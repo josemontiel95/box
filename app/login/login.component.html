@@ -1,0 +1,30 @@
+<div class="main-panelL">   
+    <div class="col-md-6 ml-auto mr-auto text-center">
+      <div class="cardL">
+        <div class="card-header">
+        	<img src="./assets/img/favicon.png">
+          <h4 class="card-title">Iniciar Sesión </h4>
+        </div>
+        <div class="card-body">
+          <div class="col-lg px-7">
+          <div class="form-group">
+                  <label>Correo</label>
+                  <input type="text" class="form-control" placeholder="Correo" #user>
+                </div>
+                
+                <div class="form-group">
+                  <label>Contraseña</label>
+                  <input class="form-control" placeholder="Contraseña" type="password">
+                </div>
+        </div>       
+        <div class="col-md-6 ml-auto mr-auto text-center">
+
+       <button  type="button" class="btn btn-info" (click)="login(user.value);" >
+             <!-- <a href="/user-profile"> Link de referecia provisional -->
+                <span><b> Iniciar Sesión </b></span>
+        </button>
+                </div>
+      </div>
+    </div>
+</div>
+<!--(click)="showNotification('top','center')"-->

@@ -1,0 +1,80 @@
+[
+  {
+    "Hora": "09:00",
+    "Obra": "Carretera a Comala",
+    "JefeB": "Pedro Paramo",
+    "Estatus": "En revision. ",
+    
+  } ,
+  {
+    "Hora": "08:30",
+    "Obra": " Obra por definir. ",
+    "JefeB": "  Carlos Salinas. ",
+    "Estatus": "En revision. ",
+    
+  },
+  {
+    "Hora": "09:00",
+    "Obra": "Carretera a Comala",
+    "JefeB": "Martin Perez",
+    "Estatus": "En revision. ",
+    
+  } ,
+  {
+    "Hora": "08:30",
+    "Obra": " Obra por definir. ",
+    "JefeB": "  Santiago Rojas. ",
+    "Estatus": "En revision. ",
+    
+  },
+  {
+    "Hora": "09:00",
+    "Obra": "Carretera Federal",
+    "JefeB": "Justino Meneses",
+    "Estatus": "En revision. ",
+    
+  } ,
+  {
+    "Hora": "09:30",
+    "Obra": " Obra por definir. ",
+    "JefeB": "  Catarino Vargas ",
+    "Estatus": "En revision. ",
+    
+  },
+  {
+    "Hora": "10:00",
+    "Obra": "Arco norte",
+    "JefeB": "Karen Ornelas",
+    "Estatus": "En revision. ",
+    
+  }   ,
+  {
+    "Hora": "11:30",
+    "Obra": " Obra por definir. ",
+    "JefeB": "  Karla Alva ",
+    "Estatus": "En revision. ",
+    
+  },
+  {
+    "Hora": "12:00",
+    "Obra": "Carretera a Cuernavaca",
+    "JefeB": "Jose Morales",
+    "Estatus": "En revision. ",
+    
+  } 
+  ,
+  {
+    "Hora": "13:30",
+    "Obra": " Obra por definir. ",
+    "JefeB": "  Carlos Ortega ",
+    "Estatus": "En revision. ",
+    
+  },
+  {
+    "Hora": "07:00",
+    "Obra": "Carretera a Coapa",
+    "JefeB": "Pedro Arvizu",
+    "Estatus": "En revision. ",
+    
+  } 
+]
