@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { DataService } from "../data.service";
+import { LoginResp } from "../interfaces/int.LoginResp";
+import { Global } from "../interfaces/int.Global";
+
+import 'rxjs/Rx';
 /*Este import es para redireccionar iniciar sesion a Dashboard*/
 
 @Component({
@@ -9,20 +15,37 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-  constructor(private router: Router) { }
+  apiRoot: string = "http://192.168.1.102/work/lacocs/Core/BackEnd/usuario";
+  loginMessage: string= "";
+  loginresp: LoginResp;
+  global: Global;
+  constructor(private router: Router, private http: Http, private data: DataService) { }
 
   ngOnInit() {
-
+    this.data.currentGlobal.subscribe(global => this.global = global);
   }
 
-  login(user: string){
-  	if(user=="admin"){
-  		this.router.navigate(['administrador/']);
-
-  	}else{
-  		this.router.navigate(['administrativo/']);
-  	}
+  login(user: string, password: string){
+      let url = `${this.apiRoot}/get/endpoint.php`;
+      let search = new URLSearchParams();
+      search.set('function', 'login');
+      search.set('email', user);
+      search.set('constrasena', password);
+      this.http.get(url, {search}).subscribe(res => this.diplay(res.json()) );
+    /*
+    
+    */
   }
-
+  
+  diplay(loginresp: LoginResp){
+    if(loginresp.error==0){
+      this.data.changeGlobal(new Global(loginresp.id_usuario,loginresp.token,""));
+      this.router.navigate(['administrador/']);
+    }else{
+      this.loginMessage=loginresp.estatus;
+    }
+  }
 }
+
+
+
