@@ -13,21 +13,21 @@
               <div class="col-md-5 pr-1">
                 <div class="form-group">
                   <label>Rol</label> <!--tipo de credencial referido a puestos tales como jefe de laboratorio-->
-                  <input type="text" class="form-control" disabled="" placeholder="Company" value="Jefe de Laboratorio">
+                  <input type="text" class="form-control"  placeholder="Rol" value="Jefe de Laboratorio" #rol_usuario_id>
                 </div>
               </div>
               
               <div class="col-md-4 pl-1">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Correo Electronico</label>
-                  <input type="email" class="form-control" placeholder="Email">
+                  <input type="email" class="form-control" placeholder="Email" #email>
                 </div>
               </div>
 
               <div class="col-md-3 px-1">
                 <div class="form-group">
                   <label>Contraseña</label>
-                  <input type="text" class="form-control" placeholder="Username" value="Lacocs1">
+                  <input type="text" class="form-control" placeholder="Username" value="Lacocs1" #contrasena>
                 </div>
               </div>
 
@@ -36,13 +36,13 @@
               <div class="col-md-6 pr-1">
                 <div class="form-group">
                   <label>Nombre</label>
-                  <input type="text" class="form-control" placeholder="Company" value="Gabino">
+                  <input type="text" class="form-control" placeholder="Company" value="Gabino" #nombre>
                 </div>
               </div>
               <div class="col-md-6 pl-1">
                 <div class="form-group">
                   <label>Apellidos</label>
-                  <input type="text" class="form-control" placeholder="Last Name" value="Flores">
+                  <input type="text" class="form-control" placeholder="Last Name" value="Flores" #apellido>
                 </div>
               </div>
             </div>
@@ -51,13 +51,13 @@
               <div class="col-md-6 pr-1">
                 <div class="form-group">
                   <label>Numero Seguro Social</label>
-                  <input type="text" class="form-control" placeholder="Company" value="Gabino">
+                  <input type="text" class="form-control" placeholder="Company" value="34455676878" #nss>
                 </div>
               </div>
               <div class="col-md-6 pl-1">
                 <div class="form-group">
-                  <label>ID</label>
-                  <input type="text" class="form-control" placeholder="Last Name" value="Flores">
+                  <label>Laboratorio ID</label>
+                  <input type="text" class="form-control" placeholder="Last Name" value="Ga-234" #laboratorio_id >
                 </div>
               </div>
             </div>            
@@ -65,32 +65,52 @@
             <div class="row">
               <div class="col-md-4 pr-1">
                 <div class="form-group">
-                  <label>Ciudad</label>
-                  <input type="text" class="form-control" placeholder="City" value="Puebla">
+                  <label>Fecha de Nacimiento</label>
+                  <input type="date" class="form-control" #fechaDeNac>
                 </div>
               </div>
-              <div class="col-md-4 px-1">
-                <div class="form-group">
-                  <label>País</label>
-                  <input type="text" class="form-control" placeholder="Country" value="México">
-                </div>
-              </div>
-              <div class="col-md-4 pl-1">
-                <div class="form-group">
-                  <label>Codigo Postal</label>
-                  <input type="number" class="form-control" placeholder="72000	">
-                </div>
-              </div>
+              
+              
             </div>
             
             <div class="btn-group" style="float: right; padding-right: 10%;">
-            <button class="btn btn-success" (click)="crearUsuario();">
+            <button class="btn btn-success" (click)="crearUsuario(rol_usuario_id.value, email.value, contrasena.value, nombre.value, apellido.value, nss.value, laboratorio_id.value, fechaDeNac.value);">
               <span><b> Guardar Cambios </b></span>
             </button>
           </div>
           </form>
+
+
         </div>
+
+
+
       </div>
+
+      <div class="col-md-5 ml-auto mr-auto ">
+      <div class="card card-user">
+        <div class="image">
+          <img src="../assets/img/Labo.jpg" alt="...">
+        </div>
+        <div class="card-body">
+          <div class="author">
+            <a href="#">
+              <img class="avatar border-gray" src="../assets/img/gabino.jpg" alt="...">
+              
+            </a>
+            
+            
+          </div>
+          <div id="si" class="col-md-5 ml-auto mr-auto ">
+            <button  md-button (click)="openDialog()">Subir Imagen</button>
+          </div>
+          
+        </div>
+        <p>{{crearMessage}}</p>
+        
+      </div>
+    </div>
+
     </div>
     
 </div>

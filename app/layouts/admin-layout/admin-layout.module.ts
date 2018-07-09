@@ -16,6 +16,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { PruebaComponent } from '../../prueba/prueba.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { CrearUsuarioComponent } from '../../crear-usuario/crear-usuario.component';
+import { InsertarFotoComponent } from '../../insertar-foto/insertar-foto.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { CrearUsuarioComponent } from '../../crear-usuario/crear-usuario.compone
     IconsComponent,
     MapsComponent,
     CrearUsuarioComponent,
+    InsertarFotoComponent,
     NotificationsComponent,
   ]
 })
