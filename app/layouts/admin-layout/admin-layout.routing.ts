@@ -11,13 +11,13 @@ import { PruebaComponent } from '../../prueba/prueba.component';
 
 
 export const AdminLayoutRoutes: Routes = [
-    { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full', },
+    { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'prueba',  		  component: PruebaComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
-    { path: 'icons',          component: IconsComponent },
+    { path: 'usuarios',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
   

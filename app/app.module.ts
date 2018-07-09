@@ -18,6 +18,10 @@ import { DataTablesModule } from 'angular-datatables';
 ;
 import { HttpClientModule }    from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
+import { DataService } from "./data.service";
+import { AppGuard } from './app.guard';
+
+
 
 @NgModule({
   imports: [
@@ -30,16 +34,17 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     HttpClientModule,
     NgbModule.forRoot(),
+    
      
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     SubAdminLayoutComponent,
-    LoginComponent,
-
+    LoginComponent
   ],
-  providers: [/*DataService*/],
+  providers: [DataService,
+  AppGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
