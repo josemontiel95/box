@@ -2,6 +2,8 @@ import { Component, OnInit} from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import { DataService } from "../data.service";
 import { Global } from "../interfaces/int.Global";
+import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-icons',
   templateUrl: './icons.component.html',
@@ -13,7 +15,7 @@ export class IconsComponent{
   global: Global;
   private gridApi;
   private gridColumnApi;
-  constructor( private http: Http,private data: DataService){}
+  constructor( private http: Http, private router: Router, private data: DataService){}
 	columnDefs = [
       {headerName: 'id_usuario', field: 'id_usuario' },
       {headerName: 'nombre', field: 'nombre' },
@@ -27,6 +29,11 @@ export class IconsComponent{
   ];
 
   rowData: any;
+
+
+  crearUsuario(){
+    this.router.navigate(['administrador/crear-usuario']);
+  }
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);

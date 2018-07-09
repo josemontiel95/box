@@ -22,7 +22,6 @@ import { DataService } from "./data.service";
 import { AppGuard } from './app.guard';
 
 
-
 @NgModule({
   imports: [
     BrowserAnimationsModule,
