@@ -14,6 +14,7 @@ import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { PruebaComponent } from '../../prueba/prueba.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { PruebaComponent } from '../../prueba/prueba.component';
     FormsModule,
     ChartsModule,
     NgbModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    AgGridModule.withComponents([])
   ],
   declarations: [
     DashboardComponent,

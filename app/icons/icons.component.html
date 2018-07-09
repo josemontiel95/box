@@ -5,11 +5,27 @@
    <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title"> Historial:</h4>
-
+          <h4 class="card-title"> Usuarios:</h4>
         </div>
-        
-          <div class="table-responsive">
+        <div style="">
+          
+          <ag-grid-angular 
+            style="width: 800px; height: 800px;" 
+            class="ag-theme-balham"
+            [enableSorting]="true"
+            [rowData]="rowData" 
+            [columnDefs]="columnDefs"
+            [enableFilter]="true"
+            [enableColResize]="true"
+            [colResizeDefault]="false"
+            [suppressAutoSize]="true"
+            (gridReady)="onGridReady($event)"
+            >
+          </ag-grid-angular>
+
+          
+          <!--
+          
             <table class="table table-striped table-bordered">
               <thead class=" text-primary">
                 <th>
@@ -201,7 +217,9 @@
                 </tr>
               </tbody>
             </table>
+             -->
           </div>
+       
         </div>
       </div>
     </div>
