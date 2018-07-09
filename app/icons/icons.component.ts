@@ -9,7 +9,7 @@ import { Global } from "../interfaces/int.Global";
 })
 export class IconsComponent{
 	title = 'app';
-  apiRoot: string = "http://192.168.1.102/work/lacocs/Core/BackEnd/usuario";
+  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   private gridApi;
   private gridColumnApi;
