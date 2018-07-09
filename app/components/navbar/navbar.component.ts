@@ -3,6 +3,7 @@ import { ROUTES } from '../sidebars/sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
 import Chart from 'chart.js';
+import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 
 @Component({
   selector: 'app-navbar',
@@ -13,12 +14,13 @@ export class NavbarComponent implements OnInit {
     private listTitles: any[];
     location: Location;
     mobile_menu_visible: any = 0;
+    apiRoot: string = "http://192.168.1.102/work/lacocs/Core/BackEnd/usuario";
     private toggleButton: any;
     private sidebarVisible: boolean;
 
     public isCollapsed = true;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
+    constructor(location: Location,  private element: ElementRef, private router: Router,private http: Http) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -151,5 +153,18 @@ export class NavbarComponent implements OnInit {
           }
       }
       return 'Bienvenido';
+    }
+    cerrarSesion(){
+      let token: string;
+      token= localStorage.getItem("token");
+      let url = `${this.apiRoot}/get/endpoint.php`;
+      let search = new URLSearchParams();
+      search.set('function', 'cerrarSesion');
+      search.set('token', token);
+      this.http.get(url, {search}).subscribe(res => {
+                                                  console.log(res.json().estatus);
+                                                  this.router.navigate(['login']); 
+                                                });
+
     }
 }
