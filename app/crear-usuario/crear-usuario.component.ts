@@ -62,6 +62,7 @@ export class CrearUsuarioComponent implements OnInit {
 
 diplay(crearResp: CrearResp){
     if(crearResp.error==0){
+      console.log(crearResp);
    	  this.router.navigate(['administrador/insertar-foto']);
     }else{
       this.crearMessage=crearResp.estatus;
