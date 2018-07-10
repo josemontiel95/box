@@ -10,6 +10,8 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { PruebaComponent } from '../../prueba/prueba.component';
+import { HerramientasComponent } from '../../herramientas/herramientas.component';
+import { CrearHerramientasComponent } from '../../crear-herramientas/crear-herramientas.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -24,5 +26,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'usuarios',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
-  
+    { path: 'herramientas',  component: HerramientasComponent },
+    { path: 'crear-herramientas',  component: CrearHerramientasComponent },
+
 ];

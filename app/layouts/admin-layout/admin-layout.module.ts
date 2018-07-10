@@ -17,6 +17,8 @@ import { PruebaComponent } from '../../prueba/prueba.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { CrearUsuarioComponent } from '../../crear-usuario/crear-usuario.component';
 import { InsertarFotoComponent } from '../../insertar-foto/insertar-foto.component';
+import { HerramientasComponent } from '../../herramientas/herramientas.component';
+import { CrearHerramientasComponent } from '../../crear-herramientas/crear-herramientas.component';
 
 
 @NgModule({
@@ -40,6 +42,8 @@ import { InsertarFotoComponent } from '../../insertar-foto/insertar-foto.compone
     CrearUsuarioComponent,
     InsertarFotoComponent,
     NotificationsComponent,
+    CrearHerramientasComponent,
+    HerramientasComponent
   ]
 })
 

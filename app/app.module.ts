@@ -22,6 +22,7 @@ import { DataService } from "./data.service";
 import { AppGuard } from './app.guard';
 
 
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -40,7 +41,7 @@ import { AppGuard } from './app.guard';
     AppComponent,
     AdminLayoutComponent,
     SubAdminLayoutComponent,
-    LoginComponent
+    LoginComponent,
   ],
   providers: [DataService,
   AppGuard],
