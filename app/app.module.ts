@@ -41,7 +41,7 @@ import { AppGuard } from './app.guard';
     AppComponent,
     AdminLayoutComponent,
     SubAdminLayoutComponent,
-    LoginComponent
+    LoginComponent,
   ],
   providers: [DataService,
   AppGuard],

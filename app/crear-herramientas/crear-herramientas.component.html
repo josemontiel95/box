@@ -1,0 +1,66 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Crear Herramienta</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+              <div class="col-md-12 pr-1">
+                <div class="form-group">
+                  <label>Descripcion</label> <!--tipo de credencial referido a puestos tales como jefe de laboratorio-->
+                  <textarea class="form-control" placeholder="¿Qué herramienta es?"   #descripcion> </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Tipo</label>
+                  <input type="text" class="form-control" placeholder="Nombre" #tipo>
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Fecha de Compra</label>
+                  <input type="date" class="form-control" #fechaC>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Condicion</label>
+                  <input type="text" class="form-control" placeholder="Estado de la herramienta" #condicion>
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Laboratorio ID</label>
+                  <input type="text" class="form-control" disabled="" value="1001" #laboratorio_id >
+                </div>
+              </div>
+            </div>            
+
+            
+            <div class="btn-group" style="float: right; padding-right: 10%;">
+            <button class="btn btn-success" (click)="crearHerramienta(descripcion.value, tipo.value, fechaC.value, condicion.value, laboratorio_id.value);">
+              <span><b> Guardar Cambios </b></span>
+            </button>
+            <div class="row">
+            <p>
+              {{crearMessage}}
+            </p>
+          </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>
