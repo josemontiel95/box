@@ -7,6 +7,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebars/sidebar/sidebar.component';
 import { SidebarAdministrativoComponent } from './sidebars/sidebarAdministrativo/sidebarAdministrativo.component';
+import { SidebarJefebComponent } from './sidebars/sidebarJefeB/sidebarjefeb.component';
 
 
 @NgModule({
@@ -18,14 +19,18 @@ import { SidebarAdministrativoComponent } from './sidebars/sidebarAdministrativo
   declarations: [
     FooterComponent,
     NavbarComponent,
+    SidebarJefebComponent,
     SidebarComponent,
     SidebarAdministrativoComponent,
+    SidebarJefebComponent,
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
+    SidebarJefebComponent,
     SidebarComponent,
     SidebarAdministrativoComponent,
+    SidebarJefebComponent,
   ]
 })
 export class ComponentsModule { }
