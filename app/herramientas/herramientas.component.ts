@@ -34,7 +34,7 @@ export class HerramientasComponent {
 
 
   crearUsuario(){
-    this.router.navigate(['administrador/crear-usuario']);
+    this.router.navigate(['administrador/crear-herramientas']);
   }
 
   onGridReady(params) {
