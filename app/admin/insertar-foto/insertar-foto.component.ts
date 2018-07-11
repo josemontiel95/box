@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from "../data.service";
+import { DataService } from "../../data.service";
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import { Observable} from 'rxjs/Rx';

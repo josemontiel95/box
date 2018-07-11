@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DataService } from "../data.service";
-import { Global } from "../interfaces/int.Global";
-import { CrearResp } from "../interfaces/int.CrearResp";
+import { DataService } from "../../data.service";
+import { Global } from "../../interfaces/int.Global";
+import { CrearResp } from "../../interfaces/int.CrearResp";
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import * as moment from 'moment';
 import {
