@@ -17,7 +17,7 @@ import {
 
 @Injectable()
 export class AppGuard implements OnInit, CanActivate{
-  	apiRoot: string = "http://192.168.1.102/work/lacocs/Core/BackEnd/usuario";
+  	apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
 	global: Global;
 	constructor(private data: DataService, private http: Http) { }
 

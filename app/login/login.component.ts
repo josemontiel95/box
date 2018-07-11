@@ -15,7 +15,7 @@ import 'rxjs/Rx';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  apiRoot: string = "http://192.168.1.102/work/lacocs/Core/BackEnd/usuario";
+  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   loginMessage: string= "";
   loginresp: LoginResp;
   global: Global;
