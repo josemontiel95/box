@@ -32,70 +32,44 @@ export class CrearUsuarioComponent  {
  
  
   model = new Usuario('18', 'Dr IQ', '99999', 'IQ', 'Overstreet','19/05/2010');
- /*
- rol_usuario_id: FormControl;
-  email: FormControl;
-  contrasena: FormControl;
-  nombre: FormControl;
-  apellido: FormControl;
-  laboratorio_id: FormControl;
-  fechaDeNac: FormControl;
-*/
 
   crearMessage: string= "";
   
-   /* ngOnInit() {
-        this.CreaUForm = this.formBuilder.group({
-            rol_usuario_id: ['', Validators.required],
-            email: ['', Validators.required],
-            contrasena: ['', Validators.required],
-            nombre: ['', Validators.required],
-            apellido: ['', Validators.required],
-            laboratorio_id: ['', Validators.required],
-            fechaDeNac: ['', Validators.required]
-        })};*/
+//insertar-foto
 
 
   submitted = false;
 
   onSubmit() { this.submitted = true; }
-/*
-  createFormControls() {
-    this.rol_usuario_idf = new FormControl('', Validators.required);
-    this.nombref = new FormControl('', Validators.required);
-    this.apellidof = new FormControl('', Validators.required);
-    this.fechaDeNacf = new FormControl('', Validators.required);
-    this.emailf = new FormControl('', [
-      Validators.required,
-      Validators.pattern("[^ @]@[^ @]")
-    ]);
-    this.contrasenaf = new FormControl('', [
-      Validators.required,
-      Validators.minLength(8)
-    ]);
-    this.laboratorio_idf = new FormControl('', [
-      Validators.required,
-      Validators.minLength(4)
-    ]);
+
+  crearUsuario(rol_usuario_id: string, email: string, contrasena: string, nombre: string, apellido: string, laboratorio_id: string, fechaDeNac: string, error: string, envioDatos: boolean = true){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.apiRoot}/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'insert');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', "1001");
+    search.set('nombre', nombre);
+    search.set('apellido', apellido);
+    search.set('email', email);
+    //search.set('nss', nss);
+    search.set('fechaDeNac', fechaDeNac);
+    search.set('rol_usuario_id_new', rol_usuario_id);
+    search.set('constrasena', contrasena);
+    search.set('error', error);
+
+    this.http.get(url, {search}).subscribe(res => this.diplay(res.json()) );
   }
 
-  createForm() {
-    this.myform = new FormGroup({
-      name: new FormGroup({
-        rol_usuario_idf: this.rol_usuario_idf,
-        nombref: this.nombref,
-        apellidof: this.apellidof,
-        fechaDeNacf: this.fechaDeNacf,
-      }),
-      emailf: this.emailf,
-      contrasenaf: this.contrasenaf,
-      laboratorio_idf: this.laboratorio_idf
-    });
+  diplay(crearResp: CrearResp){
+    
+    if(crearResp.error==0){
+      console.log(crearResp);
+       this.router.navigate(['administrador/insertar-foto']);
+    }else{
+      this.crearMessage=crearResp.estatus;
+    }
   }
-}
-
-
-*/
 
 
 }
