@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from "../data.service";
 
 @Component({
   selector: 'app-insertar-foto',
@@ -11,5 +12,7 @@ export class InsertarFotoComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  fileToUpload: File = null;
 
 }
