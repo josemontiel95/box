@@ -10,8 +10,8 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 */
 
 
-export const SubAdminLayoutRoutes: Routes = [
-    /*{ path: '',      		  redirectTo: 'dashboard', pathMatch: 'full', },
+export const JefebLayoutRoutes: Routes = [
+   /* { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full', },
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'table-list',     component: TableListComponent },

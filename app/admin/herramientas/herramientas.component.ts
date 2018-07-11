@@ -1,20 +1,23 @@
 import { Component, OnInit} from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
-import { DataService } from "../data.service";
-import { Global } from "../interfaces/int.Global";
+import { DataService } from "../../data.service";
+import { Global } from "../../interfaces/int.Global";
+import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
-  selector: 'app-icons',
-  templateUrl: './icons.component.html',
-  styleUrls: ['./icons.component.css']
+  selector: 'app-herramientas',
+  templateUrl: './herramientas.component.html',
+  styleUrls: ['./herramientas.component.scss']
 })
-export class IconsComponent{
-	title = 'app';
-  apiRoot: string = "http://192.168.1.102/work/lacocs/Core/BackEnd/usuario";
+export class HerramientasComponent {
+
+  title = 'app';
+  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   private gridApi;
   private gridColumnApi;
-  constructor( private http: Http,private data: DataService){}
-	columnDefs = [
+  constructor( private http: Http, private router: Router, private data: DataService){}
+	  /*columnDefs = [
       {headerName: 'id_usuario', field: 'id_usuario' },
       {headerName: 'nombre', field: 'nombre' },
       {headerName: 'apellido', field: 'apellido'},
@@ -25,8 +28,14 @@ export class IconsComponent{
       {headerName: 'active', field: 'active' },
 
   ];
+  */
 
   rowData: any;
+
+
+  crearUsuario(){
+    this.router.navigate(['administrador/crear-herramientas']);
+  }
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);

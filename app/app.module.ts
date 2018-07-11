@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 
 import { AppComponent } from './app.component';
+import { JefebLayoutComponent } from './layouts/jefeb-layout/jefeb-layout.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { SubAdminLayoutComponent } from './layouts/subadmin-layout/subadmin-layout.component';
@@ -41,7 +42,8 @@ import { AppGuard } from './app.guard';
     AppComponent,
     AdminLayoutComponent,
     SubAdminLayoutComponent,
-    LoginComponent
+    LoginComponent,
+    JefebLayoutComponent,
   ],
   providers: [DataService,
   AppGuard],

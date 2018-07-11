@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SubAdminLayoutRoutes } from './subadmin-layout.routing';
-/*
-import { DashboardComponent } from '../../dashboard/dashboard.component';
+import { JefebLayoutRoutes } from './jefeb-layout.routing';
+/*import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { TableListComponent } from '../../table-list/table-list.component';
 import { TypographyComponent } from '../../typography/typography.component';
@@ -20,14 +19,14 @@ import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(SubAdminLayoutRoutes),
+    RouterModule.forChild(JefebLayoutRoutes),
     FormsModule,
     ChartsModule,
     NgbModule,
     ToastrModule.forRoot()
   ],
   declarations: [
-   /* DashboardComponent,
+    /*DashboardComponent,
     UserProfileComponent,
     TableListComponent,
     TypographyComponent,
@@ -37,4 +36,4 @@ import { ToastrModule } from 'ngx-toastr';
   ]
 })
 
-export class SubAdminLayoutModule {}
+export class JefebLayoutModule {}
