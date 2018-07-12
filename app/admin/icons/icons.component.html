@@ -6,17 +6,20 @@
       <div class="card">
         
         <div class="card-header">
-          <div class="btn-group" style="float: right; padding-right: 20%;">
+          <div class="btn-group" style="float: right; padding-right: 5%;">
             <button class="btn btn-success" (click)="crearUsuario();">
               <span><b> Nuevo Usuario </b></span>
             </button>
           </div>
-          <h4 class="card-title"> Usuarios:</h4>
+          <h4 class="card-title"> Usuarios: </h4>
         </div>
-        <div style="">
-          
+        
+        <div class="card-body">        
+        <p style="color: green">{{selectedRowsString}}<p>  
           <ag-grid-angular 
-            style="width: 800px; height: 800px;" 
+            #agGrid
+            id="myGrid"
+            style="width: 100%; height: 600px;" 
             class="ag-theme-balham"
             [enableSorting]="true"
             [rowData]="rowData" 
@@ -25,6 +28,8 @@
             [enableColResize]="true"
             [colResizeDefault]="false"
             [suppressAutoSize]="true"
+            [rowSelection]="rowSelection"
+            (selectionChanged)="onSelectionChanged($event)"
             (gridReady)="onGridReady($event)"
             >
           </ag-grid-angular>

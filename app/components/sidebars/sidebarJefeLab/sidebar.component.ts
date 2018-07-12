@@ -17,11 +17,11 @@ export const ROUTES: RouteInfo[] = [
 ];
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'app-sidebarJefeLab',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarJefeLab implements OnInit {
   menuItems: any[];
 
   constructor() { }

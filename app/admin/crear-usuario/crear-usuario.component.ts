@@ -23,17 +23,16 @@ import {
 })
 export class CrearUsuarioComponent  {
 //implements OnInit
-
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   constructor(private router: Router, 
               private data: DataService, 
               private http: Http) { }
  
  
-  model = new Usuario('18', 'Dr IQ', '99999', 'IQ', 'Overstreet','19/05/2010');
+  model = new Usuario('1001', 'Dr IQ', '99999', 'IQ', 'Overstreet','19-05-2010');
 
   crearMessage: string= "";
+  crearMessageCargando: string= "";
   
 //insertar-foto
 
@@ -44,7 +43,7 @@ export class CrearUsuarioComponent  {
 
   crearUsuario(rol_usuario_id: string, email: string, contrasena: string, nombre: string, apellido: string, laboratorio_id: string, fechaDeNac: string, error: string, envioDatos: boolean = true){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.apiRoot}/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'insert');
     search.set('token', this.global.token);
@@ -57,17 +56,45 @@ export class CrearUsuarioComponent  {
     search.set('rol_usuario_id_new', rol_usuario_id);
     search.set('constrasena', contrasena);
     search.set('error', error);
-
+    this.crearMessageCargando="Cargando...";
     this.http.get(url, {search}).subscribe(res => this.diplay(res.json()) );
+
+
   }
 
   diplay(crearResp: CrearResp){
     
     if(crearResp.error==0){
+      this.crearMessage="";
+      this.crearMessageCargando=crearResp.estatus;
       console.log(crearResp);
-       this.router.navigate(['administrador/insertar-foto']);
+      setTimeout(()=>{ this.router.navigate(['administrador/insertar-foto/'+crearResp.id_usuario])}, 1500);
+       
     }else{
-      this.crearMessage=crearResp.estatus;
+      this.crearMessageCargando="";
+      switch (crearResp.error) {
+        case 1:
+          
+          this.crearMessage=crearResp.estatus;
+          window.alert(this.crearMessage);
+          console.log(crearResp);
+          let token: string;
+          token= localStorage.getItem("token");
+          let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+          let search = new URLSearchParams();
+          search.set('function', 'cerrarSesion');
+          search.set('token', token);
+          this.http.get(url, {search}).subscribe(res => {
+                                                      console.log(res.json().estatus);
+                                                      this.router.navigate(['login']); 
+                                                    });
+          break;
+        case 2:
+          this.crearMessage=crearResp.estatus;
+          window.alert(this.crearMessage);
+          break;
+      }
+      
     }
   }
 

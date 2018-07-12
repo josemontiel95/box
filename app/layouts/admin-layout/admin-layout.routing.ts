@@ -19,7 +19,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'crear-usuario',   component: CrearUsuarioComponent },
-    { path: 'insertar-foto',   component: InsertarFotoComponent },
+    { path: 'insertar-foto/:id',   component: InsertarFotoComponent },
     { path: 'prueba',  		  component: PruebaComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
