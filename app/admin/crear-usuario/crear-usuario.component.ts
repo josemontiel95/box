@@ -58,15 +58,17 @@ export class CrearUsuarioComponent  {
     search.set('error', error);
     this.crearMessageCargando="Cargando...";
     this.http.get(url, {search}).subscribe(res => this.diplay(res.json()) );
+
+
   }
 
   diplay(crearResp: CrearResp){
     
     if(crearResp.error==0){
-      this.crearMessage=""
+      this.crearMessage="";
       this.crearMessageCargando=crearResp.estatus;
       console.log(crearResp);
-      setTimeout(()=>{ this.router.navigate(['administrador/insertar-foto/'+crearResp.id_usuario])}, 2500)
+      setTimeout(()=>{ this.router.navigate(['administrador/insertar-foto/'+crearResp.id_usuario])}, 1500);
        
     }else{
       this.crearMessageCargando="";
@@ -78,7 +80,7 @@ export class CrearUsuarioComponent  {
           console.log(crearResp);
           let token: string;
           token= localStorage.getItem("token");
-          let url = `${this.apiRoot}/get/endpoint.php`;
+          let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
           let search = new URLSearchParams();
           search.set('function', 'cerrarSesion');
           search.set('token', token);

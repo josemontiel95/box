@@ -14,18 +14,24 @@ export class IconsComponent{
   global: Global;
   private gridApi;
   private gridColumnApi;
-  constructor( private http: Http, private router: Router, private data: DataService){}
-	columnDefs = [
+  private rowSelection;
+  private columnDefs;
+  selectedRowsString= "";
+
+  constructor( private http: Http, private router: Router, private data: DataService){
+	  this.columnDefs = [
       {headerName: 'id_usuario', field: 'id_usuario' },
       {headerName: 'nombre', field: 'nombre' },
       {headerName: 'apellido', field: 'apellido'},
       {headerName: 'email', field: 'email' },
       {headerName: 'fechaDeNac', field: 'fechaDeNac' },
-      {headerName: 'foto', field: 'foto'},
+      //{headerName: 'foto', field: 'foto'},
       {headerName: 'rol_usuario_id', field: 'rol_usuario_id' },
       {headerName: 'active', field: 'active' },
 
-  ];
+    ];
+    this.rowSelection = "single";
+  }
 
   rowData: any;
 
@@ -51,5 +57,25 @@ export class IconsComponent{
                                             this.gridApi.sizeColumnsToFit();
                                           });
   }
+
+   onSelectionChanged() {
+    var selectedRows = this.gridApi.getSelectedRows();
+    var selectedRowsString = "";
+    selectedRows.forEach(function(selectedRow, index) {
+      if (index !== 0) {
+        selectedRowsString += ", ";
+      }
+      selectedRowsString += selectedRow.id_usuario;
+    
+    });
+    this.displayShortDescription(selectedRowsString);
+  }
+
+  displayShortDescription(id: any){
+    this.selectedRowsString="Usuario seleccionado: "+id;
+
+
+  }
+
 
 }
