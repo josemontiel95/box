@@ -29,7 +29,7 @@ export class CrearUsuarioComponent  {
               private http: Http) { }
  
  
-  model = new Usuario('18', 'Dr IQ', '99999', 'IQ', 'Overstreet','19/05/2010');
+  model = new Usuario('1001', 'Dr IQ', '99999', 'IQ', 'Overstreet','19-05-2010');
 
   crearMessage: string= "";
   crearMessageCargando: string= "";

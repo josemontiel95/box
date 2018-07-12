@@ -25,7 +25,7 @@ export class IconsComponent{
       {headerName: 'apellido', field: 'apellido'},
       {headerName: 'email', field: 'email' },
       {headerName: 'fechaDeNac', field: 'fechaDeNac' },
-      //{headerName: 'foto', field: 'foto'},
+      {headerName: 'foto', field: 'foto'},
       {headerName: 'rol_usuario_id', field: 'rol_usuario_id' },
       {headerName: 'active', field: 'active' },
 

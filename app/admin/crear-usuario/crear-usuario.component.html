@@ -19,7 +19,7 @@
                     required [(ngModel)]="model.rol_usuario_id"
                     name="rol_usuario_id"
                     placeholder="Puesto" #rol_usuario_id="ngModel">
-                  <div [hidden]="rol_usuario_id.valid || rol_usuario_id.pristine" class="alert alert-danger">
+                  <div [hidden]="rol_usuario_id.valid || rol_usuario_id.pristine"  class="alert alert-danger">
                     Rol requerido.
                 </div>
                 </div>
@@ -68,23 +68,14 @@
             </div>
 
             <div class="row">
-              <!--<div class="col-md-6 pr-1">
-                <div class="form-group">
-                  <label>Numero Seguro Social</label>
-                  <input type="text" class="form-control" placeholder="Numero IMSS" #nss>
-                   
-                </div>
-              </div>-->
               <div class="col-md-6 pl-1">
                 <div class="form-group">
                   <label>Laboratorio ID</label>
                   <input type="text" class="form-control" disabled="" value="1001" #laboratorio_id >
                 </div>
               </div>
-            </div>            
 
-            <div class="row">
-              <div class="col-md-4 pr-1">
+              <div class="col-md-6 pr-1">
                 <div class="form-group">
                   <label>Fecha de Nacimiento</label>
                   <input type="date"  id="fechaDeNac" required [(ngModel)]="model.fechaDeNac" name="fechaDeNac"  class="form-control" #fechaDeNac="ngModel">
@@ -93,10 +84,16 @@
                 </div>
                 </div>
               </div>
-              
-              
             </div>
-            
+            <div class="row">
+              <!--<div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>Numero Seguro Social</label>
+                  <input type="text" class="form-control" placeholder="Numero IMSS" #nss>
+                   
+                </div>
+              </div>-->
+            </div>
             <div class="btn-group" style="float: right; padding-right: 10%;">
             <button class="btn btn-success" (click)="crearUsuario(rol_usuario_id.value, email.value, contrasena.value, nombre.value, apellido.value, laboratorio_id.value, fechaDeNac.value);">
               <span><b> Guardar Cambios </b></span>

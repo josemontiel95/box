@@ -64,7 +64,7 @@ export class InsertarFotoComponent implements OnInit {
 
   }
   doIt(objeto : any){
-      if(objeto.error==0){
+    if(objeto.error==0){
       this.crearMessage=""
       this.crearMessageCargando=objeto.estatus;
       console.log(objeto);
@@ -72,6 +72,7 @@ export class InsertarFotoComponent implements OnInit {
        
     }else{
       this.crearMessageCargando="";
+      window.alert(objeto.estatus);
       switch (objeto.error) {
         case 1:
           
