@@ -22,6 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { DataService } from "./data.service";
 import { AppGuard } from './app.guard';
 
+import { MatProgressBarModule } from '@angular/material';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { AppGuard } from './app.guard';
     ComponentsModule,
     RouterModule,
     DataTablesModule,
+    MatProgressBarModule,
     AppRoutingModule,
     HttpClientModule,
     NgbModule.forRoot(),

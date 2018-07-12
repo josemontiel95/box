@@ -19,7 +19,7 @@ import { CrearUsuarioComponent } from '../../admin/crear-usuario/crear-usuario.c
 import { InsertarFotoComponent } from '../../admin/insertar-foto/insertar-foto.component';
 import { HerramientasComponent } from '../../admin/herramientas/herramientas.component';
 import { CrearHerramientasComponent } from '../../admin/crear-herramientas/crear-herramientas.component';
-
+import { MatProgressBarModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -27,6 +27,7 @@ import { CrearHerramientasComponent } from '../../admin/crear-herramientas/crear
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     ChartsModule,
+    MatProgressBarModule,
     NgbModule,
     ToastrModule.forRoot(),
     AgGridModule.withComponents([])
