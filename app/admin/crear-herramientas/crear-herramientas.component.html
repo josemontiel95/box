@@ -8,26 +8,41 @@
           <h5 class="title">Crear Herramienta</h5>
         </div>
         <div class="card-body">
-          <form>
+          <form (ngSubmit)="onSubmit()" #HerramientaForm="ngForm">
             <div class="row">
               <div class="col-md-12 pr-1">
                 <div class="form-group">
-                  <label>Descripcion</label> <!--tipo de credencial referido a puestos tales como jefe de laboratorio-->
-                  <textarea class="form-control" placeholder="¿Qué herramienta es?"   #descripcion> </textarea>
+                  <label for="descripcion">Descripcion</label> <!--tipo de credencial referido a puestos tales como jefe de laboratorio-->
+                  <textarea class="form-control" placeholder="¿Qué herramienta es?"  id="descripcion"
+                    required [(ngModel)]="model.descripcion"
+                    name="descripcion"  #descripcion="ngModel"> </textarea>
+                     <div [hidden]="descripcion.valid || descripcion.pristine" class="alert alert-danger">
+                    Descripcion requerida.
                 </div>
-              </div>
+                </div>
+              </div>   
             </div>
             <div class="row">
               <div class="col-md-6 pr-1">
                 <div class="form-group">
-                  <label>Tipo</label>
-                  <input type="text" class="form-control" placeholder="Nombre" #tipo>
+                  <label for="tipo">Tipo</label>
+                  <input type="text"  id="tipo"
+                    required [(ngModel)]="model.tipo"
+                    name="tipo" class="form-control" placeholder="Nombre" #tipo="ngModel">
+                  <div [hidden]="tipo.valid ||tipo.pristine" class="alert alert-danger">
+                    Tipo de herramienta es un campo requerido.
+                </div>
                 </div>
               </div>
               <div class="col-md-6 pl-1">
                 <div class="form-group">
-                  <label>Fecha de Compra</label>
-                  <input type="date" class="form-control" #fechaC>
+                  <label for="fechaDeComp">Fecha de Compra</label>
+                  <input type="date"  id="fechaDeComp"
+                    required [(ngModel)]="model.fechaDeComp"
+                    name="fechaDeComp"  class="form-control" #fechaDeComp="ngModel">
+                  <div [hidden]="fechaDeComp.valid || fechaDeComp.pristine" class="alert alert-danger">
+                    Fecha de compra requerida.
+                </div>
                 </div>
               </div>
             </div>
@@ -35,28 +50,33 @@
             <div class="row">
               <div class="col-md-6 pr-1">
                 <div class="form-group">
-                  <label>Condicion</label>
-                  <input type="text" class="form-control" placeholder="Estado de la herramienta" #condicion>
+                  <label for="condicion">Condicion</label>
+                  <input type="text" id="condicion"
+                    required [(ngModel)]="model.condicion"
+                    name="condicion" class="form-control" placeholder="Estado de la herramienta" #condicion="ngModel">
+                  <div [hidden]="condicion.valid || condicion.pristine" class="alert alert-danger">
+                    Condicion requerida.
+                </div>
                 </div>
               </div>
               <div class="col-md-6 pl-1">
                 <div class="form-group">
-                  <label>Laboratorio ID</label>
-                  <input type="text" class="form-control" disabled="" value="1001" #laboratorio_id >
+                  <label for="laboratorio_id">Laboratorio ID</label>
+                  <input type="text" id="laboratorio_id"
+                    required [(ngModel)]="model.laboratorio_id"
+                    name="laboratorio_id" class="form-control" disabled="" value="1001" #laboratorio_id="ngModel" >
+                  <div [hidden]="laboratorio_id.valid || laboratorio_id.pristine" class="alert alert-danger">
+                    ID del Laboratorio requerido.
+                </div>
                 </div>
               </div>
             </div>            
 
             
             <div class="btn-group" style="float: right; padding-right: 10%;">
-            <button class="btn btn-success" (click)="crearHerramienta(descripcion.value, tipo.value, fechaC.value, condicion.value, laboratorio_id.value);">
+            <button class="btn btn-success" (click)="crearHerramienta(descripcion.value, tipo.value, fechaDeComp.value, condicion.value, laboratorio_id.value);">
               <span><b> Guardar Cambios </b></span>
             </button>
-            <div class="row">
-            <p>
-              {{crearMessage}}
-            </p>
-          </div>
           </div>
           </form>
         </div>
