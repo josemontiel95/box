@@ -24,7 +24,7 @@ export class UserProfileComponent implements OnInit {
     id_usuario: string;
     nombre: string;
     apellido: string;
-    email: string,
+    email: string;
     fechaDeNac: string;
     foto: string;
     rol_usuario_id: string;
