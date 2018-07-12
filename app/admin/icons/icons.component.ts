@@ -11,7 +11,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class IconsComponent{
 	title = 'app';
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   private gridApi;
   private gridColumnApi;
@@ -37,11 +36,12 @@ export class IconsComponent{
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
-
+    console.log("this.global.apiRoot"+this.global.apiRoot);
+    console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.apiRoot}/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllUsuarios');
     search.set('token', this.global.token);

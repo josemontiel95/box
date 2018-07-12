@@ -8,6 +8,8 @@
           <h5 class="title">Crear Nuevo Usuario</h5>
         </div>
         <div class="card-body">
+          <p style="color: red">{{crearMessage}}<p>
+          <p style="color: green">{{crearMessageCargando}}<p>
           <form (ngSubmit)="onSubmit()" #usuarioForm="ngForm">
             <div class="row">
               <div class="col-md-5 pr-1">
@@ -99,6 +101,7 @@
             <button class="btn btn-success" (click)="crearUsuario(rol_usuario_id.value, email.value, contrasena.value, nombre.value, apellido.value, laboratorio_id.value, fechaDeNac.value);">
               <span><b> Guardar Cambios </b></span>
             </button>
+
           </div>
           </form>
         </div>

@@ -15,7 +15,6 @@ import 'rxjs/Rx';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   loginMessage: string= "";
   loginresp: LoginResp;
   global: Global;
@@ -26,7 +25,8 @@ export class LoginComponent implements OnInit {
   }
 
   login(user: string, password: string){
-      let url = `${this.apiRoot}/get/endpoint.php`;
+      let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+      console.log(url);
       let search = new URLSearchParams();
       search.set('function', 'login');
       search.set('email', user);
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
   
   diplay(loginresp: LoginResp){
     if(loginresp.error==0){
-      this.data.changeGlobal(new Global(loginresp.id_usuario,loginresp.token,""));
+      this.data.changeGlobal(new Global(loginresp.id_usuario,loginresp.token,"http://lacocs.montielpalacios.com/API"));
       this.router.navigate(['administrador/']);
     }else{
       this.loginMessage=loginresp.estatus;

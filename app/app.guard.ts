@@ -17,7 +17,6 @@ import {
 
 @Injectable()
 export class AppGuard implements OnInit, CanActivate{
-  	apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
 	global: Global;
 	constructor(private data: DataService, private http: Http) { }
 
@@ -27,7 +26,7 @@ export class AppGuard implements OnInit, CanActivate{
 
 	canActivate(){
 		this.data.currentGlobal.subscribe(global => this.global = global);
-		let url = `${this.apiRoot}/get/endpoint.php`;
+		let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
       	let search = new URLSearchParams();
       	search.set('function', 'validateSesion');
       	search.set('token', this.global.token);
