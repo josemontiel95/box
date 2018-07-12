@@ -4,7 +4,15 @@ import { DataService } from "../data.service";
 import { LoginResp } from "../interfaces/int.LoginResp";
 import { Global } from "../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { Usuario }    from './Usuario';
+import {
+    ReactiveFormsModule,
+    FormsModule,
+    FormGroup,
+    FormControl,
+    Validators,
+    FormBuilder
+} from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile',
@@ -12,6 +20,16 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
+
+    id_usuario: string;
+    nombre: string;
+    apellido: string;
+    email: string;
+    fechaDeNac: string;
+    foto: string;
+    rol_usuario_id: string;
+    submitted = false;
+    onSubmit() { this.submitted = true; }
 
   loginMessage: string= "";
   loginresp: LoginResp;
@@ -25,9 +43,32 @@ export class UserProfileComponent implements OnInit {
 	search.set('function', 'getIDByToken');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
-	this.http.get(url, {search}).subscribe(res => console.log(res.json()) );
+	this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+  }
+
+  llenado(respuesta: any)
+  {
+    console.log(respuesta);
+    this.model=respuesta;
+    /*this.id_usuario= respuesta.id_usuario;
+    this.nombre= respuesta.nombre;
+    this.apellido= respuesta.apellido;
+    this.email= respuesta.email;
+    this.fechaDeNac= respuesta.fechaDeNac;
+    this.foto= respuesta.foto;
+    this.rol_usuario_id= respuesta.rol_usuario_id;*/
+
+
   }
   
+  
+   model = new Usuario(this.id_usuario,
+                       this.email,
+                       this.nombre,
+                       this.apellido,
+                       this.fechaDeNac,
+                       this.foto,
+                       this.rol_usuario_id);
 
 
 }
