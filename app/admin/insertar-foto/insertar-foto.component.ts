@@ -21,26 +21,21 @@ export class InsertarFotoComponent implements OnInit {
   fileToUpload: File = null; //Variable default para un archivo seleccionado.
 
   handleFileInput(files: FileList) {   
-	  let url = `${this.apiRoot}/get/endpoint.php`;
+	  let url = `${this.apiRoot}/post/endpoint.php`;
 
 	 if(files.length > 0){
 	 	this.fileToUpload = files[0];
 	 	console.log(this.fileToUpload);
+	 	console.log("this.fileToUpload.name");
 	 	console.log(this.fileToUpload.name);
 	 	let formData:FormData = new FormData();
 	 	formData.append('uploadFile', this.fileToUpload, this.fileToUpload.name);
-
-	 	let headers = new Headers();
-	 	headers.append('enctype', 'multipart/form-data');
-	 	headers.append('Accept', 'application/json');
-	 	let options = new RequestOptions({ headers: headers });
 	 	console.log(formData);
-		console.log(options);
-		this.http.post(url, formData, options)
+		this.http.post(url, formData)
 			.catch(error => Observable.throw(error))
 			.subscribe(
 				data =>{
-                    console.log(data);
+                    console.log(data.json());
                 },
                 error =>{
                     console.log(error);
