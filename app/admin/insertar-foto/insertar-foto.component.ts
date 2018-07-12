@@ -16,6 +16,7 @@ export class InsertarFotoComponent implements OnInit {
   id: string;
   crearMessage: string= "";
   crearMessageCargando: string= "";
+  value= 0;
 
   constructor(private router: Router, 
               private http: HttpClient, 
@@ -29,6 +30,8 @@ export class InsertarFotoComponent implements OnInit {
 
   fileToUpload: File = null; //Variable default para un archivo seleccionado.
 
+  
+  
   handleFileInput(files: FileList) {   
 	 if(files.length > 0){
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -52,6 +55,7 @@ export class InsertarFotoComponent implements OnInit {
 				event =>{
                    if(event.type ===HttpEventType.UploadProgress){
                      this.crearMessageCargando='UploadProgress: ' + Math.round(event.loaded / event.total * 100) + "%";
+                                   this.value =Math.round(event.loaded / event.total * 100);
                    }else if(event.type ===HttpEventType.Response){
                      this.doIt(event.body);
                    }
