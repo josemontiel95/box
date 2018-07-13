@@ -16,18 +16,23 @@ export class IconsComponent{
   private gridColumnApi;
   private rowSelection;
   private columnDefs;
-  selectedRowsString= "";
+  id= "";
+  nombre= "";
+  apellido= "";
+  foto= "";
+  rol= "";
+  hidden=false;
 
   constructor( private http: Http, private router: Router, private data: DataService){
 	  this.columnDefs = [
-      {headerName: 'id_usuario', field: 'id_usuario' },
-      {headerName: 'nombre', field: 'nombre' },
-      {headerName: 'apellido', field: 'apellido'},
-      {headerName: 'email', field: 'email' },
-      {headerName: 'fechaDeNac', field: 'fechaDeNac' },
-      {headerName: 'foto', field: 'foto'},
-      {headerName: 'rol_usuario_id', field: 'rol_usuario_id' },
-      {headerName: 'active', field: 'active' },
+      {headerName: 'ID', field: 'id_usuario' },
+      {headerName: 'Nombre', field: 'nombre' },
+      {headerName: 'Apellido', field: 'apellido'},
+      {headerName: 'Email', field: 'email' },
+      {headerName: 'Fecha de Nacimiento', field: 'fechaDeNac' },
+      {headerName: 'Foto', field: 'foto'},
+      {headerName: 'Rol', field: 'rol' },
+      {headerName: 'Activo', field: 'active' },
 
     ];
     this.rowSelection = "single";
@@ -58,24 +63,39 @@ export class IconsComponent{
                                           });
   }
 
+   menosDetalles(){
+     this.hidden=false;
+   }
+
+
    onSelectionChanged() {
     var selectedRows = this.gridApi.getSelectedRows();
-    var selectedRowsString = "";
+    var id = "";
+    var nombre = "";
+    var apellido = "";
+    var foto = "";
+    var rol = "";
     selectedRows.forEach(function(selectedRow, index) {
-      if (index !== 0) {
-        selectedRowsString += ", ";
-      }
-      selectedRowsString += selectedRow.id_usuario;
-    
+      id += selectedRow.id_usuario;
+      nombre += selectedRow.nombre;
+      apellido += selectedRow.apellido;
+      foto += selectedRow.foto;
+      rol += selectedRow.rol;
     });
-    this.displayShortDescription(selectedRowsString);
+    this.displayShortDescription(id, nombre, apellido, foto, rol);
   }
 
-  displayShortDescription(id: any){
-    this.selectedRowsString="Usuario seleccionado: "+id;
-
-
+  displayShortDescription(id: any, nombre: any, apellido: any, foto: any, rol: any){
+    this.hidden=true;
+    //activar 
+    this.id=id;
+    this.nombre=nombre;
+    this.apellido=apellido;
+    this.foto=foto;
+    this.rol=rol;
   }
+
+
 
 
 }

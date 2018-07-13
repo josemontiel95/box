@@ -4,7 +4,6 @@
   <div class="row">
    <div class="col-md-12">
       <div class="card">
-        
         <div class="card-header">
           <div class="btn-group" style="float: right; padding-right: 5%;">
             <button class="btn btn-success" (click)="crearUsuario();">
@@ -13,9 +12,82 @@
           </div>
           <h4 class="card-title"> Usuarios: </h4>
         </div>
-        
-        <div class="card-body">        
-        <p style="color: green">{{selectedRowsString}}<p>  
+        <div class="card-body">
+          <div id="tarjetaMasDetalles" *ngIf="hidden">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="row">  
+                      <img class="img-usuario" src="../assets/img/gabino.jpg" alt="..."> 
+                </div>
+              </div>
+              <div class="col-md-9">
+                 <div class="row">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>
+                              ID
+                            </td>
+                            <td>
+                              {{id}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Rol
+                            </td>
+                            <td>
+                              {{rol}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div> 
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9">
+                  <div class="row">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>
+                              Nombre
+                            </td>
+                            <td>
+                              {{nombre}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Apellido
+                            </td>
+                            <td>
+                              {{apellido}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div> 
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="row" align="center">
+                    <button type="button" class="btn btn-default btn-round ">Detalles</button>
+                    <button type="button" class="btn btn-danger btn-round ">Desactivar</button>
+                </div>
+                <div id="MenosDetalles">
+                  <div class="row">
+                      <button type="button" class="btn btn-primary btn-link" (click)="menosDetalles()">Menos detalles</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>{{foto}}</p>
           <ag-grid-angular 
             #agGrid
             id="myGrid"
