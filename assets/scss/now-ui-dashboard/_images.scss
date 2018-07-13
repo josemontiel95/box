@@ -2,6 +2,15 @@ img{
     max-width: 100%;
     border-radius: $border-radius-small;
 }
+
+.img-usuario{
+	width: 50%;
+	height: 50%;
+
+	display : block;
+	margin : auto;
+}
+
 .img-raised{
     box-shadow: $box-shadow-raised;
 }
