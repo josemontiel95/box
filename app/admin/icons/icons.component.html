@@ -76,8 +76,9 @@
               </div>
               <div class="col-md-3">
                 <div class="row" align="center">
-                    <button type="button" class="btn btn-default btn-round ">Detalles</button>
-                    <button type="button" class="btn btn-danger btn-round ">Desactivar</button>
+                    <button type="button" class="btn btn-default btn-round">Detalles</button>
+                    <button type="button" class="btn btn-danger btn-round " (click)="desactivarUsuario()" *ngIf="desBut">Desactivar</button>
+                    <button type="button" class="btn btn-success btn-round " (click)="activarUsuario()" *ngIf="actBut">Activar</button>
                 </div>
                 <div id="MenosDetalles">
                   <div class="row">
