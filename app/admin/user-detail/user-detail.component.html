@@ -152,10 +152,10 @@
         </div>
         <div class="card-body">
           <div class="author">
-            <a href="#">
-              <img class="avatar border-gray" src="../assets/img/gabino.jpg" alt="...">
+            
+              <img class="avatar border-gray" src="{{this.imgUrl}}" (click)="subirFoto()" alt="...">
               <h5 class="title">{{model.nombre + ' '+ model.apellido}}</h5>
-            </a>
+           
             <p class="description">
               {{model.rol}}
             </p>

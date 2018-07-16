@@ -37,6 +37,7 @@ export class UserDetailComponent implements OnInit {
     hidden = false;
     mis_roles: Array<any>;
     mis_lab: Array<any>;
+    imgUrl = "";
     onSubmit() { this.submitted = true; }
 
     loginMessage: string= "";
@@ -120,6 +121,11 @@ export class UserDetailComponent implements OnInit {
     this.router.navigate(['administrador/usuarios']);
   }
 
+
+  subirFoto(){
+    this.router.navigate(['administrador/insertar-foto/'+this.id]);
+  }
+
   llenaRoles(resp: any)
   {
     console.log(resp);
@@ -200,6 +206,12 @@ export class UserDetailComponent implements OnInit {
     console.log("jbihghiv");
     console.log(respuesta);
     this.model=respuesta;
+    if(this.foto == "null"){
+      this.imgUrl= "../assets/img/gabino.jpg";
+    }
+    else{
+      this.imgUrl= this.global.assetsRoot+this.foto;
+    }
   }
   
   
