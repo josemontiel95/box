@@ -145,6 +145,7 @@ export class UserProfileComponent implements OnInit {
 
     llenado(respuesta: any)
     {
+      console.log(respuesta);
       this.model=respuesta;
     }
   
