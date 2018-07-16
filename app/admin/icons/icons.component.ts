@@ -25,6 +25,7 @@ export class IconsComponent implements OnInit{
   hidden=false;
   desBut=true;
   actBut=false;
+  imgUrl="";
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -152,6 +153,12 @@ export class IconsComponent implements OnInit{
     this.apellido=apellido;
     this.foto=foto;
     this.rol=rol;
+
+    if(this.foto== "null"){
+      this.imgUrl="../assets/img/gabino.jpg";
+    }else{
+      this.imgUrl= this.global.assetsRoot+this.foto;
+    }
 
 
     if(active == 1)
