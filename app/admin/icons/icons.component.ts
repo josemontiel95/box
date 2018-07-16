@@ -34,7 +34,7 @@ export class IconsComponent implements OnInit{
       {headerName: 'Apellido', field: 'apellido'},
       {headerName: 'Email', field: 'email' },
       {headerName: 'Fecha de Nacimiento', field: 'fechaDeNac' },
-      {headerName: 'Foto', field: 'foto'},
+      //{headerName: 'Foto', field: 'foto'},
       {headerName: 'Rol', field: 'rol' },
       {headerName: 'Activo', field: 'active' },
 
