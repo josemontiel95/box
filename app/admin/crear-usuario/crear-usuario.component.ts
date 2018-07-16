@@ -21,27 +21,95 @@ import {
   templateUrl: './crear-usuario.component.html',
   styleUrls: ['./crear-usuario.component.scss']
 })
-export class CrearUsuarioComponent  {
-//implements OnInit
+export class CrearUsuarioComponent implements OnInit
+  {
   global: Global;
   constructor(private router: Router, 
               private data: DataService, 
               private http: Http) { }
  
+    id_usuario: string ;
+    nombre: string;
+    apellido: string;
+    email: string;
+    fechaDeNac: string;
+    foto: string;
+    laboratorio_id: string;
+    laboratorio: string;
+    nss: string;
+    rol: string;
+    submitted = false;
+    hidden = false;
+    mis_roles: Array<any>;
+    mis_lab: Array<any>;
  
-  model = new Usuario('1001', 'Dr IQ', '99999', 'IQ', 'Overstreet','19-05-2010');
+   model = new Usuario(this.id_usuario,
+                       this.email,
+                       this.nombre,
+                       this.apellido,
+                       this.fechaDeNac,
+                       this.foto,
+                       this.rol,
+                       this.nss,
+                       this.laboratorio,
+                       this.laboratorio_id);
 
   crearMessage: string= "";
   crearMessageCargando: string= "";
-  
+
+
+    //inicio y llenados
+  ngOnInit() {
+    this.data.currentGlobal.subscribe(global => this.global = global);
+
+    let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
+  let search = new URLSearchParams();
+  search.set('function', 'getAll');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', "1001");
+  this.http.get(url, {search}).subscribe(res => this.llenaRoles(res.json()) );
+
+     url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getAll');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', "1001");
+    this.http.get(url, {search}).subscribe(res => this.llenaLaboratorio(res.json()) );
+
+  }
+
+  llenaRoles(resp: any)
+  {
+    this.mis_roles= new Array(resp.length);
+    var j=resp.length-1;
+    for (var _i = 0; _i < resp.length; _i++ )
+    {
+      this.mis_roles[_i]=resp[j];
+      j--;
+
+    }
+  }
+
+  llenaLaboratorio(resp: any)
+  {
+    this.mis_lab= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ )
+    {
+      this.mis_lab[_i]=resp[_i];
+
+    }
+  }
+
+
+
 //insertar-foto
 
 
-  submitted = false;
-
   onSubmit() { this.submitted = true; }
 
-  crearUsuario(rol_usuario_id: string, email: string, contrasena: string, nombre: string, apellido: string, laboratorio_id: string, fechaDeNac: string, error: string, envioDatos: boolean = true){
+
+  crearUsuario(nombre: string, apellido: string, laboratorio_id: string, nss: string, email: string, fechaDeNac: string, rol_usuario_id: string, contrasena: string, error: string, envioDatos: boolean = true)
+  {
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -50,8 +118,9 @@ export class CrearUsuarioComponent  {
     search.set('rol_usuario_id', "1001");
     search.set('nombre', nombre);
     search.set('apellido', apellido);
+    search.set('laboratorio_id', laboratorio_id);
+    search.set('nss', nss);    
     search.set('email', email);
-    //search.set('nss', nss);
     search.set('fechaDeNac', fechaDeNac);
     search.set('rol_usuario_id_new', rol_usuario_id);
     search.set('constrasena', contrasena);
