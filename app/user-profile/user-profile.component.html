@@ -53,10 +53,7 @@
                 <div class="form-group">
                   <div class="col-md-">
                   <label for="nss"> Nmero de Seguridad Social</label>
-                  <input type="nss" id="nss" [disabled]="!hidden" required [(ngModel)]="model.nss" class="form-control" name="nss" placeholder="mail@lacocs.com" #nss="ngModel">
-                  <div [hidden]="nss.valid ||nss.pristine"  class="alert alert-danger">
-                    Numero de Seguridad Social requerido.
-                </div>
+                  <input type="nss" id="nss" [disabled]="!hidden"  [(ngModel)]="model.nss" class="form-control" name="nss" placeholder="mail@lacocs.com" #nss="ngModel">
                 </div>
               </div>
             </div>
