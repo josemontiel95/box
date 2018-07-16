@@ -21,8 +21,6 @@ import {
 })
 export class UserProfileComponent implements OnInit {
 
-    puestos= ['Jefe de Brigada', 'Jefe de Laboratorio', 
-              'Administrativo', 'Tecnico de campo']
     id_usuario: string ;
     nombre: string;
     apellido: string;
@@ -71,27 +69,27 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-  llenaRoles(resp: any)
-  {
-    this.mis_roles= new Array(resp.length);
-    var j=resp.length-1;
-    for (var _i = 0; _i < resp.length; _i++ )
+    llenaRoles(resp: any)
     {
-      this.mis_roles[_i]=resp[j];
-      j--;
+      this.mis_roles= new Array(resp.length);
+      var j=resp.length-1;
+      for (var _i = 0; _i < resp.length; _i++ )
+      {
+        this.mis_roles[_i]=resp[j];
+        j--;
 
+      }
     }
-  }
 
-  llenaLaboratorio(resp: any)
-  {
-    this.mis_lab= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
+    llenaLaboratorio(resp: any)
     {
-      this.mis_lab[_i]=resp[_i];
+      this.mis_lab= new Array(resp.length);
+      for (var _i = 0; _i < resp.length; _i++ )
+      {
+        this.mis_lab[_i]=resp[_i];
 
+      }
     }
-  }
 
   mostrar()
   {
@@ -145,10 +143,10 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-  llenado(respuesta: any)
-  {
-    this.model=respuesta;
-  }
+    llenado(respuesta: any)
+    {
+      this.model=respuesta;
+    }
   
   
    model = new Usuario(this.id_usuario,
