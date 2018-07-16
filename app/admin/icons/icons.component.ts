@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './icons.component.html',
   styleUrls: ['./icons.component.css']
 })
-export class IconsComponent{
+export class IconsComponent implements OnInit{
 	title = 'app';
   global: Global;
   private gridApi;
@@ -26,7 +26,7 @@ export class IconsComponent{
   desBut=true;
   actBut=false;
 
-  constructor( private http: Http, private router: Router, private data: DataService){
+  constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
       {headerName: 'ID', field: 'id_usuario' },
       {headerName: 'Nombre', field: 'nombre' },
@@ -43,11 +43,18 @@ export class IconsComponent{
 
   rowData: any;
 
+  ngOnInit() {
+    this.route.params.subscribe( params => this.id=params.id );
+  }
+
 
   crearUsuario(){
     this.router.navigate(['administrador/crear-usuario']);
   }
 
+  detalleUsuario(){
+    this.router.navigate(['administrador/user-detail/'+this.id]);
+  }
   
 
   onGridReady(params) {
