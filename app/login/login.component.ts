@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
   
   diplay(loginresp: LoginResp){
     if(loginresp.error==0){
-      this.data.changeGlobal(new Global(loginresp.id_usuario,loginresp.token,"http://lacocs.montielpalacios.com/API"));
+      this.data.changeGlobal(new Global(loginresp.id_usuario,loginresp.token,"http://lacocs.montielpalacios.com/API", "http://lacocs.montielpalacios.com/"));
       this.router.navigate(['administrador/']);
     }else{
       this.loginMessage=loginresp.estatus;
