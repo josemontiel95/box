@@ -206,11 +206,12 @@ export class UserDetailComponent implements OnInit {
     console.log("jbihghiv");
     console.log(respuesta);
     this.model=respuesta;
-    if(this.foto == "null"){
+    console.log(respuesta.foto);
+    if(respuesta.foto == "null"){
       this.imgUrl= "../assets/img/gabino.jpg";
     }
     else{
-      this.imgUrl= this.global.assetsRoot+this.foto;
+      this.imgUrl= this.global.assetsRoot+respuesta.foto;
     }
   }
   
