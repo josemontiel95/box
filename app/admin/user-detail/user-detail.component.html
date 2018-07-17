@@ -57,7 +57,7 @@
                 <div class="form-group">
                   <div class="col-md-">
                   <label for="nss"> Nmero de Seguridad Social</label>
-                  <input type="nss" id="nss" [disabled]="!hidden" required [(ngModel)]="model.nss" class="form-control" name="nss" placeholder="mail@lacocs.com" #nss="ngModel">
+                  <input type="nss" id="nss" [disabled]="!hidden"  [(ngModel)]="model.nss" class="form-control" name="nss" placeholder="2323234141" #nss="ngModel">
                   <div [hidden]="nss.valid ||nss.pristine"  class="alert alert-danger">
                     Numero de Seguridad Social requerido.
                 </div>
@@ -116,7 +116,7 @@
               </div>
               <div class="col-md-6 pr-1">
                 <div class="form-group">
-                  <label>Fecha de Nacimiento</label>
+                  <label for="fechaDeNac">Fecha de Nacimiento</label>
                   <input type="date" [disabled]="!hidden" id="fechaDeNac" required [(ngModel)]="model.fechaDeNac" name="fechaDeNac"  class="form-control" #fechaDeNac="ngModel">
                    <div [hidden]="fechaDeNac.valid ||fechaDeNac.pristine"  class="alert alert-danger">
                     Fecha de nacimiento requerida.
@@ -136,7 +136,7 @@
               <button class="btn btn-info" *ngIf="hidden == false"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="hidden" (click)="actualizarUsuario(nombre.value, apellido.value, laboratorio_id.value, nss.value, email.value, fechaDeNac.value, id_usuario.value,  rol_usuario_id.value ); ocultar();">
+            <button class="btn btn-success" *ngIf="hidden" [disabled]="userForm.invalid" (click)="actualizarUsuario(nombre.value, apellido.value, laboratorio_id.value, nss.value, email.value, fechaDeNac.value, id_usuario.value,  rol_usuario_id.value ); ocultar();">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>
@@ -144,12 +144,15 @@
         </div>
       </div>
     </div>
+
+
     <div class="col-md-4">
       <div class="card card-user">
         <div class="image">
           <img src="../assets/img/Labo.jpg" alt="...">
         </div>
         <div class="card-body">
+          <form (ngSubmit)="onSubmit()" #passwordForm="ngForm">
           <div class="author">
             
               <img class="avatar border-gray" src="{{this.imgUrl}}" (click)="subirFoto()" alt="...">
@@ -160,26 +163,26 @@
             </p>
             <div class="form-group" [hidden]="desBut">
                   <label>Contrase&ntilde;a</label>
-                  <input class="form-control" placeholder="Contrase&ntilde;a" type="password" #password1>
+                  <input class="form-control"  required [(ngModel)]="model2.password1" placeholder="Contrase&ntilde;a" name="password1" type="password" #password1>
             </div>
             <div class="form-group" [hidden]="desBut">
                   <label>Contrase&ntilde;a</label>
-                  <input class="form-control" placeholder="Repite Contrase&ntilde;a" type="password" #npassword>
+                  <input class="form-control" required [(ngModel)]="model2.npassword" placeholder="Repite Contrase&ntilde;a" name="npassword" type="password" #npassword>
             </div>
 
             <div [hidden]= "!resppass" class="alert alert-danger">
-              Las Contrase&ntilde;s no coinciden.
+              Las Contrase&ntilde;as no coinciden.
             </div>
             <div [hidden]= "!exitoCon" class="alert alert-success">
             Nueva contrase&ntilde;a actualizada</div>
           </div>
-        </div>
-        <hr>
+
         <div class="button-container">
           <button type="button" class="btn btn-danger btn-round " (click)="cambiarContrasena()" *ngIf="desBut">Cambiar Contrase&ntilde;a</button>
-          <button type="button" class="btn btn-success btn-round " (click)="guardarContrasena(password1.value, npassword.value);" *ngIf="actBut">Guardar Contrase&ntilde;a</button>
+          <button type="button" class="btn btn-success btn-round " [disabled]="passwordForm.invalid" (click)="guardarContrasena(password1.value, npassword.value);" *ngIf="actBut">Guardar Contrase&ntilde;a</button>
         </div>
-      </div>
+     
+    </form>
     </div>
   </div>
 </div>

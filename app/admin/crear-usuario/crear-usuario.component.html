@@ -107,7 +107,7 @@
             </div>
 
            
-            <button class="btn btn-success"  (click)="crearUsuario(nombre.value, apellido.value, laboratorio_id.value, nss.value, email.value, fechaDeNac.value, rol_usuario_id.value, contrasena.value   ); ">
+            <button  type="submit" class="btn btn-success" [disabled]="userForm.invalid"  (click)="crearUsuario(nombre.value, apellido.value, laboratorio_id.value, nss.value, email.value, fechaDeNac.value, rol_usuario_id.value, contrasena.value   ); ">
               <span><b> Guardar Cambios. </b></span>
             </button>
 
