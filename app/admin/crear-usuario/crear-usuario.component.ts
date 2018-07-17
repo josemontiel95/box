@@ -15,6 +15,7 @@ import {
     FormBuilder
 } from '@angular/forms';
 
+  //Esto es un dummy, borralo despues.
 
 @Component({
   selector: 'app-crear-usuario',
@@ -67,15 +68,39 @@ export class CrearUsuarioComponent implements OnInit
   search.set('function', 'getAll');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
-  this.http.get(url, {search}).subscribe(res => this.llenaRoles(res.json()) );
+  this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
+                                                 this.rolValidator(res.json());
+                                                });
 
      url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getAll');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
-    this.http.get(url, {search}).subscribe(res => this.llenaLaboratorio(res.json()) );
+    this.http.get(url, {search}).subscribe(res => {this.llenaLaboratorio(res.json());
+                                                   this.labValidator(res.json());
+                                                 });
 
+  }
+
+  rolValidator(repuesta: any){
+    console.log(repuesta)
+    if(repuesta.error==5 || repuesta.error==6){
+      window.alert(repuesta.estatus);
+    }
+    else{
+      
+    }
+  }
+
+  labValidator(repuesta: any){
+    console.log(repuesta)
+    if(repuesta.error==5 || repuesta.error==6){
+      window.alert(repuesta.estatus);
+    }
+    else{
+      
+    }
   }
 
   llenaRoles(resp: any)

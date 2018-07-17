@@ -35,26 +35,25 @@ export class UserProfileComponent implements OnInit {
     hidden = false;
     mis_roles: Array<any>;
     mis_lab: Array<any>;
+    imgUrl = "";
     onSubmit() { this.submitted = true; }
 
     loginMessage: string= "";
     loginresp: LoginResp;
     global: Global;
-    imgUrl = "";
     id: string;
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
 
-  rowData: any;
+  
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id=params.id);
 
-    let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
+  let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
   let search = new URLSearchParams();
   search.set('function', 'getAll');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
+  search.set('token', this.global.token);
+  search.set('rol_usuario_id', "1001");
   this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
                                                  this.rolValidator(res.json());
                                                 });
@@ -195,6 +194,7 @@ export class UserProfileComponent implements OnInit {
   {
     console.log(respuesta);
     this.model=respuesta;
+    this.id = respuesta.id_usuario; //De aqui sacamos id para parametrisarlo en el método subirFoto.
     console.log(respuesta.foto);
     if(respuesta.foto == "null"){
       this.imgUrl= "../assets/img/gabino.jpg";
