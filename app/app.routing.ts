@@ -34,7 +34,7 @@ const routes: Routes =[
    {
     path: 'administrador',
     component: AdminLayoutComponent,
-    CanActivateChild: [AppGuard],
+    canActivateChild: [AppGuard],
     children: [
         {
       path: '',
