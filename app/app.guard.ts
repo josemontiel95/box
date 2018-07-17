@@ -16,7 +16,7 @@ import {
 } from "@angular/router";
 
 @Injectable()
-export class AppGuard implements OnInit, CanActivate{
+export class AppGuard implements OnInit, CanActivateChild{
 	global: Global;
 	constructor(private data: DataService, private http: Http) { }
 
@@ -24,7 +24,7 @@ export class AppGuard implements OnInit, CanActivate{
     	
 	}
 
-	canActivate(){
+	canActivateChild(){
 		this.data.currentGlobal.subscribe(global => this.global = global);
 		let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
       	let search = new URLSearchParams();
