@@ -71,9 +71,19 @@ export class IconsComponent implements OnInit{
     search.set('token', this.global.token);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
-                                            this.rowData= res.json();
+                                            this.llenaTabla(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
+  }
+
+  llenaTabla(repuesta: any){
+    console.log(repuesta)
+    if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
+      window.alert(repuesta.estatus);
+      this.router.navigate(['login']);
+    }else{
+      this.rowData =repuesta;
+    }
   }
 
    menosDetalles(){
