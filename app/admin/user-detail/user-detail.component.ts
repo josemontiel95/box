@@ -21,8 +21,6 @@ import {
 })
 export class UserDetailComponent implements OnInit {
 
-    puestos= ['Jefe de Brigada', 'Jefe de Laboratorio', 
-              'Administrativo', 'Tecnico de campo']
     id_usuario: string ;
     nombre: string;
     apellido: string;
@@ -33,6 +31,7 @@ export class UserDetailComponent implements OnInit {
     laboratorio: string;
     nss: string;
     rol: string;
+    estatus: string;
     submitted = false;
     hidden = false;
     mis_roles: Array<any>;
@@ -47,6 +46,7 @@ export class UserDetailComponent implements OnInit {
     resppass= false;
     exitoCon = false;
     id: string;
+    
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -135,6 +135,7 @@ export class UserDetailComponent implements OnInit {
 
   llenaLaboratorio(resp: any)
   {
+        console.log(resp);
     this.mis_lab= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
@@ -197,7 +198,6 @@ export class UserDetailComponent implements OnInit {
 
   llenado(respuesta: any)
   {
-    console.log("jbihghiv");
     console.log(respuesta);
     this.model=respuesta;
   }
@@ -212,7 +212,7 @@ export class UserDetailComponent implements OnInit {
                        this.rol,
                        this.nss,
                        this.laboratorio,
-                       this.laboratorio_id);
+                       this.estatus);
 
 
 }

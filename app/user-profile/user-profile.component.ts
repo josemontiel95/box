@@ -71,6 +71,7 @@ export class UserProfileComponent implements OnInit {
 
     llenaRoles(resp: any)
     {
+        console.log(resp);
       this.mis_roles= new Array(resp.length);
       var j=resp.length-1;
       for (var _i = 0; _i < resp.length; _i++ )
@@ -83,9 +84,12 @@ export class UserProfileComponent implements OnInit {
 
     llenaLaboratorio(resp: any)
     {
+       console.log(resp);
+
       this.mis_lab= new Array(resp.length);
       for (var _i = 0; _i < resp.length; _i++ )
       {
+
         this.mis_lab[_i]=resp[_i];
 
       }

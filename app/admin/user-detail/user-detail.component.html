@@ -27,18 +27,17 @@
               </div>
 
               <div class="col-md-5 pr-1">
-                <div class="form-group">
+                 <div class="form-group">
                   <label for="rol_usuario_id">Rol</label> <!--tipo de credencial referido a puestos tales como jefe de laboratorio-->
-                  <select   class="form-control" [disabled]="!hidden" id="rol_usuario_id"
+                  <select   class="form-control"[disabled]="!hidden" id="rol_usuario_id"
                     required [(ngModel)]="model.rol_usuario_id"
                     name="rol_usuario_id"
                     placeholder="Puesto" #rol_usuario_id="ngModel">
-                    <option value="" [disabled]="true">Selecciona un Rol...</option>
+
                     <option *ngFor="let puesto of mis_roles" [value]="puesto.id_rol_usuario">
                       {{puesto.rol}}
                     </option>
                   </select>
-
                   <div [hidden]="rol_usuario_id.valid || rol_usuario_id.pristine"  class="alert alert-danger">
                     Rol requerido.
                   </div>
@@ -105,7 +104,7 @@
                     required [(ngModel)]="model.laboratorio_id"
                     name="laboratorio_id"
                     placeholder="Laboratorio" #laboratorio_id="ngModel">
-                    <option value="" [disabled]="true">Selecciona un Laboratorio...</option>
+
                     <option *ngFor="let lab of mis_lab" [value]="lab.id_laboratorio">
                       {{lab.laboratorio}}
                     </option>
