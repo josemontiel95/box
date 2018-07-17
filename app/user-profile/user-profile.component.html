@@ -126,9 +126,9 @@
         </div>
         <div class="card-body">
           <div class="author">
-            <a href="#">
-              <img class="avatar border-gray" src="../assets/img/gabino.jpg" alt="...">
-                          </a>
+            
+              <img class="avatar border-gray" src="{{this.imgUrl}}" (click)="subirFoto()" alt="...">
+            
               <h5 class="title">{{model.nombre + ' '+ model.apellido}}</h5>
             <p class="description">
               {{model.rol}}
