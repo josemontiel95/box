@@ -13,7 +13,8 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { PruebaComponent } from '../../prueba/prueba.component';
 import { HerramientasComponent } from '../../admin/herramientas/herramientas.component';
 import { CrearHerramientasComponent } from '../../admin/crear-herramientas/crear-herramientas.component';
-
+import { ClientesComponent } from '../../admin/clientes/clientes.component';
+import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full' },
@@ -30,5 +31,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'herramientas',  component: HerramientasComponent },
     { path: 'crear-herramientas',  component: CrearHerramientasComponent },
+    { path: 'clientes',  component: ClientesComponent }, 
+    { path: 'crear-cliente',  component: CrearClienteComponent },
 
 ];

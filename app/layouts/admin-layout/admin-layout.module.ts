@@ -21,6 +21,8 @@ import { InsertarFotoComponent } from '../../admin/insertar-foto/insertar-foto.c
 import { HerramientasComponent } from '../../admin/herramientas/herramientas.component';
 import { CrearHerramientasComponent } from '../../admin/crear-herramientas/crear-herramientas.component';
 import { MatProgressBarModule } from '@angular/material';
+import { ClientesComponent } from '../../admin/clientes/clientes.component';
+import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
 
 @NgModule({
   imports: [
@@ -46,7 +48,10 @@ import { MatProgressBarModule } from '@angular/material';
     InsertarFotoComponent,
     NotificationsComponent,
     CrearHerramientasComponent,
-    HerramientasComponent
+    HerramientasComponent,
+    ClientesComponent,
+    CrearClienteComponent
+
   ]
 })
 

@@ -1,0 +1,107 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Crear Nuevo Cliente</h5>
+        </div>
+        <div class="card-body">
+          <p style="color: red">{{crearMessage}}<p>
+          <p style="color: green">{{crearMessageCargando}}<p>
+                     <form (ngSubmit)="onSubmit()" #clienteForm="ngForm">
+            <div class="row">
+              <div class="col-md-6 pr-1 ">
+                <div class="form-group">
+                  <label for="id_cliente">Raz&oacute;n social.</label> 
+                   <input type="id_cliente" id="id_cliente"   required [(ngModel)]="model.id_cliente" class="form-control" name="id_cliente" placeholder="Tu Empresa S.A. de C.V." #id_cliente="ngModel">
+                  <div [hidden]="id_cliente.valid || id_cliente.pristine"  class="alert alert-danger">
+                    Raz&oacute;n social. requerida.
+                  </div>
+                </div>
+              </div>
+               <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label for="nombre">Nombre de la empresa.</label> 
+                   <input type="nombre" id="nombre" required [(ngModel)]="model.nombre" class="form-control" name="nombre" placeholder="Tu Empresa S.A. de C.V." #nombre="ngModel">
+                  <div [hidden]="nombre.valid || nombre.pristine"   class="alert alert-danger">
+                    Nombre de la empresa requerido.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+         <div class="col-md-6 pr-1 ">
+                <div class="form-group">
+                  <label for="email">Correo Electronico</label>
+                  <input type="email" id="email"   required [(ngModel)]="model.email" class="form-control" name="email" placeholder="mail@lacocs.com" #email="ngModel">
+                  <div [hidden]="email.valid ||email.pristine"  class="alert alert-danger">
+                    Correo requerido.
+                </div>
+              </div>
+         </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                 <label>Direcci&oacute;n.</label>
+                  <input type="password" id="contrasena" required [(ngModel)]="model.contrasena" class="form-control" name="contrasena" placeholder="Avenida Siempre Viva 2141" #contrasena="ngModel">
+                   <div [hidden]="contrasena.valid ||contrasena.pristine"  class="alert alert-danger">
+                    Direcci&oacute;n requerida.
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+               <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label for="telefono">Tel&eacute;fono de la Empresa.</label>
+                  <input type="text"  id="telefono" required [(ngModel)]="model.telefono" name="telefono"  class="form-control" placeholder="555501234" #telefono="ngModel">
+                   <div [hidden]="telefono.valid ||telefono.pristine"  class="alert alert-danger">
+                    Tel&eacute;fono de la Empresa requerido.
+                </div>
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label for="rfc">RFC</label>
+                  <input type="text" id="rfc"  required [(ngModel)]="model.rfc" name="rfc" class="form-control" placeholder="RFC" #rfc="ngModel">
+                   <div [hidden]="rfc.valid ||rfc.pristine"  class="alert alert-danger">
+                   RFC requerido.
+                </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+                        <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label for="nombreContacto">Nombre de contacto</label>
+                  <input type="text" id="nombreContacto"  required [(ngModel)]="model.nombreContacto" name="nombreContacto" class="form-control" placeholder="Nombre Contacto" #nombreContacto="ngModel">
+                   <div [hidden]="nombreContacto.valid ||nombreContacto.pristine"  class="alert alert-danger">
+                    Nombre de contacto requerido.
+                </div>
+                </div>
+              </div>
+            <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label for="telefonoDeContacto"> Tel&eacute;fono de Contacto.</label>
+                  <input type="text" id="telefonoDeContacto" required  [(ngModel)]="model.telefonoDeContacto" class="form-control" name="telefonoDeContacto" placeholder="555501234" #telefonoDeContacto="ngModel">
+                  <div [hidden]="telefonoDeContacto.valid ||telefonoDeContacto.pristine"  class="alert alert-danger">
+                    Tel&eacute;fono de la Empresa requerida.
+                </div>
+                </div>
+              </div>
+            </div>
+
+           
+            <button  type="submit" class="btn btn-success" [disabled]="clienteForm.invalid"  (click)="crearCliente(nombre.value, rfc.value, telefonoDeContacto.value, email.value, telefono.value, id_cliente.value, razonSocial.value, nombreContacto.value ); ">
+              <span><b> Guardar Cambios. </b></span>
+            </button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>
+
