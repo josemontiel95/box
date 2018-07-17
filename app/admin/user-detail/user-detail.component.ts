@@ -14,6 +14,16 @@ import {
     FormBuilder
 } from '@angular/forms';
 
+export class Password
+{
+  constructor(
+    public password1: string, 
+    public npassword: string, 
+
+    ) {  }
+
+}
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-detail.component.html',
@@ -46,6 +56,8 @@ export class UserDetailComponent implements OnInit {
     actBut=false;
     resppass= false;
     exitoCon = false;
+    password1: string;
+    npassword: string;
     id: string;
     
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
@@ -82,12 +94,14 @@ export class UserDetailComponent implements OnInit {
   cambiarContrasena(){
      this.actBut= true;
      this.desBut= false;
+     this.resppass = false;
+     this.exitoCon = false;
   }
 
    guardarContrasena(password1: string, npassword: string){
      this.actBut = false;
      this.desBut = true;
-     if(password1 == npassword)
+     if(password1 == npassword && password1 != null)
      {
        this.postContrasena(password1);
        this.exitoCon = true;
@@ -227,5 +241,8 @@ export class UserDetailComponent implements OnInit {
                        this.laboratorio,
                        this.estatus);
 
-
+   model2= new Password(
+                         this.password1,
+                         this.npassword
+                        )
 }

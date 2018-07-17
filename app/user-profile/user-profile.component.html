@@ -107,11 +107,11 @@
                 </div>
               </div>
             </div>
-            <div class="btn-group"  style="float: right; padding-right: 10%;">
+            <div class="btn-group"  style="float: right; padding-right: 10%;" >
               <button class="btn btn-info" *ngIf="hidden == false"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="hidden" (click)="actualizarUsuario(nombre.value, apellido.value, laboratorio_id.value, nss.value, email.value, fechaDeNac.value, id_usuario.value,  rol_usuario_id.value ); ocultar();">
+            <button class="btn btn-success" *ngIf="hidden" [disabled]="userForm.invalid" (click)="actualizarUsuario(nombre.value, apellido.value, laboratorio_id.value, nss.value, email.value, fechaDeNac.value, id_usuario.value,  rol_usuario_id.value ); ocultar();">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>
