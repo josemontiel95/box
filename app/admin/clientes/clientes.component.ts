@@ -118,12 +118,12 @@ export class ClientesComponent implements OnInit  {
      let search = new URLSearchParams();
       
       if(active == 0){
-        search.set('function', 'deactivate');
+        search.set('function', 'deactive');
       }
       else{
-        search.set('function', 'activate');
+        search.set('function', 'active');
       }
-        search.set('id_usuario', this.id);
+        search.set('id_cliente', this.id_cliente);
         search.set('rol_usuario_id', "1001");
         search.set('token', this.global.token);
         this.http.get(url, {search}).subscribe(res => {
