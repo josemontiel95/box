@@ -34,7 +34,7 @@ export class ClienteDetailComponent implements OnInit {
 
     submitted = false;
     hidden = false;
-    imgUrl = "";
+    imgUrl = "../assets/img/gabino.jpg";
     onSubmit() { this.submitted = true; }
 
     loginMessage: string= "";
@@ -238,7 +238,7 @@ export class ClienteDetailComponent implements OnInit {
     this.model=respuesta;
     console.log(respuesta.foto);
     if(respuesta.foto == "null"){
-      this.imgUrl= "../assets/img/gabino.jpg";
+      this.imgUrl= "../assets/img/gabino2.jpg";
     }
     else{
       this.imgUrl= this.global.assetsRoot+respuesta.foto;

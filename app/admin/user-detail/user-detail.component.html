@@ -19,7 +19,7 @@
         <div class="card-body">
            <form (ngSubmit)="onSubmit()" #userForm="ngForm">
             <div class="row">
-              <div class="col-md-5 pr-1">
+              <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="id_usuario">ID Usuario</label> 
                   <input type="text"  disabled="" class="form-control" id="id_usuario"
@@ -32,7 +32,7 @@
                 </div>
               </div>
 
-              <div class="col-md-5 pr-1">
+              <div class="col-md-6 col-12">
                  <div class="form-group">
                   <label for="rol_usuario_id">Rol</label> <!--tipo de credencial referido a puestos tales como jefe de laboratorio-->
                   <select   class="form-control"[disabled]="!hidden" id="rol_usuario_id"
@@ -51,7 +51,7 @@
               </div>
                           </div>
               <div class="row">
-              <div class="col-md-6 pl-1">
+              <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="email">Correo Electronico</label>
                   <input type="email" id="email" [disabled]="!hidden"  required [(ngModel)]="model.email" class="form-control" name="email" placeholder="mail@lacocs.com" #email="ngModel">
@@ -82,7 +82,7 @@
               </div>
   -->
             <div class="row">
-              <div class="col-md-6 pr-1">
+              <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label>Nombre</label>
                   <input type="text" id="nombre" [disabled]="!hidden" required [(ngModel)]="model.nombre" name="nombre" class="form-control" placeholder="Nombre" #nombre="ngModel">
@@ -91,7 +91,7 @@
                 </div>
                 </div>
               </div>
-              <div class="col-md-6 pl-1">
+              <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label>Apellidos</label>
                   <input type="text" id="apellido" [disabled]="!hidden" required [(ngModel)]="model.apellido" name="apellido" class="form-control" placeholder="Apellidos" #apellido="ngModel">
@@ -103,7 +103,7 @@
             </div>
 
             <div class="row">
-              <div class="col-md-6 pl-1">
+              <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="laboratorio_id">Laboratorio</label> 
                   <select   class="form-control" [disabled]="!hidden" id="laboratorio_id"
@@ -120,7 +120,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6 pr-1">
+              <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="fechaDeNac">Fecha de Nacimiento</label>
                   <input type="date" [disabled]="!hidden" id="fechaDeNac" required [(ngModel)]="model.fechaDeNac" name="fechaDeNac"  class="form-control" #fechaDeNac="ngModel">
@@ -131,7 +131,7 @@
               </div>
             </div>
             <div class="row">
-              <!--<div class="col-md-4 pr-1">
+              <!--<div class="col-md-4 col-12">
                 <div class="form-group">
                   <label>Numero Seguro Social</label>
                   <input type="text" class="form-control" placeholder="Numero IMSS" #nss>                 
