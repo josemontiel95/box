@@ -289,7 +289,7 @@ export class ObraDetailComponent implements OnInit {
                        this.rol,
                        this.nss,
                        this.laboratorio,
-                       this.estatus);
+                       this.estatus, "", "");
 
    model2= new Password(
                          this.password1,

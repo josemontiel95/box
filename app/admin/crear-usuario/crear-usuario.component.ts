@@ -53,7 +53,7 @@ export class CrearUsuarioComponent implements OnInit
                        this.rol,
                        this.nss,
                        this.laboratorio,
-                       this.laboratorio_id);
+                       this.laboratorio_id, "", "");
 
   crearMessage: string= "";
   crearMessageCargando: string= "";
@@ -133,7 +133,7 @@ export class CrearUsuarioComponent implements OnInit
   onSubmit() { this.submitted = true; }
 
 
-  crearUsuario(nombre: string, apellido: string, laboratorio_id: string, nss: string, email: string, fechaDeNac: string, rol_usuario_id: string, contrasena: string, error: string, envioDatos: boolean = true)
+  crearUsuario(nombre: string, apellido: string, laboratorio_id: string, nss: string, email: string, fechaDeNac: string, rol_usuario_id: string, contrasena: string)
   {
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
@@ -149,7 +149,6 @@ export class CrearUsuarioComponent implements OnInit
     search.set('fechaDeNac', fechaDeNac);
     search.set('rol_usuario_id_new', rol_usuario_id);
     search.set('constrasena', contrasena);
-    search.set('error', error);
     this.crearMessageCargando="Cargando...";
     this.http.get(url, {search}).subscribe(res => this.diplay(res.json()) );
 

@@ -14,8 +14,8 @@ export class ClientesComponent implements OnInit{
   global: Global;
   private gridApi;
   private gridColumnApi;
-  private rowSelection;
-  private columnDefs;
+  rowSelection;
+  columnDefs;
   id= "";
   apellido= "";
   foto= "";
@@ -144,7 +144,7 @@ export class ClientesComponent implements OnInit{
    }
 
 
-   onSelectionChanged() {
+   onSelectionChanged(event: EventListenerObject) {
     var selectedRows = this.gridApi.getSelectedRows();
     var id_cliente = "";
     var razonSocial = "";

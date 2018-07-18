@@ -9,7 +9,8 @@ export class Cliente
  	public telefono: string,
   	public nombreContacto: string,
   	public direccion: string,
-  	public telefonoDeContacto: string
+  	public telefonoDeContacto: string,
+    public contrasena: string
   	) {  }
 
 }

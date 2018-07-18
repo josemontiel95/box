@@ -30,6 +30,9 @@ export class CrearHerramientasComponent  {
   
   model = new Herramienta('18', 'Dr IQ', '19/05/2010', 'IQ', '1001');
 
+  crearHerramienta(descripcion: string, tipo: string, fechaDeComp: string, condicion: string, laboratorio_id: string){
+
+  }
 
 
    submitted = false;
