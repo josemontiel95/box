@@ -1,0 +1,120 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Crear Nueva Obra</h5>
+        </div>
+        <div class="card-body">
+          <p style="color: red">{{crearMessage}}<p>
+          <p style="color: green">{{crearMessageCargando}}<p>
+                     <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+            <div class="row">
+              <div class="col-md-6 pr-1 ">
+                <div class="form-group">
+                  <label for="rol_usuario_id">Rol</label> <!--tipo de credencial referido a puestos tales como jefe de laboratorio-->
+                  <select   class="form-control"  id="rol_usuario_id"
+                    required [(ngModel)]="model.rol_usuario_id"
+                    name="rol_usuario_id"
+                    placeholder="Puesto" #rol_usuario_id="ngModel">
+                    <option value="Selecciona un rol..."  selected>Selecciona un rol...</option>
+                    <option *ngFor="let puesto of mis_roles" [value]="puesto.id_rol_usuario">
+                      {{puesto.rol}}
+                    </option>
+                  </select>
+                  <div [hidden]="rol_usuario_id.valid || rol_usuario_id.pristine"  class="alert alert-danger">
+                    Rol requerido.
+                  </div>
+                </div>
+              </div>
+               <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label for="laboratorio_id">Laboratorio</label> 
+                  <select   class="form-control"  id="laboratorio_id"
+                    required [(ngModel)]="model.laboratorio_id"
+                    name="laboratorio_id"
+                    placeholder="Laboratorio" #laboratorio_id="ngModel">
+                    <option value="Selecciona un Laboratorio..." selected>Selecciona un Laboratorio...</option>
+                    <option *ngFor="let lab of mis_lab" [value]="lab.id_laboratorio">
+                      {{lab.laboratorio}}
+                    </option>
+                  </select>
+                  <div [hidden]="laboratorio_id.valid || laboratorio_id.pristine"  class="alert alert-danger">
+                    Laboratorio requerido.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+         <div class="col-md-6 pr-1 ">
+                <div class="form-group">
+                  <label for="email">Correo Electronico</label>
+                  <input type="email" id="email"   required [(ngModel)]="model.email" class="form-control" name="email" placeholder="mail@lacocs.com" #email="ngModel">
+                  <div [hidden]="email.valid ||email.pristine"  class="alert alert-danger">
+                    Correo requerido.
+                </div>
+              </div>
+         </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                 <label>Contraseña</label>
+                  <input type="password" id="contrasena" required [(ngModel)]="model.contrasena" class="form-control" name="contrasena" placeholder="Contraseña" #contrasena="ngModel">
+                   <div [hidden]="contrasena.valid ||contrasena.pristine"  class="alert alert-danger">
+                    Contrasena requerido.
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input type="text" id="nombre"  required [(ngModel)]="model.nombre" name="nombre" class="form-control" placeholder="Nombre" #nombre="ngModel">
+                   <div [hidden]="nombre.valid ||nombre.pristine"  class="alert alert-danger">
+                    Nombre requerido.
+                </div>
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Apellidos</label>
+                  <input type="text" id="apellido"  required [(ngModel)]="model.apellido" name="apellido" class="form-control" placeholder="Apellidos" #apellido="ngModel">
+                   <div [hidden]="apellido.valid ||apellido.pristine"  class="alert alert-danger">
+                   Apellido requerido.
+                </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label for="nss"> Número de Seguridad Social</label>
+                  <input type="nss" id="nss"   [(ngModel)]="model.nss" class="form-control" name="nss" placeholder="555501234" #nss="ngModel">
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Fecha de Nacimiento</label>
+                  <input type="date"  id="fechaDeNac" required [(ngModel)]="model.fechaDeNac" name="fechaDeNac"  class="form-control" #fechaDeNac="ngModel">
+                   <div [hidden]="fechaDeNac.valid ||fechaDeNac.pristine"  class="alert alert-danger">
+                    Fecha de nacimiento requerida.
+                </div>
+                </div>
+              </div>
+            </div>
+
+           
+            <button  type="submit" class="btn btn-success" [disabled]="userForm.invalid"  (click)="crearUsuario(nombre.value, apellido.value, laboratorio_id.value, nss.value, email.value, fechaDeNac.value, rol_usuario_id.value, contrasena.value   ); ">
+              <span><b> Guardar Cambios. </b></span>
+            </button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>
+

@@ -9,6 +9,7 @@ import { UserDetailComponent } from '../../admin/user-detail/user-detail.compone
 import { TableListComponent } from '../../table-list/table-list.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../admin/icons/icons.component';
+import { ObrasComponent } from '../../admin/obras/obras.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { ChartsModule } from 'ng2-charts';
@@ -17,6 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { PruebaComponent } from '../../prueba/prueba.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { CrearUsuarioComponent } from '../../admin/crear-usuario/crear-usuario.component';
+import { CrearObraComponent } from '../../admin/crear-obra/crear-obra.component';
 import { InsertarFotoComponent } from '../../admin/insertar-foto/insertar-foto.component';
 import { HerramientasComponent } from '../../admin/herramientas/herramientas.component';
 import { CrearHerramientasComponent } from '../../admin/crear-herramientas/crear-herramientas.component';
@@ -41,8 +43,10 @@ import { MatProgressBarModule } from '@angular/material';
     TypographyComponent,
     PruebaComponent,
     IconsComponent,
+    ObrasComponent,
     MapsComponent,
     CrearUsuarioComponent,
+    CrearObraComponent,
     InsertarFotoComponent,
     NotificationsComponent,
     CrearHerramientasComponent,
