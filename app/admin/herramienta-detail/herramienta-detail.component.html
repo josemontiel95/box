@@ -1,0 +1,123 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaHerramientas();"></i>
+            Herramienta No. {{model.id_herramienta}}
+          </h5>
+        </div>
+        <div class="card-body">
+           <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <label for="id_herramienta">ID herramienta</label> 
+                  <input type="text" id="id_herramienta" [disabled]="!hidden"  
+                    required [(ngModel)]="model.id_herramienta" 
+                    class="form-control"
+                    name="id_herramienta" placeholder="ID" #id_herramienta="ngModel">
+                  <div [hidden]="id_herramienta.valid || id_herramienta.pristine"  class="alert alert-danger">
+                    ID herramienta requerido.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-5 pr-1">
+                 <div class="form-group">
+                  <label for="herramienta_tipo_id">Tipos</label> <!--tipo de credencial referido a puestos tales como jefe de laboratorio-->
+                  <select  class="form-control"[disabled]="!hidden" id="herramienta_tipo_id"
+                    required [(ngModel)]="model.herramienta_tipo_id"
+                    name="herramienta_tipo_id"
+                    placeholder="Tipos" #herramienta_tipo_id="ngModel">
+
+                    <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo">
+                      {{tipo.tipo}}
+                    </option>
+                  </select>
+                  <div [hidden]="herramienta_tipo_id.valid || herramienta_tipo_id.pristine"  class="alert alert-danger">
+                    Rol requerido.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label for="placas">Placas</label>
+                  <input type="text" id="placas" [disabled]="!hidden"  
+                  required [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" #placas="ngModel">
+                  <div [hidden]="placas.valid ||placas.pristine"  class="alert alert-danger">
+                    Placa requerido.
+                </div>
+              </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-">
+                  <label for="fechaDeCompra"> Fecha de compra</label>
+                  <input type="date" id="fechaDeCompra" [disabled]="!hidden"  [(ngModel)]="model.fechaDeCompra" class="form-control" name="fechaDeCompra" placeholder="" #fechaDeCompra="ngModel">
+                  <div [hidden]="fechaDeCompra.valid ||fechaDeCompra.pristine"  class="alert alert-danger">
+                    Fecha de compra requerida.
+                </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Condicion</label>
+                  <input type="text" id="condicion" [disabled]="!hidden" required [(ngModel)]="model.condicion" name="condicion" class="form-control" placeholder="Condicion" #condicion="ngModel">
+                   <div [hidden]="condicion.valid ||condicion.pristine"  class="alert alert-danger">
+                    Nombre requerido.
+                </div>
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                
+              </div>
+            </div>
+
+            <div class="btn-group"  style="float: right; padding-right: 10%;">
+              <button class="btn btn-info" *ngIf="hidden == false"  (click)="mostrar()">
+                <span><b> Cambiar Datos. </b></span>
+              </button>
+            <button class="btn btn-success" *ngIf="hidden" [disabled]="userForm.invalid" (click)="actualizarUsuario(nombre.value, apellido.value, laboratorio_id.value, nss.value, email.value, fechaDeNac.value, id_usuario.value,  rol_usuario_id.value ); ocultar();">
+              <span><b> Guardar Cambios. </b></span>
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="card card-user">
+        <div class="image">
+          <img src="../assets/img/Labo.jpg" alt="...">
+        </div>
+        <div class="card-body">
+          <div class="author">
+            
+              <h5 class="title">Panel</h5>
+           
+            <p class="description">
+              Hola
+            </p>
+           
+      </div>
+    </div>
+  </div>
+</div>
