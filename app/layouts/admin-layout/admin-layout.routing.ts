@@ -13,6 +13,7 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { PruebaComponent } from '../../prueba/prueba.component';
 import { HerramientasComponent } from '../../admin/herramientas/herramientas.component';
 import { CrearHerramientasComponent } from '../../admin/crear-herramientas/crear-herramientas.component';
+import { HerramientaDetailComponent } from '../../admin/herramienta-detail/herramienta-detail.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -20,6 +21,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'user-detail/:id',   component: UserDetailComponent },
+    { path: 'herramienta-detail/:id',   component: HerramientaDetailComponent },
     { path: 'crear-usuario',   component: CrearUsuarioComponent },
     { path: 'insertar-foto/:id',   component: InsertarFotoComponent },
     { path: 'prueba',  		  component: PruebaComponent },

@@ -1,0 +1,32 @@
+.loading{
+	height: 100%;
+    width: 100%;
+    position: fixed;
+    top: -100vh;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 2000;
+}
+
+.loading-visible{
+	top:0;
+}
+
+.loading i{
+	color: white;
+	font-size: 72px;
+}
+
+.loader-container{
+	position: absolute;
+	display: block;
+	height: auto;
+	width: 100%;
+	text-align: center;
+	top:50%;
+	transform: translate(0,-50%);
+    -webkit-transform: translate(0,-50%);
+    -moz-transform: translate(0,-50%);
+    -ms-transform: translate(0,-50%);
+    -o-transform: translate(0,-50%);
+}

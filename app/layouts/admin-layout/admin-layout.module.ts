@@ -6,6 +6,7 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../admin/dashboard/dashboard.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { UserDetailComponent } from '../../admin/user-detail/user-detail.component';
+import { HerramientaDetailComponent } from '../../admin/herramienta-detail/herramienta-detail.component';
 import { TableListComponent } from '../../table-list/table-list.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../admin/icons/icons.component';
@@ -37,6 +38,7 @@ import { MatProgressBarModule } from '@angular/material';
     DashboardComponent,
     UserProfileComponent,
     UserDetailComponent,
+    HerramientaDetailComponent,
     TableListComponent,
     TypographyComponent,
     PruebaComponent,
