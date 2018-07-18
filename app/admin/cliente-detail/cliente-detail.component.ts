@@ -4,7 +4,7 @@ import { DataService } from "../../data.service";
 import { LoginResp } from "../../interfaces/int.LoginResp";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
-import { Cliente }    from './Cliente';
+import { Cliente }    from './cliente';
 import {
     ReactiveFormsModule,
     FormsModule,
@@ -56,7 +56,8 @@ export class ClienteDetailComponent implements OnInit {
     "",
     "",
     "",
-    "");
+    "",
+    "", "","");
 
 
     model2= new Password(
@@ -168,7 +169,7 @@ export class ClienteDetailComponent implements OnInit {
     this.exitoCon = false;
   }
 
-  regresacliente(){
+  regresaCliente(){
     this.router.navigate(['administrador/clientes']);
   }
 
