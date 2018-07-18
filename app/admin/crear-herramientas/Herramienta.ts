@@ -1,11 +1,15 @@
 export class Herramienta {
 
   constructor(
-   public 	descripcion: string,
-   public	tipo: string,
-   public	fechaDeComp: string,
-   public	condicion: string,
-   public	laboratorio_id: string
+	public id_herramienta: string, 
+	public fechaDeCompra: string, 
+  	public placas: string, 
+ 	public condicion: string, 
+  	public tipo: string, 
+  	public active: string, 
+  	public estatus: string, 
+  	public error: string, 
+    public herramienta_tipo_id: string
   
   ) {  }
 }
