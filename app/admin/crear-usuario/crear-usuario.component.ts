@@ -126,7 +126,9 @@ export class CrearUsuarioComponent implements OnInit
   }
 
 
-
+  regresaUsuario(){
+    this.router.navigate(['administrador/usuarios']);
+  }
 //insertar-foto
 
 

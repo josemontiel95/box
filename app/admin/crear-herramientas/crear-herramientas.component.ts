@@ -34,6 +34,14 @@ export class CrearHerramientasComponent  {
 
    submitted = false;
 
+   regresaUsuario(){
+    this.router.navigate(['administrador/herramientas']);
+  }
+
   onSubmit() { this.submitted = true; }
 
 }
+
+
+
+
