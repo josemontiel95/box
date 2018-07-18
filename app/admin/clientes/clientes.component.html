@@ -14,7 +14,12 @@
         </div>
         <div class="card-body">
           <div id="tarjetaMasDetalles" *ngIf="hidden">
-            <div class="row">
+           <div class="row">
+              <div class="col-md-3">
+                <div class="row">  
+                      <img class="img-usuario" src="{{this.imgUrl}}" alt="..."> 
+                </div>
+              </div>
               <div class="col-md-9">
                  <div class="row">
                     <div class="table-responsive">
@@ -35,7 +40,18 @@
                             <td>
                               {{rfc}}
                             </td>
-                          </tr>
+                           </tbody>
+                      </table>
+                    </div> 
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9">
+                  <div class="row">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
                           <tr>
                             <td>
                                <b>Razon Social.</b>
@@ -59,9 +75,9 @@
               </div>
               <div class="col-md-3">
                 <div class="row" align="center">
-                    <button type="button" class="btn btn-default btn-round" (click)="detalleUsuario();">Detalles</button>
-                    <button type="button" class="btn btn-danger btn-round " (click)="desactivarUsuario()" *ngIf="desBut">Desactivar</button>
-                    <button type="button" class="btn btn-success btn-round " (click)="activarUsuario()" *ngIf="actBut">Activar</button>
+                <button type="button" class="btn btn-default btn-round" (click)="detalleCliente();">Detalles</button>
+                    <button type="button" class="btn btn-danger btn-round " (click)="desactivarCliente()" *ngIf="desBut">Desactivar</button>
+                    <button type="button" class="btn btn-success btn-round " (click)="activarCliente()" *ngIf="actBut">Activar</button>
                 </div>
                 <div id="MenosDetalles">
                   <div class="row">

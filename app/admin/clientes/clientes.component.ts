@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.css']
 })
-export class ClientesComponent implements OnInit{
+export class ClientesComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
@@ -17,10 +17,7 @@ export class ClientesComponent implements OnInit{
   rowSelection;
   columnDefs;
   id= "";
-  apellido= "";
-  foto= "";
-  rol= "";
-  active="";a
+  active="";
   hidden=false;
   desBut=true;
   actBut=false;
@@ -46,6 +43,7 @@ export class ClientesComponent implements OnInit{
       {headerName: 'Nombre de contacto', field: 'nombreContacto' },
       {headerName: 'Telefono de Contacto', field: 'telefonoDeContacto' },
       {headerName: 'Telefono de la Empresa', field: 'telefono' },
+      {headerName: 'Activo', field: 'active' },
 
       
     ];
@@ -101,20 +99,20 @@ export class ClientesComponent implements OnInit{
      this.hidden=false;
    }
 
-   desactivarUsuario(){
+   desactivarCliente(){
      this.actBut= true;
      this.desBut= false;
      this.switchActive(0);
   }
 
-   activarUsuario(){
+   activarCliente(){
      this.actBut = false;
      this.desBut = true;
      this.switchActive(1);
    }
 
    switchActive(active: number){
-     let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+     let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
      let search = new URLSearchParams();
       
       if(active == 0){
@@ -167,6 +165,7 @@ export class ClientesComponent implements OnInit{
       nombreContacto += selectedRow.nombreContacto;
       telefonoDeContacto += selectedRow.telefonoDeContacto;
       telefono+= selectedRow.telefono;
+       active += selectedRow.active;
     });
     this.displayShortDescription(id_cliente, razonSocial, nombre, direccion, email, nombreContacto, rfc, active);
   }

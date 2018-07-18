@@ -18,6 +18,7 @@ import { CrearHerramientasComponent } from '../../admin/crear-herramientas/crear
 import { HerramientaDetailComponent } from '../../admin/herramienta-detail/herramienta-detail.component';
 import { ClientesComponent } from '../../admin/clientes/clientes.component';
 import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
+import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detail.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full' },
@@ -25,6 +26,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'user-detail/:id',   component: UserDetailComponent },
     { path: 'herramienta-detail/:id',   component: HerramientaDetailComponent },
+    { path: 'cliente-detail/:id',   component: ClienteDetailComponent },
     { path: 'crear-usuario',   component: CrearUsuarioComponent },
     { path: 'crear-obra',   component: CrearObraComponent },
     { path: 'insertar-foto/:id',   component: InsertarFotoComponent },

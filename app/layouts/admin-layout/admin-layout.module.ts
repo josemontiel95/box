@@ -27,6 +27,8 @@ import { CrearHerramientasComponent } from '../../admin/crear-herramientas/crear
 import { MatProgressBarModule } from '@angular/material';
 import { ClientesComponent } from '../../admin/clientes/clientes.component';
 import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
+import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detail.component';
+
 
 @NgModule({
   imports: [
@@ -58,7 +60,8 @@ import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.c
     CrearHerramientasComponent,
     HerramientasComponent,
     ClientesComponent,
-    CrearClienteComponent
+    CrearClienteComponent,
+    ClienteDetailComponent
 
   ]
 })
