@@ -49,7 +49,7 @@ export class HerramientaDetailComponent implements OnInit {
     password1: string;
     npassword: string;
     id: string;
-    model: Herramienta= new Herramienta("","","","","","","","");
+    model: Herramienta= new Herramienta("","","","","","","","", "");
     
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
 

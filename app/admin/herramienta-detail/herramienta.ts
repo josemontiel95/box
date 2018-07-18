@@ -9,6 +9,7 @@ export class Herramienta
   	public active: string, 
   	public estatus: string, 
   	public error: string, 
+    public herramienta_tipo_id: string
   	) {  }
 
 }

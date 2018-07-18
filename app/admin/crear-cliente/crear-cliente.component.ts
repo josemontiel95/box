@@ -51,7 +51,7 @@ export class CrearClienteComponent implements OnInit
     this.telefono,
     this.nombreContacto,
     this.direccion,
-    this.telefonoDeContacto);
+    this.telefonoDeContacto, "");
 
   crearMessage: string= "";
   crearMessageCargando: string= "";
@@ -107,7 +107,7 @@ export class CrearClienteComponent implements OnInit
   onSubmit() { this.submitted = true; }
 
 
-  crearCliente(nombre: string, apellido: string, laboratorio_id: string, nss: string, email: string, fechaDeNac: string, rol_usuario_id: string, contrasena: string, error: string, envioDatos: boolean = true)
+  crearCliente(nombre: string, apellido: string, laboratorio_id: string, nss: string, email: string, fechaDeNac: string, rol_usuario_id: string)
   {
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
@@ -122,11 +122,8 @@ export class CrearClienteComponent implements OnInit
     search.set('email', email);
     search.set('fechaDeNac', fechaDeNac);
     search.set('rol_usuario_id_new', rol_usuario_id);
-    search.set('constrasena', contrasena);
-    search.set('error', error);
     this.crearMessageCargando="Cargando...";
     this.http.get(url, {search}).subscribe(res => this.diplay(res.json()) );
-
 
   }
 

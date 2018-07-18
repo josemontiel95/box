@@ -14,8 +14,8 @@ export class HerramientasComponent implements OnInit{
   global: Global;
     private gridApi;
   private gridColumnApi;
-  private rowSelection;
-  private columnDefs;
+  rowSelection;
+  columnDefs;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -57,7 +57,7 @@ export class HerramientasComponent implements OnInit{
                                           });
   }
 
-  onSelectionChanged(){
+  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
     var id = "";
 

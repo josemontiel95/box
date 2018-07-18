@@ -214,7 +214,8 @@ export class UserProfileComponent implements OnInit {
                        this.rol,
                        this.nss,
                        this.laboratorio,
-                       this.laboratorio_id);
+                       this.laboratorio_id,
+                       "");
 
 
 }

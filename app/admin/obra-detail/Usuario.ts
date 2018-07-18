@@ -10,7 +10,9 @@ export class Usuario
   	public email: string, 
   	public fechaDeNac: string, 
   	public foto: string, 
-    public estatus: string 
+    public estatus: string,
+    public rol_usuario_id: string,
+    public laboratorio_id: string
   	) {  }
 
 }

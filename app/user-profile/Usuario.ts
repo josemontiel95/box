@@ -10,7 +10,8 @@ export class Usuario
   	public rol: string,
   	public email: string,
   	public fechaDeNac: string,
-  	public foto: string
+  	public foto: string,
+    public rol_usuario_id: string
   	) {  }
 
 }
