@@ -20,7 +20,7 @@ export class ObrasComponent implements OnInit{
   nombre= "";
   prefijo= "";
   foto= "";
-  rol= "";
+  cliente= "";
   active="";
   hidden=false;
   desBut=true;
@@ -30,15 +30,17 @@ export class ObrasComponent implements OnInit{
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
       {headerName: 'ID', field: 'id_obra' },
-      {headerName: 'Nombre', field: 'obra' },
+      {headerName: 'Obra', field: 'obra' },
       {headerName: 'Prefijo', field: 'prefijo'},
       {headerName: 'Fecha de Creacion', field: 'fechaDeCreacion' },
       {headerName: 'Descripcion', field: 'descripcion' },
-      {headerName: 'Cliente', field: 'cliente_id' },
-      {headerName: 'Datos Obra', field: 'concretera_id' },
+      {headerName: 'Datos Obra', field: 'concretera' },
       {headerName: 'Tipo', field: 'tipo' },
-      {headerName: 'Revenimiento', field: 'revenimiento' },
-      {headerName: 'Incertidumbre', field: 'incertidumbre' },
+      {headerName: 'ID Cliente', field: 'id_cliente' },
+      {headerName: 'Nombre Cliente', field: 'nombre' },
+      {headerName: 'Created', field: 'createdON' },
+      {headerName: 'Last Edited', field: 'lastEditedON' },
+      {headerName: 'Active', field: 'active' },
 
     ];
     this.rowSelection = "single";
@@ -67,10 +69,11 @@ export class ObrasComponent implements OnInit{
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/obra/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllUsuarios');
+    search.set('function', 'getAllAdmin');
     search.set('token', this.global.token);
+    search.set('rol_usuario_id', "1001");
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.llenaTabla(res.json());
@@ -105,14 +108,14 @@ export class ObrasComponent implements OnInit{
    }
 
    switchActive(active: number){
-     let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+     let url = `${this.global.apiRoot}/obra/get/endpoint.php`;
      let search = new URLSearchParams();
       
       if(active == 0){
-        search.set('function', 'deactivate');
+        search.set('function', 'deactive');
       }
       else{
-        search.set('function', 'activate');
+        search.set('function', 'active');
       }
         search.set('id_usuario', this.id);
         search.set('rol_usuario_id', "1001");
@@ -141,21 +144,21 @@ export class ObrasComponent implements OnInit{
     var nombre = "";
     var prefijo = "";
     var foto = "";
-    var rol = "";
+    var cliente = "";
     var active = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_usuario;
-      nombre += selectedRow.nombre;
+      id += selectedRow.id_obra;
+      nombre += selectedRow.obra;
       prefijo += selectedRow.prefijo;
       foto += selectedRow.foto;
-      rol += selectedRow.rol;
+      cliente += selectedRow.nombre;
       active += selectedRow.active;
     });
-    this.displayShortDescription(id, nombre, prefijo, foto, rol, active);
+    this.displayShortDescription(id, nombre, prefijo, foto, cliente, active);
   }
 
-  displayShortDescription(id: any, nombre: any, prefijo: any, foto: any, rol: any, active: any){
+  displayShortDescription(id: any, nombre: any, prefijo: any, foto: any, cliente: any, active: any){
     
 
     this.hidden=true;
@@ -164,7 +167,7 @@ export class ObrasComponent implements OnInit{
     this.nombre=nombre;
     this.prefijo=prefijo;
     this.foto=foto;
-    this.rol=rol;
+    this.cliente=cliente;
 
     if(this.foto== "null"){
       this.imgUrl="../assets/img/gabino.jpg";
@@ -173,13 +176,13 @@ export class ObrasComponent implements OnInit{
     }
 
 
-    if(active == 1)
+    if(active == "Si")
     {
       this.desBut = true;
       this.actBut= false;
     }
     else{
-      if (active == 0) {
+      if (active == "No") {
         this.desBut = false;
         this.actBut= true;
       }
