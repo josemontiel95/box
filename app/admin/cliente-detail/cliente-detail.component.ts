@@ -27,7 +27,7 @@ export class Password
 @Component({
   selector: 'app-cliente-detail',
   templateUrl: './cliente-detail.component.html',
-  styleUrls: ['./cliente-detail.component.css']
+  styleUrls: ['./cliente-detail.component.css' , '../../loadingArrows.css']
 })
 export class ClienteDetailComponent implements OnInit {
 
@@ -45,6 +45,7 @@ export class ClienteDetailComponent implements OnInit {
     resppass= false;
     exitoCon = false;;
     id: string;
+    cargando= 1;
     
 
     model = new Cliente(
@@ -71,7 +72,7 @@ export class ClienteDetailComponent implements OnInit {
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
-
+    this.cargando=1;
 
     let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
 	  let search = new URLSearchParams();
@@ -190,8 +191,8 @@ export class ClienteDetailComponent implements OnInit {
   }
 
 
-  actualizarcliente(id_cliente: string,
-                rfc: string, razonSocial: string,
+  actualizarCliente(
+                    rfc: string, razonSocial: string,
                     nombre: string, email:string,
                     telefono: string, nombreContacto: string,
                      direccion: string, telefonoDeContacto: string, )
@@ -203,7 +204,7 @@ export class ClienteDetailComponent implements OnInit {
     formData.append('rol_usuario_id', '1001');
 
 
-    formData.append('id_cliente', id_cliente);
+    formData.append('id_cliente', this.id);
     formData.append('rfc', rfc);
     formData.append('razonSocial', razonSocial);
     formData.append('email', email);
@@ -237,12 +238,14 @@ export class ClienteDetailComponent implements OnInit {
     console.log(respuesta);
     this.model=respuesta;
     console.log(respuesta.foto);
-    if(respuesta.foto == "null"){
+    if(respuesta.foto == "null" || respuesta.foto == 0){
       this.imgUrl= "../assets/img/gabino2.jpg";
     }
     else{
       this.imgUrl= this.global.assetsRoot+respuesta.foto;
     }
+
+    this.cargando=this.cargando-1;
   }
   
 

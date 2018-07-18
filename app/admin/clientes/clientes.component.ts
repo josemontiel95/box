@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.css']
+  styleUrls: ['./clientes.component.css','../../loadingArrows.css']
 })
 export class ClientesComponent implements OnInit  {
 	title = 'app';
@@ -31,6 +31,7 @@ export class ClientesComponent implements OnInit  {
   nombreContacto= "";
   direccion= "";
   telefonoDeContacto= "";
+  cargando= 1;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -53,7 +54,7 @@ export class ClientesComponent implements OnInit  {
   rowData: any;
 
   ngOnInit() {
-    this.route.params.subscribe( params => this.id=params.id );
+    this.cargando=1;
   }
 
   
@@ -62,7 +63,7 @@ export class ClientesComponent implements OnInit  {
   }
 
   detalleCliente(){
-    this.router.navigate(['administrador/cliente-detail/'+this.id]);
+    this.router.navigate(['administrador/cliente-detail/'+this.id_cliente]);
   }
   
 
@@ -93,6 +94,7 @@ export class ClientesComponent implements OnInit  {
     }else{
       this.rowData =repuesta;
     }
+    this.cargando=this.cargando-1;
   }
 
    menosDetalles(){

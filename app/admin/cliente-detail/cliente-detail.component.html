@@ -1,3 +1,9 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
@@ -13,13 +19,13 @@
         <div class="card-body">
                 <form (ngSubmit)="onSubmit()" #clienteForm="ngForm">
             <div class="row">
-              <div class="col-md-6 col-12 ">
+              <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label for="id_cliente">Raz&oacute;n social.</label> 
-                   <input type="text" [disabled]="!hidden" id= "id_cliente"   required [(ngModel)]="model.id_cliente" class="form-control" name="id_cliente" placeholder="Tu Empresa S.A. de C.V." #id_cliente="ngModel">
-                  <div [hidden]="id_cliente.valid || id_cliente.pristine"  class="alert alert-danger">
-                    Raz&oacute;n social. requerida.
-                  </div>
+                  <label for="rfc">R.F.C.</label>
+                  <input type="text" [disabled]="!hidden" id= "rfc"  required [(ngModel)]="model.rfc" name="rfc" class="form-control" placeholder="RFC" #rfc="ngModel">
+                   <div [hidden]="rfc.valid ||rfc.pristine"  class="alert alert-danger">
+                   RFC requerido.
+                </div>
                 </div>
               </div>
                <div class="col-md-6 col-12">
@@ -32,22 +38,25 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-         <div class="col-md-6 col-12 ">
+              <div class="row">
+                <div class="col-md-12 col-12 ">
                 <div class="form-group">
-                  <label for="email">Correo Electronico</label>
-                  <input type="text" [disabled]="!hidden" id= "email"   required [(ngModel)]="model.email" class="form-control" name="email" placeholder="mail@lacocs.com" #email="ngModel">
-                  <div [hidden]="email.valid ||email.pristine"  class="alert alert-danger">
-                    Correo requerido.
-                </div>
+                  <label for="razonSocial">Raz&oacute;n social.</label> 
+                   <input type="text" [disabled]="!hidden" id= "razonSocial"   required [(ngModel)]="model.razonSocial" class="form-control" name="razonSocial" placeholder="Tu Empresa S.A. de C.V." #razonSocial="ngModel">
+                  <div [hidden]="razonSocial.valid || razonSocial.pristine"  class="alert alert-danger">
+                    Raz&oacute;n social. requerida.
+                  </div>
+                  </div>
+                 </div>
               </div>
-         </div>
-              <div class="col-md-6 col-12">
+         <div class="row">
+              <div class="col-md-12 col-12">
                 <div class="form-group">
-                 <label>Direcci&oacute;n.</label>
-                  <input type="password" [disabled]="!hidden" id= "contrasena" required [(ngModel)]="model.contrasena" class="form-control" name="contrasena" placeholder="Avenida Siempre Viva 2141" #contrasena="ngModel">
-                   <div [hidden]="contrasena.valid ||contrasena.pristine"  class="alert alert-danger">
+                 <label for="direccion">Direcci&oacute;n.</label>
+                  <textarea  rows="2" cols="12" [disabled]="!hidden" id= "direccion" required [(ngModel)]="model.direccion" class="form-control" name="direccion" placeholder="Avenida Siempre Viva 2141" #direccion="ngModel"> </textarea>
+                   <div [hidden]="direccion.valid ||direccion.pristine"  class="alert alert-danger">
                     Direcci&oacute;n requerida.
+                 
                 </div>
                 </div>
               </div>
@@ -62,21 +71,20 @@
                 </div>
                 </div>
               </div>
-              <div class="col-md-6 col-12">
+                <div class="col-md-6 col-12 ">
                 <div class="form-group">
-                  <label for="rfc">RFC</label>
-                  <input type="text" [disabled]="!hidden" id= "rfc"  required [(ngModel)]="model.rfc" name="rfc" class="form-control" placeholder="RFC" #rfc="ngModel">
-                   <div [hidden]="rfc.valid ||rfc.pristine"  class="alert alert-danger">
-                   RFC requerido.
-                </div>
+                  <label for="email">Correo Electronico.</label>
+                  <input type="text" [disabled]="!hidden" id= "email"   required [(ngModel)]="model.email" class="form-control" name="email" placeholder="mail@lacocs.com" #email="ngModel">
+                  <div [hidden]="email.valid ||email.pristine"  class="alert alert-danger">
+                    Correo requerido.
+                  </div>
                 </div>
               </div>
-            </div>
-
+                </div>
             <div class="row">
                         <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label for="nombreContacto">Nombre de contacto</label>
+                  <label for="nombreContacto">Nombre de contacto.</label>
                   <input type="text" [disabled]="!hidden" id= "nombreContacto"  required [(ngModel)]="model.nombreContacto" name="nombreContacto" class="form-control" placeholder="Nombre Contacto" #nombreContacto="ngModel">
                    <div [hidden]="nombreContacto.valid ||nombreContacto.pristine"  class="alert alert-danger">
                     Nombre de contacto requerido.
@@ -99,7 +107,7 @@
               <button class="btn btn-info" *ngIf="hidden == false"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="hidden" [disabled]="clienteForm.invalid" (click)="actualizarUsuario(nombre.value, apellido.value, laboratorio_id.value, nss.value, email.value, fechaDeNac.value, id_usuario.value,  rol_usuario_id.value ); ocultar();">
+            <button class="btn btn-success" *ngIf="hidden" [disabled]="clienteForm.invalid" (click)="actualizarCliente(rfc.value, razonSocial.value, nombre.value, email.value, telefono.value, nombreContacto.value,  direccion.value, telefonoDeContacto.value ); ocultar();">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>
@@ -118,7 +126,8 @@
           <form (ngSubmit)="onSubmit()" #passwordForm="ngForm">
           <div class="author">
             
-              <img class="avatar border-gray" src="{{imgUrl}}" (click)="subirFoto()" alt="...">
+              <img class="avatar border-gray" src="../assets/img/gabino.jpg" (click)="subirFoto()" alt="...">
+              <!--{{imgUrl}} binding para la foto quitado con fines esteticos-->
               <h5 class="title">{{model.razonSocial}}</h5>
            
             <div class="form-group" [hidden]="desBut">

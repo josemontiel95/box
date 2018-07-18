@@ -19,7 +19,7 @@
         <div class="card-body">
            <form (ngSubmit)="onSubmit()" #userForm="ngForm">
             <div class="row">
-              <div class="col-md-5 col-12">
+              <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="id_herramienta">ID herramienta</label> 
                   <input type="text" id="id_herramienta" [disabled]="!hidden"  
@@ -32,7 +32,7 @@
                 </div>
               </div>
 
-              <div class="col-md-5 col-12">
+              <div class="col-md-6 col-12">
                  <div class="form-group">
                   <label for="herramienta_tipo_id">Tipos</label> <!--tipo de credencial referido a puestos tales como jefe de laboratorio-->
                   <select  class="form-control"[disabled]="!hidden" id="herramienta_tipo_id"
@@ -63,8 +63,8 @@
                 </div>
               </div>
                 </div>
+                <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <div class="col-md-">
                   <label for="fechaDeCompra"> Fecha de compra</label>
                   <input type="date" id="fechaDeCompra" [disabled]="!hidden"  [(ngModel)]="model.fechaDeCompra" class="form-control" name="fechaDeCompra" placeholder="" #fechaDeCompra="ngModel">
                   <div [hidden]="fechaDeCompra.valid ||fechaDeCompra.pristine"  class="alert alert-danger">
