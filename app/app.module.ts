@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 
 import { AppRoutingModule } from './app.routing';
@@ -48,7 +49,7 @@ import { MatProgressBarModule } from '@angular/material';
     JefebLayoutComponent,
   ],
   providers: [DataService,
-  AppGuard],
+  AppGuard, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
