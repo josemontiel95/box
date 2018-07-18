@@ -19,13 +19,13 @@
         <div class="card-body">
                 <form (ngSubmit)="onSubmit()" #clienteForm="ngForm">
             <div class="row">
-              <div class="col-md-6 col-12 ">
+              <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label for="razonSocial">Raz&oacute;n social.</label> 
-                   <input type="text" [disabled]="!hidden" id= "razonSocial"   required [(ngModel)]="model.razonSocial" class="form-control" name="razonSocial" placeholder="Tu Empresa S.A. de C.V." #razonSocial="ngModel">
-                  <div [hidden]="razonSocial.valid || razonSocial.pristine"  class="alert alert-danger">
-                    Raz&oacute;n social. requerida.
-                  </div>
+                  <label for="rfc">R.F.C.</label>
+                  <input type="text" [disabled]="!hidden" id= "rfc"  required [(ngModel)]="model.rfc" name="rfc" class="form-control" placeholder="RFC" #rfc="ngModel">
+                   <div [hidden]="rfc.valid ||rfc.pristine"  class="alert alert-danger">
+                   RFC requerido.
+                </div>
                 </div>
               </div>
                <div class="col-md-6 col-12">
@@ -38,22 +38,25 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-         <div class="col-md-6 col-12 ">
+              <div class="row">
+                <div class="col-md-12 col-12 ">
                 <div class="form-group">
-                  <label for="email">Correo Electronico</label>
-                  <input type="text" [disabled]="!hidden" id= "email"   required [(ngModel)]="model.email" class="form-control" name="email" placeholder="mail@lacocs.com" #email="ngModel">
-                  <div [hidden]="email.valid ||email.pristine"  class="alert alert-danger">
-                    Correo requerido.
-                </div>
+                  <label for="razonSocial">Raz&oacute;n social.</label> 
+                   <input type="text" [disabled]="!hidden" id= "razonSocial"   required [(ngModel)]="model.razonSocial" class="form-control" name="razonSocial" placeholder="Tu Empresa S.A. de C.V." #razonSocial="ngModel">
+                  <div [hidden]="razonSocial.valid || razonSocial.pristine"  class="alert alert-danger">
+                    Raz&oacute;n social. requerida.
+                  </div>
+                  </div>
+                 </div>
               </div>
-         </div>
-              <div class="col-md-6 col-12">
+         <div class="row">
+              <div class="col-md-12 col-12">
                 <div class="form-group">
                  <label for="direccion">Direcci&oacute;n.</label>
-                  <input type="text" [disabled]="!hidden" id= "direccion" required [(ngModel)]="model.direccion" class="form-control" name="direccion" placeholder="Avenida Siempre Viva 2141" #direccion="ngModel">
+                  <textarea  rows="2" cols="12" [disabled]="!hidden" id= "direccion" required [(ngModel)]="model.direccion" class="form-control" name="direccion" placeholder="Avenida Siempre Viva 2141" #direccion="ngModel"> </textarea>
                    <div [hidden]="direccion.valid ||direccion.pristine"  class="alert alert-danger">
                     Direcci&oacute;n requerida.
+                 
                 </div>
                 </div>
               </div>
@@ -68,21 +71,20 @@
                 </div>
                 </div>
               </div>
-              <div class="col-md-6 col-12">
+                <div class="col-md-6 col-12 ">
                 <div class="form-group">
-                  <label for="rfc">RFC</label>
-                  <input type="text" [disabled]="!hidden" id= "rfc"  required [(ngModel)]="model.rfc" name="rfc" class="form-control" placeholder="RFC" #rfc="ngModel">
-                   <div [hidden]="rfc.valid ||rfc.pristine"  class="alert alert-danger">
-                   RFC requerido.
-                </div>
+                  <label for="email">Correo Electronico.</label>
+                  <input type="text" [disabled]="!hidden" id= "email"   required [(ngModel)]="model.email" class="form-control" name="email" placeholder="mail@lacocs.com" #email="ngModel">
+                  <div [hidden]="email.valid ||email.pristine"  class="alert alert-danger">
+                    Correo requerido.
+                  </div>
                 </div>
               </div>
-            </div>
-
+                </div>
             <div class="row">
                         <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label for="nombreContacto">Nombre de contacto</label>
+                  <label for="nombreContacto">Nombre de contacto.</label>
                   <input type="text" [disabled]="!hidden" id= "nombreContacto"  required [(ngModel)]="model.nombreContacto" name="nombreContacto" class="form-control" placeholder="Nombre Contacto" #nombreContacto="ngModel">
                    <div [hidden]="nombreContacto.valid ||nombreContacto.pristine"  class="alert alert-danger">
                     Nombre de contacto requerido.
