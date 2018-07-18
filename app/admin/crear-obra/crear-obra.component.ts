@@ -125,7 +125,9 @@ export class CrearObraComponent implements OnInit
     }
   }
 
-
+  regresaUsuario(){
+    this.router.navigate(['administrador/obras']);
+  }
 
 //insertar-foto
 
