@@ -12,7 +12,8 @@ export class Cliente
   	public telefonoDeContacto: string,
     public apellido: string,
     public regresaUsuario: string,
-    public rol:string
+    public rol:string,
+    public contrasena: string
   	) {  }
 
 }

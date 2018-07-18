@@ -57,7 +57,7 @@ export class ClienteDetailComponent implements OnInit {
     "",
     "",
     "",
-    "", "","");
+    "", "","","");
 
 
     model2= new Password(
