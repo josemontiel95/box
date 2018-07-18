@@ -27,7 +27,7 @@ export class Password
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.css']
+  styleUrls: ['./user-detail.component.css','../../loadingArrows.css']
 })
 export class UserDetailComponent implements OnInit {
 
@@ -47,6 +47,7 @@ export class UserDetailComponent implements OnInit {
     mis_roles: Array<any>;
     mis_lab: Array<any>;
     imgUrl = "";
+    cargando= 3;
     onSubmit() { this.submitted = true; }
 
     loginMessage: string= "";
@@ -65,6 +66,7 @@ export class UserDetailComponent implements OnInit {
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
+    this.cargando=3;
 
     let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
   let search = new URLSearchParams();
@@ -201,6 +203,8 @@ export class UserDetailComponent implements OnInit {
       j--;
 
     }
+    this.cargando=this.cargando-1;
+    console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
   llenaLaboratorio(resp: any)
@@ -212,6 +216,8 @@ export class UserDetailComponent implements OnInit {
       this.mis_lab[_i]=resp[_i];
 
     }
+    this.cargando=this.cargando-1;
+    console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
   mostrar()
@@ -277,6 +283,10 @@ export class UserDetailComponent implements OnInit {
     else{
       this.imgUrl= this.global.assetsRoot+respuesta.foto;
     }
+    setTimeout(()=>{ this.model=respuesta;
+                     this.cargando=this.cargando-1;
+                     console.log("llenado this.cargando: "+this.cargando);
+                     }, 0);
   }
   
   

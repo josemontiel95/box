@@ -18,7 +18,7 @@ import {
 @Component({
   selector: 'app-herramienta-detail',
   templateUrl: './herramienta-detail.component.html',
-  styleUrls: ['./herramienta-detail.component.css']
+  styleUrls: ['./herramienta-detail.component.css','../../loadingArrows.css']
 })
 export class HerramientaDetailComponent implements OnInit {
 

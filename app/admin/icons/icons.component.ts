@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-icons',
   templateUrl: './icons.component.html',
-  styleUrls: ['./icons.component.css']
+  styleUrls: ['./icons.component.css','../../loadingArrows.css']
 })
 export class IconsComponent implements OnInit{
 	title = 'app';
@@ -26,7 +26,7 @@ export class IconsComponent implements OnInit{
   desBut=true;
   actBut=false;
   imgUrl="";
-
+  cargando= 1;
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
       {headerName: 'ID', field: 'id_usuario' },
@@ -46,6 +46,7 @@ export class IconsComponent implements OnInit{
 
   ngOnInit() {
     this.route.params.subscribe( params => this.id=params.id );
+    this.cargando=1;
   }
 
 
@@ -84,6 +85,8 @@ export class IconsComponent implements OnInit{
     }else{
       this.rowData =repuesta;
     }
+    this.cargando=this.cargando-1;
+      console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
    menosDetalles(){
