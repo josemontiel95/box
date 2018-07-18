@@ -99,6 +99,10 @@ export class CrearClienteComponent implements OnInit
     }
   }
 
+    regresaCliente(){
+    this.router.navigate(['administrador/clientes']);
+  }
+
 
 
 //insertar-foto
