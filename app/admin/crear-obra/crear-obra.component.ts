@@ -5,7 +5,7 @@ import { Global } from "../../interfaces/int.Global";
 import { CrearResp } from "../../interfaces/int.CrearResp";
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import * as moment from 'moment';
-import { Usuario }    from './Usuario';
+import { Usuario }    from './Obra';
 import {
     ReactiveFormsModule,
     FormsModule,
@@ -18,11 +18,11 @@ import {
   //Esto es un dummy, borralo despues.
 
 @Component({
-  selector: 'app-crear-usuario',
-  templateUrl: './crear-usuario.component.html',
-  styleUrls: ['./crear-usuario.component.scss']
+  selector: 'app-crear-obra',
+  templateUrl: './crear-obra.component.html',
+  styleUrls: ['./crear-obra.component.scss']
 })
-export class CrearUsuarioComponent implements OnInit
+export class CrearObraComponent implements OnInit
   {
   global: Global;
   constructor(private router: Router, 

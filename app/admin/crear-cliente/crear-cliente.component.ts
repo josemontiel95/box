@@ -5,7 +5,7 @@ import { Global } from "../../interfaces/int.Global";
 import { CrearResp } from "../../interfaces/int.CrearResp";
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import * as moment from 'moment';
-import { Usuario }    from './Usuario';
+import { Cliente }    from './cliente';
 import {
     ReactiveFormsModule,
     FormsModule,
@@ -15,45 +15,43 @@ import {
     FormBuilder
 } from '@angular/forms';
 
-  //Esto es un dummy, borralo despues.
 
 @Component({
-  selector: 'app-crear-usuario',
-  templateUrl: './crear-usuario.component.html',
-  styleUrls: ['./crear-usuario.component.scss']
+  selector: 'app-crear-cliente',
+  templateUrl: './crear-cliente.component.html',
+  styleUrls: ['./crear-cliente.component.scss']
 })
-export class CrearUsuarioComponent implements OnInit
+export class CrearClienteComponent implements OnInit
   {
   global: Global;
   constructor(private router: Router, 
               private data: DataService, 
               private http: Http) { }
  
-    id_usuario: string ;
+    id_cliente: string;
+    rfc: string;
+    razonSocial: string;
     nombre: string;
-    apellido: string;
     email: string;
-    fechaDeNac: string;
-    foto: string;
-    laboratorio_id: string;
-    laboratorio: string;
-    nss: string;
-    rol: string;
+    telefono: string;
+    nombreContacto: string;
+    direccion: string;
+    telefonoDeContacto: string;
     submitted = false;
     hidden = false;
     mis_roles: Array<any>;
     mis_lab: Array<any>;
  
-   model = new Usuario(this.id_usuario,
-                       this.email,
-                       this.nombre,
-                       this.apellido,
-                       this.fechaDeNac,
-                       this.foto,
-                       this.rol,
-                       this.nss,
-                       this.laboratorio,
-                       this.laboratorio_id);
+   model = new Cliente(
+    this.id_cliente,
+    this.rfc,    
+    this.razonSocial,
+    this.nombre,    
+    this.email,
+    this.telefono,
+    this.nombreContacto,
+    this.direccion,
+    this.telefonoDeContacto);
 
   crearMessage: string= "";
   crearMessageCargando: string= "";
@@ -68,39 +66,15 @@ export class CrearUsuarioComponent implements OnInit
   search.set('function', 'getAll');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
-  this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
-                                                 this.rolValidator(res.json());
-                                                });
+  this.http.get(url, {search}).subscribe(res => this.llenaRoles(res.json()) );
 
      url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getAll');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
-    this.http.get(url, {search}).subscribe(res => {this.llenaLaboratorio(res.json());
-                                                   this.labValidator(res.json());
-                                                 });
+    this.http.get(url, {search}).subscribe(res => this.llenaLaboratorio(res.json()) );
 
-  }
-
-  rolValidator(repuesta: any){
-    console.log(repuesta)
-    if(repuesta.error==5 || repuesta.error==6){
-      window.alert(repuesta.estatus);
-    }
-    else{
-      
-    }
-  }
-
-  labValidator(repuesta: any){
-    console.log(repuesta)
-    if(repuesta.error==5 || repuesta.error==6){
-      window.alert(repuesta.estatus);
-    }
-    else{
-      
-    }
   }
 
   llenaRoles(resp: any)
@@ -133,10 +107,10 @@ export class CrearUsuarioComponent implements OnInit
   onSubmit() { this.submitted = true; }
 
 
-  crearUsuario(nombre: string, apellido: string, laboratorio_id: string, nss: string, email: string, fechaDeNac: string, rol_usuario_id: string, contrasena: string, error: string, envioDatos: boolean = true)
+  crearCliente(nombre: string, apellido: string, laboratorio_id: string, nss: string, email: string, fechaDeNac: string, rol_usuario_id: string, contrasena: string, error: string, envioDatos: boolean = true)
   {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'insert');
     search.set('token', this.global.token);
@@ -174,7 +148,7 @@ export class CrearUsuarioComponent implements OnInit
           console.log(crearResp);
           let token: string;
           token= localStorage.getItem("token");
-          let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+          let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
           let search = new URLSearchParams();
           search.set('function', 'cerrarSesion');
           search.set('token', token);

@@ -25,7 +25,7 @@ export class Password
 }
 
 @Component({
-  selector: 'app-user-profile',
+  selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
   styleUrls: ['./user-detail.component.css']
 })
@@ -71,14 +71,18 @@ export class UserDetailComponent implements OnInit {
   search.set('function', 'getAll');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
-  this.http.get(url, {search}).subscribe(res => this.llenaRoles(res.json()) );
+  this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
+                                                 this.rolValidator(res.json());
+                                                });
 
      url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getAll');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
-    this.http.get(url, {search}).subscribe(res => this.llenaLaboratorio(res.json()) );
+    this.http.get(url, {search}).subscribe(res => {this.llenaLaboratorio(res.json());
+                                                   this.labValidator(res.json());
+                                                 });
 
 
     url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
@@ -87,7 +91,42 @@ export class UserDetailComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     search.set('id_usuario', this.id);
-	this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+	this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
+                                                 this.llenadoValidator(res.json());
+                                               });
+  }
+
+
+
+
+  llenadoValidator(respuesta: any){
+    console.log(respuesta)
+    if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
+      window.alert(respuesta.estatus);
+    }
+    else{
+      
+    }
+  }
+
+  rolValidator(respuesta: any){
+    console.log(respuesta)
+    if(respuesta.error==5 || respuesta.error==6){
+      window.alert(respuesta.estatus);
+    }
+    else{
+      
+    }
+  }
+
+  labValidator(respuesta: any){
+    console.log(respuesta)
+    if(respuesta.error==5 || respuesta.error==6){
+      window.alert(respuesta.estatus);
+    }
+    else{
+      
+    }
   }
 
 
@@ -124,8 +163,19 @@ export class UserDetailComponent implements OnInit {
         search.set('token', this.global.token);
         this.http.get(url, {search}).subscribe(res => {
                                               res.json();
+                                              this.upContValidator(res.json());
                                             });
    }
+
+   upContValidator(respuesta: any){
+    console.log(respuesta)
+    if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
+      window.alert(respuesta.estatus);
+    }
+    else{
+      
+    }
+  }
 
   switchAlerta(exitoCon: any){
     this.exitoCon = false;

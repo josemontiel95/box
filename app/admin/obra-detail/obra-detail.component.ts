@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
-import { DataService } from "../data.service";
-import { LoginResp } from "../interfaces/int.LoginResp";
-import { Global } from "../interfaces/int.Global";
+import { DataService } from "../../data.service";
+import { LoginResp } from "../../interfaces/int.LoginResp";
+import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
 import { Usuario }    from './Usuario';
 import {
@@ -14,12 +14,22 @@ import {
     FormBuilder
 } from '@angular/forms';
 
+export class Password
+{
+  constructor(
+    public password1: string, 
+    public npassword: string, 
+
+    ) {  }
+
+}
+
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css']
+  selector: 'app-obra-detail',
+  templateUrl: './obra-detail.component.html',
+  styleUrls: ['./obra-detail.component.css']
 })
-export class UserProfileComponent implements OnInit {
+export class ObraDetailComponent implements OnInit {
 
     id_usuario: string ;
     nombre: string;
@@ -31,6 +41,7 @@ export class UserProfileComponent implements OnInit {
     laboratorio: string;
     nss: string;
     rol: string;
+    estatus: string;
     submitted = false;
     hidden = false;
     mis_roles: Array<any>;
@@ -41,19 +52,25 @@ export class UserProfileComponent implements OnInit {
     loginMessage: string= "";
     loginresp: LoginResp;
     global: Global;
+    desBut=true;
+    actBut=false;
+    resppass= false;
+    exitoCon = false;
+    password1: string;
+    npassword: string;
     id: string;
+    
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
-
-  
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
+    this.route.params.subscribe( params => this.id=params.id);
 
-  let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
   let search = new URLSearchParams();
   search.set('function', 'getAll');
-  search.set('token', this.global.token);
-  search.set('rol_usuario_id', "1001");
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', "1001");
   this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
                                                  this.rolValidator(res.json());
                                                 });
@@ -69,39 +86,43 @@ export class UserProfileComponent implements OnInit {
 
 
     url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
-	 search = new URLSearchParams();
-	search.set('function', 'getIDByToken');
+	  search = new URLSearchParams();
+	  search.set('function', 'getUserByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
+    search.set('id_usuario', this.id);
 	this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
-                                                 this.llenadoValidator(res.json());});
+                                                 this.llenadoValidator(res.json());
+                                               });
   }
 
 
-  rolValidator(repuesta: any){
-    console.log(repuesta)
-    if(repuesta.error==5 || repuesta.error==6){
-      window.alert(repuesta.estatus);
+
+
+  llenadoValidator(respuesta: any){
+    console.log(respuesta)
+    if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
+      window.alert(respuesta.estatus);
     }
     else{
       
     }
   }
 
-  labValidator(repuesta: any){
-    console.log(repuesta)
-    if(repuesta.error==5 || repuesta.error==6){
-      window.alert(repuesta.estatus);
+  rolValidator(respuesta: any){
+    console.log(respuesta)
+    if(respuesta.error==5 || respuesta.error==6){
+      window.alert(respuesta.estatus);
     }
     else{
       
     }
   }
 
-  llenadoValidator(repuesta: any){
-    console.log(repuesta)
-    if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
-      window.alert(repuesta.estatus);
+  labValidator(respuesta: any){
+    console.log(respuesta)
+    if(respuesta.error==5 || respuesta.error==6){
+      window.alert(respuesta.estatus);
     }
     else{
       
@@ -109,31 +130,89 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-    llenaRoles(resp: any)
+  cambiarContrasena(){
+     this.actBut= true;
+     this.desBut= false;
+     this.resppass = false;
+     this.exitoCon = false;
+  }
+
+   guardarContrasena(password1: string, npassword: string){
+     this.actBut = false;
+     this.desBut = true;
+     if(password1 == npassword && password1 != null)
+     {
+       this.postContrasena(password1);
+       this.exitoCon = true;
+       //setTimeout(this.switchAlerta(this.exitoCon), 8000);
+     }
+     else{
+       this.resppass = true;
+     }
+     
+   }
+
+   postContrasena(password1: string){
+     let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+     let search = new URLSearchParams();
+     search.set('function', 'upDateContrasena');
+     search.set('constrasena', password1);
+     search.set('id_usuario', this.id);
+
+        search.set('rol_usuario_id', "1001");
+        search.set('token', this.global.token);
+        this.http.get(url, {search}).subscribe(res => {
+                                              res.json();
+                                              this.upContValidator(res.json());
+                                            });
+   }
+
+   upContValidator(respuesta: any){
+    console.log(respuesta)
+    if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
+      window.alert(respuesta.estatus);
+    }
+    else{
+      
+    }
+  }
+
+  switchAlerta(exitoCon: any){
+    this.exitoCon = false;
+  }
+
+  regresaUsuario(){
+    this.router.navigate(['administrador/usuarios']);
+  }
+
+
+  subirFoto(){
+    this.router.navigate(['administrador/insertar-foto/'+this.id]);
+  }
+
+  llenaRoles(resp: any)
+  {
+    console.log(resp);
+    this.mis_roles= new Array(resp.length);
+    var j=resp.length-1;
+    for (var _i = 0; _i < resp.length; _i++ )
     {
+      this.mis_roles[_i]=resp[j];
+      j--;
+
+    }
+  }
+
+  llenaLaboratorio(resp: any)
+  {
         console.log(resp);
-      this.mis_roles= new Array(resp.length);
-      var j=resp.length-1;
-      for (var _i = 0; _i < resp.length; _i++ )
-      {
-        this.mis_roles[_i]=resp[j];
-        j--;
-
-      }
-    }
-
-    llenaLaboratorio(resp: any)
+    this.mis_lab= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ )
     {
-       console.log(resp);
+      this.mis_lab[_i]=resp[_i];
 
-      this.mis_lab= new Array(resp.length);
-      for (var _i = 0; _i < resp.length; _i++ )
-      {
-
-        this.mis_lab[_i]=resp[_i];
-
-      }
     }
+  }
 
   mostrar()
   {
@@ -173,6 +252,7 @@ export class UserProfileComponent implements OnInit {
 
   }
 
+
   respuestaError(resp: any){
     if(resp.error!=0)
     {
@@ -186,15 +266,10 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-  subirFoto(){
-    this.router.navigate(['administrador/insertar-foto/'+this.id]);
-  }
-
-    llenado(respuesta: any)
+  llenado(respuesta: any)
   {
     console.log(respuesta);
     this.model=respuesta;
-    this.id = respuesta.id_usuario; //De aqui sacamos id para parametrisarlo en el método subirFoto.
     console.log(respuesta.foto);
     if(respuesta.foto == "null"){
       this.imgUrl= "../assets/img/gabino.jpg";
@@ -214,7 +289,10 @@ export class UserProfileComponent implements OnInit {
                        this.rol,
                        this.nss,
                        this.laboratorio,
-                       this.laboratorio_id);
+                       this.estatus);
 
-
+   model2= new Password(
+                         this.password1,
+                         this.npassword
+                        )
 }
