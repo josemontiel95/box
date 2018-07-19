@@ -113,10 +113,11 @@ export class HerramientaDetailComponent implements OnInit {
   actualizarHerramienta(herramienta_tipo_id:string, placas: string,
                           fechaDeCompra: string, condicion: string)
   {
-    /*let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let formData:FormData = new FormData();
     //let search = new URLSearchParams();
-    formData.append('function', 'upDate');
+    formData.append('function', 'upDateAdmin');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', '1001');
     //formData.append
@@ -126,8 +127,8 @@ export class HerramientaDetailComponent implements OnInit {
     formData.append('condicion', condicion);
     formData.append('herramienta_tipo_id', herramienta_tipo_id);
     //post  formData
-    this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );*/
-    this.data.currentGlobal.subscribe(global => this.global = global);
+    this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
+    /*
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'upDate');
@@ -140,7 +141,7 @@ export class HerramientaDetailComponent implements OnInit {
     search.set('condicion', condicion);
     search.set('herramienta_tipo_id', herramienta_tipo_id);
     this.http.get(url, {search}).subscribe(res => this.respuestaError(res.json()) );
-    
+    */
   }
 
 
@@ -201,10 +202,10 @@ export class HerramientaDetailComponent implements OnInit {
      let search = new URLSearchParams();
       
       if(active == 0){
-        search.set('function', 'deactive');
+        search.set('function', 'deactivate');
       }
       else{
-        search.set('function', 'active');
+        search.set('function', 'activate');
       }
         search.set('id_herramienta', this.id);
         search.set('rol_usuario_id', "1001");
