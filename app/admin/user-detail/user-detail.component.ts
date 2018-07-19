@@ -98,9 +98,6 @@ export class UserDetailComponent implements OnInit {
                                                });
   }
 
-
-
-
   llenadoValidator(respuesta: any){
     console.log(respuesta)
     if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){

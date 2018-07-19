@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { DashboardComponent } from '../../admin/dashboard/dashboard.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { UserDetailComponent } from '../../admin/user-detail/user-detail.component';
+import { ObraDetailComponent } from '../../admin/obra-detail/obra-detail.component';
 import { CrearUsuarioComponent } from '../../admin/crear-usuario/crear-usuario.component';
 import { CrearObraComponent } from '../../admin/crear-obra/crear-obra.component';
 import { InsertarFotoComponent } from '../../admin/insertar-foto/insertar-foto.component';
@@ -25,6 +26,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'user-detail/:id',   component: UserDetailComponent },
+    { path: 'obra-detail/:id',   component: ObraDetailComponent },
     { path: 'herramienta-detail/:id',   component: HerramientaDetailComponent },
     { path: 'cliente-detail/:id',   component: ClienteDetailComponent },
     { path: 'crear-usuario',   component: CrearUsuarioComponent },
