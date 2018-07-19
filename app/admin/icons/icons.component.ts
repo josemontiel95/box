@@ -68,7 +68,7 @@ export class IconsComponent implements OnInit{
 
     let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllUsuarios');
+    search.set('function', 'getAllAdmin');
     search.set('token', this.global.token);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
