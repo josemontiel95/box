@@ -135,30 +135,30 @@ export class CrearUsuarioComponent implements OnInit
   onSubmit() { this.submitted = true; }
 
 
-  crearUsuario(nombre: string, apellido: string, laboratorio_id: string, nss: string, email: string, fechaDeNac: string, rol_usuario_id: string, contrasena: string)
-  {
+  crearUsuario(nombre: string, apellido: string, laboratorio_id: string, nss: string, email: string, fechaDeNac: string, rol_usuario_id: string, contrasena: string){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'insert');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
-    search.set('nombre', nombre);
-    search.set('apellido', apellido);
-    search.set('laboratorio_id', laboratorio_id);
-    search.set('nss', nss);    
-    search.set('email', email);
-    search.set('fechaDeNac', fechaDeNac);
-    search.set('rol_usuario_id_new', rol_usuario_id);
-    search.set('constrasena', contrasena);
-    this.crearMessageCargando="Cargando...";
-    this.http.get(url, {search}).subscribe(res => this.diplay(res.json()) );
+    let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
+    let formData:FormData = new FormData();
 
+    formData.append('function', 'insertAdmin');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', '1001');
+    formData.append('nombre', nombre);
+    formData.append('apellido', apellido);
+    formData.append('laboratorio_id', laboratorio_id);
+    formData.append('nss', nss);
+    formData.append('email', email);
+    formData.append('fechaDeNac', fechaDeNac);
+    formData.append('rol_usuario_id_new', rol_usuario_id);
+    formData.append('constrasena', contrasena);
+
+    this.crearMessageCargando="Cargando...";
+    this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );
 
   }
 
   diplay(crearResp: CrearResp){
-    
+    console.log(crearResp);
     if(crearResp.error==0){
       this.crearMessage="";
       this.crearMessageCargando=crearResp.estatus;
@@ -168,6 +168,7 @@ export class CrearUsuarioComponent implements OnInit
     }else{
       this.crearMessageCargando="";
       switch (crearResp.error) {
+        case 3:
         case 1:
           
           this.crearMessage=crearResp.estatus;
