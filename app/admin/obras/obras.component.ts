@@ -59,8 +59,8 @@ export class ObrasComponent implements OnInit{
     this.router.navigate(['administrador/crear-obra']);
   }
 
-  detalleUsuario(){ //Cambialo a detalleObra
-    this.router.navigate(['administrador/user-detail/'+this.id]);
+  detalleObra(){ //Cambialo a detalleObra
+    this.router.navigate(['administrador/obra-detail/'+this.id]);
   }
   
 

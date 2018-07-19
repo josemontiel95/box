@@ -4,7 +4,7 @@ import { DataService } from "../../data.service";
 import { LoginResp } from "../../interfaces/int.LoginResp";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
-import { Usuario }    from './Usuario';
+import { Obra }    from './Obra';
 import {
     ReactiveFormsModule,
     FormsModule,
@@ -27,37 +27,37 @@ export class Password
 @Component({
   selector: 'app-obra-detail',
   templateUrl: './obra-detail.component.html',
-  styleUrls: ['./obra-detail.component.css']
+  styleUrls: ['./obra-detail.component.css','../../loadingArrows.css']
 })
 export class ObraDetailComponent implements OnInit {
 
-    id_usuario: string ;
-    nombre: string;
-    apellido: string;
-    email: string;
-    fechaDeNac: string;
+    
+    id_obra: string ;
+    obra: string;
+    revenimiento: string;
+    incertidumbre: string;
+    prefijo: string;
+    fechaDeCre: string;
     foto: string;
-    laboratorio_id: string;
+    id_cliente: string;
+    id_concretera: string;
+    tipo: string;
     laboratorio: string;
-    nss: string;
-    rol: string;
-    estatus: string;
+    descripcion: string;
     submitted = false;
     hidden = false;
-    mis_roles: Array<any>;
-    mis_lab: Array<any>;
-    imgUrl = "";
+    cargando= 3;
+    mis_con: Array<any>;
+    mis_cli: Array<any>;
+
+    estatus: string;
     onSubmit() { this.submitted = true; }
 
     loginMessage: string= "";
     loginresp: LoginResp;
     global: Global;
-    desBut=true;
-    actBut=false;
-    resppass= false;
-    exitoCon = false;
-    password1: string;
-    npassword: string;
+    
+    
     id: string;
     
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
@@ -65,32 +65,32 @@ export class ObraDetailComponent implements OnInit {
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
-
-    let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
-  let search = new URLSearchParams();
-  search.set('function', 'getAll');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
-  this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
-                                                 this.rolValidator(res.json());
-                                                });
-
-     url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
-    search = new URLSearchParams();
+    this.cargando=3;
+    let url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
+    let search = new URLSearchParams();
     search.set('function', 'getAll');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
-    this.http.get(url, {search}).subscribe(res => {this.llenaLaboratorio(res.json());
+    this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
+                                                 this.rolValidator(res.json());
+                                                });
+
+     url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getAllUser');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', "1001");
+    this.http.get(url, {search}).subscribe(res => {this.llenaClientes(res.json());
                                                    this.labValidator(res.json());
                                                  });
 
 
-    url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+    url = `${this.global.apiRoot}/obra/get/endpoint.php`;
 	  search = new URLSearchParams();
-	  search.set('function', 'getUserByID');
+	  search.set('function', 'getObraByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
-    search.set('id_usuario', this.id);
+    search.set('id_obra', this.id);
 	this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
                                                  this.llenadoValidator(res.json());
                                                });
@@ -129,89 +129,37 @@ export class ObraDetailComponent implements OnInit {
     }
   }
 
-
-  cambiarContrasena(){
-     this.actBut= true;
-     this.desBut= false;
-     this.resppass = false;
-     this.exitoCon = false;
-  }
-
-   guardarContrasena(password1: string, npassword: string){
-     this.actBut = false;
-     this.desBut = true;
-     if(password1 == npassword && password1 != null)
-     {
-       this.postContrasena(password1);
-       this.exitoCon = true;
-       //setTimeout(this.switchAlerta(this.exitoCon), 8000);
-     }
-     else{
-       this.resppass = true;
-     }
-     
-   }
-
-   postContrasena(password1: string){
-     let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
-     let search = new URLSearchParams();
-     search.set('function', 'upDateContrasena');
-     search.set('constrasena', password1);
-     search.set('id_usuario', this.id);
-
-        search.set('rol_usuario_id', "1001");
-        search.set('token', this.global.token);
-        this.http.get(url, {search}).subscribe(res => {
-                                              res.json();
-                                              this.upContValidator(res.json());
-                                            });
-   }
-
-   upContValidator(respuesta: any){
-    console.log(respuesta)
-    if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
-      window.alert(respuesta.estatus);
-    }
-    else{
-      
-    }
-  }
-
-  switchAlerta(exitoCon: any){
-    this.exitoCon = false;
-  }
-
-  regresaUsuario(){
-    this.router.navigate(['administrador/usuarios']);
+  regresaObra(){
+    this.router.navigate(['administrador/obras']);
   }
 
 
-  subirFoto(){
-    this.router.navigate(['administrador/insertar-foto/'+this.id]);
-  }
+  
 
   llenaRoles(resp: any)
   {
     console.log(resp);
-    this.mis_roles= new Array(resp.length);
+    this.mis_con= new Array(resp.length);
     var j=resp.length-1;
     for (var _i = 0; _i < resp.length; _i++ )
     {
-      this.mis_roles[_i]=resp[j];
+      this.mis_con[_i]=resp[j];
       j--;
 
     }
+    this.cargando=this.cargando-1;
   }
 
-  llenaLaboratorio(resp: any)
+  llenaClientes(resp: any)
   {
         console.log(resp);
-    this.mis_lab= new Array(resp.length);
+    this.mis_cli= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
-      this.mis_lab[_i]=resp[_i];
+      this.mis_cli[_i]=resp[_i];
 
     }
+    this.cargando=this.cargando-1;
   }
 
   mostrar()
@@ -226,28 +174,28 @@ export class ObraDetailComponent implements OnInit {
   }
 
 
-  actualizarUsuario(nombre: string, apellido: string,
-                    laboratorio_id: string, nss:string,
-                    email: string, fechaDeNac: string,
-                    id_usuario: string, rol_usuario_id: string, )
+  actualizarObra(obra: string, prefijo: string, fechaDeCre: string, descripcion: string, id_cliente: string, id_concretera:string, tipo: string, revenimiento: string, incertidumbre : string)
   {
-    let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'upDate');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', '1001');
+    this.cargando=1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/obra/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'upDate');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', '1001');
+    search.set('id_obra', this.id);
 
-
-    formData.append('id_usuario', id_usuario);
-    formData.append('nombre', nombre);
-    formData.append('apellido', apellido);
-    formData.append('laboratorio_id', laboratorio_id);
-    formData.append('nss', nss);
-    formData.append('email', email);
-    formData.append('fechaDeNac', fechaDeNac);
-    formData.append('rol_usuario_id_new', rol_usuario_id);
-
-    this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
+    search.set('obra', obra);
+    search.set('prefijo', prefijo);
+    search.set('fechaDeCreacion', fechaDeCre);
+    search.set('descripcion', descripcion);
+    search.set('cliente_id', id_cliente);
+    search.set('concretera', id_concretera);
+    search.set('tipo', tipo);
+    search.set('revenimiento', revenimiento);
+    search.set('incertidumbre', incertidumbre);
+    
+    this.http.get(url, {search}).subscribe(res => this.respuestaError(res.json()) );
 
 
   }
@@ -263,6 +211,7 @@ export class ObraDetailComponent implements OnInit {
     {
       location.reload();
     }
+    console.log(resp);
   }
 
 
@@ -270,29 +219,21 @@ export class ObraDetailComponent implements OnInit {
   {
     console.log(respuesta);
     this.model=respuesta;
-    console.log(respuesta.foto);
-    if(respuesta.foto == "null"){
-      this.imgUrl= "../assets/img/gabino.jpg";
-    }
-    else{
-      this.imgUrl= this.global.assetsRoot+respuesta.foto;
-    }
+    this.cargando=this.cargando-1;
   }
   
   
-   model = new Usuario(this.id_usuario,
-                       this.email,
-                       this.nombre,
-                       this.apellido,
-                       this.fechaDeNac,
+   model = new Obra(this.id_obra,
+                       this.id_concretera,
+                       this.obra,
+                       this.revenimiento,
+                       this.incertidumbre,
+                       this.prefijo,
+                       this.fechaDeCre,
                        this.foto,
-                       this.rol,
-                       this.nss,
+                       this.descripcion,
                        this.laboratorio,
-                       this.estatus, "", "");
+                       this.tipo,
+                       this.id_cliente,"");
 
-   model2= new Password(
-                         this.password1,
-                         this.npassword
-                        )
 }
