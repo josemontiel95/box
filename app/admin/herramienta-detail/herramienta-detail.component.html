@@ -18,8 +18,18 @@
         </div>
         <div class="card-body">
                     <form (ngSubmit)="onSubmit()" #herramientaForm="ngForm">
+                      <div class="row">
+                <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="id_herramienta">ID Herramienta.</label>
+                  <input type="text" disabled="" id="id_herramienta"  
+                   [(ngModel)]="model.id_herramienta" 
+                  class="form-control" 
+                  name="id_herramienta" placeholder="" #id_herramienta="ngModel">
+                </div>
+                </div>
+              </div>
             <div class="row">
-
               <div class="col-md-6 col-12">
                  <div class="form-group">
                   <label for="herramienta_tipo_id">Tipos</label>
@@ -40,7 +50,7 @@
 
             <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label for="placas">Placas</label>
+                  <label for="placas">Placas/identificador</label>
                   <input type="text" [disabled]="!hidden" id="placas"  
                    [(ngModel)]="model.placas" 
                   class="form-control" 
@@ -90,24 +100,19 @@
 
 
     <div class="col-md-4">
-      <div class="card card-user">
-        <div class="image">
+      <div class="card card">
+         <div class="image">
           <img src="../assets/img/Labo.jpg" alt="...">
-        </div>
+            </div>
         <div class="card-body">
           <div class="author">
-            
-              <h5 class="title">Panel</h5>
            
-            <p class="description">
-              Hola
-            </p>
               <div class="col-md-6 ml-auto mr-auto">
-                <div class="row" align="center">
                     <button type="button" class="btn btn-danger btn-round " (click)="desactivarHerramienta()" *ngIf="desBut">Desactivar</button>
                     <button type="button" class="btn btn-success btn-round " (click)="activarHerramienta()" *ngIf="actBut">Activar</button>
                 </div>
               </div>
+            </div>
       </div>
     </div>
   </div>
