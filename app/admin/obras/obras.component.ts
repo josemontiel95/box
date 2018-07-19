@@ -114,10 +114,10 @@ export class ObrasComponent implements OnInit{
      let search = new URLSearchParams();
       
       if(active == 0){
-        search.set('function', 'deactive');
+        search.set('function', 'deactivate');
       }
       else{
-        search.set('function', 'active');
+        search.set('function', 'activate');
       }
         search.set('id_obra', this.id);
         search.set('rol_usuario_id', "1001");

@@ -77,7 +77,7 @@ export class ObraDetailComponent implements OnInit {
 
      url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
     search = new URLSearchParams();
-    search.set('function', 'getAllUser');
+    search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     this.http.get(url, {search}).subscribe(res => {this.llenaClientes(res.json());
@@ -87,7 +87,7 @@ export class ObraDetailComponent implements OnInit {
 
     url = `${this.global.apiRoot}/obra/get/endpoint.php`;
 	  search = new URLSearchParams();
-	  search.set('function', 'getObraByID');
+	  search.set('function', 'getByIDAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     search.set('id_obra', this.id);
