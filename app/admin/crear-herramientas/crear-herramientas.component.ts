@@ -36,19 +36,34 @@ export class CrearHerramientasComponent implements OnInit {
   crearHerramienta(  placas: string, herramienta_tipo_id: string, condicion: string, fechaDeCompra: string )
   {
       this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'insert');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
+    let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertAdmin');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', "1001");
 
-    search.set('placas', placas);
-    search.set('herramienta_tipo_id', herramienta_tipo_id);  
-    search.set('condicion', condicion);
-    search.set('fechaDeCompra', fechaDeCompra);
-    this.http.get(url, {search}).subscribe(res => console.log(res.json()) );
+    formData.append('placas', placas);
+    formData.append('herramienta_tipo_id', herramienta_tipo_id);  
+    formData.append('condicion', condicion);
+    formData.append('fechaDeCompra', fechaDeCompra);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());
+                                            } );
 
   }
+
+
+   respuestaSwitch(res: any){
+     console.log(res);
+     if(res.error!= 0){
+       window.alert("Intentalo otra vez");
+       location.reload();
+     }
+     else{
+       location.reload();
+     }
+   }
+
 
   aver( fechaDeCompra: string, placas: string, condicion: string, herramienta_tipo_id: string )
   {

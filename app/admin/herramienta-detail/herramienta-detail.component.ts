@@ -69,7 +69,7 @@ export class HerramientaDetailComponent implements OnInit {
 
     url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
 	  search = new URLSearchParams();
-	  search.set('function', 'getHerramientaByID');
+	  search.set('function', 'getByIDAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     search.set('id_herramienta', this.id);
@@ -114,7 +114,7 @@ export class HerramientaDetailComponent implements OnInit {
                           fechaDeCompra: string, condicion: string)
   {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
     let formData:FormData = new FormData();
     //let search = new URLSearchParams();
     formData.append('function', 'upDateAdmin');
@@ -127,7 +127,9 @@ export class HerramientaDetailComponent implements OnInit {
     formData.append('condicion', condicion);
     formData.append('herramienta_tipo_id', herramienta_tipo_id);
     //post  formData
-    this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
+    this.http.post(url, formData).subscribe(res =>  {
+                                              this.respuestaError(res.json());
+                                            } );
     /*
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -198,19 +200,19 @@ export class HerramientaDetailComponent implements OnInit {
    }
 
    switchActive(active: number){
-     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-     let search = new URLSearchParams();
+     let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
+     let formData:FormData = new FormData();
       
       if(active == 0){
-        search.set('function', 'deactivate');
+        formData.append('function', 'deactivate');
       }
       else{
-        search.set('function', 'activate');
+       formData.append('function', 'activate');
       }
-        search.set('id_herramienta', this.id);
-        search.set('rol_usuario_id', "1001");
-        search.set('token', this.global.token);
-        this.http.get(url, {search}).subscribe(res => {
+        formData.append('id_herramienta', this.id);
+        formData.append('rol_usuario_id', "1001");
+        formData.append('token', this.global.token);
+        this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             });
        
