@@ -106,19 +106,20 @@ export class IconsComponent implements OnInit{
    }
 
    switchActive(active: number){
-     let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
-     let search = new URLSearchParams();
+    let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
+    let formData:FormData = new FormData();
       
       if(active == 0){
-        search.set('function', 'deactivate');
+        formData.append('function', 'deactivate');
       }
       else{
-        search.set('function', 'activate');
+        formData.append('function', 'activate');
       }
-        search.set('id_usuario', this.id);
-        search.set('rol_usuario_id', "1001");
-        search.set('token', this.global.token);
-        this.http.get(url, {search}).subscribe(res => {
+        formData.append('id_usuario', this.id);
+        formData.append('rol_usuario_id', "1001");
+        formData.append('token', this.global.token);
+
+        this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             });
        
@@ -174,13 +175,13 @@ export class IconsComponent implements OnInit{
     }
 
 
-    if(active == 1)
+    if(active == "Si")
     {
       this.desBut = true;
       this.actBut= false;
     }
     else{
-      if (active == 0) {
+      if (active == "No") {
         this.desBut = false;
         this.actBut= true;
       }
