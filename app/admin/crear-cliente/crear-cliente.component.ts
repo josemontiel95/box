@@ -111,7 +111,7 @@ export class CrearClienteComponent implements OnInit
   onSubmit() { this.submitted = true; }
 
 
-  crearCliente(nombre: string, apellido: string, laboratorio_id: string, nss: string, email: string, fechaDeNac: string, rol_usuario_id: string)
+  crearCliente(nombre: string, apellido: string, laboratorio_id: string, email: string, fechaDeNac: string, rol_usuario_id: string)
   {
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
@@ -122,7 +122,6 @@ export class CrearClienteComponent implements OnInit
     search.set('nombre', nombre);
     search.set('apellido', apellido);
     search.set('laboratorio_id', laboratorio_id);
-    search.set('nss', nss);    
     search.set('email', email);
     search.set('fechaDeNac', fechaDeNac);
     search.set('rol_usuario_id_new', rol_usuario_id);

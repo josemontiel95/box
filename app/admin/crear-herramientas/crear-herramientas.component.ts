@@ -30,10 +30,10 @@ export class CrearHerramientasComponent implements OnInit {
     mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
-  model = new Herramienta('', '', '', '', '', '', '', '', '');
+  model = new Herramienta('', '', '', '', '', '', '');
   condi= [1,2,3,4,5,6,7,8,9,10];
   
-  crearHerramienta( fechaDeCompra: string, placas: string, condicion: string, tipo: string, active: string , estatus: string ,error: string ,herramienta_tipo_id: string )
+  crearHerramienta( fechaDeCompra: string, placas: string, condicion: string,herramienta_tipo_id: string )
   {
       this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
@@ -45,9 +45,6 @@ export class CrearHerramientasComponent implements OnInit {
     search.set('fechaDeCompra', fechaDeCompra);
     search.set('placas', placas);
     search.set('condicion', condicion);
-    search.set('tipo', tipo);    
-    search.set('active', active);
-    search.set('estatus', estatus);
     search.set('herramienta_tipo_id', herramienta_tipo_id);
     this.http.get(url, {search}).subscribe(res => res.json() );
 
