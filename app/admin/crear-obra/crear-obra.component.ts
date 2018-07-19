@@ -5,7 +5,7 @@ import { Global } from "../../interfaces/int.Global";
 import { CrearResp } from "../../interfaces/int.CrearResp";
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import * as moment from 'moment';
-import { Usuario }    from './Obra';
+import { Obra }    from './Obra';
 import {
     ReactiveFormsModule,
     FormsModule,
@@ -20,7 +20,7 @@ import {
 @Component({
   selector: 'app-crear-obra',
   templateUrl: './crear-obra.component.html',
-  styleUrls: ['./crear-obra.component.scss']
+  styleUrls: ['./crear-obra.component.scss','../../loadingArrows.css']
 })
 export class CrearObraComponent implements OnInit
   {
@@ -29,31 +29,36 @@ export class CrearObraComponent implements OnInit
               private data: DataService, 
               private http: Http) { }
  
-    id_usuario: string ;
-    nombre: string;
-    apellido: string;
-    email: string;
-    fechaDeNac: string;
+    id_obra: string ;
+    obra: string;
+    revenimiento: string;
+    incertidumbre: string;
+    prefijo: string;
+    fechaDeCre: string;
     foto: string;
-    laboratorio_id: string;
+    cliente_id: string;
+    id_concretera: string;
+    tipo: string;
     laboratorio: string;
-    nss: string;
-    rol: string;
+    descripcion: string;
     submitted = false;
     hidden = false;
-    mis_roles: Array<any>;
-    mis_lab: Array<any>;
+    cargando= 2;
+    mis_con: Array<any>;
+    mis_cli: Array<any>;
  
-   model = new Usuario(this.id_usuario,
-                       this.email,
-                       this.nombre,
-                       this.apellido,
-                       this.fechaDeNac,
+   model = new Obra(this.id_obra,
+                       this.id_concretera,
+                       this.obra,
+                       this.revenimiento,
+                       this.incertidumbre,
+                       this.prefijo,
+                       this.fechaDeCre,
                        this.foto,
-                       this.rol,
-                       this.nss,
+                       this.descripcion,
                        this.laboratorio,
-                       this.laboratorio_id, "", "");
+                       this.tipo,
+                       this.cliente_id,);
 
   crearMessage: string= "";
   crearMessageCargando: string= "";
@@ -62,8 +67,8 @@ export class CrearObraComponent implements OnInit
     //inicio y llenados
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-
-    let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
+    this.cargando=2;
+    let url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
   let search = new URLSearchParams();
   search.set('function', 'getAll');
     search.set('token', this.global.token);
@@ -72,12 +77,12 @@ export class CrearObraComponent implements OnInit
                                                  this.rolValidator(res.json());
                                                 });
 
-     url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
+     url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
     search = new URLSearchParams();
-    search.set('function', 'getAll');
+    search.set('function', 'getAllUser');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
-    this.http.get(url, {search}).subscribe(res => {this.llenaLaboratorio(res.json());
+    this.http.get(url, {search}).subscribe(res => {this.llenaClientes(res.json());
                                                    this.labValidator(res.json());
                                                  });
 
@@ -105,27 +110,28 @@ export class CrearObraComponent implements OnInit
 
   llenaRoles(resp: any)
   {
-    this.mis_roles= new Array(resp.length);
-    var j=resp.length-1;
+    this.mis_con= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
-      this.mis_roles[_i]=resp[j];
-      j--;
-
+      this.mis_con[_i]=resp[_i];
     }
+    console.log(this.mis_con);
+    this.cargando=this.cargando-1;
   }
 
-  llenaLaboratorio(resp: any)
+  llenaClientes(resp: any)
   {
-    this.mis_lab= new Array(resp.length);
+    this.mis_cli= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
-      this.mis_lab[_i]=resp[_i];
+      this.mis_cli[_i]=resp[_i];
 
     }
+    console.log(this.mis_cli);
+    this.cargando=this.cargando-1;
   }
 
-  regresaUsuario(){
+  regresaObra(){
     this.router.navigate(['administrador/obras']);
   }
 
@@ -135,25 +141,27 @@ export class CrearObraComponent implements OnInit
   onSubmit() { this.submitted = true; }
 
 
-  crearUsuario(nombre: string, apellido: string, laboratorio_id: string, nss: string, email: string, fechaDeNac: string, rol_usuario_id: string, contrasena: string)
+  crearObra(obra: string, revenimiento: string, incertidumbre : string, prefijo: string, cliente_id: string, tipo: string, descripcion: string, fechaDeCre: string, id_concretera:string )
   {
+    this.cargando=1;
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/obra/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'insert');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
-    search.set('nombre', nombre);
-    search.set('apellido', apellido);
-    search.set('laboratorio_id', laboratorio_id);
-    search.set('nss', nss);    
-    search.set('email', email);
-    search.set('fechaDeNac', fechaDeNac);
-    search.set('rol_usuario_id_new', rol_usuario_id);
-    search.set('constrasena', contrasena);
+    search.set('obra', obra);
+    search.set('revenimiento', revenimiento);
+    search.set('incertidumbre', incertidumbre);
+    search.set('prefijo', prefijo);
+    search.set('cliente_id', cliente_id);
+    search.set('concretera', id_concretera);
+    search.set('tipo', tipo);
+    search.set('descripcion', descripcion);
+    search.set('fechaDeCreacion', fechaDeCre);
     this.crearMessageCargando="Cargando...";
     this.http.get(url, {search}).subscribe(res => this.diplay(res.json()) );
-
+    
 
   }
 
@@ -163,7 +171,7 @@ export class CrearObraComponent implements OnInit
       this.crearMessage="";
       this.crearMessageCargando=crearResp.estatus;
       console.log(crearResp);
-      setTimeout(()=>{ this.router.navigate(['administrador/insertar-foto/'+crearResp.id_usuario])}, 1500);
+      //setTimeout(()=>{ this.router.navigate(['administrador/insertar-foto/'+crearResp.id_obra])}, 1500);
        
     }else{
       this.crearMessageCargando="";
@@ -191,6 +199,8 @@ export class CrearObraComponent implements OnInit
       }
       
     }
+    this.cargando=this.cargando-1;
+    this.router.navigate(['administrador/obras']);
   }
 
 

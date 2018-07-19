@@ -1,18 +1,18 @@
-export class Usuario 
+export class Obra 
 {
 	constructor(
-	  public id_usuario: string,
-	  public nombre: string,
-  	public apellido: string,
-  	public laboratorio_id: string,
+	  public id_obra: string,
+	  public obra: string,
+    public revenimiento: string,
+    public incertidumbre: string,
+  	public prefijo: string,
+  	public cliente_id: string,
+    public id_concretera: string,
+    public tipo: string,
  	  public laboratorio: string,
-  	public nss: string,
-  	public rol: string,
-  	public email: string,
-  	public fechaDeNac: string,
-  	public foto: string, 
-    public rol_usuario_id: string, 
-    public contrasena: string
+  	public descripcion: string,
+    public fechaDeCre: string,
+  	public foto: string,
   	) {  }
 
 }

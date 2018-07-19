@@ -40,6 +40,8 @@ export class ObrasComponent implements OnInit{
       {headerName: 'Nombre Cliente', field: 'nombre' },
       {headerName: 'Created', field: 'createdON' },
       {headerName: 'Last Edited', field: 'lastEditedON' },
+      {headerName: 'Revenimiento', field: 'revenimiento' },
+      {headerName: 'Incertidumbre', field: 'incertidumbre' },
       {headerName: 'Active', field: 'active' },
 
     ];
@@ -117,7 +119,7 @@ export class ObrasComponent implements OnInit{
       else{
         search.set('function', 'active');
       }
-        search.set('id_usuario', this.id);
+        search.set('id_obra', this.id);
         search.set('rol_usuario_id', "1001");
         search.set('token', this.global.token);
         this.http.get(url, {search}).subscribe(res => {
@@ -129,7 +131,7 @@ export class ObrasComponent implements OnInit{
    respuestaSwitch(res: any){
      console.log(res);
      if(res.error!= 0){
-       window.alert("Intentalo otra vez");
+       window.alert(res.estatus);
        location.reload();
      }
      else{
