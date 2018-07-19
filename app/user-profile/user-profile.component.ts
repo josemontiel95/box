@@ -158,7 +158,7 @@ export class UserProfileComponent implements OnInit {
   {
     let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'upDate');
+    formData.append('function', 'upDateAdmin');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', '1001');
 
