@@ -4,7 +4,6 @@ import { DataService } from "../../data.service";
 import { LoginResp } from "../../interfaces/int.LoginResp";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
-import { Cliente }    from './cliente';
 import {
     ReactiveFormsModule,
     FormsModule,
@@ -23,6 +22,24 @@ export class Password
     ) {  }
 
 }
+
+export class Cliente 
+{
+  constructor(
+    public id_cliente: string,
+    public rfc: string,    
+    public razonSocial: string,
+    public nombre: string,    
+    public email: string,
+   public telefono: string,
+    public nombreContacto: string,
+    public direccion: string,
+    public telefonoDeContacto: string,
+    public contrasena: string
+    ) {  }
+
+}
+
 
 @Component({
   selector: 'app-cliente-detail',
@@ -58,7 +75,7 @@ export class ClienteDetailComponent implements OnInit {
     "",
     "",
     "",
-    "", "","","");
+    "", );
 
 
     model2= new Password(

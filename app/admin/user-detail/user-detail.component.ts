@@ -89,7 +89,7 @@ export class UserDetailComponent implements OnInit {
 
     url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
 	  search = new URLSearchParams();
-	  search.set('function', 'getUserByID');
+	  search.set('function', 'getByIDAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     search.set('id_usuario', this.id);

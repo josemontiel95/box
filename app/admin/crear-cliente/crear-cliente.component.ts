@@ -111,7 +111,7 @@ export class CrearClienteComponent implements OnInit
   onSubmit() { this.submitted = true; }
 
 
-  crearCliente(nombre: string, apellido: string, laboratorio_id: string, email: string, fechaDeNac: string, rol_usuario_id: string)
+  crearCliente(razonSocial: string,  nombre: string ,  rfc: string, telefonoDeContacto: string ,direccion: string,  email: string, telefono: string,  nombreContacto: string   )
   {
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
@@ -119,24 +119,26 @@ export class CrearClienteComponent implements OnInit
     search.set('function', 'insert');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
+    search.set('razonSocial', razonSocial);
     search.set('nombre', nombre);
-    search.set('apellido', apellido);
-    search.set('laboratorio_id', laboratorio_id);
-    search.set('email', email);
-    search.set('fechaDeNac', fechaDeNac);
-    search.set('rol_usuario_id_new', rol_usuario_id);
+    search.set('telefono', telefono);  
+    search.set('direccion', direccion); 
+    search.set('rfc', rfc);      
+    search.set('telefonoDeContacto', telefonoDeContacto);     
+    search.set('email', email);  
+    search.set('nombreContacto', nombreContacto); 
     this.crearMessageCargando="Cargando...";
     this.http.get(url, {search}).subscribe(res => this.diplay(res.json()) );
 
   }
 
-  diplay(crearResp: CrearResp){
+ diplay(crearResp: CrearResp){
     
     if(crearResp.error==0){
       this.crearMessage="";
       this.crearMessageCargando=crearResp.estatus;
       console.log(crearResp);
-      setTimeout(()=>{ this.router.navigate(['administrador/insertar-foto/'+crearResp.id_usuario])}, 1500);
+      setTimeout(()=>{ this.router.navigate(['administrador/clientes'])}, 1500);
        
     }else{
       this.crearMessageCargando="";

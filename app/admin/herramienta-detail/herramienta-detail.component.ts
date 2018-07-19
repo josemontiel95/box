@@ -27,16 +27,16 @@ export class HerramientaDetailComponent implements OnInit {
     placas: string;
     condicion: string;
     tipo: string;
-    active: string;
     estatus: string;
     error: string;
     cargando= 2;
-
+    active: any;
     submitted = false;
     hidden = false;
     mis_tipos: Array<any>;
     mis_lab: Array<any>;
     imgUrl = "";
+    condi= [1,2,3,4,5,6,7,8,9,10];
     onSubmit() { this.submitted = true; }
 
     loginMessage: string= "";
@@ -62,7 +62,7 @@ export class HerramientaDetailComponent implements OnInit {
     let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
     let search = new URLSearchParams();
     
-    search.set('function', 'getAll');
+    search.set('function', 'getAllUser');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
@@ -110,33 +110,42 @@ export class HerramientaDetailComponent implements OnInit {
 
   }
 
-  actualizarUsuario(nombre: string, apellido: string,
-                    laboratorio_id: string, nss:string,
-                    email: string, fechaDeNac: string,
-                    id_usuario: string, rol_usuario_id: string, )
+  actualizarHerramienta(herramienta_tipo_id:string, placas: string,
+                          fechaDeCompra: string, condicion: string)
   {
-    let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
+    /*let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let formData:FormData = new FormData();
+    //let search = new URLSearchParams();
     formData.append('function', 'upDate');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', '1001');
+    //formData.append
+    formData.append('id_herramienta', this.id);
+    formData.append('fechaDeCompra', fechaDeCompra);
+    formData.append('placas', placas);
+    formData.append('condicion', condicion);
+    formData.append('herramienta_tipo_id', herramienta_tipo_id);
+    //post  formData
+    this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );*/
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'upDate');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', "1001");
 
-    formData.append('id_usuario', id_usuario);
-    formData.append('nombre', nombre);
-    formData.append('apellido', apellido);
-    formData.append('laboratorio_id', laboratorio_id);
-    formData.append('nss', nss);
-    formData.append('email', email);
-    formData.append('fechaDeNac', fechaDeNac);
-    formData.append('rol_usuario_id_new', rol_usuario_id);
-
-    this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
-
-
+    search.set('id_herramienta', this.id);
+    search.set('fechaDeCompra', fechaDeCompra);
+    search.set('placas', placas);
+    search.set('condicion', condicion);
+    search.set('herramienta_tipo_id', herramienta_tipo_id);
+    this.http.get(url, {search}).subscribe(res => this.respuestaError(res.json()) );
+    
   }
 
 
   respuestaError(resp: any){
+    console.log(resp);
     if(resp.error!=0)
     {
       window.alert(resp.estatus);
@@ -153,15 +162,67 @@ export class HerramientaDetailComponent implements OnInit {
     console.log(respuesta);
      
     setTimeout(()=>{ this.model=respuesta;
+                      this.active= this.model.active;
+                      this.status(this.active);
                      this.cargando=this.cargando-1;
                      console.log("llenado this.cargando: "+this.cargando);
-                     }, 100);
-    
-    
-    
-    
+                     }, 100);   
   }
   
 
+  status(active: any)
+  {
+    if (active == 1) {
+     this.actBut = false;
+     this.desBut = true;
+          }
+     else
+     {
+     this.actBut= true;
+     this.desBut= false;
+     }     
+
+  }
+
+  desactivarHerramienta(){
+     this.actBut= true;
+     this.desBut= false;
+     this.switchActive(0);
+  }
+
+   activarHerramienta(){
+     this.actBut = false;
+     this.desBut = true;
+     this.switchActive(1);
+   }
+
+   switchActive(active: number){
+     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+     let search = new URLSearchParams();
+      
+      if(active == 0){
+        search.set('function', 'deactive');
+      }
+      else{
+        search.set('function', 'active');
+      }
+        search.set('id_herramienta', this.id);
+        search.set('rol_usuario_id', "1001");
+        search.set('token', this.global.token);
+        this.http.get(url, {search}).subscribe(res => {
+                                              this.respuestaSwitch(res.json());
+                                            });
+       
+   }
+   respuestaSwitch(res: any){
+     console.log(res);
+     if(res.error!= 0){
+       window.alert("Intentalo otra vez");
+       location.reload();
+     }
+     else{
+       location.reload();
+     }
+   }
 
 }

@@ -33,7 +33,7 @@ export class CrearHerramientasComponent implements OnInit {
   model = new Herramienta('', '', '', '', '', '', '');
   condi= [1,2,3,4,5,6,7,8,9,10];
   
-  crearHerramienta( fechaDeCompra: string, placas: string, condicion: string,herramienta_tipo_id: string )
+  crearHerramienta(  placas: string, herramienta_tipo_id: string, condicion: string, fechaDeCompra: string )
   {
       this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
@@ -42,14 +42,22 @@ export class CrearHerramientasComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
 
-    search.set('fechaDeCompra', fechaDeCompra);
     search.set('placas', placas);
+    search.set('herramienta_tipo_id', herramienta_tipo_id);  
     search.set('condicion', condicion);
-    search.set('herramienta_tipo_id', herramienta_tipo_id);
-    this.http.get(url, {search}).subscribe(res => res.json() );
+    search.set('fechaDeCompra', fechaDeCompra);
+    this.http.get(url, {search}).subscribe(res => console.log(res.json()) );
 
   }
 
+  aver( fechaDeCompra: string, placas: string, condicion: string, herramienta_tipo_id: string )
+  {
+    console.log(fechaDeCompra,
+placas,
+condicion,
+herramienta_tipo_id);
+
+  }
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando=2;
@@ -58,7 +66,7 @@ export class CrearHerramientasComponent implements OnInit {
     let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
     let search = new URLSearchParams();
     
-    search.set('function', 'getAll');
+    search.set('function', 'getAllUser');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
