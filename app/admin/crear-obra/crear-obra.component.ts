@@ -70,7 +70,7 @@ export class CrearObraComponent implements OnInit
     this.cargando=2;
     let url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
   let search = new URLSearchParams();
-  search.set('function', 'getAll');
+  search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
   this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());

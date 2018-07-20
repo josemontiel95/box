@@ -93,7 +93,7 @@ export class ClienteDetailComponent implements OnInit {
 
     let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
 	  let search = new URLSearchParams();
-	  search.set('function', 'getClienteByID');
+	  search.set('function', 'getByIDAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     search.set('id_cliente', this.id);
@@ -216,7 +216,7 @@ export class ClienteDetailComponent implements OnInit {
   {
     let url = `${this.global.apiRoot}/cliente/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'upDate');
+    formData.append('function', 'upDateAdmin');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', '1001');
 

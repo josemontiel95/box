@@ -75,7 +75,7 @@ export class ClientesComponent implements OnInit  {
     this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAll');
+    search.set('function', 'getAllAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     console.log(search);
@@ -114,19 +114,19 @@ export class ClientesComponent implements OnInit  {
    }
 
    switchActive(active: number){
-     let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
-     let search = new URLSearchParams();
+     let url = `${this.global.apiRoot}/cliente/post/endpoint.php`;
+     let formData:FormData = new FormData();
       
       if(active == 0){
-        search.set('function', 'deactive');
+        formData.append('function', 'deactivate');
       }
       else{
-        search.set('function', 'active');
+        formData.append('function', 'activate');
       }
-        search.set('id_cliente', this.id_cliente);
-        search.set('rol_usuario_id', "1001");
-        search.set('token', this.global.token);
-        this.http.get(url, {search}).subscribe(res => {
+        formData.append('id_cliente', this.id_cliente);
+        formData.append('rol_usuario_id', "1001");
+        formData.append('token', this.global.token);
+        this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             });
        
