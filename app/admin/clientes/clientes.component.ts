@@ -22,6 +22,7 @@ export class ClientesComponent implements OnInit  {
   desBut=true;
   actBut=false;
   imgUrl="";
+  foto= "";
   id_cliente= "";
   rfc= "";
   razonSocial= "";
@@ -156,6 +157,8 @@ export class ClientesComponent implements OnInit  {
     var telefonoDeContacto = "";
     var telefono = "";
     var active = ""
+    var foto = "";
+
 
     selectedRows.forEach(function(selectedRow, index) {
       id_cliente += selectedRow.id_cliente;
@@ -167,12 +170,14 @@ export class ClientesComponent implements OnInit  {
       nombreContacto += selectedRow.nombreContacto;
       telefonoDeContacto += selectedRow.telefonoDeContacto;
       telefono+= selectedRow.telefono;
-       active += selectedRow.active;
+      active += selectedRow.active;
+      foto += selectedRow.foto;
+
     });
-    this.displayShortDescription(id_cliente, razonSocial, nombre, direccion, email, nombreContacto, rfc, active);
+    this.displayShortDescription(id_cliente, razonSocial, nombre, direccion, email, nombreContacto, rfc, active, foto);
   }
 
-  displayShortDescription(id_cliente: any, razonSocial: any, nombre: any, direccion: any, email: any, nombreContacto: any, rfc: any, active: any)
+  displayShortDescription(id_cliente: any, razonSocial: any, nombre: any,  direccion: any, email: any, nombreContacto: any, rfc: any, active: any, foto:any)
   {
     
 
@@ -184,6 +189,13 @@ export class ClientesComponent implements OnInit  {
     this.rfc=rfc;
     this.direccion=direccion;
     this.nombreContacto=nombreContacto;
+    this.foto=foto;
+
+    if(this.foto== "null"){
+      this.imgUrl="../assets/img/gabino.jpg";
+    }else{
+      this.imgUrl= this.global.assetsRoot+this.foto;
+    }
     
     if(active == 1)
     {

@@ -126,7 +126,7 @@
           <form (ngSubmit)="onSubmit()" #passwordForm="ngForm">
           <div class="author">
             
-              <img class="avatar border-gray" src="../assets/img/gabino.jpg" (click)="subirFoto()" alt="...">
+              <img class="avatar border-gray" src="{{this.imgUrl}}" (click)="subirFoto()" alt="...">
               <!--{{imgUrl}} binding para la foto quitado con fines esteticos-->
               <h5 class="title">{{model.razonSocial}}</h5>
            
