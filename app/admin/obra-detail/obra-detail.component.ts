@@ -77,7 +77,7 @@ export class ObraDetailComponent implements OnInit {
 
      url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
     search = new URLSearchParams();
-    search.set('function', 'getAllUser');
+    search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     this.http.get(url, {search}).subscribe(res => {this.llenaClientes(res.json());
@@ -87,7 +87,7 @@ export class ObraDetailComponent implements OnInit {
 
     url = `${this.global.apiRoot}/obra/get/endpoint.php`;
 	  search = new URLSearchParams();
-	  search.set('function', 'getObraByID');
+	  search.set('function', 'getByIDAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     search.set('id_obra', this.id);
@@ -174,28 +174,28 @@ export class ObraDetailComponent implements OnInit {
   }
 
 
-  actualizarObra(obra: string, prefijo: string, fechaDeCre: string, descripcion: string, id_cliente: string, id_concretera:string, tipo: string, revenimiento: string, incertidumbre : string)
-  {
+  actualizarObra(obra: string, prefijo: string, fechaDeCre: string, descripcion: string, id_cliente: string, id_concretera:string, tipo: string, revenimiento: string, incertidumbre : string){
     this.cargando=1;
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/obra/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'upDate');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', '1001');
-    search.set('id_obra', this.id);
+    let url = `${this.global.apiRoot}/obra/post/endpoint.php`;
+    let formData:FormData = new FormData();
 
-    search.set('obra', obra);
-    search.set('prefijo', prefijo);
-    search.set('fechaDeCreacion', fechaDeCre);
-    search.set('descripcion', descripcion);
-    search.set('cliente_id', id_cliente);
-    search.set('concretera', id_concretera);
-    search.set('tipo', tipo);
-    search.set('revenimiento', revenimiento);
-    search.set('incertidumbre', incertidumbre);
+    formData.append('function', 'upDateAdmin');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', '1001');
+    formData.append('id_obra', this.id);
+
+    formData.append('obra', obra);
+    formData.append('prefijo', prefijo);
+    formData.append('fechaDeCreacion', fechaDeCre);
+    formData.append('descripcion', descripcion);
+    formData.append('cliente_id', id_cliente);
+    formData.append('concretera', id_concretera);
+    formData.append('tipo', tipo);
+    formData.append('revenimiento', revenimiento);
+    formData.append('incertidumbre', incertidumbre);
     
-    this.http.get(url, {search}).subscribe(res => this.respuestaError(res.json()) );
+    this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
 
 
   }
