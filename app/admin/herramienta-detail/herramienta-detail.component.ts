@@ -163,15 +163,37 @@ export class HerramientaDetailComponent implements OnInit {
 
   llenado(respuesta: any){
     console.log(respuesta);
+    this.model=respuesta;
+    if(respuesta.isHerramienta_tipoActive==0){
+      this.addHerramientaTipo(respuesta.herramienta_tipo_id,respuesta.tipo);
+    }
      
     setTimeout(()=>{ this.model=respuesta;
-                      this.active= this.model.active;
-                      this.status(this.active);
+                     this.active= this.model.active;
+                     this.status(this.active);
                      this.cargando=this.cargando-1;
                      console.log("llenado this.cargando: "+this.cargando);
-                     }, 100);   
+                     }, 100);  
   }
-  
+
+
+  addHerramientaTipo(herramienta_tipo_id: any,tipo: any){
+    let aux= new Array(this.mis_tipos.length+1);
+
+    let index=0;
+    for (var _i = 0; _i < aux.length; _i++ ){
+       if(_i < aux.length-1){
+        aux[_i]=this.mis_tipos[_i];
+      }else if(_i == aux.length-1){
+        aux[_i]={'id_herramienta_tipo':herramienta_tipo_id,'tipo':"*Desactivado*"+tipo+"*Desactivado*"};
+      }
+    }
+    this.mis_tipos= new Array(aux.length);
+    for (var _i = 0; _i < aux.length; _i++ ){
+      this.mis_tipos[_i]=aux[_i];
+    }
+  }
+ 
 
   status(active: any)
   {
