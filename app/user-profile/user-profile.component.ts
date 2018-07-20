@@ -201,6 +201,9 @@ export class UserProfileComponent implements OnInit {
     if(respuesta.isRolActive==0){
       this.addRol(respuesta.rol_usuario_id,respuesta.rol);
     }
+    if(respuesta.isLaboratorioActive==0){
+      this. addLabs(respuesta.laboratorio_id, respuesta.laboratorio );
+    }
     this.id = respuesta.id_usuario; //De aqui sacamos id para parametrisarlo en el método subirFoto.
     console.log(respuesta.foto);
     if(respuesta.foto == "null"){
@@ -232,6 +235,22 @@ export class UserProfileComponent implements OnInit {
     }
   }
   
+  addLabs(laboratorio_id: any,laboratorio: any){
+    let aux= new Array(this.mis_lab.length+1);
+
+    let index=0;
+    for (var _i = 0; _i < aux.length; _i++ ){
+       if(_i < aux.length-1){
+        aux[_i]=this.mis_lab[_i];
+      }else if(_i == aux.length-1){
+        aux[_i]={'id_laboratorio':laboratorio_id,'laboratorio':"*Desactivado*"+laboratorio+"*Desactivado*"};
+      }
+    }
+    this.mis_lab= new Array(aux.length);
+    for (var _i = 0; _i < aux.length; _i++ ){
+      this.mis_lab[_i]=aux[_i];
+    }
+  }
   
    model = new Usuario(this.id_usuario,
                        this.email,

@@ -79,6 +79,7 @@ export class ObrasComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.llenaTabla(res.json());
+                                            this.llenadoValidator(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
   }
@@ -92,6 +93,17 @@ export class ObrasComponent implements OnInit{
       this.rowData =repuesta;
     }
   }
+
+    llenadoValidator(respuesta: any){
+    console.log(respuesta)
+    if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
+      window.alert(respuesta.estatus);
+    }
+    else{
+      
+    }
+  }
+
 
    menosDetalles(){
      this.hidden=false;
