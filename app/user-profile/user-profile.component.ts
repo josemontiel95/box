@@ -54,7 +54,7 @@ export class UserProfileComponent implements OnInit {
 
   let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
   let search = new URLSearchParams();
-  search.set('function', 'getAll');
+  search.set('function', 'getForDroptdownAdmin');
   search.set('token', this.global.token);
   search.set('rol_usuario_id', "1001");
   this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
@@ -63,7 +63,7 @@ export class UserProfileComponent implements OnInit {
 
      url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
     search = new URLSearchParams();
-    search.set('function', 'getAll');
+    search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     this.http.get(url, {search}).subscribe(res => {this.llenaLaboratorio(res.json());
@@ -198,6 +198,9 @@ export class UserProfileComponent implements OnInit {
   {
     console.log(respuesta);
     this.model=respuesta;
+    if(respuesta.isRolActive==0){
+      this.addRol(respuesta.rol_usuario_id,respuesta.rol);
+    }
     this.id = respuesta.id_usuario; //De aqui sacamos id para parametrisarlo en el método subirFoto.
     console.log(respuesta.foto);
     if(respuesta.foto == "null"){
@@ -210,6 +213,23 @@ export class UserProfileComponent implements OnInit {
                      this.cargando=this.cargando-1;
                      console.log("llenado this.cargando: "+this.cargando);
                      }, 0);
+  }
+
+  addRol(rol_usuario_id: any,rol: any){
+    let aux= new Array(this.mis_roles.length+1);
+
+    let index=0;
+    for (var _i = 0; _i < aux.length; _i++ ){
+       if(_i < aux.length-1){
+        aux[_i]=this.mis_roles[_i];
+      }else if(_i == aux.length-1){
+        aux[_i]={'id_rol_usuario':rol_usuario_id,'rol':"*Desactivado*"+rol+"*Desactivado*"};
+      }
+    }
+    this.mis_roles= new Array(aux.length);
+    for (var _i = 0; _i < aux.length; _i++ ){
+      this.mis_roles[_i]=aux[_i];
+    }
   }
   
   
