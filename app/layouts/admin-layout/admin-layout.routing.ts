@@ -7,6 +7,7 @@ import { ObraDetailComponent } from '../../admin/obra-detail/obra-detail.compone
 import { CrearUsuarioComponent } from '../../admin/crear-usuario/crear-usuario.component';
 import { CrearObraComponent } from '../../admin/crear-obra/crear-obra.component';
 import { InsertarFotoComponent } from '../../admin/insertar-foto/insertar-foto.component';
+import { InsertarFotoClienteComponent } from '../../admin/insertar-fotocliente/insertar-fotocliente.component';
 import { TableListComponent } from '../../table-list/table-list.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../admin/icons/icons.component';
@@ -32,6 +33,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'crear-usuario',   component: CrearUsuarioComponent },
     { path: 'crear-obra',   component: CrearObraComponent },
     { path: 'insertar-foto/:id',   component: InsertarFotoComponent },
+    { path: 'insertar-fotocliente/:id',   component: InsertarFotoClienteComponent },
     { path: 'prueba',  		  component: PruebaComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },

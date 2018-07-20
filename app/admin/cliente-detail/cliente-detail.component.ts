@@ -62,6 +62,7 @@ export class ClienteDetailComponent implements OnInit {
     resppass= false;
     exitoCon = false;;
     id: string;
+    foto: string;
     cargando= 1;
     
 
@@ -193,7 +194,7 @@ export class ClienteDetailComponent implements OnInit {
 
 
   subirFoto(){
-    this.router.navigate(['administrador/insertar-foto/'+this.id]);
+    this.router.navigate(['administrador/insertar-fotocliente/'+this.id]);
   }
 
   mostrar()
@@ -255,13 +256,14 @@ export class ClienteDetailComponent implements OnInit {
     console.log(respuesta);
     this.model=respuesta;
     console.log(respuesta.foto);
-    if(respuesta.foto == "null" || respuesta.foto == 0){
+    if(respuesta.foto == "null"){
       this.imgUrl= "../assets/img/gabino2.jpg";
+      console.log("--"+respuesta.foto);
     }
     else{
       this.imgUrl= this.global.assetsRoot+respuesta.foto;
     }
-
+    console.log("llenado this.cargando: "+this.cargando);
     this.cargando=this.cargando-1;
   }
   

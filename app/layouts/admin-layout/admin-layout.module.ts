@@ -22,6 +22,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { CrearUsuarioComponent } from '../../admin/crear-usuario/crear-usuario.component';
 import { CrearObraComponent } from '../../admin/crear-obra/crear-obra.component';
 import { InsertarFotoComponent } from '../../admin/insertar-foto/insertar-foto.component';
+import { InsertarFotoClienteComponent } from '../../admin/insertar-fotocliente/insertar-fotocliente.component';
 import { HerramientasComponent } from '../../admin/herramientas/herramientas.component';
 import { CrearHerramientasComponent } from '../../admin/crear-herramientas/crear-herramientas.component';
 import { MatProgressBarModule } from '@angular/material';
@@ -56,6 +57,7 @@ import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detai
     CrearUsuarioComponent,
     CrearObraComponent,
     InsertarFotoComponent,
+    InsertarFotoClienteComponent,
     NotificationsComponent,
     CrearHerramientasComponent,
     HerramientasComponent,
