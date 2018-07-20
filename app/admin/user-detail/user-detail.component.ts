@@ -154,15 +154,16 @@ export class UserDetailComponent implements OnInit {
    }
 
    postContrasena(password1: string){
-     let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
-     let search = new URLSearchParams();
-     search.set('function', 'upDateContrasena');
-     search.set('constrasena', password1);
-     search.set('id_usuario', this.id);
+     let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
+     this.data.currentGlobal.subscribe(global => this.global = global);
+     let formData:FormData = new FormData();
+     formData.append('function', 'upDateContrasena');
+     formData.append('constrasena', password1);
+     formData.append('id_usuario', this.id);
 
-        search.set('rol_usuario_id', "1001");
-        search.set('token', this.global.token);
-        this.http.get(url, {search}).subscribe(res => {
+        formData.append('rol_usuario_id', "1001");
+        formData.append('token', this.global.token);
+        this.http.post(url, formData).subscribe(res => {
                                               res.json();
                                               this.upContValidator(res.json());
                                             });
@@ -234,6 +235,7 @@ export class UserDetailComponent implements OnInit {
                     email: string, fechaDeNac: string,
                     id_usuario: string, rol_usuario_id: string, )
   {
+    this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'upDateAdmin');
