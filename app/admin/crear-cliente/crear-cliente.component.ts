@@ -63,14 +63,14 @@ export class CrearClienteComponent implements OnInit
 
     let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
   let search = new URLSearchParams();
-  search.set('function', 'getAll');
+  search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
   this.http.get(url, {search}).subscribe(res => this.llenaRoles(res.json()) );
 
      url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
     search = new URLSearchParams();
-    search.set('function', 'getAll');
+    search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     this.http.get(url, {search}).subscribe(res => this.llenaLaboratorio(res.json()) );
@@ -114,21 +114,21 @@ export class CrearClienteComponent implements OnInit
   crearCliente(razonSocial: string,  nombre: string ,  rfc: string, telefonoDeContacto: string ,direccion: string,  email: string, telefono: string,  nombreContacto: string   )
   {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'insert');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
-    search.set('razonSocial', razonSocial);
-    search.set('nombre', nombre);
-    search.set('telefono', telefono);  
-    search.set('direccion', direccion); 
-    search.set('rfc', rfc);      
-    search.set('telefonoDeContacto', telefonoDeContacto);     
-    search.set('email', email);  
-    search.set('nombreContacto', nombreContacto); 
+    let url = `${this.global.apiRoot}/cliente/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertAdmin');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', "1001");
+    formData.append('razonSocial', razonSocial);
+    formData.append('nombre', nombre);
+    formData.append('telefono', telefono);  
+    formData.append('direccion', direccion); 
+    formData.append('rfc', rfc);      
+    formData.append('telefonoDeContacto', telefonoDeContacto);     
+    formData.append('email', email);  
+    formData.append('nombreContacto', nombreContacto); 
     this.crearMessageCargando="Cargando...";
-    this.http.get(url, {search}).subscribe(res => this.diplay(res.json()) );
+    this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );
 
   }
 
