@@ -110,19 +110,19 @@ export class ObrasComponent implements OnInit{
    }
 
    switchActive(active: number){
-     let url = `${this.global.apiRoot}/obra/get/endpoint.php`;
-     let search = new URLSearchParams();
+     let url = `${this.global.apiRoot}/obra/post/endpoint.php`;
+     let formData:FormData = new FormData();
       
       if(active == 0){
-        search.set('function', 'deactivate');
+        formData.append('function', 'deactivate');
       }
       else{
-        search.set('function', 'activate');
+        formData.append('function', 'activate');
       }
-        search.set('id_obra', this.id);
-        search.set('rol_usuario_id', "1001");
-        search.set('token', this.global.token);
-        this.http.get(url, {search}).subscribe(res => {
+        formData.append('id_obra', this.id);
+        formData.append('rol_usuario_id', "1001");
+        formData.append('token', this.global.token);
+        this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             });
        

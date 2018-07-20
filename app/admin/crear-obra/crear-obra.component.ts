@@ -79,7 +79,7 @@ export class CrearObraComponent implements OnInit
 
      url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
     search = new URLSearchParams();
-    search.set('function', 'getAllUser');
+    search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     this.http.get(url, {search}).subscribe(res => {this.llenaClientes(res.json());
@@ -145,22 +145,23 @@ export class CrearObraComponent implements OnInit
   {
     this.cargando=1;
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/obra/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'insert');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
-    search.set('obra', obra);
-    search.set('revenimiento', revenimiento);
-    search.set('incertidumbre', incertidumbre);
-    search.set('prefijo', prefijo);
-    search.set('cliente_id', cliente_id);
-    search.set('concretera', id_concretera);
-    search.set('tipo', tipo);
-    search.set('descripcion', descripcion);
-    search.set('fechaDeCreacion', fechaDeCre);
+    let url = `${this.global.apiRoot}/obra/post/endpoint.php`;
+    let formData:FormData = new FormData();
+
+    formData.append('function', 'insertAdmin');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', "1001");
+    formData.append('obra', obra);
+    formData.append('revenimiento', revenimiento);
+    formData.append('incertidumbre', incertidumbre);
+    formData.append('prefijo', prefijo);
+    formData.append('cliente_id', cliente_id);
+    formData.append('concretera', id_concretera);
+    formData.append('tipo', tipo);
+    formData.append('descripcion', descripcion);
+    formData.append('fechaDeCreacion', fechaDeCre);
     this.crearMessageCargando="Cargando...";
-    this.http.get(url, {search}).subscribe(res => this.diplay(res.json()) );
+    this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );
     
 
   }
