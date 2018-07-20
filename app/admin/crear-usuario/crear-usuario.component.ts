@@ -65,7 +65,7 @@ export class CrearUsuarioComponent implements OnInit
 
     let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
   let search = new URLSearchParams();
-  search.set('function', 'getAll');
+  search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
   this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
@@ -74,7 +74,7 @@ export class CrearUsuarioComponent implements OnInit
 
      url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
     search = new URLSearchParams();
-    search.set('function', 'getAll');
+    search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     this.http.get(url, {search}).subscribe(res => {this.llenaLaboratorio(res.json());
