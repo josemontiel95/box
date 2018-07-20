@@ -168,7 +168,6 @@ export class CrearUsuarioComponent implements OnInit
     }else{
       this.crearMessageCargando="";
       switch (crearResp.error) {
-        case 3:
         case 1:
           
           this.crearMessage=crearResp.estatus;
@@ -186,6 +185,27 @@ export class CrearUsuarioComponent implements OnInit
                                                     });
           break;
         case 2:
+          this.crearMessage=crearResp.estatus;
+          window.alert(this.crearMessage);
+          break;
+
+        case 3:
+          this.crearMessage=crearResp.estatus;
+          window.alert(this.crearMessage);
+          console.log(crearResp);
+           token= "";
+          token= localStorage.getItem("token");
+           url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+           search = new URLSearchParams();
+          search.set('function', 'cerrarSesion');
+          search.set('token', token);
+          this.http.get(url, {search}).subscribe(res => {
+                                                      console.log(res.json().estatus);
+                                                      this.router.navigate(['login']); 
+                                                    });
+          break;
+
+        case 4:
           this.crearMessage=crearResp.estatus;
           window.alert(this.crearMessage);
           break;
