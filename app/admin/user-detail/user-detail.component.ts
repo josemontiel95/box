@@ -44,7 +44,7 @@ export class UserDetailComponent implements OnInit {
     estatus: string;
     submitted = false;
     hidden = false;
-    mis_roles: Array<any>;
+    mis_rolesActivos: Array<any>;
     mis_lab: Array<any>;
     imgUrl = "";
     cargando= 3;
@@ -60,6 +60,7 @@ export class UserDetailComponent implements OnInit {
     password1: string;
     npassword: string;
     id: string;
+    size: number;
     
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
 
@@ -70,16 +71,17 @@ export class UserDetailComponent implements OnInit {
 
     let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
   let search = new URLSearchParams();
-  search.set('function', 'getAll');
+  search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
+    console.log(search);
   this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
                                                  this.rolValidator(res.json());
                                                 });
 
      url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
     search = new URLSearchParams();
-    search.set('function', 'getAll');
+    search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     this.http.get(url, {search}).subscribe(res => {this.llenaLaboratorio(res.json());
@@ -88,12 +90,12 @@ export class UserDetailComponent implements OnInit {
 
 
     url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
-	  search = new URLSearchParams();
-	  search.set('function', 'getByIDAdmin');
+    search = new URLSearchParams();
+    search.set('function', 'getByIDAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");
     search.set('id_usuario', this.id);
-	this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
+  this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
                                                  this.llenadoValidator(res.json());
                                                });
   }
@@ -189,17 +191,15 @@ export class UserDetailComponent implements OnInit {
     this.router.navigate(['administrador/insertar-foto/'+this.id]);
   }
 
-  llenaRoles(resp: any)
-  {
+  llenaRoles(resp: any){
     console.log(resp);
-    this.mis_roles= new Array(resp.length);
-    var j=resp.length-1;
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
-      this.mis_roles[_i]=resp[j];
-      j--;
 
+    this.mis_rolesActivos= new Array(resp.length);
+
+    for (var _i = 0; _i < resp.length; _i++ ){
+      this.mis_rolesActivos[_i]=resp[_i];
     }
+
     this.cargando=this.cargando-1;
     console.log("llenaTipos this.cargando: "+this.cargando);
   }
@@ -269,10 +269,12 @@ export class UserDetailComponent implements OnInit {
   }
 
 
-  llenado(respuesta: any)
-  {
+  llenado(respuesta: any){
     console.log(respuesta);
     this.model=respuesta;
+    if(respuesta.isRolActive==0){
+      this.addRol(respuesta.rol_usuario_id,respuesta.rol);
+    }
     console.log(respuesta.foto);
     if(respuesta.foto == "null"){
       this.imgUrl= "../assets/img/gabino.jpg";
@@ -284,6 +286,22 @@ export class UserDetailComponent implements OnInit {
                      this.cargando=this.cargando-1;
                      console.log("llenado this.cargando: "+this.cargando);
                      }, 0);
+  }
+  addRol(rol_usuario_id: any,rol: any){
+    let aux= new Array(this.mis_rolesActivos.length+1);
+
+    let index=0;
+    for (var _i = 0; _i < aux.length; _i++ ){
+       if(_i < aux.length-1){
+        aux[_i]=this.mis_rolesActivos[_i];
+      }else if(_i == aux.length-1){
+        aux[_i]={'id_rol_usuario':rol_usuario_id,'rol':"*Desactivado*"+rol+"*Desactivado*"};
+      }
+    }
+    this.mis_rolesActivos= new Array(aux.length);
+    for (var _i = 0; _i < aux.length; _i++ ){
+      this.mis_rolesActivos[_i]=aux[_i];
+    }
   }
   
   
