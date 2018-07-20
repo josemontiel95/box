@@ -47,9 +47,11 @@ export class ObraDetailComponent implements OnInit {
     submitted = false;
     hidden = false;
     cargando= 3;
+    imgUrl = "";
     mis_con: Array<any>;
     mis_cli: Array<any>;
-
+    mis_concreterasActivas: Array<any>;
+    mis_clientesActivos: Array<any>;
     estatus: string;
     onSubmit() { this.submitted = true; }
 
@@ -150,6 +152,8 @@ export class ObraDetailComponent implements OnInit {
     this.cargando=this.cargando-1;
   }
 
+
+
   llenaClientes(resp: any)
   {
         console.log(resp);
@@ -219,8 +223,62 @@ export class ObraDetailComponent implements OnInit {
   {
     console.log(respuesta);
     this.model=respuesta;
-    this.cargando=this.cargando-1;
+
+     if(respuesta.isConcreteraActive==0 ){
+      this.addConcretera(respuesta.id_concretera,respuesta.concretera);
+    }
+
+    if(respuesta.isClienteActive==0)
+    {
+      this.addCliente(respuesta.id_cliente,respuesta.nombre);
+    }
+
+    console.log(respuesta.foto);
+    if(respuesta.foto == "null"){
+      this.imgUrl= "../assets/img/gabino.jpg";
+    }
+    else{
+      this.imgUrl= this.global.assetsRoot+respuesta.foto;
+    }
+    setTimeout(()=>{ this.model=respuesta;
+                     this.cargando=this.cargando-1;
+                     console.log("llenado this.cargando: "+this.cargando);
+                     }, 0);
   }
+  
+  addConcretera(id_concretera: any,concretera: any){
+    let aux= new Array(this.mis_con.length+1);
+
+    let index=0;
+    for (var _i = 0; _i < aux.length; _i++ ){
+       if(_i < aux.length-1){
+        aux[_i]=this.mis_con[_i];
+      }else if(_i == aux.length-1){
+        aux[_i]={'id_concretera':id_concretera,'concretera':"*Desactivado*"+concretera+"*Desactivado*"};
+      }
+    }
+    this.mis_con= new Array(aux.length);
+    for (var _i = 0; _i < aux.length; _i++ ){
+      this.mis_con[_i]=aux[_i];
+    }
+  }
+
+    addCliente(id_cliente: any,cliente: any){
+    let aux= new Array(this.mis_cli.length+1);
+    let index=0;
+    for (var _i = 0; _i < aux.length; _i++ ){
+       if(_i < aux.length-1){
+        aux[_i]=this.mis_cli[_i];
+      }else if(_i == aux.length-1){
+        aux[_i]={'id_cliente':id_cliente,'nombre':"*Desactivado*"+cliente+"*Desactivado*"};
+      }
+    }
+    this.mis_cli= new Array(aux.length);
+    for (var _i = 0; _i < aux.length; _i++ ){
+      this.mis_cli[_i]=aux[_i];
+    }
+  }
+  
   
   
    model = new Obra(this.id_obra,

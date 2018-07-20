@@ -275,6 +275,9 @@ export class UserDetailComponent implements OnInit {
     if(respuesta.isRolActive==0){
       this.addRol(respuesta.rol_usuario_id,respuesta.rol);
     }
+    if(respuesta.isLaboratorioActive==0){
+      this. addLabs(respuesta.laboratorio_id, respuesta.laboratorio );
+    }
     console.log(respuesta.foto);
     if(respuesta.foto == "null"){
       this.imgUrl= "../assets/img/gabino.jpg";
@@ -287,6 +290,7 @@ export class UserDetailComponent implements OnInit {
                      console.log("llenado this.cargando: "+this.cargando);
                      }, 0);
   }
+
   addRol(rol_usuario_id: any,rol: any){
     let aux= new Array(this.mis_rolesActivos.length+1);
 
@@ -304,7 +308,26 @@ export class UserDetailComponent implements OnInit {
     }
   }
   
+   addLabs(laboratorio_id: any,laboratorio: any){
+    let aux= new Array(this.mis_lab.length+1);
+
+    let index=0;
+    for (var _i = 0; _i < aux.length; _i++ ){
+       if(_i < aux.length-1){
+        aux[_i]=this.mis_lab[_i];
+      }else if(_i == aux.length-1){
+        aux[_i]={'id_laboratorio':laboratorio_id,'laboratorio':"*Desactivado*"+laboratorio+"*Desactivado*"};
+      }
+    }
+    this.mis_lab= new Array(aux.length);
+    for (var _i = 0; _i < aux.length; _i++ ){
+      this.mis_lab[_i]=aux[_i];
+    }
+  }
   
+
+
+
    model = new Usuario(this.id_usuario,
                        this.email,
                        this.nombre,
