@@ -13,6 +13,7 @@ export const ROUTES: RouteInfo[] = [
     { path: 'herramientas', title: 'Herramienta',  icon:'now-ui-icons ui-2_settings-90', class: '' },
     { path: 'obras', title: 'Obras',  icon:'now-ui-icons travel_istanbul', class: '' },
     { path: 'clientes', title: 'Clientes',  icon:'shopping_shop', class: '' },
+    { path: 'concretera', title: 'Concretera',  icon:'shopping_tag-content', class: '' },
 ];
 
 @Component({
