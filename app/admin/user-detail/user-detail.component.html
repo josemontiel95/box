@@ -40,7 +40,7 @@
                     name="rol_usuario_id"
                     placeholder="Puesto" #rol_usuario_id="ngModel">
 
-                    <option *ngFor="let puesto of mis_roles" [value]="puesto.id_rol_usuario">
+                    <option *ngFor="let puesto of mis_rolesActivos" [value]="puesto.id_rol_usuario">
                       {{puesto.rol}}
                     </option>
                   </select>
