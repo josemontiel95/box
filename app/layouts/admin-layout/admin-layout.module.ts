@@ -28,7 +28,7 @@ import { MatProgressBarModule } from '@angular/material';
 import { ClientesComponent } from '../../admin/clientes/clientes.component';
 import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
 import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detail.component';
-
+import { ConcreteraComponent } from '../../admin/concretera/concretera.component';
 
 @NgModule({
   imports: [
@@ -61,7 +61,8 @@ import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detai
     HerramientasComponent,
     ClientesComponent,
     CrearClienteComponent,
-    ClienteDetailComponent
+    ClienteDetailComponent,
+    ConcreteraComponent
 
   ]
 })

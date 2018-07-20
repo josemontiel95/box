@@ -20,6 +20,8 @@ import { HerramientaDetailComponent } from '../../admin/herramienta-detail/herra
 import { ClientesComponent } from '../../admin/clientes/clientes.component';
 import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
 import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detail.component';
+import { ConcreteraComponent } from '../../admin/concretera/concretera.component';
+
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full' },
@@ -43,5 +45,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'crear-herramientas',  component: CrearHerramientasComponent },
     { path: 'clientes',  component: ClientesComponent }, 
     { path: 'crear-cliente',  component: CrearClienteComponent },
+    { path: 'concretera',  component: ConcreteraComponent },
 
 ];
