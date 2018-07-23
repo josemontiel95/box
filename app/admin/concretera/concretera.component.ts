@@ -21,6 +21,8 @@ export class ConcreteraComponent implements OnInit{
     this.columnDefs = [
     {headerName: 'ID', field: 'id_concretera' },
     {headerName: 'Concretera', field: 'concretera' },
+    {headerName: 'Editado en', field: 'lastEditedON'},
+    {headerName: 'active', field: 'active' },
   ];
     this.rowSelection = "single";
   }
@@ -42,7 +44,7 @@ export class ConcreteraComponent implements OnInit{
 
     let url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getForDroptdownAdmin');
+    search.set('function', 'getAllAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', '1001');
     this.http.get(url, {search}).subscribe(res => {
