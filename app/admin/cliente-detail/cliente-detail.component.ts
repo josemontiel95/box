@@ -82,7 +82,7 @@ export class ClienteDetailComponent implements OnInit {
     model2= new Password(
                          "",
                          ""
-                        )
+                        );
 
 
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
