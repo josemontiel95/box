@@ -29,6 +29,8 @@ import { ClientesComponent } from '../../admin/clientes/clientes.component';
 import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
 import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detail.component';
 import { ConcreteraComponent } from '../../admin/concretera/concretera.component';
+import { CrearConcreteraComponent } from '../../admin/crear-concretera/crear-concretera.component';
+import { ConcreteraDetailComponent } from '../../admin/concretera-detail/concretera-detail.component';
 
 @NgModule({
   imports: [
@@ -62,7 +64,9 @@ import { ConcreteraComponent } from '../../admin/concretera/concretera.component
     ClientesComponent,
     CrearClienteComponent,
     ClienteDetailComponent,
-    ConcreteraComponent
+    ConcreteraComponent,
+    CrearConcreteraComponent,
+    ConcreteraDetailComponent 
 
   ]
 })

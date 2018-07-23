@@ -21,7 +21,8 @@ import { ClientesComponent } from '../../admin/clientes/clientes.component';
 import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
 import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detail.component';
 import { ConcreteraComponent } from '../../admin/concretera/concretera.component';
-
+import { CrearConcreteraComponent } from '../../admin/crear-concretera/crear-concretera.component';
+import { ConcreteraDetailComponent } from '../../admin/concretera-detail/concretera-detail.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full' },
@@ -31,6 +32,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'obra-detail/:id',   component: ObraDetailComponent },
     { path: 'herramienta-detail/:id',   component: HerramientaDetailComponent },
     { path: 'cliente-detail/:id',   component: ClienteDetailComponent },
+    { path: 'concretera-detail/:id',   component: ConcreteraDetailComponent },    
     { path: 'crear-usuario',   component: CrearUsuarioComponent },
     { path: 'crear-obra',   component: CrearObraComponent },
     { path: 'insertar-foto/:id',   component: InsertarFotoComponent },
@@ -46,5 +48,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'clientes',  component: ClientesComponent }, 
     { path: 'crear-cliente',  component: CrearClienteComponent },
     { path: 'concretera',  component: ConcreteraComponent },
-
+    { path: 'crear-concretera',  component: CrearConcreteraComponent },
 ];
