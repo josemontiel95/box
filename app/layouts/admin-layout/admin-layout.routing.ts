@@ -28,25 +28,31 @@ export const AdminLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
-    { path: 'user-detail/:id',   component: UserDetailComponent },
-    { path: 'obra-detail/:id',   component: ObraDetailComponent },
-    { path: 'herramienta-detail/:id',   component: HerramientaDetailComponent },
-    { path: 'cliente-detail/:id',   component: ClienteDetailComponent },
-    { path: 'crear-usuario',   component: CrearUsuarioComponent },
-    { path: 'crear-obra',   component: CrearObraComponent },
+    
+    { path: 'usuarios',          component: IconsComponent },
+    { path: 'usuarios/user-detail/:id',   component: UserDetailComponent },
+    { path: 'usuarios/crear-usuario',   component: CrearUsuarioComponent },
+
+    { path: 'obras',          component: ObrasComponent },
+    { path: 'obras/obra-detail/:id',   component: ObraDetailComponent },
+    { path: 'obras/crear-obra',   component: CrearObraComponent },
+
+    { path: 'herramientas',  component: HerramientasComponent },
+    { path: 'herramientas/herramienta-detail/:id',   component: HerramientaDetailComponent },
+    { path: 'herramientas/crear-herramientas',  component: CrearHerramientasComponent },
+
+    { path: 'clientes',  component: ClientesComponent }, 
+    { path: 'clientes/cliente-detail/:id',   component: ClienteDetailComponent },
+    { path: 'clientes/crear-cliente',  component: CrearClienteComponent },
+
+
     { path: 'insertar-foto/:id',   component: InsertarFotoComponent },
     { path: 'insertar-fotocliente/:id',   component: InsertarFotoClienteComponent },
     { path: 'prueba',  		  component: PruebaComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
-    { path: 'usuarios',          component: IconsComponent },
-    { path: 'obras',          component: ObrasComponent },
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
-    { path: 'herramientas',  component: HerramientasComponent },
-    { path: 'crear-herramientas',  component: CrearHerramientasComponent },
-    { path: 'clientes',  component: ClientesComponent }, 
-    { path: 'crear-cliente',  component: CrearClienteComponent },
     { path: 'concretera',  component: ConcreteraComponent },
 
 ];

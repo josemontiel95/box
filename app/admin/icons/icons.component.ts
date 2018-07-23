@@ -51,11 +51,11 @@ export class IconsComponent implements OnInit{
 
 
   crearUsuario(){
-    this.router.navigate(['administrador/crear-usuario']);
+    this.router.navigate(['administrador/usuarios/crear-usuario']);
   }
 
   detalleUsuario(){
-    this.router.navigate(['administrador/user-detail/'+this.id]);
+    this.router.navigate(['administrador/usuarios/user-detail/'+this.id]);
   }
   
 
