@@ -22,6 +22,10 @@ import { ClientesComponent } from '../../admin/clientes/clientes.component';
 import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
 import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detail.component';
 import { ConcreteraComponent } from '../../admin/concretera/concretera.component';
+import { LaboratoriosComponent } from '../../admin/laboratorios/laboratorios.component';
+import { LaboratorioDetailComponent } from '../../admin/laboratorio-detail/laboratorio-detail.component';
+import { CrearLaboratoriosComponent } from '../../admin/crear-laboratorios/crear-laboratorios.component';
+
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -48,5 +52,10 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'clientes',  component: ClientesComponent }, 
     { path: 'crear-cliente',  component: CrearClienteComponent },
     { path: 'concretera',  component: ConcreteraComponent },
+    { path: 'laboratorios',  component: LaboratoriosComponent },
+    { path: 'laboratorio-detail/:id',  component: LaboratorioDetailComponent },
+    { path: 'crear-laboratorios',  component: CrearLaboratoriosComponent },
+
+
 
 ];

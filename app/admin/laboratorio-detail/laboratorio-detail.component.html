@@ -1,0 +1,99 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaHerramientas();"></i>
+            Laboratorio No. {{model.id_laboratorio}}
+          </h5>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmit()" #laboratorioForm="ngForm">
+            <div class="row">
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label for="id_laboratorio">ID Laboratorio.</label>
+                    <input type="text" disabled="" id="id_laboratorio"  
+                     [(ngModel)]="model.id_laboratorio" 
+                    class="form-control" 
+                    name="id_laboratorio" placeholder="" #id_laboratorio="ngModel">
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label for="laboratorio">Laboratorio</label>
+                    <input type="text" [disabled]="!hidden" id="laboratorio"  
+                     [(ngModel)]="model.laboratorio" 
+                    class="form-control" 
+                    name="laboratorio" placeholder="" #laboratorio="ngModel">
+                  </div>
+                </div>
+            </div>
+            
+
+            <div class="row">
+              
+              <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <input type="text" [disabled]="!hidden" id="estado"  
+                     [(ngModel)]="model.estado" 
+                    class="form-control" 
+                    name="estado" placeholder="" #estado="ngModel">
+                  </div>
+              </div>
+
+              <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label for="municipio">Municipio</label>
+                    <input type="text" [disabled]="!hidden" id="municipio"  
+                     [(ngModel)]="model.municipio" 
+                    class="form-control" 
+                    name="municipio" placeholder="" #municipio="ngModel">
+                  </div>
+              </div>
+            
+            </div>
+
+            <div class="btn-group"  style="float: right; padding-right: 10%;">
+              <button class="btn btn-info" *ngIf="hidden == false"  (click)="mostrar()">
+                <span><b> Cambiar Datos. </b></span>
+              </button>
+            <button class="btn btn-success" *ngIf="hidden" [disabled]="laboratorioForm.invalid" (click)="actualizarLaboratorio(laboratorio.value, estado.value, municipio.value); ocultar();">
+              <span><b> Guardar Cambios. </b></span>
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="card card">
+         <div class="image">
+          <img src="../assets/img/Labo.jpg" alt="...">
+            </div>
+        <div class="card-body">
+          <div class="author">
+           
+              <div class="col-md-6 ml-auto mr-auto">
+                    <button type="button" class="btn btn-danger btn-round " (click)="desactivarLaboratorio()" *ngIf="desBut">Desactivar</button>
+                    <button type="button" class="btn btn-success btn-round " (click)="activarLaboratorio()" *ngIf="actBut">Activar</button>
+                </div>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>

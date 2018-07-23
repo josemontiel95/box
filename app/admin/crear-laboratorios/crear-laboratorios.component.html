@@ -1,0 +1,63 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaUsuario();"></i>
+          Crear Laboratorio</h5>
+        </div>
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" #herramientaForm="ngForm">
+            <div class="row">
+
+        
+
+            <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="laboratorio">Laboratorio</label>
+                  <input type="text" id="laboratorio"  
+                   [(ngModel)]="model.laboratorio" 
+                  class="form-control" 
+                  name="laboratorio" placeholder="Nombre de Laboratorio" #laboratorio="ngModel">
+              </div>
+                </div>
+            </div>
+
+            <div class="row">
+                
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="estado">Estado</label>
+                  <input type="date" id="estado" required [(ngModel)]="model.estado" class="form-control" name="estado" placeholder="" #estado="ngModel">
+                  <div [hidden]="estado.valid ||estado.pristine"  class="alert alert-danger">
+                    Estado Requerido.
+                </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="municipio">Municipio</label>
+                  <input type="date" id="municipio" required [(ngModel)]="model.municipio" class="form-control" name="municipio" placeholder="" #municipio="ngModel">
+                  <div [hidden]="municipio.valid ||municipio.pristine"  class="alert alert-danger">
+                    Municipio Requerido.
+                </div>
+                </div>
+              </div>
+            </div>
+
+            
+            <div class="btn-group" style="float: right; padding-right: 10%;">
+            <button class="btn btn-success" (click)="crearHerramienta(laboratorio.value, herramienta_tipo_id.value, condicion.value, fechaDeCompra.value ); aver(laboratorio.value, herramienta_tipo_id.value, condicion.value, fechaDeCompra.value);">
+              <span><b> Guardar Cambios </b></span>
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>

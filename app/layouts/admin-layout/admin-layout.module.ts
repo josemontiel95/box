@@ -30,6 +30,12 @@ import { ClientesComponent } from '../../admin/clientes/clientes.component';
 import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
 import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detail.component';
 import { ConcreteraComponent } from '../../admin/concretera/concretera.component';
+import { LaboratoriosComponent } from '../../admin/laboratorios/laboratorios.component';
+import { LaboratorioDetailComponent } from '../../admin/laboratorio-detail/laboratorio-detail.component';
+import { CrearLaboratoriosComponent } from '../../admin/crear-laboratorios/crear-laboratorios.component';
+
+
+
 
 @NgModule({
   imports: [
@@ -64,7 +70,10 @@ import { ConcreteraComponent } from '../../admin/concretera/concretera.component
     ClientesComponent,
     CrearClienteComponent,
     ClienteDetailComponent,
-    ConcreteraComponent
+    ConcreteraComponent,
+    LaboratoriosComponent,
+    LaboratorioDetailComponent,
+    CrearLaboratoriosComponent
 
   ]
 })
