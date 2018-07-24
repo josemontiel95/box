@@ -44,13 +44,22 @@
             <div class="row">
               
               <div class="col-md-6 col-12">
-                  <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <input type="text" [disabled]="!hidden" id="estado"  
-                     [(ngModel)]="model.estado" 
-                    class="form-control" 
-                    name="estado" placeholder="" #estado="ngModel">
+                <div class="form-group">
+                  <label for="estado">Estado</label>
+
+
+                  <select type="text" [disabled]="!hidden" id="estado" required [(ngModel)]="model.estado" class="form-control" name="estado" placeholder="Estado" #estado="ngModel">
+                  <option value="" [disabled]="true">Selecciona el Estado...</option>
+                    <option *ngFor="let estado of estados" [value]="estado.id">
+                      {{estado.estado}}
+                    </option>
+                  </select>
+                  
+                  <div [hidden]="estado.valid ||estado.pristine"  class="alert alert-danger">
+                    Estado Requerido.
                   </div>
+
+                </div>
               </div>
 
               <div class="col-md-6 col-12">

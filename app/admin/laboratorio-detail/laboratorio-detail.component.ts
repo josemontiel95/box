@@ -50,7 +50,8 @@ export class LaboratorioDetailComponent implements OnInit {
     npassword: string;
     id: string;
     model: Laboratorio= new Laboratorio("","","","","","","");
-    
+    estados= [{"estado":"Aguascalientes", "id":"Aguascalientes"},{"estado":"Baja California", "id":"Baja California"},{"estado":"Baja California Sur", "id":"Baja California Sur"},{"estado":"Baja Campeche", "id":"Baja Campeche"},{"estado":"Coahuila de Zaragoza", "id":"Coahuila de Zaragoza"},{"estado":"Colima", "id":"Colima"},{"estado":"Chiapas", "id":"Chiapas"},{"estado":"Chihuahua", "id":"Chihuahua"},{"estado":"CDMX", "id":"CDMX"},{"estado":"Durango", "id":"Durango"},{"estado":"Guanajuato", "id":"Guanajuato"},{"estado":"Guerrero", "id":"Guerrero"},{"estado":"Hidalgo", "id":"Hidalgo"},{"estado":"Jalisco", "id":"Jalisco"},{"estado":"México", "id":"México"},{"estado":"Michoacan de Ocampo", "id":"Michoacan de Ocampo"},{"estado":"Morelos", "id":"Morelos"},{"estado":"Nayarit", "id":"Nayarit"},{"estado":"Nuevo Leon", "id":"Nuevo Leon"},{"estado":"Oaxaca", "id":"Oaxaca"},{"estado":"Puebla", "id":"Puebla"},{"estado":"Querétaro", "id":"Querétaro"},{"estado":"Quintana Roo", "id":"Quintana Roo"},{"estado":"San Luis Potosí", "id":"San Luis Potosí"},{"estado":"Sinaloa", "id":"Sinaloa"},{"estado":"Sonora", "id":"Sonora"},{"estado":"Tabasco", "id":"Tabasco"},{"estado":"Tamaulipas", "id":"Tamaulipas"},{"estado":"Tlaxcala", "id":"Tlaxcala"},{"estado":"Veracruz de Ignacio de la Llave", "id":"Veracruz de Ignacio de la Llave"},{"estado":"Yucatán", "id":"Yucatán"},{"estado":"Zacatecas", "id":"Zacatecas"},];
+
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
 
   ngOnInit() {

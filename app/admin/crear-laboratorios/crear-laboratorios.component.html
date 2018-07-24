@@ -6,24 +6,26 @@
       <div class="card">
         <div class="card-header">
           <h5 class="title">
-          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaUsuario();"></i>
+          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaLaboratorio();"></i>
           Crear Laboratorio</h5>
         </div>
         <div class="card-body">
-         <form (ngSubmit)="onSubmit()" #herramientaForm="ngForm">
+         <form (ngSubmit)="onSubmit()" #laboratorioForm="ngForm">
+            
+
             <div class="row">
-
-        
-
-            <div class="col-md-12 col-12">
-                <div class="form-group">
-                  <label for="laboratorio">Laboratorio</label>
-                  <input type="text" id="laboratorio"  
-                   [(ngModel)]="model.laboratorio" 
-                  class="form-control" 
-                  name="laboratorio" placeholder="Nombre de Laboratorio" #laboratorio="ngModel">
+              <div class="col-md-12 col-12">
+                  <div class="form-group">
+                    <label for="laboratorio">Laboratorio</label>
+                    <input type="text" id="laboratorio"  
+                     required [(ngModel)]="model.laboratorio" 
+                    class="form-control" 
+                    name="laboratorio" placeholder="Nombre de Laboratorio" #laboratorio="ngModel">
+                    <div [hidden]="laboratorio.valid ||laboratorio.pristine"  class="alert alert-danger">
+                    Nombre de Laboratorio Requerido.
+                    </div>
+                  </div>
               </div>
-                </div>
             </div>
 
             <div class="row">
@@ -31,17 +33,26 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="estado">Estado</label>
-                  <input type="date" id="estado" required [(ngModel)]="model.estado" class="form-control" name="estado" placeholder="" #estado="ngModel">
+
+
+                  <select type="text" id="estado" required [(ngModel)]="model.estado" class="form-control" name="estado" placeholder="Estado" #estado="ngModel">
+                  <option value="" [disabled]="true">Selecciona el Estado...</option>
+                    <option *ngFor="let estado of estados" [value]="estado.id">
+                      {{estado.estado}}
+                    </option>
+                  </select>
+                  
                   <div [hidden]="estado.valid ||estado.pristine"  class="alert alert-danger">
                     Estado Requerido.
-                </div>
+                  </div>
+
                 </div>
               </div>
 
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="municipio">Municipio</label>
-                  <input type="date" id="municipio" required [(ngModel)]="model.municipio" class="form-control" name="municipio" placeholder="" #municipio="ngModel">
+                  <input type="text" id="municipio" required [(ngModel)]="model.municipio" class="form-control" name="municipio" placeholder="" #municipio="ngModel">
                   <div [hidden]="municipio.valid ||municipio.pristine"  class="alert alert-danger">
                     Municipio Requerido.
                 </div>
@@ -51,7 +62,7 @@
 
             
             <div class="btn-group" style="float: right; padding-right: 10%;">
-            <button class="btn btn-success" (click)="crearHerramienta(laboratorio.value, herramienta_tipo_id.value, condicion.value, fechaDeCompra.value ); aver(laboratorio.value, herramienta_tipo_id.value, condicion.value, fechaDeCompra.value);">
+            <button class="btn btn-success" [disabled]="laboratorioForm.invalid" (click)="crearLaboratorio();">
               <span><b> Guardar Cambios </b></span>
             </button>
           </div>

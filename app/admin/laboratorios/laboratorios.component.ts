@@ -17,6 +17,7 @@ export class LaboratoriosComponent implements OnInit{
   rowSelection;
   columnDefs;
 
+
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
     {headerName: 'ID', field: 'id_laboratorio' },
