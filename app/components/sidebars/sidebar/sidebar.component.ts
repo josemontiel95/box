@@ -15,6 +15,7 @@ export const ROUTES: RouteInfo[] = [
     { path: 'clientes', title: 'Clientes',  icon:'shopping_shop', class: '' },
     { path: 'concretera', title: 'Concretera',  icon:'shopping_tag-content', class: '' },
     { path: 'laboratorios', title: 'Laboratorios',  icon:'now-ui-icons files_box', class: '' },
+    { path: 'tipos-de-herramienta', title: 'Tipos de Herramienta',  icon:'now-ui-icons ui-2_settings-90', class: '' },
 ];
 
 @Component({

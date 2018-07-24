@@ -1,0 +1,39 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaConcretera();"></i>
+          Crear Herramienta</h5>
+        </div>
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" #concreteraForm="ngForm">
+            <div class="row">
+
+            <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="concretera">Nombre de la concretera.</label>
+                  <input type="text" required id="concretera"  
+                   [(ngModel)]="model.concretera" 
+                  class="form-control" 
+                  name="concretera" placeholder="" #concretera="ngModel">
+              </div>
+                  <div [hidden]="concretera.valid || concretera.pristine"  class="alert alert-danger">
+                    Nombre de la concretera es un campo requerido.
+                  </div>
+                </div>
+            </div>
+            <div class="btn-group" style="float: right; padding-right: 10%;">
+            <button class="btn btn-success" (click)="crearConcretera(concretera.value); ;">
+              <span><b> Guardar Cambios </b></span>
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>

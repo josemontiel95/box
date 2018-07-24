@@ -33,8 +33,11 @@ import { ConcreteraComponent } from '../../admin/concretera/concretera.component
 import { LaboratoriosComponent } from '../../admin/laboratorios/laboratorios.component';
 import { LaboratorioDetailComponent } from '../../admin/laboratorio-detail/laboratorio-detail.component';
 import { CrearLaboratoriosComponent } from '../../admin/crear-laboratorios/crear-laboratorios.component';
-
-
+import { CrearConcreteraComponent } from '../../admin/crear-concretera/crear-concretera.component';
+import { ConcreteraDetailComponent } from '../../admin/concretera-detail/concretera-detail.component';
+import { TiposDeHerramientaComponent } from '../../admin/tipos-de-herramienta/tipos-de-herramienta.component';
+import { CrearTipoHerramientasComponent } from '../../admin/crear-tipo-de-herramienta/crear-tipo-de-herramienta.component';
+import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-detail/tipo-de-herramienta-detail.component';
 
 
 @NgModule({
@@ -74,6 +77,11 @@ import { CrearLaboratoriosComponent } from '../../admin/crear-laboratorios/crear
     LaboratoriosComponent,
     LaboratorioDetailComponent,
     CrearLaboratoriosComponent
+    CrearConcreteraComponent,
+    ConcreteraDetailComponent,
+    TiposDeHerramientaComponent,
+    CrearTipoHerramientasComponent,
+    TipoHerramientaDetailComponent
 
   ]
 })

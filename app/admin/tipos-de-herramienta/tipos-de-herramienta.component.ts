@@ -5,11 +5,11 @@ import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-herramientas',
-  templateUrl: './herramientas.component.html',
-  styleUrls: ['./herramientas.component.scss']
+  selector: 'app-tipos-de-herramienta',
+  templateUrl: './tipos-de-herramienta.component.html',
+  styleUrls: ['./tipos-de-herramienta.component.scss']
 })
-export class HerramientasComponent implements OnInit{
+export class TiposDeHerramientaComponent implements OnInit{
   title = 'app';
   global: Global;
     private gridApi;
@@ -19,11 +19,9 @@ export class HerramientasComponent implements OnInit{
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'ID', field: 'id_herramienta' },
+    {headerName: 'ID', field: 'id_herramienta_tipo' },
     {headerName: 'Tipo', field: 'tipo' },
-    {headerName: 'Placas', field: 'placas' },
-    {headerName: 'Condicion', field: 'condicion'},
-    {headerName: 'Fecha de compra', field: 'fechaDeCompra' },
+    {headerName: 'Placas', field: 'createdON' },
     {headerName: 'Editado en', field: 'lastEditedON'},
     {headerName: 'active', field: 'active' },
   ];
@@ -36,8 +34,8 @@ export class HerramientasComponent implements OnInit{
 
   rowData: any;
 
-  crearHerramienta(){
-    this.router.navigate(['administrador/herramientas/crear-herramientas']);
+  crearTipoHerramienta(){
+    this.router.navigate(['administrador/crear-tipo-de-herramienta']);
   }
 
   onGridReady(params) {
@@ -45,7 +43,7 @@ export class HerramientasComponent implements OnInit{
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllAdmin');
     search.set('token', this.global.token);
@@ -62,10 +60,10 @@ export class HerramientasComponent implements OnInit{
     var id = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_herramienta;
+      id += selectedRow.id_herramienta_tipo;
       
     });
-    this.router.navigate(['administrador/herramientas/herramienta-detail/'+id]);
+    this.router.navigate(['administrador/tipo-de-herramienta-detail/'+id]);
   }
 
 }

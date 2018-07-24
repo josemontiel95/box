@@ -22,40 +22,59 @@ import { ClientesComponent } from '../../admin/clientes/clientes.component';
 import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
 import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detail.component';
 import { ConcreteraComponent } from '../../admin/concretera/concretera.component';
+
 import { LaboratoriosComponent } from '../../admin/laboratorios/laboratorios.component';
 import { LaboratorioDetailComponent } from '../../admin/laboratorio-detail/laboratorio-detail.component';
 import { CrearLaboratoriosComponent } from '../../admin/crear-laboratorios/crear-laboratorios.component';
 
+import { CrearConcreteraComponent } from '../../admin/crear-concretera/crear-concretera.component';
+import { ConcreteraDetailComponent } from '../../admin/concretera-detail/concretera-detail.component';
+import { TiposDeHerramientaComponent } from '../../admin/tipos-de-herramienta/tipos-de-herramienta.component';
+import { CrearTipoHerramientasComponent } from '../../admin/crear-tipo-de-herramienta/crear-tipo-de-herramienta.component';
+import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-detail/tipo-de-herramienta-detail.component';
 
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
-    { path: 'user-detail/:id',   component: UserDetailComponent },
-    { path: 'obra-detail/:id',   component: ObraDetailComponent },
-    { path: 'herramienta-detail/:id',   component: HerramientaDetailComponent },
-    { path: 'cliente-detail/:id',   component: ClienteDetailComponent },
-    { path: 'crear-usuario',   component: CrearUsuarioComponent },
-    { path: 'crear-obra',   component: CrearObraComponent },
+    
+    { path: 'usuarios',          component: IconsComponent },
+    { path: 'usuarios/user-detail/:id',   component: UserDetailComponent },
+    { path: 'usuarios/crear-usuario',   component: CrearUsuarioComponent },
+
+    { path: 'obras',          component: ObrasComponent },
+    { path: 'obras/obra-detail/:id',   component: ObraDetailComponent },
+    { path: 'obras/crear-obra',   component: CrearObraComponent },
+
+    { path: 'herramientas',  component: HerramientasComponent },
+    { path: 'herramientas/herramienta-detail/:id',   component: HerramientaDetailComponent },
+    { path: 'herramientas/crear-herramientas',  component: CrearHerramientasComponent },
+
+    { path: 'clientes',  component: ClientesComponent }, 
+    { path: 'clientes/cliente-detail/:id',   component: ClienteDetailComponent },
+    { path: 'clientes/crear-cliente',  component: CrearClienteComponent },
+
+
+    { path: 'concretera',  component: ConcreteraComponent },
+    { path: 'concretera-detail/:id',   component: ConcreteraDetailComponent }, 
+    { path: 'crear-concretera',  component: CrearConcreteraComponent },
+
     { path: 'insertar-foto/:id',   component: InsertarFotoComponent },
     { path: 'insertar-fotocliente/:id',   component: InsertarFotoClienteComponent },
     { path: 'prueba',  		  component: PruebaComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
-    { path: 'usuarios',          component: IconsComponent },
-    { path: 'obras',          component: ObrasComponent },
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
-    { path: 'herramientas',  component: HerramientasComponent },
-    { path: 'crear-herramientas',  component: CrearHerramientasComponent },
-    { path: 'clientes',  component: ClientesComponent }, 
-    { path: 'crear-cliente',  component: CrearClienteComponent },
-    { path: 'concretera',  component: ConcreteraComponent },
+
     { path: 'laboratorios',  component: LaboratoriosComponent },
     { path: 'laboratorio-detail/:id',  component: LaboratorioDetailComponent },
     { path: 'crear-laboratorios',  component: CrearLaboratoriosComponent },
 
 
+    { path: 'tipos-de-herramienta',  component: TiposDeHerramientaComponent },
+    { path: 'crear-tipo-de-herramienta',  component: CrearTipoHerramientasComponent },
+    { path: 'tipo-de-herramienta-detail/:id',  component: TipoHerramientaDetailComponent },
 
 ];
