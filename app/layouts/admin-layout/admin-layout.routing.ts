@@ -22,11 +22,17 @@ import { ClientesComponent } from '../../admin/clientes/clientes.component';
 import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
 import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detail.component';
 import { ConcreteraComponent } from '../../admin/concretera/concretera.component';
+
+import { LaboratoriosComponent } from '../../admin/laboratorios/laboratorios.component';
+import { LaboratorioDetailComponent } from '../../admin/laboratorio-detail/laboratorio-detail.component';
+import { CrearLaboratoriosComponent } from '../../admin/crear-laboratorios/crear-laboratorios.component';
+
 import { CrearConcreteraComponent } from '../../admin/crear-concretera/crear-concretera.component';
 import { ConcreteraDetailComponent } from '../../admin/concretera-detail/concretera-detail.component';
 import { TiposDeHerramientaComponent } from '../../admin/tipos-de-herramienta/tipos-de-herramienta.component';
 import { CrearTipoHerramientasComponent } from '../../admin/crear-tipo-de-herramienta/crear-tipo-de-herramienta.component';
 import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-detail/tipo-de-herramienta-detail.component';
+
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full' },
@@ -61,6 +67,11 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'typography',     component: TypographyComponent },
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
+
+    { path: 'laboratorios',  component: LaboratoriosComponent },
+    { path: 'laboratorio-detail/:id',  component: LaboratorioDetailComponent },
+    { path: 'crear-laboratorios',  component: CrearLaboratoriosComponent },
+
 
     { path: 'tipos-de-herramienta',  component: TiposDeHerramientaComponent },
     { path: 'crear-tipo-de-herramienta',  component: CrearTipoHerramientasComponent },
