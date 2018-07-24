@@ -60,11 +60,11 @@ export class ClientesComponent implements OnInit  {
 
   
   crearCliente(){
-    this.router.navigate(['administrador/crear-cliente']);
+    this.router.navigate(['administrador/clientes/crear-cliente']);
   }
 
   detalleCliente(){
-    this.router.navigate(['administrador/cliente-detail/'+this.id_cliente]);
+    this.router.navigate(['administrador/clientes/cliente-detail/'+this.id_cliente]);
   }
   
 

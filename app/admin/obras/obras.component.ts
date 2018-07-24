@@ -56,11 +56,11 @@ export class ObrasComponent implements OnInit{
 
 
   crearObra(){
-    this.router.navigate(['administrador/crear-obra']);
+    this.router.navigate(['administrador/obras/crear-obra']);
   }
 
   detalleObra(){ //Cambialo a detalleObra
-    this.router.navigate(['administrador/obra-detail/'+this.id]);
+    this.router.navigate(['administrador/obras/obra-detail/'+this.id]);
   }
   
 
