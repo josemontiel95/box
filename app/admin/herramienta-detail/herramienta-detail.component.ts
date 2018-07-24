@@ -36,7 +36,7 @@ export class HerramientaDetailComponent implements OnInit {
     mis_tipos: Array<any>;
     mis_lab: Array<any>;
     imgUrl = "";
-    condi= [1,2,3,4,5,6,7,8,9,10];
+    condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
     onSubmit() { this.submitted = true; }
 
     loginMessage: string= "";

@@ -19,7 +19,7 @@
                   <input type="text" id="tipo"  
                    [(ngModel)]="model.tipo" 
                   class="form-control" 
-                  name="tipo" placeholder="" #tipo="ngModel">
+                  name="tipo" placeholder="" required #tipo="ngModel">
               </div>
                
 
@@ -31,7 +31,7 @@
             </div>
             
             <div class="btn-group" style="float: right; padding-right: 10%;">
-            <button class="btn btn-success" (click)="crearTipoHerramienta(tipo.value); ">
+            <button class="btn btn-success" [disabled]="tipoherramientaForm.invalid" (click)="crearTipoHerramienta(tipo.value); ">
               <span><b> Guardar Cambios </b></span>
             </button>
           </div>
