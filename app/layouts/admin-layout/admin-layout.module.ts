@@ -76,7 +76,7 @@ import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-
     ConcreteraComponent,
     LaboratoriosComponent,
     LaboratorioDetailComponent,
-    CrearLaboratoriosComponent
+    CrearLaboratoriosComponent,
     CrearConcreteraComponent,
     ConcreteraDetailComponent,
     TiposDeHerramientaComponent,
