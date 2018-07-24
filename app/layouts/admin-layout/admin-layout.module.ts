@@ -32,6 +32,10 @@ import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detai
 import { ConcreteraComponent } from '../../admin/concretera/concretera.component';
 import { CrearConcreteraComponent } from '../../admin/crear-concretera/crear-concretera.component';
 import { ConcreteraDetailComponent } from '../../admin/concretera-detail/concretera-detail.component';
+import { TiposDeHerramientaComponent } from '../../admin/tipos-de-herramienta/tipos-de-herramienta.component';
+import { CrearTipoHerramientasComponent } from '../../admin/crear-tipo-de-herramienta/crear-tipo-de-herramienta.component';
+import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-detail/tipo-de-herramienta-detail.component';
+
 
 @NgModule({
   imports: [
@@ -68,7 +72,10 @@ import { ConcreteraDetailComponent } from '../../admin/concretera-detail/concret
     ClienteDetailComponent,
     ConcreteraComponent,
     CrearConcreteraComponent,
-    ConcreteraDetailComponent 
+    ConcreteraDetailComponent,
+    TiposDeHerramientaComponent,
+    CrearTipoHerramientasComponent,
+    TipoHerramientaDetailComponent
 
   ]
 })

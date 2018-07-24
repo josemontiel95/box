@@ -24,6 +24,9 @@ import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detai
 import { ConcreteraComponent } from '../../admin/concretera/concretera.component';
 import { CrearConcreteraComponent } from '../../admin/crear-concretera/crear-concretera.component';
 import { ConcreteraDetailComponent } from '../../admin/concretera-detail/concretera-detail.component';
+import { TiposDeHerramientaComponent } from '../../admin/tipos-de-herramienta/tipos-de-herramienta.component';
+import { CrearTipoHerramientasComponent } from '../../admin/crear-tipo-de-herramienta/crear-tipo-de-herramienta.component';
+import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-detail/tipo-de-herramienta-detail.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full' },
@@ -51,4 +54,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'crear-cliente',  component: CrearClienteComponent },
     { path: 'concretera',  component: ConcreteraComponent },
     { path: 'crear-concretera',  component: CrearConcreteraComponent },
+    { path: 'tipos-de-herramienta',  component: TiposDeHerramientaComponent },
+    { path: 'crear-tipo-de-herramienta',  component: CrearTipoHerramientasComponent },
+    { path: 'tipo-de-herramienta-detail/:id',  component: TipoHerramientaDetailComponent },
 ];

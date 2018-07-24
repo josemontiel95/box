@@ -1,0 +1,45 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaUsuario();"></i>
+          Crear Herramienta</h5>
+        </div>
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" #tipoherramientaForm="ngForm">
+            <div class="row">
+
+            <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="tipo">Tipo de herramienta</label>
+                  <input type="text" id="tipo"  
+                   [(ngModel)]="model.tipo" 
+                  class="form-control" 
+                  name="tipo" placeholder="" #tipo="ngModel">
+              </div>
+               
+
+
+            <div [hidden]="tipo.valid || tipo.pristine"  class="alert alert-danger">
+                   Tipo de herramienta requerido.
+                  </div>
+            </div>
+            </div>
+            
+            <div class="btn-group" style="float: right; padding-right: 10%;">
+            <button class="btn btn-success" (click)="crearTipoHerramienta(tipo.value); ">
+              <span><b> Guardar Cambios </b></span>
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>
+
+
