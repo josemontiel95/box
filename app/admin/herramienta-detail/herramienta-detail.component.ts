@@ -60,14 +60,14 @@ export class HerramientaDetailComponent implements OnInit {
     
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) {
     this.columnDefs = [
-    {headerName: 'ID', field: 'id_herramienta' },
-    {headerName: 'Tipo', field: 'tipo' },
-    {headerName: 'Placas', field: 'placas' },
-    {headerName: 'Condicion', field: 'condicion'},
-    {headerName: 'Fecha de compra', field: 'fechaDeCompra' },
-    {headerName: 'Editado en', field: 'lastEditedON'},
-    {headerName: 'Observaciones', field: 'observaciones'},
-    {headerName: 'active', field: 'active' },
+    {headerName: 'Orden de Servicio', field: 'ordenDeServicio_id' },
+    {headerName: 'ID J.Brigada', field: 'jefe_brigada_id' },
+    {headerName: 'Nombre J.Brigada', field: 'nombre_jefe_brigada' },
+    {headerName: 'Condici&oacute;n', field: 'status' },
+    {headerName: 'Fecha de Prestamo', field: 'fechaDePrestamo' },
+    {headerName: 'Fecha de Devoluci&oacute;n', field: 'fechaDevolucion'},
+    {headerName: 'Placa/Identificador', field: 'placas' },
+    {headerName: 'Estado', field: 'estado' }
   ];
     this.rowSelection = "single";
    }
@@ -322,11 +322,12 @@ export class HerramientaDetailComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/herramienta_ordenDeServicio/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllAdmin');
+    search.set('function', 'getByIDAdminHerra');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_herramienta', this.id);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.rowData= res.json();
