@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'obras',
   templateUrl: './obras.component.html',
-  styleUrls: ['./obras.component.css']
+  styleUrls: ['./obras.component.css','../../loadingArrows.css']
 })
 export class ObrasComponent implements OnInit{
 	title = 'app';
@@ -26,7 +26,7 @@ export class ObrasComponent implements OnInit{
   desBut=true;
   actBut=false;
   imgUrl="";
-
+  cargando= 1;
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
       {headerName: 'ID', field: 'id_obra' },
@@ -52,6 +52,7 @@ export class ObrasComponent implements OnInit{
 
   ngOnInit() {
     this.route.params.subscribe( params => this.id=params.id );
+    this.cargando=1;
   }
 
 
@@ -92,6 +93,7 @@ export class ObrasComponent implements OnInit{
     }else{
       this.rowData =repuesta;
     }
+    this.cargando=this.cargando-1;
   }
 
     llenadoValidator(respuesta: any){
@@ -174,7 +176,7 @@ export class ObrasComponent implements OnInit{
 
   displayShortDescription(id: any, nombre: any, prefijo: any, foto: any, cliente: any, active: any){
     
-
+    
     this.hidden=true;
     //activar 
     this.id=id;
