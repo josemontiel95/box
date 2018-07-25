@@ -64,14 +64,14 @@ export class HerramientaDetailComponent implements OnInit {
     
     search.set('function', 'getAllUser');
     search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
+    search.set('rol_usuario_id',  this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
 
     url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
 	  search = new URLSearchParams();
 	  search.set('function', 'getByIDAdmin');
     search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
+    search.set('rol_usuario_id',  this.global.rol);
     search.set('id_herramienta', this.id);
 	  this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
   }
@@ -119,7 +119,7 @@ export class HerramientaDetailComponent implements OnInit {
     //let search = new URLSearchParams();
     formData.append('function', 'upDateAdmin');
     formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', '1001');
+    formData.append('rol_usuario_id',  this.global.rol);
     //formData.append
     formData.append('id_herramienta', this.id);
     formData.append('fechaDeCompra', fechaDeCompra);
@@ -232,7 +232,7 @@ export class HerramientaDetailComponent implements OnInit {
        formData.append('function', 'activate');
       }
         formData.append('id_herramienta', this.id);
-        formData.append('rol_usuario_id', "1001");
+        formData.append('rol_usuario_id', this.global.rol);
         formData.append('token', this.global.token);
         this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());

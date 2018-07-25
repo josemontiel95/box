@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { DashboardComponent } from '../../admin/dashboard/dashboard.component';
-import { UserProfileComponent } from '../../user-profile/user-profile.component';
+import { UserProfileComponent } from '../../admin/user-profile/user-profile.component';
 import { UserDetailComponent } from '../../admin/user-detail/user-detail.component';
 import { ObraDetailComponent } from '../../admin/obra-detail/obra-detail.component';
 import { CrearUsuarioComponent } from '../../admin/crear-usuario/crear-usuario.component';

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../admin/dashboard/dashboard.component';
-import { UserProfileComponent } from '../../user-profile/user-profile.component';
+import { UserProfileComponent } from '../../admin/user-profile/user-profile.component';
 import { UserDetailComponent } from '../../admin/user-detail/user-detail.component';
 import { ObraDetailComponent } from '../../admin/obra-detail/obra-detail.component';
 import { HerramientaDetailComponent } from '../../admin/herramienta-detail/herramienta-detail.component';

@@ -1,0 +1,153 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaObra();"></i>
+          Crear Nueva Obra</h5>
+        </div>
+        <div class="card-body">
+          <p style="color: red">{{crearMessage}}<p>
+          <p style="color: green">{{crearMessageCargando}}<p>
+                     <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+
+            <div class="row"> <!-- INICIO PRIMER ROW -->
+                <div class="col-md-6 col-12"> <!-- INICIO PRIMER CAMPO -->
+                  <div class="form-group">
+                    <label>Obra</label>
+                    <input type="text" id="obra"  required [(ngModel)]="model.obra" name="obra" class="form-control" placeholder="Obra" #obra="ngModel">
+                     <div [hidden]="obra.valid ||obra.pristine"  class="alert alert-danger">
+                      Nombre de Obra Requerido.
+                    </div>
+                  </div>
+                </div><!-- FIN PRIMER CAMPO -->
+                <div class="col-md-6 col-12"> <!-- INICIO SEGUNDO CAMPO -->
+                  <div class="form-group">
+                    <label for="cliente_id">Cliente</label> 
+                    <select   class="form-control"  id="cliente_id"
+                      required [(ngModel)]="model.cliente_id"
+                      name="cliente_id"
+                      placeholder="Cliente" #cliente_id="ngModel">
+                      <option value="Selecciona un Cliente..." selected>Selecciona un Cliente...</option>
+                      <option *ngFor="let cli of mis_cli" [value]="cli.id_cliente">
+                        {{cli.nombre}}
+                      </option>
+                    </select>
+                    <div [hidden]="cliente_id.valid || cliente_id.pristine"  class="alert alert-danger">
+                      Cliente requerido.
+                    </div>
+                  </div>
+              </div> <!-- FIN SEGUNDO CAMPO -->
+            </div> <!-- FIN PRIMER ROW -->
+
+            <div class="row"><!-- INICIO SEGUNDO ROW -->
+              <div class="col-md-6 col-12"> <!-- INICIO TERCER CAMPO -->
+                <div class="form-group">
+                  <label>Prefijo</label>
+                  <input type="text" id="prefijo"  required [(ngModel)]="model.prefijo" name="prefijo" class="form-control" placeholder="Prefijo" #prefijo="ngModel">
+                   <div [hidden]="prefijo.valid ||prefijo.pristine"  class="alert alert-danger">
+                   Prefijo requerido.
+                  </div>
+                </div>
+              </div> <!-- FIN TERCER CAMPO -->
+
+              <div class="col-md-6 col-12"> <!-- INICIO CUARTO CAMPO -->
+                <div class="form-group">
+                  <label for="tipo">Tipo</label> 
+                  <select   class="form-control"  id="tipo"
+                    required [(ngModel)]="model.tipo"
+                    name="tipo"
+                    placeholder="Tipo" #tipo="ngModel">
+                    <option value="Selecciona un Tipo..." selected>Selecciona un Tipo...</option>
+                    <option  value="1">
+                      Iguala
+                    </option>
+                    <option  value="2">
+                      Unitario
+                    </option>
+                  </select>
+                  <div [hidden]="tipo.valid || tipo.pristine"  class="alert alert-danger">
+                    Tipo requerido.
+                  </div>
+                </div>
+              </div><!-- FIN CUARTO CAMPO -->
+             </div> <!-- FIN SEGUNDO ROW -->
+            <div class="row"> <!-- INICIO TERCER ROW -->
+              <div class="col-md-12 col-12"> <!-- INICIO QUINTO CAMPO -->
+                <div class="form-group">
+                  <label for="descripcion"> Descripcion</label>
+                  <textarea type="text" id="descripcion"   [(ngModel)]="model.descripcion" class="form-control" name="descripcion" placeholder="descripcion" #descripcion="ngModel"></textarea>
+                </div>
+              </div> <!-- FIN QUINTO CAMPO -->
+            </div> <!-- FIN TERCER ROW -->
+
+            <div class="row"> <!-- INICIO CUARTO ROW -->
+              <div class="col-md-6 col-12"> <!-- INICIO SEXTO CAMPO -->
+                <div class="form-group">
+                  <label>Fecha de Creacion</label>
+                  <input type="date"  id="fechaDeCre" required [(ngModel)]="model.fechaDeCre" name="fechaDeCre"  class="form-control" #fechaDeCre="ngModel">
+                  <div [hidden]="fechaDeCre.valid ||fechaDeCre.pristine"  class="alert alert-danger">
+                    Fecha de creacion requerida.
+                  </div>
+                </div>
+              </div> <!-- FIN SEXTO CAMPO -->
+              <div class="col-md-6 col-12"> <!-- INICIO SEPTIMO CAMPO -->
+                <div class="form-group">
+                  <label for="id_concretera">Concretera</label> <!--tipo de credencial referido al catalogo de clientes.-->
+                  <select   class="form-control"  id="id_concretera"
+                    required [(ngModel)]="model.id_concretera"
+                    name="id_concretera"
+                    placeholder="Concretera" #id_concretera="ngModel">
+                    <option value="Selecciona una Concretera..."  selected>Selecciona una Concretera...</option>
+                    <option *ngFor="let concretera of mis_con" [value]="concretera.id_concretera">
+                      {{concretera.concretera}}
+                    </option>
+                  </select>
+                  <div [hidden]="id_concretera.valid || id_concretera.pristine"  class="alert alert-danger">
+                    Concretera requerido.
+                  </div>
+                </div>
+              </div> <!-- FIN SEPTIMO CAMPO -->
+            </div> <!-- FIN CUARTO ROW -->
+
+            <div class="row"> <!-- INICIO QUINTO ROW -->
+              <div class="col-md-6 col-12"> <!-- INICIO OCTAVO CAMPO -->
+                  <div class="form-group">
+                    <label>Revenimiento</label>
+                    <input type="text" id="revenimiento"  required [(ngModel)]="model.revenimiento" name="revenimiento" class="form-control" placeholder="Revenimiento" #revenimiento="ngModel">
+                     <div [hidden]="revenimiento.valid ||revenimiento.pristine"  class="alert alert-danger">
+                      Indice de Revenimiento Requerido.
+                    </div>
+                  </div>
+              </div><!-- FIN OCTAVO CAMPO -->  
+              <div class="col-md-6 col-12"> <!-- INICIO NOVENO CAMPO -->
+                  <div class="form-group">
+                    <label>Incertidumbre</label>
+                    <input type="text" id="incertidumbre"  required [(ngModel)]="model.incertidumbre" name="incertidumbre" class="form-control" placeholder="Incertidumbre" #incertidumbre="ngModel">
+                     <div [hidden]="incertidumbre.valid ||incertidumbre.pristine"  class="alert alert-danger">
+                      Indice de Incertidumbre Requerido.
+                    </div>
+                  </div>
+              </div><!-- FIN NOVENO CAMPO --> 
+            </div> <!-- FIN QUINTO ROW -->
+
+            <button  type="submit" class="btn btn-success" [disabled]="userForm.invalid"  (click)="crearObra(obra.value, revenimiento.value, incertidumbre.value, prefijo.value, cliente_id.value, tipo.value, descripcion.value, fechaDeCre.value, id_concretera.value); ">
+              <span><b> Guardar Cambios. </b></span>
+            </button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>
+

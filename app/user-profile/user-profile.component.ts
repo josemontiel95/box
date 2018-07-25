@@ -56,7 +56,7 @@ export class UserProfileComponent implements OnInit {
   let search = new URLSearchParams();
   search.set('function', 'getForDroptdownAdmin');
   search.set('token', this.global.token);
-  search.set('rol_usuario_id', "1001");
+  search.set('rol_usuario_id', this.global.rol);
   this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
                                                  this.rolValidator(res.json());
                                                 });
@@ -65,7 +65,7 @@ export class UserProfileComponent implements OnInit {
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
+    search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => {this.llenaLaboratorio(res.json());
                                                    this.labValidator(res.json());
                                                  });
@@ -75,7 +75,7 @@ export class UserProfileComponent implements OnInit {
 	 search = new URLSearchParams();
 	search.set('function', 'getIDByToken');
     search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
+    search.set('rol_usuario_id', this.global.rol);
 	this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
                                                  this.llenadoValidator(res.json());});
   }

@@ -40,7 +40,7 @@ export class CrearHerramientasComponent implements OnInit {
     let formData:FormData = new FormData();
     formData.append('function', 'insertAdmin');
     formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', "1001");
+    formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('placas', placas);
     formData.append('herramienta_tipo_id', herramienta_tipo_id);  
@@ -83,7 +83,7 @@ herramienta_tipo_id);
     
     search.set('function', 'getAllUser');
     search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
+    search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
   }
 
