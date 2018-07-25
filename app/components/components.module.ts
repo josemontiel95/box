@@ -8,7 +8,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebars/sidebar/sidebar.component';
 import { SidebarAdministrativoComponent } from './sidebars/sidebarAdministrativo/sidebarAdministrativo.component';
 import { SidebarJefebComponent } from './sidebars/sidebarJefeB/sidebarjefeb.component';
-import { SidebarJefeLab } from './sidebars/sidebarJefeLab/sidebar.component';
+import { SidebarJefeLab } from './sidebars/sidebarJefeLab/sidebarjefelab.component';
 
 
 @NgModule({

@@ -30,7 +30,7 @@ export class AppGuard implements OnInit, CanActivateChild{
       	let search = new URLSearchParams();
       	search.set('function', 'validateSesion');
       	search.set('token', this.global.token);
-      	search.set('rol_usuario_id', "1001");
+      	search.set('rol_usuario_id', this.global.rol );
       	return this.http.get(url, {search}).map(res=>{
       				console.log(res.json().estatus);
 			       	if ( res.json().error === 0 ) return true;

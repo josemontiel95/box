@@ -3,7 +3,8 @@ export class Global {
     		public id_usuario: number,
 		    public token: string,
 		    public apiRoot: string,
-		    public assetsRoot: string
+		    public assetsRoot: string,
+		    public rol: string
     	){
     	
     }

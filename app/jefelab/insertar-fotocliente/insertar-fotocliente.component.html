@@ -1,0 +1,35 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+<div class="col-md-8 ml-auto mr-auto ">
+      <div class="card card-user">
+        <div class="image">
+          <img src="../assets/img/Labo.jpg" alt="...">
+        </div>
+        <div class="card-body">
+          <div class="author">
+            <a href="#">
+              <img class="avatar border-gray" src="../assets/img/gabino.jpg" alt="...">
+              
+            </a>
+          </div>
+
+          <div class="col-md-3 ml-auto mr-auto">
+            <p style="color: red">{{crearMessage}}<p>
+            <p style="color: green">{{crearMessageCargando}}<p>
+              <mat-progress-bar  [value]="value" ></mat-progress-bar>
+            <div class="form-group">
+                <button class="btn btn-info" for="file">Elige una foto</button>
+                <input type="file"
+                       id="file"
+                       (change)="handleFileInput($event.target.files)">
+            </div>
+          </div>
+          <!--<div id="si" class="col-md-2 ml-auto mr-auto ">
+            <button  md-button (click)="openDialog()">Subir Imagen</button>
+          </div> -->
+        </div>        
+      </div>
+</div>
+</div>
+
