@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-tipos-de-herramienta',
   templateUrl: './tipos-de-herramienta.component.html',
-  styleUrls: ['./tipos-de-herramienta.component.scss']
+  styleUrls: ['./tipos-de-herramienta.component.scss','../../loadingArrows.css']
 })
 export class TiposDeHerramientaComponent implements OnInit{
   title = 'app';
@@ -16,6 +16,7 @@ export class TiposDeHerramientaComponent implements OnInit{
   private gridColumnApi;
   rowSelection;
   columnDefs;
+  cargando= 1;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -30,6 +31,7 @@ export class TiposDeHerramientaComponent implements OnInit{
 	  
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
+    this.cargando=1;
   }
 
   rowData: any;
@@ -52,6 +54,7 @@ export class TiposDeHerramientaComponent implements OnInit{
                                             console.log(res.json());
                                             this.rowData= res.json();
                                             this.gridApi.sizeColumnsToFit();
+                                            this.cargando=this.cargando-1;
                                           });
   }
 

@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-concretera',
   templateUrl: './concretera.component.html',
-  styleUrls: ['./concretera.component.scss']
+  styleUrls: ['./concretera.component.scss','../../loadingArrows.css']
 })
 export class ConcreteraComponent implements OnInit{
   title = 'app';
@@ -16,6 +16,7 @@ export class ConcreteraComponent implements OnInit{
   private gridColumnApi;
   rowSelection;
   columnDefs;
+  cargando= 1;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -51,7 +52,7 @@ export class ConcreteraComponent implements OnInit{
                                             console.log(res.json());
                                             this.rowData= res.json();
                                             this.gridApi.sizeColumnsToFit();
-
+                                            this.cargando=this.cargando-1;
                                           });
   }
 
@@ -63,6 +64,7 @@ export class ConcreteraComponent implements OnInit{
       id += selectedRow.id_concretera;
       
     });
+    
     this.router.navigate(['administrador/concretera-detail/'+id]);
   }
 

@@ -41,6 +41,7 @@ export class TipoHerramientaDetailComponent implements OnInit {
     password1: string;
     npassword: string;
     id: string;
+
     model: Herramienta= new Herramienta("","","");
     
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
@@ -126,7 +127,7 @@ export class TipoHerramientaDetailComponent implements OnInit {
                      this.status(this.active);
                      this.cargando=this.cargando-1;
                      console.log("llenado this.cargando: "+this.cargando);
-                     }, 100);  
+                     }, 0);  
   }
 
 

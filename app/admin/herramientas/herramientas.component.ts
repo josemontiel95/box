@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-herramientas',
   templateUrl: './herramientas.component.html',
-  styleUrls: ['./herramientas.component.scss']
+  styleUrls: ['./herramientas.component.scss','../../loadingArrows.css']
 })
 export class HerramientasComponent implements OnInit{
   title = 'app';
@@ -16,6 +16,7 @@ export class HerramientasComponent implements OnInit{
   private gridColumnApi;
   rowSelection;
   columnDefs;
+  cargando= 1;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -25,6 +26,7 @@ export class HerramientasComponent implements OnInit{
     {headerName: 'Condicion', field: 'condicion'},
     {headerName: 'Fecha de compra', field: 'fechaDeCompra' },
     {headerName: 'Editado en', field: 'lastEditedON'},
+    {headerName: 'Observaciones', field: 'observaciones'},
     {headerName: 'active', field: 'active' },
   ];
     this.rowSelection = "single";
@@ -32,6 +34,7 @@ export class HerramientasComponent implements OnInit{
 	  
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
+    this.cargando=1;
   }
 
   rowData: any;
@@ -54,6 +57,7 @@ export class HerramientasComponent implements OnInit{
                                             console.log(res.json());
                                             this.rowData= res.json();
                                             this.gridApi.sizeColumnsToFit();
+                                            this.cargando=this.cargando-1;
                                           });
   }
 

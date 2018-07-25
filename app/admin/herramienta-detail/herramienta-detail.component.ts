@@ -25,6 +25,7 @@ export class HerramientaDetailComponent implements OnInit {
     id_herramienta: string;
     fechaDeCompra: string;
     placas: string;
+    observaciones: string;
     condicion: string;
     tipo: string;
     estatus: string;
@@ -44,14 +45,34 @@ export class HerramientaDetailComponent implements OnInit {
     global: Global;
     desBut=true;
     actBut=false;
+    desHis=true;
+    actHis=false;
     resppass= false;
     exitoCon = false;
     password1: string;
     npassword: string;
     id: string;
-    model: Herramienta= new Herramienta("","","","","","","","", "");
+    model: Herramienta= new Herramienta("","","","","","","","", "", "");
+    private gridApi;
+    private gridColumnApi;
+    rowSelection;
+    columnDefs;
     
-  constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
+  constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) {
+    this.columnDefs = [
+    {headerName: 'ID', field: 'id_herramienta' },
+    {headerName: 'Tipo', field: 'tipo' },
+    {headerName: 'Placas', field: 'placas' },
+    {headerName: 'Condicion', field: 'condicion'},
+    {headerName: 'Fecha de compra', field: 'fechaDeCompra' },
+    {headerName: 'Editado en', field: 'lastEditedON'},
+    {headerName: 'Observaciones', field: 'observaciones'},
+    {headerName: 'active', field: 'active' },
+  ];
+    this.rowSelection = "single";
+   }
+
+   rowData: any;
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -106,11 +127,9 @@ export class HerramientaDetailComponent implements OnInit {
   ocultar()
   {
     this.hidden=false;
-
-
   }
 
-  actualizarHerramienta(herramienta_tipo_id:string, placas: string,
+  actualizarHerramienta(herramienta_tipo_id:string, placas: string, observaciones: string,
                           fechaDeCompra: string, condicion: string)
   {
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -124,6 +143,7 @@ export class HerramientaDetailComponent implements OnInit {
     formData.append('id_herramienta', this.id);
     formData.append('fechaDeCompra', fechaDeCompra);
     formData.append('placas', placas);
+    formData.append('observaciones', observaciones);
     formData.append('condicion', condicion);
     formData.append('herramienta_tipo_id', herramienta_tipo_id);
     //post  formData
@@ -171,6 +191,7 @@ export class HerramientaDetailComponent implements OnInit {
     setTimeout(()=>{ this.model=respuesta;
                      this.active= this.model.active;
                      this.status(this.active);
+                     this.statusHistorial(this.active);
                      this.cargando=this.cargando-1;
                      console.log("llenado this.cargando: "+this.cargando);
                      }, 100);  
@@ -209,6 +230,20 @@ export class HerramientaDetailComponent implements OnInit {
 
   }
 
+  statusHistorial(active: any)
+  {
+    if (active == 1) {
+     this.actHis = false;
+     this.desHis = true;
+          }
+     else
+     {
+     this.actHis= true;
+     this.desHis= false;
+     }     
+
+  }
+
   desactivarHerramienta(){
      this.actBut= true;
      this.desBut= false;
@@ -222,14 +257,14 @@ export class HerramientaDetailComponent implements OnInit {
    }
 
    desactivarHistorial(){
-     this.actBut= true;
-     this.desBut= false;
+     this.actHis= true;
+     this.desHis= false;
      //this.switchHistorial(0);
   }
 
    activarHistorial(){
-     this.actBut = false;
-     this.desBut = true;
+     this.actHis = false;
+     this.desHis = true;
      //this.switchHistorial(1);
    }
 
@@ -280,5 +315,23 @@ export class HerramientaDetailComponent implements OnInit {
        location.reload();
      }
    }
+
+
+   onGridReady(params) {
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+
+    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getAllAdmin');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {
+                                            console.log(res.json());
+                                            this.rowData= res.json();
+                                            this.gridApi.sizeColumnsToFit();
+                                          });
+  }
 
 }
