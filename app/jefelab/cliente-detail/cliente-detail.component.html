@@ -22,7 +22,7 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="rfc">R.F.C.</label>
-                  <input type="text" [disabled]="!hidden" id= "rfc"  required [(ngModel)]="model.rfc" name="rfc" class="form-control" placeholder="RFC" #rfc="ngModel">
+                  <input type="text" disabled="" id= "rfc"  required [(ngModel)]="model.rfc" name="rfc" class="form-control" placeholder="RFC" #rfc="ngModel">
                    <div [hidden]="rfc.valid ||rfc.pristine"  class="alert alert-danger">
                    RFC requerido.
                 </div>
@@ -42,8 +42,8 @@
                 <div class="col-md-12 col-12 ">
                 <div class="form-group">
                   <label for="razonSocial">Raz&oacute;n social.</label> 
-                   <input type="text" [disabled]="!hidden" id= "razonSocial"   required [(ngModel)]="model.razonSocial" class="form-control" name="razonSocial" placeholder="Tu Empresa S.A. de C.V." #razonSocial="ngModel">
-                  <div [hidden]="razonSocial.valid || razonSocial.pristine"  class="alert alert-danger">
+                   <input type="text" disabled="" id= "razonSocial"   required [(ngModel)]="model.razonSocial" class="form-control" name="razonSocial" placeholder="Tu Empresa S.A. de C.V." #razonSocial="ngModel">
+                <div [hidden]="razonSocial.valid || razonSocial.pristine"  class="alert alert-danger">
                     Raz&oacute;n social. requerida.
                   </div>
                   </div>
@@ -56,7 +56,6 @@
                   <textarea  rows="2" cols="12" [disabled]="!hidden" id= "direccion" required [(ngModel)]="model.direccion" class="form-control" name="direccion" placeholder="Avenida Siempre Viva 2141" #direccion="ngModel"> </textarea>
                    <div [hidden]="direccion.valid ||direccion.pristine"  class="alert alert-danger">
                     Direcci&oacute;n requerida.
-                 
                 </div>
                 </div>
               </div>
@@ -123,35 +122,6 @@
           <img src="../assets/img/Labo.jpg" alt="...">
         </div>
         <div class="card-body">
-          <form (ngSubmit)="onSubmit()" #passwordForm="ngForm">
-          <div class="author">
-            
-              <img class="avatar border-gray" src="{{this.imgUrl}}" (click)="subirFoto()" alt="...">
-              <!--{{imgUrl}} binding para la foto quitado con fines esteticos-->
-              <h5 class="title">{{model.razonSocial}}</h5>
-           
-            <div class="form-group" [hidden]="desBut">
-                  <label>Contrase&ntilde;a</label>
-                  <input class="form-control"  required [(ngModel)]="model2.password1" placeholder="Contrase&ntilde;a" name="password1" type="password" #password1>
-            </div>
-            <div class="form-group" [hidden]="desBut">
-                  <label>Contrase&ntilde;a</label>
-                  <input class="form-control" required [(ngModel)]="model2.npassword" placeholder="Repite Contrase&ntilde;a" name="npassword" type="password" #npassword>
-            </div>
-
-            <div [hidden]= "!resppass" class="alert alert-danger">
-              Las Contrase&ntilde;as no coinciden.
-            </div>
-            <div [hidden]= "!exitoCon" class="alert alert-success">
-            Nueva contrase&ntilde;a actualizada</div>
-          </div>
-
-        <div class="button-container">
-          <button type="button" class="btn btn-danger btn-round " (click)="cambiarContrasena()" *ngIf="desBut">Cambiar Contrase&ntilde;a</button>
-          <button type="button" class="btn btn-success btn-round " [disabled]="passwordForm.invalid" (click)="guardarContrasena(password1.value, npassword.value);" *ngIf="actBut">Guardar Contrase&ntilde;a</button>
-        </div>
-     
-    </form>
     </div>
   </div>
 </div>

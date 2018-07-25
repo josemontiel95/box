@@ -112,20 +112,6 @@ export class ConcreteraDetailComponent implements OnInit {
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaError(res.json());
                                             } );
-    /*
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'upDate');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
-
-    search.set('id_herramienta', this.id);
-    search.set('fechaDeCompra', fechaDeCompra);
-    search.set('placas', placas);
-    search.set('condicion', condicion);
-    search.set('herramienta_tipo_id', herramienta_tipo_id);
-    this.http.get(url, {search}).subscribe(res => this.respuestaError(res.json()) );
-    */
   }
 
 
@@ -138,7 +124,7 @@ export class ConcreteraDetailComponent implements OnInit {
     }
     else
     {
-      location.reload();
+   this.router.navigate(['jefeLaboratorio/concretera']);
     }
   }
 
@@ -177,22 +163,12 @@ export class ConcreteraDetailComponent implements OnInit {
      this.switchActive(0);
   }
 
-   activarConcretera(){
-     this.actBut = false;
-     this.desBut = true;
-     this.switchActive(1);
-   }
 
    switchActive(active: number){
      let url = `${this.global.apiRoot}/concretera/post/endpoint.php`;
      let formData:FormData = new FormData();
       
-      if(active == 0){
         formData.append('function', 'deactivate');
-      }
-      else{
-       formData.append('function', 'activate');
-      }
         formData.append('id_concretera', this.id);
         formData.append('rol_usuario_id', this.global.rol);
         formData.append('token', this.global.token);
@@ -208,7 +184,7 @@ export class ConcreteraDetailComponent implements OnInit {
        location.reload();
      }
      else{
-       location.reload();
+   this.router.navigate(['jefeLaboratorio/concretera']);
      }
    }
 
