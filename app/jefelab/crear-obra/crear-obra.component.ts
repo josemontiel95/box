@@ -132,7 +132,7 @@ export class CrearObraComponent implements OnInit
   }
 
   regresaObra(){
-    this.router.navigate(['administrador/obras']);
+    this.router.navigate(['jefeLaboratorio/obras']);
   }
 
 //insertar-foto
@@ -172,7 +172,7 @@ export class CrearObraComponent implements OnInit
       this.crearMessage="";
       this.crearMessageCargando=crearResp.estatus;
       console.log(crearResp);
-      //setTimeout(()=>{ this.router.navigate(['administrador/insertar-foto/'+crearResp.id_obra])}, 1500);
+      //setTimeout(()=>{ this.router.navigate(['jefeLaboratorio/insertar-foto/'+crearResp.id_obra])}, 1500);
        
     }else{
       this.crearMessageCargando="";
@@ -201,7 +201,7 @@ export class CrearObraComponent implements OnInit
       
     }
     this.cargando=this.cargando-1;
-    this.router.navigate(['administrador/obras']);
+    this.router.navigate(['jefeLaboratorio/obras']);
   }
 
 

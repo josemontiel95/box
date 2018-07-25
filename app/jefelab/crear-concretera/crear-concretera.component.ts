@@ -65,7 +65,7 @@ export class CrearConcreteraComponent implements OnInit {
        location.reload();
      }
      else{
-       this.router.navigate(['administrador/concretera']);
+       this.router.navigate(['jefeLaboratorio/concretera']);
      }
    }
 
@@ -78,7 +78,7 @@ export class CrearConcreteraComponent implements OnInit {
    submitted = false;
 
    regresaConcretera(){
-    this.router.navigate(['administrador/concretera']);
+    this.router.navigate(['jefeLaboratorio/concretera']);
   }
 
   onSubmit() { this.submitted = true; }

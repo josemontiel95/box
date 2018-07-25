@@ -20,7 +20,7 @@
                     required [(ngModel)]="model.herramienta_tipo_id"
                     name="herramienta_tipo_id"
                     placeholder="Tipos" #herramienta_tipo_id="ngModel">
-
+                    <option value="" [disabled]="true">Selecciona el tipo...</option>
                     <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo">
                       {{tipo.tipo}}
                     </option>
@@ -48,9 +48,9 @@
                 <div class="form-group">
                   <label>Condicion</label>
                   <select type="text" id="condicion" required [(ngModel)]="model.condicion" name="condicion" class="form-control" placeholder="Condicion" #condicion="ngModel">
-                    <option value="" [disabled]="true">Selecciona la condici&oacute;n...</option>
-                    <option *ngFor="let condicion of condi" [value]="condicion">
-                      {{condicion}}
+                    <option value="" [disabled]="true">Selecciona el condici&oacute;n...</option>
+                    <option *ngFor="let condicion of condi" [value]="condicion.id">
+                      {{condicion.condicion}}
                     </option>
                   </select>
                    <div [hidden]="condicion.valid ||condicion.pristine"  class="alert alert-danger">

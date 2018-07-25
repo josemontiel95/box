@@ -189,12 +189,12 @@ export class ClienteDetailComponent implements OnInit {
   }
 
   regresaCliente(){
-    this.router.navigate(['administrador/clientes']);
+    this.router.navigate(['jefeLaboratorio/clientes']);
   }
 
 
   subirFoto(){
-    this.router.navigate(['administrador/insertar-fotocliente/'+this.id]);
+    this.router.navigate(['jefeLaboratorio/insertar-fotocliente/'+this.id]);
   }
 
   mostrar()

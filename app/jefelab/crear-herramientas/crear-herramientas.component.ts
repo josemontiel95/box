@@ -31,7 +31,8 @@ export class CrearHerramientasComponent implements OnInit {
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
   model = new Herramienta('', '', '', '', '', '', '');
-  condi= [1,2,3,4,5,6,7,8,9,10];
+ condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
+    
   
   crearHerramienta(  placas: string, herramienta_tipo_id: string, condicion: string, fechaDeCompra: string )
   {
@@ -81,7 +82,7 @@ herramienta_tipo_id);
     let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
     let search = new URLSearchParams();
     
-    search.set('function', 'getAllUser');
+    search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
@@ -90,7 +91,7 @@ herramienta_tipo_id);
    submitted = false;
 
    regresaUsuario(){
-    this.router.navigate(['administrador/herramientas']);
+    this.router.navigate(['jefeLaboratorio/herramientas']);
   }
 
   onSubmit() { this.submitted = true; }

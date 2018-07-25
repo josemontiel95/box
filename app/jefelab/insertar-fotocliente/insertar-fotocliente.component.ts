@@ -72,7 +72,7 @@ export class InsertarFotoClienteComponent implements OnInit {
       this.crearMessage=""
       this.crearMessageCargando=objeto.estatus;
       console.log(objeto);
-      setTimeout(()=>{ this.router.navigate(['administrador/clientes'])}, 1500)
+      setTimeout(()=>{ this.router.navigate(['jefeLaboratorio/clientes'])}, 1500)
        
     }else{
       this.crearMessageCargando="";
