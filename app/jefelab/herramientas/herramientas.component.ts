@@ -25,7 +25,7 @@ export class HerramientasComponent implements OnInit{
     {headerName: 'Condicion', field: 'condicion'},
     {headerName: 'Fecha de compra', field: 'fechaDeCompra' },
     {headerName: 'Editado en', field: 'lastEditedON'},
-    {headerName: 'active', field: 'active' },
+
   ];
     this.rowSelection = "single";
   }
@@ -47,7 +47,7 @@ export class HerramientasComponent implements OnInit{
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllAdmin');
+    search.set('function', 'getAllJefaLab');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => {

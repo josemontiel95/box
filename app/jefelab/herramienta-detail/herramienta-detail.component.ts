@@ -22,12 +22,6 @@ import {
 })
 export class HerramientaDetailComponent implements OnInit {
 
-    id_herramienta: string;
-    fechaDeCompra: string;
-    placas: string;
-    condicion: string;
-    tipo: string;
-    estatus: string;
     error: string;
     cargando= 2;
     active: any;
@@ -36,7 +30,7 @@ export class HerramientaDetailComponent implements OnInit {
     mis_tipos: Array<any>;
     mis_lab: Array<any>;
     imgUrl = "";
-    condi= [1,2,3,4,5,6,7,8,9,10];
+    condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
     onSubmit() { this.submitted = true; }
 
     loginMessage: string= "";
@@ -83,7 +77,7 @@ export class HerramientaDetailComponent implements OnInit {
   }
 
   regresaHerramientas(){
-    this.router.navigate(['administrador/herramientas']);
+    this.router.navigate(['jefeLaboratorio/herramientas']);
   }
 
 
@@ -130,20 +124,7 @@ export class HerramientaDetailComponent implements OnInit {
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaError(res.json());
                                             } );
-    /*
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'upDate');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
 
-    search.set('id_herramienta', this.id);
-    search.set('fechaDeCompra', fechaDeCompra);
-    search.set('placas', placas);
-    search.set('condicion', condicion);
-    search.set('herramienta_tipo_id', herramienta_tipo_id);
-    this.http.get(url, {search}).subscribe(res => this.respuestaError(res.json()) );
-    */
   }
 
 
@@ -156,7 +137,7 @@ export class HerramientaDetailComponent implements OnInit {
     }
     else
     {
-      location.reload();
+     this.router.navigate(['jefeLaboratorio/herramientas']);
     }
   }
 
@@ -215,22 +196,13 @@ export class HerramientaDetailComponent implements OnInit {
      this.switchActive(0);
   }
 
-   activarHerramienta(){
-     this.actBut = false;
-     this.desBut = true;
-     this.switchActive(1);
-   }
 
    switchActive(active: number){
      let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
      let formData:FormData = new FormData();
       
-      if(active == 0){
         formData.append('function', 'deactivate');
-      }
-      else{
-       formData.append('function', 'activate');
-      }
+      
         formData.append('id_herramienta', this.id);
         formData.append('rol_usuario_id', this.global.rol);
         formData.append('token', this.global.token);
@@ -239,6 +211,7 @@ export class HerramientaDetailComponent implements OnInit {
                                             });
        
    }
+
    respuestaSwitch(res: any){
      console.log(res);
      if(res.error!= 0){
@@ -246,7 +219,7 @@ export class HerramientaDetailComponent implements OnInit {
        location.reload();
      }
      else{
-       location.reload();
+       this.router.navigate(['jefeLaboratorio/herramientas']);
      }
    }
 

@@ -100,7 +100,7 @@ export class CrearClienteComponent implements OnInit
   }
 
     regresaCliente(){
-    this.router.navigate(['administrador/clientes']);
+    this.router.navigate(['jefeLaboratorio/clientes']);
   }
 
 
@@ -138,7 +138,7 @@ export class CrearClienteComponent implements OnInit
       this.crearMessage="";
       this.crearMessageCargando=crearResp.estatus;
       console.log(crearResp);
-      setTimeout(()=>{ this.router.navigate(['administrador/clientes'])}, 1500);
+      setTimeout(()=>{ this.router.navigate(['jefeLaboratorio/clientes'])}, 1500);
        
     }else{
       this.crearMessageCargando="";

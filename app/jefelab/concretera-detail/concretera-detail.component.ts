@@ -80,7 +80,7 @@ export class ConcreteraDetailComponent implements OnInit {
   }
 
   regresaConcreteras(){
-    this.router.navigate(['administrador/concretera']);
+    this.router.navigate(['jefeLaboratorio/concretera']);
   }
 
 

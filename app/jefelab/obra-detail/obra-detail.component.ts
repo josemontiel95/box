@@ -132,7 +132,7 @@ export class ObraDetailComponent implements OnInit {
   }
 
   regresaObra(){
-    this.router.navigate(['administrador/obras']);
+    this.router.navigate(['jefeLaboratorio/obras']);
   }
 
 
