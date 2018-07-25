@@ -37,7 +37,7 @@ export class HerramientasComponent implements OnInit{
   rowData: any;
 
   crearHerramienta(){
-    this.router.navigate(['administrador/herramientas/crear-herramientas']);
+    this.router.navigate(['jefeLaboratorio/herramientas/crear-herramientas']);
   }
 
   onGridReady(params) {
@@ -65,7 +65,7 @@ export class HerramientasComponent implements OnInit{
       id += selectedRow.id_herramienta;
       
     });
-    this.router.navigate(['administrador/herramientas/herramienta-detail/'+id]);
+    this.router.navigate(['jefeLaboratorio/herramientas/herramienta-detail/'+id]);
   }
 
 }

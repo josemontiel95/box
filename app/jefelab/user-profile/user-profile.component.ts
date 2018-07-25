@@ -191,7 +191,7 @@ export class UserProfileComponent implements OnInit {
 
 
   subirFoto(){
-    this.router.navigate(['administrador/insertar-foto/'+this.id]);
+    this.router.navigate(['jefeLaboratorio/insertar-foto/'+this.id]);
   }
 
     llenado(respuesta: any)

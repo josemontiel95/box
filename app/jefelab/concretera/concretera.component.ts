@@ -34,7 +34,7 @@ export class ConcreteraComponent implements OnInit{
   rowData: any;
 
   crearConcretera(){
-    this.router.navigate(['administrador/crear-concretera']);
+    this.router.navigate(['jefeLaboratorio/crear-concretera']);
   }
 
   onGridReady(params) {
@@ -63,7 +63,7 @@ export class ConcreteraComponent implements OnInit{
       id += selectedRow.id_concretera;
       
     });
-    this.router.navigate(['administrador/concretera-detail/'+id]);
+    this.router.navigate(['jefeLaboratorio/concretera-detail/'+id]);
   }
 
 }
