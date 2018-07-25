@@ -7,8 +7,6 @@ import { UserProfileComponent } from '../../jefelab/user-profile/user-profile.co
 import { ObraDetailComponent } from '../../jefelab/obra-detail/obra-detail.component';
 import { HerramientaDetailComponent } from '../../jefelab/herramienta-detail/herramienta-detail.component';
 import { ObrasComponent } from '../../jefelab/obras/obras.component';
-import { MapsComponent } from '../../maps/maps.component';
-import { NotificationsComponent } from '../../notifications/notifications.component';
 import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
@@ -42,11 +40,9 @@ import { ConcreteraDetailComponent } from '../../jefelab/concretera-detail/concr
     ObraDetailComponent,
     HerramientaDetailComponent,
     ObrasComponent,
-    MapsComponent,
     CrearObraComponent,
     InsertarFotoComponent,
     InsertarFotoClienteComponent,
-    NotificationsComponent,
     CrearHerramientasComponent,
     HerramientasComponent,
     ClientesComponent,
