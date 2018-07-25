@@ -13,6 +13,8 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { JefebLayoutComponent } from './layouts/jefeb-layout/jefeb-layout.component';
 
+import { UserProfileComponent } from './user-profile/user-profile.component';
+
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { SubAdminLayoutComponent } from './layouts/subadmin-layout/subadmin-layout.component';
 import { JefeLabLayoutComponent } from './layouts/JefeLab-layout/jefelab-layout.component';
@@ -50,6 +52,7 @@ import { MatProgressBarModule } from '@angular/material';
     LoginComponent,
     JefebLayoutComponent,
     JefeLabLayoutComponent,
+    UserProfileComponent
   ],
   providers: [DataService,
   AppGuard, {provide: LocationStrategy, useClass: HashLocationStrategy}],

@@ -76,7 +76,7 @@ export class ClientesComponent implements OnInit  {
     this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllAdmin');
+    search.set('function', 'getAllJefaLab');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     console.log(search);
