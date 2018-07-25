@@ -110,9 +110,13 @@
               <div class="col-md-6 ml-auto mr-auto">
                     <button type="button" class="btn btn-danger btn-round " (click)="desactivarHerramienta()" *ngIf="desBut">Desactivar</button>
                     <button type="button" class="btn btn-success btn-round " (click)="activarHerramienta()" *ngIf="actBut">Activar</button>
-                </div>
               </div>
-            </div>
+              <div class="col-md-6 ml-auto mr-auto">
+                    <button type="button" class="btn btn-default btn-round " (click)="desactivarHistorial()" *ngIf="desBut">Mostrar Historial</button>
+                    <button type="button" class="btn btn-default btn-round " (click)="activarHistorial()" *ngIf="actBut">Ocultar Historial</button>
+              </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

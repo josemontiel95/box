@@ -12,7 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class HerramientasComponent implements OnInit{
   title = 'app';
   global: Global;
-    private gridApi;
+  private gridApi;
   private gridColumnApi;
   rowSelection;
   columnDefs;

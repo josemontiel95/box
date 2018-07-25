@@ -221,6 +221,37 @@ export class HerramientaDetailComponent implements OnInit {
      this.switchActive(1);
    }
 
+   desactivarHistorial(){
+     this.actBut= true;
+     this.desBut= false;
+     //this.switchHistorial(0);
+  }
+
+   activarHistorial(){
+     this.actBut = false;
+     this.desBut = true;
+     //this.switchHistorial(1);
+   }
+
+   switchHistorial(active: number){
+     let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
+     let formData:FormData = new FormData();
+      
+      if(active == 0){
+        formData.append('function', 'deactivate');
+      }
+      else{
+       formData.append('function', 'activate');
+      }
+        formData.append('id_herramienta', this.id);
+        formData.append('rol_usuario_id', this.global.rol);
+        formData.append('token', this.global.token);
+        this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());
+                                            });
+       
+   }
+
    switchActive(active: number){
      let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
      let formData:FormData = new FormData();
