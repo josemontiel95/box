@@ -30,6 +30,9 @@ import { ClientesComponent } from '../../admin/clientes/clientes.component';
 import { CrearClienteComponent } from '../../admin/crear-cliente/crear-cliente.component';
 import { ClienteDetailComponent } from '../../admin/cliente-detail/cliente-detail.component';
 import { ConcreteraComponent } from '../../admin/concretera/concretera.component';
+import { LaboratoriosComponent } from '../../admin/laboratorios/laboratorios.component';
+import { LaboratorioDetailComponent } from '../../admin/laboratorio-detail/laboratorio-detail.component';
+import { CrearLaboratoriosComponent } from '../../admin/crear-laboratorios/crear-laboratorios.component';
 import { CrearConcreteraComponent } from '../../admin/crear-concretera/crear-concretera.component';
 import { ConcreteraDetailComponent } from '../../admin/concretera-detail/concretera-detail.component';
 import { TiposDeHerramientaComponent } from '../../admin/tipos-de-herramienta/tipos-de-herramienta.component';
@@ -71,6 +74,9 @@ import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-
     CrearClienteComponent,
     ClienteDetailComponent,
     ConcreteraComponent,
+    LaboratoriosComponent,
+    LaboratorioDetailComponent,
+    CrearLaboratoriosComponent,
     CrearConcreteraComponent,
     ConcreteraDetailComponent,
     TiposDeHerramientaComponent,

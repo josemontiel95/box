@@ -26,7 +26,9 @@ export const ROUTES2: RouteInfo2[] = [
    { path: 'tipos-de-herramienta', title: 'Tipos de Herramienta',  icon:'now-ui-icons ui-2_settings-90', class: '' },
    { path: 'herramientas', title: 'Herramienta',  icon:'now-ui-icons ui-2_settings-90', class: '' },
    { path: 'usuarios', title: 'Usuarios',  icon:'users_single-02', class: '' },
+   { path: 'laboratorios', title: 'Laboratorios',  icon:'now-ui-icons files_box', class: '' },
    { path: 'clientes', title: 'Clientes',  icon:'shopping_shop', class: '' },
+
 ];
 
 

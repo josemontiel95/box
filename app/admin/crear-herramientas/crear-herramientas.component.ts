@@ -31,7 +31,7 @@ export class CrearHerramientasComponent implements OnInit {
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
   model = new Herramienta('', '', '', '', '', '', '');
-  condi= [1,2,3,4,5,6,7,8,9,10];
+  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
   
   crearHerramienta(  placas: string, herramienta_tipo_id: string, condicion: string, fechaDeCompra: string )
   {
