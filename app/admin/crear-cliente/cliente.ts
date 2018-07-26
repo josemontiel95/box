@@ -6,7 +6,7 @@ export class Cliente
   	public razonSocial: string,
     public nombre: string,    
     public email: string,
- 	public telefono: string,
+ 	  public telefono: string,
   	public nombreContacto: string,
   	public direccion: string,
   	public telefonoDeContacto: string,
