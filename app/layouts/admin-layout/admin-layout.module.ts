@@ -45,6 +45,7 @@ import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
+     ReactiveFormsModule,
     ChartsModule,
     MatProgressBarModule,
     NgbModule,
