@@ -17,6 +17,7 @@ declare interface RouteInfo2 {
 export const ROUTES: RouteInfo[] = [
     { path: 'user-profile', title: 'Mi perfil',  icon:'users_circle-08', class: '' },
     { path: 'obras', title: 'Obras',  icon:'now-ui-icons travel_istanbul', class: '' },
+    { path: 'orden-trabajo', title: 'Orden de Trabajo',  icon:'now-ui-icons files_paper', class: '' },
  ];
 
 export const ROUTES2: RouteInfo2[] = [
