@@ -29,30 +29,27 @@ export class CrearClienteComponent implements OnInit
               private http: Http) { }
  
     id_cliente: string;
-    rfc: string;
-    razonSocial: string;
-    nombre: string;
-    email: string;
-    telefono: string;
-    nombreContacto: string;
-    direccion: string;
-    telefonoDeContacto: string;
+  
     submitted = false;
     hidden = false;
     mis_roles: Array<any>;
     mis_lab: Array<any>;
-    clienteForm: FormGroup;
+    clienteForm: FormGroup; //se crea un formulario de tipo form group
 
-   model = new Cliente(
-    this.id_cliente,
-    this.rfc,    
-    this.razonSocial,
-    this.nombre,    
-    this.email,
-    this.telefono,
-    this.nombreContacto,
-    this.direccion,
-    this.telefonoDeContacto, "");
+
+   cliente = {
+    id_cliente: '',
+    rfc: '',
+    razonSocial: '',
+    nombre: '',
+        email: '',
+        telefono: 8686973,
+        nombreContacto: '',
+        direccion: '',
+        telefonoDeContacto: 8686974,
+        //se creo un arreglo llamado cliente con los campos del form
+        };
+
 
   crearMessage: string= "";
   crearMessageCargando: string= "";
@@ -69,28 +66,51 @@ export class CrearClienteComponent implements OnInit
     search.set('rol_usuario_id', this.global.rol);
   this.http.get(url, {search}).subscribe(res => this.llenaRoles(res.json()) );
 
-     url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
+      url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaLaboratorio(res.json()) );
 
+    // se inicializan los campos del form y se añaden un validador personalizado para email que confirma la existencia del arroba "@"
+
     this.clienteForm = new FormGroup({
-      'rfc':new FormControl(this.model.rfc, Validators.required), 
-      'nombre':new FormControl(this.model.nombre, Validators.required), 
-      'razonSocial':new FormControl(this.model.razonSocial,  Validators.required), 
-      'direccion':new FormControl(this.model.direccion,  Validators.required), 
-      'telefono':new FormControl(this.model.telefono,  Validators.required), 
-      'nombreContacto':new FormControl(this.model.nombreContacto,  Validators.required), 
-      'telefonoDeContacto':new FormControl(this.model.telefonoDeContacto,  Validators.required), 
-      'email': new FormControl(this.model.email, [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
+      'rfc': new FormControl(this.cliente.rfc, Validators.required), 
+      'nombre': new FormControl(this.cliente.nombre, Validators.required), 
+      'razonSocial': new FormControl(this.cliente.razonSocial,  Validators.required), 
+      'direccion': new FormControl(this.cliente.direccion,  Validators.required), 
+      'telefono': new FormControl(this.cliente.telefono,  Validators.required), 
+      'nombreContacto': new FormControl(this.cliente.nombreContacto,  Validators.required), 
+      'telefonoDeContacto': new FormControl(this.cliente.telefonoDeContacto,  Validators.required), 
+      'email': new FormControl(this.cliente.email, [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
 
                                         
                                       });
 
 
   }
+
+  // funcion para acceder de manera sencilla a los campos del form
+  // referencia: https://angular.io/guide/reactive-forms
+
+  get rfc() { return this.clienteForm.get('rfc'); }
+
+  get nombre() { return this.clienteForm.get('nombre'); }
+
+  get razonSocial() { return this.clienteForm.get('razonSocial'); }
+
+  get direccion() { return this.clienteForm.get('direccion'); }
+
+  get telefono() { return this.clienteForm.get('telefono'); }
+
+  get nombreContacto() { return this.clienteForm.get('nombreContacto'); }
+
+  get telefonoDeContacto() { return this.clienteForm.get('telefonoDeContacto'); }
+
+  get email() { return this.clienteForm.get('email'); }
+
+
 
   llenaRoles(resp: any)
   {
@@ -126,22 +146,23 @@ export class CrearClienteComponent implements OnInit
   onSubmit() { this.submitted = true; }
 
 
-  crearCliente(razonSocial: string,  nombre: string ,  rfc: string, telefonoDeContacto: string ,direccion: string,  email: string, telefono: string,  nombreContacto: string   )
+  crearCliente( )
   {
+    //la nueva forma de obtener el valor es a través del valor del form sin necesidad de un parceo con hash (#)
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/cliente/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertAdmin');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-    formData.append('razonSocial', razonSocial);
-    formData.append('nombre', nombre);
-    formData.append('telefono', telefono);  
-    formData.append('direccion', direccion); 
-    formData.append('rfc', rfc);      
-    formData.append('telefonoDeContacto', telefonoDeContacto);     
-    formData.append('email', email);  
-    formData.append('nombreContacto', nombreContacto); 
+    formData.append('razonSocial', this.clienteForm.value.razonSocial);
+    formData.append('nombre', this.clienteForm.value.nombre);
+    formData.append('telefono', this.clienteForm.value.telefono);  
+    formData.append('direccion', this.clienteForm.value.direccion); 
+    formData.append('rfc', this.clienteForm.value.rfc);      
+    formData.append('telefonoDeContacto', this.clienteForm.value.telefonoDeContacto);     
+    formData.append('email',this.clienteForm.value.email);  
+    formData.append('nombreContacto', this.clienteForm.value.nombreContacto); 
     this.crearMessageCargando="Cargando...";
     this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );
 
