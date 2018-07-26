@@ -49,7 +49,6 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-
     this.cargando=3;
 
   let url = `${this.global.apiRoot}/rol/get/endpoint.php`;

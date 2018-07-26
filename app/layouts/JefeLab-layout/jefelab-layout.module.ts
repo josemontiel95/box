@@ -23,6 +23,8 @@ import { ClienteDetailComponent } from '../../jefelab/cliente-detail/cliente-det
 import { ConcreteraComponent } from '../../jefelab/concretera/concretera.component';
 import { CrearConcreteraComponent } from '../../jefelab/crear-concretera/crear-concretera.component';
 import { ConcreteraDetailComponent } from '../../jefelab/concretera-detail/concretera-detail.component';
+import { OrdenTrabajoComponent } from '../../jefelab/orden-trabajo/orden-trabajo.component';
+import { CrearOrdenTrabajoComponent } from '../../jefelab/crear-orden-trabajo/crear-orden-trabajo.component';
 
 @NgModule({
   imports: [
@@ -51,7 +53,8 @@ import { ConcreteraDetailComponent } from '../../jefelab/concretera-detail/concr
     ConcreteraComponent,
     CrearConcreteraComponent,
     ConcreteraDetailComponent,
-
+    OrdenTrabajoComponent,
+    CrearOrdenTrabajoComponent,
   ]
 })
 
