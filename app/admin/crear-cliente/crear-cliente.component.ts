@@ -41,7 +41,8 @@ export class CrearClienteComponent implements OnInit
     hidden = false;
     mis_roles: Array<any>;
     mis_lab: Array<any>;
- 
+    clienteForm: FormGroup;
+
    model = new Cliente(
     this.id_cliente,
     this.rfc,    
@@ -61,7 +62,7 @@ export class CrearClienteComponent implements OnInit
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
 
-    let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
+  let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
   let search = new URLSearchParams();
   search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
@@ -74,6 +75,20 @@ export class CrearClienteComponent implements OnInit
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaLaboratorio(res.json()) );
+
+    this.clienteForm = new FormGroup({
+      'rfc':new FormControl(this.model.rfc, Validators.required), 
+      'nombre':new FormControl(this.model.nombre, Validators.required), 
+      'razonSocial':new FormControl(this.model.razonSocial,  Validators.required), 
+      'direccion':new FormControl(this.model.direccion,  Validators.required), 
+      'telefono':new FormControl(this.model.telefono,  Validators.required), 
+      'nombreContacto':new FormControl(this.model.nombreContacto,  Validators.required), 
+      'telefonoDeContacto':new FormControl(this.model.telefonoDeContacto,  Validators.required), 
+      'email': new FormControl(this.model.email, [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
+
+                                        
+                                      });
+
 
   }
 

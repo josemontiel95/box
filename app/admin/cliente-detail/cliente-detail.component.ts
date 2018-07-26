@@ -114,6 +114,13 @@ export class ClienteDetailComponent implements OnInit {
     else{
       
     }
+
+    if( typeof respuesta.telefonoDeContacto === "string" )
+    {
+      console.log("si es numero");
+    }
+
+
   }
 
   rolValidator(respuesta: any){

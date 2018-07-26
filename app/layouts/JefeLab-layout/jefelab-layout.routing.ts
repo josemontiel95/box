@@ -5,10 +5,7 @@ import { ObraDetailComponent } from '../../jefelab/obra-detail/obra-detail.compo
 import { CrearObraComponent } from '../../jefelab/crear-obra/crear-obra.component';
 import { InsertarFotoComponent } from '../../jefelab/insertar-foto/insertar-foto.component';
 import { InsertarFotoClienteComponent } from '../../jefelab/insertar-fotocliente/insertar-fotocliente.component';
-
 import { ObrasComponent } from '../../jefelab/obras/obras.component';
-import { MapsComponent } from '../../maps/maps.component';
-import { NotificationsComponent } from '../../notifications/notifications.component';
 import { PruebaComponent } from '../../prueba/prueba.component';
 import { HerramientasComponent } from '../../jefelab/herramientas/herramientas.component';
 import { CrearHerramientasComponent } from '../../jefelab/crear-herramientas/crear-herramientas.component';
@@ -43,7 +40,4 @@ export const JefeLabLayoutRoutes: Routes = [
 
     { path: 'insertar-foto/:id',   component: InsertarFotoComponent },
     { path: 'insertar-fotocliente/:id',   component: InsertarFotoClienteComponent },
-    { path: 'maps',           component: MapsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
-
 ];
