@@ -30,12 +30,7 @@ export class CrearUsuarioComponent implements OnInit
               private http: Http) { }
  
     id_usuario: string ;
-    nombre: string;
-    apellido: string;
-    email: string;
-    fechaDeNac: string;
     foto: string;
-    laboratorio_id: string;
     laboratorio: string;
     nss: string;
     rol: string;
@@ -43,17 +38,19 @@ export class CrearUsuarioComponent implements OnInit
     hidden = false;
     mis_roles: Array<any>;
     mis_lab: Array<any>;
- 
-   model = new Usuario(this.id_usuario,
-                       this.email,
-                       this.nombre,
-                       this.apellido,
-                       this.fechaDeNac,
-                       this.foto,
-                       this.rol,
-                       this.nss,
-                       this.laboratorio,
-                       this.laboratorio_id, "", "");
+    
+    userForm: FormGroup;
+
+  Usuario= {
+            email: '',
+            nombre: '',
+            apellido: '',
+            fechaDeNac: '',
+            contrasena: '',
+            rol_usuario_id: '',
+            nss: '',
+            laboratorio_id: ''};
+
 
   crearMessage: string= "";
   crearMessageCargando: string= "";
@@ -81,7 +78,37 @@ export class CrearUsuarioComponent implements OnInit
                                                    this.labValidator(res.json());
                                                  });
 
+     this.userForm = new FormGroup({
+      'apellido': new FormControl(this.Usuario.apellido, Validators.required), 
+      'nombre': new FormControl(this.Usuario.nombre, Validators.required), 
+      'rol_usuario_id': new FormControl(this.Usuario.rol_usuario_id,  Validators.required), 
+      'nss': new FormControl(this.Usuario.nss,), 
+      'laboratorio_id': new FormControl(this.Usuario.laboratorio_id,  Validators.required), 
+      'contrasena': new FormControl(this.Usuario.contrasena,  Validators.required), 
+      'fechaDeNac': new FormControl(this.Usuario.fechaDeNac,  Validators.required), 
+      'email': new FormControl(this.Usuario.email, [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
+
+                                        
+                                      });
+
   }
+
+    get apellido() { return this.userForm.get('apellido'); }
+
+  get nombre() { return this.userForm.get('nombre'); }
+
+  get rol_usuario_id() { return this.userForm.get('rol_usuario_id'); }
+
+  get direccion() { return this.userForm.get('direccion'); }
+
+  get laboratorio_id() { return this.userForm.get('laboratorio_id'); }
+
+  get contrasena() { return this.userForm.get('contrasena'); }
+
+  get fechaDeNac() { return this.userForm.get('fechaDeNac'); }
+
+  get email() { return this.userForm.get('email'); }
+
 
   rolValidator(repuesta: any){
     console.log(repuesta)
@@ -135,7 +162,7 @@ export class CrearUsuarioComponent implements OnInit
   onSubmit() { this.submitted = true; }
 
 
-  crearUsuario(nombre: string, apellido: string, laboratorio_id: string, nss: string, email: string, fechaDeNac: string, rol_usuario_id: string, contrasena: string){
+  crearUsuario( ){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -143,14 +170,14 @@ export class CrearUsuarioComponent implements OnInit
     formData.append('function', 'insertAdmin');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', '1001');
-    formData.append('nombre', nombre);
-    formData.append('apellido', apellido);
-    formData.append('laboratorio_id', laboratorio_id);
-    formData.append('nss', nss);
-    formData.append('email', email);
-    formData.append('fechaDeNac', fechaDeNac);
-    formData.append('rol_usuario_id_new', rol_usuario_id);
-    formData.append('constrasena', contrasena);
+    formData.append('nombre', this.userForm.value.nombre);
+    formData.append('apellido', this.userForm.value.apellido);
+    formData.append('laboratorio_id', this.userForm.value.laboratorio_id);
+    formData.append('nss', this.userForm.value.nss);
+    formData.append('email', this.userForm.value.email);
+    formData.append('fechaDeNac',this.userForm.value.fechaDeNac);
+    formData.append('rol_usuario_id_new', this.userForm.value.rol_usuario_id);
+    formData.append('constrasena', this.userForm.value.contrasena);
 
     this.crearMessageCargando="Cargando...";
     this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );

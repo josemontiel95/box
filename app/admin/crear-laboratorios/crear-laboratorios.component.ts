@@ -30,7 +30,14 @@ export class CrearLaboratoriosComponent implements OnInit {
   mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
-  model = new Laboratorios('', '', '', '');
+  laboratorioForm: FormGroup;
+
+  Laboratorio= {
+    laboratorio: '',  
+    estado: '',
+    municipio: ''  
+  }
+
   estados= [{"estado":"Aguascalientes", "id":"Aguascalientes"},{"estado":"Baja California", "id":"Baja California"},{"estado":"Baja California Sur", "id":"Baja California Sur"},{"estado":"Baja Campeche", "id":"Baja Campeche"},{"estado":"Coahuila de Zaragoza", "id":"Coahuila de Zaragoza"},{"estado":"Colima", "id":"Colima"},{"estado":"Chiapas", "id":"Chiapas"},{"estado":"Chihuahua", "id":"Chihuahua"},{"estado":"CDMX", "id":"CDMX"},{"estado":"Durango", "id":"Durango"},{"estado":"Guanajuato", "id":"Guanajuato"},{"estado":"Guerrero", "id":"Guerrero"},{"estado":"Hidalgo", "id":"Hidalgo"},{"estado":"Jalisco", "id":"Jalisco"},{"estado":"México", "id":"México"},{"estado":"Michoacan de Ocampo", "id":"Michoacan de Ocampo"},{"estado":"Morelos", "id":"Morelos"},{"estado":"Nayarit", "id":"Nayarit"},{"estado":"Nuevo Leon", "id":"Nuevo Leon"},{"estado":"Oaxaca", "id":"Oaxaca"},{"estado":"Puebla", "id":"Puebla"},{"estado":"Querétaro", "id":"Querétaro"},{"estado":"Quintana Roo", "id":"Quintana Roo"},{"estado":"San Luis Potosí", "id":"San Luis Potosí"},{"estado":"Sinaloa", "id":"Sinaloa"},{"estado":"Sonora", "id":"Sonora"},{"estado":"Tabasco", "id":"Tabasco"},{"estado":"Tamaulipas", "id":"Tamaulipas"},{"estado":"Tlaxcala", "id":"Tlaxcala"},{"estado":"Veracruz de Ignacio de la Llave", "id":"Veracruz de Ignacio de la Llave"},{"estado":"Yucatán", "id":"Yucatán"},{"estado":"Zacatecas", "id":"Zacatecas"},];
   crearLaboratorio(){
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -39,10 +46,10 @@ export class CrearLaboratoriosComponent implements OnInit {
     formData.append('function', 'insertAdmin');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', "1001");
-    formData.append('laboratorio', this.model.laboratorio);
+    formData.append('laboratorio', this.laboratorioForm.value.laboratorio);
       
-    formData.append('estado', this.model.estado);
-    formData.append('municipio', this.model.municipio);
+    formData.append('estado', this.laboratorioForm.value.estado);
+    formData.append('municipio', this.laboratorioForm.value.municipio);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             } );
@@ -64,7 +71,21 @@ export class CrearLaboratoriosComponent implements OnInit {
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando=1;
+     this.laboratorioForm = new FormGroup({
+      'laboratorio': new FormControl(this.Laboratorio.laboratorio, Validators.required), 
+      'estado': new FormControl(this.Laboratorio.estado,  Validators.required), 
+      'municipio': new FormControl(this.Laboratorio.municipio,  Validators.required)    });
+ 
   }
+
+
+  get laboratorio() { return this.laboratorioForm.get('laboratorio'); }
+
+
+  get estado() { return this.laboratorioForm.get('estado'); }
+
+  get municipio() { return this.laboratorioForm.get('municipio'); }
+
 
    submitted = false;
 

@@ -30,7 +30,13 @@ export class CrearHerramientasComponent implements OnInit {
     mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
-  model = new Herramienta('', '', '', '', '', '', '');
+  herramientaForm: FormGroup;
+      herramienta = {
+        herramienta_tipo_id: '',
+        placas:'',
+        condicion:'',
+        fechaDeCompra:'' }
+
   condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
   
   crearHerramienta(  placas: string, herramienta_tipo_id: string, condicion: string, fechaDeCompra: string )
@@ -42,10 +48,10 @@ export class CrearHerramientasComponent implements OnInit {
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('placas', placas);
-    formData.append('herramienta_tipo_id', herramienta_tipo_id);  
-    formData.append('condicion', condicion);
-    formData.append('fechaDeCompra', fechaDeCompra);
+    formData.append('placas', this.herramientaForm.value.placas);
+    formData.append('herramienta_tipo_id', this.herramientaForm.value.herramienta_tipo_id);  
+    formData.append('condicion', this.herramientaForm.value.condicion);
+    formData.append('fechaDeCompra', this.herramientaForm.value.fechaDeCompra);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             } );
@@ -64,15 +70,7 @@ export class CrearHerramientasComponent implements OnInit {
      }
    }
 
-
-  aver( fechaDeCompra: string, placas: string, condicion: string, herramienta_tipo_id: string )
-  {
-    console.log(fechaDeCompra,
-placas,
-condicion,
-herramienta_tipo_id);
-
-  }
+ 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando=2;
@@ -85,7 +83,19 @@ herramienta_tipo_id);
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
+
+        this.herramientaForm = new FormGroup({
+      'herramienta_tipo_id': new FormControl(this.herramienta.herramienta_tipo_id, Validators.required), 
+      'condicion': new FormControl(this.herramienta.condicion,  Validators.required), 
+      'fechaDeCompra': new FormControl(this.herramienta.fechaDeCompra,  Validators.required)    });
   }
+
+  get herramienta_tipo_id() { return this.herramientaForm.get('herramienta_tipo_id'); }
+
+
+  get condicion() { return this.herramientaForm.get('condicion'); }
+
+  get fechaDeCompra() { return this.herramientaForm.get('fechaDeCompra'); }
 
    submitted = false;
 

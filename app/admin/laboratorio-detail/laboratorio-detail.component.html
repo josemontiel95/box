@@ -22,20 +22,24 @@
                 <div class="col-md-6 col-12">
                   <div class="form-group">
                     <label for="id_laboratorio">ID Laboratorio.</label>
-                    <input type="text" disabled="" id="id_laboratorio"  
-                     [(ngModel)]="model.id_laboratorio" 
+                    <input type="text" disabled="" id="id_laboratorio"   
                     class="form-control" 
-                    name="id_laboratorio" placeholder="" #id_laboratorio="ngModel">
+                    name="id_laboratorio" placeholder="" formControlName="id_laboratorio" >
                   </div>
                 </div>
 
                 <div class="col-md-6 col-12">
                   <div class="form-group">
                     <label for="laboratorio">Laboratorio</label>
-                    <input type="text" [disabled]="!hidden" id="laboratorio"  
-                     [(ngModel)]="model.laboratorio" 
+                    <input type="text"  id="laboratorio"  
                     class="form-control" 
-                    name="laboratorio" placeholder="" #laboratorio="ngModel">
+                    name="laboratorio" placeholder="" formControlName="laboratorio" >
+                      <div *ngIf="laboratorio.invalid && (laboratorio.dirty || laboratorio.touched)"
+              class="alert alert-danger">
+              <div *ngIf="laboratorio.errors.required">
+                Laboratorio requerido.
+              </div>
+            </div>
                   </div>
                 </div>
             </div>
@@ -48,16 +52,19 @@
                   <label for="estado">Estado</label>
 
 
-                  <select type="text" [disabled]="!hidden" id="estado" required [(ngModel)]="model.estado" class="form-control" name="estado" placeholder="Estado" #estado="ngModel">
+                  <select type="text"  id="estado" required class="form-control" name="estado" placeholder="Estado" formControlName="estado">
                   <option value="" [disabled]="true">Selecciona el Estado...</option>
                     <option *ngFor="let estado of estados" [value]="estado.id">
                       {{estado.estado}}
                     </option>
                   </select>
-                  
-                  <div [hidden]="estado.valid ||estado.pristine"  class="alert alert-danger">
-                    Estado Requerido.
-                  </div>
+                    
+                <div *ngIf="estado.invalid && (estado.dirty || estado.touched)"
+              class="alert alert-danger">
+              <div *ngIf="estado.errors.required">
+                Estado requerido.
+              </div>
+            </div>
 
                 </div>
               </div>
@@ -65,20 +72,26 @@
               <div class="col-md-6 col-12">
                   <div class="form-group">
                     <label for="municipio">Municipio</label>
-                    <input type="text" [disabled]="!hidden" id="municipio"  
+                    <input type="text"  id="municipio"  
                      [(ngModel)]="model.municipio" 
                     class="form-control" 
-                    name="municipio" placeholder="" #municipio="ngModel">
+                    name="municipio" placeholder="" formControlName="municipio" >
+                      <div *ngIf="municipio.invalid && (municipio.dirty || municipio.touched)"
+              class="alert alert-danger">
+              <div *ngIf="municipio.errors.required">
+                Municipio de contacto requerido.
+              </div>
+            </div>
                   </div>
               </div>
             
             </div>
 
             <div class="btn-group"  style="float: right; padding-right: 10%;">
-              <button class="btn btn-info" *ngIf="hidden == false"  (click)="mostrar()">
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="hidden" [disabled]="laboratorioForm.invalid" (click)="actualizarLaboratorio(laboratorio.value, estado.value, municipio.value); ocultar();">
+            <button class="btn btn-success" *ngIf="!hidden" [disabled]="laboratorioForm.invalid" (click)="actualizarLaboratorio();  ">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>

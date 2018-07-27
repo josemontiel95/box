@@ -21,18 +21,21 @@ import {
   styleUrls: ['./laboratorio-detail.component.css','../../loadingArrows.css']
 })
 export class LaboratorioDetailComponent implements OnInit {
+  laboratorioForm: FormGroup;
 
-    id_laboratorio: string;
-    laboratorio: string;
-    estado: string;
-    municipio: string;
+  Laboratorio= {
+    laboratorio: '',  
+    estado: '',
+    municipio: ''  ,
+    id_laboratorio: ''
+  }
     tipo: string;
     estatus: string;
     error: string;
     cargando= 1;
     active: any;
     submitted = false;
-    hidden = false;
+    hidden = true;
     mis_tipos: Array<any>;
     mis_lab: Array<any>;
     imgUrl = "";
@@ -67,8 +70,22 @@ export class LaboratorioDetailComponent implements OnInit {
     search.set('rol_usuario_id', "1001");
     search.set('id_laboratorio', this.id);
 	  this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+
+      this.laboratorioForm = new FormGroup({
+   'laboratorio': new FormControl( { value:this.Laboratorio.laboratorio, disabled:  this.hidden },  [Validators.required]),
+'estado': new FormControl({ value: this.Laboratorio.estado, disabled: this.hidden },  [ Validators.required]),
+ 'municipio': new FormControl( { value:this.Laboratorio.municipio, disabled: this.hidden },  [Validators.required]),
+'id_laboratorio': new FormControl({ value: this.Laboratorio.id_laboratorio, disabled: true },  [ Validators.required]),
+});
   }
 
+      get laboratorio() { return this.laboratorioForm.get('laboratorio'); }
+
+    get estado() { return this.laboratorioForm.get('estado'); }
+
+     get municipio() { return this.laboratorioForm.get('municipio'); }
+
+    get id_laboratorio() { return this.laboratorioForm.get('id_laboratorio'); }
 
 
   switchAlerta(exitoCon: any){
@@ -80,18 +97,17 @@ export class LaboratorioDetailComponent implements OnInit {
   }
 
 
-  mostrar()
+   mostrar()
   {
-    this.hidden=true;
+    this.hidden = !this.hidden;
+    const state = this.hidden ? 'disable' : 'enable';
+
+    Object.keys(this.laboratorioForm.controls).forEach((controlName) => {
+        this.laboratorioForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
+    });
   }
-  ocultar()
-  {
-    this.hidden=false;
 
-
-  }
-
-  actualizarLaboratorio(laboratorio: string, estado: string, municipio: string)
+  actualizarLaboratorio( )
   {
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/laboratorio/post/endpoint.php`;
@@ -102,28 +118,14 @@ export class LaboratorioDetailComponent implements OnInit {
     formData.append('rol_usuario_id', '1001');
     //formData.append
     formData.append('id_laboratorio', this.id);
-    formData.append('laboratorio', laboratorio);
-    formData.append('estado', estado);
-    formData.append('municipio', municipio);
+    formData.append('laboratorio', this.laboratorioForm.value.laboratorio);
+    formData.append('estado', this.laboratorioForm.value.estado);
+    formData.append('municipio', this.laboratorioForm.value.municipio);
     //post  formData
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaError(res.json());
                                             } );
-    /*
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'upDate');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
-
-    search.set('id_laboratorio', this.id);
-    search.set('fechaDeCompra', fechaDeCompra);
-    search.set('placas', placas);
-    search.set('condicion', condicion);
-    search.set('herramienta_tipo_id', herramienta_tipo_id);
-    this.http.get(url, {search}).subscribe(res => this.respuestaError(res.json()) );
-    */
-  }
+   }
 
 
   respuestaError(resp: any){

@@ -10,28 +10,26 @@
           Crear Herramienta</h5>
         </div>
         <div class="card-body">
-         <form (ngSubmit)="onSubmit()" #tipoherramientaForm="ngForm">
+         <form (ngSubmit)="onSubmit()" [formGroup]=herramientaForm #formDir="ngForm">
             <div class="row">
 
             <div class="col-md-12 col-12">
                 <div class="form-group">
                   <label for="tipo">Tipo de herramienta</label>
                   <input type="text" id="tipo"  
-                   [(ngModel)]="model.tipo" 
                   class="form-control" 
-                  name="tipo" placeholder="" required #tipo="ngModel">
+                  name="tipo" placeholder="" required formControlName="tipo">
               </div>
-               
-
-
-            <div [hidden]="tipo.valid || tipo.pristine"  class="alert alert-danger">
+         <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)" class="alert alert-danger">
+                   <div *ngIf="tipo.errors.required">
                    Tipo de herramienta requerido.
-                  </div>
+                </div>
+              </div>
             </div>
             </div>
             
             <div class="btn-group" style="float: right; padding-right: 10%;">
-            <button class="btn btn-success" [disabled]="tipoherramientaForm.invalid" (click)="crearTipoHerramienta(tipo.value); ">
+            <button class="btn btn-success" [disabled]="herramientaForm.invalid" (click)="crearTipoHerramienta(); ">
               <span><b> Guardar Cambios </b></span>
             </button>
           </div>

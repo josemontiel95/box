@@ -17,15 +17,18 @@
           </h5>
         </div>
         <div class="card-body">
-           <form (ngSubmit)="onSubmit()" #userForm="ngForm"> <!-- INICIO DEL FORM -->
+         <form (ngSubmit)="onSubmit()"  [formGroup]=obraForm #formDir="ngForm" > <!-- INICIO DEL FORM -->
             <div class="row"> <!-- INICIO PRIMER ROW -->
 
               <div class="col-md-6 col-12"> <!-- INICIO PRIMER CAMPO -->
                   <div class="form-group">
                     <label>ID</label>
-                    <input type="text" disabled="" id="id_obra"  required [(ngModel)]="model.id_obra" name="id_obra" class="form-control" placeholder="ID" #id_obra="ngModel">
-                     <div [hidden]="id_obra.valid ||id_obra.pristine"  class="alert alert-danger">
+                    <input type="text" disabled="" id="id_obra"  name="id_obra" class="form-control" placeholder="ID" formControlName="id_obra">
+                 <div *ngIf="id_obra.invalid && (id_obra.dirty || id_obra.touched)"
+              class="alert alert-danger">            
+              <div *ngIf="id_obra.errors.required">
                       ID de Obra Requerido.
+                    </div>
                     </div>
                   </div>
                 </div><!-- FIN PRIMER CAMPO -->
@@ -33,22 +36,28 @@
               <div class="col-md-6 col-12"> <!-- INICIO SEGUNDO CAMPO -->
                 <div class="form-group">
                   <label>Prefijo</label>
-                  <input type="text" [disabled]="!hidden" id="prefijo"  required [(ngModel)]="model.prefijo" name="prefijo" class="form-control" placeholder="Prefijo" #prefijo="ngModel">
-                   <div [hidden]="prefijo.valid ||prefijo.pristine"  class="alert alert-danger">
-                   Prefijo requerido.
-                  </div>
+                  <input type="text" id="prefijo"  required name="prefijo" class="form-control" placeholder="Prefijo" formControlName="prefijo">
+            <div *ngIf="prefijo.invalid && (prefijo.dirty || prefijo.touched)"
+              class="alert alert-danger">            
+              <div *ngIf="prefijo.errors.required">
+              Prefijo requerido.
+              </div>
+            </div>
                 </div>
               </div> <!-- FIN SEGUNDO CAMPO -->  
             </div> <!-- FIN PRIMER ROW -->
 
               <div class="row"> <!-- INICIO SEGUNDO ROW -->
               <div class="col-md-12 col-12"> <!-- INICIO TERCER CAMPO -->
-                  <div class="form-group">
+                 <div class="form-group">
                     <label>Obra</label>
-                    <input type="text" [disabled]="!hidden" id="obra"  required [(ngModel)]="model.obra" name="obra" class="form-control" placeholder="Obra" #obra="ngModel">
-                     <div [hidden]="obra.valid ||obra.pristine"  class="alert alert-danger">
-                      Nombre de Obra Requerido.
-                    </div>
+                    <input type="text" id="obra"  required   name="obra" class="form-control" placeholder="Obra"  formControlName="obra" >
+            <div *ngIf="obra.invalid && (obra.dirty || obra.touched)"
+              class="alert alert-danger">            
+              <div *ngIf="obra.errors.required">
+              Nombre de la obra requerido.
+              </div>
+            </div>
                   </div>
                 </div><!-- FIN TERCER CAMPO -->
               </div><!-- FIN SEGUNDO ROW -->
@@ -58,28 +67,30 @@
               <div class="col-md-6 col-12"> <!-- INICIO CUARTO CAMPO -->
                   <div class="form-group">
                     <label for="cliente_id">Cliente</label> 
-                    <select   class="form-control" [disabled]="!hidden" id="cliente_id"
-                      required [(ngModel)]="model.id_cliente"
+                    <select   class="form-control"  id="cliente_id"
+                      required  
                       name="cliente_id"
-                      placeholder="Cliente" #cliente_id="ngModel">
+                      placeholder="Cliente" formControlName="cliente_id">
                       <option value="Selecciona un Cliente..." selected>Selecciona un Cliente...</option>
                       <option *ngFor="let cli of mis_cli" [value]="cli.id_cliente">
                         {{cli.nombre}}
                       </option>
                     </select>
-                    <div [hidden]="cliente_id.valid || cliente_id.pristine"  class="alert alert-danger">
-                      Cliente requerido.
-                    </div>
+            <div *ngIf="cliente_id.invalid && (cliente_id.dirty || cliente_id.touched)"
+              class="alert alert-danger">            
+              <div *ngIf="cliente_id.errors.required">
+              Cliente requerido.
+              </div>
+            </div>
                   </div>
               </div> <!-- FIN CUARTO CAMPO -->
 
               <div class="col-md-6 col-12"> <!-- INICIO QUINTO CAMPO -->
                 <div class="form-group">
                   <label for="tipo">Tipo</label> 
-                  <select   class="form-control" [disabled]="!hidden" id="tipo"
-                    required [(ngModel)]="model.tipo"
-                    name="tipo"
-                    placeholder="Tipo" #tipo="ngModel">
+                  <select   class="form-control"  id="tipo"
+                    required name="tipo"
+                    placeholder="Tipo" formControlName="tipo">
                     <option value="Selecciona un Tipo..." selected>Selecciona un Tipo...</option>
                     <option  value="1">
                       Iguala
@@ -88,9 +99,12 @@
                       Unitario
                     </option>
                   </select>
-                  <div [hidden]="tipo.valid || tipo.pristine"  class="alert alert-danger">
-                    Tipo requerido.
-                  </div>
+                              <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)"
+              class="alert alert-danger">            
+              <div *ngIf="tipo.errors.required">
+              Tipo requerido.
+              </div>
+            </div>
                 </div>
               </div><!-- FIN QUINTO CAMPO -->
                 
@@ -98,38 +112,42 @@
 
             <div class="row"> <!-- INICIO CUARTO ROW -->
               <div class="col-md-12 col-12"> <!-- INICIO SEXTO CAMPO -->
-                <div class="form-group">
+                  <div class="form-group">
                   <label for="descripcion"> Descripcion</label>
-                  <textarea type="text" [disabled]="!hidden" id="descripcion"   [(ngModel)]="model.descripcion" class="form-control" name="descripcion" placeholder="descripcion" #descripcion="ngModel"></textarea>
+                  <textarea type="text" id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" formControlName="descripcion" ></textarea>
                 </div>
               </div> <!-- FIN SEXTO CAMPO -->
             </div> <!-- FIN CUARTO ROW -->
 
             <div class="row"> <!-- INICIO QUINTO ROW -->
               <div class="col-md-6 col-12"> <!-- INICIO SEPTIMO CAMPO -->
-                <div class="form-group">
-                  <label for="fechaDeCre">Fecha de Creacion</label>
-                  <input type="date" [disabled]="!hidden" id="fechaDeCre" required [(ngModel)]="model.fechaDeCreacion" name="fechaDeCre"  class="form-control" #fechaDeCre="ngModel">
-                  <div [hidden]="fechaDeCre.valid ||fechaDeCre.pristine"  class="alert alert-danger">
-                    Fecha de creacion requerida.
-                  </div>
+                 <div class="form-group">
+                  <label>Fecha de Creacion</label>
+                  <input type="date"  id="fechaDeCre" required   name="fechaDeCre"  class="form-control" formControlName="fechaDeCre">
+                             <div *ngIf="fechaDeCre.invalid && (fechaDeCre.dirty || fechaDeCre.touched)"
+              class="alert alert-danger">            
+              <div *ngIf="fechaDeCre.errors.required">
+              Fecha de Creacion requerida.
+              </div>
+            </div>
                 </div>
               </div> <!-- FIN SEPTIMO CAMPO -->
               <div class="col-md-6 col-12"> <!-- INICIO OCTAVO CAMPO -->
                 <div class="form-group">
                   <label for="id_concretera">Concretera</label> <!--tipo de credencial referido al catalogo de clientes.-->
-                  <select   class="form-control" [disabled]="!hidden" id="id_concretera"
-                    required [(ngModel)]="model.id_concretera"
-                    name="id_concretera"
-                    placeholder="Concretera" #id_concretera="ngModel">
+                  <select   class="form-control"  id="id_concretera"
+                    required name="id_concretera" placeholder="Concretera" formControlName="id_concretera" >
                     <option value="Selecciona una Concretera..."  selected>Selecciona una Concretera...</option>
                     <option *ngFor="let concretera of mis_con" [value]="concretera.id_concretera">
                       {{concretera.concretera}}
                     </option>
                   </select>
-                  <div [hidden]="id_concretera.valid || id_concretera.pristine"  class="alert alert-danger">
-                    Concretera requerido.
-                  </div>
+                             <div *ngIf="id_concretera.invalid && (id_concretera.dirty || id_concretera.touched)"
+              class="alert alert-danger">            
+              <div *ngIf="id_concretera.errors.required">
+              Concretera requerida.
+              </div>
+            </div>
                 </div>
               </div> <!-- FIN OCTAVO CAMPO -->
             </div> <!-- FIN QUINTO ROW -->
@@ -138,28 +156,34 @@
               <div class="col-md-6 col-12"> <!-- INICIO NOVENO CAMPO -->
                   <div class="form-group">
                     <label>Revenimiento</label>
-                    <input type="text" [disabled]="!hidden" id="revenimiento"  required [(ngModel)]="model.revenimiento" name="revenimiento" class="form-control" placeholder="Revenimiento" #revenimiento="ngModel">
-                     <div [hidden]="revenimiento.valid ||revenimiento.pristine"  class="alert alert-danger">
-                      Indice de Revenimiento Requerido.
-                    </div>
+                    <input type="number" id="revenimiento"  required  name="revenimiento" class="form-control" placeholder="Revenimiento" formControlName="revenimiento">
+            <div *ngIf="revenimiento.invalid && (revenimiento.dirty || revenimiento.touched)"
+              class="alert alert-danger">            
+              <div *ngIf="revenimiento.errors.required">
+              Revenimiento requerido.
+              </div>
+            </div>
                   </div>
               </div><!-- FIN NOVENO CAMPO -->  
               <div class="col-md-6 col-12"> <!-- INICIO DECIMO CAMPO -->
-                  <div class="form-group">
+               <div class="form-group">
                     <label>Incertidumbre</label>
-                    <input type="text" [disabled]="!hidden" id="incertidumbre"  required [(ngModel)]="model.incertidumbre" name="incertidumbre" class="form-control" placeholder="Incertidumbre" #incertidumbre="ngModel">
-                     <div [hidden]="incertidumbre.valid ||incertidumbre.pristine"  class="alert alert-danger">
-                      Indice de Incertidumbre Requerido.
-                    </div>
+                    <input type="number" id="incertidumbre" name="incertidumbre" class="form-control" placeholder="Incertidumbre" formControlName="incertidumbre">
+                  <div *ngIf="incertidumbre.invalid && (incertidumbre.dirty || incertidumbre.touched)"
+              class="alert alert-danger">            
+              <div *ngIf="incertidumbre.errors.required">
+              Incertidumbre requerido.
+              </div>
+            </div>
                   </div>
               </div><!-- FIN DECIMO CAMPO --> 
             </div> <!-- FIN SEXTO ROW -->
 
             <div class="btn-group"  style="float: right; padding-right: 10%;">
-              <button class="btn btn-info" *ngIf="hidden == false"  (click)="mostrar()">
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="hidden" [disabled]="userForm.invalid" (click)="actualizarObra(obra.value, prefijo.value, fechaDeCre.value, descripcion.value, cliente_id.value, id_concretera.value, tipo.value, revenimiento.value, incertidumbre.value); ocultar();">
+            <button class="btn btn-success" *ngIf="!hidden" [disabled]="obraForm.invalid" (click)="actualizarObra(obra.value, prefijo.value, fechaDeCre.value, descripcion.value, cliente_id.value, id_concretera.value, tipo.value, revenimiento.value, incertidumbre.value); ocultar();">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>

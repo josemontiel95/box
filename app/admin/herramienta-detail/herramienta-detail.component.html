@@ -31,31 +31,31 @@
               </div>
             <div class="row">
               <div class="col-md-6 col-12">
-                 <div class="form-group">
+                <div class="form-group">
                   <label for="herramienta_tipo_id">Tipos</label>
-                  <select  class="form-control" [disabled]="!hidden" [disabled]="!hidden" id="herramienta_tipo_id"
-                    required [(ngModel)]="model.herramienta_tipo_id"
+                  <select  class="form-control" id="herramienta_tipo_id"
+                    required 
                     name="herramienta_tipo_id"
-                    placeholder="Tipos" #herramienta_tipo_id="ngModel">
+                    placeholder="Tipos"  formControlName="herramienta_tipo_id">
 
                     <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo">
                       {{tipo.tipo}}
                     </option>
                   </select>
-                  <div [hidden]="herramienta_tipo_id.valid || herramienta_tipo_id.pristine"  class="alert alert-danger">
-                    Tipo de Herramienta es un campo requerido.
-                  </div>
+                 <div *ngIf="herramienta_tipo_id.invalid && (herramienta_tipo_id.dirty || herramienta_tipo_id.touched)" class="alert alert-danger">
+                   <div *ngIf="herramienta_tipo_id.errors.required">
+                   Tipo de herramienta requerido.
+                </div>
+              </div>
                 </div>
               </div>
 
               <div class="col-md-6 col-12">
                   <div class="form-group">
-                    <label for="placas">Placas/identificador</label>
-                    <input type="text" [disabled]="!hidden" id="placas"  
-                     [(ngModel)]="model.placas" 
-                    class="form-control" 
-                    name="placas" placeholder="" #placas="ngModel">
-                </div>
+                  <label for="placas">Placas/Identificador</label>
+                  <input type="text" id="placas" class="form-control" 
+                  name="placas" placeholder="" formControlName="placas" >
+              </div>
               </div>
             </div>
 
@@ -63,24 +63,28 @@
                 <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="fechaDeCompra"> Fecha de compra.</label>
-                  <input type="date" [disabled]="!hidden"  id="fechaDeCompra" required [(ngModel)]="model.fechaDeCompra" class="form-control" name="fechaDeCompra" placeholder="" #fechaDeCompra="ngModel">
-                  <div [hidden]="fechaDeCompra.valid ||fechaDeCompra.pristine"  class="alert alert-danger">
-                    Fecha de compra requerida.
+                  <input type="date" id="fechaDeCompra" class="form-control" name="fechaDeCompra" placeholder="" formControlName="fechaDeCompra" >
+                 <div *ngIf="fechaDeCompra.invalid && (fechaDeCompra.dirty || fechaDeCompra.touched)" class="alert alert-danger">
+                   <div *ngIf="fechaDeCompra.errors.required">
+                   Fecha de compra requerida.
                 </div>
+              </div>
                 </div>
               </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label>Condicion</label>
-                  <select type="text" [disabled]="!hidden" id="condicion" required [(ngModel)]="model.condicion" name="condicion" class="form-control" placeholder="Condicion" #condicion="ngModel">
+                  <label for="condicion">Condicion</label>
+                  <select type="text" id="condicion" required name="condicion" class="form-control" placeholder="Condicion" formControlName="condicion"  >
                     <option value="" [disabled]="true">Selecciona la condici&oacute;n...</option>
                     <option *ngFor="let condicion of condi" [value]="condicion.id">
                       {{condicion.condicion}}
                     </option>
                   </select>
-                   <div [hidden]="condicion.valid ||condicion.pristine"  class="alert alert-danger">
-                    Condicion de la herramienta requerida.
+                <div *ngIf="condicion.invalid && (condicion.dirty || condicion.touched)" class="alert alert-danger">
+                   <div *ngIf="condicion.errors.required">
+                   Condicion requerida.
                 </div>
+              </div>
                 </div>
               </div>
             </div>
@@ -99,10 +103,10 @@
             </div>
 
             <div class="btn-group"  style="float: right; padding-right: 10%;">
-              <button class="btn btn-info" *ngIf="hidden == false"  (click)="mostrar()">
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="hidden" [disabled]="herramientaForm.invalid" (click)="actualizarHerramienta(herramienta_tipo_id.value,  placas.value, observaciones.value, fechaDeCompra.value, condicion.value ); ocultar();">
+            <button class="btn btn-success" *ngIf="!hidden" [disabled]="herramientaForm.invalid" (click)="actualizarHerramienta(herramienta_tipo_id.value,  placas.value, observaciones.value, fechaDeCompra.value, condicion.value );">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>

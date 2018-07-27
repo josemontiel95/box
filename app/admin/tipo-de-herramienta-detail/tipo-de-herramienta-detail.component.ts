@@ -22,12 +22,11 @@ import {
 })
 export class TipoHerramientaDetailComponent implements OnInit {
 
-    id_herramienta_tipo: string;
-    tipo: string;
+  
     cargando= 1;
     active: any;
     submitted = false;
-    hidden = false;
+    hidden = true;
     imgUrl = "";
     onSubmit() { this.submitted = true; }
 
@@ -41,6 +40,14 @@ export class TipoHerramientaDetailComponent implements OnInit {
     password1: string;
     npassword: string;
     id: string;
+
+    herramientaForm: FormGroup;
+    herramienta= {
+
+    id_herramienta_tipo: '',
+    tipo: '',
+
+    }
 
     model: Herramienta= new Herramienta("","","");
     
@@ -59,8 +66,18 @@ export class TipoHerramientaDetailComponent implements OnInit {
     search.set('rol_usuario_id', "1001");
     search.set('id_herramienta_tipo', this.id);
 	  this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+
+     this.herramientaForm = new FormGroup({
+      'id_herramienta_tipo': new FormControl( { value: this.herramienta.id_herramienta_tipo, disabled: this.hidden },  [Validators.required]), 
+      'tipo': new FormControl({ value: this.herramienta.tipo, disabled: this.hidden },  [ Validators.required]),
+     });   
+
   }
 
+
+  get id_herramienta_tipo() { return this.herramientaForm.get('id_herramienta_tipo'); }
+
+  get tipo() { return this.herramientaForm.get('tipo'); }
 
 
   switchAlerta(exitoCon: any){
@@ -73,18 +90,18 @@ export class TipoHerramientaDetailComponent implements OnInit {
 
 
 
-  mostrar()
+    mostrar()
   {
-    this.hidden=true;
+    this.hidden = !this.hidden;
+    const state = this.hidden ? 'disable' : 'enable';
+
+    Object.keys(this.herramientaForm.controls).forEach((controlName) => {
+        this.herramientaForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
+    });
   }
-  ocultar()
-  {
-    this.hidden=false;
 
 
-  }
-
-  actualizarHerramienta(tipo:string)
+  actualizarHerramienta( )
   {
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/herramienta_tipo/post/endpoint.php`;
@@ -95,7 +112,7 @@ export class TipoHerramientaDetailComponent implements OnInit {
     formData.append('rol_usuario_id', '1001');
     //formData.append
     formData.append('id_herramienta_tipo', this.id);
-    formData.append('tipo', tipo);
+    formData.append('tipo',  this.herramientaForm.value.tipo);
     //post  formData
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaError(res.json());
@@ -120,10 +137,13 @@ export class TipoHerramientaDetailComponent implements OnInit {
 
   llenado(respuesta: any){
     console.log(respuesta);
-    this.model=respuesta;
+     this.herramientaForm.patchValue({
+      id_herramienta_tipo: respuesta.id_herramienta_tipo,
+      tipo: respuesta.tipo
+      });
 
-    setTimeout(()=>{ this.model=respuesta;
-                     this.active= this.model.active;
+    setTimeout(()=>{ 
+                     this.active= respuesta.active;
                      this.status(this.active);
                      this.cargando=this.cargando-1;
                      console.log("llenado this.cargando: "+this.cargando);
