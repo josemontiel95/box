@@ -71,12 +71,12 @@ export class CrearClienteComponent implements OnInit
     search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaLaboratorio(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenaLaboratorio(res.json()) ); 
 
     // se inicializan los campos del form y se añaden un validador personalizado para email que confirma la existencia del arroba "@"
 
     this.clienteForm = new FormGroup({
-      'rfc': new FormControl(this.cliente.rfc, Validators.required), 
+      'rfc': new FormControl(this.cliente.rfc, [Validators.required, Validators.pattern("^(([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) || ^(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) ") ]), 
       'nombre': new FormControl(this.cliente.nombre, Validators.required), 
       'razonSocial': new FormControl(this.cliente.razonSocial,  Validators.required), 
       'direccion': new FormControl(this.cliente.direccion,  Validators.required), 

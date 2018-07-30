@@ -13,7 +13,9 @@
         <div class="card-header">
           <h5 class="title">
             <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaCliente();"></i>
-            Perfil de {{this.clienteForm.value.razonSocial}}
+
+            Perfil de {{this.clienteForm.value.razonSocial }}
+ 
           </h5>
         </div>
         <div class="card-body">
@@ -29,6 +31,7 @@
                    <div *ngIf="rfc.errors.required">
                    RFC requerido.
                 </div>
+                <div *ngIf="rfc.errors.pattern">Verifica tu R.F.C , recuerda que el R.F.C de personas físicas esta compuesto de 4 caracteres alfanuméricos, mas 6 numeros  y 3 carateres nuevamente alfanuméicos</div>
               </div>
                 </div>
               </div>
