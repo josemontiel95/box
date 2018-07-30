@@ -64,17 +64,7 @@ export class ClienteDetailComponent implements OnInit {
     cargando = 1;
     clienteForm: FormGroup; //se crea un formulario de tipo form group
 
-    model = new Cliente(    
-      '',
-      '',
-       '',
-      '',
-      '',
-        '',
-        '',
-         '',
-        '',
-        '');
+  
 
    cliente = {
     id_cliente: '',
@@ -305,7 +295,7 @@ export class ClienteDetailComponent implements OnInit {
   llenado(respuesta: any)
   {
     console.log(respuesta);
-    this.model=respuesta;
+ 
 
     this.clienteForm.patchValue({
       rfc: respuesta.rfc,

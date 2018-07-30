@@ -13,45 +13,42 @@
         <div class="card-header">
           <h5 class="title">
             <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaHerramientas();"></i>
-            Herramienta No. {{model.id_herramienta_tipo}}
+            Herramienta No. {{this.id}}
           </h5>
         </div>
         <div class="card-body">
-                    <form (ngSubmit)="onSubmit()" #herramientaForm="ngForm">
+                    <form (ngSubmit)="onSubmit()"  [formGroup]=herramientaForm #formDir="ngForm">
                       <div class="row">
                 <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="id_herramienta_tipo">ID Herramienta.</label>
-                  <input type="text" disabled="" id="id_herramienta_tipo"  
-                   [(ngModel)]="model.id_herramienta_tipo" 
+                  <input type="text" disabled="" id="id_herramienta_tipo"   
                   class="form-control" 
-                  name="id_herramienta_tipo" placeholder="" #id_herramienta_tipo="ngModel">
+                  name="id_herramienta_tipo" placeholder="" formControlName="id_herramienta_tipo">
                 </div>
                 </div>
 
                   <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="tipo">Tipo de herramienta</label>
-                  <input type="text" [disabled]="!hidden" id="tipo"  
-                   [(ngModel)]="model.tipo" 
+                  <input type="text"  id="tipo"  
                   class="form-control" 
-                  name="tipo" placeholder="" #tipo="ngModel">
+                  name="tipo" placeholder="" formControlName="tipo">
               </div>
-               
-
-
-            <div [hidden]="tipo.valid || tipo.pristine"  class="alert alert-danger">
+         <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)" class="alert alert-danger">
+                   <div *ngIf="tipo.errors.required">
                    Tipo de herramienta requerido.
-                  </div>
+                </div>
+              </div>
             </div>
               </div>
 
 
             <div class="btn-group"  style="float: right; padding-right: 10%;">
-              <button class="btn btn-info" *ngIf="hidden == false"  (click)="mostrar()">
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="hidden" [disabled]="herramientaForm.invalid" (click)="actualizarHerramienta(tipo.value ); ocultar();">
+            <button class="btn btn-success" *ngIf="!hidden" [disabled]="herramientaForm.invalid" (click)="actualizarHerramienta( );  ">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>

@@ -31,19 +31,24 @@ export class Password
 })
 export class ObraDetailComponent implements OnInit {
 
-    
-    id_obra: string ;
-    obra: string;
-    revenimiento: string;
-    incertidumbre: string;
-    prefijo: string;
-    fechaDeCre: string;
+
     foto: string;
-    id_cliente: string;
-    id_concretera: string;
-    tipo: string;
-    laboratorio: string;
-    descripcion: string;
+   
+     obraForm: FormGroup;
+
+    Obra = {
+     id_obra:'',
+     obra:'',
+     revenimiento:'',
+     incertidumbre:'',
+     prefijo:'',
+     cliente_id:'',
+     id_concretera:'',
+     tipo:'',
+     descripcion:'',
+     fechaDeCre:'' 
+   }
+
     submitted = false;
     hidden = false;
     cargando= 3;
@@ -96,8 +101,44 @@ export class ObraDetailComponent implements OnInit {
 	this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
                                                  this.llenadoValidator(res.json());
                                                });
+
+            this.obraForm = new FormGroup({
+      'id_obra': new FormControl({ value:this.Obra.id_obra, disabled: this.hidden },  [Validators.required]),         
+      'obra': new FormControl({ value:this.Obra.obra, disabled: this.hidden },  [Validators.required]), 
+      'revenimiento': new FormControl( { value:this.Obra.revenimiento, disabled: this.hidden },  [Validators.required]), 
+      'incertidumbre': new FormControl( { value:this.Obra.incertidumbre, disabled: this.hidden },  [Validators.required]), 
+      'prefijo': new FormControl( { value:this.Obra.prefijo, disabled: this.hidden },  [Validators.required]), 
+      'cliente_id': new FormControl( { value:this.Obra.cliente_id, disabled: this.hidden },  [Validators.required]), 
+      'id_concretera': new FormControl( { value:this.Obra.id_concretera, disabled: this.hidden },  [Validators.required]), 
+      'tipo': new FormControl( { value:this.Obra.tipo, disabled: this.hidden },  [Validators.required]), 
+      'descripcion': new FormControl( { value:this.Obra.descripcion, disabled: this.hidden },  [Validators.required]), 
+       'fechaDeCre': new FormControl( { value:this.Obra.fechaDeCre, disabled: this.hidden },  [Validators.required]), 
+        
+                                        
+                                      });
+
+
   }
 
+  get id_obra() { return this.obraForm.get('id_obra'); }
+
+  get obra() { return this.obraForm.get('obra'); }
+
+  get revenimiento() { return this.obraForm.get('revenimiento'); }
+
+  get incertidumbre() { return this.obraForm.get('incertidumbre'); }
+
+  get prefijo() { return this.obraForm.get('prefijo'); }
+
+  get cliente_id() { return this.obraForm.get('cliente_id'); }
+
+  get id_concretera() { return this.obraForm.get('id_concretera'); }
+
+  get tipo() { return this.obraForm.get('tipo'); }
+
+  get descripcion() { return this.obraForm.get('descripcion'); }
+
+  get fechaDeCre() { return this.obraForm.get('fechaDeCre'); }
 
 
 
@@ -168,13 +209,12 @@ export class ObraDetailComponent implements OnInit {
 
   mostrar()
   {
-    this.hidden=true;
-  }
-  ocultar()
-  {
-    this.hidden=false;
+    this.hidden = !this.hidden;
+    const state = this.hidden ? 'disable' : 'enable';
 
-
+    Object.keys(this.obraForm.controls).forEach((controlName) => {
+        this.obraForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
+    });
   }
 
 
@@ -189,15 +229,15 @@ export class ObraDetailComponent implements OnInit {
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('id_obra', this.id);
 
-    formData.append('obra', obra);
-    formData.append('prefijo', prefijo);
-    formData.append('fechaDeCreacion', fechaDeCre);
-    formData.append('descripcion', descripcion);
-    formData.append('cliente_id', id_cliente);
-    formData.append('concretera', id_concretera);
-    formData.append('tipo', tipo);
-    formData.append('revenimiento', revenimiento);
-    formData.append('incertidumbre', incertidumbre);
+    formData.append('obra', this.obraForm.value.obra);
+    formData.append('prefijo', this.obraForm.value.prefijo );
+    formData.append('fechaDeCreacion', this.obraForm.value.fechaDeCre);
+    formData.append('descripcion', this.obraForm.value.descripcion);
+    formData.append('cliente_id', this.obraForm.value.cliente_id);
+    formData.append('concretera', this.obraForm.value.id_concretera);
+    formData.append('tipo', this.obraForm.value.tipo);
+    formData.append('revenimiento',  this.obraForm.value.revenimiento  );
+    formData.append('incertidumbre', this.obraForm.value.incertidumbre );
     
     this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
 
@@ -222,7 +262,18 @@ export class ObraDetailComponent implements OnInit {
   llenado(respuesta: any)
   {
     console.log(respuesta);
-    this.model=respuesta;
+    
+    this.obraForm.patchValue({
+      obra: respuesta.obra,
+      prefijo: respuesta.prefijo,
+      fechaDeCre: respuesta.fechaDeCre,
+      descripcion: respuesta.descripcion,
+      cliente_id: respuesta.cliente_id,
+      id_concretera: respuesta.id_concretera,
+      tipo: respuesta.tipo,
+      revenimiento:respuesta.revenimiento,
+      incertidumbre: respuesta.incertidumbre
+    });
 
      if(respuesta.isConcreteraActive==0 ){
       this.addConcretera(respuesta.id_concretera,respuesta.concretera);
@@ -240,7 +291,7 @@ export class ObraDetailComponent implements OnInit {
     else{
       this.imgUrl= this.global.assetsRoot+respuesta.foto;
     }
-    setTimeout(()=>{ this.model=respuesta;
+    setTimeout(()=>{  
                      this.cargando=this.cargando-1;
                      console.log("llenado this.cargando: "+this.cargando);
                      }, 0);
@@ -281,17 +332,5 @@ export class ObraDetailComponent implements OnInit {
   
   
   
-   model = new Obra(this.id_obra,
-                       this.id_concretera,
-                       this.obra,
-                       this.revenimiento,
-                       this.incertidumbre,
-                       this.prefijo,
-                       this.fechaDeCre,
-                       this.foto,
-                       this.descripcion,
-                       this.laboratorio,
-                       this.tipo,
-                       this.id_cliente,"");
-
+   
 }

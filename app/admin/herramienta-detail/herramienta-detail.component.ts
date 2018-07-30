@@ -22,12 +22,7 @@ import {
 })
 export class HerramientaDetailComponent implements OnInit {
 
-    id_herramienta: string;
-    fechaDeCompra: string;
-    placas: string;
     observaciones: string;
-    condicion: string;
-    tipo: string;
     estatus: string;
     error: string;
     cargando= 2;
@@ -39,6 +34,13 @@ export class HerramientaDetailComponent implements OnInit {
     imgUrl = "";
     condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
     onSubmit() { this.submitted = true; }
+      herramientaForm: FormGroup;
+      herramienta = {
+        herramienta_tipo_id: '',
+        placas:'',
+        condicion:'',
+        fechaDeCompra:'' }
+
 
     loginMessage: string= "";
     loginresp: LoginResp;
@@ -95,8 +97,26 @@ export class HerramientaDetailComponent implements OnInit {
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_herramienta', this.id);
 	  this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+
+     this.herramientaForm = new FormGroup({
+      'herramienta_tipo_id': new FormControl( { value:this.herramienta.herramienta_tipo_id, disabled: this.hidden },  [Validators.required]), 
+      'placas': new FormControl({ value: this.herramienta.placas, disabled: this.hidden },  [ Validators.required]),
+      'condicion': new FormControl({ value: this.herramienta.condicion, disabled: this.hidden },  [  Validators.required]),
+      'fechaDeCompra': new FormControl({ value: this.herramienta.fechaDeCompra, disabled: this.hidden },  [  Validators.required]), 
+
+                                        
+                                 });
+
+
   }
 
+    get herramienta_tipo_id() { return this.herramientaForm.get('herramienta_tipo_id'); }
+
+    get placas() { return this.herramientaForm.get('placas'); }
+
+    get condicion() { return this.herramientaForm.get('condicion'); }
+
+    get fechaDeCompra() { return this.herramientaForm.get('fechaDeCompra'); }
 
 
   switchAlerta(exitoCon: any){
@@ -120,13 +140,14 @@ export class HerramientaDetailComponent implements OnInit {
     console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
-  mostrar()
+ mostrar()
   {
-    this.hidden=true;
-  }
-  ocultar()
-  {
-    this.hidden=false;
+    this.hidden = !this.hidden;
+    const state = this.hidden ? 'disable' : 'enable';
+
+    Object.keys(this.herramientaForm.controls).forEach((controlName) => {
+        this.herramientaForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
+    });
   }
 
   actualizarHerramienta(herramienta_tipo_id:string, placas: string, observaciones: string,
@@ -141,29 +162,15 @@ export class HerramientaDetailComponent implements OnInit {
     formData.append('rol_usuario_id',  this.global.rol);
     //formData.append
     formData.append('id_herramienta', this.id);
-    formData.append('fechaDeCompra', fechaDeCompra);
-    formData.append('placas', placas);
+    formData.append('fechaDeCompra',  this.herramientaForm.value.fechaDeCompra);
+    formData.append('placas', this.herramientaForm.value.placas );
     formData.append('observaciones', observaciones);
-    formData.append('condicion', condicion);
-    formData.append('herramienta_tipo_id', herramienta_tipo_id);
+    formData.append('condicion', this.herramientaForm.value.condicion);
+    formData.append('herramienta_tipo_id', this.herramientaForm.value.herramienta_tipo_id );
     //post  formData
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaError(res.json());
                                             } );
-    /*
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'upDate');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', "1001");
-
-    search.set('id_herramienta', this.id);
-    search.set('fechaDeCompra', fechaDeCompra);
-    search.set('placas', placas);
-    search.set('condicion', condicion);
-    search.set('herramienta_tipo_id', herramienta_tipo_id);
-    this.http.get(url, {search}).subscribe(res => this.respuestaError(res.json()) );
-    */
   }
 
 

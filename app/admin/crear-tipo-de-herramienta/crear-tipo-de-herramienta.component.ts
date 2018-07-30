@@ -30,9 +30,14 @@ export class CrearTipoHerramientasComponent implements OnInit {
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
   model = new Herramienta('','');
- 
+
+  herramientaForm: FormGroup;
+
+    herramienta= {
+      tipo: '',
+    }
   
-  crearTipoHerramienta(  tipo: string)
+  crearTipoHerramienta(  )
   {
       this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/herramienta_tipo/post/endpoint.php`;
@@ -41,10 +46,10 @@ export class CrearTipoHerramientasComponent implements OnInit {
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', "1001");
 
-    formData.append('tipo', tipo);
+    formData.append('tipo', this.herramientaForm.value.tipo);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
-                                            } );
+                                            } ); 
 
   }
 
@@ -65,7 +70,13 @@ export class CrearTipoHerramientasComponent implements OnInit {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando=0;
 
+   this.herramientaForm = new FormGroup({
+  'tipo': new FormControl(  this.herramienta.tipo, Validators.required),
+     });  
+
   }
+
+    get tipo() { return this.herramientaForm.get('tipo'); }
 
    submitted = false;
 
