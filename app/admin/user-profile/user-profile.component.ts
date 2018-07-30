@@ -21,18 +21,11 @@ import {
 })
 export class UserProfileComponent implements OnInit {
 
-    id_usuario: string ;
-    nombre: string;
-    apellido: string;
-    email: string;
-    fechaDeNac: string;
+    
     foto: string;
-    laboratorio_id: string;
-    laboratorio: string;
-    nss: string;
-    rol: string;
+    
     submitted = false;
-    hidden = false;
+    hidden = true;
     mis_roles: Array<any>;
     mis_lab: Array<any>;
     imgUrl = "";
@@ -43,6 +36,20 @@ export class UserProfileComponent implements OnInit {
     loginresp: LoginResp;
     global: Global;
     id: string;
+
+    userForm: FormGroup;
+
+    Usuario= {
+              id_usuario: '',
+              email: '',
+              nombre: '',
+              apellido: '',
+              fechaDeNac: '',
+              contrasena: '',
+              rol_usuario_id: '',
+              nss: '',
+              laboratorio_id: ''};
+
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
 
   
@@ -78,8 +85,33 @@ export class UserProfileComponent implements OnInit {
     search.set('rol_usuario_id', this.global.rol);
 	this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
                                                  this.llenadoValidator(res.json());});
+
+    this.userForm = new FormGroup({
+  'id_usuario': new FormControl( { value:this.Usuario.id_usuario, disabled: true },  [Validators.required]), 
+  'apellido': new FormControl( { value:this.Usuario.apellido, disabled: this.hidden },  [Validators.required]), 
+  'nombre': new FormControl( { value:this.Usuario.nombre, disabled: this.hidden },  [Validators.required]), 
+  'rol_usuario_id': new FormControl( { value:this.Usuario.rol_usuario_id, disabled: this.hidden },  [Validators.required]), 
+  'nss': new FormControl( { value:this.Usuario.nss, disabled: this.hidden }, ), 
+  'laboratorio_id': new FormControl( { value:this.Usuario.laboratorio_id, disabled: this.hidden },  [Validators.required]), 
+  'fechaDeNac': new FormControl( { value:this.Usuario.fechaDeNac, disabled: this.hidden },  [Validators.required]), 
+   'email': new FormControl({ value: this.Usuario.email, disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
+   });
+
   }
 
+  get apellido() { return this.userForm.get('apellido'); }
+
+  get nombre() { return this.userForm.get('nombre'); }
+
+  get rol_usuario_id() { return this.userForm.get('rol_usuario_id'); }
+
+  get direccion() { return this.userForm.get('direccion'); }
+
+  get laboratorio_id() { return this.userForm.get('laboratorio_id'); }
+
+  get fechaDeNac() { return this.userForm.get('fechaDeNac'); }
+
+  get email() { return this.userForm.get('email'); }
 
   rolValidator(repuesta: any){
     console.log(repuesta)
@@ -139,22 +171,18 @@ export class UserProfileComponent implements OnInit {
       console.log("llenaTipos this.cargando: "+this.cargando);
     }
 
-  mostrar()
+   mostrar()
   {
-    this.hidden=true;
+    this.hidden = !this.hidden;
+    const state = this.hidden ? 'disable' : 'enable';
+
+    Object.keys(this.userForm.controls).forEach((controlName) => {
+        this.userForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
+    });
   }
-  ocultar()
-  {
-    this.hidden=false;
 
 
-  }
-
-
-  actualizarUsuario(nombre: string, apellido: string,
-                    laboratorio_id: string, nss:string,
-                    email: string, fechaDeNac: string,
-                    id_usuario: string, rol_usuario_id: string, )
+  actualizarUsuario()
   {
     let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -163,14 +191,14 @@ export class UserProfileComponent implements OnInit {
     formData.append('rol_usuario_id', '1001');
 
 
-    formData.append('id_usuario', id_usuario);
-    formData.append('nombre', nombre);
-    formData.append('apellido', apellido);
-    formData.append('laboratorio_id', laboratorio_id);
-    formData.append('nss', nss);
-    formData.append('email', email);
-    formData.append('fechaDeNac', fechaDeNac);
-    formData.append('rol_usuario_id_new', rol_usuario_id);
+    formData.append('id_usuario', this.userForm.value.id_usuario);
+    formData.append('nombre', this.userForm.value.nombre);
+    formData.append('apellido', this.userForm.value.apellido);
+    formData.append('laboratorio_id', this.userForm.value.laboratorio_id);
+    formData.append('nss', this.userForm.value.nss);
+    formData.append('email', this.userForm.value.email);
+    formData.append('fechaDeNac', this.userForm.value.fechaDeNac);
+    formData.append('rol_usuario_id_new', this.userForm.value.rol_usuario_id);
 
     this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
 
@@ -197,7 +225,18 @@ export class UserProfileComponent implements OnInit {
     llenado(respuesta: any)
   {
     console.log(respuesta);
-    this.model=respuesta;
+    this.userForm.patchValue({
+      id_usuario: respuesta.id_usuario,
+      apellido: respuesta.apellido,
+      nombre: respuesta.nombre,
+      email: respuesta.email,
+      rol_usuario_id: respuesta.rol_usuario_id,
+      nss: respuesta.nss,
+      laboratorio_id: respuesta.laboratorio_id,
+      fechaDeNac:respuesta.fechaDeNac,
+
+    });
+
     if(respuesta.isRolActive==0){
       this.addRol(respuesta.rol_usuario_id,respuesta.rol);
     }
@@ -212,10 +251,8 @@ export class UserProfileComponent implements OnInit {
     else{
       this.imgUrl= this.global.assetsRoot+respuesta.foto;
     }
-    setTimeout(()=>{ this.model=respuesta;
-                     this.cargando=this.cargando-1;
-                     console.log("llenado this.cargando: "+this.cargando);
-                     }, 0);
+
+    this.cargando=this.cargando-1;
   }
 
   addRol(rol_usuario_id: any,rol: any){
@@ -252,17 +289,7 @@ export class UserProfileComponent implements OnInit {
     }
   }
   
-   model = new Usuario(this.id_usuario,
-                       this.email,
-                       this.nombre,
-                       this.apellido,
-                       this.fechaDeNac,
-                       this.foto,
-                       this.rol,
-                       this.nss,
-                       this.laboratorio,
-                       this.laboratorio_id,
-                       "");
+  
 
 
 }

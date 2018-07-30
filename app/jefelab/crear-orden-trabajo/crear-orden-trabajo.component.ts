@@ -34,7 +34,7 @@ export class CrearOrdenTrabajoComponent implements OnInit {
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
     
   
-  crearOrdenTrabajo(  placas: string, herramienta_tipo_id: string, condicion: string, fechaDeCompra: string )
+  crearOrdenTrabajo()
   {
       this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
@@ -43,10 +43,10 @@ export class CrearOrdenTrabajoComponent implements OnInit {
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('placas', placas);
-    formData.append('herramienta_tipo_id', herramienta_tipo_id);  
+    /*formData.append('placas', placas);
+    formData.append('herramienta_tipo_id',herramienta_tipo_id);  
     formData.append('condicion', condicion);
-    formData.append('fechaDeCompra', fechaDeCompra);
+    formData.append('fechaDeCompra', fechaDeCompra); */
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             } );
