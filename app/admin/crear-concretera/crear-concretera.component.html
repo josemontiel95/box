@@ -7,10 +7,10 @@
         <div class="card-header">
           <h5 class="title">
           <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaConcretera();"></i>
-          Crear Herramienta</h5>
+          Crear Concretera</h5>
         </div>
         <div class="card-body">
-         <form (ngSubmit)="onSubmit()" #concreteraForm="ngForm">
+         <form (ngSubmit)="onSubmit()" [formGroup]="concreteraForm" #formDir="ngForm">
             <div class="row">
 
             <div class="col-md-12 col-12">
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="btn-group" style="float: right; padding-right: 10%;">
-            <button class="btn btn-success" (click)="crearConcretera(); ">
+            <button class="btn btn-success" [disabled]="concreteraForm.invalid" (click)="crearConcretera(); ">
               <span><b> Guardar Cambios </b></span>
             </button>
           </div>

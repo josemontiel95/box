@@ -48,20 +48,20 @@
               </div>
                 </div>
               </div>
-                          </div>
+              </div> <!-- FIN ROW-->
               <div class="row">
-              <div class="col-md-6 col-12">
-               <div class="form-group">
-                  <label for="email">Correo Electronico</label>
-                  <input type="email" id="email"   required   class="form-control" name="email" placeholder="mail@lacocs.com" formControlName="email" >
-                  <div *ngIf="email.errors && (email.dirty || email.touched)"
-              class="alert alert-danger">
-              <div *ngIf="email.errors.required">Correo requerido.</div>
-              <div *ngIf="email.errors.pattern">El correo debe contener @</div>
-             </div>
-              </div>
+                <div class="col-md-6 col-12">
+                   <div class="form-group">
+                      <label for="email">Correo Electronico</label>
+                      <input type="email" id="email"   required   class="form-control" name="email" placeholder="mail@lacocs.com" formControlName="email" >
+                      <div *ngIf="email.errors && (email.dirty || email.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="email.errors.required">Correo requerido.</div>
+                        <div *ngIf="email.errors.pattern">El correo debe contener @</div>
+                      </div>
+                   </div>
                 </div>
-                  <div class="col-md-6 col-12">                
+                <div class="col-md-6 col-12">                
               <div class="form-group">
                   <label for="nss"> N&uacute;mero de Seguridad Social</label>
                   <input type="nss" id="nss"   class="form-control" name="nss" placeholder="555501234" formControlName="nss">
@@ -73,25 +73,25 @@
                 <div class="form-group">
                   <label for="nombre">Nombre</label>
                   <input type="text" id="nombre"  required   name="nombre" class="form-control" placeholder="Nombre" formControlName="nombre" >
-                 <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
-              class="alert alert-danger">            
-              <div *ngIf="nombre.errors.required">
-              Nombre requerido.
-              </div>
-            </div>
+                  <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
+                        class="alert alert-danger">            
+                      <div *ngIf="nombre.errors.required">
+                      Nombre requerido.
+                      </div>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6 col-12">
                <div class="form-group">
                   <label>Apellidos</label>
                   <input type="text" id="apellido"  required name="apellido" class="form-control" placeholder="Apellidos" formControlName="apellido" >
-                 <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)"
-              class="alert alert-danger">            
-              <div *ngIf="apellido.errors.required">
-                   Apellido requerido.
-                 </div>
-                </div>
-                </div>
+                  <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)"
+                    class="alert alert-danger">            
+                    <div *ngIf="apellido.errors.required">
+                     Apellido requerido.
+                    </div>
+                  </div>
+               </div>
               </div>
             </div>
 
@@ -109,8 +109,8 @@
                 <div *ngIf="laboratorio_id.invalid && (laboratorio_id.dirty || laboratorio_id.touched)" class="alert alert-danger">
                    <div *ngIf="laboratorio_id.errors.required">
                     Laboratorio requerido.
-                  </div>
-                  </div>
+                   </div>
+                </div>
                 </div>
               </div>
               <div class="col-md-6 col-12">
