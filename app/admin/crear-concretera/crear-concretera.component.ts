@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+  import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";

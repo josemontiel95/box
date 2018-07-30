@@ -39,7 +39,7 @@ export class CrearHerramientasComponent implements OnInit {
 
   condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
   
-  crearHerramienta(  placas: string, herramienta_tipo_id: string, condicion: string, fechaDeCompra: string )
+  crearHerramienta()
   {
       this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;

@@ -170,7 +170,7 @@ fechaDeCre:''
   onSubmit() { this.submitted = true; }
 
 
-  crearObra(obra: string, revenimiento: string, incertidumbre : string, prefijo: string, cliente_id: string, tipo: string, descripcion: string, fechaDeCre: string, id_concretera:string )
+  crearObra()
   {
     this.cargando=1;
     this.data.currentGlobal.subscribe(global => this.global = global);
