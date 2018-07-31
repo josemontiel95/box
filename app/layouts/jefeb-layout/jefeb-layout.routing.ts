@@ -12,5 +12,5 @@ export const JefebLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'orden-trabajo',      component: OrdenTrabajoComponent },
-    { path: 'crear-orden-trabajo',   component: CrearOrdenTrabajoComponent },    
+    { path: 'orden-trabajo/crear-orden-trabajo',   component: CrearOrdenTrabajoComponent },    
 ];

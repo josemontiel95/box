@@ -40,7 +40,7 @@ export class OrdenTrabajoComponent implements OnInit{
   rowData: any;
 
   crearOrdenTrabajo(){
-    this.router.navigate(['jefeLaboratorio/orden-trabajo/crear-orden-trabajo']);
+    this.router.navigate(['jefeBrigada/orden-trabajo/crear-orden-trabajo']);
   }
 
   onGridReady(params) {
@@ -69,7 +69,7 @@ export class OrdenTrabajoComponent implements OnInit{
       id += selectedRow.id_herramienta;
       
     });
-    this.router.navigate(['jefeLaboratorio/herramientas/herramienta-detail/'+id]);
+    this.router.navigate(['jefeBrigada/herramientas/herramienta-detail/'+id]);
   }
 
 }

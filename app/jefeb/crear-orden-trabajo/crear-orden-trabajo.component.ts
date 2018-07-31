@@ -91,7 +91,7 @@ herramienta_tipo_id);
    submitted = false;
 
    regresaOrdenTrabajo(){
-    this.router.navigate(['jefeLaboratorio/orden-trabajo']);
+    this.router.navigate(['jefeBrigada/orden-trabajo']);
   }
 
   onSubmit() { this.submitted = true; }
