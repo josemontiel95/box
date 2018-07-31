@@ -50,7 +50,7 @@ export class ObraDetailComponent implements OnInit {
    }
 
     submitted = false;
-    hidden = false;
+    hidden = true;
     cargando= 3;
     imgUrl = "";
     mis_con: Array<any>;
@@ -218,7 +218,7 @@ export class ObraDetailComponent implements OnInit {
   }
 
 
-  actualizarObra(obra: string, prefijo: string, fechaDeCre: string, descripcion: string, id_cliente: string, id_concretera:string, tipo: string, revenimiento: string, incertidumbre : string){
+  actualizarObra(){
     this.cargando=1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/obra/post/endpoint.php`;

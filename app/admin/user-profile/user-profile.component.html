@@ -2,7 +2,7 @@
     <div class="loader-container">
         <i class="now-ui-icons loader_refresh spin"></i> 
     </div>
-</div>
+</div> <!--Este Modulo Sirve Para Mostrar el Loading con flechas, mientras obtiene la info del servidor -->
 
 <div class="panel-header panel-header-sm">
 </div>
@@ -114,8 +114,8 @@
                 <div class="form-group">
                   <label>Fecha de Nacimiento</label>
                   <input type="date"  id="fechaDeNac" required  name="fechaDeNac" class="form-control" formControlName="fechaDeNac">
-                 <div *ngIf="fechaDeNac.invalid && (fechaDeNac.dirty || fechaDeNac.touched)"
-              class="alert alert-danger">            
+                  <div *ngIf="fechaDeNac.invalid && (fechaDeNac.dirty || fechaDeNac.touched)"
+                       class="alert alert-danger">            
                   <div *ngIf="fechaDeNac.errors.required">
                     Fecha de nacimiento requerida.
                   </div>
@@ -127,9 +127,9 @@
               <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hidden" [disabled]="userForm.invalid" (click)="actualizarUsuario(  ); ">
-              <span><b> Guardar Cambios. </b></span>
-            </button>
+              <button class="btn btn-success" *ngIf="!hidden" [disabled]="userForm.invalid" (click)="actualizarUsuario(  ); ">
+                <span><b> Guardar Cambios. </b></span>
+              </button>
           </div>
           </form>
         </div>
@@ -146,9 +146,9 @@
               <img class="avatar border-gray" src="{{this.imgUrl}}" (click)="subirFoto()" alt="...">
             
               <h5 class="title">{{this.userForm.value.nombre + ' '+ this.userForm.value.apellido}}</h5>
-            <p class="description">
+              <p class="description">
               {{this.userForm.value.rol}}
-            </p>
+              </p>
           </div>
         </div>
         <hr>

@@ -23,7 +23,6 @@ export class UserProfileComponent implements OnInit {
 
     
     foto: string;
-    
     submitted = false;
     hidden = true;
     mis_roles: Array<any>;
@@ -45,7 +44,6 @@ export class UserProfileComponent implements OnInit {
               nombre: '',
               apellido: '',
               fechaDeNac: '',
-              contrasena: '',
               rol_usuario_id: '',
               nss: '',
               laboratorio_id: ''};
@@ -251,7 +249,6 @@ export class UserProfileComponent implements OnInit {
     else{
       this.imgUrl= this.global.assetsRoot+respuesta.foto;
     }
-
     this.cargando=this.cargando-1;
   }
 
@@ -288,8 +285,4 @@ export class UserProfileComponent implements OnInit {
       this.mis_lab[_i]=aux[_i];
     }
   }
-  
-  
-
-
 }
