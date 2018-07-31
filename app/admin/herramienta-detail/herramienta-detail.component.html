@@ -13,19 +13,19 @@
         <div class="card-header">
           <h5 class="title">
             <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaHerramientas();"></i>
-            Herramienta No. {{model.id_herramienta}}
+            Herramienta No. {{this.herramientaForm.value.id_herramienta}}
           </h5>
         </div>
         <div class="card-body">
-                    <form (ngSubmit)="onSubmit()" #herramientaForm="ngForm">
+                    <form (ngSubmit)="onSubmit()" [formGroup]=herramientaForm #formDir="ngForm">
+
                       <div class="row">
                 <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="id_herramienta">ID Herramienta.</label>
-                  <input type="text" disabled="" id="id_herramienta"  
-                   [(ngModel)]="model.id_herramienta" 
-                  class="form-control" 
-                  name="id_herramienta" placeholder="" #id_herramienta="ngModel">
+                  <input type="text"  id="id_herramienta"  
+                  class="form-control"  required
+                  name="id_herramienta" placeholder="" formControlName="id_herramienta">
                 </div>
                 </div>
               </div>
@@ -63,7 +63,7 @@
                 <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="fechaDeCompra"> Fecha de compra.</label>
-                  <input type="date" id="fechaDeCompra" class="form-control" name="fechaDeCompra" placeholder="" formControlName="fechaDeCompra" >
+                  <input type="date" id="fechaDeCompra" class="form-control" name="fechaDeCompra" placeholder="" required formControlName="fechaDeCompra" >
                  <div *ngIf="fechaDeCompra.invalid && (fechaDeCompra.dirty || fechaDeCompra.touched)" class="alert alert-danger">
                    <div *ngIf="fechaDeCompra.errors.required">
                    Fecha de compra requerida.
@@ -93,10 +93,9 @@
               <div class="col-md-12 col-12">
                   <div class="form-group">
                     <label for="observaciones">Observaciones</label>
-                    <textarea type="text" [disabled]="!hidden" id="observaciones"  
-                     [(ngModel)]="model.observaciones" 
+                    <textarea type="text" id="observaciones"  
                     class="form-control" 
-                    name="observaciones" placeholder="" #observaciones="ngModel">
+                    name="observaciones" placeholder="" formControlName="observaciones">
                     </textarea>
                   </div>
               </div>
@@ -106,7 +105,7 @@
               <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hidden" [disabled]="herramientaForm.invalid" (click)="actualizarHerramienta(herramienta_tipo_id.value,  placas.value, observaciones.value, fechaDeCompra.value, condicion.value );">
+            <button class="btn btn-success" *ngIf="!hidden" [disabled]="herramientaForm.invalid" (click)="actualizarHerramienta( );">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>

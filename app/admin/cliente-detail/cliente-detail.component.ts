@@ -22,22 +22,7 @@ export class Password
     ) {  }
 
 }
-export class Cliente 
-{
-  constructor(
-    public id_cliente: string,
-    public rfc: string,    
-    public razonSocial: string,
-    public nombre: string,    
-    public email: string,
-   public telefono: string,
-    public nombreContacto: string,
-    public direccion: string,
-    public telefonoDeContacto: string,
-    public contrasena: string
-    ) {  }
 
-}
 
 @Component({
   selector: 'app-cliente-detail',
@@ -121,7 +106,7 @@ export class ClienteDetailComponent implements OnInit {
 
   }
 
-// funcion para acceder de manera sencilla a los campos del form
+  // funcion para acceder de manera sencilla a los campos del form
   // referencia: https://angular.io/guide/reactive-forms
 
   get rfc() { return this.clienteForm.get('rfc'); }

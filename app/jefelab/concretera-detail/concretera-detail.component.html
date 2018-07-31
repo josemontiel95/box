@@ -3,6 +3,7 @@
         <i class="now-ui-icons loader_refresh spin"></i> 
     </div>
 </div>
+
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
@@ -12,40 +13,40 @@
         <div class="card-header">
           <h5 class="title">
             <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaConcreteras();"></i>
-            Concretera No. {{model.id_concretera}}
+            Concretera No. {{this.concreteraForm.value.id_concretera}}
           </h5>
         </div>
         <div class="card-body">
-                    <form (ngSubmit)="onSubmit()" #concreteraForm="ngForm">
+                    <form (ngSubmit)="onSubmit()" [formGroup]=concreteraForm #formDir="ngForm">
                       <div class="row">
-                <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label for="id_concretera">ID Concretera.</label>
-                  <input type="text" disabled="" id="id_concretera"  
-                   [(ngModel)]="model.id_concretera" 
-                  class="form-control" 
-                  name="id_concretera" placeholder="" #id_concretera="ngModel">
-                </div>
-                </div>
+                  <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label for="id_concretera">ID Concretera.</label>
+                    <input type="text"  id="id_concretera"  
+                    class="form-control" 
+                    name="id_concretera" formControlName="id_concretera">
+                  </div>
+                  </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="concretera">Nombre de la concretera.</label>
-                  <input type="text" required [disabled]="!hidden" id="concretera"  
-                   [(ngModel)]="model.concretera" 
+                  <input type="text"  id="concretera"  
                   class="form-control" 
-                  name="concretera" placeholder="" #concretera="ngModel">
-              </div>
-                  <div [hidden]="concretera.valid || concretera.pristine"  class="alert alert-danger">
-                    Nombre de la concretera es un campo requerido.
-                  </div>
+                 formControlName="concretera">
                 </div>
+                  <div *ngIf="concretera.invalid && (concretera.dirty || concretera.touched)" class="alert alert-danger">
+                   <div *ngIf="concretera.errors.required">
+                   Concretera requerida.
+                   </div>
+                  </div>
+              </div>
               </div>
 
             <div class="btn-group"  style="float: right; padding-right: 10%;">
-              <button class="btn btn-info" *ngIf="hidden == false"  (click)="mostrar()">
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="hidden" [disabled]="concreteraForm.invalid" (click)="actualizarHerramienta(concretera.value  ); ocultar();">
+            <button class="btn btn-success" *ngIf="!hidden" [disabled]="concreteraForm.invalid" (click)="actualizarHerramienta( ); ">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>
@@ -62,8 +63,10 @@
             </div>
         <div class="card-body">
           <div class="author">
+           
               <div class="col-md-6 ml-auto mr-auto">
-               <button type="button" class="btn btn-danger btn-round " (click)="desactivarConcretera()" *ngIf="desBut">Desactivar</button>
+                    <button type="button" class="btn btn-danger btn-round " (click)="desactivarConcretera()" *ngIf="desBut">Desactivar</button>
+                    <button type="button" class="btn btn-success btn-round " (click)="activarConcretera()" *ngIf="actBut">Activar</button>
                 </div>
               </div>
             </div>

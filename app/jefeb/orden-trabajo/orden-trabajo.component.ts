@@ -5,22 +5,27 @@ import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-concretera',
-  templateUrl: './concretera.component.html',
-  styleUrls: ['./concretera.component.scss']
+  selector: 'app-orden-trabajo',
+  templateUrl: './orden-trabajo.component.html',
+  styleUrls: ['./orden-trabajo.component.scss','../../loadingArrows.css']
 })
-export class ConcreteraComponent implements OnInit{
+export class OrdenTrabajoComponent implements OnInit{
   title = 'app';
   global: Global;
-    private gridApi;
+  private gridApi;
   private gridColumnApi;
   rowSelection;
   columnDefs;
+  cargando= 1;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'ID', field: 'id_concretera' },
-    {headerName: 'Concretera', field: 'concretera' },
+    {headerName: '# Orden', field: 'id_herramienta' },
+    {headerName: '# Cotización', field: 'id_herramienta' },
+    {headerName: 'Tipo', field: 'tipo' },
+    {headerName: 'Placas', field: 'placas' },
+    {headerName: 'Condicion', field: 'condicion'},
+    {headerName: 'Fecha de compra', field: 'fechaDeCompra' },
     {headerName: 'Editado en', field: 'lastEditedON'},
 
   ];
@@ -29,12 +34,13 @@ export class ConcreteraComponent implements OnInit{
 	  
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
+    this.cargando=1;
   }
 
   rowData: any;
 
-  crearConcretera(){
-    this.router.navigate(['jefeLaboratorio/crear-concretera']);
+  crearOrdenTrabajo(){
+    this.router.navigate(['jefeLaboratorio/orden-trabajo/crear-orden-trabajo']);
   }
 
   onGridReady(params) {
@@ -42,16 +48,16 @@ export class ConcreteraComponent implements OnInit{
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllAdmin');
+    search.set('function', 'getAllJefaLab');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.rowData= res.json();
                                             this.gridApi.sizeColumnsToFit();
-
+                                            this.cargando=this.cargando-1;
                                           });
   }
 
@@ -60,10 +66,10 @@ export class ConcreteraComponent implements OnInit{
     var id = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_concretera;
+      id += selectedRow.id_herramienta;
       
     });
-    this.router.navigate(['jefeLaboratorio/concretera-detail/'+id]);
+    this.router.navigate(['jefeLaboratorio/herramientas/herramienta-detail/'+id]);
   }
 
 }

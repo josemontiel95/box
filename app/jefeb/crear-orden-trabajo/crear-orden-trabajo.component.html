@@ -1,0 +1,226 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i>
+          Crear Orden de Trabajo</h5>
+        </div>
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" #herramientaForm="ngForm">
+            
+            <div class="row"> <!--PRIMER ROW -->
+
+              <div class="col-md-9 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="placas">Area</label>
+                    <input type="text" id="placas"  
+                     [(ngModel)]="model.placas" 
+                    class="form-control" 
+                    name="placas" placeholder="" value="Concreto" #placas="ngModel">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-3 col-12"> <!--SEGUNDO GRID -->
+                <div class="row"> <!--PRIMER ROW DEL SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="placas">No. De Orden</label>
+                    <input type="number" id="placas"  
+                     [(ngModel)]="model.placas" 
+                    class="form-control" 
+                    name="placas" placeholder="" #placas="ngModel">
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN DEL PRIMER ROW DEL SEGUNDO GRID -->
+                <div class="row"><!--SEGUNDO ROW DEL SEGUNDO GRID -->
+                  <div class="form-group"><!--TERCER CAMPO -->
+                      <label for="placas">No. De Cotizaci&oacute;n</label>
+                      <input type="number" id="placas"  
+                       [(ngModel)]="model.placas" 
+                      class="form-control" 
+                      name="placas" placeholder="" #placas="ngModel">
+                  </div> <!--FIN TERCER CAMPO -->
+                </div><!--FIN SEGUNDO ROW DEL SEGUNDO GRID -->
+              </div> <!--FIN SEGUNDO GRID -->
+
+            </div> <!--FIN PRIMER ROW -->
+
+            <div class="row"> <!--SEGUNDO ROW -->
+              <div class="col-md-12 col-12"> <!--UNICA GRID -->
+                <div class="form-group"><!--CUARTO CAMPO -->
+                  <label for="placas">Nombre del Cliente/Empresa</label>
+                  <input type="text" id="placas"  
+                   [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" value="Concreto" #placas="ngModel">
+                </div><!--FIN CUARTO CAMPO -->
+              </div> <!--FIN UNICA GRID -->
+            </div> <!--FIN SEGUNDO ROW -->
+
+            <div class="row"> <!--TERCER ROW -->
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="placas">Nombre de la Obra</label>
+                  <input type="text" id="placas"  
+                   [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" value="Concreto" #placas="ngModel">
+                </div>
+              </div> <!--FIN PRIMER CAMPO -->
+            </div> <!--FIN TERCER ROW -->
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="placas">Direccion de la Actividad</label>
+                  <input type="text" id="placas"  
+                   [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" value="Concreto" #placas="ngModel">
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-9 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="placas">Personas a Contactar</label>
+                  <input type="text" id="placas"  
+                   [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" value="Concreto" #placas="ngModel">
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+            <div class="col-md-3 col-12">
+              <div class="form-group">
+                  <label for="placas">Telefono</label>
+                  <input type="number" id="placas"  
+                   [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" #placas="ngModel">
+                </div>
+            </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="placas">Actividades a Realizar</label>
+                  <textarea type="text" id="placas"  
+                   [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" value="Concreto" #placas="ngModel">
+                  </textarea>
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="placas">Condiciones del Area de Trabajo</label>
+                  <textarea type="text" id="placas"  
+                   [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" value="Concreto" #placas="ngModel">
+                  </textarea>
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="placas">Equipo Designado para Realizar la Actividad</label>
+                  <textarea type="text" id="placas"  
+                   [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" value="Concreto" #placas="ngModel">
+                  </textarea>
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!-- CAMPO -->
+                <div class="form-group">
+                  <label for="placas">Tecnico que Realiza la Actividad</label>
+                  <input type="text" id="placas"  
+                   [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" value="Concreto" #placas="ngModel">
+              </div>
+            </div> <!--FIN  CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-12"> <!-- CAMPO -->
+                <div class="form-group">
+                  <label for="placas">Fecha de Inicio</label>
+                  <input type="date" id="placas"  
+                   [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" value="Concreto" #placas="ngModel">
+                </div>
+              </div> <!--FIN  CAMPO -->
+
+              <div class="col-md-6 col-12"> <!-- CAMPO -->
+                  <div class="form-group">
+                    <label for="placas">Fecha de Termino</label>
+                    <input type="date" id="placas"  
+                     [(ngModel)]="model.placas" 
+                    class="form-control" 
+                    name="placas" placeholder="" value="Concreto" #placas="ngModel">
+                  </div>
+              </div> <!--FIN  CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-12"> <!-- CAMPO -->
+                <div class="form-group">
+                  <label for="placas">Hora de Inicio</label>
+                  <input type="time" id="placas"  
+                   [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" value="Concreto" #placas="ngModel">
+                </div>
+              </div> <!--FIN  CAMPO -->
+
+              <div class="col-md-6 col-12"> <!-- CAMPO -->
+                  <div class="form-group">
+                    <label for="placas">Hora de Termino</label>
+                    <input type="time" id="placas"  
+                     [(ngModel)]="model.placas" 
+                    class="form-control" 
+                    name="placas" placeholder="" value="Concreto" #placas="ngModel">
+                  </div>
+              </div> <!--FIN  CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="placas">Observaciones</label>
+                  <textarea type="text" id="placas"  
+                   [(ngModel)]="model.placas" 
+                  class="form-control" 
+                  name="placas" placeholder="" value="Concreto" #placas="ngModel">
+                  </textarea>
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+            </div>
+
+            
+            <div class="btn-group" style="float: right; padding-right: 10%;">
+            <button class="btn btn-success" (click)="crearOrdenTrabajo();">
+              <span><b> Guardar Cambios </b></span>
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>
