@@ -4,7 +4,7 @@ import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { CrearResp } from "../../interfaces/int.CrearResp";
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
-import { Herramienta }    from './Herramienta';
+import { OrdenTrabajo }    from './OrdenTrabajo';
 import * as moment from 'moment';
 import {
     ReactiveFormsModule,
@@ -16,11 +16,11 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'app-crear-herramientas',
-  templateUrl: './crear-herramientas.component.html',
-  styleUrls: ['./crear-herramientas.component.scss']
+  selector: 'app-crear-orden-trabajo',
+  templateUrl: './crear-orden-trabajo.component.html',
+  styleUrls: ['./crear-orden-trabajo.component.scss']
 })
-export class CrearHerramientasComponent implements OnInit {
+export class CrearOrdenTrabajoComponent implements OnInit {
 
 
   apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
@@ -30,18 +30,11 @@ export class CrearHerramientasComponent implements OnInit {
     mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
-      herramientaForm: FormGroup;
-      herramienta = {
-        herramienta_tipo_id: '',
-        placas:'',
-        condicion:'',
-        fechaDeCompra:'',
-        observaciones:'' }
-
-
-  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
+  model = new OrdenTrabajo('', '', '', '', '', '', '');
+ condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
+    
   
-  crearHerramienta()
+  crearOrdenTrabajo()
   {
       this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
@@ -50,10 +43,10 @@ export class CrearHerramientasComponent implements OnInit {
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('placas', this.herramientaForm.value.placas);
-    formData.append('herramienta_tipo_id', this.herramientaForm.value.herramienta_tipo_id);  
-    formData.append('condicion', this.herramientaForm.value.condicion);
-    formData.append('fechaDeCompra', this.herramientaForm.value.fechaDeCompra);
+    /*formData.append('placas', placas);
+    formData.append('herramienta_tipo_id',herramienta_tipo_id);  
+    formData.append('condicion', condicion);
+    formData.append('fechaDeCompra', fechaDeCompra); */
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             } );
@@ -72,7 +65,15 @@ export class CrearHerramientasComponent implements OnInit {
      }
    }
 
- 
+
+  aver( fechaDeCompra: string, placas: string, condicion: string, herramienta_tipo_id: string )
+  {
+    console.log(fechaDeCompra,
+placas,
+condicion,
+herramienta_tipo_id);
+
+  }
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando=2;
@@ -81,34 +82,16 @@ export class CrearHerramientasComponent implements OnInit {
     let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
     let search = new URLSearchParams();
     
-    search.set('function', 'getAllUser');
+    search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
-
-        this.herramientaForm = new FormGroup({
-      'herramienta_tipo_id': new FormControl(this.herramienta.herramienta_tipo_id, Validators.required), 
-      'condicion': new FormControl(this.herramienta.condicion,  Validators.required), 
-      'observaciones': new FormControl(this.herramienta.fechaDeCompra,  Validators.required),
-      'placas': new FormControl( this.herramienta.placas )
-      
-          });
   }
-
-  get herramienta_tipo_id() { return this.herramientaForm.get('herramienta_tipo_id'); }
-
-  get placas() { return this.herramientaForm.get('placas'); }
-   
-  get observaciones() { return this.herramientaForm.get('observaciones'); }
-
-  get condicion() { return this.herramientaForm.get('condicion'); }
-
-  get fechaDeCompra() { return this.herramientaForm.get('fechaDeCompra'); }
 
    submitted = false;
 
-   regresaUsuario(){
-    this.router.navigate(['administrador/herramientas']);
+   regresaOrdenTrabajo(){
+    this.router.navigate(['jefeLaboratorio/orden-trabajo']);
   }
 
   onSubmit() { this.submitted = true; }

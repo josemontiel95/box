@@ -10,11 +10,21 @@
           Crear Herramienta</h5>
         </div>
         <div class="card-body">
-         <form (ngSubmit)="onSubmit()" #herramientaForm="ngForm">
-            <div class="row">
+                    <form (ngSubmit)="onSubmit()" [formGroup]=herramientaForm #formDir="ngForm">
 
+                      <div class="row">
+                <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="id_herramienta">ID Herramienta.</label>
+                  <input type="text"  id="id_herramienta"  
+                  class="form-control"  required
+                  name="id_herramienta" placeholder="" formControlName="id_herramienta">
+                </div>
+                </div>
+              </div>
+            <div class="row">
               <div class="col-md-6 col-12">
-                 <div class="form-group">
+                <div class="form-group">
                   <label for="herramienta_tipo_id">Tipos</label>
                   <select  class="form-control" id="herramienta_tipo_id"
                     required 
@@ -33,17 +43,27 @@
                 </div>
               </div>
 
-            <div class="col-md-6 col-12">
-                <div class="form-group">
+              <div class="col-md-6 col-12">
+                  <div class="form-group">
                   <label for="placas">Placas/Identificador</label>
                   <input type="text" id="placas" class="form-control" 
                   name="placas" placeholder="" formControlName="placas" >
               </div>
-                </div>
+              </div>
             </div>
 
             <div class="row">
-                
+                <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="fechaDeCompra"> Fecha de compra.</label>
+                  <input type="date" id="fechaDeCompra" class="form-control" name="fechaDeCompra" placeholder="" required formControlName="fechaDeCompra" >
+                 <div *ngIf="fechaDeCompra.invalid && (fechaDeCompra.dirty || fechaDeCompra.touched)" class="alert alert-danger">
+                   <div *ngIf="fechaDeCompra.errors.required">
+                   Fecha de compra requerida.
+                </div>
+              </div>
+                </div>
+              </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="condicion">Condicion</label>
@@ -60,20 +80,19 @@
               </div>
                 </div>
               </div>
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label for="fechaDeCompra"> Fecha de compra.</label>
-                  <input type="date" id="fechaDeCompra" class="form-control" name="fechaDeCompra" placeholder="" formControlName="fechaDeCompra" >
-                 <div *ngIf="fechaDeCompra.invalid && (fechaDeCompra.dirty || fechaDeCompra.touched)" class="alert alert-danger">
-                   <div *ngIf="fechaDeCompra.errors.required">
-                   Fecha de compra requerida.
-                </div>
-              </div>
-                </div>
-              </div>
             </div>
 
-            
+            <div class="row">
+              <div class="col-md-12 col-12">
+                  <div class="form-group">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea type="text" id="observaciones"  
+                    class="form-control" 
+                    name="observaciones" placeholder="" formControlName="observaciones">
+                    </textarea>
+                  </div>
+              </div>
+            </div>
             <div class="btn-group" style="float: right; padding-right: 10%;">
             <button class="btn btn-success" [disabled]="herramientaForm.invalid" (click)="crearHerramienta(); ">
               <span><b> Guardar Cambios </b></span>

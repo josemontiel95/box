@@ -22,24 +22,25 @@ import {
 })
 export class HerramientaDetailComponent implements OnInit {
 
-    observaciones: string;
     estatus: string;
     error: string;
     cargando= 2;
     active: any;
     submitted = false;
-    hidden = false;
+    hidden = true;
     mis_tipos: Array<any>;
     mis_lab: Array<any>;
     imgUrl = "";
     condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
     onSubmit() { this.submitted = true; }
+
       herramientaForm: FormGroup;
       herramienta = {
         herramienta_tipo_id: '',
         placas:'',
         condicion:'',
-        fechaDeCompra:'' }
+        fechaDeCompra:'',
+        observaciones:'' }
 
 
     loginMessage: string= "";
@@ -54,7 +55,7 @@ export class HerramientaDetailComponent implements OnInit {
     password1: string;
     npassword: string;
     id: string;
-    model: Herramienta= new Herramienta("","","","","","","","", "", "");
+  
     private gridApi;
     private gridColumnApi;
     rowSelection;
@@ -103,8 +104,9 @@ export class HerramientaDetailComponent implements OnInit {
       'placas': new FormControl({ value: this.herramienta.placas, disabled: this.hidden },  [ Validators.required]),
       'condicion': new FormControl({ value: this.herramienta.condicion, disabled: this.hidden },  [  Validators.required]),
       'fechaDeCompra': new FormControl({ value: this.herramienta.fechaDeCompra, disabled: this.hidden },  [  Validators.required]), 
+      'observaciones': new FormControl({ value: this.herramienta.observaciones, disabled: this.hidden }), 
+      'id_herramienta': new FormControl( { value:this.herramienta.herramienta_tipo_id, disabled: true },  [Validators.required]), 
 
-                                        
                                  });
 
 
@@ -118,6 +120,9 @@ export class HerramientaDetailComponent implements OnInit {
 
     get fechaDeCompra() { return this.herramientaForm.get('fechaDeCompra'); }
 
+    get observaciones() { return this.herramientaForm.get('observaciones'); }
+
+    get id_herramienta() { return this.herramientaForm.get('id_herramienta'); }
 
   switchAlerta(exitoCon: any){
     this.exitoCon = false;
@@ -150,8 +155,7 @@ export class HerramientaDetailComponent implements OnInit {
     });
   }
 
-  actualizarHerramienta(herramienta_tipo_id:string, placas: string, observaciones: string,
-                          fechaDeCompra: string, condicion: string)
+  actualizarHerramienta( )
   {
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
@@ -164,7 +168,7 @@ export class HerramientaDetailComponent implements OnInit {
     formData.append('id_herramienta', this.id);
     formData.append('fechaDeCompra',  this.herramientaForm.value.fechaDeCompra);
     formData.append('placas', this.herramientaForm.value.placas );
-    formData.append('observaciones', observaciones);
+    formData.append('observaciones', this.herramientaForm.value.observaciones);
     formData.append('condicion', this.herramientaForm.value.condicion);
     formData.append('herramienta_tipo_id', this.herramientaForm.value.herramienta_tipo_id );
     //post  formData
@@ -190,13 +194,24 @@ export class HerramientaDetailComponent implements OnInit {
 
   llenado(respuesta: any){
     console.log(respuesta);
-    this.model=respuesta;
+
+    this.herramientaForm.patchValue({
+      herramienta_tipo_id: respuesta.herramienta_tipo_id,
+      placas: respuesta.placas,
+      condicion: respuesta.condicion,
+      fechaDeCompra: respuesta.fechaDeCompra,
+      observaciones: respuesta.observaciones,
+      id_herramienta: respuesta.id_herramienta,
+
+
+    });
+
     if(respuesta.isHerramienta_tipoActive==0){
       this.addHerramientaTipo(respuesta.herramienta_tipo_id,respuesta.tipo);
     }
      
-    setTimeout(()=>{ this.model=respuesta;
-                     this.active= this.model.active;
+    setTimeout(()=>{ 
+                     this.active= respuesta.active;
                      this.status(this.active);
                      this.statusHistorial(this.active);
                      this.cargando=this.cargando-1;

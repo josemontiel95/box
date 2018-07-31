@@ -80,7 +80,7 @@ export class ConcreteraDetailComponent implements OnInit {
 
 
     this.concreteraForm = new FormGroup({
-      'id_concretera': new FormControl( { value:this.Concretera.id_concretera, disabled: true },  [Validators.required]), 
+      'id_concretera': new FormControl( { value:this.Concretera.id_concretera, },  [Validators.required]), 
       'concretera': new FormControl({ value: this.Concretera.concretera, disabled: this.hidden },  [ Validators.required]),
                                         
                                  });

@@ -23,22 +23,7 @@ export class Password
 
 }
 
-export class Cliente 
-{
-  constructor(
-    public id_cliente: string,
-    public rfc: string,    
-    public razonSocial: string,
-    public nombre: string,    
-    public email: string,
-   public telefono: string,
-    public nombreContacto: string,
-    public direccion: string,
-    public telefonoDeContacto: string,
-    public contrasena: string
-    ) {  }
 
-}
 
 
 @Component({
@@ -50,7 +35,7 @@ export class ClienteDetailComponent implements OnInit {
 
 
     submitted = false;
-    hidden = false;
+    hidden = true;
     imgUrl = "../assets/img/gabino.jpg";
     onSubmit() { this.submitted = true; }
 
@@ -65,18 +50,21 @@ export class ClienteDetailComponent implements OnInit {
     foto: string;
     cargando= 1;
     
+ clienteForm: FormGroup; //se crea un formulario de tipo form group
 
-    model = new Cliente(
-    "",
-    "",    
-    "",
-    "",    
-    "",
-    "",
-    "",
-    "",
-    "",
-    "", );
+  
+   cliente = {
+    id_cliente: '',
+    rfc: '',
+    razonSocial: '',
+    nombre: '',
+        email: '',
+        telefono: '',
+        nombreContacto: '',
+        direccion: '',
+        telefonoDeContacto: '',
+        //se creo un arreglo llamado cliente con los campos del form
+        };
 
 
     model2= new Password(
@@ -101,8 +89,44 @@ export class ClienteDetailComponent implements OnInit {
 	this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
                                                  this.llenadoValidator(res.json());
                                                });
+
+   // se inicializan los campos del form y se añaden un validador personalizado para email que confirma la existencia del arroba "@"
+
+    this.clienteForm = new FormGroup({
+      'rfc': new FormControl( { value:this.cliente.rfc, disabled: this.hidden },  [Validators.required, Validators.pattern("^(([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) || ^(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) ") ]), 
+      'nombre': new FormControl({ value: this.cliente.nombre, disabled: this.hidden },  [ Validators.required]),
+      'razonSocial': new FormControl({ value: this.cliente.razonSocial, disabled: this.hidden },  [  Validators.required]),
+      'direccion': new FormControl({ value: this.cliente.direccion, disabled: this.hidden },  [  Validators.required]), 
+      'telefono': new FormControl({ value: this.cliente.telefono, disabled: this.hidden },  [  Validators.required]),
+      'nombreContacto': new FormControl({ value: this.cliente.nombreContacto, disabled: this.hidden },  [  Validators.required]), 
+      'telefonoDeContacto': new FormControl({ value: this.cliente.telefonoDeContacto, disabled: this.hidden },  [  Validators.required]),
+      'email': new FormControl({ value: this.cliente.email, disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
+
+                                        
+                                 });
+
+
+
   }
 
+  // funcion para acceder de manera sencilla a los campos del form
+  // referencia: https://angular.io/guide/reactive-forms
+
+  get rfc() { return this.clienteForm.get('rfc'); }
+
+  get nombre() { return this.clienteForm.get('nombre'); }
+
+  get razonSocial() { return this.clienteForm.get('razonSocial'); }
+
+  get direccion() { return this.clienteForm.get('direccion'); }
+
+  get telefono() { return this.clienteForm.get('telefono'); }
+
+  get nombreContacto() { return this.clienteForm.get('nombreContacto'); }
+
+  get telefonoDeContacto() { return this.clienteForm.get('telefonoDeContacto'); }
+
+  get email() { return this.clienteForm.get('email'); }
 
 
 
@@ -199,21 +223,17 @@ export class ClienteDetailComponent implements OnInit {
 
   mostrar()
   {
-    this.hidden=true;
+    this.hidden = !this.hidden;
+    const state = this.hidden ? 'disable' : 'enable';
+
+    Object.keys(this.clienteForm.controls).forEach((controlName) => {
+        this.clienteForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
+    });
   }
-  ocultar()
-  {
-    this.hidden=false;
 
 
-  }
 
-
-  actualizarCliente(
-                    rfc: string, razonSocial: string,
-                    nombre: string, email:string,
-                    telefono: string, nombreContacto: string,
-                     direccion: string, telefonoDeContacto: string, )
+  actualizarCliente( )
   {
     let url = `${this.global.apiRoot}/cliente/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -223,14 +243,14 @@ export class ClienteDetailComponent implements OnInit {
 
 
     formData.append('id_cliente', this.id);
-    formData.append('rfc', rfc);
-    formData.append('razonSocial', razonSocial);
-    formData.append('email', email);
-    formData.append('nombre', nombre);
-    formData.append('telefono', telefono);
-    formData.append('nombreContacto', nombreContacto);
-    formData.append('direccion', direccion);
-    formData.append('telefonoDeContacto', telefonoDeContacto);
+    formData.append('rfc', this.clienteForm.value.rfc);
+    formData.append('razonSocial', this.clienteForm.value.razonSocial);
+    formData.append('email', this.clienteForm.value.email);
+    formData.append('nombre', this.clienteForm.value.nombre);
+    formData.append('telefono', this.clienteForm.value.telefono);
+    formData.append('nombreContacto', this.clienteForm.value.nombreContacto);
+    formData.append('direccion', this.clienteForm.value.direccion);
+    formData.append('telefonoDeContacto', this.clienteForm.value.telefonoDeContacto);
 
     this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
 
@@ -254,7 +274,6 @@ export class ClienteDetailComponent implements OnInit {
   llenado(respuesta: any)
   {
     console.log(respuesta);
-    this.model=respuesta;
     console.log(respuesta.foto);
     if(respuesta.foto == "null"){
       this.imgUrl= "../assets/img/gabino2.jpg";

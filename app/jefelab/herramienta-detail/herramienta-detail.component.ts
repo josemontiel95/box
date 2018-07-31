@@ -22,30 +22,60 @@ import {
 })
 export class HerramientaDetailComponent implements OnInit {
 
+    estatus: string;
     error: string;
     cargando= 2;
     active: any;
     submitted = false;
-    hidden = false;
+    hidden = true;
     mis_tipos: Array<any>;
     mis_lab: Array<any>;
     imgUrl = "";
     condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
     onSubmit() { this.submitted = true; }
 
+      herramientaForm: FormGroup;
+      herramienta = {
+        herramienta_tipo_id: '',
+        placas:'',
+        condicion:'',
+        fechaDeCompra:'',
+        observaciones:'' }
+
+
     loginMessage: string= "";
     loginresp: LoginResp;
     global: Global;
     desBut=true;
     actBut=false;
+    desHis=true;
+    actHis=false;
     resppass= false;
     exitoCon = false;
     password1: string;
     npassword: string;
     id: string;
-    model: Herramienta= new Herramienta("","","","","","","","", "");
+
+    private gridApi;
+    private gridColumnApi;
+    rowSelection;
+    columnDefs;
     
-  constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
+  constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) {
+    this.columnDefs = [
+    {headerName: 'Orden de Servicio', field: 'ordenDeServicio_id' },
+    {headerName: 'ID J.Brigada', field: 'jefe_brigada_id' },
+    {headerName: 'Nombre J.Brigada', field: 'nombre_jefe_brigada' },
+    {headerName: 'Condici&oacute;n', field: 'status' },
+    {headerName: 'Fecha de Prestamo', field: 'fechaDePrestamo' },
+    {headerName: 'Fecha de Devoluci&oacute;n', field: 'fechaDevolucion'},
+    {headerName: 'Placa/Identificador', field: 'placas' },
+    {headerName: 'Estado', field: 'estado' }
+  ];
+    this.rowSelection = "single";
+   }
+
+   rowData: any;
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -62,15 +92,37 @@ export class HerramientaDetailComponent implements OnInit {
     this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
 
     url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-	  search = new URLSearchParams();
-	  search.set('function', 'getByIDAdmin');
+    search = new URLSearchParams();
+    search.set('function', 'getByIDAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_herramienta', this.id);
-	  this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+
+     this.herramientaForm = new FormGroup({
+      'herramienta_tipo_id': new FormControl( { value:this.herramienta.herramienta_tipo_id, disabled: this.hidden },  [Validators.required]), 
+      'placas': new FormControl({ value: this.herramienta.placas, disabled: this.hidden },  [ Validators.required]),
+      'condicion': new FormControl({ value: this.herramienta.condicion, disabled: this.hidden },  [  Validators.required]),
+      'fechaDeCompra': new FormControl({ value: this.herramienta.fechaDeCompra, disabled: this.hidden },  [  Validators.required]), 
+      'observaciones': new FormControl({ value: this.herramienta.observaciones, disabled: this.hidden }), 
+      'id_herramienta': new FormControl( { value:this.herramienta.herramienta_tipo_id, disabled: true },  [Validators.required]), 
+
+                                 });
+
+
   }
 
+    get herramienta_tipo_id() { return this.herramientaForm.get('herramienta_tipo_id'); }
 
+    get placas() { return this.herramientaForm.get('placas'); }
+
+    get condicion() { return this.herramientaForm.get('condicion'); }
+
+    get fechaDeCompra() { return this.herramientaForm.get('fechaDeCompra'); }
+
+    get observaciones() { return this.herramientaForm.get('observaciones'); }
+
+    get id_herramienta() { return this.herramientaForm.get('id_herramienta'); }
 
   switchAlerta(exitoCon: any){
     this.exitoCon = false;
@@ -93,19 +145,17 @@ export class HerramientaDetailComponent implements OnInit {
     console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
-  mostrar()
+ mostrar()
   {
-    this.hidden=true;
+    this.hidden = !this.hidden;
+    const state = this.hidden ? 'disable' : 'enable';
+
+    Object.keys(this.herramientaForm.controls).forEach((controlName) => {
+        this.herramientaForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
+    });
   }
-  ocultar()
-  {
-    this.hidden=false;
 
-
-  }
-
-  actualizarHerramienta(herramienta_tipo_id:string, placas: string,
-                          fechaDeCompra: string, condicion: string)
+  actualizarHerramienta( )
   {
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
@@ -116,15 +166,15 @@ export class HerramientaDetailComponent implements OnInit {
     formData.append('rol_usuario_id',  this.global.rol);
     //formData.append
     formData.append('id_herramienta', this.id);
-    formData.append('fechaDeCompra', fechaDeCompra);
-    formData.append('placas', placas);
-    formData.append('condicion', condicion);
-    formData.append('herramienta_tipo_id', herramienta_tipo_id);
+    formData.append('fechaDeCompra',  this.herramientaForm.value.fechaDeCompra);
+    formData.append('placas', this.herramientaForm.value.placas );
+    formData.append('observaciones', this.herramientaForm.value.observaciones);
+    formData.append('condicion', this.herramientaForm.value.condicion);
+    formData.append('herramienta_tipo_id', this.herramientaForm.value.herramienta_tipo_id );
     //post  formData
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaError(res.json());
                                             } );
-
   }
 
 
@@ -137,21 +187,33 @@ export class HerramientaDetailComponent implements OnInit {
     }
     else
     {
-     this.router.navigate(['jefeLaboratorio/herramientas']);
+      location.reload();
     }
   }
 
 
   llenado(respuesta: any){
     console.log(respuesta);
-    this.model=respuesta;
+
+    this.herramientaForm.patchValue({
+      herramienta_tipo_id: respuesta.herramienta_tipo_id,
+      placas: respuesta.placas,
+      condicion: respuesta.condicion,
+      fechaDeCompra: respuesta.fechaDeCompra,
+      observaciones: respuesta.observaciones,
+      id_herramienta: respuesta.id_herramienta,
+
+
+    });
+
     if(respuesta.isHerramienta_tipoActive==0){
       this.addHerramientaTipo(respuesta.herramienta_tipo_id,respuesta.tipo);
     }
      
-    setTimeout(()=>{ this.model=respuesta;
-                     this.active= this.model.active;
+    setTimeout(()=>{ 
+                     this.active= respuesta.active;
                      this.status(this.active);
+                     this.statusHistorial(this.active);
                      this.cargando=this.cargando-1;
                      console.log("llenado this.cargando: "+this.cargando);
                      }, 100);  
@@ -190,19 +252,54 @@ export class HerramientaDetailComponent implements OnInit {
 
   }
 
+  statusHistorial(active: any)
+  {
+    if (active == 1) {
+     this.actHis = false;
+     this.desHis = true;
+          }
+     else
+     {
+     this.actHis= true;
+     this.desHis= false;
+     }     
+
+  }
+
   desactivarHerramienta(){
      this.actBut= true;
      this.desBut= false;
      this.switchActive(0);
   }
 
+   activarHerramienta(){
+     this.actBut = false;
+     this.desBut = true;
+     this.switchActive(1);
+   }
 
-   switchActive(active: number){
+   desactivarHistorial(){
+     this.actHis= true;
+     this.desHis= false;
+     //this.switchHistorial(0);
+  }
+
+   activarHistorial(){
+     this.actHis = false;
+     this.desHis = true;
+     //this.switchHistorial(1);
+   }
+
+   switchHistorial(active: number){
      let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
      let formData:FormData = new FormData();
       
+      if(active == 0){
         formData.append('function', 'deactivate');
-      
+      }
+      else{
+       formData.append('function', 'activate');
+      }
         formData.append('id_herramienta', this.id);
         formData.append('rol_usuario_id', this.global.rol);
         formData.append('token', this.global.token);
@@ -212,6 +309,24 @@ export class HerramientaDetailComponent implements OnInit {
        
    }
 
+   switchActive(active: number){
+     let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
+     let formData:FormData = new FormData();
+      
+      if(active == 0){
+        formData.append('function', 'deactivate');
+      }
+      else{
+       formData.append('function', 'activate');
+      }
+        formData.append('id_herramienta', this.id);
+        formData.append('rol_usuario_id', this.global.rol);
+        formData.append('token', this.global.token);
+        this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());
+                                            });
+       
+   }
    respuestaSwitch(res: any){
      console.log(res);
      if(res.error!= 0){
@@ -219,8 +334,27 @@ export class HerramientaDetailComponent implements OnInit {
        location.reload();
      }
      else{
-       this.router.navigate(['jefeLaboratorio/herramientas']);
+       location.reload();
      }
    }
+
+
+   onGridReady(params) {
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+
+    let url = `${this.global.apiRoot}/herramienta_ordenDeServicio/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getByIDAdminHerra');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_herramienta', this.id);
+    this.http.get(url, {search}).subscribe(res => {
+                                            console.log(res.json());
+                                            this.rowData= res.json();
+                                            this.gridApi.sizeColumnsToFit();
+                                          });
+  }
 
 }

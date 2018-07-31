@@ -14,15 +14,7 @@ import {
     FormBuilder
 } from '@angular/forms';
 
-export class Concretera
-{
-  constructor(
-    public concretera: string
-    ) {  }
-
-} 
-
-
+  
 @Component({
   selector: 'app-crear-concretera',
   templateUrl: './crear-concretera.component.html',
@@ -33,15 +25,15 @@ export class CrearConcreteraComponent implements OnInit {
   
   apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
-
-
-  model= new Concretera(
-    "");
+  concreteraForm: FormGroup;
+      Concretera = {
+  
+        concretera:'' }
 
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
   
-  crearConcretera(  concretera: string )
+  crearConcretera()
   {
       this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/concretera/post/endpoint.php`;
@@ -50,7 +42,7 @@ export class CrearConcreteraComponent implements OnInit {
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('concretera', concretera);
+    formData.append('concretera', this.concreteraForm.value.concretera);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             } );
@@ -73,7 +65,14 @@ export class CrearConcreteraComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
+    
+     this.concreteraForm = new FormGroup({
+           'concretera': new FormControl( this.Concretera.concretera ,  [ Validators.required]),
+                                        
+                                 });
   }
+
+    get concretera() { return this.concreteraForm.get('concretera'); }
 
    submitted = false;
 
