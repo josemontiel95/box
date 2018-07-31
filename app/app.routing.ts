@@ -15,7 +15,7 @@ const routes: Routes =[
     redirectTo: 'login',
     pathMatch: 'full',
   },{
-    path: 'jefeb',
+    path: 'jefeBrigada',
     component:JefebLayoutComponent,
     children: [
         {
