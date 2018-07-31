@@ -31,6 +31,7 @@ import { CrearOrdenTrabajoComponent } from '../../jefelab/crear-orden-trabajo/cr
     CommonModule,
     RouterModule.forChild(JefeLabLayoutRoutes),
     FormsModule,
+    ReactiveFormsModule,
     ChartsModule,
     MatProgressBarModule,
     NgbModule,

@@ -37,12 +37,12 @@
                 <div class="form-group">
                   <label>Prefijo</label>
                   <input type="text" id="prefijo"  required name="prefijo" class="form-control" placeholder="Prefijo" formControlName="prefijo">
-            <div *ngIf="prefijo.invalid && (prefijo.dirty || prefijo.touched)"
-              class="alert alert-danger">            
-              <div *ngIf="prefijo.errors.required">
-              Prefijo requerido.
-              </div>
-            </div>
+                  <div *ngIf="prefijo.invalid && (prefijo.dirty || prefijo.touched)"
+                    class="alert alert-danger">    
+                    <div *ngIf="prefijo.errors.required">
+                    Prefijo requerido.
+                    </div>
+                  </div>
                 </div>
               </div> <!-- FIN SEGUNDO CAMPO -->  
             </div> <!-- FIN PRIMER ROW -->
@@ -52,12 +52,12 @@
                  <div class="form-group">
                     <label>Obra</label>
                     <input type="text" id="obra"  required   name="obra" class="form-control" placeholder="Obra"  formControlName="obra" >
-            <div *ngIf="obra.invalid && (obra.dirty || obra.touched)"
-              class="alert alert-danger">            
-              <div *ngIf="obra.errors.required">
-              Nombre de la obra requerido.
-              </div>
-            </div>
+                    <div *ngIf="obra.invalid && (obra.dirty || obra.touched)"
+                      class="alert alert-danger">            
+                      <div *ngIf="obra.errors.required">
+                      Nombre de la obra requerido.
+                      </div>
+                    </div>
                   </div>
                 </div><!-- FIN TERCER CAMPO -->
               </div><!-- FIN SEGUNDO ROW -->
@@ -76,12 +76,12 @@
                         {{cli.nombre}}
                       </option>
                     </select>
-            <div *ngIf="cliente_id.invalid && (cliente_id.dirty || cliente_id.touched)"
-              class="alert alert-danger">            
-              <div *ngIf="cliente_id.errors.required">
-              Cliente requerido.
-              </div>
-            </div>
+                    <div *ngIf="cliente_id.invalid && (cliente_id.dirty || cliente_id.touched)"
+                      class="alert alert-danger">            
+                      <div *ngIf="cliente_id.errors.required">
+                      Cliente requerido.
+                      </div>
+                    </div>
                   </div>
               </div> <!-- FIN CUARTO CAMPO -->
 
@@ -99,12 +99,12 @@
                       Unitario
                     </option>
                   </select>
-                              <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)"
-              class="alert alert-danger">            
-              <div *ngIf="tipo.errors.required">
-              Tipo requerido.
-              </div>
-            </div>
+                  <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)"
+                    class="alert alert-danger">            
+                    <div *ngIf="tipo.errors.required">
+                    Tipo requerido.
+                    </div>
+                  </div>
                 </div>
               </div><!-- FIN QUINTO CAMPO -->
                 
@@ -143,11 +143,11 @@
                     </option>
                   </select>
                              <div *ngIf="id_concretera.invalid && (id_concretera.dirty || id_concretera.touched)"
-              class="alert alert-danger">            
-              <div *ngIf="id_concretera.errors.required">
-              Concretera requerida.
-              </div>
-            </div>
+                    class="alert alert-danger">            
+                    <div *ngIf="id_concretera.errors.required">
+                    Concretera requerida.
+                    </div>
+                  </div>
                 </div>
               </div> <!-- FIN OCTAVO CAMPO -->
             </div> <!-- FIN QUINTO ROW -->
