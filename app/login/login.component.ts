@@ -12,12 +12,14 @@ import 'rxjs/Rx';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss','../loadingArrows.css']
 })
 export class LoginComponent implements OnInit {
   loginMessage: string= "";
   loginresp: LoginResp;
   global: Global;
+  cargando= 0;
+
   constructor(private router: Router, private http: Http, private data: DataService) { }
 
   ngOnInit() {
@@ -25,6 +27,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(user: string, password: string){
+      this.cargando= 1;
       let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
       console.log(url);
       let search = new URLSearchParams();
@@ -43,6 +46,7 @@ export class LoginComponent implements OnInit {
       this.data.changeGlobal(new Global(loginresp.id_usuario,loginresp.token,"http://lacocs.montielpalacios.com/API", "http://lacocs.montielpalacios.com/", loginresp.rol));
       this.router.navigate([loginresp.root+"/"]);
     }else{
+      this.cargando= 0;
       this.loginMessage=loginresp.estatus;
     }
   }
