@@ -12,16 +12,6 @@
         <div class="card-body">
                     <form (ngSubmit)="onSubmit()" [formGroup]=herramientaForm #formDir="ngForm">
 
-                      <div class="row">
-                <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label for="id_herramienta">ID Herramienta.</label>
-                  <input type="text"  id="id_herramienta"  
-                  class="form-control"  required
-                  name="id_herramienta" placeholder="" formControlName="id_herramienta">
-                </div>
-                </div>
-              </div>
             <div class="row">
               <div class="col-md-6 col-12">
                 <div class="form-group">
@@ -30,7 +20,7 @@
                     required 
                     name="herramienta_tipo_id"
                     placeholder="Tipos"  formControlName="herramienta_tipo_id">
-
+                    <option value="" [disabled]="true">Selecciona el tipo...</option>
                     <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo">
                       {{tipo.tipo}}
                     </option>

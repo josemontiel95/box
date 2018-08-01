@@ -23,6 +23,81 @@
           <h4 class="card-title">Ordenes de Trabajo:</h4>
         </div>
         <div class="card-body">
+          <div id="tarjetaMasDetalles" *ngIf="hidden">
+           <div class="row">
+              <div class="col-md-3">
+                <div class="row">  
+                      <img class="img-usuario" src="{{this.imgUrl}}" alt="..."> 
+                </div>
+              </div>
+              <div class="col-md-9">
+                 <div class="row">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <b>ID del Cliente.</b>
+                            </td>
+                            <td>
+                              {{id_cliente}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <b>R.F.C.</b>
+                            </td>
+                            <td>
+                              {{rfc}}
+                            </td>
+                           </tbody>
+                      </table>
+                    </div> 
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9">
+                  <div class="row">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>
+                               <b>Razon Social.</b>
+                            </td>
+                            <td>
+                              {{razonSocial}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                             <b>Nombre de Contacto.</b>
+                            </td>
+                            <td>
+                              {{nombreContacto}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div> 
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="row" align="center">
+                <button type="button" class="btn btn-default btn-round" (click)="detalleCliente();">Detalles</button>
+                    <button type="button" class="btn btn-danger btn-round " (click)="desactivarCliente()" *ngIf="desBut">Desactivar</button>
+                    <button type="button" class="btn btn-success btn-round " (click)="activarCliente()" *ngIf="actBut">Activar</button>
+                </div>
+                <div id="MenosDetalles">
+                  <div class="row">
+                      <button type="button" class="btn btn-primary btn-link" (click)="menosDetalles()">Menos detalles</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>          
          <ag-grid-angular 
             #agGrid
             id="myGrid"

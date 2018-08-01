@@ -89,8 +89,9 @@ export class CrearHerramientasComponent implements OnInit {
         this.herramientaForm = new FormGroup({
       'herramienta_tipo_id': new FormControl(this.herramienta.herramienta_tipo_id, Validators.required), 
       'condicion': new FormControl(this.herramienta.condicion,  Validators.required), 
-      'observaciones': new FormControl(this.herramienta.fechaDeCompra,  Validators.required),
-      'placas': new FormControl( this.herramienta.placas )
+      'observaciones': new FormControl(this.herramienta.fechaDeCompra),
+      'placas': new FormControl( this.herramienta.placas ),
+      'fechaDeCompra': new FormControl(this.herramienta.fechaDeCompra,  Validators.required),
       
           });
   }
