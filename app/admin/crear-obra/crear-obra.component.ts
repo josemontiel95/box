@@ -45,14 +45,17 @@ export class CrearObraComponent implements OnInit
 
    Obra = {
      obra:'',
-revenimiento:'',
-incertidumbre:'',
-prefijo:'',
-cliente_id:'',
-id_concretera:'',
-tipo:'',
-descripcion:'',
-fechaDeCre:'' 
+     revenimiento:'',
+     incertidumbre:'',
+     prefijo:'',
+     cliente_id:'',
+     id_concretera:'',
+     tipo:'',
+     descripcion:'',
+     fechaDeCre:'',
+     telefono_residente:'',
+     nombre_residente: '',
+     correo_residente: '' 
    }
 
   crearMessage: string= "";
@@ -90,8 +93,10 @@ fechaDeCre:''
       'id_concretera': new FormControl(this.Obra.id_concretera,  Validators.required), 
       'tipo': new FormControl(this.Obra.tipo,  Validators.required), 
       'descripcion': new FormControl(this.Obra.descripcion,  Validators.required), 
-       'fechaDeCre': new FormControl(this.Obra.fechaDeCre,  Validators.required), 
-        
+      'fechaDeCre': new FormControl(this.Obra.fechaDeCre,  Validators.required),
+      'telefono_residente': new FormControl(this.Obra.telefono_residente, [ Validators.required, Validators.pattern("^([0-9])*")]), 
+      'nombre_residente': new FormControl(this.Obra.nombre_residente,  Validators.required),  
+      'correo_residente': new FormControl(this.Obra.correo_residente,  Validators.required),   
                                         
                                       });
 
@@ -116,6 +121,14 @@ fechaDeCre:''
   get descripcion() { return this.obraForm.get('descripcion'); }
 
   get fechaDeCre() { return this.obraForm.get('fechaDeCre'); }
+
+  get telefono_residente() { return this.obraForm.get('telefono_residente'); }
+
+  get nombre_residente() { return this.obraForm.get('nombre_residente'); }
+
+  get correo_residente() { return this.obraForm.get('correo_residente'); }
+
+
 
   rolValidator(repuesta: any){
     console.log(repuesta)
@@ -189,6 +202,9 @@ fechaDeCre:''
     formData.append('tipo', this.obraForm.value.tipo);
     formData.append('descripcion', this.obraForm.value.descripcion);
     formData.append('fechaDeCreacion', this.obraForm.value.fechaDeCre);
+    formData.append('telefono_residente', this.obraForm.value.telefono_residente );
+    formData.append('nombre_residente', this.obraForm.value.nombre_residente );
+    formData.append('correo_residente', this.obraForm.value.correo_residente );
     this.crearMessageCargando="Cargando...";
     this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );
     

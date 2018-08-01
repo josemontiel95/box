@@ -43,10 +43,10 @@ export class CrearClienteComponent implements OnInit
     razonSocial: '',
     nombre: '',
         email: '',
-        telefono: 8686973,
+        telefono: '',
         nombreContacto: '',
         direccion: '',
-        telefonoDeContacto: 8686974,
+        telefonoDeContacto: '',
         //se creo un arreglo llamado cliente con los campos del form
         };
 
@@ -76,13 +76,13 @@ export class CrearClienteComponent implements OnInit
     // se inicializan los campos del form y se añaden un validador personalizado para email que confirma la existencia del arroba "@"
 
     this.clienteForm = new FormGroup({
-      'rfc': new FormControl(this.cliente.rfc, [Validators.required, Validators.pattern("^(([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) || ^(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) ") ]), 
+      'rfc': new FormControl(this.cliente.rfc, [Validators.required, Validators.pattern("^(([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3}))|^(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) ") ]), 
       'nombre': new FormControl(this.cliente.nombre, Validators.required), 
       'razonSocial': new FormControl(this.cliente.razonSocial,  Validators.required), 
       'direccion': new FormControl(this.cliente.direccion,  Validators.required), 
-      'telefono': new FormControl(this.cliente.telefono,  Validators.required), 
+      'telefono': new FormControl(this.cliente.telefono, [ Validators.required, Validators.pattern("^([0-9])*")]), 
       'nombreContacto': new FormControl(this.cliente.nombreContacto,  Validators.required), 
-      'telefonoDeContacto': new FormControl(this.cliente.telefonoDeContacto,  Validators.required), 
+      'telefonoDeContacto': new FormControl(this.cliente.telefonoDeContacto, [ Validators.required, Validators.pattern("^([0-9])*")]), 
       'email': new FormControl(this.cliente.email, [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
 
                                         

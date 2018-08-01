@@ -80,12 +80,13 @@
                <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="telefono">Tel&eacute;fono de la Empresa.</label>
-                  <input type="number"   id= "telefono" required  name="telefono"  class="form-control" placeholder="555501234" formControlName="telefono" >
+                  <input type="text"   id= "telefono" required  name="telefono"  class="form-control" placeholder="555501234" formControlName="telefono" >
              <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)"
               class="alert alert-danger">
               <div *ngIf="telefono.errors.required">
                  Tel&eacute;fono de la Empresa requerido.
               </div>
+              <div *ngIf="telefono.errors.pattern">Tel&eacute;fono solo debe contener numeros</div>              
              </div>
                 </div>
               </div>
@@ -117,12 +118,13 @@
             <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="telefonoDeContacto"> Tel&eacute;fono de Contacto.</label>
-                  <input type="number"  id= "telefonoDeContacto" required  class="form-control" name="telefonoDeContacto" placeholder="555501234" formControlName="telefonoDeContacto">
+                  <input type="text"  id= "telefonoDeContacto" required  class="form-control" name="telefonoDeContacto" placeholder="555501234" formControlName="telefonoDeContacto">
             <div *ngIf="telefonoDeContacto.invalid && (telefonoDeContacto.dirty || telefonoDeContacto.touched)"
               class="alert alert-danger">
               <div *ngIf="telefonoDeContacto.errors.required">
                 Tel&eacute;fono de contacto requerido.
               </div>
+              <div *ngIf="telefonoDeContacto.errors.pattern">Tel&eacute;fono solo debe contener numeros</div>              
             </div>
                 </div>
               </div>

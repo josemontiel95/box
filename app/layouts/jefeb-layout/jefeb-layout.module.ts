@@ -9,7 +9,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { MatProgressBarModule } from '@angular/material';
 import { OrdenTrabajoComponent } from '../../jefeb/orden-trabajo/orden-trabajo.component';
 import { CrearOrdenTrabajoComponent } from '../../jefeb/crear-orden-trabajo/crear-orden-trabajo.component';
-
+import { GridComponent } from '../../jefeb/grid/grid.component';
 
 import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -32,7 +32,8 @@ import { ToastrModule } from 'ngx-toastr';
     DashboardComponent,
     UserProfileComponent,
     OrdenTrabajoComponent,
-    CrearOrdenTrabajoComponent
+    CrearOrdenTrabajoComponent,
+    GridComponent
   ]
 })
 

@@ -89,13 +89,13 @@ export class ClienteDetailComponent implements OnInit {
  // se inicializan los campos del form y se añaden un validador personalizado para email que confirma la existencia del arroba "@"
 
     this.clienteForm = new FormGroup({
-      'rfc': new FormControl( { value:this.cliente.rfc, disabled: this.hidden },  [Validators.required, Validators.pattern("^(([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) || ^(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) ") ]), 
+      'rfc': new FormControl( { value:this.cliente.rfc, disabled: this.hidden },  [Validators.required, Validators.pattern("^(([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3}))|^(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) ") ]), 
       'nombre': new FormControl({ value: this.cliente.nombre, disabled: this.hidden },  [ Validators.required]),
       'razonSocial': new FormControl({ value: this.cliente.razonSocial, disabled: this.hidden },  [  Validators.required]),
       'direccion': new FormControl({ value: this.cliente.direccion, disabled: this.hidden },  [  Validators.required]), 
-      'telefono': new FormControl({ value: this.cliente.telefono, disabled: this.hidden },  [  Validators.required]),
+      'telefono': new FormControl({ value: this.cliente.telefono, disabled: this.hidden },  [  Validators.required,Validators.pattern("^([0-9])*$")]),
       'nombreContacto': new FormControl({ value: this.cliente.nombreContacto, disabled: this.hidden },  [  Validators.required]), 
-      'telefonoDeContacto': new FormControl({ value: this.cliente.telefonoDeContacto, disabled: this.hidden },  [  Validators.required]),
+      'telefonoDeContacto': new FormControl({ value: this.cliente.telefonoDeContacto, disabled: this.hidden },  [  Validators.required,Validators.pattern("^([0-9])*$")]),
       'email': new FormControl({ value: this.cliente.email, disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
 
                                         

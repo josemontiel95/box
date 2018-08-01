@@ -30,9 +30,22 @@ export class CrearOrdenTrabajoComponent implements OnInit {
     mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
-  model = new OrdenTrabajo('', '', '', '', '', '', '');
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
-    
+        clienteForm: FormGroup; //se crea un formulario de tipo form group
+
+
+   cliente = {
+    id_cliente: '',
+    rfc: '',
+    razonSocial: '',
+    nombre: '',
+        email: '',
+        telefono: 8686973,
+        nombreContacto: '',
+        direccion: '',
+        telefonoDeContacto: 8686974,
+        //se creo un arreglo llamado cliente con los campos del form
+        };  
   
   crearOrdenTrabajo()
   {
@@ -66,14 +79,7 @@ export class CrearOrdenTrabajoComponent implements OnInit {
    }
 
 
-  aver( fechaDeCompra: string, placas: string, condicion: string, herramienta_tipo_id: string )
-  {
-    console.log(fechaDeCompra,
-placas,
-condicion,
-herramienta_tipo_id);
 
-  }
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando=2;
