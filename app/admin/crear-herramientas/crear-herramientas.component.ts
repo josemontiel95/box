@@ -26,17 +26,17 @@ export class CrearHerramientasComponent implements OnInit {
   apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   cargando= 1;
-      mis_tipos: Array<any>;
-    mis_lab: Array<any>;
+  mis_tipos: Array<any>;
+  mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
       herramientaForm: FormGroup;
       herramienta = {
-        herramienta_tipo_id: '',
-        placas:'',
-        condicion:'',
-        fechaDeCompra:'',
-        observaciones:'' }
+      herramienta_tipo_id: '',
+      placas:'',
+      condicion:'',
+      fechaDeCompra:'',
+      observaciones:'' }
 
 
   condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
