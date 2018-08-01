@@ -9,6 +9,8 @@ import { AgGridModule } from 'ag-grid-angular';
 import { MatProgressBarModule } from '@angular/material';
 import { OrdenTrabajoComponent } from '../../jefeb/orden-trabajo/orden-trabajo.component';
 import { CrearOrdenTrabajoComponent } from '../../jefeb/crear-orden-trabajo/crear-orden-trabajo.component';
+import { llenaFormatoCCHComponent } from '../../jefeb/llenaFormatoCCH/llenaFormatoCCH.component';
+import { CrearLlenaFormatoCCHComponent } from '../../jefeb/crear-llenaFormatoCCH/crear-llenaFormatoCCH.component';
 
 
 import { ChartsModule } from 'ng2-charts';
@@ -32,6 +34,8 @@ import { ToastrModule } from 'ngx-toastr';
     DashboardComponent,
     UserProfileComponent,
     OrdenTrabajoComponent,
+    llenaFormatoCCHComponent,
+    CrearLlenaFormatoCCHComponent,
     CrearOrdenTrabajoComponent
   ]
 })

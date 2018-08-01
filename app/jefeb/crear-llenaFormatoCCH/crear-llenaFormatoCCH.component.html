@@ -1,0 +1,133 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaUsuario();"></i>
+          Crear Formato CONTROL DE CONCRETO HIDRAULICO</h5>
+        </div>
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=creaCCHForm #formDir="ngForm">
+            <div class="row">
+
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="informe">INFORME No</label>
+                  <input type="text" id="informe" class="form-control" 
+                  name="informe" placeholder="Escriba el no. Informe" formControlName="informe">
+                </div>
+              </div>
+
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label>Tipo de Especimen</label>
+                  <select type="text" id="especimen" required name="especimen" class="form-control" placeholder="Especimen" formControlName="especimen"  >
+                    <option value="" [disabled]="true">Selecciona el tipo de especimen...</option>
+                    <option *ngFor="let especimen of espec" [value]="especimen.id">
+                      {{especimen.especimen}}
+                    </option>
+                  </select>
+                  <div *ngIf="especimen.invalid && (especimen.dirty || especimen.touched)" class="alert alert-danger">
+                   <div *ngIf="especimen.errors.required">
+                   Tipo Especimen Requerido.
+                   </div>
+                  </div>
+                </div>
+              </div>
+
+              
+            </div> <!--FIN ROW-->
+            <h6>Inventario de Intrumento</h6>
+            <div class="row">
+              <div class="col-md-3 col-12">
+                 <div class="form-group">
+                  <label for="cch_id">Cono</label>
+                  <select  class="form-control" id="cch_id"
+                    required 
+                    name="cch_id"
+                    placeholder="Tipos"  formControlName="cch_id">
+
+                    <option *ngFor="let cono of mis_tipos" [value]="cono.cono_id">
+                      {{cono.CONO}}
+                    </option>
+                  </select>
+                  <div *ngIf="cch_id.invalid && (cch_id.dirty || cch_id.touched)" class="alert alert-danger">
+                     <div *ngIf="cch_id.errors.required">
+                     Tipo de herramienta requerido.
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-12">
+                 <div class="form-group">
+                  <label for="cch_id">Varilla</label>
+                  <select  class="form-control" id="cch_id"
+                    required 
+                    name="cch_id"
+                    placeholder="Tipos"  formControlName="cch_id">
+
+                    <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo">
+                      {{tipo.tipo}}
+                    </option>
+                  </select>
+                  <div *ngIf="cch_id.invalid && (cch_id.dirty || cch_id.touched)" class="alert alert-danger">
+                     <div *ngIf="cch_id.errors.required">
+                     Tipo de herramienta requerido.
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-12">
+                 <div class="form-group">
+                  <label for="cch_id">Flexometro</label>
+                  <select  class="form-control" id="cch_id"
+                    required 
+                    name="cch_id"
+                    placeholder="Tipos"  formControlName="cch_id">
+
+                    <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo">
+                      {{tipo.tipo}}
+                    </option>
+                  </select>
+                  <div *ngIf="cch_id.invalid && (cch_id.dirty || cch_id.touched)" class="alert alert-danger">
+                     <div *ngIf="cch_id.errors.required">
+                     Tipo de herramienta requerido.
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-12">
+                 <div class="form-group">
+                  <label for="cch_id">Termometro</label>
+                  <select  class="form-control" id="cch_id"
+                    required 
+                    name="cch_id"
+                    placeholder="Tipos"  formControlName="cch_id">
+
+                    <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo">
+                      {{tipo.tipo}}
+                    </option>
+                  </select>
+                  <div *ngIf="cch_id.invalid && (cch_id.dirty || cch_id.touched)" class="alert alert-danger">
+                     <div *ngIf="cch_id.errors.required">
+                     Tipo de herramienta requerido.
+                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-group" style="float: right; padding-right: 10%;">
+            <button class="btn btn-success" [disabled]="creaCCHForm.invalid" (click)="crearFormatoCCH(); ">
+              <span><b> Siguiente </b></span>
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>
