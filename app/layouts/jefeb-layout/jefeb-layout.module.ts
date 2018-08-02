@@ -8,11 +8,10 @@ import { UserProfileComponent } from '../../jefeb/user-profile/user-profile.comp
 import { AgGridModule } from 'ag-grid-angular';
 import { MatProgressBarModule } from '@angular/material';
 import { OrdenTrabajoComponent } from '../../jefeb/orden-trabajo/orden-trabajo.component';
-import { CrearOrdenTrabajoComponent } from '../../jefeb/crear-orden-trabajo/crear-orden-trabajo.component';
 import { GridComponent } from '../../jefeb/grid/grid.component';
 import { llenaFormatoCCHComponent } from '../../jefeb/llenaFormatoCCH/llenaFormatoCCH.component';
 import { CrearLlenaFormatoCCHComponent } from '../../jefeb/crear-llenaFormatoCCH/crear-llenaFormatoCCH.component';
-
+import { HerramientaGridComponent } from '../../jefeb/herramienta-grid/herramienta-grid.component';
 
 
 import { ChartsModule } from 'ng2-charts';
@@ -36,11 +35,10 @@ import { ToastrModule } from 'ngx-toastr';
     DashboardComponent,
     UserProfileComponent,
     OrdenTrabajoComponent,
-    CrearOrdenTrabajoComponent,
     GridComponent,
     llenaFormatoCCHComponent,
     CrearLlenaFormatoCCHComponent,
-    CrearOrdenTrabajoComponent
+    HerramientaGridComponent
   ]
 })
 

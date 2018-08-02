@@ -11,6 +11,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class OrdenTrabajoComponent implements OnInit{
   title = 'app';
+  id_ordenDeTrabajo: string;
+  obra: string;
+  nombre_jefe_brigada_id: string;
+  actividades: string;
+  condicionesTrabajo: string;
+  fechaInicio: string;
+  fechaFin: string;
+  desBut = false;
+  actBut= true;
+  hidden= false;
+  foto= '';
+  imgUrl="";
   global: Global;
   private gridApi;
   private gridColumnApi;
@@ -38,9 +50,14 @@ export class OrdenTrabajoComponent implements OnInit{
 
   rowData: any;
 
-  crearOrdenTrabajo(){
-    this.router.navigate(['jefeBrigada/orden-trabajo/crear-orden-trabajo']);
+
+    detalleOrdenTrabajo(){
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+this.id_ordenDeTrabajo]);
   }
+
+     menosDetalles(){
+     this.hidden=false;
+   }
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -91,13 +108,13 @@ export class OrdenTrabajoComponent implements OnInit{
 
     this.hidden=true;
     //activar 
-    this.id_cliente=id_cliente;
-    this.nombre=nombre;
-    this.razonSocial=razonSocial;
-    this.rfc=rfc;
-    this.direccion=direccion;
-    this.nombreContacto=nombreContacto;
-    this.foto=foto;
+    this.id_ordenDeTrabajo=id_ordenDeTrabajo;
+    this.obra=obra;
+    this.nombre_jefe_brigada_id=nombre_jefe_brigada_id;
+    this.actividades=actividades;
+    this.condicionesTrabajo=condicionesTrabajo;
+    this.fechaInicio=fechaInicio;
+    this.fechaFin=fechaFin;
 
     if(this.foto== "null"){
       this.imgUrl="../assets/img/gabino.jpg";

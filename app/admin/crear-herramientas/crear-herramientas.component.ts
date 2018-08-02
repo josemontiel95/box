@@ -4,7 +4,6 @@ import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { CrearResp } from "../../interfaces/int.CrearResp";
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
-import { Herramienta }    from './Herramienta';
 import * as moment from 'moment';
 import {
     ReactiveFormsModule,

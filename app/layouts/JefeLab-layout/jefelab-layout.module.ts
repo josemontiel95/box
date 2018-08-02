@@ -25,6 +25,9 @@ import { CrearConcreteraComponent } from '../../jefelab/crear-concretera/crear-c
 import { ConcreteraDetailComponent } from '../../jefelab/concretera-detail/concretera-detail.component';
 import { OrdenTrabajoComponent } from '../../jefelab/orden-trabajo/orden-trabajo.component';
 import { CrearOrdenTrabajoComponent } from '../../jefelab/crear-orden-trabajo/crear-orden-trabajo.component';
+import { GridComponent } from '../../jefelab/grid/grid.component';
+import { HerramientaGridComponent } from '../../jefelab/herramienta-grid/herramienta-grid.component';
+import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component';
 
 @NgModule({
   imports: [
@@ -56,6 +59,11 @@ import { CrearOrdenTrabajoComponent } from '../../jefelab/crear-orden-trabajo/cr
     ConcreteraDetailComponent,
     OrdenTrabajoComponent,
     CrearOrdenTrabajoComponent,
+    OrdenTrabajoComponent,
+    CrearOrdenTrabajoComponent,
+    GridComponent,
+    HerramientaGridComponent,
+    DashboardComponent
   ]
 })
 

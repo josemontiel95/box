@@ -23,6 +23,81 @@
           <h4 class="card-title">Ordenes de Trabajo:</h4>
         </div>
         <div class="card-body">
+          <div id="tarjetaMasDetalles" *ngIf="hidden">
+           <div class="row">
+              <div class="col-md-3">
+                <div class="row">  
+                      <img class="img-usuario" src="{{this.imgUrl}}" alt="..."> 
+                </div>
+              </div>
+              <div class="col-md-9">
+                 <div class="row">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <b>ID Orden de trabajo.</b>
+                            </td>
+                            <td>
+                              {{id_ordenDeTrabajo}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <b>Obra.</b>
+                            </td>
+                            <td>
+                              {{obra}}
+                            </td>
+                           </tbody>
+                      </table>
+                    </div> 
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9">
+                  <div class="row">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>
+                               <b>Jefe de Brigada.</b>
+                            </td>
+                            <td>
+                              {{nombre_jefe_brigada_id}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                             <b>Fecha de Fin.</b>
+                            </td>
+                            <td>
+                              {{fechaFin}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div> 
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="row" align="center">
+                <button type="button" class="btn btn-default btn-round" (click)="detalleOrdenTrabajo();">Detalles</button>
+                    <button type="button" class="btn btn-danger btn-round " (click)="desactivarCliente()" *ngIf="desBut">Desactivar</button>
+                    <button type="button" class="btn btn-success btn-round " (click)="activarCliente()" *ngIf="actBut">Activar</button>
+                </div>
+                <div id="MenosDetalles">
+                  <div class="row">
+                      <button type="button" class="btn btn-primary btn-link" (click)="menosDetalles()">Menos detalles</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>          
          <ag-grid-angular 
             #agGrid
             id="myGrid"
