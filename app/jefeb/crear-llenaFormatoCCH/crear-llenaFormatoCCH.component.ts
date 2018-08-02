@@ -21,28 +21,29 @@ import {
 })
 export class CrearLlenaFormatoCCHComponent implements OnInit {
 
-
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   cargando= 1;
-  mis_tipos: Array<any>;
+  mis_conos: Array<any>;
+  mis_varillas: Array<any>;
+  mis_flexometro: Array<any>;
+  mis_termometro: Array<any>;
   mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
   
     creaCCHForm: FormGroup;
       cch = {
-      cch_id: '',
+      cch_id: '1001',
       informe:'',
       especimen:'',
       cono:'',
       varilla:'',
       flexometro:'',
       termometro:'',
-      latitud: '19.0437584',
-      longitud: '-98.1996779' }
+      longitud: '-98.1996779',
+      latitud: '19.0437584' }
 
-   espec= [{"especimen":"Cilindro", "id":"Cilindro"},{"especimen":"Cubo", "id":"Cubo"},{"especimen":"Vigas", "id":"Vigas"}];
+   espec= [{"especimen":"CILINDRO", "id":"CILINDRO"},{"especimen":"CUBO", "id":"CUBO"},{"especimen":"VIGAS", "id":"VIGAS"}];
     
   
   crearFormatoCCH()
@@ -61,12 +62,11 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('varilla_id', this.creaCCHForm.value.varilla);
     formData.append('flexometro_id', this.creaCCHForm.value.flexometro);
     formData.append('termometro_id', this.creaCCHForm.value.termometro);
-    formData.append('latitud ', this.creaCCHForm.value.longitud );
-    formData.append('longitud ', this.creaCCHForm.value.latitud );
+    formData.append('longitud', this.creaCCHForm.value.longitud );
+    formData.append('latitud', this.creaCCHForm.value.latitud );
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             } );
-
   }
 
 
@@ -92,17 +92,40 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     search.set('function', 'getForDroptdownJefeBrigadaCono');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
+
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownJefeBrigadaVarilla');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
+
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownJefeBrigadaFlexometro');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
+
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownJefeBrigadaTermometro');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => this.llenaTermometro(res.json()) );
 
     this.creaCCHForm = new FormGroup({
       'cch_id': new FormControl(this.cch.cch_id, Validators.required), 
       'especimen': new FormControl(this.cch.especimen,  Validators.required), 
-      'informe': new FormControl( this.cch.informe )
-      
+      'informe': new FormControl( this.cch.informe, Validators.required),
+      'cono': new FormControl( this.cch.cono),
+      'varilla': new FormControl( this.cch.varilla ),
+      'flexometro': new FormControl( this.cch.flexometro ),
+      'termometro': new FormControl( this.cch.termometro ),
+      'latitud': new FormControl( this.cch.latitud ),
+      'longitud': new FormControl( this.cch.longitud ),
+
           });
   }
 
-   get cch_id() { return this.creaCCHForm.get('cch_id'); }
 
    get informe() { return this.creaCCHForm.get('informe'); }
 
@@ -125,19 +148,54 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
 
   onSubmit() { this.submitted = true; }
 
-  llenaTipos(resp: any)
+  llenaConos(resp: any)
   {
     console.log(resp);
-    this.mis_tipos= new Array(resp.length);
+    this.mis_conos= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
-      this.mis_tipos[_i]=resp[_i];
+      this.mis_conos[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
-    console.log("llenaTipos this.cargando: "+this.cargando);
+    console.log("llenaConos this.cargando: "+this.cargando);
   }
 
+  llenaVarillas(resp: any)
+  {
+    console.log(resp);
+    this.mis_varillas= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ )
+    {
+      this.mis_varillas[_i]=resp[_i];
+    }
+    this.cargando=this.cargando-1;
+    console.log("llenaVarillas this.cargando: "+this.cargando);
+  }
 
+  llenaFlexometro(resp: any)
+  {
+    console.log(resp);
+    this.mis_flexometro= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ )
+    {
+      this.mis_flexometro[_i]=resp[_i];
+    }
+    this.cargando=this.cargando-1;
+    console.log("llenaFlexometros this.cargando: "+this.cargando);
+  }
+
+  llenaTermometro(resp: any)
+  {
+    console.log(resp);
+    this.mis_termometro= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ )
+    {
+      this.mis_termometro[_i]=resp[_i];
+    }
+    this.cargando=this.cargando-1;
+    console.log("llenaTermometros this.cargando: "+this.cargando);
+  }
+  
 }
 
 
