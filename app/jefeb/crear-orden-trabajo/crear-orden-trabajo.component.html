@@ -10,7 +10,7 @@
           Crear Orden de Trabajo</h5>
         </div>
         <div class="card-body">
-         <form (ngSubmit)="onSubmit()" #ordenForm="ngForm">
+         <form (ngSubmit)="onSubmit()" [formGroup]=ordenForm #formDir="ngForm">
             
             <div class="row"> <!--PRIMER ROW -->
 
@@ -32,28 +32,28 @@
               <div class="col-md-3 col-12"> <!--SEGUNDO GRID -->
                 <div class="row"> <!--PRIMER ROW DEL SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="placas">No. De Orden</label>
-                    <input type="text" id="placas"  
+                    <label for="orden">No. De Orden</label>
+                    <input type="text" id="orden"  
                     class="form-control" 
-                    name="placas" placeholder="" formControlName="placas">
-                     <div *ngIf="placas.invalid && (placas.dirty || placas.touched)"
+                    name="orden" placeholder="" formControlName="orden">
+                     <div *ngIf="orden.invalid && (orden.dirty || orden.touched)"
               class="alert alert-danger">
-              <div *ngIf="placas.errors.required">
-                Nombre de contacto requerido.
+              <div *ngIf="orden.errors.required">
+                Numero de orden requerido.
               </div>
             </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN DEL PRIMER ROW DEL SEGUNDO GRID -->
                 <div class="row"><!--SEGUNDO ROW DEL SEGUNDO GRID -->
                   <div class="form-group"><!--TERCER CAMPO -->
-                      <label for="placas">No. De Cotizaci&oacute;n</label>
+                      <label for="cotizacion">No. De Cotizaci&oacute;n</label>
                       <input type="text" id="placas"  
                       class="form-control" 
-                      name="placas" placeholder="" formControlName="placas">
-                       <div *ngIf="placas.invalid && (placas.dirty || placas.touched)"
+                      name="cotizacion" placeholder="" formControlName="cotizacion">
+                       <div *ngIf="cotizacion.invalid && (cotizacion.dirty || cotizacion.touched)"
               class="alert alert-danger">
-              <div *ngIf="placas.errors.required">
-                Nombre de contacto requerido.
+              <div *ngIf="cotizacion.errors.required">
+                No. De Cotizaci&oacute;n requerido.
               </div>
             </div>
                   </div> <!--FIN TERCER CAMPO -->
@@ -67,9 +67,9 @@
                 <div class="form-group"><!--CUARTO CAMPO -->
                   <label for="cliente">Nombre del Cliente/Empresa</label>
                   <select  class="form-control" id="cliente" required name="cliente" formControlName="cliente">
-
-                    <option *ngFor="let cliente of mis_clientes" [value]="cliente.id_cliente">
-                      {{cliente.cliente}}
+                  <option value="" [disabled]="true">Selecciona el cliente...</option>
+                    <option *ngFor="let cliente of mis_cli" [value]="cliente.id_cliente">
+                      {{cliente.nombre}}
                     </option>
                   </select>
                    <div *ngIf="cliente.invalid && (cliente.dirty || cliente.touched)"
@@ -87,7 +87,7 @@
                 <div class="form-group">
                   <label for="obra">Nombre de la Obra</label>
                   <select  class="form-control" id="obra" required name="obra" formControlName="obra">
-                    
+                  <option value="" [disabled]="true">Selecciona el obra...</option>  
                     <option *ngFor="let obra of mis_obras" [value]="obra.id_obra">
                       {{obra.obra}}
                     </option>   
@@ -119,7 +119,7 @@
             </div>
 
             <div class="row">
-              <div class="col-md-9 col-12"> <!--PRIMER CAMPO -->
+              <div class="col-md-7 col-12"> <!--PRIMER CAMPO -->
                 <div class="form-group">
                   <label for="nombre">Personas a Contactar</label>
                   <input type="text" id="nombre"  
@@ -133,10 +133,10 @@
             </div>
               </div>
             </div> <!--FIN PRIMER CAMPO -->
-            <div class="col-md-3 col-12">
+            <div class="col-md-5 col-12">
               <div class="form-group">
                   <label for="telefono">Tel&eacute;fono</label>
-                  <input type="number" id="telefono"  
+                  <input type="text" id="telefono"  
                   class="form-control" 
                   name="telefono" placeholder="" formControlName="telefono">
                    <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)"
@@ -144,6 +144,7 @@
               <div *ngIf="telefono.errors.required">
                 Tel&eacute;fono requerido.
               </div>
+               <div *ngIf="telefono.errors.pattern">Tel&eacute;fono solo debe contener numeros</div>              
             </div>
                 </div>
             </div>
@@ -160,7 +161,7 @@
                    <div *ngIf="actividades.invalid && (actividades.dirty || actividades.touched)"
               class="alert alert-danger">
               <div *ngIf="actividades.errors.required">
-                Nombre de contacto requerido.
+                Actividades a Realizar requeridas.
               </div>
             </div>
               </div>
@@ -208,8 +209,9 @@
                   <label for="jefeb">Jefe de Brigada que Realiza la Actividad</label>
                   <select type="text" id="jefeb" class="form-control" 
                   name="jefeb" placeholder="" required   formControlName="jefeb">
-                  <option *ngFor="let jefeb of mis_jefes" [value]="obra.id_jefeb">
-                      {{jefeb.jefeb}}
+                   <option value="" [disabled]="true">Selecciona el Jefe...</option>                  
+                  <option *ngFor="let jefeb of mis_jefes" [value]="obra. id_usuario">
+                      {{jefeb.nombre}}
                     </option> 
                   </select>
                    <div *ngIf="jefeb.invalid && (jefeb.dirty || jefeb.touched)"
@@ -292,14 +294,8 @@
                   <label for="observacio">Observaciones</label>
                   <textarea type="text" id="observacio"  
                   class="form-control" 
-                  name="observacio" placeholder="" required  formControlName="observacio">
+                  name="observacio" placeholder=""   formControlName="observacio">
                   </textarea>
-                   <div *ngIf="observacio.invalid && (observacio.dirty || observacio.touched)"
-              class="alert alert-danger">
-              <div *ngIf="observacio.errors.required">
-                Nombre de contacto requerido.
-              </div>
-            </div>
               </div>
             </div> <!--FIN PRIMER CAMPO -->
             </div>

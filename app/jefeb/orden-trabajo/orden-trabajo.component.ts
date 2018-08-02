@@ -50,12 +50,9 @@ export class OrdenTrabajoComponent implements OnInit{
 
   rowData: any;
 
-  crearOrdenTrabajo(){
-    this.router.navigate(['jefeLaboratorio/orden-trabajo/crear-orden-trabajo']);
-  }
 
     detalleOrdenTrabajo(){
-    this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/'+this.id_ordenDeTrabajo]);
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+this.id_ordenDeTrabajo]);
   }
 
      menosDetalles(){

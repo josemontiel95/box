@@ -5,11 +5,11 @@ import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-grid',
-  templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.css']
+  selector: 'app-herramienta-grid',
+  templateUrl: './herramienta-grid.component.html',
+  styleUrls: ['./herramienta-grid.component.css']
 })
-export class GridComponent implements OnInit  {
+export class HerramientaGridComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
@@ -19,16 +19,9 @@ export class GridComponent implements OnInit  {
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-      {headerName: 'ID', field: 'id_cliente'},
-      {headerName: 'Razón social.', field: 'razonSocial' },
-      {headerName: 'Nombre de la empresa.', field: 'nombre' },
-      {headerName: 'Direccion', field: 'direccion'},
-      {headerName: 'RFC', field: 'rfc' },      
-      {headerName: 'Email', field: 'email' },
-      {headerName: 'Nombre de contacto', field: 'nombreContacto' },
-      {headerName: 'Telefono de Contacto', field: 'telefonoDeContacto' },
-      {headerName: 'Telefono de la Empresa', field: 'telefono' },
-      {headerName: 'Activo', field: 'active' },
+    {headerName: 'Tipo', field: 'tipo' },
+    {headerName: 'Placas', field: 'placas' },
+    {headerName: 'Condicion', field: 'condicion'},
 
       
     ];
@@ -47,7 +40,7 @@ export class GridComponent implements OnInit  {
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllAdmin');
     search.set('token', this.global.token);

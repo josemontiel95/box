@@ -18,7 +18,9 @@ import { CrearConcreteraComponent } from '../../jefelab/crear-concretera/crear-c
 import { ConcreteraDetailComponent } from '../../jefelab/concretera-detail/concretera-detail.component';
 import { OrdenTrabajoComponent } from '../../jefelab/orden-trabajo/orden-trabajo.component';
 import { CrearOrdenTrabajoComponent } from '../../jefelab/crear-orden-trabajo/crear-orden-trabajo.component';
-
+import { GridComponent } from '../../jefelab/grid/grid.component';
+import { HerramientaGridComponent } from '../../jefelab/herramienta-grid/herramienta-grid.component';
+import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component';
 
 export const JefeLabLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'user-profile', pathMatch: 'full' },
@@ -28,8 +30,9 @@ export const JefeLabLayoutRoutes: Routes = [
     { path: 'obras/obra-detail/:id',   component: ObraDetailComponent },
     { path: 'obras/crear-obra',   component: CrearObraComponent },
 
-    { path: 'orden-trabajo',  component: OrdenTrabajoComponent },
-    { path: 'orden-trabajo/crear-orden-trabajo',  component: CrearOrdenTrabajoComponent },
+    { path: 'orden-trabajo/dashboard/:id',      component: DashboardComponent },
+    { path: 'orden-trabajo',      component: OrdenTrabajoComponent },
+    { path: 'orden-trabajo/crear-orden-trabajo',   component: CrearOrdenTrabajoComponent }, 
 
     { path: 'herramientas',  component: HerramientasComponent },
     { path: 'herramientas/herramienta-detail/:id',   component: HerramientaDetailComponent },
