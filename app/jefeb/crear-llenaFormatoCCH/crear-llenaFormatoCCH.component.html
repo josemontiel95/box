@@ -16,7 +16,7 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="informe">INFORME No</label>
-                  <input type="text" id="informe" class="form-control" 
+                  <input type="text" id="informe" class="form-control" required 
                   name="informe" placeholder="Escriba el no. Informe" formControlName="informe">
                 </div>
               </div>
@@ -42,79 +42,81 @@
             </div> <!--FIN ROW-->
             <h6>Inventario de Intrumento</h6>
             <div class="row">
-              <div class="col-md-3 col-12">
+              <div class="col-md-6 col-12">
                  <div class="form-group">
-                  <label for="cch_id">Cono</label>
-                  <select  class="form-control" id="cch_id"
-                    required 
-                    name="cch_id"
-                    placeholder="Tipos"  formControlName="cch_id">
-
-                    <option *ngFor="let cono of mis_tipos" [value]="cono.cono_id">
-                      {{cono.CONO}}
+                  <label for="cono">Cono</label>
+                  <select  class="form-control" id="cono" 
+                    required name="cono"
+                    placeholder="Tipos"  formControlName="cono">
+                    <option value="" [disabled]="true">Selecciona un cono...</option>
+                    <option value="NULL" [disabled]="false">No usare termometro...</option>
+                    <option *ngFor="let cono of mis_conos" [value]="cono.id_herramienta">
+                      {{cono.placas}}
                     </option>
                   </select>
-                  <div *ngIf="cch_id.invalid && (cch_id.dirty || cch_id.touched)" class="alert alert-danger">
-                     <div *ngIf="cch_id.errors.required">
-                     Tipo de herramienta requerido.
-                     </div>
+                  <div *ngIf="cono.invalid && (cono.dirty || cono.touched)" class="alert alert-danger">
+                   <div *ngIf="cono.errors.required">
+                   Cono Requerido.
+                   </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-3 col-12">
+              <div class="col-md-6 col-12">
                  <div class="form-group">
-                  <label for="cch_id">Varilla</label>
-                  <select  class="form-control" id="cch_id"
-                    required 
-                    name="cch_id"
-                    placeholder="Tipos"  formControlName="cch_id">
-
-                    <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo">
-                      {{tipo.tipo}}
+                  <label for="varilla">Varilla</label>
+                  <select  class="form-control" id="varilla" 
+                    required name="varilla"
+                    placeholder="Tipos"  formControlName="varilla">
+                    <option value="" [disabled]="true">Selecciona una varilla...</option>
+                    <option value="NULL" [disabled]="false">No usare varilla...</option>
+                    <option *ngFor="let varilla of mis_varillas" [value]="varilla.id_herramienta">
+                      {{varilla.placas}}
                     </option>
                   </select>
-                  <div *ngIf="cch_id.invalid && (cch_id.dirty || cch_id.touched)" class="alert alert-danger">
-                     <div *ngIf="cch_id.errors.required">
-                     Tipo de herramienta requerido.
-                     </div>
+                  <div *ngIf="varilla.invalid && (varilla.dirty || varilla.touched)" class="alert alert-danger">
+                   <div *ngIf="varilla.errors.required">
+                   Varilla Requerido.
+                   </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-3 col-12">
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-12">
                  <div class="form-group">
-                  <label for="cch_id">Flexometro</label>
-                  <select  class="form-control" id="cch_id"
-                    required 
-                    name="cch_id"
-                    placeholder="Tipos"  formControlName="cch_id">
-
-                    <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo">
-                      {{tipo.tipo}}
+                  <label for="flexometro">Flexometro</label>
+                  <select  class="form-control" id="flexometro" 
+                    required name="flexometro"
+                    placeholder="Tipos"  formControlName="flexometro">
+                    <option value="" [disabled]="true">Selecciona un flexometro...</option>
+                    <option value="NULL" [disabled]="false">No usare termometro...</option>
+                    <option *ngFor="let flexometro of mis_flexometro" [value]="flexometro.id_herramienta">
+                      {{flexometro.placas}}
                     </option>
                   </select>
-                  <div *ngIf="cch_id.invalid && (cch_id.dirty || cch_id.touched)" class="alert alert-danger">
-                     <div *ngIf="cch_id.errors.required">
-                     Tipo de herramienta requerido.
-                     </div>
+                  <div *ngIf="flexometro.invalid && (flexometro.dirty || flexometro.touched)" class="alert alert-danger">
+                   <div *ngIf="flexometro.errors.required">
+                   Flexometro Requerido.
+                   </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-3 col-12">
+              <div class="col-md-6 col-12">
                  <div class="form-group">
-                  <label for="cch_id">Termometro</label>
-                  <select  class="form-control" id="cch_id"
-                    required 
-                    name="cch_id"
-                    placeholder="Tipos"  formControlName="cch_id">
-
-                    <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo">
-                      {{tipo.tipo}}
+                  <label for="termometro">Termometro</label>
+                  <select  class="form-control" id="termometro" 
+                    required name="termometro"
+                    placeholder="Tipos"  formControlName="termometro">
+                    <option value="" [disabled]="true">Selecciona un termometro...</option>       
+                    <option value="NULL" [disabled]="false">No usare termometro...</option>
+                    <option *ngFor="let termometro of mis_termometro" [value]="termometro.id_herramienta">
+                      {{termometro.placas}}
                     </option>
                   </select>
-                  <div *ngIf="cch_id.invalid && (cch_id.dirty || cch_id.touched)" class="alert alert-danger">
-                     <div *ngIf="cch_id.errors.required">
-                     Tipo de herramienta requerido.
-                     </div>
+                  <div *ngIf="termometro.invalid && (termometro.dirty || termometro.touched)" class="alert alert-danger">
+                   <div *ngIf="termometro.errors.required">
+                   Termometro Requerido.
+                   </div>
                   </div>
                 </div>
               </div>
