@@ -11,6 +11,7 @@
           <h4 class="card-title">Orden de trabajo.</h4>
         </div>
         <div class="card-body">
+
          <form (ngSubmit)="onSubmit()" [formGroup]=ordenForm #formDir="ngForm">
             
             <div class="row"> <!--PRIMER ROW -->
@@ -189,7 +190,7 @@
 
 
             <div class="row">
-              <div class="col-md-12 col-12"> <!-- CAMPO -->
+              <div class="col-md-6 col-12"> <!-- CAMPO -->
                 <div class="form-group">
                   <label for="jefe_brigada_id">Jefe de Brigada que Realiza la Actividad</label>
                   <select type="text" id="jefe_brigada_id" class="form-control" 
@@ -203,6 +204,24 @@
               class="alert alert-danger">
               <div *ngIf="jefe_brigada_id.errors.required">
                 Jefe de Brigada requerido.
+              </div>
+            </div>
+              </div>
+            </div> <!--FIN  CAMPO -->
+            <div class="col-md-6 col-12"> <!-- CAMPO -->
+                <div class="form-group">
+                  <label for="laboratorio_id">Laboratorio.</label>
+                  <select type="text" id="laboratorio_id" class="form-control" 
+                  name="laboratorio_id" placeholder="" required   formControlName="laboratorio_id">
+                   <option value="" [disabled]="true">Selecciona el Laboratorio...</option>                  
+                  <option *ngFor="let lab of mis_lab" [value]="lab.id_laboratorio">
+                      {{lab.laboratorio}}
+                    </option>
+                  </select>
+                   <div *ngIf="laboratorio_id.invalid && (laboratorio_id.dirty || laboratorio_id.touched)"
+              class="alert alert-danger">
+              <div *ngIf="laboratorio_id.errors.required">
+                Laboratorio requerido.
               </div>
             </div>
               </div>
@@ -276,7 +295,7 @@
             <div class="row">
               <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
                 <div class="form-group">
-                  <label for="observaciones">observacionesnes</label>
+                  <label for="observaciones">Observacionesnes</label>
                   <textarea type="text" id="observaciones"  
                   class="form-control" 
                   name="observaciones" placeholder=""   formControlName="observaciones">
@@ -309,7 +328,17 @@
           <h4 class="card-title">Equipo en obra.</h4>
         </div>
         <div class="card-body ">
+             <div class="btn-group"  style="padding-left: 55%;">
+              <button class="btn btn-info" *ngIf="hiddenHerramienta == true"  (click)="mostrarHerramienta()">
+                <span><b> Cambiar Herramienta. </b></span>
+              </button>
+            <button class="btn btn-success" *ngIf="!hiddenHerramienta" [disabled]="false" (click)="actualizarHerramienta( ); mostrarHerramienta();">
+              <span><b> Guardar Cambios. </b></span>
+            </button>
+          </div>
+          <div *ngIf="this.hiddenHerramienta == true">
           <app-herramienta-grid></app-herramienta-grid>
+          </div>
         </div>
       </div>
     </div>
@@ -318,10 +347,21 @@
     <div class="col-md-6 col-12">
       <div class="card">
         <div class="card-header">
-          <h5 class="card-category">All Persons List</h5>
-          <h4 class="card-title"> Employees Stats</h4>
+          <h5 class="card-category">Tecnicos.</h5>
+          <h4 class="card-title"> Tecnicos en obra.</h4>
         </div>
         <div class="card-body">
+                       <div class="btn-group"  style=" padding-left: 65%;">
+              <button class="btn btn-info" *ngIf="hiddenTecnicos == true"  (click)="mostrarTecnicos()">
+                <span><b> Agregar Tecnicos. </b></span>
+              </button>
+            <button class="btn btn-success" *ngIf="!hiddenTecnicos" [disabled]="false" (click)="mostrarTecnicos();">
+              <span><b> Guardar Cambios. </b></span>
+            </button>
+          </div>
+          <div *ngIf="this.hiddenTecnicos == true">
+          <app-tecnicos-grid></app-tecnicos-grid>
+        </div>
         </div>
       </div>
     </div>

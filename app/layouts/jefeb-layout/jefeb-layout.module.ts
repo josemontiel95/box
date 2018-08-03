@@ -15,6 +15,8 @@ import { CrearLlenaFormatoCCHComponent } from '../../jefeb/crear-llenaFormatoCCH
 import { HerramientaGridComponent } from '../../jefeb/herramienta-grid/herramienta-grid.component';
 
 
+import { TecnicosGridComponent } from '../../jefeb/tecnicos-grid/tecnicos-grid.component';
+
 import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
@@ -40,7 +42,8 @@ import { ToastrModule } from 'ngx-toastr';
     GridComponent,
     llenaFormatoCCHComponent,
     CrearLlenaFormatoCCHComponent,
-    HerramientaGridComponent
+    HerramientaGridComponent,
+    TecnicosGridComponent
   ]
 })
 

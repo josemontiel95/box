@@ -16,6 +16,7 @@ export class HerramientaGridComponent implements OnInit  {
   private gridColumnApi;
   rowSelection;
   columnDefs;
+  id: string;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -31,20 +32,24 @@ export class HerramientaGridComponent implements OnInit  {
   rowData: any;
 
   ngOnInit() {
+            this.data.currentGlobal.subscribe(global => this.global = global);
+    this.route.params.subscribe( params => this.id=params.id);
   }
 
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
+
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllAdmin');
+    search.set('function', 'getAllHerraOrden');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());

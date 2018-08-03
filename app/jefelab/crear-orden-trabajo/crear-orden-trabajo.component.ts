@@ -27,7 +27,7 @@ export class CrearOrdenTrabajoComponent implements OnInit {
   global: Global;
   cargando= 1;
       mis_tipos: Array<any>;
-    mis_lab: Array<any>;
+
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
@@ -37,25 +37,21 @@ export class CrearOrdenTrabajoComponent implements OnInit {
    mis_cli: Array<any>;
    mis_obras: Array<any>;
    mis_jefes: Array<any>;
+   mis_lab: Array<any>;
 
    Orden = {
-     area: '',
-     orden: '',
-     cotizacion: '',
-     cliente: '',
-     obra: '',
-     direccion: '',
-     nombre: '',
-     telefono: '',
+     cotizacion_id: '',
+     obra_id: '',
      actividades: '',
-     condicion: '',
-     equipo: '',
-     jefeb: '',
-     fechainicio: '',
-     fechatermnio: '',
-     horainicio: '',
-     horatermino: '',
-     observacio: ''
+     condicionesTrabajo: '',
+     fechaInicio: '',
+     fechaFin: '',
+     horaInicio: '',
+     horaFin: '',
+     observaciones: '',
+     lugar: '',
+     jefe_brigada_id: '',
+     laboratorio_id: '',
 
         //se creo un arreglo llamado cliente con los campos del form
         };  
@@ -63,16 +59,26 @@ export class CrearOrdenTrabajoComponent implements OnInit {
   crearOrdenTrabajo()
   {
       this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertAdmin');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    /*formData.append('placas', placas);
-    formData.append('herramienta_tipo_id',herramienta_tipo_id);  
-    formData.append('condicion', condicion);
-    formData.append('fechaDeCompra', fechaDeCompra); */
+    formData.append('cotizacion_id', this.ordenForm.value.cotizacion_id,);
+    formData.append('obra_id',this.ordenForm.value.obra_id);  
+    formData.append('actividades', this.ordenForm.value.actividades);
+    formData.append('condicionesTrabajo', this.ordenForm.value.condicionesTrabajo); 
+    formData.append('fechaInicio', this.ordenForm.value.fechaInicio);
+    formData.append('fechaFin',this.ordenForm.value.fechaFin);  
+    formData.append('horaInicio', this.ordenForm.value.horaInicio);
+    formData.append('horaFin', this.ordenForm.value.horaFin); 
+    formData.append('observaciones', this.ordenForm.value.observaciones);
+    formData.append('lugar',this.ordenForm.value.lugar);  
+    formData.append('jefe_brigada_id', this.ordenForm.value.jefe_brigada_id);
+    formData.append('laboratorio_id', this.ordenForm.value.laboratorio_id);   
+ 
+ 
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             } );
@@ -125,6 +131,15 @@ export class CrearOrdenTrabajoComponent implements OnInit {
                                                    this.labValidator(res.json());
                                                  });
 
+    url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownAdmin');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {this.llenaLaboratorio(res.json());
+                                                   this.labValidator(res.json());
+                                                 });
+
     url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getJefesBrigadaForDroptdown');
@@ -134,64 +149,50 @@ export class CrearOrdenTrabajoComponent implements OnInit {
                                                    this.labValidator(res.json());
                                                  });
 
-
     this.ordenForm = new FormGroup({
-      'area': new FormControl( this.Orden.area,  [Validators.required]), 
-      'orden': new FormControl(this.Orden.orden,  [ Validators.required]),
-      'cotizacion': new FormControl(this.Orden.cotizacion,  [  Validators.required]),
-      'cliente': new FormControl(this.Orden.cliente,  [  Validators.required]), 
-      'obra': new FormControl(this.Orden.obra,  [  Validators.required]),
-      'direccion': new FormControl(this.Orden.direccion,  [  Validators.required]), 
-      'telefono': new FormControl( this.Orden.telefono,  [  Validators.required,Validators.pattern("^([0-9])*$")]),
-      'nombre': new FormControl(this.Orden.nombre,  [  Validators.required]), 
-      'actividades': new FormControl(this.Orden.actividades,  [  Validators.required]), 
-      'condicion': new FormControl(this.Orden.condicion,  [  Validators.required]), 
-      'equipo': new FormControl(this.Orden.equipo,  [  Validators.required]),       
-      'jefeb': new FormControl(this.Orden.jefeb,  [  Validators.required]), 
-      'fechainicio': new FormControl(this.Orden.fechainicio,  [  Validators.required]), 
-      'fechatermnio': new FormControl(this.Orden.fechatermnio,  [  Validators.required]), 
-      'horainicio': new FormControl(this.Orden.horainicio,  [  Validators.required]), 
-      'horatermino': new FormControl(this.Orden.horatermino,  [  Validators.required]), 
-      'observacio': new FormControl(this.Orden.observacio),       
+      'cotizacion_id': new FormControl( this.Orden.cotizacion_id), 
+      'obra_id': new FormControl(this.Orden.obra_id,  [ Validators.required]),
+      'actividades': new FormControl(this.Orden.actividades,  [  Validators.required]),
+      'condicionesTrabajo': new FormControl(this.Orden.condicionesTrabajo,  [  Validators.required]),
+      'fechaInicio': new FormControl(this.Orden.fechaInicio,  [  Validators.required]), 
+      'fechaFin': new FormControl( this.Orden.fechaFin,  [  Validators.required]),
+      'horaInicio': new FormControl(this.Orden.horaInicio,  [  Validators.required]), 
+      'horaFin': new FormControl(this.Orden.horaFin,  [  Validators.required]), 
+      'observaciones': new FormControl(this.Orden.observaciones,  [  Validators.required]), 
+      'lugar': new FormControl(this.Orden.lugar,  [  Validators.required]), 
+      'laboratorio_id': new FormControl(this.Orden.laboratorio_id,  [  Validators.required]), 
+      'jefe_brigada_id': new FormControl(this.Orden.jefe_brigada_id,  [  Validators.required]), 
+      
   
           });
 
 
   }
 
-   get area() { return this.ordenForm.get('area'); }
+   get cotizacion_id() { return this.ordenForm.get('cotizacion_id'); }
 
-   get orden() { return this.ordenForm.get('orden'); }
+   get obra_id() { return this.ordenForm.get('obra_id'); }
   
-   get cotizacion() { return this.ordenForm.get('cotizacion'); }
-
-   get cliente() { return this.ordenForm.get('cliente'); }
-   
-   get obra() { return this.ordenForm.get('obra'); }
-  
-   get direccion() { return this.ordenForm.get('direccion'); }
-
-   get telefono() { return this.ordenForm.get('telefono'); }
-   
-   get nombre() { return this.ordenForm.get('nombre'); }
-   
    get actividades() { return this.ordenForm.get('actividades'); }
+
+   get condicionesTrabajo() { return this.ordenForm.get('condicionesTrabajo'); }
    
-   get condicion() { return this.ordenForm.get('condicion'); }
+   get fechaInicio() { return this.ordenForm.get('fechaInicio'); }
+  
+   get fechaFin() { return this.ordenForm.get('fechaFin'); }
+
+   get horaInicio() { return this.ordenForm.get('horaInicio'); }
    
-   get equipo() { return this.ordenForm.get('equipo'); } 
+   get horaFin() { return this.ordenForm.get('horaFin'); }
+   
+   get observaciones() { return this.ordenForm.get('observaciones'); }
+   
+   get lugar() { return this.ordenForm.get('lugar'); }
+   
+   get laboratorio_id() { return this.ordenForm.get('laboratorio_id'); } 
 
-   get jefeb() { return this.ordenForm.get('jefeb'); } 
+   get jefe_brigada_id() { return this.ordenForm.get('jefe_brigada_id'); } 
 
-   get fechainicio() { return this.ordenForm.get('fechainicio'); } 
-
-   get fechatermnio() { return this.ordenForm.get('fechatermnio'); } 
-
-   get horainicio() { return this.ordenForm.get('horainicio'); } 
-
-   get horatermino() { return this.ordenForm.get('horatermino'); } 
-
-   get observacio() { return this.ordenForm.get('observacio'); } 
 
 
 
@@ -262,6 +263,20 @@ export class CrearOrdenTrabajoComponent implements OnInit {
     }
     console.log(this.mis_jefes);
     this.cargando=this.cargando-1;
+  }
+
+
+  llenaLaboratorio(resp: any)
+  {
+        console.log(resp);
+    this.mis_lab= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ )
+    {
+      this.mis_lab[_i]=resp[_i];
+
+    }
+    this.cargando=this.cargando-1;
+    console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
 

@@ -3,27 +3,25 @@ import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angu
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
-import { DashboardComponent } from '../dashboard/dashboard.component';
-
 
 @Component({
-  selector: 'app-herramienta-grid',
-  templateUrl: './herramienta-grid.component.html',
-  styleUrls: ['./herramienta-grid.component.css']
+  selector: 'app-tecnicos-grid',
+  templateUrl: './tecnicos-grid.component.html',
+  styleUrls: ['./tecnicos-grid.component.css']
 })
-export class HerramientaGridComponent implements OnInit  {
+export class TecnicosGridComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
   private gridColumnApi;
   rowSelection;
   columnDefs;
-  id: string;
+
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-    {headerName: 'Tipo', field: 'tipo' },
-    {headerName: 'Placas', field: 'placas' },
-    {headerName: 'Condicion', field: 'condicion'},
+      {headerName: 'ID', field: 'id_cliente'},
+      {headerName: 'Tecnico.', field: 'nombre'+'apellido' },
+
 
       
     ];
@@ -33,8 +31,6 @@ export class HerramientaGridComponent implements OnInit  {
   rowData: any;
 
   ngOnInit() {
-        this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id=params.id);
   }
 
 
@@ -44,16 +40,15 @@ export class HerramientaGridComponent implements OnInit  {
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllHerraOrden');
+    search.set('function', 'getAllAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('id_ordenDeTrabajo', this.id);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
-                                            this.llenaTabla(res.json());
+                                            //this.llenaTabla(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
   }
@@ -74,7 +69,7 @@ export class HerramientaGridComponent implements OnInit  {
     var id = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_herramienta;
+      id += selectedRow.id_tecnicos;
       
     });
     //this.router.navigate(['jefeb/herramientas/herramienta-detail/'+id]);

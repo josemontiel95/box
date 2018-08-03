@@ -9,6 +9,8 @@ import { GridComponent } from '../../jefeb/grid/grid.component';
 import { llenaFormatoCCHComponent } from '../../jefeb/llenaFormatoCCH/llenaFormatoCCH.component';
 import { CrearLlenaFormatoCCHComponent } from '../../jefeb/crear-llenaFormatoCCH/crear-llenaFormatoCCH.component';
 
+import { TecnicosGridComponent } from '../../jefeb/tecnicos-grid/tecnicos-grid.component';
+
 
 export const JefebLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'user-profile', pathMatch: 'full' },
