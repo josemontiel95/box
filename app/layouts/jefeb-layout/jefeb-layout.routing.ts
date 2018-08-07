@@ -16,6 +16,6 @@ export const JefebLayoutRoutes: Routes = [
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'orden-trabajo/crear-orden-trabajo',   component: CrearOrdenTrabajoComponent }, 
     { path: 'orden-trabajo',      component: OrdenTrabajoComponent },
-    { path: 'llenaFormatoCCH',      component: llenaFormatoCCHComponent },
-    { path: 'crear-llenaFormatoCCH',      component: CrearLlenaFormatoCCHComponent },   
+    { path: 'orden-trabajo/dashboard/llenaFormatoCCH/:id',      component: llenaFormatoCCHComponent },
+    { path: 'orden-trabajo/dashboard/crear-llenaFormatoCCH/:id',      component: CrearLlenaFormatoCCHComponent },   
 ];
