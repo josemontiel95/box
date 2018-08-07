@@ -8,8 +8,7 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: 'user-profile', title: 'Mi perfil',  icon:'users_circle-08', class: '' },
-    { path: 'orden-trabajo', title: 'Orden de Trabajo',  icon:'now-ui-icons files_paper', class: '' },
-    { path: 'llenaFormatoCCH', title: 'FormatoCCH',  icon:'now-ui-icons files_paper', class: '' },
+    { path: 'orden-trabajo', title: 'Orden de Trabajo',  icon:'now-ui-icons files_paper', class: '' }
 
 
 ];

@@ -59,8 +59,11 @@ export class DashboardComponent implements OnInit {
         //se creo un arreglo llamado cliente con los campos del form
         };  
   
+  crearFormato(){
+        this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
+  }
 
-  ngOnInit() {
+  ngOnInit(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
     this.cargando=2;
@@ -126,12 +129,10 @@ export class DashboardComponent implements OnInit {
       'fechaFin': new FormControl({value: this.Orden.fechaFin, disabled: this.hidden },  [  Validators.required]), 
       'horaInicio': new FormControl({value: this.Orden.horaInicio, disabled: this.hidden },  [  Validators.required]), 
       'horaFin': new FormControl({value: this.Orden.horaFin, disabled: this.hidden },  [  Validators.required]), 
-      'observaciones': new FormControl({value: this.Orden.observaciones, disabled: this.hidden })       
+      'observaciones': new FormControl({value: this.Orden.observaciones, disabled: this.hidden }),       
   
           });
-
-
-  }
+      }
 
    get area() { return this.ordenForm.get('area'); }
 
@@ -165,8 +166,7 @@ export class DashboardComponent implements OnInit {
 
    get observaciones() { return this.ordenForm.get('observaciones'); } 
 
-    mostrar()
-  {
+    mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
 
@@ -178,6 +178,8 @@ export class DashboardComponent implements OnInit {
   
 
    submitted = false;
+
+
 
    regresaOrdenTrabajo(){
     this.router.navigate(['jefeBrigada/orden-trabajo']);
@@ -233,11 +235,9 @@ export class DashboardComponent implements OnInit {
     this.cargando=this.cargando-1;
   }
 
-  llenaJefe(resp: any)
-  {
+  llenaJefe(resp: any){
     this.mis_jefes= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
+    for (var _i = 0; _i < resp.length; _i++ ){
       this.mis_jefes[_i]=resp[_i];
 
     }
@@ -269,8 +269,7 @@ export class DashboardComponent implements OnInit {
 
     });
 
-    if(respuesta.isClienteActive==0)
-    {
+    if(respuesta.isClienteActive==0){
       this.addCliente(respuesta.id_cliente,respuesta.nombre);
     }
 
@@ -292,5 +291,7 @@ export class DashboardComponent implements OnInit {
       this.mis_cli[_i]=aux[_i];
     }
   }
+
+  
   
 }

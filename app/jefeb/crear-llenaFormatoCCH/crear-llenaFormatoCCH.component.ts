@@ -28,12 +28,14 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   mis_flexometro: Array<any>;
   mis_termometro: Array<any>;
   mis_lab: Array<any>;
-  constructor(private router: Router, private data: DataService, private http: Http) { }
+  id = "";
+  id_formato: "";
+  constructor(private router: Router, private route: ActivatedRoute, private data: DataService, private http: Http) { }
   
   
     creaCCHForm: FormGroup;
       cch = {
-      cch_id: '1001',
+      cch_id: '',
       informe:'',
       especimen:'',
       cono:'',
@@ -56,7 +58,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('informeNo', this.creaCCHForm.value.informe);
-    formData.append('ordenDeTrabajo_id', this.creaCCHForm.value.cch_id);  
+    formData.append('ordenDeTrabajo_id', this.id);  
     formData.append('tipo', this.creaCCHForm.value.especimen);
     formData.append('cono_id', this.creaCCHForm.value.cono);
     formData.append('varilla_id', this.creaCCHForm.value.varilla);
@@ -65,24 +67,40 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('longitud', this.creaCCHForm.value.longitud );
     formData.append('latitud', this.creaCCHForm.value.latitud );
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());
+                                              this.recibeFormatoID(res.json());
+                                              this.respuestaSwitch(res.json());                 
                                             } );
+
+    
   }
 
+  recibeFormatoID(res: any)
+  {
+    this.id_formato= res.id_formatoCampo;
+    console.log(this.id_formato); 
+  }
 
-   respuestaSwitch(res: any){
+   /*respuestaSwitch
+     Si la respuesta es distinta 0 siginifica que hubo algun error
+     por lo que mandara una alerta y recargara la pagina
+     Si la respuesta es 0 siginifica que la insercion fue exitosa y
+     Por lo tanto lo enviara a la ruta de llenaFormatoCCH con su id_formato 
+     Parametrizado. */
+   respuestaSwitch(res: any){ 
      console.log(res);
      if(res.error!= 0){
        window.alert("Intentalo otra vez");
        location.reload();
      }
      else{
-       location.reload();
+       this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
+       
      }
    }
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
+    this.route.params.subscribe( params => this.id=params.id);
     this.cargando=2;
 
 
@@ -113,7 +131,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     this.http.get(url, {search}).subscribe(res => this.llenaTermometro(res.json()) );
 
     this.creaCCHForm = new FormGroup({
-      'cch_id': new FormControl(this.cch.cch_id, Validators.required), 
+      'cch_id': new FormControl(this.cch.cch_id,), 
       'especimen': new FormControl(this.cch.especimen,  Validators.required), 
       'informe': new FormControl( this.cch.informe, Validators.required),
       'cono': new FormControl( this.cch.cono),
