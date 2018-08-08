@@ -38,6 +38,8 @@ export class DashboardComponent implements OnInit {
    mis_obras: Array<any>;
    mis_jefes: Array<any>;
    hidden = true;
+   hiddenHerramienta= true;
+   hiddenTecnicos= true;
    Orden = {
      area: '',
      id_ordenDeTrabajo: '',
@@ -54,6 +56,7 @@ export class DashboardComponent implements OnInit {
      fechaFin: '',
      horaInicio: '',
      horaFin: '',
+     laboratorio_id: '',
      observaciones: ''
 
         //se creo un arreglo llamado cliente con los campos del form
@@ -96,6 +99,15 @@ export class DashboardComponent implements OnInit {
                                                    this.labValidator(res.json());
                                                  });
 
+    url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownAdmin');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {this.llenaLaboratorio(res.json());
+                                                   this.labValidator(res.json());
+                                                 });
+
     url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getJefesBrigadaForDroptdown');
@@ -130,7 +142,8 @@ export class DashboardComponent implements OnInit {
       'horaInicio': new FormControl({value: this.Orden.horaInicio, disabled: this.hidden },  [  Validators.required]), 
       'horaFin': new FormControl({value: this.Orden.horaFin, disabled: this.hidden },  [  Validators.required]), 
       'observaciones': new FormControl({value: this.Orden.observaciones, disabled: this.hidden }),       
-  
+      'laboratorio_id': new FormControl({value: this.Orden.laboratorio_id, disabled: this.hidden }, [  Validators.required]), 
+
           });
       }
 
@@ -166,7 +179,12 @@ export class DashboardComponent implements OnInit {
 
    get observaciones() { return this.ordenForm.get('observaciones'); } 
 
-    mostrar(){
+   get laboratorio_id() { return this.ordenForm.get('laboratorio_id'); } 
+
+
+    mostrar()
+  {
+
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
 
@@ -175,7 +193,17 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  
+  mostrarHerramienta()
+  {
+    this.hiddenHerramienta = !this.hiddenHerramienta;
+
+
+  }
+
+    mostrarTecnicos()
+  {
+    this.hiddenTecnicos = !this.hiddenTecnicos;
+  }
 
    submitted = false;
 
@@ -264,8 +292,8 @@ export class DashboardComponent implements OnInit {
      fechaFin:  respuesta.fechaFin,
      horaInicio:  respuesta.horaInicio,
      horaFin:  respuesta.horaFin,
-     observaciones: respuesta.observaciones
-
+     observaciones: respuesta.observaciones,
+     laboratorio_id: respuesta.laboratorio_id
 
     });
 
@@ -292,6 +320,19 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  
+    llenaLaboratorio(resp: any)
+  {
+        console.log(resp);
+    this.mis_lab= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ )
+    {
+      this.mis_lab[_i]=resp[_i];
+
+    }
+    this.cargando=this.cargando-1;
+    console.log("llenaTipos this.cargando: "+this.cargando);
+  }
+
+
   
 }

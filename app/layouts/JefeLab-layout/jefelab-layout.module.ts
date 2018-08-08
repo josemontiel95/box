@@ -29,6 +29,11 @@ import { GridComponent } from '../../jefelab/grid/grid.component';
 import { HerramientaGridComponent } from '../../jefelab/herramienta-grid/herramienta-grid.component';
 import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component';
 
+import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid.component';
+import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
+
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -63,7 +68,9 @@ import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component'
     CrearOrdenTrabajoComponent,
     GridComponent,
     HerramientaGridComponent,
-    DashboardComponent
+    DashboardComponent,
+    TecnicosGridComponent,
+    HerramientaGridAgregaComponent
   ]
 })
 

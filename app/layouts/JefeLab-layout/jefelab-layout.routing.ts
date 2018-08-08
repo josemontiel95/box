@@ -22,6 +22,10 @@ import { GridComponent } from '../../jefelab/grid/grid.component';
 import { HerramientaGridComponent } from '../../jefelab/herramienta-grid/herramienta-grid.component';
 import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component';
 
+import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid.component';
+import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
+
+
 export const JefeLabLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'user-profile', pathMatch: 'full' },
     { path: 'user-profile',   component: UserProfileComponent },

@@ -7,11 +7,11 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 
 
 @Component({
-  selector: 'app-herramienta-grid',
-  templateUrl: './herramienta-grid.component.html',
-  styleUrls: ['./herramienta-grid.component.css']
+  selector: 'app-herramienta-grida',
+  templateUrl: './herramienta-grida.component.html',
+  styleUrls: ['./herramienta-grida.component.css']
 })
-export class HerramientaGridComponent implements OnInit  {
+export class HerramientaGridAgregaComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
@@ -19,6 +19,7 @@ export class HerramientaGridComponent implements OnInit  {
   rowSelection;
   columnDefs;
   id: string;
+
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
     {headerName: 'Tipo', field: 'tipo' },
@@ -34,7 +35,7 @@ export class HerramientaGridComponent implements OnInit  {
 
   ngOnInit() {
         this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id=params.id);
+        this.id= localStorage.getItem("herra");
   }
 
 
@@ -44,12 +45,12 @@ export class HerramientaGridComponent implements OnInit  {
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllHerraOrden');
+    search.set('function', 'getAllFromTipo');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('id_ordenDeTrabajo', this.id);
+    search.set('herramienta_tipo_id', this.id);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
