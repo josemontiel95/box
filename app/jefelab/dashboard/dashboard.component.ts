@@ -25,21 +25,27 @@ export class DashboardComponent implements OnInit {
   apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   cargando= 1;
-      mis_tipos: Array<any>;
+
     mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
   
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
         
   ordenForm: FormGroup; //se crea un formulario de tipo form group
-
+  tipoForm: FormGroup;
    id: string;
    mis_cli: Array<any>;
    mis_obras: Array<any>;
    mis_jefes: Array<any>;
+   mis_tipos: Array<any>;
    hidden = true;
    hiddenHerramienta= true;
    hiddenTecnicos= true;
+   hiddenHerramientaDispo= true;
+   herra = {
+
+     herramienta_tipo_id: ''
+   }
    Orden = {
      area: '',
      id_ordenDeTrabajo: '',
@@ -114,13 +120,25 @@ export class DashboardComponent implements OnInit {
                                                    this.labValidator(res.json());
                                                  });
 
+    url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    search = new URLSearchParams();
+    
+    search.set('function', 'getForDroptdownTipo');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
+
+
     url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
-	search = new URLSearchParams();
-	search.set('function', 'getByIDAdmin');
+	  search = new URLSearchParams();
+	  search.set('function', 'getByIDAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_ordenDeTrabajo', this.id);
 	  this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+
+
+    
 
     this.ordenForm = new FormGroup({
       'area': new FormControl( {value: this.Orden.area, disabled: this.hidden },  [Validators.required]), 
@@ -141,8 +159,11 @@ export class DashboardComponent implements OnInit {
       'observaciones': new FormControl({value: this.Orden.observaciones, disabled: this.hidden }),       
       'laboratorio_id': new FormControl({value: this.Orden.laboratorio_id, disabled: this.hidden }, [  Validators.required]), 
           });
+  
 
-
+  this.tipoForm = new FormGroup({
+    'herramienta_tipo_id': new FormControl(  this.herra.herramienta_tipo_id, [  Validators.required])
+    });
   }
 
    get area() { return this.ordenForm.get('area'); }
@@ -179,6 +200,7 @@ export class DashboardComponent implements OnInit {
 
    get laboratorio_id() { return this.ordenForm.get('laboratorio_id'); } 
 
+   get herramienta_tipo_id() { return this.tipoForm.get('herramienta_tipo_id'); }
 
     mostrar()
   {
@@ -197,6 +219,14 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  mostrarHerramientaDisponible()
+  {
+    console.log(this.tipoForm.value.herramienta_tipo_id);
+    localStorage.setItem('herra',this.tipoForm.value.herramienta_tipo_id);
+   this.hiddenHerramientaDispo = !this.hiddenHerramientaDispo;
+
+  }
+
     mostrarTecnicos()
   {
     this.hiddenTecnicos = !this.hiddenTecnicos;
@@ -210,6 +240,7 @@ export class DashboardComponent implements OnInit {
 
   onSubmit() { this.submitted = true; }
 
+ 
   llenaTipos(resp: any)
   {
     console.log(resp);
@@ -221,8 +252,6 @@ export class DashboardComponent implements OnInit {
     this.cargando=this.cargando-1;
     console.log("llenaTipos this.cargando: "+this.cargando);
   }
-
-
 
     labValidator(repuesta: any){
     console.log(repuesta)

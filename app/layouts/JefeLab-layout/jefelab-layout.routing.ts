@@ -23,6 +23,7 @@ import { HerramientaGridComponent } from '../../jefelab/herramienta-grid/herrami
 import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component';
 
 import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid.component';
+import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
 
 
 export const JefeLabLayoutRoutes: Routes = [

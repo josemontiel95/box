@@ -328,7 +328,7 @@
           <h4 class="card-title">Equipo en obra.</h4>
         </div>
         <div class="card-body ">
-             <div class="btn-group"  style="padding-left: 55%;">
+             <div class="btn-group"  style=" padding-left: 45%;">
               <button class="btn btn-info" *ngIf="hiddenHerramienta == true"  (click)="mostrarHerramienta()">
                 <span><b> Cambiar Herramienta. </b></span>
               </button>
@@ -338,6 +338,32 @@
           </div>
           <div *ngIf="this.hiddenHerramienta == true">
           <app-herramienta-grid></app-herramienta-grid>
+          </div>
+          <div *ngIf="!this.hiddenHerramienta">
+            <form (ngSubmit)="onSubmit()" [formGroup]=tipoForm #formDir="ngForm">
+               <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="herramienta_tipo_id">Tipos</label>
+                  <select  class="form-control" id="herramienta_tipo_id"
+                    required (blur)="mostrarHerramientaDisponible();" 
+                    name="herramienta_tipo_id"
+                    placeholder="Tipos"  formControlName="herramienta_tipo_id">
+                    <option value="" [disabled]="true">Selecciona el tipo...</option>
+                    <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo" >
+                      {{tipo.tipo}}
+                    </option>
+                  </select>
+                 <div *ngIf="herramienta_tipo_id.invalid && (herramienta_tipo_id.dirty || herramienta_tipo_id.touched)" class="alert alert-danger">
+                   <div *ngIf="herramienta_tipo_id.errors.required">
+                   Tipo de herramienta requerido.
+                   </div>
+                </div>
+                </div>
+              </div>
+            </form>
+          </div>         
+          <div *ngIf="!this.hiddenHerramientaDispo">
+          <app-herramienta-grida></app-herramienta-grida>          
           </div>
         </div>
       </div>
@@ -351,7 +377,7 @@
           <h4 class="card-title"> Tecnicos en obra.</h4>
         </div>
         <div class="card-body">
-                       <div class="btn-group"  style=" padding-left: 65%;">
+                       <div class="btn-group"  style=" padding-left: 45%;">
               <button class="btn btn-info" *ngIf="hiddenTecnicos == true"  (click)="mostrarTecnicos()">
                 <span><b> Agregar Tecnicos. </b></span>
               </button>
