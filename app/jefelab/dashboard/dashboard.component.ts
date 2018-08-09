@@ -219,21 +219,21 @@ export class DashboardComponent implements OnInit {
 
 
   }
-/*
+
   mostrarHerramientaDisponible()
   {
 
     localStorage.setItem('herra',this.tipoForm.value.herramienta_tipo_id);
 
-    if(this.hiddenTecnicosDispo == true){
-   this.hiddenTecnicosDispo = !this.hiddenTecnicosDispo;
+    if(this.hiddenHerramientaDispo == true){
+   this.hiddenHerramientaDispo = !this.hiddenHerramientaDispo;
   }
   else{
-    this.hiddenTecnicosDispo = !this.hiddenTecnicosDispo;
-     setTimeout(() =>{this.hiddenTecnicosDispo = !this.hiddenTecnicosDispo;},1000);
+    this.hiddenHerramientaDispo = true;
+     setTimeout(() =>{this.hiddenHerramientaDispo = false},1000);
    }
 
-  }*/
+  }
 
 /*
   actualizarHerramienta()
