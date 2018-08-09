@@ -43,8 +43,7 @@ export class GridComponent implements OnInit  {
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    console.log("this.global.apiRoot"+this.global.apiRoot);
-    console.log("this.global.token"+this.global.token);
+
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
