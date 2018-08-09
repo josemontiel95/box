@@ -22,6 +22,7 @@ export class HerramientaGridAgregaComponent implements OnInit  {
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
+    {headerName: 'ID', field: 'id_herramienta' },    
     {headerName: 'Tipo', field: 'tipo' },
     {headerName: 'Placas', field: 'placas' },
     {headerName: 'Condicion', field: 'condicion'},
@@ -41,8 +42,6 @@ export class HerramientaGridAgregaComponent implements OnInit  {
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    console.log("this.global.apiRoot"+this.global.apiRoot);
-    console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
@@ -59,8 +58,12 @@ export class HerramientaGridAgregaComponent implements OnInit  {
                                           });
   }
 
+
+
+
   llenaTabla(repuesta: any){
     console.log(repuesta)
+
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
