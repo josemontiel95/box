@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
   
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
-        
+   aux= 1;     
   ordenForm: FormGroup; //se crea un formulario de tipo form group
   tipoForm: FormGroup;
    id: string;
@@ -42,6 +42,7 @@ export class DashboardComponent implements OnInit {
    hiddenHerramienta= true;
    hiddenTecnicos= true;
    hiddenHerramientaDispo= true;
+   hiddenTecnicosDispo= true;   
    herra = {
 
      herramienta_tipo_id: ''
@@ -218,19 +219,61 @@ export class DashboardComponent implements OnInit {
 
 
   }
-
+/*
   mostrarHerramientaDisponible()
   {
-    console.log(this.tipoForm.value.herramienta_tipo_id);
+
     localStorage.setItem('herra',this.tipoForm.value.herramienta_tipo_id);
+
+    if(this.hiddenTecnicosDispo == true){
+   this.hiddenTecnicosDispo = !this.hiddenTecnicosDispo;
+  }
+  else{
+    this.hiddenTecnicosDispo = !this.hiddenTecnicosDispo;
+     setTimeout(() =>{this.hiddenTecnicosDispo = !this.hiddenTecnicosDispo;},1000);
+   }
+
+  }*/
+
+/*
+  actualizarHerramienta()
+  {
+     let url = `${this.global.apiRoot}/cliente/post/endpoint.php`;
+     let formData:FormData = new FormData();
+        formData.append('function', 'deactivate');
+        formData.append('id_cliente', this.id_cliente);
+        formData.append('rol_usuario_id', this.global.rol);
+        formData.append('token', this.global.token);
+        this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());
+                                            });
+       
+  }
+
+     mostrarTecnicosDisponible()
+  {
+
+    localStorage.setItem('tecni',this.tecniForm.value.id);
+
+    if(this.hiddenHerramientaDispo == true){
    this.hiddenHerramientaDispo = !this.hiddenHerramientaDispo;
+  }
+  else{
+    this.hiddenHerramientaDispo = !this.hiddenHerramientaDispo;
+     setTimeout(() =>{this.hiddenHerramientaDispo = !this.hiddenHerramientaDispo;},1000);
+   }
 
   }
+  
+  */
 
     mostrarTecnicos()
   {
     this.hiddenTecnicos = !this.hiddenTecnicos;
   }
+
+
+
 
    submitted = false;
 
