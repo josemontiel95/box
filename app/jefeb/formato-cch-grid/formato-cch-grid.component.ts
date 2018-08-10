@@ -40,9 +40,9 @@ export class FormatoCCHGridComponent implements OnInit  {
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllAdmin');
+    search.set('function', 'getAllRegistrosByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     console.log(search);
