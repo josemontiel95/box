@@ -25,13 +25,14 @@ export class llenaFormatoCCHComponent implements OnInit{
 
   id: string = "1001";
   id_formato: string;
+  id_registro: string;
   title = 'app';
   global: Global;
   private gridApi;
   private gridColumnApi;
   rowSelection;
   columnDefs;
-  cargando= 1;
+  cargando= 5;
   hidden = true;
   mis_tipos: Array<any>;
   mis_lab: Array<any>;
@@ -80,7 +81,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id_formato=params.id);
-    this.cargando=1;
+    this.cargando=5;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -218,13 +219,24 @@ export class llenaFormatoCCHComponent implements OnInit{
      termometro:  respuesta.termometro_id
     });
 
-    
+    this.cargando=this.cargando-1;
      
   }
 
    
-  agregaFormato(){
-    //this.router.navigate(['jefeBrigada/orden-trabajo/crear-orden-trabajo']);
+  agregaRegistro(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'initInsert');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('formatoCampo_id', this.id_formato);  
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaRegistro(res.json());                 
+                                            } );
+    
   }
 
   actualizarInformeNo(){
@@ -268,13 +280,24 @@ export class llenaFormatoCCHComponent implements OnInit{
   respuestaSwitch(res: any){ 
      console.log(res);
      if(res.error!= 0){
-       window.alert("Intentalo otra vez");
+       window.alert(res.estatus);
        location.reload();
      }
      else{
-          this.mostrar();  
-          //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
-       
+          this.mostrar();         
+     }
+   }
+
+  respuestaRegistro(res: any){ 
+     console.log(res);
+     if(res.error!= 0){
+       window.alert(res.estatus);
+       location.reload();
+     }
+     else{
+          this.id_registro= res.id_registrosCampo;
+          console.log(this.id_registro);
+          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_registro + '/' +this.id_formato]);        
      }
    }
 

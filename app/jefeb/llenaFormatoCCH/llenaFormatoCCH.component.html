@@ -1,3 +1,8 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
 
 <div class="panel-header panel-header-sm">
 </div>
@@ -121,8 +126,8 @@
         <div class="card-header ">
           <h4 style="text-align: center;" class="card-title">CONTROL DE CONCRETO HIDRAULICO.</h4>
             <div class="btn-group" style=" padding-left: 80%;">
-                  <button class="btn btn-success" (click)="agregaFormato();">
-                    <span><b>AGREGAR FORMATO</b></span>
+                  <button class="btn btn-success" (click)="agregaRegistro();">
+                    <span><b>AGREGAR REGISTRO</b></span>
                   </button>
             </div>
         </div>

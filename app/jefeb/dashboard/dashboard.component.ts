@@ -62,15 +62,12 @@ export class DashboardComponent implements OnInit {
         //se creo un arreglo llamado cliente con los campos del form
         };  
   
-  crearFormato(){
-        this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
-  }
+  
 
   ngOnInit(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
     this.cargando=2;
-
 
     let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -181,6 +178,9 @@ export class DashboardComponent implements OnInit {
 
    get laboratorio_id() { return this.ordenForm.get('laboratorio_id'); } 
 
+   crearFormato(){
+        this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
+    }
 
     mostrar()
   {
