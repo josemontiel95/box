@@ -16,56 +16,41 @@
                     <label for="cesp">CLAVE DEL ESPECIMEN</label> <!--disable-->
                     <input type="text" id="cesp"   
                     class="form-control" 
-                    name="cesp" placeholder="" required   formControlName="cesp">
-                     <div *ngIf="cesp.invalid && (cesp.dirty || cesp.touched)"
-                      class="alert alert-danger">
-                      <div *ngIf="cesp.errors.required">
-                        CLAVE ESPECIMEN requerida.
-                      </div>
-                    </div>
+                    name="cesp" placeholder="" formControlName="cesp" (blur)="onBlurClaveEspecimen()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
+
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="fecha">FECHA</label> <!--disable-->
-                    <input type="text" id="fecha"   
+                    <input type="date" id="fecha"   
                     class="form-control" 
-                    name="fecha" placeholder="" required   formControlName="fecha">
-                     <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="fecha.errors.required">
-                          FECHA requerida.
-                        </div>
-                      </div>
+                    name="fecha" placeholder="" formControlName="fecha" (blur)="onBlurFecha()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
+
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="empresa">F'C (kg/cm<sup>2</sup>)</label> <!--disable-->
-                    <input type="text" id="empresa"   
+                    <label for="fc">F'C (kg/cm<sup>2</sup>)</label> <!--disable-->
+                    <input type="text" id="fc"   
                     class="form-control" 
-                    name="empresa" placeholder="" required   formControlName="empresa">
-                     <div *ngIf="empresa.invalid && (empresa.dirty || empresa.touched)"
-                      class="alert alert-danger">
-                      <div *ngIf="empresa.errors.required">
-                        Empresa requerida.
-                      </div>
-                    </div>
+                    name="fc" placeholder="" formControlName="fc" (blur)="onBlurFC()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
+
             </div> <!--FIN PRIMER ROW -->
 
           
             <div class="row">
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="informe">REVENIMIENTO(cm): PROYECTO</label>
-                    <input type="text" id="informe"  
+                    <label for="revp">REVENIMIENTO(cm): PROYECTO</label>
+                    <input type="text" id="revp"  
                     class="form-control" 
-                    name="informe" placeholder="" formControlName="informe">
-                     <div *ngIf="informe.invalid && (informe.dirty || informe.touched)"
+                    name="revp" placeholder="" formControlName="revp" (blur)="onBlurRevProy()">
+                     <div *ngIf="revp.invalid && (revp.dirty || revp.touched)"
                       class="alert alert-danger">
-                        <div *ngIf="informe.errors.required">
+                        <div *ngIf="revp.errors.required">
                           No. de orden requerido.
                         </div>
                       </div>
@@ -74,31 +59,19 @@
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="direccion">REVENIMIENTO(cm): OBRA</label> <!--disable-->
-                    <input type="text" id="direccion"   
+                    <label for="revo">REVENIMIENTO(cm): OBRA</label> <!--disable-->
+                    <input type="text" id="revo"   
                     class="form-control" 
-                    name="direccion" placeholder="" required   formControlName="direccion">
-                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
-                      class="alert alert-danger">
-                      <div *ngIf="direccion.errors.required">
-                        Empresa requerida.
-                      </div>
-                    </div>
+                    name="revo" placeholder="" formControlName="revo" (blur)="onBlurRevObra()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="direccion">TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm)</label> <!--disable-->
-                    <input type="text" id="direccion"   
+                    <label for="tamano">TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm)</label> <!--disable-->
+                    <input type="text" id="tamano"   
                     class="form-control" 
-                    name="direccion" placeholder="" required   formControlName="direccion">
-                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
-                      class="alert alert-danger">
-                      <div *ngIf="direccion.errors.required">
-                        Empresa requerida.
-                      </div>
-                    </div>
+                    name="tamano" placeholder="" formControlName="tamano" (blur)="onBlurTamNomAg()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -107,46 +80,28 @@
             <div class="row">
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="informe">VOLUMEN(m<sup>3</sup>)</label>
-                    <input type="text" id="informe"  
+                    <label for="volumen">VOLUMEN(m<sup>3</sup>)</label>
+                    <input type="text" id="volumen"  
                     class="form-control" 
-                    name="informe" placeholder="" formControlName="informe">
-                     <div *ngIf="informe.invalid && (informe.dirty || informe.touched)"
-                      class="alert alert-danger">
-                        <div *ngIf="informe.errors.required">
-                          No. de orden requerido.
-                        </div>
-                      </div>
+                    name="volumen" placeholder="" formControlName="volumen" (blur)="onBlurVolumen()">
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="direccion">TIPO DE CONCRETO</label> <!--disable-->
-                    <input type="text" id="direccion"   
+                    <label for="tconcreto">TIPO DE CONCRETO</label> <!--disable-->
+                    <input type="text" id="tconcreto"   
                     class="form-control" 
-                    name="direccion" placeholder="" required   formControlName="direccion">
-                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
-                      class="alert alert-danger">
-                      <div *ngIf="direccion.errors.required">
-                        Empresa requerida.
-                      </div>
-                    </div>
+                    name="tconcreto" placeholder="" formControlName="tconcreto" (blur)="onBlurTipoConcreto()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="direccion">UNIDAD</label> <!--disable-->
-                    <input type="text" id="direccion"   
+                    <label for="unidad">UNIDAD</label> <!--disable-->
+                    <input type="text" id="unidad"   
                     class="form-control" 
-                    name="direccion" placeholder="" required   formControlName="direccion">
-                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
-                      class="alert alert-danger">
-                      <div *ngIf="direccion.errors.required">
-                        Empresa requerida.
-                      </div>
-                    </div>
+                    name="unidad" placeholder="" formControlName="unidad" (blur)="onBlurUnidad()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
               
@@ -156,13 +111,13 @@
             <div class="row">
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="informe">HORA DE MUESTREO EN OBRA</label>
-                    <input type="time" id="informe"  
+                    <label for="hmobra">HORA DE MUESTREO EN OBRA</label>
+                    <input type="time" id="hmobra"  
                     class="form-control" 
-                    name="informe" placeholder="" formControlName="informe">
-                     <div *ngIf="informe.invalid && (informe.dirty || informe.touched)"
+                    name="hmobra" placeholder="" formControlName="hmobra" (blur)="onBlurHoraMuestreo()">
+                     <div *ngIf="hmobra.invalid && (hmobra.dirty || hmobra.touched)"
                       class="alert alert-danger">
-                        <div *ngIf="informe.errors.required">
+                        <div *ngIf="hmobra.errors.required">
                           No. de orden requerido.
                         </div>
                       </div>
@@ -171,31 +126,30 @@
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="direccion">TEMPERATURA AMBIENTE DE MUESTREO (&#176;C)</label> <!--disable-->
-                    <input type="text" id="direccion"   
+                    <label for="tempamb">TEMPERATURA AMBIENTE DE MUESTREO (&#176;C)</label> <!--disable-->
+                    <input type="text" id="tempamb"   
                     class="form-control" 
-                    name="direccion" placeholder="" required   formControlName="direccion">
-                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
-                      class="alert alert-danger">
-                      <div *ngIf="direccion.errors.required">
-                        Empresa requerida.
-                      </div>
-                    </div>
+                    name="tempamb" placeholder="" formControlName="tempamb" (blur)="onBlurTemperaturaMuestreo()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="direccion">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C)</label> <!--disable-->
-                    <input type="text" id="direccion"   
+                    <label for="tempambrec">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C)</label> <!--disable-->
+                    <input type="text" id="tempambrec"   
                     class="form-control" 
-                    name="direccion" placeholder="" required   formControlName="direccion">
-                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
-                      class="alert alert-danger">
-                      <div *ngIf="direccion.errors.required">
-                        Empresa requerida.
-                      </div>
-                    </div>
+                    name="tempambrec" placeholder="" formControlName="tempambrec" (blur)="onBlurTemperaturaRecoleccion()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="localizacion">LOCALIZACI&Oacute;N</label> <!--disable-->
+                    <input type="textarea" id="localizacion"   
+                    class="form-control" 
+                    name="localizacion" placeholder="" formControlName="localizacion" (blur)="onBlurLocalizacion()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -203,7 +157,7 @@
               <div class="col-md-2 col-12">
                  
                     <button class="btn btn-danger" *ngIf="hidden == true"  (click)="descartaCambios()">
-                      <span><b> Descartar Cambios. </b></span>
+                      <span><b> Eliminar Registro </b></span>
                     </button>
                   <button class="btn btn-success" *ngIf="!hidden" [disabled]="formatoCCHForm.invalid" (click)="actualizarInformeNo();">
                     <span><b> Guardar Cambios. </b></span>
@@ -214,12 +168,12 @@
 
               </div>
               <div class="col-md-2 col-12">
-                <button class="btn btn-default" *ngIf="hidden == true"  (click)="mostrar()">
+                <button class="btn btn-default" (click)="llenarDespues()">
                       <span><b> Llenar mas tarde. </b></span>
                 </button>
               </div>
               <div class="col-md-2 col-12">
-                <button class="btn btn-success" *ngIf="hidden == true"  (click)="mostrar()">
+                <button class="btn btn-success" (click)="llenarDespues()">
                       <span><b> Registro Completo. </b></span>
                 </button>
               </div>
