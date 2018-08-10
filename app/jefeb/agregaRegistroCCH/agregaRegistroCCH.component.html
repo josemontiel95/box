@@ -1,0 +1,232 @@
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+<div class="row">
+    <div class="col-lg-12 col-12 col-md-12">
+      <div class="card card-chart">
+        
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            <h5>AGREGA REGISTRO</h5>
+            <div class="row"> <!--PRIMER ROW -->
+              
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="cesp">CLAVE DEL ESPECIMEN</label> <!--disable-->
+                    <input type="text" id="cesp"   
+                    class="form-control" 
+                    name="cesp" placeholder="" required   formControlName="cesp">
+                     <div *ngIf="cesp.invalid && (cesp.dirty || cesp.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="cesp.errors.required">
+                        CLAVE ESPECIMEN requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="fecha">FECHA</label> <!--disable-->
+                    <input type="text" id="fecha"   
+                    class="form-control" 
+                    name="fecha" placeholder="" required   formControlName="fecha">
+                     <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="fecha.errors.required">
+                          FECHA requerida.
+                        </div>
+                      </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="empresa">F'C (kg/cm<sup>2</sup>)</label> <!--disable-->
+                    <input type="text" id="empresa"   
+                    class="form-control" 
+                    name="empresa" placeholder="" required   formControlName="empresa">
+                     <div *ngIf="empresa.invalid && (empresa.dirty || empresa.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="empresa.errors.required">
+                        Empresa requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div> <!--FIN PRIMER ROW -->
+
+          
+            <div class="row">
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="informe">REVENIMIENTO(cm): PROYECTO</label>
+                    <input type="text" id="informe"  
+                    class="form-control" 
+                    name="informe" placeholder="" formControlName="informe">
+                     <div *ngIf="informe.invalid && (informe.dirty || informe.touched)"
+                      class="alert alert-danger">
+                        <div *ngIf="informe.errors.required">
+                          No. de orden requerido.
+                        </div>
+                      </div>
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="direccion">REVENIMIENTO(cm): OBRA</label> <!--disable-->
+                    <input type="text" id="direccion"   
+                    class="form-control" 
+                    name="direccion" placeholder="" required   formControlName="direccion">
+                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="direccion.errors.required">
+                        Empresa requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="direccion">TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm)</label> <!--disable-->
+                    <input type="text" id="direccion"   
+                    class="form-control" 
+                    name="direccion" placeholder="" required   formControlName="direccion">
+                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="direccion.errors.required">
+                        Empresa requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="informe">VOLUMEN(m<sup>3</sup>)</label>
+                    <input type="text" id="informe"  
+                    class="form-control" 
+                    name="informe" placeholder="" formControlName="informe">
+                     <div *ngIf="informe.invalid && (informe.dirty || informe.touched)"
+                      class="alert alert-danger">
+                        <div *ngIf="informe.errors.required">
+                          No. de orden requerido.
+                        </div>
+                      </div>
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="direccion">TIPO DE CONCRETO</label> <!--disable-->
+                    <input type="text" id="direccion"   
+                    class="form-control" 
+                    name="direccion" placeholder="" required   formControlName="direccion">
+                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="direccion.errors.required">
+                        Empresa requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="direccion">UNIDAD</label> <!--disable-->
+                    <input type="text" id="direccion"   
+                    class="form-control" 
+                    name="direccion" placeholder="" required   formControlName="direccion">
+                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="direccion.errors.required">
+                        Empresa requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              
+              
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="informe">HORA DE MUESTREO EN OBRA</label>
+                    <input type="time" id="informe"  
+                    class="form-control" 
+                    name="informe" placeholder="" formControlName="informe">
+                     <div *ngIf="informe.invalid && (informe.dirty || informe.touched)"
+                      class="alert alert-danger">
+                        <div *ngIf="informe.errors.required">
+                          No. de orden requerido.
+                        </div>
+                      </div>
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="direccion">TEMPERATURA AMBIENTE DE MUESTREO (&#176;C)</label> <!--disable-->
+                    <input type="text" id="direccion"   
+                    class="form-control" 
+                    name="direccion" placeholder="" required   formControlName="direccion">
+                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="direccion.errors.required">
+                        Empresa requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="direccion">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C)</label> <!--disable-->
+                    <input type="text" id="direccion"   
+                    class="form-control" 
+                    name="direccion" placeholder="" required   formControlName="direccion">
+                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="direccion.errors.required">
+                        Empresa requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+            <div class="row">
+              <div class="col-md-2 col-12">
+                 
+                    <button class="btn btn-danger" *ngIf="hidden == true"  (click)="descartaCambios()">
+                      <span><b> Descartar Cambios. </b></span>
+                    </button>
+                  <button class="btn btn-success" *ngIf="!hidden" [disabled]="formatoCCHForm.invalid" (click)="actualizarInformeNo();">
+                    <span><b> Guardar Cambios. </b></span>
+                  </button>
+                
+              </div>
+              <div class="col-md-6 col-md-offset-6 col-12">
+
+              </div>
+              <div class="col-md-2 col-12">
+                <button class="btn btn-default" *ngIf="hidden == true"  (click)="mostrar()">
+                      <span><b> Llenar mas tarde. </b></span>
+                </button>
+              </div>
+              <div class="col-md-2 col-12">
+                <button class="btn btn-success" *ngIf="hidden == true"  (click)="mostrar()">
+                      <span><b> Registro Completo. </b></span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

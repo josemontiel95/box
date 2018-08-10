@@ -17,12 +17,12 @@ import {
 @Component({
   selector: 'app-crear-llenaFormatoCCH',
   templateUrl: './crear-llenaFormatoCCH.component.html',
-  styleUrls: ['./crear-llenaFormatoCCH.component.scss']
+  styleUrls: ['./crear-llenaFormatoCCH.component.scss','../../loadingArrows.css']
 })
 export class CrearLlenaFormatoCCHComponent implements OnInit {
 
   global: Global;
-  cargando= 1;
+  cargando= 4;
   mis_conos: Array<any>;
   mis_varillas: Array<any>;
   mis_flexometro: Array<any>;
@@ -30,6 +30,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   mis_lab: Array<any>;
   id = "";
   id_formato: "";
+
   constructor(private router: Router, private route: ActivatedRoute, private data: DataService, private http: Http) { }
   
   
@@ -101,7 +102,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
-    this.cargando=2;
+    this.cargando=4;
 
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;

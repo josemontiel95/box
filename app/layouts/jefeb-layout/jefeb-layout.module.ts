@@ -13,9 +13,11 @@ import { GridComponent } from '../../jefeb/grid/grid.component';
 import { llenaFormatoCCHComponent } from '../../jefeb/llenaFormatoCCH/llenaFormatoCCH.component';
 import { CrearLlenaFormatoCCHComponent } from '../../jefeb/crear-llenaFormatoCCH/crear-llenaFormatoCCH.component';
 import { HerramientaGridComponent } from '../../jefeb/herramienta-grid/herramienta-grid.component';
+import { agregaRegistroCCHComponent } from '../../jefeb/agregaRegistroCCH/agregaRegistroCCH.component';
 
 
 import { TecnicosGridComponent } from '../../jefeb/tecnicos-grid/tecnicos-grid.component';
+import { FormatoCCHGridComponent } from '../../jefeb/formato-cch-grid/formato-cch-grid.component';
 
 import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -43,7 +45,9 @@ import { ToastrModule } from 'ngx-toastr';
     llenaFormatoCCHComponent,
     CrearLlenaFormatoCCHComponent,
     HerramientaGridComponent,
-    TecnicosGridComponent
+    TecnicosGridComponent,
+    agregaRegistroCCHComponent,
+    FormatoCCHGridComponent
   ]
 })
 
