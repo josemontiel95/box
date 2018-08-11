@@ -379,7 +379,7 @@
         <div class="card-body">
                        <div class="btn-group"  style=" padding-left: 45%;">
               <button class="btn btn-info" *ngIf="hiddenTecnicos == true"  (click)="mostrarTecnicos()">
-                <span><b> Agregar Tecnicos. </b></span>
+                <span><b> Agregar Tecnico. </b></span>
               </button>
             <button class="btn btn-success" *ngIf="!hiddenTecnicos" [disabled]="false" (click)="mostrarTecnicos();">
               <span><b> Guardar Cambios. </b></span>
@@ -388,6 +388,9 @@
           <div *ngIf="this.hiddenTecnicos == true">
           <app-tecnicos-grid></app-tecnicos-grid>
         </div>
+          <div *ngIf="!this.hiddenTecnicos">
+          <app-tecnicos-grida></app-tecnicos-grida>          
+          </div>        
         </div>
       </div>
     </div>
