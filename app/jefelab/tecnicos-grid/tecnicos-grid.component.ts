@@ -16,6 +16,7 @@ export class TecnicosGridComponent implements OnInit  {
   private gridColumnApi;
   rowSelection;
   columnDefs;
+  id: string;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -31,6 +32,8 @@ export class TecnicosGridComponent implements OnInit  {
   rowData: any;
 
   ngOnInit() {
+        this.data.currentGlobal.subscribe(global => this.global = global);
+    this.route.params.subscribe( params => this.id=params.id);
   }
 
 
@@ -40,15 +43,16 @@ export class TecnicosGridComponent implements OnInit  {
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
-                                            //this.llenaTabla(res.json());
+                                            this.llenaTabla(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
   }
