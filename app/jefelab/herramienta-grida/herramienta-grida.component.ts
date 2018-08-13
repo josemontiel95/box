@@ -81,7 +81,8 @@ export class HerramientaGridAgregaComponent implements OnInit  {
       id += selectedRow.id_herramienta;
       
     });
-    //this.router.navigate(['jefeb/herramientas/herramienta-detail/'+id]);
+      localStorage.setItem('herrasel',id );
+
   }
 
 

@@ -34,6 +34,8 @@ export class DashboardComponent implements OnInit {
   ordenForm: FormGroup; //se crea un formulario de tipo form group
   tipoForm: FormGroup;
    id: string;
+   id_herra: string;
+   id_tec: string;
    mis_cli: Array<any>;
    mis_obras: Array<any>;
    mis_jefes: Array<any>;
@@ -220,6 +222,17 @@ export class DashboardComponent implements OnInit {
 
   }
 
+     respuestaSwitch(res: any){
+     console.log(res);
+     if(res.error!= 0){
+       window.alert("Intentalo otra vez");
+       location.reload();
+     }
+     else{
+       window.alert("Insertado con exito.");
+     }
+   }
+
   mostrarHerramientaDisponible()
   {
 
@@ -235,37 +248,41 @@ export class DashboardComponent implements OnInit {
 
   }
 
-/*
+
   actualizarHerramienta()
   {
-     let url = `${this.global.apiRoot}/cliente/post/endpoint.php`;
-     let formData:FormData = new FormData();
-        formData.append('function', 'deactivate');
-        formData.append('id_cliente', this.id_cliente);
-        formData.append('rol_usuario_id', this.global.rol);
-        formData.append('token', this.global.token);
-        this.http.post(url, formData).subscribe(res => {
+   this.id_herra= localStorage.getItem("herrasel");
+     let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
+     let search = new URLSearchParams();
+        search.set('function', 'insertAdmin');
+        search.set('ordenDeTrabajo_id', this.id);
+        search.set('rol_usuario_id', this.global.rol);
+        search.set('token', this.global.token);
+        search.set('herramienta_id', this.id_herra);
+        this.http.get(url, {search}).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             });
+        this.hiddenHerramientaDispo = true;
+
        
   }
 
-     mostrarTecnicosDisponible()
+     actualizarTecnicos ()
   {
-
-    localStorage.setItem('tecni',this.tecniForm.value.id);
-
-    if(this.hiddenHerramientaDispo == true){
-   this.hiddenHerramientaDispo = !this.hiddenHerramientaDispo;
-  }
-  else{
-    this.hiddenHerramientaDispo = !this.hiddenHerramientaDispo;
-     setTimeout(() =>{this.hiddenHerramientaDispo = !this.hiddenHerramientaDispo;},1000);
-   }
-
+    this.id_tec= localStorage.getItem("tecnisel");
+    let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertAdmin');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id',  this.global.rol);
+    formData.append('tecnico_id',  this.id_tec);
+    this.http.post(url, formData).subscribe(res =>  {
+                                              this.respuestaSwitch(res.json());
+                                            } );
+    this.hiddenTecnicos = !this.hiddenTecnicos;
   }
   
-  */
+  
 
     mostrarTecnicos()
   {
