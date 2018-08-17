@@ -33,7 +33,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   rowSelection;
   columnDefs;
   cargando= 1;
-  hidden = true;
+  hidden = false;
  
   
   formatoCCHForm: FormGroup;
@@ -81,19 +81,19 @@ export class agregaRegistroCCHComponent implements OnInit{
 
 
     this.formatoCCHForm = new FormGroup({
-      'cesp': new FormControl( {value: this.FormatoCCH.cesp}),
-      'fecha': new FormControl( {value: this.FormatoCCH.fecha}),
-      'fc': new FormControl( {value: this.FormatoCCH.fc}),
-      'revp': new FormControl( {value: this.FormatoCCH.revp}),
-      'revo': new FormControl( {value: this.FormatoCCH.revo}),
-      'tamano': new FormControl( {value: this.FormatoCCH.tamano}),
-      'volumen': new FormControl( {value: this.FormatoCCH.volumen}),       
-      'tconcreto': new FormControl( {value: this.FormatoCCH.tconcreto}),
-      'unidad': new FormControl( {value: this.FormatoCCH.unidad}),
-      'hmobra': new FormControl( {value: this.FormatoCCH.hmobra}),
-      'tempamb': new FormControl( {value: this.FormatoCCH.tempamb}),
-      'tempambrec': new FormControl( {value: this.FormatoCCH.tempambrec}),
-      'localizacion': new FormControl( {value: this.FormatoCCH.localizacion})
+      'cesp': new FormControl( {value: this.FormatoCCH.cesp, disabled: this.hidden}),
+      'fecha': new FormControl( {value: this.FormatoCCH.fecha, disabled: this.hidden}),
+      'fc': new FormControl( {value: this.FormatoCCH.fc, disabled: this.hidden}),
+      'revp': new FormControl( {value: this.FormatoCCH.revp, disabled: this.hidden}),
+      'revo': new FormControl( {value: this.FormatoCCH.revo, disabled: this.hidden}),
+      'tamano': new FormControl( {value: this.FormatoCCH.tamano, disabled: this.hidden}),
+      'volumen': new FormControl( {value: this.FormatoCCH.volumen, disabled: this.hidden}),       
+      'tconcreto': new FormControl( {value: this.FormatoCCH.tconcreto, disabled: this.hidden}),
+      'unidad': new FormControl( {value: this.FormatoCCH.unidad, disabled: this.hidden}),
+      'hmobra': new FormControl( {value: this.FormatoCCH.hmobra, disabled: this.hidden}),
+      'tempamb': new FormControl( {value: this.FormatoCCH.tempamb, disabled: this.hidden}),
+      'tempambrec': new FormControl( {value: this.FormatoCCH.tempambrec, disabled: this.hidden}),
+      'localizacion': new FormControl( {value: this.FormatoCCH.localizacion, disabled: this.hidden})
           });
   }
 
@@ -148,7 +148,9 @@ export class agregaRegistroCCHComponent implements OnInit{
      localizacion: respuesta.localizacion
     });
 
-    
+    if(respuesta.status == 1){
+      this.mostrar();
+    }
      
   }
   //DON'T TOUCH THIS!
@@ -167,6 +169,36 @@ export class agregaRegistroCCHComponent implements OnInit{
   }
 
   llenarDespues(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '14');
+    formData.append('valor', '0');
+    formData.append('id_registrosCampo', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+ this.id_formato]);
+  }
+
+  registroCompletado(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '14');
+    formData.append('valor', '1');
+    formData.append('id_registrosCampo', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+ this.id_formato]);
   }
 
@@ -405,9 +437,13 @@ export class agregaRegistroCCHComponent implements OnInit{
    }
 
   
-  
-
-
-
+  mostrar()
+  {
+    this.hidden = !this.hidden;
+    const state = this.hidden ? 'disable' : 'enable'; 
+    Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
+        this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
+    });    
+  }
 
 }

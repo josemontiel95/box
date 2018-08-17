@@ -136,7 +136,7 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="tempambrec">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C)</label> <!--disable-->
-                    <input type="text" id="tempambrec"   
+                    <input type="text" id="tempambrec"  
                     class="form-control" 
                     name="tempambrec" placeholder="" formControlName="tempambrec" (blur)="onBlurTemperaturaRecoleccion()">
                   </div><!--FIN PRIMER CAMPO -->
@@ -156,24 +156,33 @@
             <div class="row">
               <div class="col-md-2 col-12">
                  
-                    <button class="btn btn-danger" *ngIf="hidden == true"  (click)="descartaCambios()">
+                    <button class="btn btn-danger" *ngIf="!hidden"  (click)="descartaCambios()">
                       <span><b> Eliminar Registro </b></span>
                     </button>
-                  <button class="btn btn-success" *ngIf="!hidden" [disabled]="formatoCCHForm.invalid" (click)="actualizarInformeNo();">
-                    <span><b> Guardar Cambios. </b></span>
+                  
+
+                  <button class="btn btn-default" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="registroCompletado();">
+                    <span><b> Regresar. </b></span>
                   </button>
+
+                  
                 
               </div>
               <div class="col-md-6 col-md-offset-6 col-12">
 
               </div>
               <div class="col-md-2 col-12">
-                <button class="btn btn-default" (click)="llenarDespues()">
+
+                <button class="btn btn-success" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
+                    <span><b> Cambiar Datos. </b></span>
+                  </button>
+
+                <button class="btn btn-default" *ngIf="!hidden" (click)="llenarDespues()">
                       <span><b> Llenar mas tarde. </b></span>
                 </button>
               </div>
               <div class="col-md-2 col-12">
-                <button class="btn btn-success" (click)="llenarDespues()">
+                <button class="btn btn-success" *ngIf="!hidden" (click)="registroCompletado()">
                       <span><b> Registro Completo. </b></span>
                 </button>
               </div>

@@ -205,6 +205,12 @@ export class DashboardComponent implements OnInit {
 
    get herramienta_tipo_id() { return this.tipoForm.get('herramienta_tipo_id'); }
 
+
+   crearFormato(){
+        this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
+    }
+   
+
     mostrar()
   {
     this.hidden = !this.hidden;

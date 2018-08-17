@@ -16,6 +16,7 @@ export class HerramientaGridComponent implements OnInit  {
   global: Global;
   private gridApi;
   private gridColumnApi;
+  id_formato: string;
   rowSelection;
   columnDefs;
   id: string;

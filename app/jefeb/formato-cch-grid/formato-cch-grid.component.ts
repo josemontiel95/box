@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, ViewChild ,OnInit} from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -14,23 +14,48 @@ export class FormatoCCHGridComponent implements OnInit  {
   global: Global;
   private gridApi;
   private gridColumnApi;
+  id_formato: string;
   rowSelection;
   columnDefs;
+  rowClassRules;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-    {headerName: 'Tipo', field: 'tipo' },
-    {headerName: 'Placas', field: 'placas' },
-    {headerName: 'Condicion', field: 'condicion'},
+    {headerName: 'CLAVE DEL ESPECIMEN', field: 'claveEspecimen' },
+    /*
+    {headerName: 'FECHA', field: 'fecha' },
+    {headerName: 'F&rsquo;C', field: 'fprima'},
+    {headerName: 'REVENIMIENTO: PROYECTO', field: 'revProyecto'},
+    {headerName: 'REVENIMIENTO: OBRA', field: 'revObra'},
+    {headerName: 'TAMA&Ntilde;O NOMINAL DEL AGREGADO (mm)', field: 'tamagregado' },
+    {headerName: 'VOLUMEN (m<sup>2</sup>)', field: 'volumen' },
+    {headerName: 'TIPO DE CONCRETO', field: 'tipoConcreto' },
+    {headerName: 'UNIDAD', field: 'herramienta_id' },
+    {headerName: 'HORA DE MUESTREO EN OBRA', field: 'horaMuestreo' },
+    {headerName: 'TEMP AMBIENTE DE MUESTREO (&#176;C)', field: 'tempMuestreo' },
+    {headerName: 'TEMP AMBIENTE DE RECOLECCI&Oacute;N (&#176;C)', field: 'tempRecoleccion' },
+    {headerName: 'LOCALIZACI&Oacute;N', field: 'localizacion' },
+    */
+    {headerName: 'ESTATUS', field: 'status' }
 
       
     ];
     this.rowSelection = "single";
+
+    this.rowClassRules = {
+      "sick-days-warning": function(params) {
+        var numSickDays = params.data.status;
+        return numSickDays === 0;
+      },
+      "sick-days-breach": "data.status == 1"
+    };
   }
 
   rowData: any;
 
   ngOnInit() {
+      this.data.currentGlobal.subscribe(global => this.global = global);
+      this.route.params.subscribe( params => this.id_formato=params.id);
   }
 
 
@@ -45,6 +70,7 @@ export class FormatoCCHGridComponent implements OnInit  {
     search.set('function', 'getAllRegistrosByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_formatoCampo', this.id_formato);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
@@ -69,10 +95,10 @@ export class FormatoCCHGridComponent implements OnInit  {
     var id = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_herramienta;
+      id += selectedRow.id_registrosCampo;
       
     });
-    //this.router.navigate(['jefeb/herramientas/herramienta-detail/'+id]);
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroCCH/'+id+'/'+this.id_formato]);
   }
 
 
