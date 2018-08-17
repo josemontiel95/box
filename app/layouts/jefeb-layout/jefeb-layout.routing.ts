@@ -20,7 +20,7 @@ export const JefebLayoutRoutes: Routes = [
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'orden-trabajo/crear-orden-trabajo',   component: CrearOrdenTrabajoComponent }, 
     { path: 'orden-trabajo',      component: OrdenTrabajoComponent },
-    { path: 'orden-trabajo/dashboard/llenaFormatoCCH/:id',      component: llenaFormatoCCHComponent },
+    { path: 'orden-trabajo/dashboard/llenaFormatoCCH/:id2/:id',      component: llenaFormatoCCHComponent },
     { path: 'orden-trabajo/dashboard/crear-llenaFormatoCCH/:id',      component: CrearLlenaFormatoCCHComponent },
     { path: 'orden-trabajo/dashboard/agregaRegistroCCH/:id/:id2',      component: agregaRegistroCCHComponent }
    

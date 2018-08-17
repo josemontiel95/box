@@ -18,7 +18,11 @@ import { agregaRegistroCCHComponent } from '../../jefeb/agregaRegistroCCH/agrega
 
 import { TecnicosGridComponent } from '../../jefeb/tecnicos-grid/tecnicos-grid.component';
 import { FormatoCCHGridComponent } from '../../jefeb/formato-cch-grid/formato-cch-grid.component';
+
 import { TecnicosGridAgregaComponent } from '../../jefeb/tecnicos-grida/tecnicos-grida.component';
+
+import { FormatosGridComponent } from '../../jefeb/formatos-grid/formatos-grid.component';
+
 
 
 
@@ -51,7 +55,9 @@ import { ToastrModule } from 'ngx-toastr';
     TecnicosGridComponent,
     agregaRegistroCCHComponent,
     FormatoCCHGridComponent,
-    TecnicosGridAgregaComponent
+
+    TecnicosGridAgregaComponent,
+    FormatosGridComponent
   ]
 })
 
