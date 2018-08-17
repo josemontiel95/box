@@ -24,6 +24,7 @@ import {
 export class llenaFormatoCCHComponent implements OnInit{
 
   id: string = "1001";
+  id_orden: string;
   id_formato: string;
   id_registro: string;
   title = 'app';
@@ -80,7 +81,7 @@ export class llenaFormatoCCHComponent implements OnInit{
 	  
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id_formato=params.id);
+    this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id}); 
     this.cargando=5;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
@@ -347,6 +348,10 @@ export class llenaFormatoCCHComponent implements OnInit{
     }
     this.cargando=this.cargando-1;
     console.log("llenaTermometros this.cargando: "+this.cargando);
+  }
+
+  regresaOrdenTrabajo(){
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+ this.id_orden]);
   }
 
 
