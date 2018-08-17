@@ -45,7 +45,7 @@ export class TecnicosGridComponent implements OnInit  {
     this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllAdmin');
+    search.set('function', ' getAllTecOrden');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id);
