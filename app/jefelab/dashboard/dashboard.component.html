@@ -345,7 +345,7 @@
                 <div class="form-group">
                   <label for="herramienta_tipo_id">Tipos</label>
                   <select  class="form-control" id="herramienta_tipo_id"
-                    required (blur)="mostrarHerramientaDisponible();" 
+                    required (change)="mostrarHerramientaDisponible();" 
                     name="herramienta_tipo_id"
                     placeholder="Tipos"  formControlName="herramienta_tipo_id">
                     <option value="" [disabled]="true">Selecciona el tipo...</option>

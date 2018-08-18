@@ -11,6 +11,7 @@ import { CrearLlenaFormatoCCHComponent } from '../../jefeb/crear-llenaFormatoCCH
 import { agregaRegistroCCHComponent } from '../../jefeb/agregaRegistroCCH/agregaRegistroCCH.component';
 
 import { TecnicosGridComponent } from '../../jefeb/tecnicos-grid/tecnicos-grid.component';
+import { TecnicosGridAgregaComponent } from '../../jefeb/tecnicos-grida/tecnicos-grida.component';
 
 
 export const JefebLayoutRoutes: Routes = [

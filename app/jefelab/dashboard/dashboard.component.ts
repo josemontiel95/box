@@ -36,6 +36,8 @@ export class DashboardComponent implements OnInit {
    id: string;
    id_herra: string;
    id_tec: string;
+   aux2= 1;
+   aux3: Array<any>;
    mis_cli: Array<any>;
    mis_obras: Array<any>;
    mis_jefes: Array<any>;
@@ -258,14 +260,21 @@ export class DashboardComponent implements OnInit {
   actualizarHerramienta()
   {
    this.id_herra= localStorage.getItem("herrasel");
-     let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
-     let search = new URLSearchParams();
-        search.set('function', 'insertAdmin');
-        search.set('ordenDeTrabajo_id', this.id);
-        search.set('rol_usuario_id', this.global.rol);
-        search.set('token', this.global.token);
-        search.set('herramienta_id', this.id_herra);
-        this.http.get(url, {search}).subscribe(res => {
+   this.aux2 = this.id_herra.lastIndexOf(" ");
+   this.aux2 = this.aux2/5;
+   this.aux3= this.id_herra.split(" ", this.aux2);
+     let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/post/endpoint.php`;
+     let formData:FormData = new FormData();
+        formData.append('function', 'insertAdmin');
+        formData.append('ordenDeTrabajo_id', this.id);
+        formData.append('rol_usuario_id', this.global.rol);
+        formData.append('token', this.global.token);
+            for (var _i = 0; _i < this.aux2; _i++ )
+    {
+      formData.append('herramienta_id', this.aux3[_i]);
+    }
+        
+        this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             });
         this.hiddenHerramientaDispo = true;
