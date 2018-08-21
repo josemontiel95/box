@@ -22,15 +22,18 @@ import {
 })
 export class DashboardComponent implements OnInit {
 
+
   apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   cargando= 1;
-      mis_tipos: Array<any>;
-    mis_lab: Array<any>;
+  mis_tipos: Array<any>;
+  mis_lab: Array<any>;
+
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
   
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
-        
+ areas= [{"area":"CONCRETO", "id":"CONCRETO"},{"area":"GEOTECNIA", "id":"GEOTECNIA"},{"area":"ASFALTOS", "id":"ASFALTOS"}];
+       
   ordenForm: FormGroup; //se crea un formulario de tipo form group
 
    id: string;
