@@ -336,6 +336,7 @@ export class DashboardComponent implements OnInit {
     console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
+  
 
   
 }

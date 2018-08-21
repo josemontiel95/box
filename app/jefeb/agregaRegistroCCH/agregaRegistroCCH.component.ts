@@ -55,7 +55,7 @@ export class agregaRegistroCCHComponent implements OnInit{
         localizacion: ''          
     }
 
-    espec= [{"especimen":"CILINDRO", "id":"CILINDRO"},{"especimen":"CUBO", "id":"CUBO"},{"especimen":"VIGAS", "id":"VIGAS"}];
+    tipoc= [{"tipocon":"N", "id":"N"},{"tipocon":"RR", "id":"RR"},{"tipocon":"CA", "id":"CA"}];
 
 
 

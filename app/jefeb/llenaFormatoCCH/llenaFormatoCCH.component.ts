@@ -374,7 +374,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     console.log("llenaTermometros this.cargando: "+this.cargando);
   }
 
-  regresaOrdenTrabajo(){
+  regresaDashboard(){
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+ this.id_orden]);
   }
 
