@@ -256,7 +256,7 @@
             </div>
           </form>
           <div class="btn-group"  style="float: right; padding-right: 10%;">
-              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrarFooter()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
             <button class="btn btn-success" *ngIf="!hidden" [disabled]="formatoCCHForm.invalid" (click)="actualizarFooter();">
