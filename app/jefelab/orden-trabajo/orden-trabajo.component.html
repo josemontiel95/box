@@ -26,9 +26,7 @@
           <div id="tarjetaMasDetalles" *ngIf="hidden">
            <div class="row">
               <div class="col-md-3">
-                <div class="row">  
-                      <img class="img-usuario" src="{{this.imgUrl}}" alt="..."> 
-                </div>
+                
               </div>
               <div class="col-md-9">
                  <div class="row">
@@ -91,7 +89,7 @@
                 </div>
                 <div id="MenosDetalles">
                   <div class="row">
-                      <button type="button" class="btn btn-primary btn-link" (click)="menosDetalles()">Menos detalles</button>
+                      <button type="button" class="btn btn-primary btn-link" (click)="menosDetalles();deseleccionGrids();">Menos detalles</button>
                   </div>
                 </div>
               </div>

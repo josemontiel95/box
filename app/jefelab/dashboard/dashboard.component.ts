@@ -30,6 +30,8 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
   
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
+ areas= [{"are":"CONCRETO", "id":"CONCRETO"},{"are":"GEOTECNIA", "id":"GEOTECNIA"},{"are":"ASFALTOS", "id":"ASFALTOS"}];
+
    aux= 1;     
   ordenForm: FormGroup; //se crea un formulario de tipo form group
   tipoForm: FormGroup;
