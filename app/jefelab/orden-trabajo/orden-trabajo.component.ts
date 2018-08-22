@@ -62,13 +62,11 @@ export class OrdenTrabajoComponent implements OnInit{
   }
 
      menosDetalles(){
+     //this.gridApi.deselectAll();
      this.hidden=false;
    }
 
-     deseleccionGrids(){
-      this.gridApi.deselectAll();
-     }
-
+    
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
