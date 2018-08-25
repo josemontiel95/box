@@ -80,7 +80,7 @@ export class ConcreteraDetailComponent implements OnInit {
 
 
     this.concreteraForm = new FormGroup({
-      'id_concretera': new FormControl( { value:this.Concretera.id_concretera, },  [Validators.required]), 
+      'id_concretera': new FormControl( { value:this.Concretera.id_concretera, disabled: this.hidden},  [Validators.required]), 
       'concretera': new FormControl({ value: this.Concretera.concretera, disabled: this.hidden },  [ Validators.required]),
                                         
                                  });
@@ -108,6 +108,8 @@ export class ConcreteraDetailComponent implements OnInit {
     Object.keys(this.concreteraForm.controls).forEach((controlName) => {
         this.concreteraForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
     });
+    
+    this.concreteraForm.controls['id_concretera']['disable']();
   }
 
   actualizarConcretera()
@@ -121,7 +123,7 @@ export class ConcreteraDetailComponent implements OnInit {
     formData.append('rol_usuario_id', this.global.rol);
     //formData.append
     formData.append('id_concretera', this.id);
-    formData.append('concretera', this.concreteraForm.value.concretera );
+    formData.append('concretera', this.concreteraForm.value.concretera);
 
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaError(res.json());
@@ -139,7 +141,7 @@ export class ConcreteraDetailComponent implements OnInit {
     }
     else
     {
-      location.reload();
+       this.router.navigate(['administrador/concretera']);
     }
   }
 

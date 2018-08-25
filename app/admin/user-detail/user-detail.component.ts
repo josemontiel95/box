@@ -264,6 +264,7 @@ export class UserDetailComponent implements OnInit {
     Object.keys(this.userForm.controls).forEach((controlName) => {
         this.userForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
     });
+    this.userForm.controls['id_usuario']['disable']();
   }
 
 

@@ -61,7 +61,7 @@ export class CrearTipoHerramientasComponent implements OnInit {
        location.reload();
      }
      else{
-       location.reload();
+       this.router.navigate(['administrador/tipos-de-herramienta']);
      }
    }
 

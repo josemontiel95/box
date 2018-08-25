@@ -128,15 +128,15 @@
                     <button type="button" class="btn btn-success btn-round " (click)="activarHerramienta()" *ngIf="actBut">Activar</button>
               </div>
               <div class="col-md-6 ml-auto mr-auto">
-                    <button type="button" class="btn btn-warning btn-round " (click)="desactivarHistorial()" *ngIf="desHis">Mostrar Historial</button>
-                    <button type="button" class="btn btn-default btn-round " (click)="activarHistorial()" *ngIf="actHis">Ocultar Historial</button>
+                    <button type="button" class="btn btn-warning btn-round " (click)="verHistorial()" *ngIf="this.His">Mostrar Historial</button>
+                    <button type="button" class="btn btn-default btn-round " (click)="verHistorial()" *ngIf="!this.His">Ocultar Historial</button>
               </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div *ngIf="!desHis" class="row">
+  <div *ngIf="!this.His" class="row">
     <div class="col-md-8">
       <div class="card">
         <div class="card-body">
