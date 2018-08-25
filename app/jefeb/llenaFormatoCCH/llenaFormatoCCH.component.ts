@@ -298,7 +298,7 @@ export class llenaFormatoCCHComponent implements OnInit{
      else{
           this.id_registro= res.id_registrosCampo;
           console.log(this.id_registro);
-          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_registro + '/' +this.id_formato]);        
+          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_orden + '/' + this.id_formato  + '/' +this.id_registro]);        
      }
    }
 
