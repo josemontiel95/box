@@ -310,7 +310,7 @@ export class llenaRevenimientoComponent implements OnInit{
        location.reload();
      }
      else{
-          this.id_registro= res.id_registrosCampo;
+          this.id_registro= res.id_RegistroRev;
           console.log(this.id_registro);
           this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroRevenimiento/'+this.id_orden + '/' + this.id_formato + '/' +this.id_registro]);        
      }

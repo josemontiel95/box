@@ -14,6 +14,7 @@ export class FormatoCCHGridComponent implements OnInit  {
   global: Global;
   private gridApi;
   private gridColumnApi;
+  id_orden: string;
   id_formato: string;
   rowSelection;
   columnDefs;
@@ -55,7 +56,7 @@ export class FormatoCCHGridComponent implements OnInit  {
 
   ngOnInit() {
       this.data.currentGlobal.subscribe(global => this.global = global);
-      this.route.params.subscribe( params => this.id_formato=params.id);
+      this.route.params.subscribe( params => {this.id_orden = params.id2; this.id_formato=params.id});
   }
 
 
@@ -98,7 +99,7 @@ export class FormatoCCHGridComponent implements OnInit  {
       id += selectedRow.id_registrosCampo;
       
     });
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroCCH/'+id+'/'+this.id_formato]);
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_orden + '/' +this.id_formato +'/' +id]);
   }
 
 
