@@ -1,3 +1,4 @@
+
           <ag-grid-angular 
             #agGrid
             id="myGrid"
@@ -11,8 +12,10 @@
             [colResizeDefault]="false"
             [suppressAutoSize]="true"
             [rowSelection]="rowSelection"
+             
             (selectionChanged)="onSelectionChanged($event)"
             (gridReady)="onGridReady($event)"
+
             >
           </ag-grid-angular>
     
