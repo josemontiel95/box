@@ -4,7 +4,6 @@ import { DataService } from "../../data.service";
 import { LoginResp } from "../../interfaces/int.LoginResp";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
-import { Obra }    from './Obra';
 import {
     ReactiveFormsModule,
     FormsModule,
@@ -31,8 +30,10 @@ export class Password
 })
 export class ObraDetailComponent implements OnInit {
 
+
     foto: string;
-    obraForm: FormGroup;
+   
+     obraForm: FormGroup;
 
     Obra = {
      id_obra:'',
@@ -40,12 +41,16 @@ export class ObraDetailComponent implements OnInit {
      revenimiento:'',
      incertidumbre:'',
      prefijo:'',
-     cliente_id:'',
+     id_cliente:'',
      id_concretera:'',
      tipo:'',
      descripcion:'',
-     fechaDeCre:'' 
+     fechaDeCre:'' ,
+     telefono_residente:'',
+     nombre_residente: '',
+     correo_residente: '' 
    }
+
     submitted = false;
     hidden = true;
     cargando= 3;
@@ -90,34 +95,39 @@ export class ObraDetailComponent implements OnInit {
 
 
     url = `${this.global.apiRoot}/obra/get/endpoint.php`;
-	  search = new URLSearchParams();
-	  search.set('function', 'getByIDAdmin');
+    search = new URLSearchParams();
+    search.set('function', 'getByIDAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_obra', this.id);
-	this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
+  this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
                                                  this.llenadoValidator(res.json());
                                                });
-  this.obraForm = new FormGroup({
-      'id_obra': new FormControl({ value:this.Obra.id_obra, disabled: this.hidden },  [Validators.required]),         
+
+            this.obraForm = new FormGroup({
+      'id_obra': new FormControl({ value:this.Obra.id_obra, disabled: true },  [Validators.required]),         
       'obra': new FormControl({ value:this.Obra.obra, disabled: this.hidden },  [Validators.required]), 
       'revenimiento': new FormControl( { value:this.Obra.revenimiento, disabled: this.hidden },  [Validators.required]), 
       'incertidumbre': new FormControl( { value:this.Obra.incertidumbre, disabled: this.hidden },  [Validators.required]), 
       'prefijo': new FormControl( { value:this.Obra.prefijo, disabled: this.hidden },  [Validators.required]), 
-      'cliente_id': new FormControl( { value:this.Obra.cliente_id, disabled: this.hidden },  [Validators.required]), 
+      'id_cliente': new FormControl( { value:this.Obra.id_cliente, disabled: this.hidden },  [Validators.required]), 
       'id_concretera': new FormControl( { value:this.Obra.id_concretera, disabled: this.hidden },  [Validators.required]), 
       'tipo': new FormControl( { value:this.Obra.tipo, disabled: this.hidden },  [Validators.required]), 
       'descripcion': new FormControl( { value:this.Obra.descripcion, disabled: this.hidden },  [Validators.required]), 
-       'fechaDeCre': new FormControl( { value:this.Obra.fechaDeCre, disabled: this.hidden },  [Validators.required]), 
-        
+      'fechaDeCre': new FormControl( { value:this.Obra.fechaDeCre, disabled: this.hidden },  [Validators.required]), 
+      'telefono_residente': new FormControl( {value:this.Obra.telefono_residente,disabled: this.hidden },  [ Validators.required, Validators.pattern("^([0-9])*")]), 
+      'nombre_residente': new FormControl( {value:this.Obra.nombre_residente,disabled: this.hidden },   [Validators.required]),  
+      'correo_residente': new FormControl( {value:this.Obra.correo_residente,disabled: this.hidden },   [Validators.required])   
+          
                                         
                                       });
 
-  }
 
+  }
 
   get id_obra() { return this.obraForm.get('id_obra'); }
 
+ 
   get obra() { return this.obraForm.get('obra'); }
 
   get revenimiento() { return this.obraForm.get('revenimiento'); }
@@ -126,7 +136,7 @@ export class ObraDetailComponent implements OnInit {
 
   get prefijo() { return this.obraForm.get('prefijo'); }
 
-  get cliente_id() { return this.obraForm.get('cliente_id'); }
+  get id_cliente() { return this.obraForm.get('id_cliente'); }
 
   get id_concretera() { return this.obraForm.get('id_concretera'); }
 
@@ -135,6 +145,17 @@ export class ObraDetailComponent implements OnInit {
   get descripcion() { return this.obraForm.get('descripcion'); }
 
   get fechaDeCre() { return this.obraForm.get('fechaDeCre'); }
+
+  get telefono_residente() { return this.obraForm.get('telefono_residente'); }
+
+  get nombre_residente() { return this.obraForm.get('nombre_residente'); }
+
+  get correo_residente() { return this.obraForm.get('correo_residente'); }
+
+
+
+
+
 
   llenadoValidator(respuesta: any){
     console.log(respuesta)
@@ -209,6 +230,7 @@ export class ObraDetailComponent implements OnInit {
     Object.keys(this.obraForm.controls).forEach((controlName) => {
         this.obraForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
     });
+    this.obraForm.controls['id_obra']['disable']();
   }
 
 
@@ -224,14 +246,17 @@ export class ObraDetailComponent implements OnInit {
     formData.append('id_obra', this.id);
 
     formData.append('obra', this.obraForm.value.obra);
-    formData.append('prefijo', this.obraForm.value.prefijo);
+    formData.append('prefijo', this.obraForm.value.prefijo );
     formData.append('fechaDeCreacion', this.obraForm.value.fechaDeCre);
     formData.append('descripcion', this.obraForm.value.descripcion);
-    formData.append('cliente_id', this.obraForm.value.id_cliente);
+    formData.append('id_cliente', this.obraForm.value.id_cliente);
     formData.append('concretera', this.obraForm.value.id_concretera);
     formData.append('tipo', this.obraForm.value.tipo);
-    formData.append('revenimiento', this.obraForm.value.revenimiento);
-    formData.append('incertidumbre', this.obraForm.value.incertidumbre);
+    formData.append('revenimiento',  this.obraForm.value.revenimiento  );
+    formData.append('incertidumbre', this.obraForm.value.incertidumbre );
+    formData.append('telefono_residente', this.obraForm.value.telefono_residente );
+    formData.append('nombre_residente', this.obraForm.value.nombre_residente );
+    formData.append('correo_residente', this.obraForm.value.correo_residente );
     
     this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
 
@@ -256,16 +281,21 @@ export class ObraDetailComponent implements OnInit {
   llenado(respuesta: any)
   {
     console.log(respuesta);
+    
     this.obraForm.patchValue({
+      id_obra: respuesta.id_obra,
       obra: respuesta.obra,
       prefijo: respuesta.prefijo,
-      fechaDeCre: respuesta.fechaDeCre,
+      fechaDeCre: respuesta.fechaDeCreacion,
       descripcion: respuesta.descripcion,
-      cliente_id: respuesta.cliente_id,
+      id_cliente: respuesta.id_cliente,
       id_concretera: respuesta.id_concretera,
       tipo: respuesta.tipo,
       revenimiento:respuesta.revenimiento,
-      incertidumbre: respuesta.incertidumbre
+      incertidumbre: respuesta.incertidumbre,
+      telefono_residente: respuesta.telefono_residente,
+      nombre_residente:respuesta.nombre_residente,
+      correo_residente: respuesta.correo_residente
     });
 
      if(respuesta.isConcreteraActive==0 ){
@@ -284,7 +314,10 @@ export class ObraDetailComponent implements OnInit {
     else{
       this.imgUrl= this.global.assetsRoot+respuesta.foto;
     }
-    this.cargando=this.cargando-1;
+    setTimeout(()=>{  
+                     this.cargando=this.cargando-1;
+                     console.log("llenado this.cargando: "+this.cargando);
+                     }, 0);
   }
   
   addConcretera(id_concretera: any,concretera: any){
@@ -319,4 +352,5 @@ export class ObraDetailComponent implements OnInit {
       this.mis_cli[_i]=aux[_i];
     }
   }
+   
 }
