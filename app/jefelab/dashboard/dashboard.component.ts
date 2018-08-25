@@ -1,5 +1,5 @@
 import { GridComponent } from '../grid/grid.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  Output, EventEmitter, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -30,15 +30,15 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
   
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
- areas= [{"are":"CONCRETO", "id":"CONCRETO"},{"are":"GEOTECNIA", "id":"GEOTECNIA"},{"are":"ASFALTOS", "id":"ASFALTOS"}];
-
-   aux= 1;     
+   aux= 1;  
+   auxx: any;   
   ordenForm: FormGroup; //se crea un formulario de tipo form group
   tipoForm: FormGroup;
    id: string;
    id_herra: string;
    id_tec: string;
-   aux2= 1;
+   aux2: Array<any>;
+
    aux3: Array<any>;
    mis_cli: Array<any>;
    mis_obras: Array<any>;
@@ -213,6 +213,8 @@ export class DashboardComponent implements OnInit {
    crearFormato(){
         this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
     }
+
+      
    
 
     mostrar()
@@ -229,7 +231,6 @@ export class DashboardComponent implements OnInit {
   {
     this.hiddenHerramienta = !this.hiddenHerramienta;
 
-
   }
 
      respuestaSwitch(res: any){
@@ -243,10 +244,28 @@ export class DashboardComponent implements OnInit {
      }
    }
 
+   //@Output() agregaHerraid = new EventEmitter<any>();  =this.tipoForm.value.herramienta_tipo_id
+   
+ 
+
+    addHerra(aux3: any) {
+        console.log(typeof aux3);
+    this.aux3=aux3;
+    console.log(typeof this.aux3);
+
+  }
+
+     addTec(aux2: any) {
+        console.log(typeof aux2);
+    this.aux2=aux2;
+    console.log(typeof this.aux2);
+
+  }
+  
   mostrarHerramientaDisponible()
   {
 
-    localStorage.setItem('herra',this.tipoForm.value.herramienta_tipo_id);
+    //this.agregaHerrid(this.tipoForm.value.herramienta_tipo_id);
 
     if(this.hiddenHerramientaDispo == true){
    this.hiddenHerramientaDispo = !this.hiddenHerramientaDispo;
@@ -256,25 +275,24 @@ export class DashboardComponent implements OnInit {
      setTimeout(() =>{this.hiddenHerramientaDispo = false},1000);
    }
 
+
   }
 
 
   actualizarHerramienta()
   {
-   this.id_herra= localStorage.getItem("herrasel");
-   this.aux2 = this.id_herra.lastIndexOf(" ");
-   this.aux2 = this.aux2/5;
-   this.aux3= this.id_herra.split(" ", this.aux2);
+
+
+      console.log(typeof this.aux3);
+    
      let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/post/endpoint.php`;
      let formData:FormData = new FormData();
         formData.append('function', 'insertAdmin');
         formData.append('ordenDeTrabajo_id', this.id);
         formData.append('rol_usuario_id', this.global.rol);
         formData.append('token', this.global.token);
-            for (var _i = 0; _i < this.aux2; _i++ )
-    {
-      formData.append('herramienta_id', this.aux3[_i]);
-    }
+        formData.append('herramientasArray', JSON.stringify(this.aux3));
+    
         
         this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
@@ -284,15 +302,17 @@ export class DashboardComponent implements OnInit {
        
   }
 
+
      actualizarTecnicos ()
   {
-    this.id_tec= localStorage.getItem("tecnisel");
+    
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertAdmin');
-    formData.append('token', this.global.token);
+    formData.append('token', this.global.token);           
+    formData.append('ordenDeTrabajo_id', this.id);
     formData.append('rol_usuario_id',  this.global.rol);
-    formData.append('tecnico_id',  this.id_tec);
+    formData.append('tecnicosArray',  JSON.stringify(this.aux2));
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaSwitch(res.json());
                                             } );
@@ -304,6 +324,7 @@ export class DashboardComponent implements OnInit {
     mostrarTecnicos()
   {
     this.hiddenTecnicos = !this.hiddenTecnicos;
+
   }
 
 

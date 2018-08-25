@@ -62,16 +62,13 @@ export class OrdenTrabajoComponent implements OnInit{
   }
 
      menosDetalles(){
-     //this.gridApi.deselectAll();
      this.hidden=false;
    }
 
-    
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-
 
     let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -97,7 +94,7 @@ export class OrdenTrabajoComponent implements OnInit{
     var fechaFin = "";
     var active= "";
 
-    
+
     selectedRows.forEach(function(selectedRow, index) {
       id_ordenDeTrabajo += selectedRow.id_ordenDeTrabajo;
       obra += selectedRow.obra;
@@ -126,7 +123,12 @@ export class OrdenTrabajoComponent implements OnInit{
     this.fechaInicio=fechaInicio;
     this.fechaFin=fechaFin;
     this.active=active;
-        
+    if(this.foto== "null"){
+      this.imgUrl="../assets/img/gabino.jpg";
+    }else{
+      this.imgUrl= this.global.assetsRoot+this.foto;
+    }
+    
     if(active == 1)
     {
       this.desBut = true;

@@ -34,6 +34,14 @@ export class TecnicosGridAgregaComponent implements OnInit  {
   }
 
 
+
+    @Output() agregaTec = new EventEmitter<any>();
+
+  agregaTec(ids: any) {
+    this.agregaTecni.emit(ids);
+
+  }
+
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     console.log("this.global.apiRoot"+this.global.apiRoot);
@@ -66,13 +74,13 @@ export class TecnicosGridAgregaComponent implements OnInit  {
    
  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
-    var id = "";
+    var id = []; //array
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_tecnicos;
+      id.push(selectedRow.id_tecnicos);
       
     });
-    localStorage.setItem('tecnisel',id );
+   this.agregaTec(id);
   }
 
 

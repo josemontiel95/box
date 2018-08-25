@@ -19,13 +19,9 @@
               <div class="col-md-9 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="area">Area</label> <!--disable-->
-                      <select type="text" id="area" required name="area" class="form-control" placeholder="Area" formControlName="area">
-                      <option value="" [disabled]="true">Selecciona el &Aacute;rea...</option>
-                      <option *ngFor="let are of areas" [value]="areas.id">
-                        {{are.are}}
-                      </option>
-                    </select>
-                    
+                    <input type="text" id="area"   
+                    class="form-control" 
+                    name="area" placeholder="" required   formControlName="area">
                      <div *ngIf="area.invalid && (area.dirty || area.touched)"
               class="alert alert-danger">
               <div *ngIf="area.errors.required">
@@ -367,7 +363,8 @@
             </form>
           </div>         
           <div *ngIf="!this.hiddenHerramientaDispo">
-          <app-herramienta-grida></app-herramienta-grida>          
+
+          <app-herramienta-grida [idh]="this.tipoForm.value.herramienta_tipo_id" (agregaHerra)="addHerra($event)"></app-herramienta-grida>          
           </div>
         </div>
       </div>
@@ -393,7 +390,7 @@
           <app-tecnicos-grid></app-tecnicos-grid>
         </div>
           <div *ngIf="!this.hiddenTecnicos">
-          <app-tecnicos-grida></app-tecnicos-grida>          
+          <app-tecnicos-grida  (agregaTec)="addTec($event)"></app-tecnicos-grida>          
           </div>        
         </div>
       </div>
