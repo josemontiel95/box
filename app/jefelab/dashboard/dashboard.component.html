@@ -367,7 +367,8 @@
             </form>
           </div>         
           <div *ngIf="!this.hiddenHerramientaDispo">
-          <app-herramienta-grida></app-herramienta-grida>          
+
+          <app-herramienta-grida [idh]="this.tipoForm.value.herramienta_tipo_id" (agregaHerra)="addHerra($event)"></app-herramienta-grida>          
           </div>
         </div>
       </div>

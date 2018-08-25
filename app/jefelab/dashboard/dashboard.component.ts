@@ -1,5 +1,5 @@
 import { GridComponent } from '../grid/grid.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  Output, EventEmitter, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -30,9 +30,13 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
   
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
+ 
+   aux= 1;  
+   auxx: any;   
+ 
  areas= [{"are":"CONCRETO", "id":"CONCRETO"},{"are":"GEOTECNIA", "id":"GEOTECNIA"},{"are":"ASFALTOS", "id":"ASFALTOS"}];
 
-   aux= 1;     
+ 
   ordenForm: FormGroup; //se crea un formulario de tipo form group
   tipoForm: FormGroup;
    id: string;
@@ -213,6 +217,8 @@ export class DashboardComponent implements OnInit {
    crearFormato(){
         this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
     }
+
+      
    
 
     mostrar()
@@ -229,7 +235,6 @@ export class DashboardComponent implements OnInit {
   {
     this.hiddenHerramienta = !this.hiddenHerramienta;
 
-
   }
 
      respuestaSwitch(res: any){
@@ -243,10 +248,22 @@ export class DashboardComponent implements OnInit {
      }
    }
 
+   //@Output() agregaHerraid = new EventEmitter<any>();  =this.tipoForm.value.herramienta_tipo_id
+   
+ 
+
+    addHerra(aux3: any) {
+        console.log(aux3);
+    this.aux3=aux3;
+    console.log(this.aux3);
+
+  }
+
+  
   mostrarHerramientaDisponible()
   {
 
-    localStorage.setItem('herra',this.tipoForm.value.herramienta_tipo_id);
+    //this.agregaHerrid(this.tipoForm.value.herramienta_tipo_id);
 
     if(this.hiddenHerramientaDispo == true){
    this.hiddenHerramientaDispo = !this.hiddenHerramientaDispo;
@@ -255,6 +272,7 @@ export class DashboardComponent implements OnInit {
     this.hiddenHerramientaDispo = true;
      setTimeout(() =>{this.hiddenHerramientaDispo = false},1000);
    }
+
 
   }
 
@@ -304,6 +322,7 @@ export class DashboardComponent implements OnInit {
     mostrarTecnicos()
   {
     this.hiddenTecnicos = !this.hiddenTecnicos;
+
   }
 
 

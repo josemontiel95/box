@@ -93,7 +93,7 @@ export class CrearOrdenTrabajoComponent implements OnInit {
        location.reload();
      }
      else{
-       location.reload();
+       this.router.navigate(['jefeLaboratorio/orden-trabajo']);
      }
    }
 
@@ -200,7 +200,7 @@ export class CrearOrdenTrabajoComponent implements OnInit {
    submitted = false;
 
    regresaOrdenTrabajo(){
-    this.router.navigate(['jefeBrigada/orden-trabajo']);
+    this.router.navigate(['jefeLaboratorio/orden-trabajo']);
   }
 
   onSubmit() { this.submitted = true; }
