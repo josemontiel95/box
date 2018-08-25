@@ -19,9 +19,13 @@
               <div class="col-md-9 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="area">Area</label> <!--disable-->
-                    <input type="text" id="area"   
-                    class="form-control" 
-                    name="area" placeholder="" required   formControlName="area">
+                      <select type="text" id="area" required name="area" class="form-control" placeholder="Area" formControlName="area">
+                      <option value="" [disabled]="true">Selecciona el &Aacute;rea...</option>
+                      <option *ngFor="let are of areas" [value]="areas.id">
+                        {{are.are}}
+                      </option>
+                    </select>
+                    
                      <div *ngIf="area.invalid && (area.dirty || area.touched)"
               class="alert alert-danger">
               <div *ngIf="area.errors.required">

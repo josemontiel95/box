@@ -22,24 +22,33 @@ import {
 })
 export class DashboardComponent implements OnInit {
 
+
   apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   cargando= 1;
-      mis_tipos: Array<any>;
-    mis_lab: Array<any>;
+  mis_tipos: Array<any>;
+  mis_lab: Array<any>;
+  formatos= [{"form":"CONTROL CONCRETO HIDRAULICO", "id": 0},{"form":"REVENIMIENTO", "id":1}];
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
   
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
-        
+ areas= [{"area":"CONCRETO", "id":"CONCRETO"},{"area":"GEOTECNIA", "id":"GEOTECNIA"},{"area":"ASFALTOS", "id":"ASFALTOS"}];
+       
   ordenForm: FormGroup; //se crea un formulario de tipo form group
+  tipoForm: FormGroup;
 
    id: string;
    mis_cli: Array<any>;
    mis_obras: Array<any>;
    mis_jefes: Array<any>;
    hidden = true;
-   hiddenHerramienta= true;
+   hiddenFormato= true;
+   hiddenFormatoDispo = true;
    hiddenTecnicos= true;
+   forma = {
+
+     formato_tipo_id: ''
+   }
    Orden = {
      area: '',
      id_ordenDeTrabajo: '',
@@ -142,7 +151,12 @@ export class DashboardComponent implements OnInit {
       'laboratorio_id': new FormControl({value: this.Orden.laboratorio_id, disabled: this.hidden }, [  Validators.required]), 
 
           });
-      }
+
+      this.tipoForm = new FormGroup({
+          'formato_tipo_id': new FormControl(  this.forma.formato_tipo_id, [  Validators.required])
+          });
+        }
+
 
    get area() { return this.ordenForm.get('area'); }
 
@@ -176,7 +190,9 @@ export class DashboardComponent implements OnInit {
 
    get observaciones() { return this.ordenForm.get('observaciones'); } 
 
-   get laboratorio_id() { return this.ordenForm.get('laboratorio_id'); } 
+   get laboratorio_id() { return this.ordenForm.get('laboratorio_id'); }
+
+   get formato_tipo_id() { return this.tipoForm.get('formato_tipo_id'); } 
 
    crearFormato(){
         this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
@@ -195,7 +211,7 @@ export class DashboardComponent implements OnInit {
 
   mostrarHerramienta()
   {
-    this.hiddenHerramienta = !this.hiddenHerramienta;
+    //this.hiddenHerramienta = !this.hiddenHerramienta;
 
 
   }
@@ -334,5 +350,19 @@ export class DashboardComponent implements OnInit {
   }
 
 
+  mostrarFormatos()
+  {
+    this.hiddenFormato = !this.hiddenFormato;
+  }
+
+  seleccionaFormato(){
+    if(this.tipoForm.value.formato_tipo_id == 0){
+      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
+    }
+    else if(this.tipoForm.value.formato_tipo_id == 1){
+      console.log("El Valor es: " + this.tipoForm.value.formato_tipo_id);
+      //FALTA CREAR RUTA REVENIMIENTO this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
+    }
+  }
   
 }

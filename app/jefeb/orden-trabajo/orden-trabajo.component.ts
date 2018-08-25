@@ -22,7 +22,6 @@ export class OrdenTrabajoComponent implements OnInit{
   actBut= true;
   hidden= false;
   foto= '';
-  imgUrl="";
   global: Global;
   private gridApi;
   private gridColumnApi;
@@ -116,11 +115,7 @@ export class OrdenTrabajoComponent implements OnInit{
     this.fechaInicio=fechaInicio;
     this.fechaFin=fechaFin;
 
-    if(this.foto== "null"){
-      this.imgUrl="../assets/img/gabino.jpg";
-    }else{
-      this.imgUrl= this.global.assetsRoot+this.foto;
-    }
+    
     
     if(active == 1)
     {

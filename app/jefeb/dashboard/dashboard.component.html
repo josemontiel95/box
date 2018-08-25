@@ -7,7 +7,10 @@
     <div class="col-lg-12 col-12 col-md-12">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Orden de trabajo No.{{this.id}}</h5>
+          <div class="row">
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i> 
+            <h5 class="card-category">Orden de trabajo No.{{this.id}}</h5>
+          </div>
           <h4 class="card-title">Orden de trabajo.</h4>
         </div>
         <div class="card-body">
@@ -19,9 +22,13 @@
               <div class="col-md-9 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="area">Area</label> <!--disable-->
-                    <input type="text" id="area"   
-                    class="form-control" 
-                    name="area" placeholder="" required   formControlName="area">
+                    <select type="text" id="area" required name="area" class="form-control" placeholder="Area" formControlName="area">
+                    <option value="" [disabled]="true">Selecciona el &Aacute;rea...</option>
+                    <option *ngFor="let area of areas" [value]="area.id">
+                      {{area.area}}
+                    </option>
+                  </select>
+                    
                      <div *ngIf="area.invalid && (area.dirty || area.touched)"
               class="alert alert-danger">
               <div *ngIf="area.errors.required">
@@ -303,16 +310,6 @@
               </div>
             </div> <!--FIN PRIMER CAMPO -->
             </div>
-
-            
-           <div class="btn-group"  style="float: right; padding-right: 10%;">
-              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
-                <span><b> Cambiar Datos. </b></span>
-              </button>
-            <button class="btn btn-success" *ngIf="!hidden" [disabled]="ordenForm.invalid" (click)="actualizarHerramienta( );">
-              <span><b> Guardar Cambios. </b></span>
-            </button>
-          </div>
           </form>
         </div>
       </div>
@@ -374,11 +371,48 @@
         <div class="card-header">
           <h5 class="card-category">Formatos</h5>
           <h4 class="card-title">Formatos</h4>
-                    <div class="btn-group" style=" padding-left: 80%;">
-            <button class="btn btn-success" (click)="crearFormato();">
-              <span><b>Crea Formatos</b></span>
-            </button>
-          </div>
+
+
+
+          
+
+          
+
+            <div class="btn-group" style=" padding-left: 80%;">
+              <button class="btn btn-info" *ngIf="hiddenFormato == true"  (click)="mostrarFormatos()">
+                <span><b> Seleccionar Formato. </b></span>
+              </button>
+              <button class="btn btn-success" *ngIf="!hiddenFormato" [disabled]="false" (click)="seleccionaFormato()">
+                <span><b>Crea Formatos</b></span>
+              </button>
+            </div>
+
+            <div *ngIf="!this.hiddenFormato">
+            <form (ngSubmit)="onSubmit()" [formGroup]=tipoForm #formDir="ngForm">
+               <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="formato_tipo_id">FORMATOS</label>
+                  <select  type="text" id="formato_tipo_id" name="formato_tipo_id" class="form-control"
+                    placeholder="FORMATOS"  formControlName="formato_tipo_id">
+                    <option value="" [disabled]="true">Selecciona un Formato...</option>
+                    <option *ngFor="let form of formatos" [value]="form.id" >
+                      {{form.form}}
+                    </option>
+                  </select>
+                 <div *ngIf="formato_tipo_id.invalid && (formato_tipo_id.dirty || formato_tipo_id.touched)" class="alert alert-danger">
+                   <div *ngIf="formato_tipo_id.errors.required">
+                   Tipo de formato requerido.
+                   </div>
+                </div>
+                </div>
+              </div>
+            </form>
+          </div> 
+
+
+
+
+
         </div>
         <div class="card-body">
      <!--aqui va el grid--><app-formatos-grid></app-formatos-grid>
