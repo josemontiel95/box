@@ -29,9 +29,11 @@ export class DashboardComponent implements OnInit {
     mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
   
+ formatos = [{"format":"CONTROL DE CONCRETO HIDRAULICO", "id": "0"},{"format":"REVENIMIENTO", "id":"1"}]
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
         
   ordenForm: FormGroup; //se crea un formulario de tipo form group
+  tipoForm: FormGroup;
 
    id: string;
    mis_cli: Array<any>;
@@ -43,6 +45,11 @@ export class DashboardComponent implements OnInit {
    hiddenFormato= true;
    hiddenFormatoDispo = true;
    hiddenTecnicos= true;
+   
+   forma={
+     formato_tipo_id:''
+   };
+
    Orden = {
      area: '',
      id_ordenDeTrabajo: '',
@@ -145,6 +152,11 @@ export class DashboardComponent implements OnInit {
       'laboratorio_id': new FormControl({value: this.Orden.laboratorio_id, disabled: this.hidden }, [  Validators.required]), 
 
           });
+
+    this.tipoForm = new FormGroup({
+          'formato_tipo_id': new FormControl(  this.forma.formato_tipo_id, [  Validators.required])
+          });
+
       }
 
    get area() { return this.ordenForm.get('area'); }
@@ -180,10 +192,6 @@ export class DashboardComponent implements OnInit {
    get observaciones() { return this.ordenForm.get('observaciones'); } 
 
    get laboratorio_id() { return this.ordenForm.get('laboratorio_id'); } 
-
-   crearFormato(){
-        this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
-    }
 
     mostrar()
   {
@@ -346,7 +354,6 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
     }
     else if(this.tipoForm.value.formato_tipo_id == 1){
-      console.log("El Valor es: " + this.tipoForm.value.formato_tipo_id);
       this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaRevenimiento/'+this.id]);
     }
   }
