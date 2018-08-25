@@ -42,6 +42,7 @@ export class DashboardComponent implements OnInit {
    mis_obras: Array<any>;
    mis_jefes: Array<any>;
    hidden = true;
+   hiddenHerramienta =true;
    hiddenFormato= true;
    hiddenFormatoDispo = true;
    hiddenTecnicos= true;
@@ -361,7 +362,7 @@ export class DashboardComponent implements OnInit {
     }
     else if(this.tipoForm.value.formato_tipo_id == 1){
       console.log("El Valor es: " + this.tipoForm.value.formato_tipo_id);
-      //FALTA CREAR RUTA REVENIMIENTO this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
+      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaRevenimiento/'+this.id]);
     }
   }
   

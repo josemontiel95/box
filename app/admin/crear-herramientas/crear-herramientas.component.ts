@@ -52,6 +52,7 @@ export class CrearHerramientasComponent implements OnInit {
     formData.append('placas', this.herramientaForm.value.placas);
     formData.append('herramienta_tipo_id', this.herramientaForm.value.herramienta_tipo_id);  
     formData.append('condicion', this.herramientaForm.value.condicion);
+    formData.append('observaciones', this.herramientaForm.value.observaciones);
     formData.append('fechaDeCompra', this.herramientaForm.value.fechaDeCompra);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
@@ -88,7 +89,7 @@ export class CrearHerramientasComponent implements OnInit {
         this.herramientaForm = new FormGroup({
       'herramienta_tipo_id': new FormControl(this.herramienta.herramienta_tipo_id, Validators.required), 
       'condicion': new FormControl(this.herramienta.condicion,  Validators.required), 
-      'observaciones': new FormControl(this.herramienta.fechaDeCompra),
+      'observaciones': new FormControl(this.herramienta.observaciones),
       'placas': new FormControl( this.herramienta.placas ),
       'fechaDeCompra': new FormControl(this.herramienta.fechaDeCompra,  Validators.required),
       

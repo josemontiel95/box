@@ -53,7 +53,7 @@
               <div class="col-md-2 col-12"> <!--SEGUNDO GRID -->
                 <div class="row"> <!--PRIMER ROW DEL SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="informe">INFORME No</label>
+                    <label for="informe">REG. No</label>
                     <input type="text" id="informe"  
                     class="form-control" 
                     name="informe" placeholder="" formControlName="informe">
@@ -73,7 +73,7 @@
             <div class="row">
               <div class="col-md-10 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="empresa">NOMBRE DE LA EMPRESA</label> <!--disable-->
+                    <label for="empresa">NOMBRE DEL CLIENTE</label> <!--disable-->
                     <input type="text" id="empresa"   
                     class="form-control" 
                     name="empresa" placeholder="" required   formControlName="empresa">
@@ -100,7 +100,7 @@
             <div class="row">
               <div class="col-md-10 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="direccion">DIRECCION DE LA EMPRESA</label> <!--disable-->
+                    <label for="direccion">DIRECCION DEL CLIENTE</label> <!--disable-->
                     <input type="text" id="direccion"   
                     class="form-control" 
                     name="direccion" placeholder="" required   formControlName="direccion">
@@ -114,6 +114,22 @@
               </div> <!--FIN PRIMERA GRID -->
             </div>
 
+            <div class="row">
+              <div class="col-md-10 col-12">
+                <div class="form-group">
+                  <label>LOCALIZACION</label>
+                  <input type="text" id="especimen" required class="form-control" 
+                  name="observaciones" placeholder="" formControlName="tipo_especimen">
+
+                  <div *ngIf="tipo_especimen.invalid && (tipo_especimen.dirty || tipo_especimen.touched)" class="alert alert-danger">
+                   <div *ngIf="tipo_especimen.errors.required">
+                   Localizacion Requerida.
+                   </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </form>
         </div>
       </div>
@@ -125,7 +141,7 @@
     <div class="col-md-12 col-12">
       <div class="card  card-tasks">
         <div class="card-header ">
-          <h4 style="text-align: center;" class="card-title">CONTROL DE CONCRETO HIDRAULICO.</h4>
+          <h4 style="text-align: center;" class="card-title">REGISTRO EN LA DETERMINACION DEL REVENIMIENTO EN EL CONCRETO FRESCO.</h4>
             <div class="btn-group" style=" padding-left: 80%;">
                   <button class="btn btn-success" (click)="agregaRegistro();">
                     <span><b>AGREGAR REGISTRO</b></span>
@@ -146,7 +162,7 @@
          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
             <div class="row">
 
-              <div class="col-md-6 col-12">
+              <div class="col-md-12 col-12">
                 <div class="form-group">
                   <label for="observaciones">OBSERVACIONES</label>
                   <input type="text" id="observaciones" class="form-control" 
@@ -155,23 +171,7 @@
                 </div>
               </div>
 
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label>Tipo de Especimen</label>
-                  <select type="text" id="especimen" required name="especimen" class="form-control" placeholder="Especimen" formControlName="tipo_especimen">
-                    <option value="" [disabled]="true">Selecciona el tipo de especimen...</option>
-                    <option *ngFor="let especimen of espec" [value]="especimen.id">
-                      {{especimen.especimen}}
-                    </option>
-                  </select>
-                  <div *ngIf="tipo_especimen.invalid && (tipo_especimen.dirty || tipo_especimen.touched)" class="alert alert-danger">
-                   <div *ngIf="tipo_especimen.errors.required">
-                   Tipo Especimen Requerido.
-                   </div>
-                  </div>
-                </div>
-              </div>
-
+              
               
             </div> <!--FIN ROW-->
             <h6>Inventario de Intrumento</h6>
@@ -216,7 +216,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 col-12">
+              <div class="col-md-12 col-12">
                  <div class="form-group">
                   <label for="flexometro">Flexometro</label>
                   <select  class="form-control" id="flexometro" 
@@ -235,25 +235,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6 col-12">
-                 <div class="form-group">
-                  <label for="termometro">Termometro</label>
-                  <select  class="form-control" id="termometro" 
-                    required name="termometro"
-                    placeholder="Tipos"  formControlName="termometro">
-                    <option value="" [disabled]="true">Selecciona un termometro...</option>    
-                    
-                    <option *ngFor="let termometro of mis_termometro" [value]="termometro.id_herramienta">
-                      {{termometro.placas}}
-                    </option>
-                  </select>
-                  <div *ngIf="termometro.invalid && (termometro.dirty || termometro.touched)" class="alert alert-danger">
-                   <div *ngIf="termometro.errors.required">
-                   Termometro Requerido.
-                   </div>
-                  </div>
-                </div>
-              </div>
+              
             </div>
           </form>
           <div class="btn-group"  style="float: right; padding-right: 10%;">

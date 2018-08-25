@@ -17,11 +17,11 @@ import {
 //FIN DE LOS IMPORTS
 
 @Component({
-  selector: 'app-llenaFormatoCCH',
-  templateUrl: './llenaFormatoCCH.component.html',
-  styleUrls: ['./llenaFormatoCCH.component.scss','../../loadingArrows.css']
+  selector: 'app-llenaRevenimiento',
+  templateUrl: './llenaRevenimiento.component.html',
+  styleUrls: ['./llenaRevenimiento.component.scss','../../loadingArrows.css']
 })
-export class llenaFormatoCCHComponent implements OnInit{
+export class llenaRevenimientoComponent implements OnInit{
 
   id: string = "1001";
   id_orden: string;
@@ -33,7 +33,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   private gridColumnApi;
   rowSelection;
   columnDefs;
-  cargando= 5;
+  cargando= 4;
   hidden = true;
   hiddenf= true;
   mis_tipos: Array<any>;
@@ -58,9 +58,6 @@ export class llenaFormatoCCHComponent implements OnInit{
         termometro:''
     }
 
-    espec= [{"especimen":"CILINDRO", "id":"CILINDRO"},{"especimen":"CUBO", "id":"CUBO"},{"especimen":"VIGAS", "id":"VIGAS"}];
-
-
    mis_conos: Array<any>;
    mis_varillas: Array<any>;
    mis_flexometro: Array<any>;
@@ -83,7 +80,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id}); 
-    this.cargando=5;
+    this.cargando=4;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -106,18 +103,13 @@ export class llenaFormatoCCHComponent implements OnInit{
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
 
-    search = new URLSearchParams();
-    search.set('function', 'getForDroptdownJefeBrigadaTermometro');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaTermometro(res.json()) );
 
-    url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getInfoByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
-    search.set('id_formatoCampo', this.id_formato);
+    search.set('id_formatoRegistroRev', this.id_formato);
     this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) ); 
 
 
@@ -132,7 +124,6 @@ export class llenaFormatoCCHComponent implements OnInit{
       'cono': new FormControl( {value: this.FormatoCCH.cono, disabled: this.hidden },  [Validators.required]),
       'varilla': new FormControl( {value: this.FormatoCCH.varilla, disabled: this.hidden },  [Validators.required]),
       'flexometro': new FormControl( {value: this.FormatoCCH.flexometro, disabled: this.hidden },  [Validators.required]),
-      'termometro': new FormControl( {value: this.FormatoCCH.termometro, disabled: this.hidden },  [Validators.required]),
           });
   }
 
@@ -173,7 +164,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.formatoCCHForm.controls['direccion']['disable']();
 
     this.formatoCCHForm.controls['observaciones']['disable']();
-    this.formatoCCHForm.controls['tipo_especimen']['disable']();
+    
     this.formatoCCHForm.controls['cono']['disable']();
     this.formatoCCHForm.controls['varilla']['disable']();
     this.formatoCCHForm.controls['flexometro']['disable']();
@@ -233,11 +224,11 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.formatoCCHForm.patchValue({
      obra: respuesta.obra,
      localizacion:  respuesta.localizacion,
-     informe:  respuesta.informeNo,
+     informe:  respuesta.regNo,
      empresa:  respuesta.razonSocial,
      direccion: respuesta.direccion,
      observaciones:  respuesta.observaciones,
-     tipo_especimen:  respuesta.tipo,
+     tipo_especimen:  respuesta.localizacion,
      cono:   respuesta.cono_id,
      varilla:  respuesta.varilla_id,
      flexometro:  respuesta.flexometro_id,
@@ -251,13 +242,13 @@ export class llenaFormatoCCHComponent implements OnInit{
    
   agregaRegistro(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'initInsert');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('formatoCampo_id', this.id_formato);  
+    formData.append('id_formatoRegistroRev', this.id_formato);  
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaRegistro(res.json());                 
                                             } );
@@ -266,14 +257,15 @@ export class llenaFormatoCCHComponent implements OnInit{
 
   actualizarInformeNo(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'updateHeader');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('id_formatoCampo', this.id_formato);  
-    formData.append('informeNo', this.formatoCCHForm.value.informe);
+    formData.append('id_formatoRegistroRev', this.id_formato);  
+    formData.append('regNo', this.formatoCCHForm.value.informe);
+    formData.append('localizacion', this.formatoCCHForm.value.tipo_especimen);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -283,19 +275,17 @@ export class llenaFormatoCCHComponent implements OnInit{
 
   actualizarFooter(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'updateFooter');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('id_formatoCampo', this.id_formato);  
+    formData.append('id_formatoRegistroRev', this.id_formato);  
     formData.append('observaciones', this.formatoCCHForm.value.observaciones);
-    formData.append('tipo', this.formatoCCHForm.value.tipo_especimen);
     formData.append('cono_id', this.formatoCCHForm.value.cono);
     formData.append('varilla_id', this.formatoCCHForm.value.varilla);
     formData.append('flexometro_id', this.formatoCCHForm.value.flexometro);
-    formData.append('termometro_id', this.formatoCCHForm.value.termometro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -322,7 +312,7 @@ export class llenaFormatoCCHComponent implements OnInit{
      else{
           this.id_registro= res.id_registrosCampo;
           console.log(this.id_registro);
-          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_orden + '/' + this.id_formato + '/' +this.id_registro]);        
+          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroRevenimiento/'+this.id_orden + '/' + this.id_formato + '/' +this.id_registro]);        
      }
    }
 
@@ -360,18 +350,6 @@ export class llenaFormatoCCHComponent implements OnInit{
     }
     this.cargando=this.cargando-1;
     console.log("llenaFlexometros this.cargando: "+this.cargando);
-  }
-
-  llenaTermometro(resp: any)
-  {
-    console.log(resp);
-    this.mis_termometro= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
-      this.mis_termometro[_i]=resp[_i];
-    }
-    this.cargando=this.cargando-1;
-    console.log("llenaTermometros this.cargando: "+this.cargando);
   }
 
   regresaDashboard(){

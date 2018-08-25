@@ -11,10 +11,13 @@ import { CrearOrdenTrabajoComponent } from '../../jefeb/crear-orden-trabajo/crea
 import { OrdenTrabajoComponent } from '../../jefeb/orden-trabajo/orden-trabajo.component';
 import { GridComponent } from '../../jefeb/grid/grid.component';
 import { llenaFormatoCCHComponent } from '../../jefeb/llenaFormatoCCH/llenaFormatoCCH.component';
+import { llenaRevenimientoComponent } from '../../jefeb/llenaRevenimiento/llenaRevenimiento.component';
 import { CrearLlenaFormatoCCHComponent } from '../../jefeb/crear-llenaFormatoCCH/crear-llenaFormatoCCH.component';
+import { CrearLlenaRevenimientoComponent } from '../../jefeb/crear-llenaRevenimiento/crear-llenaRevenimiento.component';
+
 import { HerramientaGridComponent } from '../../jefeb/herramienta-grid/herramienta-grid.component';
 import { agregaRegistroCCHComponent } from '../../jefeb/agregaRegistroCCH/agregaRegistroCCH.component';
-
+import { agregaRegistroRevenimientoComponent } from '../../jefeb/agregaRegistroRevenimiento/agregaRegistroRevenimiento.component';
 
 import { TecnicosGridComponent } from '../../jefeb/tecnicos-grid/tecnicos-grid.component';
 import { FormatoCCHGridComponent } from '../../jefeb/formato-cch-grid/formato-cch-grid.component';
@@ -50,11 +53,14 @@ import { ToastrModule } from 'ngx-toastr';
     OrdenTrabajoComponent,
     GridComponent,
     llenaFormatoCCHComponent,
+    llenaRevenimientoComponent,
     CrearLlenaFormatoCCHComponent,
     HerramientaGridComponent,
     TecnicosGridComponent,
     agregaRegistroCCHComponent,
+    agregaRegistroRevenimientoComponent,
     FormatoCCHGridComponent,
+    CrearLlenaRevenimientoComponent,
 
     TecnicosGridAgregaComponent,
     FormatosGridComponent
