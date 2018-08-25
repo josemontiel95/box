@@ -35,7 +35,6 @@ export class llenaFormatoCCHComponent implements OnInit{
   columnDefs;
   cargando= 5;
   hidden = true;
-  hiddenf= true;
   mis_tipos: Array<any>;
   mis_lab: Array<any>;
   mis_cli: Array<any>;
@@ -171,29 +170,6 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.formatoCCHForm.controls['localizacion']['disable']();
     this.formatoCCHForm.controls['empresa']['disable']();
     this.formatoCCHForm.controls['direccion']['disable']();
-
-    this.formatoCCHForm.controls['observaciones']['disable']();
-    this.formatoCCHForm.controls['tipo_especimen']['disable']();
-    this.formatoCCHForm.controls['cono']['disable']();
-    this.formatoCCHForm.controls['varilla']['disable']();
-    this.formatoCCHForm.controls['flexometro']['disable']();
-    this.formatoCCHForm.controls['termometro']['disable']();
-  }
-
-  mostrarFooter(){
-    this.hidden = !this.hidden;
-    const state = this.hidden ? 'disable' : 'enable';
-
-    Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
-        this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
-    });
-
-    this.formatoCCHForm.controls['obra']['disable']();
-    this.formatoCCHForm.controls['localizacion']['disable']();
-    this.formatoCCHForm.controls['informe']['disable']();
-    this.formatoCCHForm.controls['empresa']['disable']();
-    this.formatoCCHForm.controls['direccion']['disable']();
-
   }
 
   submitted = false;
@@ -322,7 +298,7 @@ export class llenaFormatoCCHComponent implements OnInit{
      else{
           this.id_registro= res.id_registrosCampo;
           console.log(this.id_registro);
-          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_orden + '/' + this.id_formato + '/' +this.id_registro]);        
+          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_registro + '/' +this.id_formato]);        
      }
    }
 
@@ -374,7 +350,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     console.log("llenaTermometros this.cargando: "+this.cargando);
   }
 
-  regresaDashboard(){
+  regresaOrdenTrabajo(){
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+ this.id_orden]);
   }
 

@@ -90,13 +90,9 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="tconcreto">TIPO DE CONCRETO</label> <!--disable-->
-                    <select type="text" id="tconcreto" name="tconcreto" class="form-control" placeholder="Tipo Concreto" formControlName="tconcreto" (blur)="onBlurTipoConcreto()">
-                    <option value="" [disabled]="true">Selecciona el tipo de concreto...</option>
-                    <option *ngFor="let tipocon of tipoc" [value]="tipocon.id">
-                      {{tipocon.tipocon}}
-                    </option>
-                  </select>
-                    
+                    <input type="text" id="tconcreto"   
+                    class="form-control" 
+                    name="tconcreto" placeholder="" formControlName="tconcreto" (blur)="onBlurTipoConcreto()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
