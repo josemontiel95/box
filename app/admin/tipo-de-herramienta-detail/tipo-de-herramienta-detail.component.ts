@@ -98,6 +98,7 @@ export class TipoHerramientaDetailComponent implements OnInit {
     Object.keys(this.herramientaForm.controls).forEach((controlName) => {
         this.herramientaForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
     });
+    this.herramientaForm.controls['id_herramienta_tipo']['disable']();
   }
 
 

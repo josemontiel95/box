@@ -22,7 +22,7 @@
                   <div class="col-md-6 col-12">
                   <div class="form-group">
                     <label for="id_concretera">ID Concretera.</label>
-                    <input type="text" disabled="" id="id_concretera"  
+                    <input type="text"  id="id_concretera"  
                     class="form-control" 
                     name="id_concretera" formControlName="id_concretera">
                   </div>
@@ -46,7 +46,7 @@
               <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hidden" [disabled]="concreteraForm.invalid" (click)="actualizarHerramienta( ); ">
+            <button class="btn btn-success" *ngIf="!hidden" [disabled]="concreteraForm.invalid" (click)="actualizarConcretera();">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>

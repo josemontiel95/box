@@ -48,8 +48,8 @@ export class HerramientaDetailComponent implements OnInit {
     global: Global;
     desBut=true;
     actBut=false;
-    desHis=true;
-    actHis=false;
+    His=true;
+    
     resppass= false;
     exitoCon = false;
     password1: string;
@@ -153,6 +153,7 @@ export class HerramientaDetailComponent implements OnInit {
     Object.keys(this.herramientaForm.controls).forEach((controlName) => {
         this.herramientaForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
     });
+    this.herramientaForm.controls['id_herramienta']['disable']();
   }
 
   actualizarHerramienta( )
@@ -187,7 +188,7 @@ export class HerramientaDetailComponent implements OnInit {
     }
     else
     {
-      location.reload();
+      this.router.navigate(['administrador/herramientas']);
     }
   }
 
@@ -255,13 +256,11 @@ export class HerramientaDetailComponent implements OnInit {
   statusHistorial(active: any)
   {
     if (active == 1) {
-     this.actHis = false;
-     this.desHis = true;
+     this.His = false;
           }
      else
      {
-     this.actHis= true;
-     this.desHis= false;
+     this.His= true;
      }     
 
   }
@@ -278,17 +277,9 @@ export class HerramientaDetailComponent implements OnInit {
      this.switchActive(1);
    }
 
-   desactivarHistorial(){
-     this.actHis= true;
-     this.desHis= false;
-     //this.switchHistorial(0);
+   verHistorial(){
+  this.His=!this.His;
   }
-
-   activarHistorial(){
-     this.actHis = false;
-     this.desHis = true;
-     //this.switchHistorial(1);
-   }
 
    switchHistorial(active: number){
      let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;

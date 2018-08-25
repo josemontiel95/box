@@ -69,7 +69,7 @@ export class HerramientasComponent implements OnInit{
       id += selectedRow.id_herramienta;
       
     });
-     localStorage.setItem('herraadd',id);
+      this.router.navigate(['administrador/herramientas/herramienta-detail/'+id]);
   }
 
 }
