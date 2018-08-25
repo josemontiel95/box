@@ -309,9 +309,10 @@ export class DashboardComponent implements OnInit {
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertAdmin');
-    formData.append('token', this.global.token);
+    formData.append('token', this.global.token);           
+    formData.append('ordenDeTrabajo_id', this.id);
     formData.append('rol_usuario_id',  this.global.rol);
-    formData.append('tecnico_id',  JSON.stringify(this.aux2));
+    formData.append('tecnicosArray',  JSON.stringify(this.aux2));
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaSwitch(res.json());
                                             } );
