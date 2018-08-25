@@ -390,7 +390,7 @@
           <app-tecnicos-grid></app-tecnicos-grid>
         </div>
           <div *ngIf="!this.hiddenTecnicos">
-          <app-tecnicos-grida></app-tecnicos-grida>          
+          <app-tecnicos-grida  (agregaTec)="addTec($event)"></app-tecnicos-grida>          
           </div>        
         </div>
       </div>

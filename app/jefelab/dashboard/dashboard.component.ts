@@ -37,7 +37,8 @@ export class DashboardComponent implements OnInit {
    id: string;
    id_herra: string;
    id_tec: string;
-   aux2= 1;
+   aux2: Array<any>;
+
    aux3: Array<any>;
    mis_cli: Array<any>;
    mis_obras: Array<any>;
@@ -254,6 +255,12 @@ export class DashboardComponent implements OnInit {
 
   }
 
+     addTec(aux2: any) {
+        console.log(typeof aux2);
+    this.aux2=aux2;
+    console.log(typeof this.aux2);
+
+  }
   
   mostrarHerramientaDisponible()
   {
@@ -298,13 +305,13 @@ export class DashboardComponent implements OnInit {
 
      actualizarTecnicos ()
   {
-    this.id_tec= localStorage.getItem("tecnisel");
+    
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertAdmin');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id',  this.global.rol);
-    formData.append('tecnico_id',  this.id_tec);
+    formData.append('tecnico_id',  JSON.stringify(this.aux2));
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaSwitch(res.json());
                                             } );
