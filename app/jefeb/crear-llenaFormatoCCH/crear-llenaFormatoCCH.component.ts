@@ -28,7 +28,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   mis_flexometro: Array<any>;
   mis_termometro: Array<any>;
   mis_lab: Array<any>;
-  id_orden: string;
+  id = "";
   id_formato: "";
 
   constructor(private router: Router, private route: ActivatedRoute, private data: DataService, private http: Http) { }
@@ -59,7 +59,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('informeNo', this.creaCCHForm.value.informe);
-    formData.append('ordenDeTrabajo_id', this.id_orden);  
+    formData.append('ordenDeTrabajo_id', this.id);  
     formData.append('tipo', this.creaCCHForm.value.especimen);
     formData.append('cono_id', this.creaCCHForm.value.cono);
     formData.append('varilla_id', this.creaCCHForm.value.varilla);
@@ -94,14 +94,14 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
        location.reload();
      }
      else{
-       this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
+       this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
        
      }
    }
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id_orden=params.id);
+    this.route.params.subscribe( params => this.id=params.id);
     this.cargando=4;
 
 
@@ -162,7 +162,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
    submitted = false;
 
    regresaUsuario(){
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+ this.id_orden]);
+    this.router.navigate(['jefeLaboratorio/herramientas']);
   }
 
   onSubmit() { this.submitted = true; }

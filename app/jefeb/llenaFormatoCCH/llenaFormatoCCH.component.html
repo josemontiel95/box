@@ -19,7 +19,7 @@
 
               <div class="col-md-10 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaDashboard();"></i>
+                    <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i>
                     <label for="obra">NOMBRE DE LA OBRA</label> <!--disable-->
                     <input type="text" id="obra"   
                     class="form-control" 
@@ -256,7 +256,7 @@
             </div>
           </form>
           <div class="btn-group"  style="float: right; padding-right: 10%;">
-              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrarFooter()">
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
             <button class="btn btn-success" *ngIf="!hidden" [disabled]="formatoCCHForm.invalid" (click)="actualizarFooter();">

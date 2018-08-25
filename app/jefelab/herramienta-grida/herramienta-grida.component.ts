@@ -64,10 +64,6 @@ export class HerramientaGridAgregaComponent implements OnInit  {
 
     @Output() agregaHerra = new EventEmitter<any>();
 
-    aver()
-    {
-      console.log(this.idh);
-    }
   agregaHerr(ids: any) {
     this.agregaHerra.emit(ids);
     //this.id= h
@@ -91,10 +87,10 @@ export class HerramientaGridAgregaComponent implements OnInit  {
    
  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
-    var id = ""; //array
-
+    var id = []; //array
+    var i =0 ;
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_herramienta+ " ";
+      id.push(selectedRow.id_herramienta);
       
     });
       this.agregaHerr(id);
