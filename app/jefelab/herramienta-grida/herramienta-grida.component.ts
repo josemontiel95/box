@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,  Output, EventEmitter,Input} from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -18,7 +18,7 @@ export class HerramientaGridAgregaComponent implements OnInit  {
   private gridColumnApi;
   rowSelection;
   columnDefs;
-  id: string;
+  id: any;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -36,11 +36,13 @@ export class HerramientaGridAgregaComponent implements OnInit  {
 
   ngOnInit() {
         this.data.currentGlobal.subscribe(global => this.global = global);
-        this.id= localStorage.getItem("herra");
+
   }
 
+ 
 
   onGridReady(params) {
+
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -49,15 +51,29 @@ export class HerramientaGridAgregaComponent implements OnInit  {
     search.set('function', 'getAllFromTipo');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('herramienta_tipo_id', this.id);
+    search.set('herramienta_tipo_id', this.idh);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
+
                                             this.llenaTabla(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
   }
+    @Input( ) idh: any;
 
+    @Output() agregaHerra = new EventEmitter<any>();
+
+    aver()
+    {
+      console.log(this.idh);
+    }
+  agregaHerr(ids: any) {
+    this.agregaHerra.emit(ids);
+    //this.id= h
+    console.log(ids);
+
+  }
 
 
 
@@ -81,8 +97,7 @@ export class HerramientaGridAgregaComponent implements OnInit  {
       id += selectedRow.id_herramienta+ " ";
       
     });
-      localStorage.setItem('herrasel',id );
-
+      this.agregaHerr(id);
   }
 
 
