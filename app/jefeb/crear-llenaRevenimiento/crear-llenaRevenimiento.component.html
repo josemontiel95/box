@@ -13,7 +13,7 @@
         <div class="card-header">
           <h5 class="title">
           <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaUsuario();"></i>
-          CONTROL DE CONCRETO HIDRAULICO</h5>
+          INFORME EN LA DETERMINACI&Oacute;N DEL REVENIMIENTO EN EL CONCRETO FRESCO</h5>
         </div>
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=creaCCHForm #formDir="ngForm">
@@ -21,35 +21,26 @@
 
               <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label for="informe">INFORME No</label>
-                  <input type="text" id="informe" class="form-control" required 
-                  name="informe" placeholder="Escriba el no. Informe" formControlName="informe">
-                  <div *ngIf="informe.invalid && (informe.dirty || informe.touched)"
-                    class="alert alert-danger">
-                    <div *ngIf="informe.errors.required">
-                       Informe No. requerido.
-                    </div>
-                  </div>
+                  <label for="reg">REG. No.</label>
+                  <input type="text" id="reg" class="form-control" required 
+                  name="reg" placeholder="Escriba el REG No." formControlName="reg">
                 </div>
               </div>
 
               <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label>Tipo de Especimen</label>
-                  <select type="text" id="especimen" required name="especimen" class="form-control" placeholder="Especimen" formControlName="especimen"  >
-                    <option value="" [disabled]="true">Selecciona el tipo de especimen...</option>
-                    <option *ngFor="let especimen of espec" [value]="especimen.id">
-                      {{especimen.especimen}}
-                    </option>
-                  </select>
-                  <div *ngIf="especimen.invalid && (especimen.dirty || especimen.touched)" class="alert alert-danger">
-                   <div *ngIf="especimen.errors.required">
-                   Tipo Especimen Requerido.
-                   </div>
+                  <label for="localizacion">LOCALIZACIÓN</label>
+                  <input type="text" id="localizacion" class="form-control" required 
+                  name="localizacion" placeholder="Escriba la Inceritumbre" formControlName="localizacion">
+                  <div *ngIf="localizacion.invalid && (localizacion.dirty || localizacion.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="localizacion.errors.required">
+                       Localizaci&oacute;n requerida.
+                    </div>
+                    <div *ngIf="localizacion.errors.pattern">La Localizacion solo debe contener numeros</div>
                   </div>
                 </div>
               </div>
-
               
             </div> <!--FIN ROW-->
             <h6>Inventario de Intrumento</h6>
@@ -93,8 +84,9 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6 col-12">
+
+             <div class="row">
+              <div class="col-md-12 col-12">
                  <div class="form-group">
                   <label for="flexometro">Flexometro</label>
                   <select  class="form-control" id="flexometro" 
@@ -113,26 +105,9 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6 col-12">
-                 <div class="form-group">
-                  <label for="termometro">Termometro</label>
-                  <select  class="form-control" id="termometro" 
-                    required name="termometro"
-                    placeholder="Tipos"  formControlName="termometro">
-                    <option value="" [disabled]="true">Selecciona un termometro...</option>       
-                    
-                    <option *ngFor="let termometro of mis_termometro" [value]="termometro.id_herramienta">
-                      {{termometro.placas}}
-                    </option>
-                  </select>
-                  <div *ngIf="termometro.invalid && (termometro.dirty || termometro.touched)" class="alert alert-danger">
-                   <div *ngIf="termometro.errors.required">
-                   Termometro Requerido.
-                   </div>
-                  </div>
-                </div>
-              </div>
+              
             </div>
+
 
             <div class="btn-group" style="float: right; padding-right: 10%;">
             <button class="btn btn-success" [disabled]="creaCCHForm.invalid" (click)="crearFormatoCCH(); ">

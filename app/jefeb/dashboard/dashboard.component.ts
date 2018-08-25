@@ -38,7 +38,10 @@ export class DashboardComponent implements OnInit {
    mis_obras: Array<any>;
    mis_jefes: Array<any>;
    hidden = true;
-   hiddenHerramienta= true;
+
+   hiddenHerramienta =true;
+   hiddenFormato= true;
+   hiddenFormatoDispo = true;
    hiddenTecnicos= true;
    Orden = {
      area: '',
@@ -333,6 +336,19 @@ export class DashboardComponent implements OnInit {
     console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
+  mostrarFormatos()
+  {
+    this.hiddenFormato = !this.hiddenFormato;
+  }
 
-  
+  seleccionaFormato(){
+    if(this.tipoForm.value.formato_tipo_id == 0){
+      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
+    }
+    else if(this.tipoForm.value.formato_tipo_id == 1){
+      console.log("El Valor es: " + this.tipoForm.value.formato_tipo_id);
+      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaRevenimiento/'+this.id]);
+    }
+  }
+
 }
