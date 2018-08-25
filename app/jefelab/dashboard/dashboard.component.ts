@@ -256,9 +256,9 @@ export class DashboardComponent implements OnInit {
   }
 
      addTec(aux2: any) {
-        console.log(typeof aux2);
+        console.log(aux2);
     this.aux2=aux2;
-    console.log(typeof this.aux2);
+    console.log(this.aux2);
 
   }
   
@@ -303,7 +303,7 @@ export class DashboardComponent implements OnInit {
   }
 
 
-     actualizarTecnicos ()
+     actualizarTecnicos()
   {
     
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
@@ -316,7 +316,7 @@ export class DashboardComponent implements OnInit {
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaSwitch(res.json());
                                             } );
-    this.hiddenTecnicos = !this.hiddenTecnicos;
+    this.hiddenTecnicos = true;
   }
   
   

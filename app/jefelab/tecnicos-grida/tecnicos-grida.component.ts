@@ -19,13 +19,10 @@ export class TecnicosGridAgregaComponent implements OnInit  {
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-      {headerName: 'ID', field: 'id_cliente'},
-      {headerName: 'Tecnico.', field: 'nombre'+'apellido' },
-
-
-      
+      {headerName: 'ID', field: 'id_usuario'},
+      {headerName: 'Tecnico.', field: 'nombre' },
     ];
-    this.rowSelection = "single";
+    this.rowSelection = "multiple";
   }
 
   rowData: any;
@@ -37,9 +34,9 @@ export class TecnicosGridAgregaComponent implements OnInit  {
 
     @Output() agregaTecn = new EventEmitter<any>();
 
-  agregaTec(ids: any) {
-    this.agregaTecn.emit(ids);
-
+  agregaTec(idt: any) {
+    this.agregaTecn.emit(idt);
+    console.log(idt);
   }
 
   onGridReady(params) {
@@ -50,13 +47,13 @@ export class TecnicosGridAgregaComponent implements OnInit  {
     this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllAdmin');
+    search.set('function', 'getTecnicosForDroptdown');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
-                                            //this.llenaTabla(res.json());
+                                            this.llenaTabla(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
   }
@@ -77,7 +74,7 @@ export class TecnicosGridAgregaComponent implements OnInit  {
     var id = []; //array
 
     selectedRows.forEach(function(selectedRow, index) {
-      id.push(selectedRow.id_tecnicos);
+      id.push(selectedRow.id_usuario);
       
     });
    this.agregaTec(id);

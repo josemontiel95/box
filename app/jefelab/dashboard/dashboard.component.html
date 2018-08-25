@@ -382,7 +382,7 @@
               <button class="btn btn-info" *ngIf="hiddenTecnicos == true"  (click)="mostrarTecnicos()">
                 <span><b> Agregar Tecnico. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hiddenTecnicos" [disabled]="false" (click)="mostrarTecnicos();">
+            <button class="btn btn-success" *ngIf="!hiddenTecnicos" [disabled]="false" (click)="mostrarTecnicos();  actualizarTecnicos();">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>
