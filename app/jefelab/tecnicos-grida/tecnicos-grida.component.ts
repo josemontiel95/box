@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit ,Output, EventEmitter} from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -35,10 +35,10 @@ export class TecnicosGridAgregaComponent implements OnInit  {
 
 
 
-    @Output() agregaTec = new EventEmitter<any>();
+    @Output() agregaTecn = new EventEmitter<any>();
 
   agregaTec(ids: any) {
-    this.agregaTecni.emit(ids);
+    this.agregaTecn.emit(ids);
 
   }
 
