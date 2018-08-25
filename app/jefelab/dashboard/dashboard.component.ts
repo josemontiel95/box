@@ -248,9 +248,9 @@ export class DashboardComponent implements OnInit {
  
 
     addHerra(aux3: any) {
-        console.log(aux3);
+        console.log(typeof aux3);
     this.aux3=aux3;
-    console.log(this.aux3);
+    console.log(typeof this.aux3);
 
   }
 
@@ -274,20 +274,18 @@ export class DashboardComponent implements OnInit {
 
   actualizarHerramienta()
   {
-   this.id_herra= localStorage.getItem("herrasel");
-   this.aux2 = this.id_herra.lastIndexOf(" ");
-   this.aux2 = this.aux2/5;
-   this.aux3= this.id_herra.split(" ", this.aux2);
+
+
+      console.log(typeof this.aux3);
+    
      let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/post/endpoint.php`;
      let formData:FormData = new FormData();
         formData.append('function', 'insertAdmin');
         formData.append('ordenDeTrabajo_id', this.id);
         formData.append('rol_usuario_id', this.global.rol);
         formData.append('token', this.global.token);
-            for (var _i = 0; _i < this.aux2; _i++ )
-    {
-      formData.append('herramienta_id', this.aux3[_i]);
-    }
+        formData.append('herramientasArray', JSON.stringify(this.aux3));
+    
         
         this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
@@ -296,6 +294,7 @@ export class DashboardComponent implements OnInit {
 
        
   }
+
 
      actualizarTecnicos ()
   {
