@@ -30,35 +30,33 @@ export class CrearObraComponent implements OnInit
               private http: Http) { }
  
     id_obra: string ;
-    obra: string;
-    revenimiento: string;
-    incertidumbre: string;
-    prefijo: string;
-    fechaDeCre: string;
+
     foto: string;
-    cliente_id: string;
-    id_concretera: string;
-    tipo: string;
-    laboratorio: string;
-    descripcion: string;
+
     submitted = false;
     hidden = false;
     cargando= 2;
     mis_con: Array<any>;
     mis_cli: Array<any>;
+
+     obraForm: FormGroup;
  
-   model = new Obra(this.id_obra,
-                       this.id_concretera,
-                       this.obra,
-                       this.revenimiento,
-                       this.incertidumbre,
-                       this.prefijo,
-                       this.fechaDeCre,
-                       this.foto,
-                       this.descripcion,
-                       this.laboratorio,
-                       this.tipo,
-                       this.cliente_id,);
+
+
+   Obra = {
+     obra:'',
+     revenimiento:'',
+     incertidumbre:'',
+     prefijo:'',
+     cliente_id:'',
+     id_concretera:'',
+     tipo:'',
+     descripcion:'',
+     fechaDeCre:'',
+     telefono_residente:'',
+     nombre_residente: '',
+     correo_residente: '' 
+   }
 
   crearMessage: string= "";
   crearMessageCargando: string= "";
@@ -86,7 +84,51 @@ export class CrearObraComponent implements OnInit
                                                    this.labValidator(res.json());
                                                  });
 
+        this.obraForm = new FormGroup({
+      'obra': new FormControl(this.Obra.obra, Validators.required), 
+      'revenimiento': new FormControl(this.Obra.revenimiento, Validators.required), 
+      'incertidumbre': new FormControl(this.Obra.incertidumbre,  Validators.required), 
+      'prefijo': new FormControl(this.Obra.prefijo,  Validators.required), 
+      'cliente_id': new FormControl(this.Obra.cliente_id,  Validators.required), 
+      'id_concretera': new FormControl(this.Obra.id_concretera,  Validators.required), 
+      'tipo': new FormControl(this.Obra.tipo,  Validators.required), 
+      'descripcion': new FormControl(this.Obra.descripcion,  Validators.required), 
+      'fechaDeCre': new FormControl(this.Obra.fechaDeCre,  Validators.required),
+      'telefono_residente': new FormControl(this.Obra.telefono_residente, [ Validators.required, Validators.pattern("^([0-9])*")]), 
+      'nombre_residente': new FormControl(this.Obra.nombre_residente,  Validators.required),  
+      'correo_residente': new FormControl(this.Obra.correo_residente,  Validators.required),   
+                                        
+                                      });
+
+
   }
+
+
+  get obra() { return this.obraForm.get('obra'); }
+
+  get revenimiento() { return this.obraForm.get('revenimiento'); }
+
+  get incertidumbre() { return this.obraForm.get('incertidumbre'); }
+
+  get prefijo() { return this.obraForm.get('prefijo'); }
+
+  get cliente_id() { return this.obraForm.get('cliente_id'); }
+
+  get id_concretera() { return this.obraForm.get('id_concretera'); }
+
+  get tipo() { return this.obraForm.get('tipo'); }
+
+  get descripcion() { return this.obraForm.get('descripcion'); }
+
+  get fechaDeCre() { return this.obraForm.get('fechaDeCre'); }
+
+  get telefono_residente() { return this.obraForm.get('telefono_residente'); }
+
+  get nombre_residente() { return this.obraForm.get('nombre_residente'); }
+
+  get correo_residente() { return this.obraForm.get('correo_residente'); }
+
+
 
   rolValidator(repuesta: any){
     console.log(repuesta)
@@ -141,7 +183,7 @@ export class CrearObraComponent implements OnInit
   onSubmit() { this.submitted = true; }
 
 
-  crearObra(obra: string, revenimiento: string, incertidumbre : string, prefijo: string, cliente_id: string, tipo: string, descripcion: string, fechaDeCre: string, id_concretera:string )
+  crearObra()
   {
     this.cargando=1;
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -151,15 +193,18 @@ export class CrearObraComponent implements OnInit
     formData.append('function', 'insertAdmin');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', "1001");
-    formData.append('obra', obra);
-    formData.append('revenimiento', revenimiento);
-    formData.append('incertidumbre', incertidumbre);
-    formData.append('prefijo', prefijo);
-    formData.append('cliente_id', cliente_id);
-    formData.append('concretera', id_concretera);
-    formData.append('tipo', tipo);
-    formData.append('descripcion', descripcion);
-    formData.append('fechaDeCreacion', fechaDeCre);
+    formData.append('obra', this.obraForm.value.obra);
+    formData.append('revenimiento', this.obraForm.value.revenimiento);
+    formData.append('incertidumbre', this.obraForm.value.incertidumbre);
+    formData.append('prefijo', this.obraForm.value.prefijo);
+    formData.append('cliente_id', this.obraForm.value.cliente_id);
+    formData.append('concretera', this.obraForm.value.id_concretera);
+    formData.append('tipo', this.obraForm.value.tipo);
+    formData.append('descripcion', this.obraForm.value.descripcion);
+    formData.append('fechaDeCreacion', this.obraForm.value.fechaDeCre);
+    formData.append('telefono_residente', this.obraForm.value.telefono_residente );
+    formData.append('nombre_residente', this.obraForm.value.nombre_residente );
+    formData.append('correo_residente', this.obraForm.value.correo_residente );
     this.crearMessageCargando="Cargando...";
     this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );
     
@@ -172,7 +217,7 @@ export class CrearObraComponent implements OnInit
       this.crearMessage="";
       this.crearMessageCargando=crearResp.estatus;
       console.log(crearResp);
-      //setTimeout(()=>{ this.router.navigate(['jefeLaboratorio/insertar-foto/'+crearResp.id_obra])}, 1500);
+      //setTimeout(()=>{ this.router.navigate(['administrador/insertar-foto/'+crearResp.id_obra])}, 1500);
        
     }else{
       this.crearMessageCargando="";

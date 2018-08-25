@@ -29,18 +29,18 @@ export class ObrasComponent implements OnInit{
   cargando= 1;
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-      {headerName: 'ID', field: 'id_obra' },
+      {headerName: 'Ctrl', field: 'id_obra' },
       {headerName: 'Obra', field: 'obra' },
       {headerName: 'Fecha de Creacion', field: 'fechaDeCreacion' },
       {headerName: 'Nombre de Residente', field: 'nombre_residente' },
-      {headerName: 'Telefono de Residente', field: 'telefono_residente'},
-      {headerName: 'Correo de Residente', field: 'correo_residente' },
+      //{headerName: 'Telefono de Residente', field: 'telefono_residente'},
+      //{headerName: 'Correo de Residente', field: 'correo_residente' },
       {headerName: 'Concretera', field: 'concretera' },
       {headerName: 'Tipo', field: 'tipo' },
       {headerName: 'Cliente', field: 'nombre' },
       {headerName: 'Created', field: 'createdON' },
       {headerName: 'Last Edited', field: 'lastEditedON' },
-      {headerName: 'Revenimiento', field: 'revenimiento' },
+      //{headerName: 'Revenimiento', field: 'revenimiento' },
       {headerName: 'Incertidumbre', field: 'incertidumbre' },
       {headerName: 'Active', field: 'active' },
 

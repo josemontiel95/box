@@ -287,7 +287,7 @@ export class ObraDetailComponent implements OnInit {
       id_obra: respuesta.id_obra,
       obra: respuesta.obra,
       prefijo: respuesta.prefijo,
-      fechaDeCre: respuesta.fechaDeCre,
+      fechaDeCre: respuesta.fechaDeCreacion,
       descripcion: respuesta.descripcion,
       id_cliente: respuesta.id_cliente,
       id_concretera: respuesta.id_concretera,
