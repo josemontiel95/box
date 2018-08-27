@@ -172,8 +172,8 @@ export class llenaRevenimientoComponent implements OnInit{
   }
 
   mostrarFooter(){
-    this.hidden = !this.hidden;
-    const state = this.hidden ? 'disable' : 'enable';
+    this.hiddenf = !this.hiddenf;
+    const state = this.hiddenf ? 'disable' : 'enable';
 
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
         this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
@@ -184,6 +184,7 @@ export class llenaRevenimientoComponent implements OnInit{
     this.formatoCCHForm.controls['informe']['disable']();
     this.formatoCCHForm.controls['empresa']['disable']();
     this.formatoCCHForm.controls['direccion']['disable']();
+    this.formatoCCHForm.controls['tipo_especimen']['disable']();
 
   }
 
@@ -287,8 +288,9 @@ export class llenaRevenimientoComponent implements OnInit{
     formData.append('varilla_id', this.formatoCCHForm.value.varilla);
     formData.append('flexometro_id', this.formatoCCHForm.value.flexometro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitchFooter(res.json());                 
                                             } );
+
 
   }
 
@@ -300,6 +302,17 @@ export class llenaRevenimientoComponent implements OnInit{
      }
      else{
           this.mostrar();         
+     }
+   }
+
+   respuestaSwitchFooter(res: any){ 
+     console.log(res);
+     if(res.error!= 0){
+       window.alert(res.estatus);
+       location.reload();
+     }
+     else{
+          this.mostrarFooter();         
      }
    }
 
