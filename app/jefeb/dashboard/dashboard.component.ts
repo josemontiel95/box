@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
         
   ordenForm: FormGroup; //se crea un formulario de tipo form group
   tipoForm: FormGroup;
-
+  paseForm: FormGroup;
    id: string;
    mis_cli: Array<any>;
    mis_obras: Array<any>;
@@ -49,6 +49,13 @@ export class DashboardComponent implements OnInit {
    forma={
      formato_tipo_id:''
    };
+
+   pase=
+   {
+     pass: '',
+     correo: ''
+
+   }
 
    Orden = {
      area: '',
@@ -157,7 +164,16 @@ export class DashboardComponent implements OnInit {
           'formato_tipo_id': new FormControl(  this.forma.formato_tipo_id, [  Validators.required])
           });
 
+ 
+
+             this.paseForm = new FormGroup({
+          'correo': new FormControl(  this.pase.correo, [  Validators.required]),
+          'pass': new FormControl(  this.pase.pass, [  Validators.required])
+          });
+
       }
+
+      
 
    get area() { return this.ordenForm.get('area'); }
 
