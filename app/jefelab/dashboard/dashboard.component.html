@@ -14,7 +14,7 @@
 
          <form (ngSubmit)="onSubmit()" [formGroup]=ordenForm #formDir="ngForm">
             
-            <div class="row"> <!--PRIMER ROW -->
+            <div class="row"  *ngIf="!hiddenDetail"> <!--PRIMER ROW -->
 
               <div class="col-md-9 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
@@ -105,7 +105,7 @@
               </div> <!--FIN PRIMER CAMPO -->
             </div> <!--FIN TERCER ROW -->
 
-            <div class="row">
+            <div class="row"  *ngIf="!hiddenDetail">
               <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
                 <div class="form-group">
                   <label for="lugar">Direcci&oacute;n de la Actividad</label>
@@ -152,7 +152,7 @@
             </div>
             </div>
 
-            <div class="row">
+            <div class="row"  *ngIf="!hiddenDetail">
               <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
                 <div class="form-group">
                   <label for="actividades">Actividades a Realizar</label>
@@ -170,7 +170,7 @@
             </div> <!--FIN PRIMER CAMPO -->
             </div>
 
-            <div class="row">
+            <div class="row"  *ngIf="!hiddenDetail">
               <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
                 <div class="form-group">
                   <label for="condicionesTrabajo">Condiciones del Area de Trabajo</label>
@@ -228,7 +228,7 @@
             </div> <!--FIN  CAMPO -->
             </div>
 
-            <div class="row">
+            <div class="row"  *ngIf="!hiddenDetail">
               <div class="col-md-6 col-12"> <!-- CAMPO -->
                 <div class="form-group">
                   <label for="fechaInicio">Fecha de Inicio</label>
@@ -260,7 +260,7 @@
               </div> <!--FIN  CAMPO -->
             </div>
 
-            <div class="row">
+            <div class="row"  *ngIf="!hiddenDetail">
               <div class="col-md-6 col-12"> <!-- CAMPO -->
                 <div class="form-group">
                   <label for="horaInicio">Hora de Inicio</label>
@@ -292,7 +292,7 @@
               </div> <!--FIN  CAMPO -->
             </div>
 
-            <div class="row">
+            <div class="row"  *ngIf="!hiddenDetail">
               <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
                 <div class="form-group">
                   <label for="observaciones">Observacionesnes</label>
@@ -303,16 +303,22 @@
               </div>
             </div> <!--FIN PRIMER CAMPO -->
             </div>
-
-            
-           <div class="btn-group"  style="float: right; padding-right: 10%;">
-              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
-                <span><b> Cambiar Datos. </b></span>
+            <div class="btn-group"  >
+            <button class="btn btn-info" *ngIf="hiddenDetail == true" (click)="mostrarDetalles()">
+                <span><b> Mas detalles </b></span>
+            </button>   
+            <button class="btn btn-info" *ngIf="!hiddenDetail && hidden"  (click)="mostrarDetalles()">
+                <span><b> Menos detalles </b></span>
+            </button>    
+           <div class="btn-group"  style="float: right; padding-left: 10%;">
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar(); mostrarDetalles();">
+                <span><b> Cambiar Datos </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hidden" [disabled]="ordenForm.invalid" >
+            <button class="btn btn-success" *ngIf="!hidden" [disabled]="ordenForm.invalid" (click)="mostrar(); mostrarDetalles();" >
               <!--(click)="actualizarHerramienta( );"-->
-              <span><b> Guardar Cambios. </b></span>
+              <span><b> Guardar Cambios </b></span>
             </button>
+          </div>
           </div>
           </form>
         </div>
@@ -331,15 +337,17 @@
         <div class="card-body ">
              <div class="btn-group">
             <button  class="btn btn-danger" *ngIf="hiddenHerramienta == true" (click)="eliminarHerramienta();">
-              <span><b> Eliminar Herramienta. </b></span>
+              <span><b> Eliminar Herramienta </b></span>
             </button>
-
+            <button  class="btn btn-danger" *ngIf="!hiddenHerramienta" (click)="mostrarHerramienta();">
+              <span><b> Cancelar </b></span>
+            </button>
             <div class="btn-group"  style=" padding-left: 15%;">              
               <button class="btn btn-info" *ngIf="hiddenHerramienta == true"  (click)="mostrarHerramienta()">
-                <span><b> Cambiar Herramienta. </b></span>
+                <span><b> Cambiar Herramienta </b></span>
               </button>
             <button class="btn btn-success" *ngIf="!hiddenHerramienta" [disabled]="false" (click)="actualizarHerramienta(); mostrarHerramienta();">
-              <span><b> Agregar Herramienta. </b></span>
+              <span><b> Agregar Herramienta </b></span>
             </button>
           </div>
           </div>
@@ -387,14 +395,17 @@
         <div class="card-body">
           <div class="btn-group">
              <button  class="btn btn-danger" *ngIf="hiddenTecnicos == true" (click)="eliminarTecni();">
-              <span><b> Eliminar Herramienta. </b></span>
+              <span><b> Eliminar Tecnico </b></span>
             </button>
+            <button  class="btn btn-danger" *ngIf="!hiddenTecnicos" (click)="mostrarTecnicos();">
+              <span><b> Cancelar </b></span>
+            </button>            
           <div class="btn-group"  style=" padding-left: 15%;">
               <button class="btn btn-info" *ngIf="hiddenTecnicos == true"  (click)="mostrarTecnicos()">
-                <span><b> Agregar Tecnico. </b></span>
+                <span><b> Agregar Tecnico</b></span>
               </button>
             <button class="btn btn-success" *ngIf="!hiddenTecnicos" [disabled]="false" (click)="mostrarTecnicos();  actualizarTecnicos();">
-              <span><b> Guardar Cambios. </b></span>
+              <span><b> Guardar Cambios</b></span>
             </button>
           </div>
         </div>

@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
    mis_obras: Array<any>;
    mis_jefes: Array<any>;
    hidden = true;
-
+   hiddenDetail = true;
    hiddenHerramienta =true;
    hiddenFormato= true;
    hiddenFormatoDispo = true;
@@ -245,6 +245,11 @@ export class DashboardComponent implements OnInit {
     console.log(this.hiddenTecnicos);
 
   }   
+
+  mostrarDetalles()
+  {
+     this.hiddenDetail = !this.hiddenDetail;
+  }
 
    regresaOrdenTrabajo(){
     this.router.navigate(['jefeBrigada/orden-trabajo']);

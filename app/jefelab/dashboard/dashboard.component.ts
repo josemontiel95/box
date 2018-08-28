@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit {
    mis_jefes: Array<any>;
    mis_tipos: Array<any>;
    hidden = true;
+   hiddenDetail = true;
    hiddenHerramienta= true;
    hiddenTecnicos= true;
    hiddenHerramientaDispo= true;
@@ -216,7 +217,11 @@ export class DashboardComponent implements OnInit {
 
       
    
-
+      mostrarDetalles()
+  {
+     this.hiddenDetail = !this.hiddenDetail;
+  }
+  
     mostrar()
   {
     this.hidden = !this.hidden;
