@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,Output, EventEmitter} from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -26,7 +26,7 @@ export class TecnicosGridComponent implements OnInit  {
 
       
     ];
-    this.rowSelection = "single";
+    this.rowSelection = "multiple";
   }
 
   rowData: any;
@@ -36,6 +36,12 @@ export class TecnicosGridComponent implements OnInit  {
     this.route.params.subscribe( params => this.id=params.id);
   }
 
+      @Output() eliminaTecn = new EventEmitter<any>();
+
+  agregaTec(idt: any) {
+    this.eliminaTecn.emit(idt);
+    console.log(idt);
+  }
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -69,13 +75,13 @@ export class TecnicosGridComponent implements OnInit  {
    
  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
-    var id = "";
+     var id = []; //array
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_tecnicos;
+      id.push(selectedRow.id_usuario);
       
     });
-    //this.router.navigate(['jefeb/herramientas/herramienta-detail/'+id]);
+   this.agregaTec(id);
   }
 
 

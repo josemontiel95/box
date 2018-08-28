@@ -233,7 +233,26 @@ export class DashboardComponent implements OnInit {
 
   }
 
-     respuestaSwitch(res: any){
+     respuestaSwitchE(res: any){
+     console.log(res);
+     
+     if(window.confirm("Estas seguro de la eliminación.") == true)
+       {
+     if(res.error!= 0){
+       window.alert("Intentalo otra vez");
+       location.reload();
+     }
+     else{
+       console.log("holaa");
+         location.reload();
+       }
+     }
+       else{
+         window.alert("Acción Cancelada.");
+     }
+   
+ }
+        respuestaSwitch(res: any){
      console.log(res);
      if(res.error!= 0){
        window.alert("Intentalo otra vez");
@@ -247,15 +266,30 @@ export class DashboardComponent implements OnInit {
    //@Output() agregaHerraid = new EventEmitter<any>();  =this.tipoForm.value.herramienta_tipo_id
    
  
+   eliminaHerra(aux3: any)
+   {
+     this.aux3=aux3;
 
-    addHerra(aux3: any) {
-        console.log(typeof aux3);
+   }
+
+   eliminaTec(aux2: any)
+   {
+     this.aux2=aux2;
+     console.log(this.aux2);
+    
+   }
+
+
+    addHerra(aux3: any)
+     {
+   
     this.aux3=aux3;
-    console.log(typeof this.aux3);
+  
 
   }
 
-     addTec(aux2: any) {
+     addTec(aux2: any) 
+     {
         console.log(aux2);
     this.aux2=aux2;
     console.log(this.aux2);
@@ -278,6 +312,38 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  eliminarHerramienta()
+  {
+
+     let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/post/endpoint.php`;
+     let formData:FormData = new FormData();
+        formData.append('function', 'deleteHerra');
+        formData.append('ordenDeTrabajo_id', this.id);
+        formData.append('rol_usuario_id', this.global.rol);
+        formData.append('token', this.global.token);
+        formData.append('herramientasArray', JSON.stringify(this.aux3));
+    
+        
+        this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitchE(res.json());
+                                            });
+
+  }
+
+   eliminarTecni()
+  {
+
+    let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'deleteTec');
+    formData.append('token', this.global.token);           
+    formData.append('ordenDeTrabajo_id', this.id);
+    formData.append('rol_usuario_id',  this.global.rol);
+    formData.append('tecnicosArray',  JSON.stringify(this.aux2));
+    this.http.post(url, formData).subscribe(res =>  {
+                                              this.respuestaSwitchE(res.json());
+                                            } );
+  }
 
   actualizarHerramienta()
   {

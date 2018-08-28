@@ -318,20 +318,12 @@
           <h4 class="card-title">Equipo en obra.</h4>
         </div>
         <div class="card-body ">
-             <div class="btn-group"  style="padding-left: 55%;">
-              <button class="btn btn-info" *ngIf="hiddenHerramienta == true"  (click)="mostrarHerramienta()">
-                <span><b> Cambiar Herramienta. </b></span>
-              </button>
-            <button class="btn btn-success" *ngIf="!hiddenHerramienta" [disabled]="false" (click)="actualizarHerramienta( ); mostrarHerramienta();">
-              <span><b> Guardar Cambios. </b></span>
-            </button>
-          </div>
-          <div *ngIf="this.hiddenHerramienta == true">
           <app-herramienta-grid></app-herramienta-grid>
-          </div>
+
         </div>
       </div>
     </div>
+
 
 
     <div class="col-md-6 col-12">
@@ -341,17 +333,48 @@
           <h4 class="card-title"> Tecnicos en obra.</h4>
         </div>
         <div class="card-body">
-                       <div class="btn-group"  style=" padding-left: 65%;">
+                       <div class="btn-group"  style=" padding-left: 45%;">
               <button class="btn btn-info" *ngIf="hiddenTecnicos == true"  (click)="mostrarTecnicos()">
-                <span><b> Agregar Tecnicos. </b></span>
+                <span><b> Agregar Tecnico. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hiddenTecnicos" [disabled]="false" (click)="mostrarTecnicos();">
+            <button class="btn btn-success" *ngIf="!hiddenTecnicos" [disabled]="false" (click)="mostrarTecnicos();  actualizarTecnicos();">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>
           <div *ngIf="this.hiddenTecnicos == true">
-          <app-tecnicos-grid></app-tecnicos-grid>
+          <app-tecnicos-grid (pasaLista)="pasaTec($event)"></app-tecnicos-grid>
         </div>
+          <div *ngIf="!this.hiddenTecnicos">
+           <form [formGroup]=paseForm #formDir="ngForm">
+                    <div class="form-group">
+                  <label>Correo</label>
+                  <input type="text" id="correo"   
+                    class="form-control" 
+                    name="correo" placeholder="" required   formControlName="correo">
+                </div>
+             <div *ngIf="correo.invalid && (correo.dirty || correo.touched)"
+              class="alert alert-danger">
+              <div *ngIf="correo.errors.required">
+                Correo requerido.
+              </div>
+            </div>                
+                <div class="form-group">
+                  <label>Contrase&ntilde;a</label>
+                  <input class="form-control" id="pass"  name="pass" placeholder="Contrase&ntilde;a" type="password"  formControlName="pass">
+                </div>
+                 <div *ngIf="pass.invalid && (pass.dirty || pass.touched)"
+              class="alert alert-danger">
+              <div *ngIf="pass.errors.required">
+                Contrase&ntilde;a requerido.
+              </div>
+            </div>
+          <div class="btn-group"  style=" padding-left: 45%;">
+              <button class="btn btn-info" *ngIf="!hiddenTecnicos"  (click)="mostrarTecnicos()">
+                <span><b> Pasar lista. </b></span>
+              </button>
+          </div>               
+                </form>      
+          </div>        
         </div>
       </div>
     </div>
