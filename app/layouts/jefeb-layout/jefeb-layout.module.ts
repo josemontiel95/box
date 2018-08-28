@@ -21,6 +21,7 @@ import { agregaRegistroRevenimientoComponent } from '../../jefeb/agregaRegistroR
 
 import { TecnicosGridComponent } from '../../jefeb/tecnicos-grid/tecnicos-grid.component';
 import { FormatoCCHGridComponent } from '../../jefeb/formato-cch-grid/formato-cch-grid.component';
+import { RegistrosRevGridComponent } from '../../jefeb/registrosrev-grid/registrosrev-grid.component';
 
 import { TecnicosGridAgregaComponent } from '../../jefeb/tecnicos-grida/tecnicos-grida.component';
 
@@ -60,6 +61,7 @@ import { ToastrModule } from 'ngx-toastr';
     agregaRegistroCCHComponent,
     agregaRegistroRevenimientoComponent,
     FormatoCCHGridComponent,
+    RegistrosRevGridComponent,
     CrearLlenaRevenimientoComponent,
 
     TecnicosGridAgregaComponent,

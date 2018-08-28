@@ -25,16 +25,16 @@
                     <label for="revProy">REV. DE PROYECTO EN cm.</label> <!--disable-->
                     <input type="text" id="revProy"   
                     class="form-control" 
-                    name="revProy" placeholder="" formControlName="revProy" (blur)="onBlurClaveEspecimen()">
+                    name="revProy" placeholder="" formControlName="revProy" (blur)="onBlurRevProy()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="fc">REV. OBTENIDO EN cm.</label> <!--disable-->
-                    <input type="text" id="fc"   
+                    <label for="revObtenido">REV. OBTENIDO EN cm.</label> <!--disable-->
+                    <input type="text" id="revObtenido"   
                     class="form-control" 
-                    name="fc" placeholder="" formControlName="fc" (blur)="onBlurFC()">
+                    name="revObtenido" placeholder="" formControlName="revObtenido" (blur)="onBlurRevObtenido()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -44,13 +44,13 @@
             <div class="row">
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="revp">TAMAÑO NOMINAL DEL AGREGADO mm</label>
-                    <input type="text" id="revp"  
+                    <label for="tamAgregado">TAMAÑO NOMINAL DEL AGREGADO mm</label>
+                    <input type="text" id="tamAgregado"  
                     class="form-control" 
-                    name="revp" placeholder="" formControlName="revp" (blur)="onBlurRevProy()">
-                     <div *ngIf="revp.invalid && (revp.dirty || revp.touched)"
+                    name="tamAgregado" placeholder="" formControlName="tamAgregado" (blur)="onBlurTamNomAg()">
+                     <div *ngIf="tamAgregado.invalid && (tamAgregado.dirty || tamAgregado.touched)"
                       class="alert alert-danger">
-                        <div *ngIf="revp.errors.required">
+                        <div *ngIf="tamAgregado.errors.required">
                           No. de orden requerido.
                         </div>
                       </div>
@@ -59,25 +59,19 @@
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="revo">IDENTIFICACI&Oacute;N DEL CONCRETO</label> <!--disable-->
-                    <input type="text" id="revo"   
+                    <label for="idConcreto">IDENTIFICACI&Oacute;N DEL CONCRETO</label> <!--disable-->
+                    <input type="text" id="idConcreto"   
                     class="form-control" 
-                    name="revo" placeholder="" formControlName="revo" (blur)="onBlurRevObra()">
+                    name="idConcreto" placeholder="" formControlName="idConcreto" (blur)="onBlurIdConcreto()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="hmobra">HORA DE LA DETERMINACI&Oacute;N</label>
-                    <input type="time" id="hmobra"  
+                    <label for="hDet">HORA DE LA DETERMINACI&Oacute;N</label>
+                    <input type="time" id="hDet"  
                     class="form-control" 
-                    name="hmobra" placeholder="" formControlName="hmobra" (blur)="onBlurHoraMuestreo()">
-                     <div *ngIf="hmobra.invalid && (hmobra.dirty || hmobra.touched)"
-                      class="alert alert-danger">
-                        <div *ngIf="hmobra.errors.required">
-                          No. de orden requerido.
-                        </div>
-                      </div>
+                    name="hDet" placeholder="" formControlName="hDet" (blur)="onBlurHoraMuestreo()">
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
             </div>
@@ -85,10 +79,10 @@
             <div class="row">
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="volumen">UNIDAD</label>
-                    <input type="text" id="volumen"  
+                    <label for="unidad">UNIDAD</label>
+                    <input type="text" id="unidad"  
                     class="form-control" 
-                    name="volumen" placeholder="" formControlName="volumen" (blur)="onBlurVolumen()">
+                    name="unidad" placeholder="" formControlName="unidad" (blur)="onBlurUnidad()">
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
 
@@ -111,10 +105,10 @@
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="unidad">NUMERO DE REMISI&Oacute;N</label> <!--disable-->
-                    <input type="text" id="unidad"   
+                    <label for="numRem">NUMERO DE REMISI&Oacute;N</label> <!--disable-->
+                    <input type="text" id="numRem"   
                     class="form-control" 
-                    name="unidad" placeholder="" formControlName="unidad" (blur)="onBlurUnidad()">
+                    name="numRem" placeholder="" formControlName="numRem" (blur)="onBlurNumeroRemision()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -123,13 +117,13 @@
                
              <div class="col-md-6 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="hmobra">HORA DE SALIDA DE PLANTA</label>
-                    <input type="time" id="hmobra"  
+                    <label for="hsalida">HORA DE SALIDA DE PLANTA</label>
+                    <input type="time" id=""  
                     class="form-control" 
-                    name="hmobra" placeholder="" formControlName="hmobra" (blur)="onBlurHoraMuestreo()">
-                     <div *ngIf="hmobra.invalid && (hmobra.dirty || hmobra.touched)"
+                    name="hsalida" placeholder="" formControlName="hsalida" (blur)="onBlurHoraSalida()">
+                     <div *ngIf="hsalida.invalid && (hsalida.dirty || hsalida.touched)"
                       class="alert alert-danger">
-                        <div *ngIf="hmobra.errors.required">
+                        <div *ngIf="hsalida.errors.required">
                           No. de orden requerido.
                         </div>
                       </div>
@@ -138,13 +132,13 @@
 
                 <div class="col-md-6 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="hmobra">HORA DE LLEGADA A OBRA</label>
-                    <input type="time" id="hmobra"  
+                    <label for="hllegada">HORA DE LLEGADA A OBRA</label>
+                    <input type="time" id="hllegada"  
                     class="form-control" 
-                    name="hmobra" placeholder="" formControlName="hmobra" (blur)="onBlurHoraMuestreo()">
-                     <div *ngIf="hmobra.invalid && (hmobra.dirty || hmobra.touched)"
+                    name="hllegada" placeholder="" formControlName="hllegada" (blur)="onBlurHoraLlegada()">
+                     <div *ngIf="hllegada.invalid && (hllegada.dirty || hllegada.touched)"
                       class="alert alert-danger">
-                        <div *ngIf="hmobra.errors.required">
+                        <div *ngIf="hllegada.errors.required">
                           No. de orden requerido.
                         </div>
                       </div>

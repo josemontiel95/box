@@ -257,10 +257,10 @@
             </div>
           </form>
           <div class="btn-group"  style="float: right; padding-right: 10%;">
-              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
+              <button class="btn btn-info" *ngIf="hiddenf == true"  (click)="mostrarFooter()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hidden" [disabled]="formatoCCHForm.invalid" (click)="actualizarFooter();">
+            <button class="btn btn-success" *ngIf="!hiddenf" [disabled]="formatoCCHForm.invalid" (click)="actualizarFooter();">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>
