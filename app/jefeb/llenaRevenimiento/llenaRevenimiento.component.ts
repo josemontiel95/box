@@ -168,7 +168,6 @@ export class llenaRevenimientoComponent implements OnInit{
     this.formatoCCHForm.controls['cono']['disable']();
     this.formatoCCHForm.controls['varilla']['disable']();
     this.formatoCCHForm.controls['flexometro']['disable']();
-    this.formatoCCHForm.controls['termometro']['disable']();
   }
 
   mostrarFooter(){
@@ -240,6 +239,7 @@ export class llenaRevenimientoComponent implements OnInit{
      
   }
 
+
    
   agregaRegistro(){
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -251,6 +251,7 @@ export class llenaRevenimientoComponent implements OnInit{
 
     formData.append('id_formatoRegistroRev', this.id_formato);  
     this.http.post(url, formData).subscribe(res => {
+                                              console.log(res);
                                               this.respuestaRegistro(res.json());                 
                                             } );
     
@@ -323,7 +324,7 @@ export class llenaRevenimientoComponent implements OnInit{
        location.reload();
      }
      else{
-          this.id_registro= res.id_RegistroRev;
+          this.id_registro= res.id_registrosRev;
           console.log(this.id_registro);
           this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroRevenimiento/'+this.id_orden + '/' + this.id_formato + '/' +this.id_registro]);        
      }

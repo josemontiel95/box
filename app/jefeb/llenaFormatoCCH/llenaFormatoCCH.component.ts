@@ -35,6 +35,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   columnDefs;
   cargando= 5;
   hidden = true;
+  hiddenf= true;
   mis_tipos: Array<any>;
   mis_lab: Array<any>;
   mis_cli: Array<any>;
@@ -157,8 +158,7 @@ export class llenaFormatoCCHComponent implements OnInit{
    
    get termometro() { return this.formatoCCHForm.get('termometro'); } 
 
-    mostrar()
-  {
+    mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
 
@@ -170,6 +170,28 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.formatoCCHForm.controls['localizacion']['disable']();
     this.formatoCCHForm.controls['empresa']['disable']();
     this.formatoCCHForm.controls['direccion']['disable']();
+    this.formatoCCHForm.controls['observaciones']['disable']();
+    this.formatoCCHForm.controls['tipo_especimen']['disable']();
+    this.formatoCCHForm.controls['cono']['disable']();
+    this.formatoCCHForm.controls['varilla']['disable']();
+    this.formatoCCHForm.controls['flexometro']['disable']();
+    this.formatoCCHForm.controls['termometro']['disable']();
+
+  }
+
+  mostrarFooter(){
+    this.hiddenf = !this.hiddenf;
+    const state = this.hiddenf ? 'disable' : 'enable';
+
+    Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
+        this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
+    });
+    
+    this.formatoCCHForm.controls['obra']['disable']();
+    this.formatoCCHForm.controls['localizacion']['disable']();
+    this.formatoCCHForm.controls['empresa']['disable']();
+    this.formatoCCHForm.controls['direccion']['disable']();
+    this.formatoCCHForm.controls['informe']['disable']();
   }
 
   submitted = false;
@@ -273,7 +295,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     formData.append('flexometro_id', this.formatoCCHForm.value.flexometro);
     formData.append('termometro_id', this.formatoCCHForm.value.termometro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitchFooter(res.json());                 
                                             } );
 
   }
@@ -286,6 +308,17 @@ export class llenaFormatoCCHComponent implements OnInit{
      }
      else{
           this.mostrar();         
+     }
+   }
+
+   respuestaSwitchFooter(res: any){ 
+     console.log(res);
+     if(res.error!= 0){
+       window.alert(res.estatus);
+       location.reload();
+     }
+     else{
+          this.mostrarFooter();         
      }
    }
 

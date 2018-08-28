@@ -34,7 +34,6 @@ export class OrdenTrabajoComponent implements OnInit{
     this.columnDefs = [
     {headerName: 'ID Orden de trabajo', field: 'id_ordenDeTrabajo'},
     {headerName: 'Obra', field: 'obra' },    
-    {headerName: 'Jefe de Brigada', field: 'nombre_jefe_brigada_id'},
     {headerName: 'Actividades', field: 'actividades' },    
     {headerName: 'Condiciones de trabajo', field: 'condicionesTrabajo' },
     {headerName: 'Fecha de Inicio', field: 'fechaInicio' },
@@ -66,7 +65,7 @@ export class OrdenTrabajoComponent implements OnInit{
 
     let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllAdmin');
+    search.set('function', 'getAllByJefeBrigada');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => {
@@ -115,13 +114,7 @@ export class OrdenTrabajoComponent implements OnInit{
     this.condicionesTrabajo=condicionesTrabajo;
     this.fechaInicio=fechaInicio;
     this.fechaFin=fechaFin;
-
-    if(this.foto== "null"){
-      this.imgUrl="../assets/img/gabino.jpg";
-    }else{
-      this.imgUrl= this.global.assetsRoot+this.foto;
-    }
-    
+ 
     if(active == 1)
     {
       this.desBut = true;

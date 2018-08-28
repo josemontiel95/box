@@ -43,17 +43,15 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
         FormatoCCH = {
         fechaDet: '',
         revProy: '',
-        fc: '',
-        revp: '',
-        revo: '' ,
-        tamano:'',
-        volumen: '',
+        revObtenido: '',
+        tamAgregado: '',
+        idConcreto: '' ,
+        hDet:'',
+        unidad: '',
         provCon: '',
-        unidad: '',  
-        hmobra: '',
-        tempamb: '',
-        tempambrec: '', 
-        localizacion: ''          
+        numRem: '',
+        hsalida: '',
+        hllegada: ''         
     }
 
 
@@ -72,12 +70,12 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
     
-    url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getRegistrosByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
-    search.set('id_registrosCampo', this.id_registro);
+    search.set('id_registrosRev', this.id_registro);
     this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
 
 
@@ -90,46 +88,39 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
 
     this.formatoCCHForm = new FormGroup({
       'fechaDet': new FormControl( {value: this.FormatoCCH.fechaDet, disabled: this.hidden}),
-      'fc': new FormControl( {value: this.FormatoCCH.fc, disabled: this.hidden}),
-      'revp': new FormControl( {value: this.FormatoCCH.revp, disabled: this.hidden}),
-      'revo': new FormControl( {value: this.FormatoCCH.revo, disabled: this.hidden}),
-      'tamano': new FormControl( {value: this.FormatoCCH.tamano, disabled: this.hidden}),
-      'volumen': new FormControl( {value: this.FormatoCCH.volumen, disabled: this.hidden}),       
+      'revProy': new FormControl( {value: this.FormatoCCH.revProy, disabled: this.hidden}),
+      'revObtenido': new FormControl( {value: this.FormatoCCH.revObtenido, disabled: this.hidden}),
+      'tamAgregado': new FormControl( {value: this.FormatoCCH.tamAgregado, disabled: this.hidden}),
+      'idConcreto': new FormControl( {value: this.FormatoCCH.idConcreto, disabled: this.hidden}),
+      'hDet': new FormControl( {value: this.FormatoCCH.hDet, disabled: this.hidden}),
+      'unidad': new FormControl( {value: this.FormatoCCH.unidad, disabled: this.hidden}),       
       'provCon': new FormControl( {value: this.FormatoCCH.provCon, disabled: this.hidden}),
-      'unidad': new FormControl( {value: this.FormatoCCH.unidad, disabled: this.hidden}),
-      'hmobra': new FormControl( {value: this.FormatoCCH.hmobra, disabled: this.hidden}),
-      'tempamb': new FormControl( {value: this.FormatoCCH.tempamb, disabled: this.hidden}),
-      'tempambrec': new FormControl( {value: this.FormatoCCH.tempambrec, disabled: this.hidden}),
-      'localizacion': new FormControl( {value: this.FormatoCCH.localizacion, disabled: this.hidden})
-          });
+      'numRem': new FormControl( {value: this.FormatoCCH.numRem, disabled: this.hidden}),
+      'hsalida': new FormControl( {value: this.FormatoCCH.hsalida, disabled: this.hidden}),
+      'hllegada': new FormControl( {value: this.FormatoCCH.hllegada, disabled: this.hidden})          });
   }
   
    get fechaDet() { return this.formatoCCHForm.get('fechaDet'); }
 
    get revProy() { return this.formatoCCHForm.get('revProy'); }
 
-   get fc() { return this.formatoCCHForm.get('fc'); }
+   get revObtenido() { return this.formatoCCHForm.get('revObtenido'); }
 
-   get revp() { return this.formatoCCHForm.get('revp'); }
+   get tamAgregado() { return this.formatoCCHForm.get('tamAgregado'); }
    
-   get revo() { return this.formatoCCHForm.get('revo'); }
+   get idConcreto() { return this.formatoCCHForm.get('idConcreto'); }
 
-   get tamano() { return this.formatoCCHForm.get('tamano'); }              
+   get hDet() { return this.formatoCCHForm.get('hDet'); }              
    
-   get volumen() { return this.formatoCCHForm.get('volumen'); }              
-
-   get provCon() { return this.formatoCCHForm.get('provCon'); }              
-
    get unidad() { return this.formatoCCHForm.get('unidad'); }              
 
-   get hmobra() { return this.formatoCCHForm.get('hmobra'); }              
+   get provCon() { return this.formatoCCHForm.get('provCon'); }                          
 
-   get tempamb() { return this.formatoCCHForm.get('tempamb'); }              
+   get numRem() { return this.formatoCCHForm.get('numRem'); }              
+
+   get hsalida() { return this.formatoCCHForm.get('hsalida'); }              
    
-   get tempambrec() { return this.formatoCCHForm.get('tempambrec'); }              
-
-   get localizacion() { return this.formatoCCHForm.get('localizacion'); }              
-
+   get hllegada() { return this.formatoCCHForm.get('hllegada'); }              
 
   submitted = false;
 
@@ -153,19 +144,17 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({
-     fechaDet:  respuesta.fechaDet,
-     revProy: respuesta.revProy,
-     fc: respuesta.fprima,
-     revp:  respuesta.revProyecto,
-     revo: respuesta.revObra,
-     tamano: respuesta.tamagregado,
-     volumen: respuesta.volumen,
-     provCon: respuesta.tipoConcreto,
-     unidad: respuesta.herramienta_id,
-     hmobra: respuesta.horaMuestreo,
-     tempamb: respuesta.tempMuestreo,
-     tempambrec: respuesta.tempRecoleccion,
-     localizacion: respuesta.localizacion
+     fechaDet:  respuesta.fecha,
+     revProy: respuesta.revProyecto,
+     revObtenido: respuesta.revObtenido,
+     tamAgregado:  respuesta.tamAgregado,
+     idConcreto: respuesta.idenConcreto,
+     hDet: respuesta.horaDeterminacion,
+     unidad: respuesta.volumen,
+     provCon: respuesta.concretera_id,
+     numRem: respuesta.remisionNo,
+     hsalida: respuesta.horaSalida,
+     hllegada: respuesta.horaLlegada
     });
 
     if(respuesta.status == 1){
@@ -190,82 +179,50 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
 
   llenarDespues(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertRegistroJefeBrigada');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('campo', '14');
+    formData.append('campo', '13');
     formData.append('valor', '0');
-    formData.append('id_registrosCampo', this.id_registro);
+    formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+ this.id_orden + '/' + this.id_formato]);
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);
   }
 
   registroCompletado(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertRegistroJefeBrigada');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('campo', '14');
+    formData.append('campo', '13');
     formData.append('valor', '1');
-    formData.append('id_registrosCampo', this.id_registro);
+    formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+ this.id_orden + '/' + this.id_formato]);
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);
   }
 
 
-  onBlurClaveEspecimen(){
+   onBlurFechaDet(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertRegistroJefeBrigada');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '1');
-    formData.append('valor', this.formatoCCHForm.value.cesp);
-    formData.append('id_registrosCampo', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
-   onBlurFechaDet(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '2');
     formData.append('valor', this.formatoCCHForm.value.fechaDet);
-    formData.append('id_registrosCampo', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
-  onBlurFC(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '3');
-    formData.append('valor', this.formatoCCHForm.value.fc);
-    formData.append('id_registrosCampo', this.id_registro);
+    formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -273,95 +230,65 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
 
   onBlurRevProy(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '2');
+    formData.append('valor', this.formatoCCHForm.value.revProy);
+    formData.append('id_registrosRev', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+
+  onBlurRevObtenido(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '3');
+    formData.append('valor', this.formatoCCHForm.value.revObtenido);
+    formData.append('id_registrosRev', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onBlurTamNomAg(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertRegistroJefeBrigada');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '4');
-    formData.append('valor', this.formatoCCHForm.value.revp);
-    formData.append('id_registrosCampo', this.id_registro);
+    formData.append('valor', this.formatoCCHForm.value.tamAgregado);
+    formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
   }
+  
 
-  onBlurRevObra(){
+  onBlurIdConcreto(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertRegistroJefeBrigada');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '5');
-    formData.append('valor', this.formatoCCHForm.value.revo);
-    formData.append('id_registrosCampo', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-  
-  onBlurTamNomAg(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '6');
-    formData.append('valor', this.formatoCCHForm.value.tamano);
-    formData.append('id_registrosCampo', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
-  onBlurVolumen(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '7');
-    formData.append('valor', this.formatoCCHForm.value.volumen);
-    formData.append('id_registrosCampo', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
-  onBlurTipoConcreto(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '8');
-    formData.append('valor', this.formatoCCHForm.value.provCon);
-    formData.append('id_registrosCampo', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
-  onBlurUnidad(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '9');
-    formData.append('valor', this.formatoCCHForm.value.unidad);
-    formData.append('id_registrosCampo', this.id_registro);
+    formData.append('valor', this.formatoCCHForm.value.idConcreto);
+    formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -369,63 +296,95 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
 
   onBlurHoraMuestreo(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '7');
+    formData.append('valor', this.formatoCCHForm.value.hDet);
+    formData.append('id_registrosRev', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+ 
+  onBlurUnidad(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '8');
+    formData.append('valor', this.formatoCCHForm.value.unidad);
+    formData.append('id_registrosRev', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onBlurTipoConcreto(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '9');
+    formData.append('valor', this.formatoCCHForm.value.provCon);
+    formData.append('id_registrosRev', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onBlurNumeroRemision(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertRegistroJefeBrigada');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '10');
-    formData.append('valor', this.formatoCCHForm.value.hmobra);
-    formData.append('id_registrosCampo', this.id_registro);
+    formData.append('valor', this.formatoCCHForm.value.numRem);
+    formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
   }
 
-  onBlurTemperaturaMuestreo(){
+  onBlurHoraSalida(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertRegistroJefeBrigada');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '11');
-    formData.append('valor', this.formatoCCHForm.value.tempamb);
-    formData.append('id_registrosCampo', this.id_registro);
+    formData.append('valor', this.formatoCCHForm.value.hsalida);
+    formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
   }
 
-  onBlurTemperaturaRecoleccion(){
+  onBlurHoraLlegada(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertRegistroJefeBrigada');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '12');
-    formData.append('valor', this.formatoCCHForm.value.tempambrec);
-    formData.append('id_registrosCampo', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
-  onBlurLocalizacion(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '13');
-    formData.append('valor', this.formatoCCHForm.value.localizacion);
-    formData.append('id_registrosCampo', this.id_registro);
+    formData.append('valor', this.formatoCCHForm.value.hllegada);
+    formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -439,7 +398,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
      }
      else{
           console.log(this.id_registro);
-          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+ this.id_orden + '/' + this.id_formato]);        
+          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);        
      }
    }
 

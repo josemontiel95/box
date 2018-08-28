@@ -87,14 +87,51 @@
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
 
-              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+              <div class="col-md-2 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="tconcreto">TIPO DE CONCRETO</label> <!--disable-->
-                    <input type="text" id="tconcreto"   
-                    class="form-control" 
-                    name="tconcreto" placeholder="" formControlName="tconcreto" (blur)="onBlurTipoConcreto()">
+
+                    <select  class="form-control" id="tconcreto" name="tconcreto" formControlName="tconcreto" (blur)="onBlurTipoConcreto()">
+                          <option value="0" [disabled]="true">Selecciona un tipo de concreto...</option>
+                          <option *ngFor="let tconcreto of tipoconcreto" [value]="tconcreto.id">
+                                {{tconcreto.tconcreto}}
+                          </option>
+                    </select>
+
+                    
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-2 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="unidad">Especimen 1</label> <!--disable-->
+                    <input type="text" id="unidad"   
+                    class="form-control" 
+                    name="unidad" placeholder="" formControlName="especimen1" (blur)="onBlurEspecimen1()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-2 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="unidad">Especimen 2</label> <!--disable-->
+                    <input type="text" id="unidad"   
+                    class="form-control" 
+                    name="unidad" placeholder="" formControlName="especimen2" (blur)="onBlurEspecimen2()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-2 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="unidad">Especimen 3</label> <!--disable-->
+                    <input type="text" id="unidad"   
+                    class="form-control" 
+                    name="unidad" placeholder="" formControlName="especimen3" (blur)="onBlurEspecimen3()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              
+            </div>
+
+            <div class="row">
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
@@ -104,11 +141,7 @@
                     name="unidad" placeholder="" formControlName="unidad" (blur)="onBlurUnidad()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
-              
-              
-            </div>
 
-            <div class="row">
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="hmobra">HORA DE MUESTREO EN OBRA</label>
@@ -133,7 +166,11 @@
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
-              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+              
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="tempambrec">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C)</label> <!--disable-->
                     <input type="text" id="tempambrec"  
@@ -141,10 +178,8 @@
                     name="tempambrec" placeholder="" formControlName="tempambrec" (blur)="onBlurTemperaturaRecoleccion()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
-            </div>
 
-            <div class="row">
-              <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="localizacion">LOCALIZACI&Oacute;N</label> <!--disable-->
                     <input type="textarea" id="localizacion"   
