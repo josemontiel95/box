@@ -29,7 +29,7 @@ export class IconsComponent implements OnInit{
   cargando= 1;
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-      {headerName: 'ID', field: 'id_usuario' },
+      {headerName: 'Ctrl', field: 'id_usuario' },
       {headerName: 'Nombre', field: 'nombre' },
       {headerName: 'Apellido', field: 'apellido'},
       {headerName: 'Email', field: 'email' },

@@ -20,7 +20,7 @@ export class TiposDeHerramientaComponent implements OnInit{
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'ID', field: 'id_herramienta_tipo' },
+    {headerName: 'Ctrl', field: 'id_herramienta_tipo' },
     {headerName: 'Tipo', field: 'tipo' },
     {headerName: 'Placas', field: 'createdON' },
     {headerName: 'Editado en', field: 'lastEditedON'},

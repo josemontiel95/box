@@ -18,14 +18,13 @@ import {
 @Component({
   selector: 'app-crear-laboratorios',
   templateUrl: './crear-laboratorios.component.html',
-  styleUrls: ['./crear-laboratorios.component.scss']
+  styleUrls: ['./crear-laboratorios.component.scss', '../../loadingArrows.css']
 })
 export class CrearLaboratoriosComponent implements OnInit {
 
 
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
-  cargando= 1;
+  cargando= 0;
   
   mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http) { }
@@ -40,6 +39,7 @@ export class CrearLaboratoriosComponent implements OnInit {
 
   estados= [{"estado":"Aguascalientes", "id":"Aguascalientes"},{"estado":"Baja California", "id":"Baja California"},{"estado":"Baja California Sur", "id":"Baja California Sur"},{"estado":"Baja Campeche", "id":"Baja Campeche"},{"estado":"Coahuila de Zaragoza", "id":"Coahuila de Zaragoza"},{"estado":"Colima", "id":"Colima"},{"estado":"Chiapas", "id":"Chiapas"},{"estado":"Chihuahua", "id":"Chihuahua"},{"estado":"CDMX", "id":"CDMX"},{"estado":"Durango", "id":"Durango"},{"estado":"Guanajuato", "id":"Guanajuato"},{"estado":"Guerrero", "id":"Guerrero"},{"estado":"Hidalgo", "id":"Hidalgo"},{"estado":"Jalisco", "id":"Jalisco"},{"estado":"México", "id":"México"},{"estado":"Michoacan de Ocampo", "id":"Michoacan de Ocampo"},{"estado":"Morelos", "id":"Morelos"},{"estado":"Nayarit", "id":"Nayarit"},{"estado":"Nuevo Leon", "id":"Nuevo Leon"},{"estado":"Oaxaca", "id":"Oaxaca"},{"estado":"Puebla", "id":"Puebla"},{"estado":"Querétaro", "id":"Querétaro"},{"estado":"Quintana Roo", "id":"Quintana Roo"},{"estado":"San Luis Potosí", "id":"San Luis Potosí"},{"estado":"Sinaloa", "id":"Sinaloa"},{"estado":"Sonora", "id":"Sonora"},{"estado":"Tabasco", "id":"Tabasco"},{"estado":"Tamaulipas", "id":"Tamaulipas"},{"estado":"Tlaxcala", "id":"Tlaxcala"},{"estado":"Veracruz de Ignacio de la Llave", "id":"Veracruz de Ignacio de la Llave"},{"estado":"Yucatán", "id":"Yucatán"},{"estado":"Zacatecas", "id":"Zacatecas"},];
   crearLaboratorio(){
+    this.cargando= 1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/laboratorio/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -58,19 +58,20 @@ export class CrearLaboratoriosComponent implements OnInit {
 
 
    respuestaSwitch(res: any){
+     this.cargando= this.cargando-1;
      console.log(res);
      if(res.error!= 0){
-       window.alert("Intentalo otra vez");
+       window.alert(res.estatus);
        location.reload();
      }
      else{
-       location.reload();
+       this.regresaLaboratorio();
      }
    }
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.cargando=1;
+    this.cargando=0;
      this.laboratorioForm = new FormGroup({
       'laboratorio': new FormControl(this.Laboratorio.laboratorio, Validators.required), 
       'estado': new FormControl(this.Laboratorio.estado,  Validators.required), 
@@ -79,12 +80,9 @@ export class CrearLaboratoriosComponent implements OnInit {
   }
 
 
-  get laboratorio() { return this.laboratorioForm.get('laboratorio'); }
-
-
-  get estado() { return this.laboratorioForm.get('estado'); }
-
-  get municipio() { return this.laboratorioForm.get('municipio'); }
+  get laboratorio()    { return this.laboratorioForm.get('laboratorio'); }
+  get estado()         { return this.laboratorioForm.get('estado'); }
+  get municipio()      { return this.laboratorioForm.get('municipio'); }
 
 
    submitted = false;

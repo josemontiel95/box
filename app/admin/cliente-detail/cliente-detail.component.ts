@@ -31,43 +31,63 @@ export class Password
 })
 export class ClienteDetailComponent implements OnInit {
 
+  submitted = false;
+  hidden = true;
+  imgUrl = "../assets/img/gabino.jpg";
+  onSubmit() { this.submitted = true; }
 
-    submitted = false;
-    hidden = true;
-    imgUrl = "../assets/img/gabino.jpg";
-    onSubmit() { this.submitted = true; }
+  cargandoMessage: string= "";
+  actualizarMessageCargando: string= "";
+  global: Global;
+  desBut=true;
+  actBut=false;
+  resppass= false;
+  exitoCon = false;;
+  id: string;
+  foto: string;
+  cargando = 1;
+  clienteForm: FormGroup; //se crea un formulario de tipo form group
 
-    loginMessage: string= "";
-    loginresp: LoginResp;
-    global: Global;
-    desBut=true;
-    actBut=false;
-    resppass= false;
-    exitoCon = false;;
-    id: string;
-    foto: string;
-    cargando = 1;
-    clienteForm: FormGroup; //se crea un formulario de tipo form group
-
-  
-
-   cliente = {
+  cliente = {
     id_cliente: '',
     rfc: '',
     razonSocial: '',
     nombre: '',
-        email: '',
-        telefono: '',
-        nombreContacto: '',
-        direccion: '',
-        telefonoDeContacto: '',
-        //se creo un arreglo llamado cliente con los campos del form
-        };
+    email: '',
+    telefono: '',
+    nombreContacto: '',
+    calle: '',
+    noExt: '',
+    noInt: '',
+    col: '',
+    municipio: '',
+    estado: '',
+    telefonoDeContacto: '',
+    //se creo un arreglo llamado cliente con los campos del form
+  };
 
     model2= new Password(
                          "",
                          ""
                         );
+
+    estadoss= [{"estado":"Aguascalientes", "id":"Aguascalientes"},              {"estado":"Baja California", "id":"Baja California"},
+               {"estado":"Baja California Sur", "id":"Baja California Sur"},    {"estado":"Baja Campeche", "id":"Baja Campeche"},
+               {"estado":"Coahuila de Zaragoza", "id":"Coahuila de Zaragoza"},  {"estado":"Colima", "id":"Colima"},
+               {"estado":"Chiapas", "id":"Chiapas"},                            {"estado":"Chihuahua", "id":"Chihuahua"},
+               {"estado":"CDMX", "id":"CDMX"},                                  {"estado":"Durango", "id":"Durango"},
+               {"estado":"Guanajuato", "id":"Guanajuato"},                      {"estado":"Guerrero", "id":"Guerrero"},
+               {"estado":"Hidalgo", "id":"Hidalgo"},                            {"estado":"Jalisco", "id":"Jalisco"},
+               {"estado":"Mexico", "id":"Mexico"},                              {"estado":"Michoacan de Ocampo", "id":"Michoacan de Ocampo"},
+               {"estado":"Morelos", "id":"Morelos"},                            {"estado":"Nayarit", "id":"Nayarit"},
+               {"estado":"Nuevo Leon", "id":"Nuevo Leon"},                      {"estado":"Oaxaca", "id":"Oaxaca"},
+               {"estado":"Puebla", "id":"Puebla"},                              {"estado":"Queretaro", "id":"Queretaro"},
+               {"estado":"Quintana Roo", "id":"Quintana Roo"},                  {"estado":"San Luis Potosi", "id":"San Luis Potosi"},
+               {"estado":"Sinaloa", "id":"Sinaloa"},                            {"estado":"Sonora", "id":"Sonora"},
+               {"estado":"Tabasco", "id":"Tabasco"},                            {"estado":"Tamaulipas", "id":"Tamaulipas"},
+               {"estado":"Tlaxcala", "id":"Tlaxcala"},                          {"estado":"Veracruz de Ignacio de la Llave", "id":"Veracruz de Ignacio de la Llave"},
+               {"estado":"Yucatan", "id":"Yucatan"},                            {"estado":"Zacatecas", "id":"Zacatecas"}];
+
 
 
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
@@ -92,37 +112,35 @@ export class ClienteDetailComponent implements OnInit {
       'rfc': new FormControl( { value:this.cliente.rfc, disabled: this.hidden },  [Validators.required, Validators.pattern("^(([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3}))|^(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) ") ]), 
       'nombre': new FormControl({ value: this.cliente.nombre, disabled: this.hidden },  [ Validators.required]),
       'razonSocial': new FormControl({ value: this.cliente.razonSocial, disabled: this.hidden },  [  Validators.required]),
-      'direccion': new FormControl({ value: this.cliente.direccion, disabled: this.hidden },  [  Validators.required]), 
+      'calle': new FormControl({ value: this.cliente.calle, disabled: this.hidden },  [  Validators.required]), 
+      'noExt': new FormControl({ value: this.cliente.noExt, disabled: this.hidden },  [  Validators.required]), 
+      'noInt': new FormControl({ value: this.cliente.noInt, disabled: this.hidden },  [  Validators.required]), 
+      'col': new FormControl({ value: this.cliente.col, disabled: this.hidden },  [  Validators.required]), 
+      'municipio': new FormControl({ value: this.cliente.municipio, disabled: this.hidden },  [  Validators.required]), 
+      'estado': new FormControl({ value: this.cliente.estado, disabled: this.hidden },  [  Validators.required]), 
       'telefono': new FormControl({ value: this.cliente.telefono, disabled: this.hidden },  [  Validators.required,Validators.pattern("^([0-9])*$")]),
       'nombreContacto': new FormControl({ value: this.cliente.nombreContacto, disabled: this.hidden },  [  Validators.required]), 
       'telefonoDeContacto': new FormControl({ value: this.cliente.telefonoDeContacto, disabled: this.hidden },  [  Validators.required,Validators.pattern("^([0-9])*$")]),
-      'email': new FormControl({ value: this.cliente.email, disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
-
-                                        
-                                 });
-
-
-
-
+      'email': new FormControl({ value: this.cliente.email, disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])                  
+    
+    });
   }
 
   // funcion para acceder de manera sencilla a los campos del form
   // referencia: https://angular.io/guide/reactive-forms
 
   get rfc() { return this.clienteForm.get('rfc'); }
-
   get nombre() { return this.clienteForm.get('nombre'); }
-
   get razonSocial() { return this.clienteForm.get('razonSocial'); }
-
-  get direccion() { return this.clienteForm.get('direccion'); }
-
+  get calle() { return this.clienteForm.get('calle'); }
+  get noExt() { return this.clienteForm.get('noExt'); }
+  get noInt() { return this.clienteForm.get('noInt'); }
+  get col() { return this.clienteForm.get('col'); }
+  get municipio() { return this.clienteForm.get('municipio'); }
+  get estado() { return this.clienteForm.get('estado'); }
   get telefono() { return this.clienteForm.get('telefono'); }
-
   get nombreContacto() { return this.clienteForm.get('nombreContacto'); }
-
   get telefonoDeContacto() { return this.clienteForm.get('telefonoDeContacto'); }
-
   get email() { return this.clienteForm.get('email'); }
 
 
@@ -132,17 +150,12 @@ export class ClienteDetailComponent implements OnInit {
     console.log(respuesta)
     if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
       window.alert(respuesta.estatus);
-    }
-    else{
-      
+    }else{ 
     }
 
-    if( typeof respuesta.telefonoDeContacto === "string" )
-    {
+    if( typeof respuesta.telefonoDeContacto === "string" ){
       console.log("si es numero");
     }
-
-
   }
 
   rolValidator(respuesta: any){
@@ -167,43 +180,41 @@ export class ClienteDetailComponent implements OnInit {
 
 
   cambiarContrasena(){
-     this.actBut= true;
-     this.desBut= false;
-     this.resppass = false;
-     this.exitoCon = false;
+    this.actBut= true;
+    this.desBut= false;
+    this.resppass = false;
+    this.exitoCon = false;
   }
 
-   guardarContrasena(password1: string, npassword: string){
-     this.actBut = false;
-     this.desBut = true;
-     if(password1 == npassword && password1 != null)
-     {
-       this.postContrasena(password1);
-       this.exitoCon = true;
-       //setTimeout(this.switchAlerta(this.exitoCon), 8000);
-     }
-     else{
-       this.resppass = true;
-     }
-     
+  guardarContrasena(password1: string, npassword: string){
+    this.actBut = false;
+    this.desBut = true;
+    if(password1 == npassword && password1 != null)
+    {
+     this.postContrasena(password1);
+     this.exitoCon = true;
+     //setTimeout(this.switchAlerta(this.exitoCon), 8000);
+    }
+    else{
+     this.resppass = true;
+    }
+  }
+
+  postContrasena(password1: string){
+    let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'upDateContrasena');
+    search.set('constrasena', password1);
+    search.set('id_cliente', this.id);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('token', this.global.token);
+    this.http.get(url, {search}).subscribe(res => {
+                                          res.json();
+                                          this.upContValidator(res.json());
+                                        });
    }
 
-   postContrasena(password1: string){
-     let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
-     let search = new URLSearchParams();
-     search.set('function', 'upDateContrasena');
-     search.set('constrasena', password1);
-     search.set('id_cliente', this.id);
-
-        search.set('rol_usuario_id', this.global.rol);
-        search.set('token', this.global.token);
-        this.http.get(url, {search}).subscribe(res => {
-                                              res.json();
-                                              this.upContValidator(res.json());
-                                            });
-   }
-
-   upContValidator(respuesta: any){
+  upContValidator(respuesta: any){
     console.log(respuesta)
     if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
       window.alert(respuesta.estatus);
@@ -239,8 +250,9 @@ export class ClienteDetailComponent implements OnInit {
 
 
 
-  actualizarCliente( )
-  {
+  actualizarCliente(){
+    this.cargando=1;
+    this.cargandoMessage="Cargando..."
     let url = `${this.global.apiRoot}/cliente/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'upDateAdmin');
@@ -255,7 +267,13 @@ export class ClienteDetailComponent implements OnInit {
     formData.append('nombre', this.clienteForm.value.nombre);
     formData.append('telefono', this.clienteForm.value.telefono);
     formData.append('nombreContacto', this.clienteForm.value.nombreContacto);
-    formData.append('direccion', this.clienteForm.value.direccion);
+    formData.append('calle', this.clienteForm.value.calle);
+    formData.append('noExt', this.clienteForm.value.noExt);
+    formData.append('noInt', this.clienteForm.value.noInt);
+    formData.append('col', this.clienteForm.value.col);
+    formData.append('municipio', this.clienteForm.value.municipio);
+    formData.append('estado', this.clienteForm.value.estado);
+
     formData.append('telefonoDeContacto', this.clienteForm.value.telefonoDeContacto);
 
     this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
@@ -265,23 +283,25 @@ export class ClienteDetailComponent implements OnInit {
 
 
   respuestaError(resp: any){
-    if(resp.error!=0)
-    {
+    console.log("respuestaError this.cargando: "+this.cargando);
+    this.cargando=this.cargando-1;
+    if(resp.error!=0){
       window.alert(resp.estatus);
       location.reload();
+    }else{
+      this.mostrar();
     }
-    else
-    {
-      location.reload();
-    }
+    this.cargandoMessage="";
+    this.actualizarMessageCargando=resp.estatus;
+     setTimeout(()=>{ 
+                     this.actualizarMessageCargando="";
+                     }, 3500); 
   }
 
 
-  llenado(respuesta: any)
-  {
+  llenado(respuesta: any){
     console.log(respuesta);
  
-
     this.clienteForm.patchValue({
       rfc: respuesta.rfc,
       razonSocial: respuesta.razonSocial,
@@ -289,7 +309,12 @@ export class ClienteDetailComponent implements OnInit {
       nombre: respuesta.nombre,
       telefono: respuesta.telefono,
       nombreContacto: respuesta.nombreContacto,
-      direccion: respuesta.direccion,
+      calle: respuesta.calle,
+      noExt: respuesta.noExt,
+      noInt: respuesta.noInt,
+      col: respuesta.col,
+      municipio: respuesta.municipio,
+      estado: respuesta.estado,
       telefonoDeContacto:respuesta.telefonoDeContacto,
 
     });
@@ -304,7 +329,4 @@ export class ClienteDetailComponent implements OnInit {
     console.log("llenado this.cargando: "+this.cargando);
     this.cargando=this.cargando-1;
   }
-  
-
-
 }

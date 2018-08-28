@@ -20,7 +20,7 @@ export class ConcreteraComponent implements OnInit{
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'ID', field: 'id_concretera' },
+    {headerName: 'Ctrl', field: 'id_concretera' },
     {headerName: 'Concretera', field: 'concretera' },
     {headerName: 'Editado en', field: 'lastEditedON'},
     {headerName: 'active', field: 'active' },

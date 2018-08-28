@@ -20,7 +20,7 @@ export class LaboratoriosComponent implements OnInit{
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'ID', field: 'id_laboratorio' },
+    {headerName: 'Ctrl', field: 'id_laboratorio' },
     {headerName: 'Laboratorio', field: 'laboratorio' },
     {headerName: 'Estado', field: 'estado' },
     {headerName: 'Municipio', field: 'municipio'},

@@ -13,108 +13,102 @@
         <div class="card-header">
           <h5 class="title">
             <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaHerramientas();"></i>
-            Laboratorio No. {{model.id_laboratorio}}
+            Laboratorio Ctrl: {{this.id}}
           </h5>
         </div>
         <div class="card-body">
-          <form (ngSubmit)="onSubmit()" #laboratorioForm="ngForm">
+          <form [formGroup]=laboratorioForm #formDir="ngForm">
             <div class="row">
-                <div class="col-md-6 col-12">
-                  <div class="form-group">
-                    <label for="id_laboratorio">ID Laboratorio.</label>
-                    <input type="text" disabled="" id="id_laboratorio"   
-                    class="form-control" 
-                    name="id_laboratorio" placeholder="" formControlName="id_laboratorio" >
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="id_laboratorio">Ctrl</label>
+                  <input type="text" id="id_laboratorio" required  class="form-control" placeholder="Ctrl" formControlName="id_laboratorio" >
+                  <div *ngIf="id_laboratorio.invalid && (id_laboratorio.dirty || id_laboratorio.touched)" class="alert alert-danger">
+                    <div *ngIf="id_laboratorio.errors.required">
+                      Ctrl requerido.
+                    </div>
+                    <div *ngIf="id_laboratorio.errors.pattern">Verifica tu Ctrl</div>                
                   </div>
                 </div>
+              </div>
 
-                <div class="col-md-6 col-12">
-                  <div class="form-group">
-                    <label for="laboratorio">Laboratorio</label>
-                    <input type="text"  id="laboratorio"  
-                    class="form-control" 
-                    name="laboratorio" placeholder="" formControlName="laboratorio" >
-                      <div *ngIf="laboratorio.invalid && (laboratorio.dirty || laboratorio.touched)"
-              class="alert alert-danger">
-              <div *ngIf="laboratorio.errors.required">
-                Laboratorio requerido.
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="laboratorio">Laboratorio</label>
+                  <input type="text"  id="laboratorio" required class="form-control"  placeholder="" formControlName="laboratorio" >
+                  <div *ngIf="laboratorio.invalid && (laboratorio.dirty || laboratorio.touched)" class="alert alert-danger">
+                    <div *ngIf="laboratorio.errors.required">
+                      Laboratorio requerido.
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-                  </div>
-                </div>
-            </div>
-            
-
-            <div class="row">
-              
+            <div class="row"> 
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="estado">Estado</label>
-
-
-                  <select type="text"  id="estado" required class="form-control" name="estado" placeholder="Estado" formControlName="estado">
-                  <option value="" [disabled]="true">Selecciona el Estado...</option>
-                    <option *ngFor="let estado of estados" [value]="estado.id">
+                  <select  id="estado" required class="form-control" formControlName="estado">
+                    <option value="" [disabled]="true">Selecciona el Estado...</option>
+                    <option *ngFor="let estado of estadoss" [value]="estado.id">
                       {{estado.estado}}
                     </option>
                   </select>
-                    
-                <div *ngIf="estado.invalid && (estado.dirty || estado.touched)"
-              class="alert alert-danger">
-              <div *ngIf="estado.errors.required">
-                Estado requerido.
-              </div>
-            </div>
-
+                  <div *ngIf="estado.invalid && (estado.dirty || estado.touched)" class="alert alert-danger">
+                    <div *ngIf="estado.errors.required">
+                      Estado requerido.
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <div class="col-md-6 col-12">
-                  <div class="form-group">
-                    <label for="municipio">Municipio</label>
-                    <input type="text"  id="municipio"  
-                     [(ngModel)]="model.municipio" 
-                    class="form-control" 
-                    name="municipio" placeholder="" formControlName="municipio" >
-                      <div *ngIf="municipio.invalid && (municipio.dirty || municipio.touched)"
-              class="alert alert-danger">
-              <div *ngIf="municipio.errors.required">
-                Municipio de contacto requerido.
+                <div class="form-group">
+                  <label for="municipio">Municipio</label>
+                  <input type="text"  id="municipio"  class="form-control" placeholder="" formControlName="municipio" >
+                  <div *ngIf="municipio.invalid && (municipio.dirty || municipio.touched)" class="alert alert-danger">
+                    <div *ngIf="municipio.errors.required">
+                      Municipio de contacto requerido.
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-                  </div>
+
+            <div class="row"> 
+              <div class="col-md-12 col-12">
+                  <p style="color: orange">{{cargandoMessage}}<p>
+                  <p style="color: green">{{actualizarMessageCargando}}<p>
               </div>
-            
             </div>
 
             <div class="btn-group"  style="float: right; padding-right: 10%;">
               <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
-                <span><b> Cambiar Datos. </b></span>
+                <span><b> Cambiar Datos </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hidden" [disabled]="laboratorioForm.invalid" (click)="actualizarLaboratorio();  ">
-              <span><b> Guardar Cambios. </b></span>
-            </button>
-          </div>
+              <button class="btn btn-success" *ngIf="!hidden" [disabled]="laboratorioForm.invalid" (click)="actualizarLaboratorio();  ">
+                <span><b> Guardar Cambios </b></span>
+              </button>
+            </div>
           </form>
         </div>
       </div>
     </div>
 
-
     <div class="col-md-4">
       <div class="card card">
-         <div class="image">
+        <div class="image">
           <img src="../assets/img/Labo.jpg" alt="...">
-            </div>
+        </div>
+
         <div class="card-body">
           <div class="author">
-           
-              <div class="col-md-6 ml-auto mr-auto">
-                    <button type="button" class="btn btn-danger btn-round " (click)="desactivarLaboratorio()" *ngIf="desBut">Desactivar</button>
-                    <button type="button" class="btn btn-success btn-round " (click)="activarLaboratorio()" *ngIf="actBut">Activar</button>
-                </div>
-              </div>
+            <div class="col-md-6 ml-auto mr-auto">
+              <button type="button" class="btn btn-danger btn-round " (click)="desactivarLaboratorio()" *ngIf="desBut">Desactivar</button>
+              <button type="button" class="btn btn-success btn-round " (click)="activarLaboratorio()" *ngIf="actBut">Activar</button>
             </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

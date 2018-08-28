@@ -145,8 +145,7 @@ export class HerramientaDetailComponent implements OnInit {
     console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
- mostrar()
-  {
+ mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
 
@@ -321,11 +320,11 @@ export class HerramientaDetailComponent implements OnInit {
    respuestaSwitch(res: any){
      console.log(res);
      if(res.error!= 0){
-       window.alert("Intentalo otra vez");
+       window.alert(res.estatus);
        location.reload();
      }
      else{
-       location.reload();
+       //location.reload();
      }
    }
 

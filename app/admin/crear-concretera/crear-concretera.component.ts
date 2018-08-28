@@ -23,22 +23,20 @@ import {
 })
 export class CrearConcreteraComponent implements OnInit {
 
-  
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   concreteraForm: FormGroup;
-
-
-      Concretera = {
-  
-        concretera:'' }
+  Concretera = { concretera:'' }
+  submitted = false;
+  cargando= 1;
+  cargandoMessage: string= "";
+  actualizarMessageCargando: string= "";
 
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
-  
-  crearConcretera(  )
-  {
-      this.data.currentGlobal.subscribe(global => this.global = global);
+  crearConcretera(){
+    this.cargando=1;
+    this.cargandoMessage="Cargando..."
+    this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/concretera/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertAdmin');
@@ -49,43 +47,38 @@ export class CrearConcreteraComponent implements OnInit {
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             } );
-
   }
 
   get concretera() { return this.concreteraForm.get('concretera'); }
 
-   respuestaSwitch(res: any){
-     console.log(res);
-     if(res.error!= 0){
-       window.alert("Intentalo otra vez");
-       location.reload();
-     }
-     else{
-       this.router.navigate(['administrador/concretera']);
-     }
-   }
-
-
+  respuestaSwitch(res: any){
+    console.log("respuestaSwitch :: this.cargando: "+this.cargando);
+    this.cargando=this.cargando-1;
+    console.log(res);
+    if(res.error!= 0){
+      window.alert(res.estatus);
+      location.reload();
+    }
+    else{
+      this.cargandoMessage="";
+      this.actualizarMessageCargando=res.estatus;
+      setTimeout(()=>{ 
+        this.actualizarMessageCargando="";
+        this.router.navigate(['administrador/concretera']);
+      }, 1500); 
+    }
+  }
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-
-    
-        this.concreteraForm = new FormGroup({
-           'concretera': new FormControl( this.Concretera.concretera ,  [ Validators.required]),
-                                        
-                                 });
+    this.concreteraForm = new FormGroup({ 'concretera': new FormControl( this.Concretera.concretera ,  [ Validators.required]),});
   }
 
-   submitted = false;
-
-   regresaConcretera(){
+  regresaConcretera(){
     this.router.navigate(['administrador/concretera']);
   }
 
   onSubmit() { this.submitted = true; }
-
-
 
 }
 

@@ -41,8 +41,9 @@ export class ConcreteraDetailComponent implements OnInit {
     hidden = true;
     onSubmit() { this.submitted = true; }
 
-    loginMessage: string= "";
-    loginresp: LoginResp;
+    cargandoMessage: string= "";
+    actualizarMessageCargando: string= "";
+
     global: Global;
     desBut=true;
     actBut=false;
@@ -78,12 +79,10 @@ export class ConcreteraDetailComponent implements OnInit {
     search.set('id_concretera', this.id);
 	  this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
 
-
     this.concreteraForm = new FormGroup({
-      'id_concretera': new FormControl( { value:this.Concretera.id_concretera, disabled: this.hidden},  [Validators.required]), 
-      'concretera': new FormControl({ value: this.Concretera.concretera, disabled: this.hidden },  [ Validators.required]),
-                                        
-                                 });
+      'id_concretera': new FormControl({ value:this.Concretera.id_concretera, disabled: this.hidden},  [Validators.required]), 
+      'concretera':    new FormControl({ value:this.Concretera.concretera, disabled: this.hidden },    [Validators.required]),
+    });
 
   }
 
@@ -100,8 +99,7 @@ export class ConcreteraDetailComponent implements OnInit {
   }
 
 
-   mostrar()
-  {
+   mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
 
@@ -112,16 +110,15 @@ export class ConcreteraDetailComponent implements OnInit {
     this.concreteraForm.controls['id_concretera']['disable']();
   }
 
-  actualizarConcretera()
-  {
+  actualizarConcretera(){
+    this.cargando=1;
+    this.cargandoMessage="Cargando..."
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/concretera/post/endpoint.php`;
     let formData:FormData = new FormData();
-    //let search = new URLSearchParams();
     formData.append('function', 'upDateAdmin');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-    //formData.append
     formData.append('id_concretera', this.id);
     formData.append('concretera', this.concreteraForm.value.concretera);
 
@@ -133,49 +130,47 @@ export class ConcreteraDetailComponent implements OnInit {
 
 
   respuestaError(resp: any){
+    console.log("respuestaError this.cargando: "+this.cargando);
+    this.cargando=this.cargando-1;
     console.log(resp);
-    if(resp.error!=0)
-    {
+    if(resp.error!=0){
       window.alert(resp.estatus);
       location.reload();
+    }else{
+      this.mostrar();
     }
-    else
-    {
-       this.router.navigate(['administrador/concretera']);
-    }
+    this.cargandoMessage="";
+    this.actualizarMessageCargando=resp.estatus;
+    setTimeout(()=>{ 
+      this.actualizarMessageCargando="";
+    }, 3500); 
   }
 
 
   llenado(respuesta: any){
+    this.cargando=this.cargando-1;
     console.log(respuesta);
      this.concreteraForm.patchValue({
       id_concretera: respuesta.id_concretera,
       concretera: respuesta.concretera
-
     });
+    this.status(this.active);
      
-    setTimeout(()=>{ this.model=respuesta;
-                     this.active= this.model.active;
-                     this.status(this.active);
-                     this.cargando=this.cargando-1;
-                     console.log("llenado this.cargando: "+this.cargando);
-                     }, 100);  
+    setTimeout(()=>{
+                     
+                     }, 1000);  
   }
 
  
 
-  status(active: any)
-  {
+  status(active: any){
     if (active == 1) {
-     this.actBut = false;
-     this.desBut = true;
-          }
-     else
-     {
-     this.actBut= true;
-     this.desBut= false;
-     }     
-
+      this.actBut = false;
+      this.desBut = true;
+    }else{
+      this.actBut= true;
+      this.desBut= false;
+    }
   }
 
   desactivarConcretera(){
@@ -183,29 +178,29 @@ export class ConcreteraDetailComponent implements OnInit {
      this.desBut= false;
      this.switchActive(0);
   }
-
-   activarConcretera(){
+  
+  activarConcretera(){
      this.actBut = false;
      this.desBut = true;
      this.switchActive(1);
    }
 
-   switchActive(active: number){
-     let url = `${this.global.apiRoot}/concretera/post/endpoint.php`;
-     let formData:FormData = new FormData();
-      
-      if(active == 0){
-        formData.append('function', 'deactivate');
-      }
-      else{
-       formData.append('function', 'activate');
-      }
-        formData.append('id_concretera', this.id);
-        formData.append('rol_usuario_id', this.global.rol);
-        formData.append('token', this.global.token);
-        this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());
-                                            });
+  switchActive(active: number){
+    let url = `${this.global.apiRoot}/concretera/post/endpoint.php`;
+    let formData:FormData = new FormData();
+
+    if(active == 0){
+      formData.append('function', 'deactivate');
+    }
+    else{
+      formData.append('function', 'activate');
+    }
+    formData.append('id_concretera', this.id);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('token', this.global.token);
+    this.http.post(url, formData).subscribe(res => {
+                                          this.respuestaSwitch(res.json());
+                                        });
        
    }
    respuestaSwitch(res: any){

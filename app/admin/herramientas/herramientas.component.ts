@@ -20,7 +20,7 @@ export class HerramientasComponent implements OnInit{
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'ID', field: 'id_herramienta' },
+    {headerName: 'Ctrl', field: 'id_herramienta' },
     {headerName: 'Tipo', field: 'tipo' },
     {headerName: 'Placas', field: 'placas' },
     {headerName: 'Condicion', field: 'condicion'},
