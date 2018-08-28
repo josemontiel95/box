@@ -21,10 +21,8 @@ export class FormatosGridComponent implements OnInit  {
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-    {headerName: 'InformeNo.', field: 'informeNo' },
-    {headerName: 'Tipo', field: 'tipo' },
-    {headerName: 'Fecha de Creacion', field: 'createdON' },
-
+    {headerName: 'InformeNo.', field: 'formatoNo' },
+    {headerName: 'Tipo', field: 'tipo' }
       
     ];
     this.rowSelection = "single";
@@ -52,9 +50,9 @@ export class FormatosGridComponent implements OnInit  {
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllAdmin');
+    search.set('function', 'getAllFormatos');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
@@ -80,12 +78,25 @@ export class FormatosGridComponent implements OnInit  {
  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
     var id = "";
-
+    var ruta = false;
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_formatoCampo;
-      
+      if(selectedRow.tipo == "REVENIMIENTO"){
+         id += selectedRow.id_formato;
+         //window.alert(selectedRow.id_formato);
+         ruta = true;
+      }else if(selectedRow.tipo == "CONTROL DE CONCRETO HIDRAULICO"){
+        id += selectedRow.id_formato;
+        //window.alert(selectedRow.id_formato);
+        ruta = false;
+      }
+            
     });
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden +'/'+id]);
+    if(ruta == false){
+      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden +'/'+id]);
+    }else if(ruta == true) {
+      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+this.id_orden +'/'+id]);
+    }
+    //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden +'/'+id]);
   }
 
 

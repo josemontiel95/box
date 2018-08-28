@@ -171,6 +171,31 @@ export class agregaRegistroCCHComponent implements OnInit{
 
     this.respuestaTipoConcreto();    
   }
+
+    /*
+
+    respuestaSwitchE(){
+       //console.log(res);
+       
+       if(window.confirm("¿Estas seguro de marcar como completado el registro? ya no podras editarlo.") == true){
+       if(res.error!= 0){
+         window.alert("Intentalo otra vez");
+         location.reload();
+       }
+       else{
+         console.log("holaa");
+           location.reload();
+         }
+       }
+         else{
+           window.alert("Acción Cancelada.");
+           this.llenarDespues();
+       }
+     
+   } */
+
+
+
   //DON'T TOUCH THIS!
   descartaCambios(){
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -214,7 +239,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('campo', '14');
     formData.append('valor', '1');
     formData.append('id_registrosCampo', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
+    this.http.post(url, formData).subscribe(res => {                                             
                                               this.respuestaSwitch(res.json());                 
                                             } );
     //window.alert("Si procedes ")
@@ -360,7 +385,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '15');
-    formData.append('valor', this.formatoCCHForm.value.tconcreto);
+    formData.append('valor', this.formatoCCHForm.value.especimen1);
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
@@ -376,7 +401,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '16');
-    formData.append('valor', this.formatoCCHForm.value.tconcreto);
+    formData.append('valor', this.formatoCCHForm.value.especimen2);
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
@@ -392,7 +417,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '17');
-    formData.append('valor', this.formatoCCHForm.value.tconcreto);
+    formData.append('valor', this.formatoCCHForm.value.especimen3);
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
@@ -505,6 +530,11 @@ export class agregaRegistroCCHComponent implements OnInit{
     }else{
       //window.alert("notRR es true, this.formatoCCHForm.value.tconcreto: "+this.formatoCCHForm.value.tconcreto);
       this.notRR = true;
+      this.formatoCCHForm.patchValue({
+       especimen1: '7',
+       especimen2: '14',
+       especimen3: '28'
+    });
     }
     //this.notRR = !this.notRR;
     const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
@@ -519,7 +549,7 @@ export class agregaRegistroCCHComponent implements OnInit{
      console.log(res);
      if(res.error!= 0){
        window.alert(res.estatus);
-       location.reload();
+       //location.reload();
      }
      else{
           
@@ -537,5 +567,21 @@ export class agregaRegistroCCHComponent implements OnInit{
     });    
   }
 
+  validaCamposVacios(){
+    let warning = false;
+    Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
+        if(this.formatoCCHForm.controls[controlName].value == "" || this.formatoCCHForm.controls[controlName].value == null || this.formatoCCHForm.controls[controlName].value == "null"){
+          warning = true;
+        }// disables/enables each form control based on 'this.formDisabled'
+    });
 
+    if(warning){
+      window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
+    }else{
+          if(window.confirm("¿Estas seguro de marcar como completado el registro? ya no podras editarlo.")){
+            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+            this.registroCompletado();
+          }
+    }
+  } //FIN ValidaCamposVacios
 }
