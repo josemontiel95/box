@@ -209,6 +209,10 @@ export class DashboardComponent implements OnInit {
 
    get laboratorio_id() { return this.ordenForm.get('laboratorio_id'); } 
 
+   get correo() { return this.paseForm.get('correo'); }
+
+   get pass() { return this.paseForm.get('pass'); }
+
     mostrar()
   {
 
@@ -234,7 +238,13 @@ export class DashboardComponent implements OnInit {
 
    submitted = false;
 
+    pasaTec(pL: any) 
+     {
+        console.log(pL);
+    this.hiddenTecnicos=pL;
+    console.log(this.hiddenTecnicos);
 
+  }   
 
    regresaOrdenTrabajo(){
     this.router.navigate(['jefeBrigada/orden-trabajo']);
