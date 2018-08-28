@@ -16,10 +16,11 @@ export class TecnicosGridComponent implements OnInit  {
   private gridColumnApi;
   rowSelection;
   columnDefs;
+  id: string;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-      {headerName: 'ID', field: 'id_cliente'},
+      {headerName: 'ID', field: 'id_usuario'},
       {headerName: 'Tecnico.', field: 'nombre' },
 
 
@@ -31,6 +32,8 @@ export class TecnicosGridComponent implements OnInit  {
   rowData: any;
 
   ngOnInit() {
+            this.data.currentGlobal.subscribe(global => this.global = global);
+    this.route.params.subscribe( params => this.id=params.id);
   }
 
   @Output() pasaLista = new EventEmitter<any>();
@@ -51,6 +54,7 @@ export class TecnicosGridComponent implements OnInit  {
     search.set('function', 'getAllTecOrden');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
@@ -80,11 +84,11 @@ export class TecnicosGridComponent implements OnInit  {
     });
    if (pl == "0") 
    {
-     this.paseL(true);
+     this.paseL(false);
    }
    else
    {
-     this.paseL(false);
+     this.paseL(true);
    }
   }
 
