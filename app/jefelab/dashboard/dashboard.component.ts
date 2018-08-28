@@ -233,7 +233,26 @@ export class DashboardComponent implements OnInit {
 
   }
 
-     respuestaSwitch(res: any){
+     respuestaSwitchE(res: any){
+     console.log(res);
+     
+     if(window.confirm("Estas seguro de la eliminación.") == true)
+       {
+     if(res.error!= 0){
+       window.alert("Intentalo otra vez");
+       location.reload();
+     }
+     else{
+       console.log("holaa");
+         location.reload();
+       }
+     }
+       else{
+         window.alert("Acción Cancelada.");
+     }
+   
+ }
+        respuestaSwitch(res: any){
      console.log(res);
      if(res.error!= 0){
        window.alert("Intentalo otra vez");
@@ -306,7 +325,7 @@ export class DashboardComponent implements OnInit {
     
         
         this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());
+                                              this.respuestaSwitchE(res.json());
                                             });
 
   }
@@ -322,7 +341,7 @@ export class DashboardComponent implements OnInit {
     formData.append('rol_usuario_id',  this.global.rol);
     formData.append('tecnicosArray',  JSON.stringify(this.aux2));
     this.http.post(url, formData).subscribe(res =>  {
-                                              this.respuestaSwitch(res.json());
+                                              this.respuestaSwitchE(res.json());
                                             } );
   }
 
