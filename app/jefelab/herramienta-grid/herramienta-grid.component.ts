@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,  Output, EventEmitter} from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -29,7 +29,7 @@ export class HerramientaGridComponent implements OnInit  {
 
       
     ];
-    this.rowSelection = "single";
+    this.rowSelection = "multiple";
   }
 
   rowData: any;
@@ -60,6 +60,18 @@ export class HerramientaGridComponent implements OnInit  {
                                           });
   }
 
+      //@Input( ) idh: any;
+
+    @Output() eliminaHerra = new EventEmitter<any>();
+
+  eliminaHerr(ids: any) {
+    this.eliminaHerra.emit(ids);
+    //this.id= h
+    console.log(ids);
+
+  }
+
+
   llenaTabla(repuesta: any){
     console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
@@ -73,13 +85,13 @@ export class HerramientaGridComponent implements OnInit  {
    
  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
-    var id = "";
+    var id = []; //array
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_herramienta;
+      id.push(selectedRow.id_herramienta);
       
     });
-    //this.router.navigate(['jefeb/herramientas/herramienta-detail/'+id]);
+   this.eliminaHerr(id);
   }
 
 
