@@ -91,8 +91,8 @@
                     <label for="tconcreto">PROVEEDOR DEL CONCRETO</label> <!--disable-->
                     
                    <select  class="form-control" id="provCon" 
-                    required name="provCon"
-                    placeholder="Concreteras"  formControlName="provCon" (blur)="onBlurTipoConcreto()">
+                    name="provCon"
+                    placeholder="Concreteras"  formControlName="provCon" (change)="onBlurTipoConcreto()">
                     <option value="" [disabled]="true">Selecciona un proveedor de concreto...</option>
                     
                     <option *ngFor="let provCon of mis_concreteras" [value]="provCon.id_concretera">
@@ -175,7 +175,7 @@
                 </button>
               </div>
               <div class="col-md-2 col-12">
-                <button class="btn btn-success" *ngIf="!hidden" (click)="registroCompletado()">
+                <button class="btn btn-success" *ngIf="!hidden" (click)="validaCamposVacios()">
                       <span><b> Registro Completo. </b></span>
                 </button>
               </div>

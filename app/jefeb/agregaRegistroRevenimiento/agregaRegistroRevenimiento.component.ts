@@ -416,8 +416,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
    }
 
   
-  mostrar()
-  {
+  mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable'; 
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
@@ -425,4 +424,21 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     });    
   }
 
+  validaCamposVacios(){
+    let warning = false;
+    Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
+        if(this.formatoCCHForm.controls[controlName].value == "" || this.formatoCCHForm.controls[controlName].value == null || this.formatoCCHForm.controls[controlName].value == "null"){
+          warning = true;
+        }// disables/enables each form control based on 'this.formDisabled'
+    });
+
+    if(warning){
+      window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
+    }else{
+          if(window.confirm("¿Estas seguro de marcar como completado el registro? ya no podras editarlo.")){
+            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+            this.registroCompletado();
+          }
+    }
+  } //FIN ValidaCamposVacios
 }

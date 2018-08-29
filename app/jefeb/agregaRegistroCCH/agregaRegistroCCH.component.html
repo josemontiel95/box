@@ -25,7 +25,7 @@
                     <label for="fecha">FECHA</label> <!--disable-->
                     <input type="date" id="fecha"   
                     class="form-control" 
-                    name="fecha" placeholder="" formControlName="fecha" (blur)="onBlurFecha()">
+                    name="fecha" placeholder="" formControlName="fecha" (change)="onBlurFecha()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -34,7 +34,7 @@
                     <label for="fc">F'C (kg/cm<sup>2</sup>)</label> <!--disable-->
                     <input type="text" id="fc"   
                     class="form-control" 
-                    name="fc" placeholder="" formControlName="fc" (blur)="onBlurFC()">
+                    name="fc" placeholder="" formControlName="fc" (change)="onBlurFC()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -47,7 +47,7 @@
                     <label for="revp">REVENIMIENTO(cm): PROYECTO</label>
                     <input type="text" id="revp"  
                     class="form-control" 
-                    name="revp" placeholder="" formControlName="revp" (blur)="onBlurRevProy()">
+                    name="revp" placeholder="" formControlName="revp" (change)="onBlurRevProy()">
                      <div *ngIf="revp.invalid && (revp.dirty || revp.touched)"
                       class="alert alert-danger">
                         <div *ngIf="revp.errors.required">
@@ -62,7 +62,7 @@
                     <label for="revo">REVENIMIENTO(cm): OBRA</label> <!--disable-->
                     <input type="text" id="revo"   
                     class="form-control" 
-                    name="revo" placeholder="" formControlName="revo" (blur)="onBlurRevObra()">
+                    name="revo" placeholder="" formControlName="revo" (change)="onBlurRevObra()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -83,7 +83,7 @@
                     <label for="volumen">VOLUMEN(m<sup>3</sup>)</label>
                     <input type="text" id="volumen"  
                     class="form-control" 
-                    name="volumen" placeholder="" formControlName="volumen" (blur)="onBlurVolumen()">
+                    name="volumen" placeholder="" formControlName="volumen" (change)="onBlurVolumen()">
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
 
@@ -91,7 +91,7 @@
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="tconcreto">TIPO DE CONCRETO</label> <!--disable-->
 
-                    <select  class="form-control" id="tconcreto" name="tconcreto" formControlName="tconcreto" (blur)="onBlurTipoConcreto()">
+                    <select  class="form-control" id="tconcreto" name="tconcreto" formControlName="tconcreto" (change)="onBlurTipoConcreto()">
                           <option value="0" [disabled]="true">Selecciona un tipo de concreto...</option>
                           <option *ngFor="let tconcreto of tipoconcreto" [value]="tconcreto.id">
                                 {{tconcreto.tconcreto}}
@@ -107,7 +107,7 @@
                     <label for="unidad">Especimen 1</label> <!--disable-->
                     <input type="text" id="unidad"   
                     class="form-control" 
-                    name="unidad" placeholder="" formControlName="especimen1" (blur)="onBlurEspecimen1()">
+                    name="unidad" placeholder="" formControlName="especimen1" (change)="onBlurEspecimen1()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -116,7 +116,7 @@
                     <label for="unidad">Especimen 2</label> <!--disable-->
                     <input type="text" id="unidad"   
                     class="form-control" 
-                    name="unidad" placeholder="" formControlName="especimen2" (blur)="onBlurEspecimen2()">
+                    name="unidad" placeholder="" formControlName="especimen2" (change)="onBlurEspecimen2()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -125,7 +125,7 @@
                     <label for="unidad">Especimen 3</label> <!--disable-->
                     <input type="text" id="unidad"   
                     class="form-control" 
-                    name="unidad" placeholder="" formControlName="especimen3" (blur)="onBlurEspecimen3()">
+                    name="unidad" placeholder="" formControlName="especimen3" (change)="onBlurEspecimen3()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
               
@@ -138,7 +138,7 @@
                     <label for="unidad">UNIDAD</label> <!--disable-->
                     <input type="text" id="unidad"   
                     class="form-control" 
-                    name="unidad" placeholder="" formControlName="unidad" (blur)="onBlurUnidad()">
+                    name="unidad" placeholder="" formControlName="unidad" (change)="onBlurUnidad()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -147,7 +147,7 @@
                     <label for="hmobra">HORA DE MUESTREO EN OBRA</label>
                     <input type="time" id="hmobra"  
                     class="form-control" 
-                    name="hmobra" placeholder="" formControlName="hmobra" (blur)="onBlurHoraMuestreo()">
+                    name="hmobra" placeholder="" formControlName="hmobra" (change)="onBlurHoraMuestreo()">
                      <div *ngIf="hmobra.invalid && (hmobra.dirty || hmobra.touched)"
                       class="alert alert-danger">
                         <div *ngIf="hmobra.errors.required">
@@ -162,7 +162,7 @@
                     <label for="tempamb">TEMPERATURA AMBIENTE DE MUESTREO (&#176;C)</label> <!--disable-->
                     <input type="text" id="tempamb"   
                     class="form-control" 
-                    name="tempamb" placeholder="" formControlName="tempamb" (blur)="onBlurTemperaturaMuestreo()">
+                    name="tempamb" placeholder="" formControlName="tempamb" (change)="onBlurTemperaturaMuestreo()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -175,7 +175,7 @@
                     <label for="tempambrec">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C)</label> <!--disable-->
                     <input type="text" id="tempambrec"  
                     class="form-control" 
-                    name="tempambrec" placeholder="" formControlName="tempambrec" (blur)="onBlurTemperaturaRecoleccion()">
+                    name="tempambrec" placeholder="" formControlName="tempambrec" (change)="onBlurTemperaturaRecoleccion()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -184,7 +184,7 @@
                     <label for="localizacion">LOCALIZACI&Oacute;N</label> <!--disable-->
                     <input type="textarea" id="localizacion"   
                     class="form-control" 
-                    name="localizacion" placeholder="" formControlName="localizacion" (blur)="onBlurLocalizacion()">
+                    name="localizacion" placeholder="" formControlName="localizacion" (change)="onBlurLocalizacion()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
