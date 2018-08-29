@@ -76,7 +76,6 @@ export class LaboratorioDetailComponent implements OnInit {
     this.route.params.subscribe( params => this.id=params.id);
     //window.alert(this.id);
     this.cargando=1;
-
     
     let url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
 	  let search = new URLSearchParams();
@@ -95,7 +94,7 @@ export class LaboratorioDetailComponent implements OnInit {
       'municipio':       new FormControl( { value:this.laboratorio2.municipio     , disabled: this.hidden },  [Validators.required]),
       'id_laboratorio':  new FormControl( { value:this.laboratorio2.id_laboratorio, disabled: true        },  [Validators.required,  Validators.pattern("^([0-9])*")])
     });
-    console.log(this.estadoss);
+    //console.log(this.estadoss);
   }
 
   get laboratorio()    { return this.laboratorioForm.get('laboratorio'       );}
@@ -143,9 +142,9 @@ export class LaboratorioDetailComponent implements OnInit {
 
 
   respuestaError(resp: any){
-    console.log("respuestaError this.cargando: "+this.cargando);
+    //console.log("respuestaError this.cargando: "+this.cargando);
     this.cargando=this.cargando-1;
-    console.log(resp);
+    //console.log(resp);
     if(resp.error!=0){ // El error es verdadero
       window.alert(resp.estatus);
       location.reload();
@@ -162,7 +161,7 @@ export class LaboratorioDetailComponent implements OnInit {
   }
 
   llenado(respuesta: any){
-    console.log(respuesta);
+    //console.log(respuesta);
     this.laboratorioForm.patchValue({
       laboratorio:    respuesta.laboratorio,
       estado:         respuesta.estado,
@@ -173,7 +172,7 @@ export class LaboratorioDetailComponent implements OnInit {
     this.status(respuesta.active);
 
 
-    console.log("llenado this.cargando: "+this.cargando);
+    //console.log("llenado this.cargando: "+this.cargando);
     this.cargando=this.cargando-1;
 
    
@@ -218,9 +217,9 @@ export class LaboratorioDetailComponent implements OnInit {
                                         });
   }
   respuestaSwitch(res: any){
-    console.log("respuestaSwitch :: llenado this.cargando: "+this.cargando);
+    //console.log("respuestaSwitch :: llenado this.cargando: "+this.cargando);
     this.cargando=this.cargando-1;
-      console.log("respuestaSwitch :: "+res);
+      //console.log("respuestaSwitch :: "+res);
      if(res.error!= 0){
        window.alert(res.estatus);
        location.reload();

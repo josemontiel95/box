@@ -10,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./clientes.component.css','../../loadingArrows.css']
 })
 export class ClientesComponent implements OnInit  {
-	title = 'app';
+  title = 'app';
   global: Global;
   private gridApi;
   private gridColumnApi;
@@ -35,11 +35,9 @@ export class ClientesComponent implements OnInit  {
   cargando= 1;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
-	  this.columnDefs = [
-      {headerName: 'ID', field: 'id_cliente'},
+    this.columnDefs = [
       {headerName: 'Razón social.', field: 'razonSocial' },
       {headerName: 'Nombre de la empresa.', field: 'nombre' },
-      {headerName: 'Direccion', field: 'direccion'},
       {headerName: 'RFC', field: 'rfc' },      
       {headerName: 'Email', field: 'email' },
       {headerName: 'Nombre de contacto', field: 'nombreContacto' },
@@ -47,7 +45,6 @@ export class ClientesComponent implements OnInit  {
       {headerName: 'Telefono de la Empresa', field: 'telefono' },
       {headerName: 'Activo', field: 'active' },
 
-      
     ];
     this.rowSelection = "single";
   }
@@ -58,7 +55,6 @@ export class ClientesComponent implements OnInit  {
     this.cargando=1;
   }
 
-  
   crearCliente(){
     this.router.navigate(['jefeLaboratorio/clientes/crear-cliente']);
   }
@@ -70,25 +66,25 @@ export class ClientesComponent implements OnInit  {
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    console.log("this.global.apiRoot"+this.global.apiRoot);
-    console.log("this.global.token"+this.global.token);
+    //console.log("this.global.apiRoot"+this.global.apiRoot);
+    //console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllJefaLab');
+    search.set('function', 'getAllAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    console.log(search);
+    //console.log(search);
     this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
+                                            //console.log(res.json());
                                             this.llenaTabla(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
   }
 
   llenaTabla(repuesta: any){
-    console.log(repuesta)
+    //console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
@@ -134,7 +130,7 @@ export class ClientesComponent implements OnInit  {
    }
 
    respuestaSwitch(res: any){
-     console.log(res);
+     //console.log(res);
      if(res.error!= 0){
        window.alert("Intentalo otra vez");
        location.reload();
@@ -177,12 +173,8 @@ export class ClientesComponent implements OnInit  {
     this.displayShortDescription(id_cliente, razonSocial, nombre, direccion, email, nombreContacto, rfc, active, foto);
   }
 
-  displayShortDescription(id_cliente: any, razonSocial: any, nombre: any,  direccion: any, email: any, nombreContacto: any, rfc: any, active: any, foto:any)
-  {
-    
-
+  displayShortDescription(id_cliente: any, razonSocial: any, nombre: any,  direccion: any, email: any, nombreContacto: any, rfc: any, active: any, foto:any){
     this.hidden=true;
-    //activar 
     this.id_cliente=id_cliente;
     this.nombre=nombre;
     this.razonSocial=razonSocial;

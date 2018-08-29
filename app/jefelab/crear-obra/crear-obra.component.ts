@@ -29,7 +29,6 @@ export class CrearObraComponent implements OnInit
               private data: DataService, 
               private http: Http) { }
  
-    id_obra: string ;
 
     foto: string;
 
@@ -39,96 +38,81 @@ export class CrearObraComponent implements OnInit
     mis_con: Array<any>;
     mis_cli: Array<any>;
 
-     obraForm: FormGroup;
- 
+    obraForm: FormGroup;
 
-
-   Obra = {
-     obra:'',
-     revenimiento:'',
-     incertidumbre:'',
-     prefijo:'',
-     cliente_id:'',
-     id_concretera:'',
-     tipo:'',
-     descripcion:'',
-     fechaDeCre:'',
-     telefono_residente:'',
-     nombre_residente: '',
-     correo_residente: '' 
+    Obra = {
+     id_obra:             '',
+     obra:                '',
+     revenimiento:        '',
+     incertidumbre:       '',
+     prefijo:             '',
+     id_cliente:          '',
+     id_concretera:       '',
+     tipo:                '',
+     localizacion:        '',
+     descripcion:         '',
+     fechaDeCre:          '',
+     telefono_residente:  '',
+     nombre_residente:    '',
+     correo_residente:    '' 
    }
 
-  crearMessage: string= "";
-  crearMessageCargando: string= "";
+  cargandoMessage: string= "";
+  actualizarMessageCargando: string= "";
 
-
-    //inicio y llenados
+  //inicio y llenados
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando=2;
     let url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
-  let search = new URLSearchParams();
-  search.set('function', 'getForDroptdownAdmin');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-  this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
+    let search = new URLSearchParams();
+    search.set('function',          'getForDroptdownAdmin');
+    search.set('token',             this.global.token);
+    search.set('rol_usuario_id',    this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
                                                  this.rolValidator(res.json());
                                                 });
 
-     url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
+    url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
     search = new URLSearchParams();
-    search.set('function', 'getForDroptdownAdmin');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
+    search.set('function',          'getForDroptdownAdmin');
+    search.set('token',             this.global.token);
+    search.set('rol_usuario_id',    this.global.rol);
     this.http.get(url, {search}).subscribe(res => {this.llenaClientes(res.json());
                                                    this.labValidator(res.json());
                                                  });
-
-        this.obraForm = new FormGroup({
-      'obra': new FormControl(this.Obra.obra, Validators.required), 
-      'revenimiento': new FormControl(this.Obra.revenimiento, Validators.required), 
-      'incertidumbre': new FormControl(this.Obra.incertidumbre,  Validators.required), 
-      'prefijo': new FormControl(this.Obra.prefijo,  Validators.required), 
-      'cliente_id': new FormControl(this.Obra.cliente_id,  Validators.required), 
-      'id_concretera': new FormControl(this.Obra.id_concretera,  Validators.required), 
-      'tipo': new FormControl(this.Obra.tipo,  Validators.required), 
-      'descripcion': new FormControl(this.Obra.descripcion,  Validators.required), 
-      'fechaDeCre': new FormControl(this.Obra.fechaDeCre,  Validators.required),
-      'telefono_residente': new FormControl(this.Obra.telefono_residente, [ Validators.required, Validators.pattern("^([0-9])*")]), 
-      'nombre_residente': new FormControl(this.Obra.nombre_residente,  Validators.required),  
-      'correo_residente': new FormControl(this.Obra.correo_residente,  Validators.required),   
-                                        
-                                      });
-
-
+    this.obraForm = new FormGroup({
+      'id_obra':            new FormControl({ value:this.Obra.id_obra,           disabled: true }),         
+      'obra':               new FormControl({ value:this.Obra.obra,              disabled: this.hidden },  [Validators.required]), 
+      'revenimiento':       new FormControl({ value:this.Obra.revenimiento,      disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'incertidumbre':      new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'prefijo':            new FormControl({ value:this.Obra.prefijo,           disabled: this.hidden },  [Validators.required]), 
+      'id_cliente':         new FormControl({ value:this.Obra.id_cliente,        disabled: this.hidden },  [Validators.required]), 
+      'id_concretera':      new FormControl({ value:this.Obra.id_concretera,     disabled: this.hidden },  [Validators.required]), 
+      'tipo':               new FormControl({ value:this.Obra.tipo,              disabled: this.hidden },  [Validators.required]), 
+      'localizacion':       new FormControl({ value:this.Obra.localizacion,      disabled: this.hidden },  [Validators.required]), 
+      'descripcion':        new FormControl({ value:this.Obra.descripcion,       disabled: this.hidden },  [Validators.required]), 
+      'fechaDeCre':         new FormControl({ value:this.Obra.fechaDeCre,        disabled: this.hidden },  [Validators.required]), 
+      'telefono_residente': new FormControl({ value:this.Obra.telefono_residente,disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'nombre_residente':   new FormControl({ value:this.Obra.nombre_residente,  disabled: this.hidden },  [Validators.required]),  
+      'correo_residente':   new FormControl({ value:this.Obra.correo_residente,  disabled: this.hidden },  [Validators.required])   
+    });
   }
 
-
-  get obra() { return this.obraForm.get('obra'); }
-
-  get revenimiento() { return this.obraForm.get('revenimiento'); }
-
-  get incertidumbre() { return this.obraForm.get('incertidumbre'); }
-
-  get prefijo() { return this.obraForm.get('prefijo'); }
-
-  get cliente_id() { return this.obraForm.get('cliente_id'); }
-
-  get id_concretera() { return this.obraForm.get('id_concretera'); }
-
-  get tipo() { return this.obraForm.get('tipo'); }
-
-  get descripcion() { return this.obraForm.get('descripcion'); }
-
-  get fechaDeCre() { return this.obraForm.get('fechaDeCre'); }
-
-  get telefono_residente() { return this.obraForm.get('telefono_residente'); }
-
-  get nombre_residente() { return this.obraForm.get('nombre_residente'); }
-
-  get correo_residente() { return this.obraForm.get('correo_residente'); }
-
-
+  get id_obra()               { return this.obraForm.get('id_obra'); }
+  get obra()                  { return this.obraForm.get('obra'); }
+  get revenimiento()          { return this.obraForm.get('revenimiento'); }
+  get incertidumbre()         { return this.obraForm.get('incertidumbre'); }
+  get prefijo()               { return this.obraForm.get('prefijo'); }
+  get id_cliente()            { return this.obraForm.get('id_cliente'); }
+  get id_concretera()         { return this.obraForm.get('id_concretera'); }
+  get tipo()                  { return this.obraForm.get('tipo'); }
+  get descripcion()           { return this.obraForm.get('descripcion'); }
+  get localizacion()          { return this.obraForm.get('localizacion'); }
+  get fechaDeCre()            { return this.obraForm.get('fechaDeCre'); }
+  get telefono_residente()    { return this.obraForm.get('telefono_residente'); }
+  get nombre_residente()      { return this.obraForm.get('nombre_residente'); }
+  get correo_residente()      { return this.obraForm.get('correo_residente'); }
 
   rolValidator(repuesta: any){
     console.log(repuesta)
@@ -183,49 +167,49 @@ export class CrearObraComponent implements OnInit
   onSubmit() { this.submitted = true; }
 
 
-  crearObra()
-  {
+  crearObra(){
     this.cargando=1;
+    this.cargandoMessage="Guardando...";
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/obra/post/endpoint.php`;
     let formData:FormData = new FormData();
 
-    formData.append('function', 'insertAdmin');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', "1001");
-    formData.append('obra', this.obraForm.value.obra);
-    formData.append('revenimiento', this.obraForm.value.revenimiento);
-    formData.append('incertidumbre', this.obraForm.value.incertidumbre);
-    formData.append('prefijo', this.obraForm.value.prefijo);
-    formData.append('cliente_id', this.obraForm.value.cliente_id);
-    formData.append('concretera', this.obraForm.value.id_concretera);
-    formData.append('tipo', this.obraForm.value.tipo);
-    formData.append('descripcion', this.obraForm.value.descripcion);
-    formData.append('fechaDeCreacion', this.obraForm.value.fechaDeCre);
+    formData.append('function',           'insertAdmin');
+    formData.append('token',              this.global.token);
+    formData.append('rol_usuario_id',     this.global.rol);
+    
+    formData.append('obra',               this.obraForm.value.obra);
+    formData.append('prefijo',            this.obraForm.value.prefijo );
+    formData.append('fechaDeCreacion',    this.obraForm.value.fechaDeCre);
+    formData.append('descripcion',        this.obraForm.value.descripcion);
+    formData.append('localizacion',       this.obraForm.value.localizacion);
+    formData.append('cliente_id',         this.obraForm.value.id_cliente);
+    formData.append('concretera',         this.obraForm.value.id_concretera);
+    formData.append('tipo',               this.obraForm.value.tipo);
+    formData.append('revenimiento',       this.obraForm.value.revenimiento  );
+    formData.append('incertidumbre',      this.obraForm.value.incertidumbre );
     formData.append('telefono_residente', this.obraForm.value.telefono_residente );
-    formData.append('nombre_residente', this.obraForm.value.nombre_residente );
-    formData.append('correo_residente', this.obraForm.value.correo_residente );
-    this.crearMessageCargando="Cargando...";
+    formData.append('nombre_residente',   this.obraForm.value.nombre_residente );
+    formData.append('correo_residente',   this.obraForm.value.correo_residente );
+    this.cargandoMessage="Cargando...";
     this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );
     
 
   }
 
   diplay(crearResp: CrearResp){
-    
+    this.cargando=this.cargando-1;
     if(crearResp.error==0){
-      this.crearMessage="";
-      this.crearMessageCargando=crearResp.estatus;
-      console.log(crearResp);
-      //setTimeout(()=>{ this.router.navigate(['administrador/insertar-foto/'+crearResp.id_obra])}, 1500);
-       
+      this.cargandoMessage="";
+      this.actualizarMessageCargando=crearResp.estatus;
+      console.log(crearResp);       
     }else{
-      this.crearMessageCargando="";
+      this.actualizarMessageCargando="";
       switch (crearResp.error) {
         case 1:
           
-          this.crearMessage=crearResp.estatus;
-          window.alert(this.crearMessage);
+          this.cargandoMessage=crearResp.estatus;
+          window.alert(this.cargandoMessage);
           console.log(crearResp);
           let token: string;
           token= localStorage.getItem("token");
@@ -239,14 +223,16 @@ export class CrearObraComponent implements OnInit
                                                     });
           break;
         case 2:
-          this.crearMessage=crearResp.estatus;
-          window.alert(this.crearMessage);
+          this.cargandoMessage=crearResp.estatus;
+          window.alert(this.cargandoMessage);
           break;
       }
       
     }
-    this.cargando=this.cargando-1;
-    this.router.navigate(['jefeLaboratorio/obras']);
+    setTimeout(()=>{ 
+      this.router.navigate(['administrador/obras']);
+    }, 1800);
+
   }
 
 
