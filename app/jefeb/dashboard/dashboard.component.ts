@@ -30,7 +30,8 @@ export class DashboardComponent implements OnInit {
   
  formatos = [{"format":"CONTROL DE CONCRETO HIDRAULICO", "id": "1"},{"format":"REVENIMIENTO", "id":"2"}]
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
-        
+ areas= [{"are":"CONCRETO", "id":"CONCRETO"},{"are":"GEOTECNIA", "id":"GEOTECNIA"},{"are":"ASFALTOS", "id":"ASFALTOS"}];
+       
   ordenForm: FormGroup; //se crea un formulario de tipo form group
   tipoForm: FormGroup;
   paseForm: FormGroup;
@@ -39,7 +40,7 @@ export class DashboardComponent implements OnInit {
    mis_obras: Array<any>;
    mis_jefes: Array<any>;
    hidden = true;
-
+   hiddenDetail = true;
    hiddenHerramienta =true;
    hiddenFormato= true;
    hiddenFormatoDispo = true;
@@ -245,6 +246,11 @@ export class DashboardComponent implements OnInit {
     console.log(this.hiddenTecnicos);
 
   }   
+
+  mostrarDetalles()
+  {
+     this.hiddenDetail = !this.hiddenDetail;
+  }
 
    regresaOrdenTrabajo(){
     this.router.navigate(['jefeBrigada/orden-trabajo']);

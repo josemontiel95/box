@@ -14,14 +14,16 @@
 
          <form (ngSubmit)="onSubmit()" [formGroup]=ordenForm #formDir="ngForm">
             
-            <div class="row"> <!--PRIMER ROW -->
+            <div class="row" *ngIf="!hiddenDetail"> <!--PRIMER ROW -->
 
               <div class="col-md-9 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="area">Area</label> <!--disable-->
-                    <input type="text" id="area"   
-                    class="form-control" 
-                    name="area" placeholder="" required   formControlName="area">
+                  <select type="text" id="area" required name="area" class="form-control" placeholder="Area" formControlName="area">
+                      <option value="" [disabled]="true">Selecciona el &Aacute;rea...</option>
+                      <option *ngFor="let are of areas" [value]="areas.id">
+                        {{are.are}}
+                      </option>
+                    </select>
                      <div *ngIf="area.invalid && (area.dirty || area.touched)"
               class="alert alert-danger">
               <div *ngIf="area.errors.required">
@@ -105,7 +107,7 @@
               </div> <!--FIN PRIMER CAMPO -->
             </div> <!--FIN TERCER ROW -->
 
-            <div class="row">
+            <div class="row"  *ngIf="!hiddenDetail">
               <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
                 <div class="form-group">
                   <label for="lugar">Direcci&oacute;n de la Actividad</label>
@@ -120,7 +122,7 @@
             </div> <!--FIN PRIMER CAMPO -->
             </div>
 
-            <div class="row">
+            <div class="row" >
               <div class="col-md-7 col-12"> <!--PRIMER CAMPO -->
                 <div class="form-group">
                   <label for="nombreContacto">Personas a Contactar</label>
@@ -152,7 +154,7 @@
             </div>
             </div>
 
-            <div class="row">
+            <div class="row"  *ngIf="!hiddenDetail">
               <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
                 <div class="form-group">
                   <label for="actividades">Actividades a Realizar</label>
@@ -170,7 +172,7 @@
             </div> <!--FIN PRIMER CAMPO -->
             </div>
 
-            <div class="row">
+            <div class="row"  *ngIf="!hiddenDetail">
               <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
                 <div class="form-group">
                   <label for="condicionesTrabajo">Condiciones del Area de Trabajo</label>
@@ -228,7 +230,7 @@
             </div> <!--FIN  CAMPO -->
             </div>
 
-            <div class="row">
+            <div class="row"  *ngIf="!hiddenDetail">
               <div class="col-md-6 col-12"> <!-- CAMPO -->
                 <div class="form-group">
                   <label for="fechaInicio">Fecha de Inicio</label>
@@ -260,7 +262,7 @@
               </div> <!--FIN  CAMPO -->
             </div>
 
-            <div class="row">
+            <div class="row"  *ngIf="!hiddenDetail">
               <div class="col-md-6 col-12"> <!-- CAMPO -->
                 <div class="form-group">
                   <label for="horaInicio">Hora de Inicio</label>
@@ -292,7 +294,7 @@
               </div> <!--FIN  CAMPO -->
             </div>
 
-            <div class="row">
+            <div class="row"  *ngIf="!hiddenDetail">
               <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
                 <div class="form-group">
                   <label for="observaciones">Observacionesnes</label>
@@ -304,7 +306,25 @@
             </div> <!--FIN PRIMER CAMPO -->
             </div>
           </form>
+          <div class="btn-group">
+          <button class="btn btn-info" *ngIf="hiddenDetail == true" (click)="mostrarDetalles()">
+                <span><b> Mas detalles </b></span>
+            </button>   
+            <button class="btn btn-info" *ngIf="!hiddenDetail && hidden"  (click)="mostrarDetalles()">
+                <span><b> Menos detalles </b></span>
+            </button>    
+        <div class="btn-group" style=" padding-left: 50%;" >
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar(); mostrarDetalles();">
+                <span><b> Cambiar Datos </b></span>
+              </button>
+            <button class="btn btn-success" *ngIf="!hidden" [disabled]="ordenForm.invalid" (click)="mostrar(); mostrarDetalles();" >
+              <!--(click)="actualizarHerramienta( );"-->
+              <span><b> Guardar Cambios </b></span>
+            </button>
+          </div>
+        </div>          
         </div>
+        
       </div>
     </div>
   </div>
@@ -333,14 +353,6 @@
           <h4 class="card-title"> Tecnicos en obra.</h4>
         </div>
         <div class="card-body">
-                       <div class="btn-group"  style=" padding-left: 45%;">
-              <button class="btn btn-info" *ngIf="hiddenTecnicos == true"  (click)="mostrarTecnicos()">
-                <span><b> Agregar Tecnico. </b></span>
-              </button>
-            <button class="btn btn-success" *ngIf="!hiddenTecnicos" [disabled]="false" (click)="mostrarTecnicos();  actualizarTecnicos();">
-              <span><b> Guardar Cambios. </b></span>
-            </button>
-          </div>
           <div *ngIf="this.hiddenTecnicos == true">
           <app-tecnicos-grid (pasaLista)="pasaTec($event)"></app-tecnicos-grid>
         </div>
@@ -370,7 +382,7 @@
             </div>
           <div class="btn-group"  style=" padding-left: 45%;">
               <button class="btn btn-info" *ngIf="!hiddenTecnicos"  (click)="mostrarTecnicos()">
-                <span><b> Pasar lista. </b></span>
+                <span><b> Pasar lista </b></span>
               </button>
           </div>               
                 </form>      
@@ -389,11 +401,11 @@
           <h4 class="card-title">Formatos</h4>
            <div class="btn-group" style=" padding-left: 80%;" >
             <button class="btn btn-info" *ngIf="hiddenFormato == true"  (click)="mostrarFormatos()">
-                <span><b> Selecciona Formato. </b></span>
+                <span><b> Selecciona Formato </b></span>
             </button>
 
             <button class="btn btn-success" *ngIf="!hiddenFormato" [disabled]="false" (click)="seleccionaFormato();">
-              <span><b> Crear Formato. </b></span>
+              <span><b> Crear Formato </b></span>
             </button>
           </div>
             <div class="col-md-12 col-12" [formGroup]=tipoForm>
