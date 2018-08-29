@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   cargando= 1;
+  areas= [{"are":"CONCRETO", "id":"CONCRETO"},{"are":"GEOTECNIA", "id":"GEOTECNIA"},{"are":"ASFALTOS", "id":"ASFALTOS"}];
 
     mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
@@ -220,6 +221,10 @@ export class DashboardComponent implements OnInit {
       mostrarDetalles()
   {
      this.hiddenDetail = !this.hiddenDetail;
+     if(this.hiddenDetail == true)
+     {
+       this.hiddenDetail = false;
+     }
   }
   
     mostrar()
@@ -349,6 +354,32 @@ export class DashboardComponent implements OnInit {
                                               this.respuestaSwitchE(res.json());
                                             } );
   }
+
+  actualizarOrden()
+  {
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'upDateAdmin');
+    formData.append('token', this.global.token);           
+    formData.append('id_ordenDeTrabajo', this.id);
+    formData.append('cotizacion_id',  this.ordenForm.value.cotizacion_id);
+    formData.append('area', this.ordenForm.value.area);           
+    formData.append('obra_id', this.ordenForm.value.obra_id);
+    formData.append('actividades',  this.ordenForm.value.actividades);
+    formData.append('condicionesTrabajo', this.ordenForm.value.condicionesTrabajo);
+    formData.append('fechaInicio', this.ordenForm.value.fechaInicio);           
+    formData.append('fechaFin', this.ordenForm.value.fechaFin);
+    formData.append('horaInicio',  this.ordenForm.value.horaInicio);
+    formData.append('horaFin', this.ordenForm.value.horaFin);           
+    formData.append('observaciones',this.ordenForm.value.observaciones);
+    formData.append('lugar',  this.ordenForm.value.lugar);
+    formData.append('jefe_brigada_id', this.ordenForm.value.jefe_brigada_id);
+    formData.append('laboratorio_id',  this.ordenForm.value.laboratorio_id);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());
+                                            });
+  }
+ 
 
   actualizarHerramienta()
   {
