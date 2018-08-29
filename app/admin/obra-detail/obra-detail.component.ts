@@ -30,45 +30,47 @@ export class Password
   styleUrls: ['./obra-detail.component.css','../../loadingArrows.css']
 })
 export class ObraDetailComponent implements OnInit {
+  foto: string;
 
+   obraForm: FormGroup;
 
-    foto: string;
-   
-     obraForm: FormGroup;
+  Obra = {
+   id_obra:'',
+   obra:'',
+   revenimiento:'',
+   incertidumbre:'',
+   prefijo:'',
+   id_cliente:'',
+   id_concretera:'',
+   tipo:'',
+   localizacion:'',
+   descripcion:'',
+   fechaDeCre:'' ,
+   telefono_residente:'',
+   nombre_residente: '',
+   correo_residente: '' 
+  }
 
-    Obra = {
-     id_obra:'',
-     obra:'',
-     revenimiento:'',
-     incertidumbre:'',
-     prefijo:'',
-     id_cliente:'',
-     id_concretera:'',
-     tipo:'',
-     descripcion:'',
-     fechaDeCre:'' ,
-     telefono_residente:'',
-     nombre_residente: '',
-     correo_residente: '' 
-   }
+  cargandoMessage: string= "";
+  actualizarMessageCargando: string= "";
 
-    submitted = false;
-    hidden = true;
-    cargando= 3;
-    imgUrl = "";
-    mis_con: Array<any>;
-    mis_cli: Array<any>;
-    mis_concreterasActivas: Array<any>;
-    mis_clientesActivos: Array<any>;
-    estatus: string;
-    onSubmit() { this.submitted = true; }
+  submitted = false;
+  hidden = true;
+  cargando= 3;
+  imgUrl = "";
+  mis_con: Array<any>;
+  mis_cli: Array<any>;
+  mis_concreterasActivas: Array<any>;
+  mis_clientesActivos: Array<any>;
+  estatus: string;
+  onSubmit() { this.submitted = true; }
 
-    loginMessage: string= "";
-    loginresp: LoginResp;
-    global: Global;
-    
-    
-    id: string;
+  loginMessage: string= "";
+  loginresp: LoginResp;
+  global: Global;
+  
+  
+  id: string;
     
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) { }
 
@@ -78,18 +80,18 @@ export class ObraDetailComponent implements OnInit {
     this.cargando=3;
     let url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getForDroptdownAdmin');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
+    search.set('function',           'getForDroptdownAdmin');
+    search.set('token',              this.global.token);
+    search.set('rol_usuario_id',     this.global.rol);
     this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
                                                  this.rolValidator(res.json());
                                                 });
 
      url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
     search = new URLSearchParams();
-    search.set('function', 'getForDroptdownAdmin');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
+    search.set('function',           'getForDroptdownAdmin');
+    search.set('token',              this.global.token);
+    search.set('rol_usuario_id',     this.global.rol);
     this.http.get(url, {search}).subscribe(res => {this.llenaClientes(res.json());
                                                    this.labValidator(res.json());
                                                  });
@@ -97,65 +99,46 @@ export class ObraDetailComponent implements OnInit {
 
     url = `${this.global.apiRoot}/obra/get/endpoint.php`;
 	  search = new URLSearchParams();
-	  search.set('function', 'getByIDAdmin');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_obra', this.id);
-	this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
-                                                 this.llenadoValidator(res.json());
-                                               });
+	  search.set('function',            'getByIDAdmin');
+    search.set('token',               this.global.token);
+    search.set('rol_usuario_id',      this.global.rol);
+    search.set('id_obra',             this.id);
+	  this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
+      this.llenadoValidator(res.json());
+    });
 
-            this.obraForm = new FormGroup({
-      'id_obra': new FormControl({ value:this.Obra.id_obra, disabled: true },  [Validators.required]),         
-      'obra': new FormControl({ value:this.Obra.obra, disabled: this.hidden },  [Validators.required]), 
-      'revenimiento': new FormControl( { value:this.Obra.revenimiento, disabled: this.hidden },  [Validators.required]), 
-      'incertidumbre': new FormControl( { value:this.Obra.incertidumbre, disabled: this.hidden },  [Validators.required]), 
-      'prefijo': new FormControl( { value:this.Obra.prefijo, disabled: this.hidden },  [Validators.required]), 
-      'id_cliente': new FormControl( { value:this.Obra.id_cliente, disabled: this.hidden },  [Validators.required]), 
-      'id_concretera': new FormControl( { value:this.Obra.id_concretera, disabled: this.hidden },  [Validators.required]), 
-      'tipo': new FormControl( { value:this.Obra.tipo, disabled: this.hidden },  [Validators.required]), 
-      'descripcion': new FormControl( { value:this.Obra.descripcion, disabled: this.hidden },  [Validators.required]), 
-      'fechaDeCre': new FormControl( { value:this.Obra.fechaDeCre, disabled: this.hidden },  [Validators.required]), 
-      'telefono_residente': new FormControl( {value:this.Obra.telefono_residente,disabled: this.hidden },  [ Validators.required, Validators.pattern("^([0-9])*")]), 
-      'nombre_residente': new FormControl( {value:this.Obra.nombre_residente,disabled: this.hidden },   [Validators.required]),  
-      'correo_residente': new FormControl( {value:this.Obra.correo_residente,disabled: this.hidden },   [Validators.required])   
-          
-                                        
-                                      });
-
-
+    this.obraForm = new FormGroup({
+      'id_obra':            new FormControl({ value:this.Obra.id_obra,           disabled: true },         [Validators.required]),         
+      'obra':               new FormControl({ value:this.Obra.obra,              disabled: this.hidden },  [Validators.required]), 
+      'revenimiento':       new FormControl({ value:this.Obra.revenimiento,      disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'incertidumbre':      new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'prefijo':            new FormControl({ value:this.Obra.prefijo,           disabled: this.hidden },  [Validators.required]), 
+      'id_cliente':         new FormControl({ value:this.Obra.id_cliente,        disabled: this.hidden },  [Validators.required]), 
+      'id_concretera':      new FormControl({ value:this.Obra.id_concretera,     disabled: this.hidden },  [Validators.required]), 
+      'tipo':               new FormControl({ value:this.Obra.tipo,              disabled: this.hidden },  [Validators.required]), 
+      'localizacion':       new FormControl({ value:this.Obra.localizacion,      disabled: this.hidden },  [Validators.required]), 
+      'descripcion':        new FormControl({ value:this.Obra.descripcion,       disabled: this.hidden },  [Validators.required]), 
+      'fechaDeCre':         new FormControl({ value:this.Obra.fechaDeCre,        disabled: this.hidden },  [Validators.required]), 
+      'telefono_residente': new FormControl({ value:this.Obra.telefono_residente,disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'nombre_residente':   new FormControl({ value:this.Obra.nombre_residente,  disabled: this.hidden },  [Validators.required]),  
+      'correo_residente':   new FormControl({ value:this.Obra.correo_residente,  disabled: this.hidden },  [Validators.required])   
+    });
   }
 
-  get id_obra() { return this.obraForm.get('id_obra'); }
-
- 
-  get obra() { return this.obraForm.get('obra'); }
-
-  get revenimiento() { return this.obraForm.get('revenimiento'); }
-
-  get incertidumbre() { return this.obraForm.get('incertidumbre'); }
-
-  get prefijo() { return this.obraForm.get('prefijo'); }
-
-  get id_cliente() { return this.obraForm.get('id_cliente'); }
-
-  get id_concretera() { return this.obraForm.get('id_concretera'); }
-
-  get tipo() { return this.obraForm.get('tipo'); }
-
-  get descripcion() { return this.obraForm.get('descripcion'); }
-
-  get fechaDeCre() { return this.obraForm.get('fechaDeCre'); }
-
-  get telefono_residente() { return this.obraForm.get('telefono_residente'); }
-
-  get nombre_residente() { return this.obraForm.get('nombre_residente'); }
-
-  get correo_residente() { return this.obraForm.get('correo_residente'); }
-
-
-
-
+  get id_obra()               { return this.obraForm.get('id_obra'); }
+  get obra()                  { return this.obraForm.get('obra'); }
+  get revenimiento()          { return this.obraForm.get('revenimiento'); }
+  get incertidumbre()         { return this.obraForm.get('incertidumbre'); }
+  get prefijo()               { return this.obraForm.get('prefijo'); }
+  get id_cliente()            { return this.obraForm.get('id_cliente'); }
+  get id_concretera()         { return this.obraForm.get('id_concretera'); }
+  get tipo()                  { return this.obraForm.get('tipo'); }
+  get descripcion()           { return this.obraForm.get('descripcion'); }
+  get localizacion()          { return this.obraForm.get('localizacion'); }
+  get fechaDeCre()            { return this.obraForm.get('fechaDeCre'); }
+  get telefono_residente()    { return this.obraForm.get('telefono_residente'); }
+  get nombre_residente()      { return this.obraForm.get('nombre_residente'); }
+  get correo_residente()      { return this.obraForm.get('correo_residente'); }
 
 
   llenadoValidator(respuesta: any){
@@ -192,11 +175,7 @@ export class ObraDetailComponent implements OnInit {
     this.router.navigate(['administrador/obras']);
   }
 
-
-  
-
-  llenaRoles(resp: any)
-  {
+  llenaRoles(resp: any){
     console.log(resp);
     this.mis_con= new Array(resp.length);
     var j=resp.length-1;
@@ -209,11 +188,8 @@ export class ObraDetailComponent implements OnInit {
     this.cargando=this.cargando-1;
   }
 
-
-
-  llenaClientes(resp: any)
-  {
-        console.log(resp);
+  llenaClientes(resp: any){
+    console.log(resp);
     this.mis_cli= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
@@ -223,8 +199,7 @@ export class ObraDetailComponent implements OnInit {
     this.cargando=this.cargando-1;
   }
 
-  mostrar()
-  {
+  mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
 
@@ -241,23 +216,24 @@ export class ObraDetailComponent implements OnInit {
     let url = `${this.global.apiRoot}/obra/post/endpoint.php`;
     let formData:FormData = new FormData();
 
-    formData.append('function', 'upDateAdmin');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-    formData.append('id_obra', this.id);
-
-    formData.append('obra', this.obraForm.value.obra);
-    formData.append('prefijo', this.obraForm.value.prefijo );
-    formData.append('fechaDeCreacion', this.obraForm.value.fechaDeCre);
-    formData.append('descripcion', this.obraForm.value.descripcion);
-    formData.append('id_cliente', this.obraForm.value.id_cliente);
-    formData.append('concretera', this.obraForm.value.id_concretera);
-    formData.append('tipo', this.obraForm.value.tipo);
-    formData.append('revenimiento',  this.obraForm.value.revenimiento  );
-    formData.append('incertidumbre', this.obraForm.value.incertidumbre );
+    formData.append('function',           'upDateAdmin');
+    formData.append('token',              this.global.token);
+    formData.append('rol_usuario_id',     this.global.rol);
+    
+    formData.append('id_obra',            this.id);
+    formData.append('obra',               this.obraForm.value.obra);
+    formData.append('prefijo',            this.obraForm.value.prefijo );
+    formData.append('fechaDeCreacion',    this.obraForm.value.fechaDeCre);
+    formData.append('descripcion',        this.obraForm.value.descripcion);
+    formData.append('localizacion',       this.obraForm.value.localizacion);
+    formData.append('cliente_id',         this.obraForm.value.id_cliente);
+    formData.append('concretera',         this.obraForm.value.id_concretera);
+    formData.append('tipo',               this.obraForm.value.tipo);
+    formData.append('revenimiento',       this.obraForm.value.revenimiento  );
+    formData.append('incertidumbre',      this.obraForm.value.incertidumbre );
     formData.append('telefono_residente', this.obraForm.value.telefono_residente );
-    formData.append('nombre_residente', this.obraForm.value.nombre_residente );
-    formData.append('correo_residente', this.obraForm.value.correo_residente );
+    formData.append('nombre_residente',   this.obraForm.value.nombre_residente );
+    formData.append('correo_residente',   this.obraForm.value.correo_residente );
     
     this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
 
@@ -266,16 +242,18 @@ export class ObraDetailComponent implements OnInit {
 
 
   respuestaError(resp: any){
-    if(resp.error!=0)
-    {
+    this.cargando=this.cargando-1;
+    if(resp.error!=0){
       window.alert(resp.estatus);
       location.reload();
+    }else{
+      this.mostrar();
     }
-    else
-    {
-      location.reload();
-    }
-    console.log(resp);
+    this.cargandoMessage="";
+    this.actualizarMessageCargando=resp.estatus;
+     setTimeout(()=>{ 
+                     this.actualizarMessageCargando="";
+                     }, 3500); 
   }
 
 
@@ -284,41 +262,37 @@ export class ObraDetailComponent implements OnInit {
     console.log(respuesta);
     
     this.obraForm.patchValue({
-      id_obra: respuesta.id_obra,
-      obra: respuesta.obra,
-      prefijo: respuesta.prefijo,
-      fechaDeCre: respuesta.fechaDeCreacion,
-      descripcion: respuesta.descripcion,
-      id_cliente: respuesta.id_cliente,
-      id_concretera: respuesta.id_concretera,
-      tipo: respuesta.tipo,
-      revenimiento:respuesta.revenimiento,
-      incertidumbre: respuesta.incertidumbre,
-      telefono_residente: respuesta.telefono_residente,
-      nombre_residente:respuesta.nombre_residente,
-      correo_residente: respuesta.correo_residente
+      id_obra:              respuesta.id_obra,
+      obra:                 respuesta.obra,
+      prefijo:              respuesta.prefijo,
+      fechaDeCre:           respuesta.fechaDeCreacion,
+      descripcion:          respuesta.descripcion,
+      localizacion:         respuesta.localizacion,
+      id_cliente:           respuesta.id_cliente,
+      id_concretera:        respuesta.id_concretera,
+      tipo:                 respuesta.tipo,
+      revenimiento:         respuesta.revenimiento,
+      incertidumbre:        respuesta.incertidumbre,
+      telefono_residente:   respuesta.telefono_residente,
+      nombre_residente:     respuesta.nombre_residente,
+      correo_residente:     respuesta.correo_residente
     });
 
-     if(respuesta.isConcreteraActive==0 ){
+    if(respuesta.isConcreteraActive==0 ){
       this.addConcretera(respuesta.id_concretera,respuesta.concretera);
     }
-
-    if(respuesta.isClienteActive==0)
-    {
+    if(respuesta.isClienteActive==0){
       this.addCliente(respuesta.id_cliente,respuesta.nombre);
     }
-
-    console.log(respuesta.foto);
     if(respuesta.foto == "null"){
       this.imgUrl= "../assets/img/gabino.jpg";
-    }
-    else{
+    }else{
       this.imgUrl= this.global.assetsRoot+respuesta.foto;
     }
     setTimeout(()=>{  
-                     this.cargando=this.cargando-1;
-                     console.log("llenado this.cargando: "+this.cargando);
-                     }, 0);
+      this.cargando=this.cargando-1;
+      console.log("llenado this.cargando: "+this.cargando);
+    }, 0);
   }
   
   addConcretera(id_concretera: any,concretera: any){
@@ -338,7 +312,7 @@ export class ObraDetailComponent implements OnInit {
     }
   }
 
-    addCliente(id_cliente: any,cliente: any){
+  addCliente(id_cliente: any,cliente: any){
     let aux= new Array(this.mis_cli.length+1);
     let index=0;
     for (var _i = 0; _i < aux.length; _i++ ){
@@ -352,9 +326,5 @@ export class ObraDetailComponent implements OnInit {
     for (var _i = 0; _i < aux.length; _i++ ){
       this.mis_cli[_i]=aux[_i];
     }
-  }
-  
-  
-  
-   
+  } 
 }

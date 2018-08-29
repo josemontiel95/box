@@ -33,14 +33,11 @@ export class ObrasComponent implements OnInit{
       {headerName: 'Obra', field: 'obra' },
       {headerName: 'Fecha de Creacion', field: 'fechaDeCreacion' },
       {headerName: 'Nombre de Residente', field: 'nombre_residente' },
-      //{headerName: 'Telefono de Residente', field: 'telefono_residente'},
-      //{headerName: 'Correo de Residente', field: 'correo_residente' },
       {headerName: 'Concretera', field: 'concretera' },
       {headerName: 'Tipo', field: 'tipo' },
       {headerName: 'Cliente', field: 'nombre' },
       {headerName: 'Created', field: 'createdON' },
       {headerName: 'Last Edited', field: 'lastEditedON' },
-      //{headerName: 'Revenimiento', field: 'revenimiento' },
       {headerName: 'Incertidumbre', field: 'incertidumbre' },
       {headerName: 'Active', field: 'active' },
 
@@ -96,13 +93,13 @@ export class ObrasComponent implements OnInit{
     this.cargando=this.cargando-1;
   }
 
-    llenadoValidator(respuesta: any){
+  llenadoValidator(respuesta: any){
     console.log(respuesta)
     if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
       window.alert(respuesta.estatus);
     }
     else{
-      
+     
     }
   }
 
@@ -139,7 +136,6 @@ export class ObrasComponent implements OnInit{
         this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             });
-       
    }
 
    respuestaSwitch(res: any){
@@ -204,8 +200,4 @@ export class ObrasComponent implements OnInit{
       }
     }
   }
-
-
-
-
 }

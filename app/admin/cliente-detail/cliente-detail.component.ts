@@ -114,7 +114,7 @@ export class ClienteDetailComponent implements OnInit {
       'razonSocial': new FormControl({ value: this.cliente.razonSocial, disabled: this.hidden },  [  Validators.required]),
       'calle': new FormControl({ value: this.cliente.calle, disabled: this.hidden },  [  Validators.required]), 
       'noExt': new FormControl({ value: this.cliente.noExt, disabled: this.hidden },  [  Validators.required]), 
-      'noInt': new FormControl({ value: this.cliente.noInt, disabled: this.hidden },  [  Validators.required]), 
+      'noInt': new FormControl({ value: this.cliente.noInt, disabled: this.hidden }), 
       'col': new FormControl({ value: this.cliente.col, disabled: this.hidden },  [  Validators.required]), 
       'municipio': new FormControl({ value: this.cliente.municipio, disabled: this.hidden },  [  Validators.required]), 
       'estado': new FormControl({ value: this.cliente.estado, disabled: this.hidden },  [  Validators.required]), 
@@ -147,19 +147,19 @@ export class ClienteDetailComponent implements OnInit {
 
 
   llenadoValidator(respuesta: any){
-    console.log(respuesta)
+    //console.log(respuesta)
     if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
       window.alert(respuesta.estatus);
     }else{ 
     }
 
     if( typeof respuesta.telefonoDeContacto === "string" ){
-      console.log("si es numero");
+      //console.log("si es numero");
     }
   }
 
   rolValidator(respuesta: any){
-    console.log(respuesta)
+    //console.log(respuesta)
     if(respuesta.error==5 || respuesta.error==6){
       window.alert(respuesta.estatus);
     }
@@ -169,7 +169,7 @@ export class ClienteDetailComponent implements OnInit {
   }
 
   labValidator(respuesta: any){
-    console.log(respuesta)
+    //console.log(respuesta)
     if(respuesta.error==5 || respuesta.error==6){
       window.alert(respuesta.estatus);
     }
@@ -215,7 +215,7 @@ export class ClienteDetailComponent implements OnInit {
    }
 
   upContValidator(respuesta: any){
-    console.log(respuesta)
+    //console.log(respuesta)
     if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
       window.alert(respuesta.estatus);
     }
@@ -283,7 +283,7 @@ export class ClienteDetailComponent implements OnInit {
 
 
   respuestaError(resp: any){
-    console.log("respuestaError this.cargando: "+this.cargando);
+    //console.log("respuestaError this.cargando: "+this.cargando);
     this.cargando=this.cargando-1;
     if(resp.error!=0){
       window.alert(resp.estatus);
@@ -300,7 +300,7 @@ export class ClienteDetailComponent implements OnInit {
 
 
   llenado(respuesta: any){
-    console.log(respuesta);
+    //console.log(respuesta);
  
     this.clienteForm.patchValue({
       rfc: respuesta.rfc,
@@ -318,15 +318,15 @@ export class ClienteDetailComponent implements OnInit {
       telefonoDeContacto:respuesta.telefonoDeContacto,
 
     });
-            console.log(this.clienteForm.disabled);
+            //console.log(this.clienteForm.disabled);
     if(respuesta.foto == "null"){
-      this.imgUrl= "../assets/img/gabino2.jpg";
-      console.log("--"+respuesta.foto);
+      this.imgUrl= "../assets/img/gabino.jpg";
+      //console.log("--"+respuesta.foto);
     }
     else{
       this.imgUrl= this.global.assetsRoot+respuesta.foto;
     }
-    console.log("llenado this.cargando: "+this.cargando);
+    //console.log("llenado this.cargando: "+this.cargando);
     this.cargando=this.cargando-1;
   }
 }

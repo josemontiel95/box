@@ -7,10 +7,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'obras',
   templateUrl: './obras.component.html',
-  styleUrls: ['./obras.component.css']
+  styleUrls: ['./obras.component.css','../../loadingArrows.css']
 })
 export class ObrasComponent implements OnInit{
-	title = 'app';
+  title = 'app';
   global: Global;
   private gridApi;
   private gridColumnApi;
@@ -26,21 +26,18 @@ export class ObrasComponent implements OnInit{
   desBut=true;
   actBut=false;
   imgUrl="";
-
+  cargando= 1;
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
-	  this.columnDefs = [
-      {headerName: 'ID', field: 'id_obra' },
+    this.columnDefs = [
+      {headerName: 'Ctrl', field: 'id_obra' },
       {headerName: 'Obra', field: 'obra' },
-      //{headerName: 'Prefijo', field: 'prefijo'},
       {headerName: 'Fecha de Creacion', field: 'fechaDeCreacion' },
-      //{headerName: 'Descripcion', field: 'descripcion' },
+      {headerName: 'Nombre de Residente', field: 'nombre_residente' },
       {headerName: 'Concretera', field: 'concretera' },
       {headerName: 'Tipo', field: 'tipo' },
-      //{headerName: 'ID Cliente', field: 'id_cliente' },
       {headerName: 'Cliente', field: 'nombre' },
       {headerName: 'Created', field: 'createdON' },
       {headerName: 'Last Edited', field: 'lastEditedON' },
-      {headerName: 'Revenimiento', field: 'revenimiento' },
       {headerName: 'Incertidumbre', field: 'incertidumbre' },
       {headerName: 'Active', field: 'active' },
 
@@ -52,6 +49,7 @@ export class ObrasComponent implements OnInit{
 
   ngOnInit() {
     this.route.params.subscribe( params => this.id=params.id );
+    this.cargando=1;
   }
 
 
@@ -92,15 +90,16 @@ export class ObrasComponent implements OnInit{
     }else{
       this.rowData =repuesta;
     }
+    this.cargando=this.cargando-1;
   }
 
-    llenadoValidator(respuesta: any){
+  llenadoValidator(respuesta: any){
     console.log(respuesta)
     if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
       window.alert(respuesta.estatus);
     }
     else{
-      
+     
     }
   }
 
@@ -137,7 +136,6 @@ export class ObrasComponent implements OnInit{
         this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             });
-       
    }
 
    respuestaSwitch(res: any){
@@ -174,7 +172,7 @@ export class ObrasComponent implements OnInit{
 
   displayShortDescription(id: any, nombre: any, prefijo: any, foto: any, cliente: any, active: any){
     
-
+    
     this.hidden=true;
     //activar 
     this.id=id;
@@ -202,8 +200,4 @@ export class ObrasComponent implements OnInit{
       }
     }
   }
-
-
-
-
 }
