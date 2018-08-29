@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { JefebLayoutComponent } from './layouts/jefeb-layout/jefeb-layout.component';
 import { JefeLabLayoutComponent } from './layouts/JefeLab-layout/jefelab-layout.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { TecnicoMLayoutComponent } from './layouts/tecnicom-layout/tecnicom-layout.component';
 import { SubAdminLayoutComponent } from './layouts/subadmin-layout/subadmin-layout.component';
 import { LoginComponent } from './login/login.component';
 import { AppGuard } from './app.guard';
@@ -51,6 +52,16 @@ const routes: Routes =[
         {
       path: '',
       loadChildren: './layouts/JefeLab-layout/jefelab-layout.module#JefeLabLayoutModule'
+
+  }]},
+  {
+    path: 'tecnico',
+    component: TecnicoMLayoutComponent,
+    canActivateChild: [AppGuard],
+    children: [
+        {
+      path: '',
+      loadChildren: './layouts/tecnicom-layout/tecnicom-layout.module#TecnicoMLayoutModule'
 
   }]},
  /* {

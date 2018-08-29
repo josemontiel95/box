@@ -18,7 +18,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { SubAdminLayoutComponent } from './layouts/subadmin-layout/subadmin-layout.component';
 import { JefeLabLayoutComponent } from './layouts/JefeLab-layout/jefelab-layout.component';
-
+import { TecnicoMLayoutComponent } from './layouts/tecnicom-layout/tecnicom-layout.component';
 
 import { DataTablesModule } from 'angular-datatables';
 
@@ -49,6 +49,7 @@ import { MatProgressBarModule } from '@angular/material';
     AppComponent,
     AdminLayoutComponent,
     SubAdminLayoutComponent,
+    TecnicoMLayoutComponent,
     LoginComponent,
     JefebLayoutComponent,
     JefeLabLayoutComponent,
