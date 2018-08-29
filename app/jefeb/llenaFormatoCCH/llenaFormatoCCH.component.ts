@@ -229,24 +229,60 @@ export class llenaFormatoCCHComponent implements OnInit{
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({
-     obra: respuesta.obra,
-     localizacion:  respuesta.localizacion,
-     informe:  respuesta.informeNo,
-     empresa:  respuesta.razonSocial,
-     direccion: respuesta.direccion,
-     observaciones:  respuesta.observaciones,
-     tipo_especimen:  respuesta.tipo,
-     cono:   respuesta.cono_id,
-     varilla:  respuesta.varilla_id,
-     flexometro:  respuesta.flexometro_id,
-     termometro:  respuesta.termometro_id
+     obra:                respuesta.obra,
+     localizacion:        respuesta.localizacion,
+     informe:             respuesta.informeNo,
+     empresa:             respuesta.razonSocial,
+     direccion:           respuesta.direccion,
+     observaciones:       respuesta.observaciones,
+     tipo_especimen:      respuesta.tipo,
+     cono:                respuesta.cono_id,
+     varilla:             respuesta.varilla_id,
+     flexometro:          respuesta.flexometro_id,
+     termometro:          respuesta.termometro_id
     });
 
     this.cargando=this.cargando-1;
      
   }
 
-   
+  obtenStatusReg(){
+    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getAllRegistrosByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_formatoCampo', this.id_formato);
+    console.log(search);
+    this.http.get(url, {search}).subscribe(res => {
+                                            console.log(res.json());
+                                            this.validaRegistrosVacios(res.json());
+                                          });
+  }
+
+  validaRegistrosVacios(res: any){
+
+    let isValid = true;
+    res.forEach(function (value) {
+      if(value.status == "0"){
+         isValid = false;
+        //window.alert("Existe al menos un registro que no ha sido completado, verifica que todos los registros esten completados.");
+      }
+    });
+
+    if(!isValid){
+      window.alert("Tienes al menos un registro vacio, todos los registros deben estar en ESTATUS:1 para completar el formato.");     
+    }else{
+          if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podra ser editarlo.")){
+            this.formatoCompletado();
+          }
+    } 
+  } //FIN ValidaCamposVacios
+
+  formatoCompletado(){
+    window.alert("Exito!");
+  } 
+
   agregaRegistro(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;

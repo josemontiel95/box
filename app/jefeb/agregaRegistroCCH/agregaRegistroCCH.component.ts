@@ -84,57 +84,41 @@ export class agregaRegistroCCHComponent implements OnInit{
     search.set('id_registrosCampo', this.id_registro);
     this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) ); 
 
-
-    this.formatoCCHForm = new FormGroup({
-      'cesp': new FormControl( {value: this.FormatoCCH.cesp, disabled: this.hidden}),
-      'fecha': new FormControl( {value: this.FormatoCCH.fecha, disabled: this.hidden}),
-      'fc': new FormControl( {value: this.FormatoCCH.fc, disabled: this.hidden}),
-      'revp': new FormControl( {value: this.FormatoCCH.revp, disabled: this.hidden}),
-      'revo': new FormControl( {value: this.FormatoCCH.revo, disabled: this.hidden}),
-      'tamano': new FormControl( {value: this.FormatoCCH.tamano, disabled: this.hidden}),
-      'volumen': new FormControl( {value: this.FormatoCCH.volumen, disabled: this.hidden}),       
-      'tconcreto': new FormControl( {value: this.FormatoCCH.tconcreto, disabled: this.hidden}),
-      'especimen1': new FormControl( {value: this.FormatoCCH.especimen1, disabled: this.hidden}),
-      'especimen2': new FormControl( {value: this.FormatoCCH.especimen2, disabled: this.hidden}),
-      'especimen3': new FormControl( {value: this.FormatoCCH.especimen3, disabled: this.hidden}),
-      'unidad': new FormControl( {value: this.FormatoCCH.unidad, disabled: this.hidden}),
-      'hmobra': new FormControl( {value: this.FormatoCCH.hmobra, disabled: this.hidden}),
-      'tempamb': new FormControl( {value: this.FormatoCCH.tempamb, disabled: this.hidden}),
-      'tempambrec': new FormControl( {value: this.FormatoCCH.tempambrec, disabled: this.hidden}),
-      'localizacion': new FormControl( {value: this.FormatoCCH.localizacion, disabled: this.hidden})
-          });
+  this.formatoCCHForm = new FormGroup({
+    'cesp':             new FormControl( {value: this.FormatoCCH.cesp, disabled: this.hidden}),
+    'fecha':            new FormControl( {value: this.FormatoCCH.fecha, disabled: this.hidden}),
+    'fc':               new FormControl( {value: this.FormatoCCH.fc, disabled: this.hidden}),
+    'revp':             new FormControl( {value: this.FormatoCCH.revp, disabled: true}),
+    'revo':             new FormControl( {value: this.FormatoCCH.revo, disabled: this.hidden}),
+    'tamano':           new FormControl( {value: this.FormatoCCH.tamano, disabled: this.hidden}),
+    'volumen':          new FormControl( {value: this.FormatoCCH.volumen, disabled: this.hidden}),       
+    'tconcreto':        new FormControl( {value: this.FormatoCCH.tconcreto, disabled: this.hidden}),
+    'especimen1':       new FormControl( {value: this.FormatoCCH.especimen1, disabled: this.hidden}),
+    'especimen2':       new FormControl( {value: this.FormatoCCH.especimen2, disabled: this.hidden}),
+    'especimen3':       new FormControl( {value: this.FormatoCCH.especimen3, disabled: this.hidden}),
+    'unidad':           new FormControl( {value: this.FormatoCCH.unidad, disabled: this.hidden}),
+    'hmobra':           new FormControl( {value: this.FormatoCCH.hmobra, disabled: this.hidden}),
+    'tempamb':          new FormControl( {value: this.FormatoCCH.tempamb, disabled: this.hidden}),
+    'tempambrec':       new FormControl( {value: this.FormatoCCH.tempambrec, disabled: this.hidden}),
+    'localizacion':     new FormControl( {value: this.FormatoCCH.localizacion, disabled: this.hidden})
+        });
   }
 
-   get cesp() { return this.formatoCCHForm.get('cesp'); }
-  
-   get fecha() { return this.formatoCCHForm.get('fecha'); }
-
-   get fc() { return this.formatoCCHForm.get('fc'); }
-
-   get revp() { return this.formatoCCHForm.get('revp'); }
-   
-   get revo() { return this.formatoCCHForm.get('revo'); }
-
-   get tamano() { return this.formatoCCHForm.get('tamano'); }              
-   
-   get volumen() { return this.formatoCCHForm.get('volumen'); }              
-
-   get tconcreto() { return this.formatoCCHForm.get('tconcreto'); }   
-
-   get especimen1() { return this.formatoCCHForm.get('especimen1'); }   
-
-   get especimen2() { return this.formatoCCHForm.get('especimen2'); }   
-
-   get especimen3() { return this.formatoCCHForm.get('especimen3'); }              
-
-   get unidad() { return this.formatoCCHForm.get('unidad'); }              
-
-   get hmobra() { return this.formatoCCHForm.get('hmobra'); }              
-
-   get tempamb() { return this.formatoCCHForm.get('tempamb'); }              
-   
-   get tempambrec() { return this.formatoCCHForm.get('tempambrec'); }              
-
+   get cesp()         { return this.formatoCCHForm.get('cesp'); }
+   get fecha()        { return this.formatoCCHForm.get('fecha'); }
+   get fc()           { return this.formatoCCHForm.get('fc'); }
+   get revp()         { return this.formatoCCHForm.get('revp'); }
+   get revo()         { return this.formatoCCHForm.get('revo'); }
+   get tamano()       { return this.formatoCCHForm.get('tamano'); }                 
+   get volumen()      { return this.formatoCCHForm.get('volumen'); }              
+   get tconcreto()    { return this.formatoCCHForm.get('tconcreto'); }   
+   get especimen1()   { return this.formatoCCHForm.get('especimen1'); }   
+   get especimen2()   { return this.formatoCCHForm.get('especimen2'); }   
+   get especimen3()   { return this.formatoCCHForm.get('especimen3'); }              
+   get unidad()       { return this.formatoCCHForm.get('unidad'); }              
+   get hmobra()       { return this.formatoCCHForm.get('hmobra'); }              
+   get tempamb()      { return this.formatoCCHForm.get('tempamb'); }              
+   get tempambrec()   { return this.formatoCCHForm.get('tempambrec'); }              
    get localizacion() { return this.formatoCCHForm.get('localizacion'); }              
 
 
@@ -147,21 +131,21 @@ export class agregaRegistroCCHComponent implements OnInit{
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({
-     cesp: respuesta.claveEspecimen,
-     fecha:  respuesta.fecha,
-     fc: respuesta.fprima,
-     revp:  respuesta.revProyecto,
-     revo: respuesta.revObra,
-     tamano: respuesta.tamagregado,
-     volumen: respuesta.volumen,
-     tconcreto: respuesta.tipoConcreto,
-     especimen1: respuesta.prueba1,
-     especimen2: respuesta.prueba2,
-     especimen3: respuesta.prueba3,
-     unidad: respuesta.herramienta_id,
-     hmobra: respuesta.horaMuestreo,
-     tempamb: respuesta.tempMuestreo,
-     tempambrec: respuesta.tempRecoleccion,
+     cesp:         respuesta.claveEspecimen,
+     fecha:        respuesta.fecha,
+     fc:           respuesta.fprima,
+     revp:         respuesta.revProyecto,
+     revo:         respuesta.revObra,
+     tamano:       respuesta.tamagregado,
+     volumen:      respuesta.volumen,
+     tconcreto:    respuesta.tipoConcreto,
+     especimen1:   respuesta.prueba1,
+     especimen2:   respuesta.prueba2,
+     especimen3:   respuesta.prueba3,
+     unidad:       respuesta.herramienta_id,
+     hmobra:       respuesta.horaMuestreo,
+     tempamb:      respuesta.tempMuestreo,
+     tempambrec:   respuesta.tempRecoleccion,
      localizacion: respuesta.localizacion
     });
 
@@ -171,6 +155,7 @@ export class agregaRegistroCCHComponent implements OnInit{
 
     this.respuestaTipoConcreto();    
   }
+  
   //DON'T TOUCH THIS!
   descartaCambios(){
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -214,7 +199,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('campo', '14');
     formData.append('valor', '1');
     formData.append('id_registrosCampo', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
+    this.http.post(url, formData).subscribe(res => {                                             
                                               this.respuestaSwitch(res.json());                 
                                             } );
     //window.alert("Si procedes ")
@@ -360,7 +345,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '15');
-    formData.append('valor', this.formatoCCHForm.value.tconcreto);
+    formData.append('valor', this.formatoCCHForm.value.especimen1);
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
@@ -376,7 +361,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '16');
-    formData.append('valor', this.formatoCCHForm.value.tconcreto);
+    formData.append('valor', this.formatoCCHForm.value.especimen2);
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
@@ -392,7 +377,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '17');
-    formData.append('valor', this.formatoCCHForm.value.tconcreto);
+    formData.append('valor', this.formatoCCHForm.value.especimen3);
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
@@ -499,12 +484,17 @@ export class agregaRegistroCCHComponent implements OnInit{
   Desabilita los 3 campos de especimen y si es falso los habilitara. 
 */
   respuestaTipoConcreto(){
-    if(this.formatoCCHForm.value.tconcreto == "RR"){
+    if(this.formatoCCHForm.value.tconcreto == "RR" || this.formatoCCHForm.value.tconcreto == "CA" ){
       this.notRR = false;
      // window.alert("notRR es false, this.formatoCCHForm.value.tconcreto: "+this.formatoCCHForm.value.tconcreto);
     }else{
       //window.alert("notRR es true, this.formatoCCHForm.value.tconcreto: "+this.formatoCCHForm.value.tconcreto);
       this.notRR = true;
+      this.formatoCCHForm.patchValue({
+       especimen1: '7',
+       especimen2: '14',
+       especimen3: '28'
+    });
     }
     //this.notRR = !this.notRR;
     const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
@@ -519,7 +509,7 @@ export class agregaRegistroCCHComponent implements OnInit{
      console.log(res);
      if(res.error!= 0){
        window.alert(res.estatus);
-       location.reload();
+       //location.reload();
      }
      else{
           
@@ -537,5 +527,21 @@ export class agregaRegistroCCHComponent implements OnInit{
     });    
   }
 
+  validaCamposVacios(){
+    let warning = false;
+    Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
+        if(this.formatoCCHForm.controls[controlName].value == "" || this.formatoCCHForm.controls[controlName].value == null || this.formatoCCHForm.controls[controlName].value == "null"){
+          warning = true;
+        }// disables/enables each form control based on 'this.formDisabled'
+    });
 
+    if(warning){
+      window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
+    }else{
+          if(window.confirm("¿Estas seguro de marcar como completado el registro? ya no podras editarlo.")){
+            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+            this.registroCompletado();
+          }
+    }
+  } //FIN ValidaCamposVacios
 }

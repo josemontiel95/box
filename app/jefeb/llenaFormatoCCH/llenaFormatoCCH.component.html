@@ -9,6 +9,20 @@
 <div class="main-content">
 
 <div class="row">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-body">
+          <div class="btn-group" style=" padding-left: 40%;">
+                  <button class="btn btn-default" (click)="obtenStatusReg();">
+                    <span><b>FORMATO COMPLETADO</b></span>
+                  </button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-lg-12 col-12 col-md-12">
       <div class="card card-chart">
         
@@ -134,7 +148,7 @@
         </div>
         <div class="card-body ">
           <app-formato-cch-grid></app-formato-cch-grid>
-        </div>
+        </div> 
       </div>
     </div>
   </div>
@@ -157,7 +171,7 @@
 
               <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label>Tipo de Especimen</label>
+                  <label>Tipos de Especimen</label>
                   <select type="text" id="especimen" required name="especimen" class="form-control" placeholder="Especimen" formControlName="tipo_especimen">
                     <option value="" [disabled]="true">Selecciona el tipo de especimen...</option>
                     <option *ngFor="let especimen of espec" [value]="especimen.id">
@@ -268,7 +282,7 @@
       </div>
     </div> 
   </div>
-  
+
   
 
 
