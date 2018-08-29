@@ -9,7 +9,7 @@ import { SidebarComponent } from './sidebars/sidebar/sidebar.component';
 import { SidebarAdministrativoComponent } from './sidebars/sidebarAdministrativo/sidebarAdministrativo.component';
 import { SidebarJefebComponent } from './sidebars/sidebarJefeB/sidebarjefeb.component';
 import { SidebarJefeLab } from './sidebars/sidebarJefeLab/sidebarjefelab.component';
-
+import { SidebarTecnicoMComponent } from './sidebars/sidebarTecnicoM/sidebartecnicom.component';
 
 @NgModule({
   imports: [
@@ -24,6 +24,7 @@ import { SidebarJefeLab } from './sidebars/sidebarJefeLab/sidebarjefelab.compone
     SidebarComponent,
     SidebarAdministrativoComponent,
     SidebarJefeLab,
+     SidebarTecnicoMComponent
   ],
   exports: [
     FooterComponent,
@@ -32,6 +33,7 @@ import { SidebarJefeLab } from './sidebars/sidebarJefeLab/sidebarjefelab.compone
     SidebarComponent,
     SidebarAdministrativoComponent,
     SidebarJefeLab,
+     SidebarTecnicoMComponent
   ]
 })
 export class ComponentsModule { }
