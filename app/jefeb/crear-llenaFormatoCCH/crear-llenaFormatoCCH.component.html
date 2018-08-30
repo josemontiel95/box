@@ -18,11 +18,10 @@
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=creaCCHForm #formDir="ngForm">
             <div class="row">
-
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="informe">INFORME No</label>
-                  <input type="text" id="informe" class="form-control" required 
+                  <input type="text" id="informe" class="form-control"  
                   name="informe" placeholder="Escriba el no. Informe" formControlName="informe">
                   <div *ngIf="informe.invalid && (informe.dirty || informe.touched)"
                     class="alert alert-danger">
@@ -49,9 +48,56 @@
                   </div>
                 </div>
               </div>
-
-              
             </div> <!--FIN ROW-->
+
+            <h6>Tipo de Concreto</h6>
+            <div class="row">
+              <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+                 <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="tconcreto">TIPO DE CONCRETO</label> <!--disable-->
+                    <select  class="form-control" required id="tconcreto" name="tconcreto" formControlName="tconcreto" (change)="onBlurTipoConcreto()">
+                          <option value="0" [disabled]="true">Selecciona un tipo de concreto...</option>
+                          <option *ngFor="let tconcreto of tipoconcreto" [value]="tconcreto.id">
+                                {{tconcreto.tconcreto}}
+                          </option>
+                    </select>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div> <!--FIN ROW-->
+            <div class="row">
+              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="especimen1">Especimen 1</label> <!--disable-->
+                    <input type="text" id="especimen1" class="form-control" required name="especimen1" placeholder="" formControlName="especimen1">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="especimen2">Especimen 2</label> <!--disable-->
+                    <input type="text" id="especimen2"   
+                    class="form-control" 
+                    name="especimen2" placeholder="" formControlName="especimen2" required>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="especimen3">Especimen 3</label> <!--disable-->
+                    <input type="text" id="especimen3"   
+                    class="form-control" 
+                    name="especimen3" placeholder="" formControlName="especimen3" required (change)="onBlurEspecimen3()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="especimen4">Especimen 4</label> <!--disable-->
+                    <input type="text" id="especimen4"  class="form-control" 
+                    name="especimen4" placeholder="" formControlName="especimen4" required>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div> <!--FIN ROW-->
+
             <h6>Inventario de Intrumento</h6>
             <div class="row">
               <div class="col-md-6 col-12">
