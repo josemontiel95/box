@@ -31,11 +31,12 @@ export class DashboardComponent implements OnInit {
  formatos = [{"format":"CONTROL DE CONCRETO HIDRAULICO", "id": "1"},{"format":"REVENIMIENTO", "id":"2"}]
  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
  areas= [{"are":"CONCRETO", "id":"CONCRETO"},{"are":"GEOTECNIA", "id":"GEOTECNIA"},{"are":"ASFALTOS", "id":"ASFALTOS"}];
-       
+   auxx: any;    
   ordenForm: FormGroup; //se crea un formulario de tipo form group
   tipoForm: FormGroup;
   paseForm: FormGroup;
    id: string;
+   ids: string;
    mis_cli: Array<any>;
    mis_obras: Array<any>;
    mis_jefes: Array<any>;
@@ -232,6 +233,35 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  pasarlista()
+  {
+
+     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
+     let formData:FormData = new FormData();
+        formData.append('function', 'insertAdmin');
+        formData.append('id_tecnicos_ordenDeTrabajo', this.ids);
+        formData.append('rol_usuario_id', this.global.rol);
+        formData.append('token', this.global.token);
+        formData.append('email', this.paseForm.value.correo);
+        formData.append('contrasena', this.paseForm.value.pass);    
+        
+        this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());
+                                            });
+        this.hiddenTecnicos = true;
+  }
+
+   respuestaSwitch(res: any){
+     console.log(res);
+     if(res.error!= 0){
+       window.alert("Intentalo otra vez");
+       location.reload();
+     }
+     else{
+       window.alert("Insertado con exito.");
+     }
+   }
+
     mostrarTecnicos()
   {
     this.hiddenTecnicos = !this.hiddenTecnicos;
@@ -242,8 +272,17 @@ export class DashboardComponent implements OnInit {
     pasaTec(pL: any) 
      {
         console.log(pL);
+        console.log(pL);
     this.hiddenTecnicos=pL;
-    console.log(this.hiddenTecnicos);
+    if (this.hiddenTecnicos == false)
+    {
+    this.ids=pL;
+  }
+   this.auxx= this.ids;
+   this.ids= this.hiddenTecnicos;
+   this.hiddenTecnicos=this.auxx;
+    console.log(this.ids); false 
+    console.log(this.hiddenTecnicos); 1034
 
   }   
 
