@@ -357,7 +357,7 @@
           <app-tecnicos-grid (pasaLista)="pasaTec($event)"></app-tecnicos-grid>
         </div>
           <div *ngIf="!this.hiddenTecnicos">
-           <form [formGroup]=paseForm #formDir="ngForm">
+           <form (ngSubmit)="onSubmit()" [formGroup]=paseForm #formDir="ngForm">
                     <div class="form-group">
                   <label>Correo</label>
                   <input type="text" id="correo"   
@@ -381,7 +381,7 @@
               </div>
             </div>
           <div class="btn-group"  style=" padding-left: 45%;">
-              <button class="btn btn-info" *ngIf="!hiddenTecnicos"  (click)="mostrarTecnicos()">
+              <button class="btn btn-info"  type="button" *ngIf="!hiddenTecnicos"  (click)="pasarlista();">
                 <span><b> Pasar lista </b></span>
               </button>
           </div>               

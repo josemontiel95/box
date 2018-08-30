@@ -22,6 +22,7 @@ export class TecnicosGridComponent implements OnInit  {
 	  this.columnDefs = [
       {headerName: 'ID', field: 'id_usuario'},
       {headerName: 'Tecnico.', field: 'nombre' },
+      {headerName: '¿Paso lista?', field: 'estado' },
 
 
       
@@ -40,6 +41,7 @@ export class TecnicosGridComponent implements OnInit  {
 
    paseL(pL: any) {
     this.pasaLista.emit(pL);
+
     //this.id= h
     console.log(pL);
 
@@ -51,7 +53,7 @@ export class TecnicosGridComponent implements OnInit  {
     this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllTecOrden');
+    search.set('function', 'getTecAsistencia');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id);
@@ -76,19 +78,20 @@ export class TecnicosGridComponent implements OnInit  {
    
  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
-    var pl = "";
-
+    var estado = "";
+    var id = "";
     selectedRows.forEach(function(selectedRow, index) {
-      pl += selectedRow.activo;
-      
+      estado += selectedRow.estado;
+      id += selectedRow.id_usuario;
     });
-   if (pl == "0") 
+   if (estado == "NO") 
    {
      this.paseL(false);
+     this.paseL(id)
    }
    else
    {
-     this.paseL(true);
+     this.paseL( true );
    }
   }
 
