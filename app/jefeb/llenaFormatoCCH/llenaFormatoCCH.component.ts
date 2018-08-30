@@ -41,6 +41,14 @@ export class llenaFormatoCCHComponent implements OnInit{
   mis_cli: Array<any>;
   mis_obras: Array<any>;
   mis_jefes: Array<any>;
+  tipoconcreto= [{"tconcreto":"Normal", "id": "N"},{"tconcreto":"Resistencia Rápida", "id": "RR"},{"tconcreto":"Con aditivo", "id": "CA"}];
+  
+  notRR=true;
+  atconcreto  ="";
+  aespecimen1 ="";
+  aespecimen2 ="";
+  aespecimen3 ="";
+  aespecimen4 ="";
   
   formatoCCHForm: FormGroup;
 
@@ -49,6 +57,11 @@ export class llenaFormatoCCHComponent implements OnInit{
         localizacion: '',
         informe: '',
         empresa:'',
+        tconcreto: '',
+        especimen1: '',
+        especimen2: '',
+        especimen3: '',
+        especimen4: '',
         direccion: '',
         observaciones:'',
         tipo_especimen:'',
@@ -114,6 +127,13 @@ export class llenaFormatoCCHComponent implements OnInit{
 
     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     search = new URLSearchParams();
+    search.set('function', 'getformatoDefoults');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => this.llenatipo(res.json()) );
+
+    url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    search = new URLSearchParams();
     search.set('function', 'getInfoByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
@@ -122,41 +142,41 @@ export class llenaFormatoCCHComponent implements OnInit{
 
 
     this.formatoCCHForm = new FormGroup({
-      'obra': new FormControl( {value: this.FormatoCCH.obra, disabled: this.hidden },  [Validators.required]),
-      'localizacion': new FormControl( {value: this.FormatoCCH.localizacion, disabled: this.hidden },  [Validators.required]),
-      'informe': new FormControl( {value: this.FormatoCCH.informe, disabled: this.hidden },  [Validators.required]),
-      'empresa': new FormControl( {value: this.FormatoCCH.empresa, disabled: this.hidden },  [Validators.required]),
-      'direccion': new FormControl( {value: this.FormatoCCH.direccion, disabled: this.hidden },  [Validators.required]),
-      'observaciones': new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden }),       
-      'tipo_especimen': new FormControl( {value: this.FormatoCCH.tipo_especimen, disabled: this.hidden },  [Validators.required]),
-      'cono': new FormControl( {value: this.FormatoCCH.cono, disabled: this.hidden },  [Validators.required]),
-      'varilla': new FormControl( {value: this.FormatoCCH.varilla, disabled: this.hidden },  [Validators.required]),
-      'flexometro': new FormControl( {value: this.FormatoCCH.flexometro, disabled: this.hidden },  [Validators.required]),
-      'termometro': new FormControl( {value: this.FormatoCCH.termometro, disabled: this.hidden },  [Validators.required]),
+      'obra':            new FormControl( {value: this.FormatoCCH.obra,           disabled: this.hidden },  [Validators.required]),
+      'localizacion':    new FormControl( {value: this.FormatoCCH.localizacion,   disabled: this.hidden },  [Validators.required]),
+      'informe':         new FormControl( {value: this.FormatoCCH.informe,        disabled: this.hidden },  [Validators.required]),
+      'empresa':         new FormControl( {value: this.FormatoCCH.empresa,        disabled: this.hidden },  [Validators.required]),
+      'tconcreto':       new FormControl( {value: this.FormatoCCH.tconcreto,      disabled: this.hidden },  [Validators.required]),
+      'especimen1':      new FormControl( {value: this.FormatoCCH.especimen1,     disabled: this.hidden },  [Validators.required]),
+      'especimen2':      new FormControl( {value: this.FormatoCCH.especimen2,     disabled: this.hidden },  [Validators.required]),
+      'especimen3':      new FormControl( {value: this.FormatoCCH.especimen3,     disabled: this.hidden },  [Validators.required]),
+      'especimen4':      new FormControl( {value: this.FormatoCCH.especimen4,     disabled: this.hidden },  [Validators.required]),
+      'direccion':       new FormControl( {value: this.FormatoCCH.direccion,      disabled: this.hidden },  [Validators.required]),
+      'observaciones':   new FormControl( {value: this.FormatoCCH.observaciones,  disabled: this.hidden }),       
+      'tipo_especimen':  new FormControl( {value: this.FormatoCCH.tipo_especimen, disabled: this.hidden },  [Validators.required]),
+      'cono':            new FormControl( {value: this.FormatoCCH.cono,           disabled: this.hidden },  [Validators.required]),
+      'varilla':         new FormControl( {value: this.FormatoCCH.varilla,        disabled: this.hidden },  [Validators.required]),
+      'flexometro':      new FormControl( {value: this.FormatoCCH.flexometro,     disabled: this.hidden },  [Validators.required]),
+      'termometro':      new FormControl( {value: this.FormatoCCH.termometro,     disabled: this.hidden },  [Validators.required]),
           });
   }
 
-   get obra() { return this.formatoCCHForm.get('obra'); }
-  
-   get localizacion() { return this.formatoCCHForm.get('localizacion'); }
-
-   get informe() { return this.formatoCCHForm.get('informe'); }
-   
-   get empresa() { return this.formatoCCHForm.get('empresa'); }
-
-   get direccion() { return this.formatoCCHForm.get('direccion'); }
-  
-   get observaciones() { return this.formatoCCHForm.get('observaciones'); }
-
-   get tipo_especimen() { return this.formatoCCHForm.get('tipo_especimen'); }
-      
-   get cono() { return this.formatoCCHForm.get('cono'); }
-
-   get varilla() { return this.formatoCCHForm.get('varilla'); }
-   
-   get flexometro() { return this.formatoCCHForm.get('flexometro'); }
-   
-   get termometro() { return this.formatoCCHForm.get('termometro'); } 
+   get obra()            { return this.formatoCCHForm.get('obra'); }
+   get localizacion()    { return this.formatoCCHForm.get('localizacion'); }
+   get informe()         { return this.formatoCCHForm.get('informe'); }
+   get empresa()         { return this.formatoCCHForm.get('empresa'); }
+   get direccion()       { return this.formatoCCHForm.get('direccion'); }
+   get observaciones()   { return this.formatoCCHForm.get('observaciones'); }
+   get tipo_especimen()  { return this.formatoCCHForm.get('tipo_especimen'); }
+   get tconcreto()       { return this.formatoCCHForm.get('tconcreto'); }
+   get especimen1()      { return this.formatoCCHForm.get('especimen1'); }
+   get especimen2()      { return this.formatoCCHForm.get('especimen2'); }
+   get especimen3()      { return this.formatoCCHForm.get('especimen3'); }
+   get especimen4()      { return this.formatoCCHForm.get('especimen4'); }
+   get cono()            { return this.formatoCCHForm.get('cono'); }
+   get varilla()         { return this.formatoCCHForm.get('varilla'); }
+   get flexometro()      { return this.formatoCCHForm.get('flexometro'); }
+   get termometro()      { return this.formatoCCHForm.get('termometro'); } 
 
     mostrar(){
     this.hidden = !this.hidden;
@@ -179,6 +199,17 @@ export class llenaFormatoCCHComponent implements OnInit{
 
   }
 
+  llenatipo(resp: any){
+    console.log(resp);
+    this.notRR=true;
+    this.atconcreto= "N";
+    this.aespecimen1= resp.cch_def_prueba1;
+    this.aespecimen2= resp.cch_def_prueba2;
+    this.aespecimen3= resp.cch_def_prueba3;
+    this.aespecimen4= resp.cch_def_prueba4;
+
+  }
+
   mostrarFooter(){
     this.hiddenf = !this.hiddenf;
     const state = this.hiddenf ? 'disable' : 'enable';
@@ -192,6 +223,9 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.formatoCCHForm.controls['empresa']['disable']();
     this.formatoCCHForm.controls['direccion']['disable']();
     this.formatoCCHForm.controls['informe']['disable']();
+    this.formatoCCHForm.controls['especimen4']['disable']();
+
+    this.onBlurTipoConcreto();
   }
 
   submitted = false;
@@ -212,8 +246,7 @@ export class llenaFormatoCCHComponent implements OnInit{
 
 
     
-    llenaObra(resp: any)
-  {
+  llenaObra(resp: any){
     this.mis_obras= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
@@ -225,7 +258,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   }
 
   
-    llenado(respuesta: any){
+  llenado(respuesta: any){
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({
@@ -236,6 +269,11 @@ export class llenaFormatoCCHComponent implements OnInit{
      direccion:           respuesta.direccion,
      observaciones:       respuesta.observaciones,
      tipo_especimen:      respuesta.tipo,
+     tconcreto:           respuesta.tipoConcreto,
+     especimen1:          respuesta.prueba1,
+     especimen2:          respuesta.prueba2,
+     especimen3:          respuesta.prueba3,
+     especimen4:          respuesta.prueba4,
      cono:                respuesta.cono_id,
      varilla:             respuesta.varilla_id,
      flexometro:          respuesta.flexometro_id,
@@ -244,6 +282,34 @@ export class llenaFormatoCCHComponent implements OnInit{
 
     this.cargando=this.cargando-1;
      
+  }
+  onBlurTipoConcreto(){
+    if(this.formatoCCHForm.getRawValue().tconcreto == "RR" || this.formatoCCHForm.getRawValue().tconcreto == "CA" ){
+      this.notRR = false;
+      //window.alert("notRR es false, this.formatoCCHForm.value.tconcreto: "+this.formatoCCHForm.value.tconcreto);
+    }else{
+      //window.alert("notRR es true, this.formatoCCHForm.value.tconcreto: "+this.formatoCCHForm.value.tconcreto);
+      this.notRR = true;
+      this.formatoCCHForm.patchValue({
+         tconcreto: this.atconcreto,
+         especimen1: this.aespecimen1,
+         especimen2: this.aespecimen2,
+         especimen3: this.aespecimen3,
+         especimen4: this.aespecimen4
+      });
+    }
+    //this.notRR = !this.notRR;
+    const state = this.hiddenf || this.notRR ? 'disable' : 'enable'; 
+    this.formatoCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
+    this.formatoCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
+    this.formatoCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
+    //this.formatoCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
+  }
+
+  onBlurEspecimen3(){
+    this.formatoCCHForm.patchValue({
+      especimen4: this.formatoCCHForm.value.especimen3,
+    });
   }
 
   obtenStatusReg(){
@@ -310,26 +376,29 @@ export class llenaFormatoCCHComponent implements OnInit{
     formData.append('informeNo', this.formatoCCHForm.value.informe);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
-                                            } );
-
-
+    });
   }
 
   actualizarFooter(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'updateFooter');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('function',          'updateFooter');
+    formData.append('token',             this.global.token);
+    formData.append('rol_usuario_id',    this.global.rol);
 
-    formData.append('id_formatoCampo', this.id_formato);  
-    formData.append('observaciones', this.formatoCCHForm.value.observaciones);
-    formData.append('tipo', this.formatoCCHForm.value.tipo_especimen);
-    formData.append('cono_id', this.formatoCCHForm.value.cono);
-    formData.append('varilla_id', this.formatoCCHForm.value.varilla);
-    formData.append('flexometro_id', this.formatoCCHForm.value.flexometro);
-    formData.append('termometro_id', this.formatoCCHForm.value.termometro);
+    formData.append('id_formatoCampo',   this.id_formato);  
+    formData.append('observaciones',     this.formatoCCHForm.value.observaciones);
+    formData.append('tipo',              this.formatoCCHForm.value.tipo_especimen);
+    formData.append('cono_id',           this.formatoCCHForm.value.cono);
+    formData.append('tipoConcreto',      this.formatoCCHForm.value.tconcreto); 
+    formData.append('prueba1',           this.formatoCCHForm.getRawValue().especimen1);  
+    formData.append('prueba2',           this.formatoCCHForm.getRawValue().especimen2);  
+    formData.append('prueba3',           this.formatoCCHForm.getRawValue().especimen3);  
+    formData.append('prueba4',           this.formatoCCHForm.getRawValue().especimen4); 
+    formData.append('varilla_id',        this.formatoCCHForm.value.varilla);
+    formData.append('flexometro_id',     this.formatoCCHForm.value.flexometro);
+    formData.append('termometro_id',     this.formatoCCHForm.value.termometro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitchFooter(res.json());                 
                                             } );
@@ -371,8 +440,7 @@ export class llenaFormatoCCHComponent implements OnInit{
      }
    }
 
-  llenaConos(resp: any)
-  {
+  llenaConos(resp: any){
     console.log(resp);
     this.mis_conos= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
@@ -383,8 +451,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     console.log("llenaConos this.cargando: "+this.cargando);
   }
 
-  llenaVarillas(resp: any)
-  {
+  llenaVarillas(resp: any){
     console.log(resp);
     this.mis_varillas= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
@@ -395,8 +462,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     console.log("llenaVarillas this.cargando: "+this.cargando);
   }
 
-  llenaFlexometro(resp: any)
-  {
+  llenaFlexometro(resp: any){
     console.log(resp);
     this.mis_flexometro= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
@@ -407,8 +473,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     console.log("llenaFlexometros this.cargando: "+this.cargando);
   }
 
-  llenaTermometro(resp: any)
-  {
+  llenaTermometro(resp: any){
     console.log(resp);
     this.mis_termometro= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
