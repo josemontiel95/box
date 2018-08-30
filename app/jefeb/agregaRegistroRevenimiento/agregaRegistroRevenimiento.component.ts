@@ -150,7 +150,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
      tamAgregado:  respuesta.tamAgregado,
      idConcreto: respuesta.idenConcreto,
      hDet: respuesta.horaDeterminacion,
-     unidad: respuesta.volumen,
+     unidad: respuesta.unidad,
      provCon: respuesta.concretera_id,
      numRem: respuesta.remisionNo,
      hsalida: respuesta.horaSalida,

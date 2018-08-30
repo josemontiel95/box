@@ -3,16 +3,22 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TecnicoMLayoutRoutes } from './tecnicom-layout.routing';
-import { UserProfileComponent } from '../../tecnicom/user-profile/user-profile.component';
 import { AgGridModule } from 'ag-grid-angular';
 
 import { MatProgressBarModule } from '@angular/material';
+
+
+import { UserProfileComponent } from '../../tecnicom/user-profile/user-profile.component';
+import { PendientesComponent } from '../../tecnicom/pendientes/pendientes.component';
+import { LlenaFooterComponent } from '../../tecnicom/llenaFooter/llenaFooter.component';
+import { PruebaCilindroComponent } from '../../tecnicom/pruebaCilindro/pruebaCilindro.component';
+import { PruebaVigaComponent } from '../../tecnicom/pruebaViga/pruebaViga.component';
+
 /*
 import { DashboardComponent } from '../../tecnicom/dashboard/dashboard.component';
 
 import { CrearOrdenTrabajoComponent } from '../../tecnicom/crear-orden-trabajo/crear-orden-trabajo.component';
 import { OrdenTrabajoComponent } from '../../tecnicom/orden-trabajo/orden-trabajo.component';
-import { GridComponent } from '../../tecnicom/grid/grid.component';
 import { llenaFormatoCCHComponent } from '../../tecnicom/llenaFormatoCCH/llenaFormatoCCH.component';
 import { llenaRevenimientoComponent } from '../../tecnicom/llenaRevenimiento/llenaRevenimiento.component';
 import { CrearLlenaFormatoCCHComponent } from '../../tecnicom/crear-llenaFormatoCCH/crear-llenaFormatoCCH.component';
@@ -52,6 +58,10 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   declarations: [
   UserProfileComponent,
+  PendientesComponent,
+  LlenaFooterComponent,
+  PruebaCilindroComponent,
+  PruebaVigaComponent
   /*
     DashboardComponent,
     CrearOrdenTrabajoComponent,

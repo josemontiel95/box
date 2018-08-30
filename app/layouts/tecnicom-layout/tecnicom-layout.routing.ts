@@ -1,7 +1,13 @@
 import { Routes } from '@angular/router';
-import { UserProfileComponent } from '../../tecnicom/user-profile/user-profile.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { MatProgressBarModule } from '@angular/material';
+
+import { UserProfileComponent } from '../../tecnicom/user-profile/user-profile.component';
+import { PendientesComponent } from '../../tecnicom/pendientes/pendientes.component';
+import { LlenaFooterComponent } from '../../tecnicom/llenaFooter/llenaFooter.component';
+import { PruebaCilindroComponent } from '../../tecnicom/pruebaCilindro/pruebaCilindro.component';
+import { PruebaVigaComponent } from '../../tecnicom/pruebaViga/pruebaViga.component';
+
 /*
 import { DashboardComponent } from '../../tecnicom/dashboard/dashboard.component';
 import { CrearOrdenTrabajoComponent } from '../../tecnicom/crear-orden-trabajo/crear-orden-trabajo.component';
@@ -22,7 +28,12 @@ import { TecnicosGridAgregaComponent } from '../../tecnicom/tecnicos-grida/tecni
 export const TecnicoMLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'user-profile', pathMatch: 'full' },
     { path: 'user-profile',   component: UserProfileComponent },
-/*
+    { path: 'pendientes',   component: PendientesComponent },
+    { path: 'llenaFooter/:id',   component: LlenaFooterComponent },
+    { path: 'pruebaCilindro/:id',   component: PruebaCilindroComponent },
+    { path: 'pruebaViga',   component: PruebaVigaComponent },
+
+/*    
     { path: 'orden-trabajo/dashboard/:id',      component: DashboardComponent },    
     { path: 'orden-trabajo/crear-orden-trabajo',   component: CrearOrdenTrabajoComponent }, 
     { path: 'orden-trabajo',      component: OrdenTrabajoComponent },
