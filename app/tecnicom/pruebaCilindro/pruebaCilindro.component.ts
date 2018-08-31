@@ -54,7 +54,6 @@ export class PruebaCilindroComponent implements OnInit{
         area: '',
         resCompresion: '',
         falla: '',
-        numRem: '',
         hsalida: '',
         hllegada: ''         
     }
@@ -105,7 +104,6 @@ export class PruebaCilindroComponent implements OnInit{
       'area': new FormControl( {value: this.FormatoCCH.area, disabled: this.hidden}),
       'resCompresion': new FormControl( {value: this.FormatoCCH.resCompresion, disabled: this.hidden}),       
       'falla': new FormControl( {value: this.FormatoCCH.falla, disabled: this.hidden}),
-      'numRem': new FormControl( {value: this.FormatoCCH.numRem, disabled: this.hidden}),
       'hsalida': new FormControl( {value: this.FormatoCCH.hsalida, disabled: this.hidden}),
       'hllegada': new FormControl( {value: this.FormatoCCH.hllegada, disabled: this.hidden})          });
   }
@@ -135,8 +133,6 @@ export class PruebaCilindroComponent implements OnInit{
    get resCompresion() { return this.formatoCCHForm.get('resCompresion'); }              
 
    get falla() { return this.formatoCCHForm.get('falla'); }                          
-
-   get numRem() { return this.formatoCCHForm.get('numRem'); }              
 
    get hsalida() { return this.formatoCCHForm.get('hsalida'); }              
    
@@ -177,7 +173,6 @@ export class PruebaCilindroComponent implements OnInit{
      area: respuesta.area,
      resCompresion: respuesta.resCompresion,
      falla: respuesta.falla,
-     numRem: respuesta.remisionNo,
      hsalida: respuesta.horaSalida,
      hllegada: respuesta.horaLlegada
     });
@@ -443,22 +438,6 @@ export class PruebaCilindroComponent implements OnInit{
 
     formData.append('campo', '9');
     formData.append('valor', this.formatoCCHForm.value.falla);
-    formData.append('id_registrosRev', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
-  onBlurNumeroRemision(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '10');
-    formData.append('valor', this.formatoCCHForm.value.numRem);
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 

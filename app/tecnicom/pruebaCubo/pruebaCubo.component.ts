@@ -17,11 +17,11 @@ import {
 //FIN DE LOS IMPORTS
 
 @Component({
-  selector: 'app-pruebaViga',
-  templateUrl: './pruebaViga.component.html',
-  styleUrls: ['./pruebaViga.component.scss','../../loadingArrows.css']
+  selector: 'app-pruebaCubo',
+  templateUrl: './pruebaCubo.component.html',
+  styleUrls: ['./pruebaCubo.component.scss','../../loadingArrows.css']
 })
-export class PruebaVigaComponent implements OnInit{
+export class PruebaCuboComponent implements OnInit{
 
   id_orden: string;
   id_registro: string;
@@ -36,14 +36,14 @@ export class PruebaVigaComponent implements OnInit{
   cargando= 1;
   hidden = false;
   mis_fallas: Array<any>;
-   
+ 
+  
   formatoCCHForm: FormGroup;
 
         FormatoCCH = {
-        idMuestra: '',
         fechaColado: '',
-        fechaEnsayo: '',
-        condiCurado: '',
+        infoNo: '',
+        pesoKg: '',
         clave: '',
         edadEnsaye: '',
         diametro1: '',
@@ -59,12 +59,11 @@ export class PruebaVigaComponent implements OnInit{
         hllegada: ''         
     }
 
- curado= [{"condicion":"Humedo", "id":0},{"condicion":"Seco", "id":1},{"condicion":"Intemperie", "id":2}];
 
 
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
-      
+    
   }
 	  
   ngOnInit() {
@@ -93,11 +92,10 @@ export class PruebaVigaComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => this.llenaFallas(res.json()) );
 
     this.formatoCCHForm = new FormGroup({
-      'idMuestra': new FormControl( {value: this.FormatoCCH.idMuestra, disabled: true}),
       'fechaColado': new FormControl( {value: this.FormatoCCH.fechaColado, disabled: true}),
-      'fechaEnsayo': new FormControl( {value: this.FormatoCCH.fechaEnsayo, disabled: true}),      
+      'infoNo': new FormControl( {value: this.FormatoCCH.infoNo, disabled: true}),
       'clave': new FormControl( {value: this.FormatoCCH.clave, disabled: true}),
-      'condiCurado': new FormControl( {value: this.FormatoCCH.condiCurado, disabled: this.hidden}),
+      'pesoKg': new FormControl( {value: this.FormatoCCH.pesoKg, disabled: this.hidden}),
       'edadEnsaye': new FormControl( {value: this.FormatoCCH.edadEnsaye, disabled: true}),
       'diametro1': new FormControl( {value: this.FormatoCCH.diametro1, disabled: this.hidden}),
       'diametro2': new FormControl( {value: this.FormatoCCH.diametro2, disabled: this.hidden}),
@@ -112,15 +110,13 @@ export class PruebaVigaComponent implements OnInit{
       'hllegada': new FormControl( {value: this.FormatoCCH.hllegada, disabled: this.hidden})          });
   }
   
-   get idMuestra() { return this.formatoCCHForm.get('idMuestra'); }
-
    get fechaColado() { return this.formatoCCHForm.get('fechaColado'); }
 
-   get fechaEnsayo() { return this.formatoCCHForm.get('fechaEnsayo'); }
+   get infoNo() { return this.formatoCCHForm.get('infoNo'); }
 
    get clave() { return this.formatoCCHForm.get('clave'); }
 
-   get condiCurado() { return this.formatoCCHForm.get('condiCurado'); }
+   get pesoKg() { return this.formatoCCHForm.get('pesoKg'); }
 
    get edadEnsaye() { return this.formatoCCHForm.get('edadEnsaye'); }
 
@@ -168,11 +164,10 @@ export class PruebaVigaComponent implements OnInit{
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({
-     idMuestra: respuesta.idMuestra,
-     fechaColado:  respuesta.fechaCol,
-     fechaEnsayo:  respuesta.fechaEns,
+     fechaColado:  respuesta.fecha,
+     infoNo: respuesta.revProyecto,
      clave: respuesta.revObtenido,
-     condiCurado: respuesta.condiCurado,
+     pesoKg: respuesta.revObtenido,
      edadEnsaye: respuesta.revObtenido,
      diametro1: respuesta.diametro1,
      diametro2: respuesta.diametro2,
@@ -242,21 +237,6 @@ export class PruebaVigaComponent implements OnInit{
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);
   }
 
-   onBlurIdMuestra(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '2');
-    formData.append('valor', this.formatoCCHForm.value.idMuestra);
-    formData.append('id_registrosRev', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  } 
 
    onBlurFechaColado(){
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -274,7 +254,7 @@ export class PruebaVigaComponent implements OnInit{
                                             } );
   }
 
-  onBlurFechaEnsayo(){
+  onBlurinformeNo(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -282,15 +262,32 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('campo', '1');
-    formData.append('valor', this.formatoCCHForm.value.fechaEnsayo);
+    formData.append('campo', '2');
+    formData.append('valor', this.formatoCCHForm.value.infoNo);
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
   }
 
-  onBlurCurado(){
+
+  onBlurClave(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '3');
+    formData.append('valor', this.formatoCCHForm.value.clave);
+    formData.append('id_registrosRev', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onBlurPesoKg(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -299,7 +296,7 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '4');
-    formData.append('valor', this.formatoCCHForm.value.condiCurado);
+    formData.append('valor', this.formatoCCHForm.value.pesoKg);
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 

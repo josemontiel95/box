@@ -5,8 +5,11 @@ import { MatProgressBarModule } from '@angular/material';
 import { UserProfileComponent } from '../../tecnicom/user-profile/user-profile.component';
 import { PendientesComponent } from '../../tecnicom/pendientes/pendientes.component';
 import { LlenaFooterComponent } from '../../tecnicom/llenaFooter/llenaFooter.component';
+import { LlenaFooterCuboComponent } from '../../tecnicom/llenaFooterCubo/llenaFooterCubo.component';
+import { LlenaFooterVigaComponent } from '../../tecnicom/llenaFooterViga/llenaFooterViga.component';
 import { PruebaCilindroComponent } from '../../tecnicom/pruebaCilindro/pruebaCilindro.component';
 import { PruebaVigaComponent } from '../../tecnicom/pruebaViga/pruebaViga.component';
+import { PruebaCuboComponent } from '../../tecnicom/pruebaCubo/pruebaCubo.component';
 
 /*
 import { DashboardComponent } from '../../tecnicom/dashboard/dashboard.component';
@@ -30,8 +33,11 @@ export const TecnicoMLayoutRoutes: Routes = [
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'pendientes',   component: PendientesComponent },
     { path: 'llenaFooter/:id',   component: LlenaFooterComponent },
+    { path: 'llenaFooterCubo/:id',   component: LlenaFooterCuboComponent },
+    { path: 'llenaFooterViga/:id',   component: LlenaFooterVigaComponent },
     { path: 'pruebaCilindro/:id',   component: PruebaCilindroComponent },
     { path: 'pruebaViga',   component: PruebaVigaComponent },
+    { path: 'pruebaCubo',   component: PruebaCuboComponent },
 
 /*    
     { path: 'orden-trabajo/dashboard/:id',      component: DashboardComponent },    
