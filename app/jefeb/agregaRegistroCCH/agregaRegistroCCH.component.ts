@@ -82,6 +82,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     search.set('function', 'getDaysPruebasForDropDown');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_formato', this.id_formato);
     this.http.get(url, {search}).subscribe(res => this.llenaDaysPrueba( res.json()) );
     
     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
@@ -166,7 +167,7 @@ export class agregaRegistroCCHComponent implements OnInit{
 
   llenaDaysPrueba(res: any){
     console.log(res);
-    
+
   }
   
   //DON'T TOUCH THIS!
