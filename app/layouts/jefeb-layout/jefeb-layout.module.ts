@@ -14,7 +14,7 @@ import { llenaFormatoCCHComponent } from '../../jefeb/llenaFormatoCCH/llenaForma
 import { llenaRevenimientoComponent } from '../../jefeb/llenaRevenimiento/llenaRevenimiento.component';
 import { CrearLlenaFormatoCCHComponent } from '../../jefeb/crear-llenaFormatoCCH/crear-llenaFormatoCCH.component';
 import { CrearLlenaRevenimientoComponent } from '../../jefeb/crear-llenaRevenimiento/crear-llenaRevenimiento.component';
-
+import { EvaluaHerraComponent } from '../../jefeb/evaluaherra/evaluaherra.component';
 import { HerramientaGridComponent } from '../../jefeb/herramienta-grid/herramienta-grid.component';
 import { agregaRegistroCCHComponent } from '../../jefeb/agregaRegistroCCH/agregaRegistroCCH.component';
 import { agregaRegistroRevenimientoComponent } from '../../jefeb/agregaRegistroRevenimiento/agregaRegistroRevenimiento.component';
@@ -63,7 +63,7 @@ import { ToastrModule } from 'ngx-toastr';
     FormatoCCHGridComponent,
     RegistrosRevGridComponent,
     CrearLlenaRevenimientoComponent,
-
+    EvaluaHerraComponent,
     TecnicosGridAgregaComponent,
     FormatosGridComponent
   ]
