@@ -7,11 +7,13 @@
     <div class="col-lg-12 col-12 col-md-12">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Orden de trabajo No.{{this.id}}</h5>
+          <h5 class="card-category">
+             <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i>
+            Orden de trabajo No.{{this.id}}</h5>
           <h4 class="card-title">Herramientas de la orden de trabajo.</h4>
         </div>
         <div class="card-body"> 
-           <app-herramienta-grid (agregaHerra)="addHerra($event)"></app-herramienta-grid>
+           <app-herramienta-grid (evaluaHerra)="evaHerra($event)"></app-herramienta-grid>
 
           <div class="col-md-12 col-12" [formGroup]=tipoForm *ngIf="!hidden">
                <div class="form-group">
@@ -30,13 +32,9 @@
                 </div>
             </div>
                     <div class="btn-group" style=" padding-left: 50%;" >
-              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar(); mostrarDetalles();">
+              <button class="btn btn-info" *ngIf="!hidden" (click)="mostrar(); mostrarDetalles();">
                 <span><b> Evaluar Herramienta </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hidden" [disabled]="tipoForm.invalid" (click)="mostrar(); mostrarDetalles();" >
-              <!--(click)="actualizarHerramienta( );"-->
-              <span><b> Guardar Cambios </b></span>
-            </button>
           </div>
         </div>          
         </div>

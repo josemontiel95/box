@@ -29,7 +29,10 @@ export class EvaluaHerraComponent implements OnInit {
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
   
  formatos = [{"format":"CONTROL DE CONCRETO HIDRAULICO", "id": "1"},{"format":"REVENIMIENTO", "id":"2"}]
- condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
+ condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},
+ {"condicion":"Dañado", "id":"Dañado"},
+ {"condicion":"Regular", "id":"Regular"},
+ {"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
  areas= [{"are":"CONCRETO", "id":"CONCRETO"},{"are":"GEOTECNIA", "id":"GEOTECNIA"},{"are":"ASFALTOS", "id":"ASFALTOS"}];
    auxx: any;    
   ordenForm: FormGroup; //se crea un formulario de tipo form group
@@ -111,62 +114,32 @@ export class EvaluaHerraComponent implements OnInit {
  
 
    regresaOrdenTrabajo(){
-    this.router.navigate(['jefeBrigada/orden-trabajo']);
+    this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/'+ this.id]);
   }
 
   onSubmit() { this.submitted = true; }
 
  
-    addHerra(aux3: any)
+    evaHerra(aux3: any)
      {
    
     this.auxx=aux3;
-    this.hidden= !this.hidden;
-    console.log(this.auxx);
-    this.tipoForm.value.condicion=aux3;
-     console.log(this.tipoForm.value.condicion);
-     //this.parcha(aux3);
+    if(this.hidden  == true){
+   this.hidden  = !this.hidden;
   }
+  else{
+    this.hidden = true;
+     setTimeout(() =>{this.hidden = false},1000);
+   }
 
- parcha(aux: any)
- {
-      this.tipoForm.patchValue({
-       condicion:  aux.condicion,
+     this.tipoForm.patchValue({
+       condicion: aux3
         });
- }
-  
-
-    llenado(respuesta: any){
-    console.log(respuesta);
-
-    this.ordenForm.patchValue({
-     area: respuesta.area,
-     id_ordenDeTrabajo: respuesta.id_ordenDeTrabajo,
-     cotizacion_id:  respuesta.cotizacion_id,
-     id_cliente:  respuesta.id_cliente,
-     obra_id:  respuesta.obra_id,
-     lugar:  respuesta.lugar,
-     nombreContacto: respuesta.nombreContacto,
-     telefonoDeContacto:  respuesta.telefonoDeContacto,
-     actividades:  respuesta.actividades,
-     condicionesTrabajo:  respuesta.condicionesTrabajo,
-     jefe_brigada_id:  respuesta.jefe_brigada_id,
-     fechaInicio:   respuesta.fechaInicio,
-     fechaFin:  respuesta.fechaFin,
-     horaInicio:  respuesta.horaInicio,
-     horaFin:  respuesta.horaFin,
-     observaciones: respuesta.observaciones,
-     laboratorio_id: respuesta.laboratorio_id
-
-    });
 
  
-
-     
   }
 
- 
- 
+
 
  
 

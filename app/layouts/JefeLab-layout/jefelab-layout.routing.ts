@@ -21,6 +21,7 @@ import { CrearOrdenTrabajoComponent } from '../../jefelab/crear-orden-trabajo/cr
 import { GridComponent } from '../../jefelab/grid/grid.component';
 import { HerramientaGridComponent } from '../../jefelab/herramienta-grid/herramienta-grid.component';
 import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component';
+import { EvaluaHerraComponent } from '../../jefelab/evaluaherra/evaluaherra.component';
 
 import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid.component';
 import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
@@ -38,6 +39,7 @@ export const JefeLabLayoutRoutes: Routes = [
     { path: 'orden-trabajo/dashboard/:id',      component: DashboardComponent },
     { path: 'orden-trabajo',      component: OrdenTrabajoComponent },
     { path: 'orden-trabajo/crear-orden-trabajo',   component: CrearOrdenTrabajoComponent }, 
+     { path: 'orden-trabajo/dashboard/evaluaherra/:id',      component: EvaluaHerraComponent },
 
     { path: 'herramientas',  component: HerramientasComponent },
     { path: 'herramientas/herramienta-detail/:id',   component: HerramientaDetailComponent },
