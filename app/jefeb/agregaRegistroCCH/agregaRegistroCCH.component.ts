@@ -36,6 +36,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   hidden = false;
   notRR = false;
   ux = false;
+  days: Array<any>;
  
   
   formatoCCHForm: FormGroup;
@@ -75,6 +76,13 @@ export class agregaRegistroCCHComponent implements OnInit{
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
+
+    url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getDaysPruebasForDropDown');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => this.llenaDaysPrueba( res.json()) );
     
     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     search = new URLSearchParams();
@@ -154,6 +162,11 @@ export class agregaRegistroCCHComponent implements OnInit{
     } 
 
     this.respuestaTipoConcreto();    
+  }
+
+  llenaDaysPrueba(res: any){
+    console.log(res);
+    
   }
   
   //DON'T TOUCH THIS!
