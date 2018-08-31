@@ -235,6 +235,12 @@ export class DashboardComponent implements OnInit {
 
   }
 
+          mostrarDetalles2()
+  {
+     this.hiddenDetail = !this.hiddenDetail;
+  }
+
+
   pasarlista()
   {
 
