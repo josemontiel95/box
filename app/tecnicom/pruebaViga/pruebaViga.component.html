@@ -43,7 +43,7 @@
             <div class="row"> <!--PRIMER ROW -->
               <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="edadEnsaye">EDAD DE ENSAYE EN DIAS</label> <!--disable-->
+                    <label for="edadEnsaye">EDAD DIAS</label> <!--disable-->
                     <input type="text" id="edadEnsaye"   
                     class="form-control" 
                     name="edadEnsaye" placeholder="" formControlName="edadEnsaye" (blur)="onBlurEdadEnsaye()">
@@ -51,15 +51,18 @@
               </div> <!--FIN PRIMERA GRID -->
             </div> <!--FIN PRIMER ROW -->
 
-            <h6>CONDICIONES DE CURADO Y HUMEDAD</h6>
-
             <div class="row">
               <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="pesoKg">HUMEDO/SECO (INTEMPERIE)</label> <!--disable-->
-                    <input type="text" id="pesoKg"   
-                    class="form-control" 
-                    name="pesoKg" placeholder="" formControlName="pesoKg" (blur)="onBlurPesoKg()">
+                    <label for="condiCurado">CONDICIONES DE CURADO Y HUMEDAD</label>
+                    
+                    <select  class="form-control" id="condiCurado" name="condiCurado" formControlName="condiCurado" (change)="onBlurCurado()">
+                          <option value="0" [disabled]="true">Selecciona la condicion de curado y humedad...</option>
+                          <option *ngFor="let condicion of curado" [value]="condicion.id">
+                                {{condicion.condicion}}
+                          </option>
+                    </select>
+
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -169,14 +172,14 @@
             <div class="row">
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="  ">CARGA kg</label>
+                    <label for="  ">DISTANCIA ENTRE APOYOS(cm)</label>
                     <input type="text" id="cargaKg"  
                     class="form-control" 
                     name="cargaKg" placeholder="" formControlName="cargaKg" (blur)="onBlurCargaKg()">
                      <div *ngIf="cargaKg.invalid && (cargaKg.dirty || cargaKg.touched)"
                       class="alert alert-danger">
                         <div *ngIf="cargaKg.errors.required">
-                          No. de orden requerido.
+                          Distancia entre apoyos.
                         </div>
                       </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
@@ -184,7 +187,7 @@
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="area">&Aacute;REA cm<sup>2</sup></label> <!--disable-->
+                    <label for="area">DISTANCIA ENTRE PUNTOS DE CARGA (cm)</label> <!--disable-->
                     <input type="text" id="area"   
                     class="form-control" 
                     name="area" placeholder="" formControlName="area" (blur)="onBlurArea()">
@@ -193,7 +196,7 @@
 
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="resCompresion">RESISTENCIA A COMPRESI&Oacute;N Kg/cm<sup>2</sup></label>
+                    <label for="resCompresion">CARGA APLICADA(kgf/cm<sup>2</sup>)</label>
                     <input type="text" id="resCompresion"  
                     class="form-control" 
                     name="resCompresion" placeholder="" formControlName="resCompresion" (blur)="onBlurResCompresion()">
@@ -205,23 +208,30 @@
               
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="falla">FALLA N°</label> <!--disable-->
-                    
-                   <select  class="form-control" id="falla" 
-                    name="falla"
-                    placeholder="falla No"  formControlName="falla" (change)="onBlurFalla()">
-                    <option value="0" [disabled]="true">Selecciona una falla...</option>
-                    
-                    <option *ngFor="let fallas of mis_fallas" [value]="fallas.id_concretera">
-                      {{fallas.concretera}}
-                    </option>
-                  </select>
-                    
+                    <label for="falla">M&Oacute;DULO DE RUPTURA(kgf/cm<sup>2</sup></label> <!--disable-->
+                    <input type="text" id="resCompresion"  
+                    class="form-control" 
+                    name="resCompresion" placeholder="" formControlName="resCompresion" (blur)="onBlurResCompresion()">                
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
-
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="falla">DEFECTOS ESPECIMEN</label> <!--disable-->
+                    <input type="text" id="resCompresion"  
+                    class="form-control" 
+                    name="resCompresion" placeholder="" formControlName="resCompresion" (blur)="onBlurResCompresion()">                
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="falla">REALIZ&Oacute;</label> <!--disable-->
+                    <input type="text" id="resCompresion"  
+                    class="form-control" 
+                    name="resCompresion" placeholder="" formControlName="resCompresion" (blur)="onBlurResCompresion()">                
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
             </div>
-
+            
             <div class="row">
               <div class="col-md-2 col-12">
                    <!-- Aqui estaban dos botones -->

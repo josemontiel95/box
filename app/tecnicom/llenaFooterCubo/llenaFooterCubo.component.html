@@ -13,7 +13,7 @@
         <div class="card-header">
           <h5 class="title">
           <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaUsuario();"></i>
-          OBSERVACIONES</h5>
+          OBSERVACIONES CUBO</h5>
         </div>
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=creaCCHForm #formDir="ngForm">
@@ -54,7 +54,7 @@
 
               <div class="col-md-4 col-12">
                  <div class="form-group">
-                  <label for="cono">REGLA,VERNIER O FLEXO</label>
+                  <label for="cono">PRENSA</label>
                   <select  class="form-control" id="cono" 
                     required name="cono"
                     placeholder="Tipos"  formControlName="cono">
@@ -73,7 +73,7 @@
               </div>
               <div class="col-md-4 col-12">
                  <div class="form-group">
-                  <label for="varilla">PRENSA</label>
+                  <label for="varilla">REGLA</label>
                   <select  class="form-control" id="varilla" 
                     required name="varilla"
                     placeholder="Tipos"  formControlName="varilla">
