@@ -45,7 +45,8 @@ export class DashboardComponent implements OnInit {
    hiddenHerramienta =true;
    hiddenFormato= true;
    hiddenFormatoDispo = true;
-   hiddenTecnicos= true;
+   hiddenTecnicos: any;
+
    
    forma={
      formato_tipo_id:'0'
@@ -83,6 +84,7 @@ export class DashboardComponent implements OnInit {
   
 
   ngOnInit(){
+       this.hiddenTecnicos = true;
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
     this.cargando=2;
@@ -133,12 +135,12 @@ export class DashboardComponent implements OnInit {
                                                  });
 
     url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
-	  search = new URLSearchParams();
-	  search.set('function', 'getByIDAdmin');
+    search = new URLSearchParams();
+    search.set('function', 'getByIDAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_ordenDeTrabajo', this.id);
-	  this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
 
     this.ordenForm = new FormGroup({
       'area': new FormControl( {value: this.Orden.area, disabled: this.hidden },  [Validators.required]), 
