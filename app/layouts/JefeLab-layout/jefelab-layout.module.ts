@@ -28,6 +28,7 @@ import { CrearOrdenTrabajoComponent } from '../../jefelab/crear-orden-trabajo/cr
 import { GridComponent } from '../../jefelab/grid/grid.component';
 import { HerramientaGridComponent } from '../../jefelab/herramienta-grid/herramienta-grid.component';
 import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component';
+import { EvaluaHerraComponent } from '../../jefelab/evaluaherra/evaluaherra.component';
 
 import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid.component';
 import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
@@ -71,7 +72,8 @@ import { TecnicosGridAgregaComponent } from '../../jefelab/tecnicos-grida/tecnic
     DashboardComponent,
     TecnicosGridComponent,
     HerramientaGridAgregaComponent,
-    TecnicosGridAgregaComponent
+    TecnicosGridAgregaComponent,
+    EvaluaHerraComponent
   ]
 })
 

@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,Output, EventEmitter} from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -36,6 +36,14 @@ export class HerramientaGridComponent implements OnInit  {
     this.route.params.subscribe( params => this.id=params.id);
   }
 
+    @Output() agregaHerra = new EventEmitter<any>();
+
+  agregaHerr(ids: any) {
+    this.agregaHerra.emit(ids);
+ 
+    console.log(ids);
+
+  }
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -72,12 +80,13 @@ export class HerramientaGridComponent implements OnInit  {
  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
     var id = "";
+    var condi= "";
 
     selectedRows.forEach(function(selectedRow, index) {
       id += selectedRow.id_herramienta;
-      
+      condi += selectedRow.condicion;
     });
-    //this.router.navigate(['jefeb/herramientas/herramienta-detail/'+id]);
+   this.agregaHerr(condi);
   }
 
 

@@ -10,7 +10,6 @@ import { llenaFormatoCCHComponent } from '../../jefeb/llenaFormatoCCH/llenaForma
 import { llenaRevenimientoComponent } from '../../jefeb/llenaRevenimiento/llenaRevenimiento.component';
 import { CrearLlenaFormatoCCHComponent } from '../../jefeb/crear-llenaFormatoCCH/crear-llenaFormatoCCH.component';
 import { CrearLlenaRevenimientoComponent } from '../../jefeb/crear-llenaRevenimiento/crear-llenaRevenimiento.component';
-
 import { agregaRegistroCCHComponent } from '../../jefeb/agregaRegistroCCH/agregaRegistroCCH.component';
 import { agregaRegistroRevenimientoComponent } from '../../jefeb/agregaRegistroRevenimiento/agregaRegistroRevenimiento.component';
 
@@ -24,6 +23,7 @@ export const JefebLayoutRoutes: Routes = [
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'orden-trabajo/crear-orden-trabajo',   component: CrearOrdenTrabajoComponent }, 
     { path: 'orden-trabajo',      component: OrdenTrabajoComponent },
+   
     { path: 'orden-trabajo/dashboard/llenaFormatoCCH/:id2/:id',      component: llenaFormatoCCHComponent },
     { path: 'orden-trabajo/dashboard/llenaRevenimiento/:id2/:id',      component: llenaRevenimientoComponent },
     { path: 'orden-trabajo/dashboard/crear-llenaFormatoCCH/:id',      component: CrearLlenaFormatoCCHComponent },
