@@ -11,8 +11,11 @@ import { MatProgressBarModule } from '@angular/material';
 import { UserProfileComponent } from '../../tecnicom/user-profile/user-profile.component';
 import { PendientesComponent } from '../../tecnicom/pendientes/pendientes.component';
 import { LlenaFooterComponent } from '../../tecnicom/llenaFooter/llenaFooter.component';
+import { LlenaFooterCuboComponent } from '../../tecnicom/llenaFooterCubo/llenaFooterCubo.component';
+import { LlenaFooterVigaComponent } from '../../tecnicom/llenaFooterViga/llenaFooterViga.component';
 import { PruebaCilindroComponent } from '../../tecnicom/pruebaCilindro/pruebaCilindro.component';
 import { PruebaVigaComponent } from '../../tecnicom/pruebaViga/pruebaViga.component';
+import { PruebaCuboComponent } from '../../tecnicom/pruebaCubo/pruebaCubo.component';
 
 /*
 import { DashboardComponent } from '../../tecnicom/dashboard/dashboard.component';
@@ -60,8 +63,11 @@ import { ToastrModule } from 'ngx-toastr';
   UserProfileComponent,
   PendientesComponent,
   LlenaFooterComponent,
+  LlenaFooterCuboComponent,
+  LlenaFooterVigaComponent,
   PruebaCilindroComponent,
-  PruebaVigaComponent
+  PruebaVigaComponent,
+  PruebaCuboComponent
   /*
     DashboardComponent,
     CrearOrdenTrabajoComponent,

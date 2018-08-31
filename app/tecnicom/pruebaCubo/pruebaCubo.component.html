@@ -1,0 +1,137 @@
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+<div class="row">
+    <div class="col-lg-12 col-12 col-md-12">
+      <div class="card card-chart">
+        
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            <h5>ENSAYO A COMPRESI&Oacute;N DE CUBOS DE CONCRETO HIDR&Aacute;ULICO </h5>
+            <div class="row"> <!--PRIMER ROW -->
+              
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="fecha">FECHA DE COLADO</label> <!--disable-->
+                    <input type="date" id="fecha"   
+                    class="form-control" 
+                    name="fecha" placeholder="" formControlName="fechaColado" (blur)="onBlurFechaColado()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="infoNo">INFORME NO.</label> <!--disable-->
+                    <input type="text" id="infoNo"   
+                    class="form-control" 
+                    name="infoNo" placeholder="" formControlName="infoNo" (blur)="onBlurinformeNo()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+            </div> <!--FIN PRIMER ROW -->
+            
+
+            <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="clave">CLAVE</label> <!--disable-->
+                    <input type="text" id="clave"   
+                    class="form-control" 
+                    name="clave" placeholder="" formControlName="clave" (blur)="onBlurClave()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="edadEnsaye">EDAD DE ENSAYE EN DIAS</label> <!--disable-->
+                    <input type="text" id="edadEnsaye"   
+                    class="form-control" 
+                    name="edadEnsaye" placeholder="" formControlName="edadEnsaye" (blur)="onBlurEdadEnsaye()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->                  
+                        
+            </div> <!--FIN PRIMER ROW -->
+
+            <h6>LADO (cm)</h6>
+
+            <div class="row">
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="diametro1">L1</label> <!--disable-->
+                    <input type="text" id="diametro1"   
+                    class="form-control" 
+                    name="diametro1" placeholder="" formControlName="diametro1" (blur)="onBlurDiametro1()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="diametro2">L2</label> <!--disable-->
+                    <input type="text" id="diametro2"   
+                    class="form-control" 
+                    name="diametro2" placeholder="" formControlName="diametro2" (blur)="onBlurDiametro2()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+
+            <h6>ALTURAS (cm)</h6>
+
+                      
+            <div class="row">
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="resCompresion">RESISTENCIA A COMPRESI&Oacute;N Kg</label>
+                    <input type="text" id="resCompresion"  
+                    class="form-control" 
+                    name="resCompresion" placeholder="" formControlName="resCompresion" (blur)="onBlurResCompresion()">
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->              
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="area">&Aacute;REA cm<sup>2</sup></label> <!--disable-->
+                    <input type="text" id="area"   
+                    class="form-control" 
+                    name="area" placeholder="" formControlName="area" (blur)="onBlurArea()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="resCompresion">RESISTENCIA A COMPRESI&Oacute;N Kg/cm<sup>2</sup></label>
+                    <input type="text" id="resCompresion"  
+                    class="form-control" 
+                    name="resCompresion" placeholder="" formControlName="resCompresion" (blur)="onBlurResCompresion()">
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->    
+            </div>
+
+            <div class="row">
+              <div class="col-md-2 col-12">
+                   <!-- Aqui estaban dos botones -->
+              </div>
+              <div class="col-md-6 col-md-offset-6 col-12">
+
+              </div>
+              <div class="col-md-2 col-12">
+
+                <button class="btn btn-success" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
+                    <span><b> Cambiar Datos. </b></span>
+                  </button>
+
+                <button class="btn btn-default" *ngIf="!hidden" (click)="llenarDespues()">
+                      <span><b> Llenar mas tarde. </b></span>
+                </button>
+              </div>
+              <div class="col-md-2 col-12">
+                <button class="btn btn-success" *ngIf="!hidden" (click)="validaCamposVacios()">
+                      <span><b> Registro Completo. </b></span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

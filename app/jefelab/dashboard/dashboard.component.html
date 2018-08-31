@@ -7,11 +7,17 @@
     <div class="col-lg-12 col-12 col-md-12">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Orden de trabajo No.{{this.id}}</h5>
+          <h5 class="card-category">
+    
+            Orden de trabajo No.{{this.id}}</h5>
           <h4 class="card-title">Orden de trabajo.</h4>
         </div>
         <div class="card-body">
-
+        <div class="btn-group"  >
+            <button class="btn btn-info" *ngIf="hiddenDetail == true" (click)="evaluaHerra();">
+                <span><b> Evaluar Herramienta</b></span>
+            </button>   
+        </div>    
          <form (ngSubmit)="onSubmit()" [formGroup]=ordenForm #formDir="ngForm">
             
             <div class="row"  *ngIf="!hiddenDetail"> <!--PRIMER ROW -->

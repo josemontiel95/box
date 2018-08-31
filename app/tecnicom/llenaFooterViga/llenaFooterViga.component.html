@@ -1,0 +1,73 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaUsuario();"></i>
+          FOOTER VIGA</h5>
+        </div>
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=creaCCHForm #formDir="ngForm">
+            
+            <h6>INVENTARIO DE INSTRUMENTO</h6>
+            <div class="row">
+              
+              <div class="col-md-6 col-12">
+                 <div class="form-group">
+                  <label for="prensas">PRENSA</label>
+                  <select  class="form-control" id="prensas" 
+                    required name="prensas"
+                    placeholder="Tipos"  formControlName="prensas">
+                    <option value="" [disabled]="true">Selecciona una Prensa...</option>
+                    <option *ngFor="let prensas of mis_prensas" [value]="prensas.id_herramienta">
+                      {{prensas.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="prensas.invalid && (prensas.dirty || prensas.touched)" class="alert alert-danger">
+                   <div *ngIf="prensas.errors.required">
+                   Prensa Requerida.
+                   </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                 <div class="form-group">
+                  <label for="flexo">FLEXO</label>
+                  <select  class="form-control" id="flexo" 
+                    required name="flexo"
+                    placeholder="Tipos"  formControlName="flexo">
+                    <option value="" [disabled]="true">Selecciona una flexo...</option>
+                    
+                    <option *ngFor="let flexo of mis_flexos" [value]="flexo.id_herramienta">
+                      {{flexo.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="flexo.invalid && (flexo.dirty || flexo.touched)" class="alert alert-danger">
+                   <div *ngIf="flexo.errors.required">
+                   flexo Requerido.
+                   </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-group" style="float: right; padding-right: 10%;">
+            <button class="btn btn-success" [disabled]="creaCCHForm.invalid" (click)="crearFormatoCCH(); ">
+              <span><b> Siguiente </b></span>
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>
