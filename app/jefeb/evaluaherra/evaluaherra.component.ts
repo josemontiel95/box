@@ -49,7 +49,7 @@ export class EvaluaHerraComponent implements OnInit {
 
    
    forma={
-     condicion:'0'
+     condicion: ""
    };
 
  
@@ -117,8 +117,23 @@ export class EvaluaHerraComponent implements OnInit {
   onSubmit() { this.submitted = true; }
 
  
+    addHerra(aux3: any)
+     {
+   
+    this.auxx=aux3;
+    this.hidden= !this.hidden;
+    console.log(this.auxx);
+    this.tipoForm.value.condicion=aux3;
+     console.log(this.tipoForm.value.condicion);
+     //this.parcha(aux3);
+  }
 
- 
+ parcha(aux: any)
+ {
+      this.tipoForm.patchValue({
+       condicion:  aux.condicion,
+        });
+ }
   
 
     llenado(respuesta: any){

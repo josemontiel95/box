@@ -11,7 +11,7 @@
           <h4 class="card-title">Herramientas de la orden de trabajo.</h4>
         </div>
         <div class="card-body"> 
-           <app-grid></app-grid>
+           <app-herramienta-grid (agregaHerra)="addHerra($event)"></app-herramienta-grid>
 
           <div class="col-md-12 col-12" [formGroup]=tipoForm *ngIf="!hidden">
                <div class="form-group">
@@ -33,7 +33,7 @@
               <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar(); mostrarDetalles();">
                 <span><b> Evaluar Herramienta </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hidden" [disabled]="ordenForm.invalid" (click)="mostrar(); mostrarDetalles();" >
+            <button class="btn btn-success" *ngIf="!hidden" [disabled]="tipoForm.invalid" (click)="mostrar(); mostrarDetalles();" >
               <!--(click)="actualizarHerramienta( );"-->
               <span><b> Guardar Cambios </b></span>
             </button>
