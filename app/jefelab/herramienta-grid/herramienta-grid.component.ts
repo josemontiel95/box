@@ -92,13 +92,17 @@ export class HerramientaGridComponent implements OnInit  {
     var selectedRows = this.gridApi.getSelectedRows();
     var id = []; //array
     var cond = "";
+    var ids = "";
 
     selectedRows.forEach(function(selectedRow, index) {
       id.push(selectedRow.id_herramienta);
       cond += selectedRow.condicion;
+      ids += selectedRow.id_herramienta;
     });
    this.eliminaHerr(id);
+   this.evaluaHerr(ids);
    this.evaluaHerr(cond);
+
   }
 
 

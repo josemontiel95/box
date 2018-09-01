@@ -30,9 +30,16 @@
                 </div>
               </div>
                 </div>
+                 <div class="form-group">
+                  <label for="observaciones">Observacionesnes</label>
+                  <textarea type="text" id="observaciones"  
+                  class="form-control" 
+                  name="observaciones" placeholder=""   formControlName="observaciones">
+                  </textarea>
+              </div>
             </div>
                     <div class="btn-group" style=" padding-left: 50%;" >
-              <button class="btn btn-info" *ngIf="!hidden" (click)="mostrar(); mostrarDetalles();">
+              <button class="btn btn-info" *ngIf="!hidden" (click)="  actualizaCondicion();  regresaOrdenTrabajo2();">
                 <span><b> Evaluar Herramienta </b></span>
               </button>
           </div>
