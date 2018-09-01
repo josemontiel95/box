@@ -32,12 +32,12 @@ export const TecnicoMLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'user-profile', pathMatch: 'full' },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'pendientes',   component: PendientesComponent },
-    { path: 'llenaFooter/:id',   component: LlenaFooterComponent },
-    { path: 'llenaFooterCubo/:id',   component: LlenaFooterCuboComponent },
-    { path: 'llenaFooterViga/:id',   component: LlenaFooterVigaComponent },
-    { path: 'pruebaCilindro/:id',   component: PruebaCilindroComponent },
-    { path: 'pruebaViga',   component: PruebaVigaComponent },
-    { path: 'pruebaCubo',   component: PruebaCuboComponent },
+    { path: 'llenaFooter/:id/:id2',   component: LlenaFooterComponent },
+    { path: 'llenaFooterCubo/:id/:id2',   component: LlenaFooterCuboComponent },
+    { path: 'llenaFooterViga/:id/:id2',   component: LlenaFooterVigaComponent },
+    { path: 'pruebaCilindro/:id/:id2',   component: PruebaCilindroComponent },
+    { path: 'pruebaViga/:id/:id2',   component: PruebaVigaComponent },
+    { path: 'pruebaCubo/:id/:id2',   component: PruebaCuboComponent },
 
 /*    
     { path: 'orden-trabajo/dashboard/:id',      component: DashboardComponent },    

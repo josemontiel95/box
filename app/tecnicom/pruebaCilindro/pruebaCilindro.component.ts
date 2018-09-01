@@ -23,6 +23,8 @@ import {
 })
 export class PruebaCilindroComponent implements OnInit{
 
+  id_Footer:string;
+  id_Registro: string;
   id_orden: string;
   id_registro: string;
   id_formato: string;
@@ -67,7 +69,7 @@ export class PruebaCilindroComponent implements OnInit{
 	  
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => {this.id_orden=params.id; this.id_formato=params.id2; this.id_registro=params.id3}); //Recibe tre parametros
+    this.route.params.subscribe( params => {this.id_Footer=params.id; this.id_Registro=params.id2}); //Recibe dos parametros
     //El primer parametro es para recibir el numero de registro y el segundo el numero de formato.
     this.cargando=1;
 
