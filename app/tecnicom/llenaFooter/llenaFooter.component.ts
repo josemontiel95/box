@@ -41,8 +41,24 @@ export class LlenaFooterComponent implements OnInit {
       regla:'',
       prensa:''}
   
-  Siguiente(){
-        
+    ValidaSiguiente(){
+
+    let warning = false;
+    Object.keys(this.creaCCHForm.controls).forEach((controlName) => {
+        if(this.creaCCHForm.controls[controlName].value == "" || this.creaCCHForm.controls[controlName].value == null || this.creaCCHForm.controls[controlName].value == "null"){
+          warning = true;
+        }// disables/enables each form control based on 'this.formDisabled'
+    });
+
+    if(warning){
+      window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
+    }else{
+          if(window.confirm("¿Estas seguro dar como completado el Footer de Cilindros del día?.")){
+            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+            this.router.navigate(['tecnico/pruebaCilindro/'+this.id_Footer + '/'+this.id_Registro]);
+          }
+    }
+
   }
   
    validaRespuesta(res:any){

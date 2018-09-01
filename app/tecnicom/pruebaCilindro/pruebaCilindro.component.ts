@@ -55,10 +55,7 @@ export class PruebaCilindroComponent implements OnInit{
         cargaKg: '',
         area: '',
         resCompresion: '',
-        falla: '',
-        hsalida: '',
-        hllegada: ''         
-    }
+        falla: ''}
 
 
 
@@ -105,9 +102,7 @@ export class PruebaCilindroComponent implements OnInit{
       'cargaKg': new FormControl( {value: this.FormatoCCH.cargaKg, disabled: this.hidden}),
       'area': new FormControl( {value: this.FormatoCCH.area, disabled: this.hidden}),
       'resCompresion': new FormControl( {value: this.FormatoCCH.resCompresion, disabled: this.hidden}),       
-      'falla': new FormControl( {value: this.FormatoCCH.falla, disabled: this.hidden}),
-      'hsalida': new FormControl( {value: this.FormatoCCH.hsalida, disabled: this.hidden}),
-      'hllegada': new FormControl( {value: this.FormatoCCH.hllegada, disabled: this.hidden})          });
+      'falla': new FormControl( {value: this.FormatoCCH.falla, disabled: this.hidden})});
   }
   
    get fechaColado() { return this.formatoCCHForm.get('fechaColado'); }
@@ -135,11 +130,7 @@ export class PruebaCilindroComponent implements OnInit{
    get resCompresion() { return this.formatoCCHForm.get('resCompresion'); }              
 
    get falla() { return this.formatoCCHForm.get('falla'); }                          
-
-   get hsalida() { return this.formatoCCHForm.get('hsalida'); }              
    
-   get hllegada() { return this.formatoCCHForm.get('hllegada'); }              
-
   submitted = false;
 
   onSubmit() { this.submitted = true; }
@@ -174,10 +165,7 @@ export class PruebaCilindroComponent implements OnInit{
      cargaKg:  respuesta.cargaKg,
      area: respuesta.area,
      resCompresion: respuesta.resCompresion,
-     falla: respuesta.falla,
-     hsalida: respuesta.horaSalida,
-     hllegada: respuesta.horaLlegada
-    });
+     falla: respuesta.falla});
 
     if(respuesta.status == 1){
       this.mostrar();
@@ -440,38 +428,6 @@ export class PruebaCilindroComponent implements OnInit{
 
     formData.append('campo', '9');
     formData.append('valor', this.formatoCCHForm.value.falla);
-    formData.append('id_registrosRev', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
-  onBlurHoraSalida(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '11');
-    formData.append('valor', this.formatoCCHForm.value.hsalida);
-    formData.append('id_registrosRev', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
-  onBlurHoraLlegada(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '12');
-    formData.append('valor', this.formatoCCHForm.value.hllegada);
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 

@@ -82,7 +82,7 @@ export class LlenaFooterVigaComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id_orden=params.id);
+    this.route.params.subscribe( params => {this.id_Footer=params.id; this.id_Registro=params.id2;});
     this.cargando=0;
 
 
@@ -99,6 +99,14 @@ export class LlenaFooterVigaComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res =>{console.log(res); this.llenaFlexos(res.json()) });
+
+    url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getFooterByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_footerEnsayo', this.id_Footer);
+    this.http.get(url, {search}).subscribe(res => {console.log(res);this.llenado(res.json());} );
 
     this.creaCCHForm = new FormGroup({
       'prensas': new FormControl( this.cch.prensas),
@@ -123,7 +131,7 @@ export class LlenaFooterVigaComponent implements OnInit {
 
     this.creaCCHForm.patchValue({
      flexo: respuesta.regVerFle_id,
-     prensa: respuesta.prensa_id
+     prensas: respuesta.prensa_id
     });
   }
 

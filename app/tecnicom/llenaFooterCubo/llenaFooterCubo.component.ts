@@ -40,29 +40,27 @@ export class LlenaFooterCuboComponent implements OnInit {
       bascula:'',
       regla:'',
       prensa:''}
-  
-  crearFormatoCCH()
-  {
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('vAplicacion', this.creaCCHForm.value.carga);
-    formData.append('ordenDeTrabajo_id', this.id_orden);
-    formData.append('bascula', this.creaCCHForm.value.bascula);  
-    formData.append('regla_id', this.creaCCHForm.value.regla);
-    formData.append('prensa_id', this.creaCCHForm.value.prensa);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.recibeFormatoID(res.json());
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+    ValidaSiguiente(){
 
-    
+    let warning = false;
+    Object.keys(this.creaCCHForm.controls).forEach((controlName) => {
+        if(this.creaCCHForm.controls[controlName].value == "" || this.creaCCHForm.controls[controlName].value == null || this.creaCCHForm.controls[controlName].value == "null"){
+          warning = true;
+        }// disables/enables each form control based on 'this.formDisabled'
+    });
+
+    if(warning){
+      window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
+    }else{
+          if(window.confirm("¿Estas seguro dar como completado el Footer de Cilindros del día?.")){
+            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+            this.router.navigate(['tecnico/pruebaCubo/'+this.id_Footer + '/'+this.id_Registro]);
+          }
+    }
+
   }
-
+  
   recibeFormatoID(res: any)
   {
     this.id_formato= res.id_formatoRegistroRev;
@@ -75,6 +73,7 @@ export class LlenaFooterCuboComponent implements OnInit {
      Si la respuesta es 0 siginifica que la insercion fue exitosa y
      Por lo tanto lo enviara a la ruta de llenaFormatoCCH con su id_formato 
      Parametrizado. */
+     
    validaRespuesta(res:any){
      console.log(res);
      if(res.error!= 0){
@@ -130,7 +129,7 @@ export class LlenaFooterCuboComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_footerEnsayo', this.id_Footer);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+    this.http.get(url, {search}).subscribe(res => {console.log(res);this.llenado(res.json());} );
 
     this.creaCCHForm = new FormGroup({
       'vAplicacion': new FormControl( this.cch.vAplicacion, Validators.required),
@@ -161,7 +160,7 @@ export class LlenaFooterCuboComponent implements OnInit {
     console.log(respuesta);
 
     this.creaCCHForm.patchValue({
-     vAplicacion:  respuesta.fecha,
+     vAplicacion:  respuesta.observaciones,
      bascula: respuesta.buscula_id,
      regla: respuesta.regVerFle_id,
      prensa: respuesta.prensa_id

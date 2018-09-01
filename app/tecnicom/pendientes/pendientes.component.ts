@@ -110,6 +110,7 @@ export class PendientesComponent implements OnInit{
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('tipo', this.tipo);
+    formData.append('id_RegistroCCH', this.id);
     this.http.post(url, formData).subscribe(res => {
       console.log(res);
                                               this.respuestaSwitch(res.json());                 
@@ -118,35 +119,43 @@ export class PendientesComponent implements OnInit{
 
    respuestaSwitch(res: any){
      let id_footer= "";
+     let id_RegistroCCH= "";
+     console.log(res.id_RegistroGabs);
      if(res.existe == 1){
 
        if(this.ruta == 1){
           id_footer = res.id_footerEnsayo;
+          id_RegistroCCH = res.id_RegistroGabs;
           window.alert("CILINDRO");
-          this.router.navigate(['tecnico/pruebaCilindro/'+id_footer + '/'+this.id]);
+          this.router.navigate(['tecnico/pruebaCilindro/'+id_footer + '/'+id_RegistroCCH]);
        }else if(this.ruta == 2) {
           id_footer = res.id_footerEnsayo;
           window.alert("CUBO");
-          this.router.navigate(['tecnico/pruebaCubo/'+id_footer + '/'+this.id]);
+          id_RegistroCCH = res.id_RegistroGabs;
+          this.router.navigate(['tecnico/pruebaCubo/'+id_footer + '/'+id_RegistroCCH]);
        }else if(this.ruta == 3) {
           id_footer = res.id_footerEnsayo;
           window.alert("VIGA");
-          this.router.navigate(['tecnico/pruebaViga/'+id_footer + '/'+this.id]);
+          id_RegistroCCH = res.id_RegistroGabs;          
+          this.router.navigate(['tecnico/pruebaViga/'+id_footer + '/'+id_RegistroCCH]);
        }
      }else{
 
        if(this.ruta == 1){
           id_footer = res.id_footerEnsayo;
           window.alert("CILINDRO");
-          this.router.navigate(['tecnico/llenaFooter/'+id_footer + '/'+this.id]);
+          id_RegistroCCH = res.id_RegistroGabs;
+          this.router.navigate(['tecnico/llenaFooter/'+id_footer + '/'+id_RegistroCCH]);
        }else if(this.ruta == 2) {
           id_footer = res.id_footerEnsayo;
           window.alert("CUBO");
-          this.router.navigate(['tecnico/llenaFooterCubo/'+id_footer + '/'+this.id]);
+          id_RegistroCCH = res.id_RegistroGabs;
+          this.router.navigate(['tecnico/llenaFooterCubo/'+id_footer + '/'+id_RegistroCCH]);
        }else if(this.ruta == 3) {
           id_footer = res.id_footerEnsayo;
-          window.alert("VIGA");  
-          this.router.navigate(['tecnico/llenaFooterViga/'+id_footer + '/'+this.id]);
+          window.alert("VIGA");
+          id_RegistroCCH = res.id_RegistroGabs;  
+          this.router.navigate(['tecnico/llenaFooterViga/'+id_footer + '/'+id_RegistroCCH]);
        }
 
      }
