@@ -1,4 +1,8 @@
-
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
@@ -352,17 +356,17 @@
             </button>
             <div class="btn-group"  style=" padding-left: 15%;">              
               <button class="btn btn-info" *ngIf="hiddenHerramienta == true"  (click)="mostrarHerramienta()">
-                <span><b> Cambiar Herramienta </b></span>
+                <span><b> Agregar Herramienta </b></span>
               </button>
             <button class="btn btn-success" *ngIf="!hiddenHerramienta" [disabled]="false" (click)="actualizarHerramienta(); mostrarHerramienta();">
-              <span><b> Agregar Herramienta </b></span>
+              <span><b> Guardar Cambios </b></span>
             </button>
           </div>
           </div>
           <div *ngIf="this.hiddenHerramienta == true">
           <app-herramienta-grid (eliminaHerra)="eliminaHerra($event)"></app-herramienta-grid>
           </div>
-          <div *ngIf="!this.hiddenHerramienta">
+          <div *ngIf="!this.hiddenHerramienta && !this.hiddenTotal">
             <form (ngSubmit)="onSubmit()" [formGroup]=tipoForm #formDir="ngForm">
                <div class="col-md-12 col-12">
                 <div class="form-group">
@@ -384,11 +388,12 @@
                 </div>
               </div>
             </form>
-          </div>         
+                  
           <div *ngIf="!this.hiddenHerramientaDispo">
 
           <app-herramienta-grida [idh]="this.tipoForm.value.herramienta_tipo_id" (agregaHerra)="addHerra($event)"></app-herramienta-grida>          
           </div>
+          </div> 
         </div>
       </div>
     </div>
@@ -412,7 +417,7 @@
               <button class="btn btn-info" *ngIf="hiddenTecnicos == true"  (click)="mostrarTecnicos()">
                 <span><b> Agregar Tecnico</b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hiddenTecnicos" [disabled]="false" (click)="mostrarTecnicos();  actualizarTecnicos();">
+            <button class="btn btn-success" *ngIf="!hiddenTecnicos " [disabled]="false" (click)="mostrarTecnicos();  actualizarTecnicos();">
               <span><b> Guardar Cambios</b></span>
             </button>
           </div>
@@ -420,7 +425,7 @@
           <div *ngIf="this.hiddenTecnicos == true">
           <app-tecnicos-grid (eliminaTecn)="eliminaTec($event)"></app-tecnicos-grid>
         </div>
-          <div *ngIf="!this.hiddenTecnicos">
+          <div *ngIf="!this.hiddenTecnicos && !this.hiddenTotal">
           <app-tecnicos-grida  (agregaTecn)="addTec($event)"></app-tecnicos-grida>          
           </div>        
         </div>
