@@ -22,12 +22,30 @@
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="herramienta">Herramienta</label> <!--disable-->
+                    <select  class="form-control" id="herramienta" name="herramienta" formControlName="herramienta" (change)="onBlurHerramienta()">
+                          <option value="0" [disabled]="true">Selecciona la herramienta</option>
+                          <option *ngFor="let herr of herramientas" [value]="herr.id_herramienta">
+                                {{herr.placas}}
+                          </option>
+                    </select>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="fecha">FECHA</label> <!--disable-->
                     <input type="date" id="fecha"   
                     class="form-control" 
                     name="fecha" placeholder="" formControlName="fecha" (change)="onBlurFecha()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
+
+
+            </div> <!--FIN PRIMER ROW -->
+
+          
+            <div class="row">
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
@@ -38,10 +56,6 @@
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
-            </div> <!--FIN PRIMER ROW -->
-
-          
-            <div class="row">
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="revp">REVENIMIENTO(cm): PROYECTO</label>
@@ -66,7 +80,13 @@
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
-              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+             
+
+            </div>
+
+            <div class="row">
+
+               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="tamano">TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm)</label> <!--disable-->
                     <input type="text" id="tamano"   
@@ -75,10 +95,7 @@
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
-            </div>
-
-            <div class="row">
-              <div class="col-md-6 col-12"> <!--SEGUNDO GRID -->
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="volumen">VOLUMEN(m<sup>3</sup>)</label>
                     <input type="text" id="volumen"  
@@ -87,7 +104,7 @@
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
 
-              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="diasEnsaye">Dias antes de ensayar</label> <!--disable-->
                     <select  class="form-control" id="diasEnsaye" name="diasEnsaye" formControlName="diasEnsaye" (change)="onBlurdiasEnsaye()">
