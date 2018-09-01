@@ -49,8 +49,8 @@ export class EvaluaHerraComponent implements OnInit {
    hiddenFormato= true;
    hiddenFormatoDispo = true;
    hiddenTecnicos: any;
-
-   
+   hiddenw= true;
+   error: any;
    forma={
      condicion: "",
      observaciones: ""
@@ -98,7 +98,9 @@ export class EvaluaHerraComponent implements OnInit {
                                                   console.log(res);
                                               this.respuestaSwitch(res.json());
                                             });
-        
+        this.hiddenw = false
+   setTimeout(() =>{this.hiddenw = true},1000);   
+   this.hidden = !this.hidden;  
   }
 
    respuestaSwitch(res: any){
@@ -153,10 +155,22 @@ export class EvaluaHerraComponent implements OnInit {
      }
      else
      {
-       this.id = aux3;
+       if(aux3 == 5)
+       {
+         this.hidden  = !this.hidden;
+         this.regresaOrdenTrabajo2();
+       }
+   
+       this.id = aux3;         
+     
+
      }
+
+
    console.log(this.tipoForm.value.condicion);
    console.log(this.id);
+   console.log(this.error);
+   console.log(this.hidden);
   }
 
 
