@@ -20,6 +20,7 @@ export class HerramientaGridComponent implements OnInit  {
   rowSelection;
   columnDefs;
   id: string;
+  error: any;
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
     {headerName: 'ID', field: 'id_herramienta' },  
@@ -52,6 +53,7 @@ export class HerramientaGridComponent implements OnInit  {
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id);
     this.http.get(url, {search}).subscribe(res => {
+                                                this.error = res.json().error;
                                             this.llenaTabla(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
@@ -79,11 +81,16 @@ export class HerramientaGridComponent implements OnInit  {
 
   llenaTabla(repuesta: any){
 
-    if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
+      if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
     }else{
       this.rowData =repuesta;
+      if(this.error == 5)
+      {
+        this.evaluaHerr(this.error);
+        console.log(this.error);
+      }
     }
   }
 
@@ -92,13 +99,18 @@ export class HerramientaGridComponent implements OnInit  {
     var selectedRows = this.gridApi.getSelectedRows();
     var id = []; //array
     var cond = "";
+    var ids = "";
 
     selectedRows.forEach(function(selectedRow, index) {
       id.push(selectedRow.id_herramienta);
       cond += selectedRow.condicion;
+      ids += selectedRow.id_herramienta;
     });
    this.eliminaHerr(id);
+   this.evaluaHerr(ids);
    this.evaluaHerr(cond);
+
+
   }
 
 

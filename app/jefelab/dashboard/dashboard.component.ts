@@ -18,7 +18,7 @@ import {
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'] 
+  styleUrls: ['./dashboard.component.css','../../loadingArrows.css'] 
 })
 export class DashboardComponent implements OnInit {
 
@@ -50,7 +50,8 @@ export class DashboardComponent implements OnInit {
    hiddenHerramienta= true;
    hiddenTecnicos= true;
    hiddenHerramientaDispo= true;
-   hiddenTecnicosDispo= true;   
+   hiddenTecnicosDispo= true; 
+   hiddenTotal= true;  
    herra = {
 
      herramienta_tipo_id: ''
@@ -81,7 +82,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
-    this.cargando=2;
+    this.cargando=6;
 
 
     let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
@@ -249,7 +250,7 @@ export class DashboardComponent implements OnInit {
   mostrarHerramienta()
   {
     this.hiddenHerramienta = !this.hiddenHerramienta;
-
+    this.hiddenTotal = !this.hiddenTotal;
   }
 
      respuestaSwitchE(res: any){
@@ -263,11 +264,12 @@ export class DashboardComponent implements OnInit {
      }
      else{
        console.log("holaa");
-         location.reload();
+       this.cargando = this.cargando-1;
        }
      }
        else{
          window.alert("Acción Cancelada.");
+          
      }
    
  }
@@ -279,6 +281,7 @@ export class DashboardComponent implements OnInit {
      }
      else{
        window.alert("Insertado con exito.");
+       this.cargando = this.cargando-1;
      }
    }
 
@@ -327,7 +330,7 @@ export class DashboardComponent implements OnInit {
     this.hiddenHerramientaDispo = true;
      setTimeout(() =>{this.hiddenHerramientaDispo = false},1000);
    }
-
+   
 
   }
 
@@ -346,7 +349,10 @@ export class DashboardComponent implements OnInit {
         this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitchE(res.json());
                                             });
-
+        this.hiddenHerramienta  = false;
+       setTimeout(() =>{ this.hiddenHerramienta  = true},1000);
+       this.cargando = 1;
+       console.log(this.cargando);
   }
 
    eliminarTecni()
@@ -362,38 +368,17 @@ export class DashboardComponent implements OnInit {
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaSwitchE(res.json());
                                             } );
+            this.hiddenTecnicos  = false;
+       setTimeout(() =>{ this.hiddenTecnicos  = true},1000);
+    this.cargando = 1;
+    console.log(this.cargando);
   }
-
-  actualizarOrden()
-  {
-    let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'upDateAdmin');
-    formData.append('token', this.global.token);           
-    formData.append('id_ordenDeTrabajo', this.id);
-    formData.append('cotizacion_id',  this.ordenForm.value.cotizacion_id);
-    formData.append('area', this.ordenForm.value.area);           
-    formData.append('obra_id', this.ordenForm.value.obra_id);
-    formData.append('actividades',  this.ordenForm.value.actividades);
-    formData.append('condicionesTrabajo', this.ordenForm.value.condicionesTrabajo);
-    formData.append('fechaInicio', this.ordenForm.value.fechaInicio);           
-    formData.append('fechaFin', this.ordenForm.value.fechaFin);
-    formData.append('horaInicio',  this.ordenForm.value.horaInicio);
-    formData.append('horaFin', this.ordenForm.value.horaFin);           
-    formData.append('observaciones',this.ordenForm.value.observaciones);
-    formData.append('lugar',  this.ordenForm.value.lugar);
-    formData.append('jefe_brigada_id', this.ordenForm.value.jefe_brigada_id);
-    formData.append('laboratorio_id',  this.ordenForm.value.laboratorio_id);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());
-                                            });
-  }
- 
 
   actualizarHerramienta()
   {
 
-
+    this.cargando = 1;
+    console.log(this.cargando);
       console.log(typeof this.aux3);
     
      let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/post/endpoint.php`;
@@ -409,7 +394,7 @@ export class DashboardComponent implements OnInit {
                                               this.respuestaSwitch(res.json());
                                             });
         this.hiddenHerramientaDispo = true;
-
+        
        
   }
 
@@ -427,7 +412,9 @@ export class DashboardComponent implements OnInit {
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaSwitch(res.json());
                                             } );
+    this.cargando = 1;
     this.hiddenTecnicos = true;
+    console.log(this.cargando);
   }
   
   
@@ -435,7 +422,8 @@ export class DashboardComponent implements OnInit {
     mostrarTecnicos()
   {
     this.hiddenTecnicos = !this.hiddenTecnicos;
-
+    this.hiddenTotal = !this.hiddenTotal;
+    console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
 

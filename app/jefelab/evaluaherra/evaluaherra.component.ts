@@ -49,10 +49,11 @@ export class EvaluaHerraComponent implements OnInit {
    hiddenFormato= true;
    hiddenFormatoDispo = true;
    hiddenTecnicos: any;
-
-   
+   hiddenw= true;
+   error: any;
    forma={
-     condicion: ""
+     condicion: "",
+     observaciones: ""
    };
 
  
@@ -64,7 +65,9 @@ export class EvaluaHerraComponent implements OnInit {
     this.route.params.subscribe( params => this.id=params.id);
     this.cargando=2;
  
-      this.tipoForm = new FormGroup({'condicion': new FormControl(  this.forma.condicion)
+      this.tipoForm = new FormGroup({
+        'condicion': new FormControl( this.forma.condicion,  [Validators.required])
+        'observaciones': new FormControl( this.forma.observaciones,  [Validators.required])
           });
 
  
@@ -73,27 +76,31 @@ export class EvaluaHerraComponent implements OnInit {
       
  
 
-   get condicion() {return this.tipoForm.get('condicion');}
-  
+   
+  get condicion() {return this.tipoForm.get('condicion');}
+  get observaciones() {return this.tipoForm.get('observaciones');}
  
  
  
-  pasarlista()
+  actualizaCondicion()
   {
 
-     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
+     let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
      let formData:FormData = new FormData();
-        formData.append('function', 'insertAdmin');
-       // formData.append('id_tecnicos_ordenDeTrabajo', this.ids);
+        formData.append('function', 'evaluateHerra');
+        formData.append('condicion', this.tipoForm.value.condicion);
         formData.append('rol_usuario_id', this.global.rol);
         formData.append('token', this.global.token);
-        formData.append('email', this.paseForm.value.correo);
-        formData.append('contrasena', this.paseForm.value.pass);    
+        formData.append('id_herramienta', this.id );
+        formData.append('observaciones', this.tipoForm.value.observaciones);    
         
         this.http.post(url, formData).subscribe(res => {
+                                                  console.log(res);
                                               this.respuestaSwitch(res.json());
                                             });
-        this.hiddenTecnicos = true;
+        this.hiddenw = false
+   setTimeout(() =>{this.hiddenw = true},1000);   
+   this.hidden = !this.hidden;  
   }
 
    respuestaSwitch(res: any){
@@ -117,6 +124,12 @@ export class EvaluaHerraComponent implements OnInit {
     this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/'+ this.id]);
   }
 
+
+     regresaOrdenTrabajo2(){
+    this.router.navigate(['jefeLaboratorio/orden-trabajo/']);
+  }
+
+
   onSubmit() { this.submitted = true; }
 
  
@@ -132,11 +145,32 @@ export class EvaluaHerraComponent implements OnInit {
      setTimeout(() =>{this.hidden = false},1000);
    }
 
+     console.log(aux3);
+     if( isNaN(aux3) == true )
+     {
      this.tipoForm.patchValue({
-       condicion: aux3
+       condicion: aux3,
+       observaciones: ""
         });
+     }
+     else
+     {
+       if(aux3 == 5)
+       {
+         this.hidden  = !this.hidden;
+         this.regresaOrdenTrabajo2();
+       }
+   
+       this.id = aux3;         
+     
 
- 
+     }
+
+
+   console.log(this.tipoForm.value.condicion);
+   console.log(this.id);
+   console.log(this.error);
+   console.log(this.hidden);
   }
 
 
