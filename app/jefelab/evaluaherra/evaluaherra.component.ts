@@ -66,7 +66,7 @@ export class EvaluaHerraComponent implements OnInit {
     this.cargando=2;
  
       this.tipoForm = new FormGroup({
-        'condicion': new FormControl( this.forma.condicion,  [Validators.required])
+        'condicion': new FormControl( this.forma.condicion,  [Validators.required]),
         'observaciones': new FormControl( this.forma.observaciones,  [Validators.required])
           });
 

@@ -29,6 +29,38 @@
                   </div>
                 </div>
               </div><!-- FIN PRIMER CAMPO -->
+              <div class="col-md-6 col-12"> <!-- INICIO OCTAVO CAMPO -->
+                <div class="form-group">
+                  <label for="id_concretera">Concretera</label> <!--tipo de credencial referido al catalogo de clientes.-->
+                  <select   class="form-control"  id="id_concretera" required name="id_concretera" placeholder="Concretera" formControlName="id_concretera" >
+                    <option value="Selecciona una Concretera..."  selected>Selecciona una Concretera...</option>
+                    <option *ngFor="let concretera of mis_con" [value]="concretera.id_concretera">
+                      {{concretera.concretera}}
+                    </option>
+                  </select>
+                  <div *ngIf="id_concretera.invalid && (id_concretera.dirty || id_concretera.touched)" class="alert alert-danger">            
+                    <div *ngIf="id_concretera.errors.required">
+                      Concretera requerida.
+                    </div>
+                  </div>
+                </div>
+              </div> <!-- FIN OCTAVO CAMPO -->
+            </div> <!-- FIN PRIMER ROW -->
+            <div class="row"> <!-- INICIO SEGUNDO ROW -->
+              <div class="col-md-12 col-12"> <!-- INICIO TERCER CAMPO -->
+                <div class="form-group">
+                  <label>Obra</label>
+                  <input type="text" id="obra"  required   name="obra" class="form-control" placeholder="Obra"  formControlName="obra" >
+                  <div *ngIf="obra.invalid && (obra.dirty || obra.touched)"class="alert alert-danger">            
+                    <div *ngIf="obra.errors.required">
+                      Nombre de la obra requerido.
+                    </div>
+                  </div>
+                </div>
+              </div><!-- FIN TERCER CAMPO -->
+            </div> <!-- FIN PRIMER ROW -->
+            <div class="row"> <!-- INICIO SEGUNDO ROW -->
+              
               <div class="col-md-6 col-12"> <!-- INICIO SEGUNDO CAMPO -->
                 <div class="form-group">
                   <label>Prefijo</label>
@@ -41,7 +73,41 @@
                   </div>
                 </div>
               </div> <!-- FIN SEGUNDO CAMPO -->  
-            </div> <!-- FIN PRIMER ROW -->
+               <div class="col-md-6 col-12"> <!-- INICIO NOVENO CAMPO -->
+                <div class="form-group">
+                  <label>Cotizaci&oacute;n</label>
+                  <input type="text" id="cotizacion"  required class="form-control" placeholder="Cotizaci&oacute;n" formControlName="cotizacion">
+                  <div *ngIf="cotizacion.invalid && (cotizacion.dirty || cotizacion.touched)" class="alert alert-danger">            
+                    <div *ngIf="cotizacion.errors.required"> No. de Cotizaci&oacute;n requerido requerido.</div>
+                  </div>
+                </div>
+              </div><!-- FIN NOVENO CAMPO -->  
+            </div><!-- FIN SEGUNDO ROW -->
+            <div class="row"> <!-- INICIO SEXTO ROW -->
+             <div class="col-md-6 col-12"> <!-- INICIO SEGUNDO CAMPO -->
+                <div class="form-group">
+                  <label>Consecutivo de documentos</label>
+                  <input type="text" id="consecutivoDocumentos"  required name="consecutivoDocumentos" class="form-control" placeholder="consecutivoDocumentos" formControlName="consecutivoDocumentos">
+                  <div *ngIf="consecutivoDocumentos.invalid && (consecutivoDocumentos.dirty || consecutivoDocumentos.touched)"
+                    class="alert alert-danger">    
+                    <div *ngIf="consecutivoDocumentos.errors.required">
+                      Consecutivo de documentos requerido.
+                    </div>
+                    <div *ngIf="consecutivoDocumentos.errors.pattern">Consecutivo de documentos solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div> <!-- FIN SEGUNDO CAMPO -->  
+              <div class="col-md-6 col-12"> <!-- INICIO DECIMO CAMPO -->
+                <div class="form-group">
+                  <label>Consecutivo de Probeta</label>
+                  <input type="text" id="consecutivoProbeta" name="consecutivoProbeta" class="form-control" placeholder="Consecutivo" value="1" formControlName="consecutivoProbeta">
+                  <div *ngIf="consecutivoProbeta.invalid && (consecutivoProbeta.dirty || consecutivoProbeta.touched)" class="alert alert-danger">            
+                    <div *ngIf="consecutivoProbeta.errors.required">Consecutivo de Probeta requerido.</div>
+                    <div *ngIf="consecutivoProbeta.errors.pattern">Consecutivo de Probeta solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div><!-- FIN DECIMO CAMPO --> 
+            </div> <!-- FIN SEXTO ROW -->
             <div class="row"> <!-- INICIO SEXTO ROW -->
               <div class="col-md-6 col-12"> <!-- INICIO NOVENO CAMPO -->
                 <div class="form-group">
@@ -64,35 +130,6 @@
                 </div>
               </div><!-- FIN DECIMO CAMPO --> 
             </div> <!-- FIN SEXTO ROW -->
-            <div class="row"> <!-- INICIO SEGUNDO ROW -->
-              <div class="col-md-6 col-12"> <!-- INICIO TERCER CAMPO -->
-                <div class="form-group">
-                  <label>Obra</label>
-                  <input type="text" id="obra"  required   name="obra" class="form-control" placeholder="Obra"  formControlName="obra" >
-                  <div *ngIf="obra.invalid && (obra.dirty || obra.touched)"class="alert alert-danger">            
-                    <div *ngIf="obra.errors.required">
-                      Nombre de la obra requerido.
-                    </div>
-                  </div>
-                </div>
-              </div><!-- FIN TERCER CAMPO -->
-              <div class="col-md-6 col-12"> <!-- INICIO OCTAVO CAMPO -->
-                <div class="form-group">
-                  <label for="id_concretera">Concretera</label> <!--tipo de credencial referido al catalogo de clientes.-->
-                  <select   class="form-control"  id="id_concretera" required name="id_concretera" placeholder="Concretera" formControlName="id_concretera" >
-                    <option value="Selecciona una Concretera..."  selected>Selecciona una Concretera...</option>
-                    <option *ngFor="let concretera of mis_con" [value]="concretera.id_concretera">
-                      {{concretera.concretera}}
-                    </option>
-                  </select>
-                  <div *ngIf="id_concretera.invalid && (id_concretera.dirty || id_concretera.touched)" class="alert alert-danger">            
-                    <div *ngIf="id_concretera.errors.required">
-                      Concretera requerida.
-                    </div>
-                  </div>
-                </div>
-              </div> <!-- FIN OCTAVO CAMPO -->
-            </div><!-- FIN SEGUNDO ROW -->
             <div class="row"> <!-- INICIO TERCER ROW -->
               <div class="col-md-6 col-12"> <!-- INICIO CUARTO CAMPO -->
                 <div class="form-group">

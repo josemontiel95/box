@@ -28,8 +28,6 @@ export class CrearObraComponent implements OnInit
   constructor(private router: Router, 
               private data: DataService, 
               private http: Http) { }
- 
-
     foto: string;
 
     submitted = false;
@@ -54,7 +52,10 @@ export class CrearObraComponent implements OnInit
      fechaDeCre:          '',
      telefono_residente:  '',
      nombre_residente:    '',
-     correo_residente:    '' 
+     correo_residente:    '', 
+     cotizacion :          '',
+     consecutivoProbeta :  '1',
+     consecutivoDocumentos:'1'
    }
 
   cargandoMessage: string= "";
@@ -82,20 +83,23 @@ export class CrearObraComponent implements OnInit
                                                    this.labValidator(res.json());
                                                  });
     this.obraForm = new FormGroup({
-      'id_obra':            new FormControl({ value:this.Obra.id_obra,           disabled: true }),         
-      'obra':               new FormControl({ value:this.Obra.obra,              disabled: this.hidden },  [Validators.required]), 
-      'revenimiento':       new FormControl({ value:this.Obra.revenimiento,      disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'incertidumbre':      new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'prefijo':            new FormControl({ value:this.Obra.prefijo,           disabled: this.hidden },  [Validators.required]), 
-      'id_cliente':         new FormControl({ value:this.Obra.id_cliente,        disabled: this.hidden },  [Validators.required]), 
-      'id_concretera':      new FormControl({ value:this.Obra.id_concretera,     disabled: this.hidden },  [Validators.required]), 
-      'tipo':               new FormControl({ value:this.Obra.tipo,              disabled: this.hidden },  [Validators.required]), 
-      'localizacion':       new FormControl({ value:this.Obra.localizacion,      disabled: this.hidden },  [Validators.required]), 
-      'descripcion':        new FormControl({ value:this.Obra.descripcion,       disabled: this.hidden },  [Validators.required]), 
-      'fechaDeCre':         new FormControl({ value:this.Obra.fechaDeCre,        disabled: this.hidden },  [Validators.required]), 
-      'telefono_residente': new FormControl({ value:this.Obra.telefono_residente,disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'nombre_residente':   new FormControl({ value:this.Obra.nombre_residente,  disabled: this.hidden },  [Validators.required]),  
-      'correo_residente':   new FormControl({ value:this.Obra.correo_residente,  disabled: this.hidden },  [Validators.required])   
+      'id_obra':              new FormControl({ value:this.Obra.id_obra,           disabled: true }),         
+      'obra':                 new FormControl({ value:this.Obra.obra,              disabled: this.hidden },  [Validators.required]), 
+      'revenimiento':         new FormControl({ value:this.Obra.revenimiento,      disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'incertidumbre':        new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'prefijo':              new FormControl({ value:this.Obra.prefijo,           disabled: this.hidden },  [Validators.required]), 
+      'id_cliente':           new FormControl({ value:this.Obra.id_cliente,        disabled: this.hidden },  [Validators.required]), 
+      'id_concretera':        new FormControl({ value:this.Obra.id_concretera,     disabled: this.hidden },  [Validators.required]), 
+      'tipo':                 new FormControl({ value:this.Obra.tipo,              disabled: this.hidden },  [Validators.required]), 
+      'localizacion':         new FormControl({ value:this.Obra.localizacion,      disabled: this.hidden },  [Validators.required]), 
+      'descripcion':          new FormControl({ value:this.Obra.descripcion,       disabled: this.hidden },  [Validators.required]), 
+      'fechaDeCre':           new FormControl({ value:this.Obra.fechaDeCre,        disabled: this.hidden },  [Validators.required]), 
+      'telefono_residente':   new FormControl({ value:this.Obra.telefono_residente,disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'nombre_residente':     new FormControl({ value:this.Obra.nombre_residente,  disabled: this.hidden },  [Validators.required]), 
+      'cotizacion':           new FormControl({ value:this.Obra.cotizacion,        disabled: this.hidden },  [Validators.required]), 
+      'consecutivoProbeta':   new FormControl({ value:this.Obra.consecutivoProbeta,disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'consecutivoDocumentos':new FormControl({ value:this.Obra.consecutivoDocumentos,disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'correo_residente':     new FormControl({ value:this.Obra.correo_residente,  disabled: this.hidden },  [Validators.required])   
     });
   }
 
@@ -111,6 +115,9 @@ export class CrearObraComponent implements OnInit
   get localizacion()          { return this.obraForm.get('localizacion'); }
   get fechaDeCre()            { return this.obraForm.get('fechaDeCre'); }
   get telefono_residente()    { return this.obraForm.get('telefono_residente'); }
+  get cotizacion()            { return this.obraForm.get('cotizacion'); }
+  get consecutivoProbeta()    { return this.obraForm.get('consecutivoProbeta'); }
+  get consecutivoDocumentos() { return this.obraForm.get('consecutivoDocumentos'); }
   get nombre_residente()      { return this.obraForm.get('nombre_residente'); }
   get correo_residente()      { return this.obraForm.get('correo_residente'); }
 
@@ -157,7 +164,7 @@ export class CrearObraComponent implements OnInit
     this.cargando=this.cargando-1;
   }
 
-  regresaObra(){
+ regresaObra(){
     this.router.navigate(['jefeLaboratorio/obras']);
   }
 
@@ -187,10 +194,13 @@ export class CrearObraComponent implements OnInit
     formData.append('concretera',         this.obraForm.value.id_concretera);
     formData.append('tipo',               this.obraForm.value.tipo);
     formData.append('revenimiento',       this.obraForm.value.revenimiento  );
-    formData.append('incertidumbre',      this.obraForm.value.incertidumbre );
-    formData.append('telefono_residente', this.obraForm.value.telefono_residente );
-    formData.append('nombre_residente',   this.obraForm.value.nombre_residente );
-    formData.append('correo_residente',   this.obraForm.value.correo_residente );
+    formData.append('incertidumbre',        this.obraForm.value.incertidumbre );
+    formData.append('telefono_residente',   this.obraForm.value.telefono_residente );
+    formData.append('cotizacion',           this.obraForm.value.cotizacion );
+    formData.append('consecutivoDocumentos',this.obraForm.getRawValue().consecutivoDocumentos );
+    formData.append('consecutivoProbeta',   this.obraForm.getRawValue().consecutivoProbeta );
+    formData.append('nombre_residente',     this.obraForm.value.nombre_residente );
+    formData.append('correo_residente',     this.obraForm.value.correo_residente );
     this.cargandoMessage="Cargando...";
     this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );
     
