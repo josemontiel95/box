@@ -443,4 +443,33 @@ export class DashboardComponent implements OnInit {
     
   }
 
+    actualizarOrden()
+  {
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'upDateAdmin');
+    formData.append('token', this.global.token);           
+    formData.append('id_ordenDeTrabajo', this.id);
+     formData.append('rol_usuario_id',  this.global.rol);
+    formData.append('cotizacion_id',  this.ordenForm.value.cotizacion_id);
+    formData.append('area', this.ordenForm.value.area);           
+    formData.append('obra_id', this.ordenForm.value.obra_id);
+    formData.append('actividades',  this.ordenForm.value.actividades);
+    formData.append('condicionesTrabajo', this.ordenForm.value.condicionesTrabajo);
+    formData.append('fechaInicio', this.ordenForm.value.fechaInicio);           
+    formData.append('fechaFin', this.ordenForm.value.fechaFin);
+    formData.append('horaInicio',  this.ordenForm.value.horaInicio);
+    formData.append('horaFin', this.ordenForm.value.horaFin);           
+    formData.append('observaciones',this.ordenForm.value.observaciones);
+    formData.append('lugar',  this.ordenForm.value.lugar);
+    formData.append('jefe_brigada_id', this.ordenForm.value.jefe_brigada_id);
+    formData.append('laboratorio_id',  this.ordenForm.value.laboratorio_id);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());
+                                            });
+    this.cargando = 1;
+    console.log(this.cargando);
+  }
+ 
+
 }
