@@ -42,6 +42,28 @@
                 </div>
               </div> <!-- FIN SEGUNDO CAMPO -->  
             </div> <!-- FIN PRIMER ROW -->
+            <div class="row"> <!-- INICIO SEXTO ROW -->
+              <div class="col-md-6 col-12"> <!-- INICIO NOVENO CAMPO -->
+                <div class="form-group">
+                  <label>Revenimiento</label>
+                  <input type="text" id="revenimiento"  required  name="revenimiento" class="form-control" placeholder="Revenimiento" formControlName="revenimiento">
+                  <div *ngIf="revenimiento.invalid && (revenimiento.dirty || revenimiento.touched)" class="alert alert-danger">            
+                    <div *ngIf="revenimiento.errors.required"> Revenimiento requerido.</div>
+                    <div *ngIf="revenimiento.errors.pattern">Revenimiento solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div><!-- FIN NOVENO CAMPO -->  
+              <div class="col-md-6 col-12"> <!-- INICIO DECIMO CAMPO -->
+                <div class="form-group">
+                  <label>Incertidumbre</label>
+                  <input type="text" id="incertidumbre" name="incertidumbre" class="form-control" placeholder="Incertidumbre" formControlName="incertidumbre">
+                  <div *ngIf="incertidumbre.invalid && (incertidumbre.dirty || incertidumbre.touched)" class="alert alert-danger">            
+                    <div *ngIf="incertidumbre.errors.required">Incertidumbre requerido.</div>
+                    <div *ngIf="incertidumbre.errors.pattern">Incertidumbre solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div><!-- FIN DECIMO CAMPO --> 
+            </div> <!-- FIN SEXTO ROW -->
             <div class="row"> <!-- INICIO SEGUNDO ROW -->
               <div class="col-md-6 col-12"> <!-- INICIO TERCER CAMPO -->
                 <div class="form-group">
@@ -123,28 +145,6 @@
                 </div>
               </div> <!-- FIN SEXTO CAMPO -->
             </div> <!-- FIN CUARTO ROW -->
-            <div class="row"> <!-- INICIO SEXTO ROW -->
-              <div class="col-md-6 col-12"> <!-- INICIO NOVENO CAMPO -->
-                <div class="form-group">
-                  <label>Revenimiento</label>
-                  <input type="text" id="revenimiento"  required  name="revenimiento" class="form-control" placeholder="Revenimiento" formControlName="revenimiento">
-                  <div *ngIf="revenimiento.invalid && (revenimiento.dirty || revenimiento.touched)" class="alert alert-danger">            
-                    <div *ngIf="revenimiento.errors.required"> Revenimiento requerido.</div>
-                    <div *ngIf="revenimiento.errors.pattern">Revenimiento solo debe contener numeros</div>              
-                  </div>
-                </div>
-              </div><!-- FIN NOVENO CAMPO -->  
-              <div class="col-md-6 col-12"> <!-- INICIO DECIMO CAMPO -->
-                <div class="form-group">
-                  <label>Incertidumbre</label>
-                  <input type="text" id="incertidumbre" name="incertidumbre" class="form-control" placeholder="Incertidumbre" formControlName="incertidumbre">
-                  <div *ngIf="incertidumbre.invalid && (incertidumbre.dirty || incertidumbre.touched)" class="alert alert-danger">            
-                    <div *ngIf="incertidumbre.errors.required">Incertidumbre requerido.</div>
-                    <div *ngIf="incertidumbre.errors.pattern">Incertidumbre solo debe contener numeros</div>              
-                  </div>
-                </div>
-              </div><!-- FIN DECIMO CAMPO --> 
-            </div> <!-- FIN SEXTO ROW -->
             <div class="row"> <!-- INICIO CUARTO ROW -->
               <div class="col-md-6 col-12"> <!-- INICIO SEXTO CAMPO -->
                 <div class="form-group">

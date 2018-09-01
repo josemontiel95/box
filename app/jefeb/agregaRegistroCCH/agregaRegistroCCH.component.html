@@ -78,7 +78,7 @@
             </div>
 
             <div class="row">
-              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+              <div class="col-md-6 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="volumen">VOLUMEN(m<sup>3</sup>)</label>
                     <input type="text" id="volumen"  
@@ -87,48 +87,18 @@
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
 
-              <div class="col-md-2 col-12"> <!--PRIMERA GRID -->
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="tconcreto">TIPO DE CONCRETO</label> <!--disable-->
-
-                    <select  class="form-control" id="tconcreto" name="tconcreto" formControlName="tconcreto" (change)="onBlurTipoConcreto()">
-                          <option value="0" [disabled]="true">Selecciona un tipo de concreto...</option>
-                          <option *ngFor="let tconcreto of tipoconcreto" [value]="tconcreto.id">
-                                {{tconcreto.tconcreto}}
+                    <label for="diasEnsaye">Dias antes de ensayar</label> <!--disable-->
+                    <select  class="form-control" id="diasEnsaye" name="diasEnsaye" formControlName="diasEnsaye" (change)="onBlurdiasEnsaye()">
+                          <option value="0" [disabled]="true">Selecciona los dias</option>
+                          <option *ngFor="let day of days" [value]="day.id">
+                                {{day.value}}
                           </option>
                     </select>
-
-                    
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
-
-              <div class="col-md-2 col-12"> <!--PRIMERA GRID -->
-                  <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="unidad">Especimen 1</label> <!--disable-->
-                    <input type="text" id="unidad"   
-                    class="form-control" 
-                    name="unidad" placeholder="" formControlName="especimen1" (change)="onBlurEspecimen1()">
-                  </div><!--FIN PRIMER CAMPO -->
-              </div> <!--FIN PRIMERA GRID -->
-
-              <div class="col-md-2 col-12"> <!--PRIMERA GRID -->
-                  <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="unidad">Especimen 2</label> <!--disable-->
-                    <input type="text" id="unidad"   
-                    class="form-control" 
-                    name="unidad" placeholder="" formControlName="especimen2" (change)="onBlurEspecimen2()">
-                  </div><!--FIN PRIMER CAMPO -->
-              </div> <!--FIN PRIMERA GRID -->
-
-              <div class="col-md-2 col-12"> <!--PRIMERA GRID -->
-                  <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="unidad">Especimen 3</label> <!--disable-->
-                    <input type="text" id="unidad"   
-                    class="form-control" 
-                    name="unidad" placeholder="" formControlName="especimen3" (change)="onBlurEspecimen3()">
-                  </div><!--FIN PRIMER CAMPO -->
-              </div> <!--FIN PRIMERA GRID -->
-              
+                
             </div>
 
             <div class="row">
@@ -208,10 +178,9 @@
               </div>
               <div class="col-md-2 col-12">
 
-               <!-- <button class="btn btn-success" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
+               <button class="btn btn-success" *ngIf="hidden && !locked" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
                     <span><b> Cambiar Datos. </b></span>
                   </button>
-                -->
                 <button class="btn btn-default" *ngIf="!hidden" (click)="llenarDespues()">
                       <span><b> Llenar mas tarde. </b></span>
                 </button>

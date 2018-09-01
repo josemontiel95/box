@@ -34,10 +34,11 @@ export class agregaRegistroCCHComponent implements OnInit{
   columnDefs;
   cargando= 1;
   hidden = false;
+  locked =false;
   notRR = false;
   ux = false;
-  days: Array<any>;
- 
+  days= new Array();
+  daysCompletition= new Array();
   
   formatoCCHForm: FormGroup;
 
@@ -49,10 +50,7 @@ export class agregaRegistroCCHComponent implements OnInit{
         revo: '' ,
         tamano:'',
         volumen: '',
-        tconcreto: '',
-        especimen1: '',
-        especimen2: '',
-        especimen3: '',
+        diasEnsaye: '',
         unidad: '',  
         hmobra: '',
         tempamb: '',
@@ -60,7 +58,6 @@ export class agregaRegistroCCHComponent implements OnInit{
         localizacion: ''          
     }
 
-    tipoconcreto= [{"tconcreto":"N", "id": "N"},{"tconcreto":"RR", "id": "RR"},{"tconcreto":"CA", "id": "CA"}];
 
 
 
@@ -84,27 +81,26 @@ export class agregaRegistroCCHComponent implements OnInit{
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_formato', this.id_formato);
     this.http.get(url, {search}).subscribe(res => this.llenaDaysPrueba( res.json()) );
-    
+
     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     search = new URLSearchParams();
-    search.set('function', 'getRegistrosByID');
+    search.set('function', 'getDaysPruebasForCompletition');
     search.set('token', this.global.token);
-    search.set('rol_usuario_id',  this.global.rol);
-    search.set('id_registrosCampo', this.id_registro);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) ); 
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_formato', this.id_formato);
+    this.http.get(url, {search}).subscribe(res => this.llenaDaysPruebaCompletition( res.json()) );
+    
+   
 
   this.formatoCCHForm = new FormGroup({
     'cesp':             new FormControl( {value: this.FormatoCCH.cesp, disabled: this.hidden}),
-    'fecha':            new FormControl( {value: this.FormatoCCH.fecha, disabled: this.hidden}),
+    'fecha':            new FormControl( {value: this.FormatoCCH.fecha, disabled: true}),
     'fc':               new FormControl( {value: this.FormatoCCH.fc, disabled: this.hidden}),
     'revp':             new FormControl( {value: this.FormatoCCH.revp, disabled: true}),
     'revo':             new FormControl( {value: this.FormatoCCH.revo, disabled: this.hidden}),
     'tamano':           new FormControl( {value: this.FormatoCCH.tamano, disabled: this.hidden}),
     'volumen':          new FormControl( {value: this.FormatoCCH.volumen, disabled: this.hidden}),       
-    'tconcreto':        new FormControl( {value: this.FormatoCCH.tconcreto, disabled: this.hidden}),
-    'especimen1':       new FormControl( {value: this.FormatoCCH.especimen1, disabled: this.hidden}),
-    'especimen2':       new FormControl( {value: this.FormatoCCH.especimen2, disabled: this.hidden}),
-    'especimen3':       new FormControl( {value: this.FormatoCCH.especimen3, disabled: this.hidden}),
+    'diasEnsaye':       new FormControl( {value: this.FormatoCCH.diasEnsaye, disabled: this.hidden}),
     'unidad':           new FormControl( {value: this.FormatoCCH.unidad, disabled: this.hidden}),
     'hmobra':           new FormControl( {value: this.FormatoCCH.hmobra, disabled: this.hidden}),
     'tempamb':          new FormControl( {value: this.FormatoCCH.tempamb, disabled: this.hidden}),
@@ -120,10 +116,7 @@ export class agregaRegistroCCHComponent implements OnInit{
    get revo()         { return this.formatoCCHForm.get('revo'); }
    get tamano()       { return this.formatoCCHForm.get('tamano'); }                 
    get volumen()      { return this.formatoCCHForm.get('volumen'); }              
-   get tconcreto()    { return this.formatoCCHForm.get('tconcreto'); }   
-   get especimen1()   { return this.formatoCCHForm.get('especimen1'); }   
-   get especimen2()   { return this.formatoCCHForm.get('especimen2'); }   
-   get especimen3()   { return this.formatoCCHForm.get('especimen3'); }              
+   get diasEnsaye()   { return this.formatoCCHForm.get('diasEnsaye'); }     
    get unidad()       { return this.formatoCCHForm.get('unidad'); }              
    get hmobra()       { return this.formatoCCHForm.get('hmobra'); }              
    get tempamb()      { return this.formatoCCHForm.get('tempamb'); }              
@@ -133,6 +126,16 @@ export class agregaRegistroCCHComponent implements OnInit{
 
   submitted = false;
 
+
+  cargaDatos(){
+    let url =`${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getRegistrosByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('id_registrosCampo', this.id_registro);
+    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) ); 
+  }
   onSubmit() { this.submitted = true; } 
     
 
@@ -147,10 +150,7 @@ export class agregaRegistroCCHComponent implements OnInit{
      revo:         respuesta.revObra,
      tamano:       respuesta.tamagregado,
      volumen:      respuesta.volumen,
-     tconcreto:    respuesta.tipoConcreto,
-     especimen1:   respuesta.prueba1,
-     especimen2:   respuesta.prueba2,
-     especimen3:   respuesta.prueba3,
+     diasEnsaye:   respuesta.diasEnsaye,
      unidad:       respuesta.unidad,
      hmobra:       respuesta.horaMuestreo,
      tempamb:      respuesta.tempMuestreo,
@@ -160,16 +160,46 @@ export class agregaRegistroCCHComponent implements OnInit{
 
     if(respuesta.status == 1){
       this.mostrar();
-    } 
-
-    this.respuestaTipoConcreto();    
+    }else if(respuesta.status==2){
+      this.mostrar();
+      this.locked=true;
+    }
+    this.llenadodiasEnsaye(respuesta.diasEnsaye);
   }
 
   llenaDaysPrueba(res: any){
     console.log(res);
+    if(res.error != 0){
+      for (let key in res) {
+        this.days.push({'id' : key, 'value' : res[key] });
+      }
+    }
+  }
 
+  llenaDaysPruebaCompletition(res: any){
+    console.log(res);
+    if(res.error != 0){
+      for (let key in res) {
+        this.daysCompletition.push({'id' : key, 'value' : res[key] });
+      }
+    }
+    this.cargaDatos();
   }
   
+  llenadodiasEnsaye(res: any){
+    if(res=="Pendiente"){
+
+    }else{
+      for (let key in this.daysCompletition) {
+        if(this.daysCompletition[key].id==res){
+          this.days.push({'id' : res, 'value' : this.daysCompletition[key].value });
+        }else{
+        }
+      }
+    }
+  }
+
+
   //DON'T TOUCH THIS!
   descartaCambios(){
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -278,7 +308,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '4');
-    formData.append('valor', this.formatoCCHForm.value.revp);
+    formData.append('valor', this.formatoCCHForm.getRawValue().revp);
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
@@ -333,7 +363,7 @@ export class agregaRegistroCCHComponent implements OnInit{
                                             } );
   }
 
-  onBlurTipoConcreto(){
+  onBlurdiasEnsaye(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -342,56 +372,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '8');
-    formData.append('valor', this.formatoCCHForm.value.tconcreto);
-    formData.append('id_registrosCampo', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaTipoConcreto();
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
-  onBlurEspecimen1(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '15');
-    formData.append('valor', this.formatoCCHForm.value.especimen1);
-    formData.append('id_registrosCampo', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
-  onBlurEspecimen2(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '16');
-    formData.append('valor', this.formatoCCHForm.value.especimen2);
-    formData.append('id_registrosCampo', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
-  onBlurEspecimen3(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '17');
-    formData.append('valor', this.formatoCCHForm.value.especimen3);
+    formData.append('valor', this.formatoCCHForm.value.diasEnsaye);
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
@@ -479,16 +460,16 @@ export class agregaRegistroCCHComponent implements OnInit{
   }
 
   respuestaDescartaCambios(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       location.reload();
-     }
-     else{
-          console.log(this.id_registro);
-          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' + this.id_formato]);        
-     }
-   }
+    console.log(res);
+    if(res.error!= 0){
+      window.alert(res.estatus);
+      location.reload();
+    }
+    else{
+      console.log(this.id_registro);
+      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' + this.id_formato]);        
+    }
+  }
 
 /* 
   Este metodo valida la respuesta de tipo de Concreto
@@ -497,27 +478,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   En el ultimo bloque del codigo se ejecuta un if shorthand que caso de ser verdadero
   Desabilita los 3 campos de especimen y si es falso los habilitara. 
 */
-  respuestaTipoConcreto(){
-    if(this.formatoCCHForm.value.tconcreto == "RR" || this.formatoCCHForm.value.tconcreto == "CA" ){
-      this.notRR = false;
-     // window.alert("notRR es false, this.formatoCCHForm.value.tconcreto: "+this.formatoCCHForm.value.tconcreto);
-    }else{
-      //window.alert("notRR es true, this.formatoCCHForm.value.tconcreto: "+this.formatoCCHForm.value.tconcreto);
-      this.notRR = true;
-      this.formatoCCHForm.patchValue({
-       especimen1: '7',
-       especimen2: '14',
-       especimen3: '28'
-    });
-    }
-    //this.notRR = !this.notRR;
-    const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
-    this.formatoCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
-    this.formatoCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
-    this.formatoCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
 
-
-  }
 
   respuestaSwitch(res: any){ 
      console.log(res);
@@ -539,6 +500,8 @@ export class agregaRegistroCCHComponent implements OnInit{
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
         this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
     });    
+    this.formatoCCHForm.controls['revp']['disable']();
+    this.formatoCCHForm.controls['fecha']['disable'](); 
   }
 
   validaCamposVacios(){
