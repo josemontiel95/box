@@ -25,6 +25,8 @@ export class LlenaFooterVigaComponent implements OnInit {
   cargando= 2;
   id_orden: string;
   id_formato: "";
+  id_Footer:string;
+  id_Registro: string;
   mis_prensas: Array<any>;
   mis_flexos: Array<any>;
   
@@ -81,22 +83,22 @@ export class LlenaFooterVigaComponent implements OnInit {
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id_orden=params.id);
-    this.cargando=2;
+    this.cargando=0;
 
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
 
-    search.set('function', 'getForDroptdownJefeBrigadaCono');
+    search.set('function', 'getForDroptdownPrensas');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaPrensas(res.json()) );
 
     search = new URLSearchParams();
-    search.set('function', 'getForDroptdownJefeBrigadaFlexometro');
+    search.set('function', 'getForDroptdownFlexo');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaFlexos(res.json()) );
+    this.http.get(url, {search}).subscribe(res =>{console.log(res); this.llenaFlexos(res.json()) });
 
     this.creaCCHForm = new FormGroup({
       'prensas': new FormControl( this.cch.prensas),
@@ -111,10 +113,19 @@ export class LlenaFooterVigaComponent implements OnInit {
    submitted = false;
 
    regresaUsuario(){
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+ this.id_orden]);
+    this.router.navigate(['tecnico/pendientes']);
   }
 
   onSubmit() { this.submitted = true; }
+
+  llenado(respuesta:any){
+    console.log(respuesta);
+
+    this.creaCCHForm.patchValue({
+     flexo: respuesta.regVerFle_id,
+     prensa: respuesta.prensa_id
+    });
+  }
 
   llenaPrensas(resp: any)
   {
@@ -124,7 +135,7 @@ export class LlenaFooterVigaComponent implements OnInit {
     {
       this.mis_prensas[_i]=resp[_i];
     }
-    this.cargando=this.cargando-1;
+    //this.cargando=this.cargando-1;
     console.log("llenaPrensas this.cargando: "+this.cargando);
   }
 
@@ -136,7 +147,53 @@ export class LlenaFooterVigaComponent implements OnInit {
     {
       this.mis_flexos[_i]=resp[_i];
     }
-    this.cargando=this.cargando-1;
+    //this.cargando=this.cargando-1;
     console.log("llenaFlexos this.cargando: "+this.cargando);
-  }  
+  }
+
+  onChangeRegla(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '2');
+    formData.append('valor', this.creaCCHForm.value.flexo);
+    formData.append('id_footerEnsayo', this.id_Footer);
+    this.http.post(url, formData).subscribe(res => {
+                                              console.log(this.id_Footer);
+                                              this.validaRespuesta(res.json());                 
+                                            } );
+  }
+
+
+   onChangePrensa(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '3');
+    formData.append('valor', this.creaCCHForm.value.prensas);
+    formData.append('id_footerEnsayo', this.id_Footer);
+    this.http.post(url, formData).subscribe(res => {
+                                              console.log(this.id_Footer);
+                                              this.validaRespuesta(res.json());                 
+                                            } );
+  }
+
+  validaRespuesta(res:any){
+     console.log(res);
+     if(res.error!= 0){
+       window.alert("Intentalo otra vez");
+     }
+     else{
+               
+     }
+   }
+
 }

@@ -23,25 +23,23 @@ export class LlenaFooterCuboComponent implements OnInit {
 
   global: Global;
   cargando= 3;
+  id_Footer:string;
+  id_Registro: string;
   id_orden: string;
   id_formato: "";
-  mis_conos: Array<any>;
-  mis_varillas: Array<any>;
-  mis_flexometro: Array<any>;
+  mis_basculas: Array<any>;
+  mis_reglas: Array<any>;
+  mis_prensas: Array<any>;
   
   constructor(private router: Router, private route: ActivatedRoute, private data: DataService, private http: Http) { }
   
   
     creaCCHForm: FormGroup;
       cch = {
-      reg:'',
-      localizacion:'',
-      cono:'',
-      varilla:'',
-      flexometro:'',
-      termometro:'',
-      longitud: '-98.1996779',
-      latitud: '19.0437584'}
+      vAplicacion:'',
+      bascula:'',
+      regla:'',
+      prensa:''}
   
   crearFormatoCCH()
   {
@@ -52,15 +50,11 @@ export class LlenaFooterCuboComponent implements OnInit {
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('regNo', this.creaCCHForm.value.reg);
+    formData.append('vAplicacion', this.creaCCHForm.value.carga);
     formData.append('ordenDeTrabajo_id', this.id_orden);
-    formData.append('localizacion', this.creaCCHForm.value.localizacion);  
-    formData.append('cono_id', this.creaCCHForm.value.cono);
-    formData.append('varilla_id', this.creaCCHForm.value.varilla);
-    formData.append('flexometro_id', this.creaCCHForm.value.flexometro);
-    formData.append('termometro_id', this.creaCCHForm.value.termometro);
-    formData.append('longitud', this.creaCCHForm.value.longitud );
-    formData.append('latitud', this.creaCCHForm.value.latitud );
+    formData.append('bascula', this.creaCCHForm.value.bascula);  
+    formData.append('regla_id', this.creaCCHForm.value.regla);
+    formData.append('prensa_id', this.creaCCHForm.value.prensa);
     this.http.post(url, formData).subscribe(res => {
                                               this.recibeFormatoID(res.json());
                                               this.respuestaSwitch(res.json());                 
@@ -81,117 +75,200 @@ export class LlenaFooterCuboComponent implements OnInit {
      Si la respuesta es 0 siginifica que la insercion fue exitosa y
      Por lo tanto lo enviara a la ruta de llenaFormatoCCH con su id_formato 
      Parametrizado. */
+   validaRespuesta(res:any){
+     console.log(res);
+     if(res.error!= 0){
+       window.alert("Intentalo otra vez");
+     }
+     else{
+               
+     }
+   }
+
    respuestaSwitch(res: any){ 
      console.log(res);
      if(res.error!= 0){
        window.alert("Intentalo otra vez");
-       location.reload();
+       //this.router.navigate(['tecnico/pruebaCilindro/'+this.id_Footer + '/'+this.id_Registro]);
+       //location.reload();
      }
      else{
-       this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+this.id_orden + '/' +this.id_formato]);
+       this.router.navigate(['tecnico/pruebaCubo/'+this.id_Footer + '/'+this.id_Registro]);
        
      }
    }
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id_orden=params.id);
+    this.route.params.subscribe( params => {this.id_Footer=params.id; this.id_Registro=params.id2;});
     this.cargando=3;
 
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
 
-    search.set('function', 'getForDroptdownJefeBrigadaCono');
+    search.set('function', 'getForDroptdownBasculas');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenaBascula(res.json()) );
 
     search = new URLSearchParams();
-    search.set('function', 'getForDroptdownJefeBrigadaVarilla');
+    search.set('function', 'getForDroptdownReglas');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenaReglas(res.json()) );
 
     search = new URLSearchParams();
-    search.set('function', 'getForDroptdownJefeBrigadaFlexometro');
+    search.set('function', 'getForDroptdownPrensas');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenaPrensas(res.json()) );
+
+    url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getFooterByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_footerEnsayo', this.id_Footer);
+    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
 
     this.creaCCHForm = new FormGroup({
-      'reg': new FormControl( this.cch.reg, Validators.required),
-      'localizacion': new FormControl( this.cch.localizacion, Validators.required),
-      'cono': new FormControl( this.cch.cono),
-      'varilla': new FormControl( this.cch.varilla ),
-      'flexometro': new FormControl( this.cch.flexometro ),
-      'latitud': new FormControl( this.cch.latitud ),
-      'longitud': new FormControl( this.cch.longitud ),
-       });
+      'vAplicacion': new FormControl( this.cch.vAplicacion, Validators.required),
+      'bascula': new FormControl( this.cch.bascula, Validators.required),
+      'regla': new FormControl( this.cch.regla),
+      'prensa': new FormControl( this.cch.prensa )});
   }
 
 
-   get reg() { return this.creaCCHForm.get('reg'); }
+   get vAplicacion() { return this.creaCCHForm.get('vAplicacion'); }
 
-   get localizacion() { return this.creaCCHForm.get('localizacion'); }
+   get bascula() { return this.creaCCHForm.get('bascula'); }
 
-   get cono() { return this.creaCCHForm.get('cono'); }
+   get regla() { return this.creaCCHForm.get('regla'); }
    
-   get varilla() { return this.creaCCHForm.get('varilla'); }
-   
-   get flexometro() { return this.creaCCHForm.get('flexometro'); }
-
-   get latitud() { return this.creaCCHForm.get('latitud'); }
-
-   get longitud() { return this.creaCCHForm.get('longitud'); }
- 
-  
+   get prensa() { return this.creaCCHForm.get('prensa'); }
+    
 
    submitted = false;
 
    regresaUsuario(){
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+ this.id_orden]);
+    this.router.navigate(['tecnico/pendientes']);
   }
 
   onSubmit() { this.submitted = true; }
 
-  llenaConos(resp: any)
-  {
-    console.log(resp);
-    this.mis_conos= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
-      this.mis_conos[_i]=resp[_i];
-    }
-    this.cargando=this.cargando-1;
-    console.log("llenaConos this.cargando: "+this.cargando);
+  llenado(respuesta:any){
+    console.log(respuesta);
+
+    this.creaCCHForm.patchValue({
+     vAplicacion:  respuesta.fecha,
+     bascula: respuesta.buscula_id,
+     regla: respuesta.regVerFle_id,
+     prensa: respuesta.prensa_id
+    });
   }
 
-  llenaVarillas(resp: any)
-  {
+  llenaBascula(resp: any){
     console.log(resp);
-    this.mis_varillas= new Array(resp.length);
+    this.mis_basculas= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
-      this.mis_varillas[_i]=resp[_i];
+      this.mis_basculas[_i]=resp[_i];
+    }
+    this.cargando=this.cargando-1;
+    console.log("llenaBascula this.cargando: "+this.cargando);
+  }
+
+  llenaPrensas(resp: any){
+    console.log(resp);
+    this.mis_prensas= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ )
+    {
+      this.mis_prensas[_i]=resp[_i];
+    }
+    this.cargando=this.cargando-1;
+    console.log("llenaPrensas this.cargando: "+this.cargando);
+  }
+
+  llenaReglas(resp: any){
+    console.log(resp);
+    this.mis_reglas= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ )
+    {
+      this.mis_reglas[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
     console.log("llenaVarillas this.cargando: "+this.cargando);
   }
 
-  llenaFlexometro(resp: any)
-  {
-    console.log(resp);
-    this.mis_flexometro= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
-      this.mis_flexometro[_i]=resp[_i];
-    }
-    this.cargando=this.cargando-1;
-    console.log("llenaFlexometros this.cargando: "+this.cargando);
+  onChangeObservaciones(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '4');
+    formData.append('valor', this.creaCCHForm.value.vAplicacion);
+    formData.append('id_footerEnsayo', this.id_Footer);
+    this.http.post(url, formData).subscribe(res => {
+                                              console.log(this.id_Footer);
+                                              this.validaRespuesta(res.json());                 
+                                            } );
+  }
+  
+  onChangeBascula(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '1');
+    formData.append('valor', this.creaCCHForm.value.bascula);
+    formData.append('id_footerEnsayo', this.id_Footer);
+    this.http.post(url, formData).subscribe(res => {
+                                              console.log(this.id_Footer);
+                                              this.validaRespuesta(res.json());                 
+                                            } );
   }
 
-  
+  onChangeRegla(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '2');
+    formData.append('valor', this.creaCCHForm.value.regla);
+    formData.append('id_footerEnsayo', this.id_Footer);
+    this.http.post(url, formData).subscribe(res => {
+                                              console.log(this.id_Footer);
+                                              this.validaRespuesta(res.json());                 
+                                            } );
+  }
+
+  onChangePrensa(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '3');
+    formData.append('valor', this.creaCCHForm.value.prensa);
+    formData.append('id_footerEnsayo', this.id_Footer);
+    this.http.post(url, formData).subscribe(res => {
+                                              console.log(this.id_Footer);
+                                              this.validaRespuesta(res.json());                 
+                                            } );
+  }  
+   
   
 }
 

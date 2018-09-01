@@ -13,7 +13,7 @@
         <div class="card-header">
           <h5 class="title">
           <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaUsuario();"></i>
-          OBSERVACIONES CUBO</h5>
+          OBSERVACIONES</h5>
         </div>
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=creaCCHForm #formDir="ngForm">
@@ -21,9 +21,9 @@
 
               <div class="col-md-12 col-12">
                 <div class="form-group">
-                  <label for="reg">LA VELOCIDAD DE APLICACI&Oacute;N DE CARGA ES DE: </label>
-                  <input type="text" id="reg" class="form-control" required 
-                  name="reg" placeholder="" formControlName="reg">
+                  <label for="vAplicacion">LA VELOCIDAD DE APLICACI&Oacute;N DE CARGA ES DE: </label>
+                  <input type="text" id="vAplicacion" class="form-control" required 
+                  name="vAplicacion" placeholder="" formControlName="vAplicacion" (change)="onChangeObservaciones()">
                 </div>
               </div>
                           
@@ -32,64 +32,66 @@
             <div class="row">
               <div class="col-md-4 col-12">
                 <div class="form-group">
-                  <label for="localizacion">BASCULA</label>
-                  <select  class="form-control" id="cono" 
-                    required name="cono"
-                    placeholder="Tipos"  formControlName="cono">
-                    <option value="" [disabled]="true">Selecciona un cono...</option>
+                  <label for="bascula">BASCULA</label>
+                  <select  class="form-control" id="bascula" 
+                    required name="bascula"
+                    placeholder="Tipos"  formControlName="bascula" (change)="onChangeBascula()">
+                    <option value="" [disabled]="true">Selecciona una bascula...</option>
                     
-                    <option *ngFor="let cono of mis_conos" [value]="cono.id_herramienta">
-                      {{cono.placas}}
+                    <option *ngFor="let bascula of mis_basculas" [value]="bascula.id_herramienta">
+                      {{bascula.placas}}
                     </option>
                   </select>
-                  <div *ngIf="localizacion.invalid && (localizacion.dirty || localizacion.touched)"
+                  <div *ngIf="bascula.invalid && (bascula.dirty || bascula.touched)"
                     class="alert alert-danger">
-                    <div *ngIf="localizacion.errors.required">
-                       Localizaci&oacute;n requerida.
+                    <div *ngIf="bascula.errors.required">
+                       Bascula requerida.
                     </div>
-                    <div *ngIf="localizacion.errors.pattern">La Localizacion solo debe contener numeros</div>
+                    <div *ngIf="bascula.errors.pattern">La Localizacion solo debe contener numeros</div>
                   </div>
                 </div>
               </div>
 
               <div class="col-md-4 col-12">
                  <div class="form-group">
-                  <label for="cono">PRENSA</label>
-                  <select  class="form-control" id="cono" 
-                    required name="cono"
-                    placeholder="Tipos"  formControlName="cono">
-                    <option value="" [disabled]="true">Selecciona un cono...</option>
+                  <label for="prensa">PRENSA</label>
+                  <select  class="form-control" id="prensa" 
+                    required name="prensa"
+                    placeholder="Tipos"  formControlName="prensa" (change)="onChangePrensa()">
+                    <option value="" [disabled]="true">Selecciona una prensa...</option>
                     
-                    <option *ngFor="let cono of mis_conos" [value]="cono.id_herramienta">
-                      {{cono.placas}}
+                    <option *ngFor="let prensa of mis_prensas" [value]="prensa.id_herramienta">
+                      {{prensa.placas}}
                     </option>
                   </select>
-                  <div *ngIf="cono.invalid && (cono.dirty || cono.touched)" class="alert alert-danger">
-                   <div *ngIf="cono.errors.required">
-                   Cono Requerido.
+                  <div *ngIf="prensa.invalid && (prensa.dirty || prensa.touched)" class="alert alert-danger">
+                   <div *ngIf="prensa.errors.required">
+                   Prensa Requerida.
                    </div>
                   </div>
                 </div>
               </div>
+
               <div class="col-md-4 col-12">
                  <div class="form-group">
-                  <label for="varilla">REGLA</label>
-                  <select  class="form-control" id="varilla" 
-                    required name="varilla"
-                    placeholder="Tipos"  formControlName="varilla">
-                    <option value="" [disabled]="true">Selecciona una varilla...</option>
+                  <label for="regla">REGLA</label>
+                  <select  class="form-control" id="regla" 
+                    required name="regla"
+                    placeholder="Tipos"  formControlName="regla" (change)="onChangeRegla()">
+                    <option value="" [disabled]="true">Selecciona un cono...</option>
                     
-                    <option *ngFor="let varilla of mis_varillas" [value]="varilla.id_herramienta">
-                      {{varilla.placas}}
+                    <option *ngFor="let regla of mis_reglas" [value]="regla.id_herramienta">
+                      {{regla.placas}}
                     </option>
                   </select>
-                  <div *ngIf="varilla.invalid && (varilla.dirty || varilla.touched)" class="alert alert-danger">
-                   <div *ngIf="varilla.errors.required">
-                   Varilla Requerido.
+                  <div *ngIf="regla.invalid && (regla.dirty || regla.touched)" class="alert alert-danger">
+                   <div *ngIf="regla.errors.required">
+                   Regla, Vernier o Flexo Requerido.
                    </div>
                   </div>
                 </div>
               </div>
+              
             </div>
 
             <div class="btn-group" style="float: right; padding-right: 10%;">

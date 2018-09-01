@@ -26,7 +26,7 @@
                   <label for="prensas">PRENSA</label>
                   <select  class="form-control" id="prensas" 
                     required name="prensas"
-                    placeholder="Tipos"  formControlName="prensas">
+                    placeholder="Tipos"  formControlName="prensas" (change)="onChangePrensa()">
                     <option value="" [disabled]="true">Selecciona una Prensa...</option>
                     <option *ngFor="let prensas of mis_prensas" [value]="prensas.id_herramienta">
                       {{prensas.placas}}
@@ -44,7 +44,7 @@
                   <label for="flexo">FLEXO</label>
                   <select  class="form-control" id="flexo" 
                     required name="flexo"
-                    placeholder="Tipos"  formControlName="flexo">
+                    placeholder="Tipos"  formControlName="flexo" (change)="onChangeRegla()">
                     <option value="" [disabled]="true">Selecciona una flexo...</option>
                     
                     <option *ngFor="let flexo of mis_flexos" [value]="flexo.id_herramienta">

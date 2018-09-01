@@ -71,66 +71,82 @@ export class PendientesComponent implements OnInit{
 
  onSelectionChanged(event: EventListenerObject) {
     var selectedRows = this.gridApi.getSelectedRows();
+    var idd
+    var tipoo
+    var rutaa
     selectedRows.forEach(function(selectedRow, index) {
+      console.log("Que paso: "+selectedRow.id_registrosCampo);
+      console.log(selectedRow.tipo);
       if(selectedRow.tipo == "CILINDRO"){
-         this.id = selectedRow.id_registrosCampo;
-         this.tipo = selectedRow.tipo;
+         idd= selectedRow.id_registrosCampo;
+         tipoo = selectedRow.tipo;
          //window.alert(selectedRow.id_formato);
-         this.ruta = 1;
-         this.validaFooter();
+         rutaa = 1;
       }else if(selectedRow.tipo == "CUBO"){
-        this.id = selectedRow.id_formato;
-        //window.alert(selectedRow.id_formato);
-        this.ruta = 2;
+         idd= selectedRow.id_registrosCampo;
+         tipoo = selectedRow.tipo;
+         //window.alert(selectedRow.id_formato);
+         rutaa = 2;
       }else if(selectedRow.tipo == "VIGA"){
-        this.id = selectedRow.id_formato;
-        //window.alert(selectedRow.id_formato);
-        this.ruta = 3;
+        idd= selectedRow.id_registrosCampo;
+         tipoo = selectedRow.tipo;
+         //window.alert(selectedRow.id_formato);
+         rutaa = 3;
       }
             
     });
-    
-
+    this.id =idd;
+    this.tipo =tipoo;
+    this.ruta =rutaa;
+    console.log("Que paso: "+this.id);
+    this.validaFooter();
    }
 
    validaFooter(){
 
-    let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'getRegistrosByID');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id',  this.global.rol);
-    search.set('id_reg', this.id);
-    search.set('tipo', this.tipo);
-    this.http.get(url, {search}).subscribe(res => this.repuestaSwitch(res.json()) );
-
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'initInsert');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('tipo', this.tipo);
+    this.http.post(url, formData).subscribe(res => {
+      console.log(res);
+                                              this.respuestaSwitch(res.json());                 
+    });
    }
 
-   repuestaSwitch(res: any){
+   respuestaSwitch(res: any){
      let id_footer= "";
-     if(res.existeFooter == 1){
+     if(res.existe == 1){
 
        if(this.ruta == 1){
-          id_footer = res.id_footer;
+          id_footer = res.id_footerEnsayo;
           window.alert("CILINDRO");
           this.router.navigate(['tecnico/pruebaCilindro/'+id_footer + '/'+this.id]);
        }else if(this.ruta == 2) {
-            window.alert("CUBO");
-            //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+this.id_orden +'/'+id]);
+          id_footer = res.id_footerEnsayo;
+          window.alert("CUBO");
+          this.router.navigate(['tecnico/pruebaCubo/'+id_footer + '/'+this.id]);
        }else if(this.ruta == 3) {
-            //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+this.id_orden +'/'+id]);
+          id_footer = res.id_footerEnsayo;
+          window.alert("VIGA");
+          this.router.navigate(['tecnico/pruebaViga/'+id_footer + '/'+this.id]);
        }
      }else{
 
        if(this.ruta == 1){
-          id_footer = res.id_footer;
+          id_footer = res.id_footerEnsayo;
           window.alert("CILINDRO");
           this.router.navigate(['tecnico/llenaFooter/'+id_footer + '/'+this.id]);
        }else if(this.ruta == 2) {
-            window.alert("CUBO");
-            //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+this.id_orden +'/'+id]);
+          id_footer = res.id_footerEnsayo;
+          window.alert("CUBO");
+          this.router.navigate(['tecnico/llenaFooterCubo/'+id_footer + '/'+this.id]);
        }else if(this.ruta == 3) {
-            //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+this.id_orden +'/'+id]);
+          id_footer = res.id_footerEnsayo;
+          window.alert("VIGA");  
+          this.router.navigate(['tecnico/llenaFooterViga/'+id_footer + '/'+this.id]);
        }
 
      }
