@@ -38,7 +38,8 @@ export class PendientesComponent implements OnInit{
     {headerName: 'CLAVE', field: 'claveEspecimen' },    
     {headerName: 'EDAD DE ENSAYE EN D&Iacute;AS', field: 'diasEnsaye' },
     {headerName: 'TIPO', field: 'tipo' },
-    {headerName: 'ESTADO', field: 'estado' }
+    {headerName: 'ESTADO', field: 'estado' },
+    {headerName: 'COMPLETADO', field: 'completado' },
   ];
     this.rowSelection = "single";
   }
@@ -76,7 +77,7 @@ export class PendientesComponent implements OnInit{
     var rutaa
     selectedRows.forEach(function(selectedRow, index) {
       console.log("Que paso: "+selectedRow.id_registrosCampo);
-      console.log(selectedRow.tipo);
+      console.log("El tipo es:"+selectedRow.tipo);
       if(selectedRow.tipo == "CILINDRO"){
          idd= selectedRow.id_registrosCampo;
          tipoo = selectedRow.tipo;
@@ -120,7 +121,7 @@ export class PendientesComponent implements OnInit{
    respuestaSwitch(res: any){
      let id_footer= "";
      let id_RegistroCCH= "";
-     console.log(res.id_RegistroGabs);
+     console.log("HOLA!!: "+ res.id_RegistroGabs);
      if(res.existe == 1){
 
        if(this.ruta == 1){

@@ -58,7 +58,7 @@
                   <select  class="form-control" id="regla" 
                     required name="regla"
                     placeholder="Tipos"  formControlName="regla" (change)="onChangeRegla()">
-                    <option value="" [disabled]="true">Selecciona un cono...</option>
+                    <option value="" [disabled]="true">Selecciona una regla,vernier o flex...</option>
                     
                     <option *ngFor="let regla of mis_reglas" [value]="regla.id_herramienta">
                       {{regla.placas}}

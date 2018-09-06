@@ -23,6 +23,8 @@ import {
 })
 export class PruebaVigaComponent implements OnInit{
 
+  id_Footer:string;
+  id_Registro: string;
   id_orden: string;
   id_registro: string;
   id_formato: string;
@@ -69,19 +71,19 @@ export class PruebaVigaComponent implements OnInit{
 	  
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => {this.id_orden=params.id; this.id_formato=params.id2; this.id_registro=params.id3}); //Recibe tre parametros
+    this.route.params.subscribe( params => {this.id_Footer=params.id; this.id_Registro=params.id2}); //Recibe tre parametros
     //El primer parametro es para recibir el numero de registro y el segundo el numero de formato.
     this.cargando=1;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
     
-    url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
+    url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getRegistrosByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
-    search.set('id_registrosRev', this.id_registro);
+    search.set('id_ensayoViga', this.id_Registro);
     this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
 
 
@@ -168,12 +170,12 @@ export class PruebaVigaComponent implements OnInit{
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({
-     idMuestra: respuesta.idMuestra,
-     fechaColado:  respuesta.fechaCol,
+     idMuestra: respuesta.claveEspecimen,
+     fechaColado:  respuesta.fecha,
      fechaEnsayo:  respuesta.fechaEns,
      clave: respuesta.revObtenido,
      condiCurado: respuesta.condiCurado,
-     edadEnsaye: respuesta.revObtenido,
+     edadEnsaye: respuesta.diasEnsayeFinal,
      diametro1: respuesta.diametro1,
      diametro2: respuesta.diametro2,
      altura1: respuesta.altura1,

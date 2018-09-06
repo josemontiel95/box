@@ -38,22 +38,24 @@ export class LlenaFooterVigaComponent implements OnInit {
       prensas:'',
       flexo:''}
   
-  crearFormatoCCH()
-  {
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
+  ValidaSiguiente(){
 
-    formData.append('ordenDeTrabajo_id', this.id_orden); 
-    formData.append('prensas_id', this.creaCCHForm.value.prensas);
-    formData.append('flexometro_id', this.creaCCHForm.value.flexo);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.recibeFormatoID(res.json());
-                                              this.respuestaSwitch(res.json());                 
-                                            } );    
+    let warning = false;
+    Object.keys(this.creaCCHForm.controls).forEach((controlName) => {
+        if(this.creaCCHForm.controls[controlName].value == "" || this.creaCCHForm.controls[controlName].value == null || this.creaCCHForm.controls[controlName].value == "null"){
+          warning = true;
+        }// disables/enables each form control based on 'this.formDisabled'
+    });
+
+    if(warning){
+      window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
+    }else{
+          if(window.confirm("¿Estas seguro dar como completado el Footer de Cilindros del día?.")){
+            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+            this.router.navigate(['tecnico/pruebaViga/'+this.id_Footer + '/'+this.id_Registro]);
+          }
+    }
+
   }
 
   recibeFormatoID(res: any)
