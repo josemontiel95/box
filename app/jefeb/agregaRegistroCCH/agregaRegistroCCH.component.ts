@@ -39,6 +39,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   ux = false;
   days= new Array();
   daysCompletition= new Array();
+  herramientas: Array<any>;
   
   formatoCCHForm: FormGroup;
 
@@ -55,7 +56,8 @@ export class agregaRegistroCCHComponent implements OnInit{
         hmobra: '',
         tempamb: '',
         tempambrec: '', 
-        localizacion: ''          
+        localizacion: '',
+        herramienta: ''          
     }
 
 
@@ -73,6 +75,14 @@ export class agregaRegistroCCHComponent implements OnInit{
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
+
+    url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getHerramientaForDropdownRegistro');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_formatoCampo', this.id_formato);
+    this.http.get(url, {search}).subscribe(res => this.llenaHerraPrueba( res.json()) );
 
     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     search = new URLSearchParams();
@@ -105,7 +115,8 @@ export class agregaRegistroCCHComponent implements OnInit{
     'hmobra':           new FormControl( {value: this.FormatoCCH.hmobra, disabled: this.hidden}),
     'tempamb':          new FormControl( {value: this.FormatoCCH.tempamb, disabled: this.hidden}),
     'tempambrec':       new FormControl( {value: this.FormatoCCH.tempambrec, disabled: this.hidden}),
-    'localizacion':     new FormControl( {value: this.FormatoCCH.localizacion, disabled: this.hidden})
+    'localizacion':     new FormControl( {value: this.FormatoCCH.localizacion, disabled: this.hidden}),
+    'herramienta':      new FormControl( {value: this.FormatoCCH.herramienta, disabled: this.hidden})
         });
   }
 
@@ -122,7 +133,7 @@ export class agregaRegistroCCHComponent implements OnInit{
    get tempamb()      { return this.formatoCCHForm.get('tempamb'); }              
    get tempambrec()   { return this.formatoCCHForm.get('tempambrec'); }              
    get localizacion() { return this.formatoCCHForm.get('localizacion'); }              
-
+   get herramienta()  { return this.formatoCCHForm.get('herramienta'); }
 
   submitted = false;
 
@@ -155,7 +166,8 @@ export class agregaRegistroCCHComponent implements OnInit{
      hmobra:       respuesta.horaMuestreo,
      tempamb:      respuesta.tempMuestreo,
      tempambrec:   respuesta.tempRecoleccion,
-     localizacion: respuesta.localizacion
+     localizacion: respuesta.localizacion,
+     herramienta:  respuesta.herramienta
     });
 
     if(respuesta.status == 1){
@@ -174,6 +186,11 @@ export class agregaRegistroCCHComponent implements OnInit{
         this.days.push({'id' : key, 'value' : res[key] });
       }
     }
+  }
+
+  llenaHerraPrueba(res: any){
+    console.log(res);
+    this.herramientas=res;
   }
 
   llenaDaysPruebaCompletition(res: any){
@@ -248,6 +265,22 @@ export class agregaRegistroCCHComponent implements OnInit{
                                             } );
     //window.alert("Si procedes ")
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
+  }
+
+  onBlurHerramienta(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '1');
+    formData.append('valor', this.formatoCCHForm.value.herramienta);
+    formData.append('id_registrosCampo', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
   }
 
 
