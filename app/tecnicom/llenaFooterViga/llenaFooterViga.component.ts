@@ -38,22 +38,24 @@ export class LlenaFooterVigaComponent implements OnInit {
       prensas:'',
       flexo:''}
   
-  crearFormatoCCH()
-  {
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
+  ValidaSiguiente(){
 
-    formData.append('ordenDeTrabajo_id', this.id_orden); 
-    formData.append('prensas_id', this.creaCCHForm.value.prensas);
-    formData.append('flexometro_id', this.creaCCHForm.value.flexo);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.recibeFormatoID(res.json());
-                                              this.respuestaSwitch(res.json());                 
-                                            } );    
+    let warning = false;
+    Object.keys(this.creaCCHForm.controls).forEach((controlName) => {
+        if(this.creaCCHForm.controls[controlName].value == "" || this.creaCCHForm.controls[controlName].value == null || this.creaCCHForm.controls[controlName].value == "null"){
+          warning = true;
+        }// disables/enables each form control based on 'this.formDisabled'
+    });
+
+    if(warning){
+      window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
+    }else{
+          if(window.confirm("¿Estas seguro dar como completado el Footer de Cilindros del día?.")){
+            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+            this.router.navigate(['tecnico/pruebaViga/'+this.id_Footer + '/'+this.id_Registro]);
+          }
+    }
+
   }
 
   recibeFormatoID(res: any)
@@ -82,7 +84,7 @@ export class LlenaFooterVigaComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id_orden=params.id);
+    this.route.params.subscribe( params => {this.id_Footer=params.id; this.id_Registro=params.id2;});
     this.cargando=0;
 
 
@@ -99,6 +101,14 @@ export class LlenaFooterVigaComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res =>{console.log(res); this.llenaFlexos(res.json()) });
+
+    url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getFooterByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_footerEnsayo', this.id_Footer);
+    this.http.get(url, {search}).subscribe(res => {console.log(res);this.llenado(res.json());} );
 
     this.creaCCHForm = new FormGroup({
       'prensas': new FormControl( this.cch.prensas),
@@ -123,7 +133,7 @@ export class LlenaFooterVigaComponent implements OnInit {
 
     this.creaCCHForm.patchValue({
      flexo: respuesta.regVerFle_id,
-     prensa: respuesta.prensa_id
+     prensas: respuesta.prensa_id
     });
   }
 

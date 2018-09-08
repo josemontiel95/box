@@ -16,7 +16,7 @@
                     <label for="fecha">FECHA DE COLADO</label> <!--disable-->
                     <input type="date" id="fecha"   
                     class="form-control" 
-                    name="fecha" placeholder="" formControlName="fechaColado" (blur)="onBlurFechaColado()">
+                    name="fecha" placeholder="" formControlName="fechaColado">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -25,7 +25,7 @@
                     <label for="infoNo">INFORME NO.</label> <!--disable-->
                     <input type="text" id="infoNo"   
                     class="form-control" 
-                    name="infoNo" placeholder="" formControlName="infoNo" (blur)="onBlurinformeNo()">
+                    name="infoNo" placeholder="" formControlName="infoNo">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -34,7 +34,7 @@
                     <label for="clave">CLAVE</label> <!--disable-->
                     <input type="text" id="clave"   
                     class="form-control" 
-                    name="clave" placeholder="" formControlName="clave" (blur)="onBlurClave()">
+                    name="clave" placeholder="" formControlName="clave">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -56,7 +56,7 @@
                     <label for="edadEnsaye">EDAD DE ENSAYE EN DIAS</label> <!--disable-->
                     <input type="text" id="edadEnsaye"   
                     class="form-control" 
-                    name="edadEnsaye" placeholder="" formControlName="edadEnsaye" (blur)="onBlurEdadEnsaye()">
+                    name="edadEnsaye" placeholder="" formControlName="edadEnsaye">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
               
@@ -129,7 +129,7 @@
                     <label for="area">&Aacute;REA cm<sup>2</sup></label> <!--disable-->
                     <input type="text" id="area"   
                     class="form-control" 
-                    name="area" placeholder="" formControlName="area" (blur)="onBlurArea()">
+                    name="area" placeholder="" formControlName="area">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -154,8 +154,8 @@
                     placeholder="falla No"  formControlName="falla" (change)="onBlurFalla()">
                     <option value="0" [disabled]="true">Selecciona una falla...</option>
                     
-                    <option *ngFor="let fallas of mis_fallas" [value]="fallas.id_concretera">
-                      {{fallas.concretera}}
+                    <option *ngFor="let falla of fallas" [value]="falla.id">
+                      {{falla.falla}}
                     </option>
                   </select>
                     
@@ -173,7 +173,7 @@
               </div>
               <div class="col-md-2 col-12">
 
-                <button class="btn btn-success" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
+                <button class="btn btn-success" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="cambiarDatos();">
                     <span><b> Cambiar Datos. </b></span>
                   </button>
 
