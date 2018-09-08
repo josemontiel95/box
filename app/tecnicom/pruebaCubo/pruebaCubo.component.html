@@ -60,7 +60,7 @@
                     <label for="l1">L1</label> <!--disable-->
                     <input type="text" id="l1"   
                     class="form-control" 
-                    name="l1" placeholder="" formControlName="l1" (blur)="onBlurL1()">
+                    name="l1" placeholder="" formControlName="l1" required (change)="onBlurL1()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -69,7 +69,7 @@
                     <label for="l2">L2</label> <!--disable-->
                     <input type="text" id="l2"   
                     class="form-control" 
-                    name="l2" placeholder="" formControlName="l2" (blur)="onBlurL2()">
+                    name="l2" placeholder="" formControlName="l2" required (change)="onBlurL2()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -83,7 +83,7 @@
                     <label for="cargaKg">RESISTENCIA A COMPRESI&Oacute;N Kg</label>
                     <input type="text" id="cargaKg"  
                     class="form-control" 
-                    name="cargaKg" placeholder="" formControlName="cargaKg" (blur)="onBlurCargaKg()">
+                    name="cargaKg" placeholder="" formControlName="cargaKg" required (change)="onBlurCargaKg()">
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->              
 

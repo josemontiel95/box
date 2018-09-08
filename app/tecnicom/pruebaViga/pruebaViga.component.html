@@ -16,7 +16,7 @@
                     <label for="idMuestra">IDENTIFICACI&Oacute;N DE LA MUESTRA</label> <!--disable-->
                     <input type="text" id="idMuestra"   
                     class="form-control" 
-                    name="idMuestra" placeholder="" formControlName="idMuestra" (blur)="onBlurIdMuestra()">
+                    name="idMuestra" placeholder="" formControlName="idMuestra">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -25,7 +25,7 @@
                     <label for="fechaColado">FECHA DE COLADO</label> <!--disable-->
                     <input type="date" id="fechaColado"   
                     class="form-control" 
-                    name="fechaColado" placeholder="" formControlName="fechaColado" (blur)="onBlurFechaColado()">
+                    name="fechaColado" placeholder="" formControlName="fechaColado">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -34,7 +34,7 @@
                     <label for="fechaEnsayo">FECHA DE ENSAYO</label> <!--disable-->
                     <input type="date" id="fechaEnsayo"   
                     class="form-control" 
-                    name="fechaEnsayo" placeholder="" formControlName="fechaEnsayo" (blur)="onBlurFechaEnsayo()">
+                    name="fechaEnsayo" placeholder="" formControlName="fechaEnsayo">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -46,7 +46,7 @@
                     <label for="edadEnsaye">EDAD DIAS</label> <!--disable-->
                     <input type="text" id="edadEnsaye"   
                     class="form-control" 
-                    name="edadEnsaye" placeholder="" formControlName="edadEnsaye" (blur)="onBlurEdadEnsaye()">
+                    name="edadEnsaye" placeholder="" formControlName="edadEnsaye">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div> <!--FIN PRIMER ROW -->
@@ -56,8 +56,8 @@
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="condiCurado">CONDICIONES DE CURADO Y HUMEDAD</label>
                     
-                    <select  class="form-control" id="condiCurado" name="condiCurado" formControlName="condiCurado" (change)="onBlurCurado()">
-                          <option value="0" [disabled]="true">Selecciona la condicion de curado y humedad...</option>
+                    <select  class="form-control" id="condiCurado" name="condiCurado" formControlName="condiCurado" required (change)="onBlurCurado()">
+                          <option value="null" [disabled]="true">Selecciona la condicion de curado y humedad...</option>
                           <option *ngFor="let condicion of curado" [value]="condicion.id">
                                 {{condicion.condicion}}
                           </option>
@@ -72,19 +72,19 @@
             <div class="row">
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="diametro1">LIJADO</label> <!--disable-->
-                    <input type="text" id="diametro1"   
+                    <label for="lijado">LIJADO</label> <!--disable-->
+                    <input type="text" id="lijado"   
                     class="form-control" 
-                    name="diametro1" placeholder="" formControlName="diametro1" (blur)="onBlurDiametro1()">
+                    name="lijado" placeholder="" formControlName="lijado" required (change)="onBlurLijado()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="diametro2">CUERO</label> <!--disable-->
-                    <input type="text" id="diametro2"   
+                    <label for="cuero">CUERO</label> <!--disable-->
+                    <input type="text" id="cuero"   
                     class="form-control" 
-                    name="diametro2" placeholder="" formControlName="diametro2" (blur)="onBlurDiametro2()">
+                    name="cuero" placeholder="" formControlName="cuero" required (change)="onBlurCuero()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -94,19 +94,19 @@
             <div class="row">
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="altura1">LEC 1</label> <!--disable-->
-                    <input type="text" id="altura1"   
+                    <label for="ancho1">LEC 1</label> <!--disable-->
+                    <input type="text" id="ancho1"   
                     class="form-control" 
-                    name="altura1" placeholder="" formControlName="altura1" (blur)="onBlurAltura1()">
+                    name="ancho1" placeholder="" formControlName="ancho1" required (change)="onBlurAncho1()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="altura2">LEC 2</label> <!--disable-->
-                    <input type="text" id="altura2"   
+                    <label for="ancho2">LEC 2</label> <!--disable-->
+                    <input type="text" id="ancho2"   
                     class="form-control" 
-                    name="altura2" placeholder="" formControlName="altura2" (blur)="onBlurAltura2()">
+                    name="ancho2" placeholder="" formControlName="ancho2" required (change)="onBlurAncho2()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -114,19 +114,19 @@
             <div class="row">
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="altura1">LEC 1</label> <!--disable-->
-                    <input type="text" id="altura1"   
+                    <label for="per1">LEC 1</label> <!--disable-->
+                    <input type="text" id="per1"   
                     class="form-control" 
-                    name="altura1" placeholder="" formControlName="altura1" (blur)="onBlurAltura1()">
+                    name="per1" placeholder="" formControlName="per1" required (change)="onBlurPer1()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="altura2">LEC 2</label> <!--disable-->
-                    <input type="text" id="altura2"   
+                    <label for="per2">LEC 2</label> <!--disable-->
+                    <input type="text" id="per2"   
                     class="form-control" 
-                    name="altura2" placeholder="" formControlName="altura2" (blur)="onBlurAltura2()">
+                    name="per2" placeholder="" formControlName="per2" required (change)="onBlurPer2()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -134,37 +134,37 @@
             <div class="row">
               <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="altura1">L1</label> <!--disable-->
-                    <input type="text" id="altura1"   
+                    <label for="l1">L1</label> <!--disable-->
+                    <input type="text" id="l1"   
                     class="form-control" 
-                    name="altura1" placeholder="" formControlName="altura1" (blur)="onBlurAltura1()">
+                    name="l1" placeholder="" formControlName="l1" (change)="onBlurL1()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="altura2">L2</label> <!--disable-->
-                    <input type="text" id="altura2"   
+                    <label for="l2">L2</label> <!--disable-->
+                    <input type="text" id="l2"   
                     class="form-control" 
-                    name="altura2" placeholder="" formControlName="altura2" (blur)="onBlurAltura2()">
+                    name="l2" placeholder="" formControlName="l2" (change)="onBlurL2()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="altura2">L3</label> <!--disable-->
-                    <input type="text" id="altura2"   
+                    <label for="l3">L3</label> <!--disable-->
+                    <input type="text" id="l3"   
                     class="form-control" 
-                    name="altura2" placeholder="" formControlName="altura2" (blur)="onBlurAltura2()">
+                    name="l3" placeholder="" formControlName="l3" (change)="onBlurL3()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="altura2">PROM</label> <!--disable-->
-                    <input type="text" id="altura2"   
+                    <label for="prom">PROM</label> <!--disable-->
+                    <input type="text" id="prom"   
                     class="form-control" 
-                    name="altura2" placeholder="" formControlName="altura2" (blur)="onBlurAltura2()">
+                    name="prom" placeholder="" formControlName="prom">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -173,12 +173,12 @@
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="  ">DISTANCIA ENTRE APOYOS(cm)</label>
-                    <input type="text" id="cargaKg"  
+                    <input type="text" id="disApoyos"  
                     class="form-control" 
-                    name="cargaKg" placeholder="" formControlName="cargaKg" (blur)="onBlurCargaKg()">
-                     <div *ngIf="cargaKg.invalid && (cargaKg.dirty || cargaKg.touched)"
+                    name="disApoyos" placeholder="" formControlName="disApoyos" required (change)="onBlurDisApoyos()">
+                     <div *ngIf="disApoyos.invalid && (disApoyos.dirty || disApoyos.touched)"
                       class="alert alert-danger">
-                        <div *ngIf="cargaKg.errors.required">
+                        <div *ngIf="disApoyos.errors.required">
                           Distancia entre apoyos.
                         </div>
                       </div>
@@ -187,19 +187,19 @@
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="area">DISTANCIA ENTRE PUNTOS DE CARGA (cm)</label> <!--disable-->
-                    <input type="text" id="area"   
+                    <label for="disCarga">DISTANCIA ENTRE PUNTOS DE CARGA (cm)</label> <!--disable-->
+                    <input type="text" id="disCarga"   
                     class="form-control" 
-                    name="area" placeholder="" formControlName="area" (blur)="onBlurArea()">
+                    name="disCarga" placeholder="" formControlName="disCarga" required (change)="onBlurDisCarga()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="resCompresion">CARGA APLICADA(kgf/cm<sup>2</sup>)</label>
-                    <input type="text" id="resCompresion"  
+                    <label for="cargaAplicada">CARGA APLICADA(kgf/cm<sup>2</sup>)</label>
+                    <input type="text" id="cargaAplicada"  
                     class="form-control" 
-                    name="resCompresion" placeholder="" formControlName="resCompresion" (blur)="onBlurResCompresion()">
+                    name="cargaAplicada" placeholder="" formControlName="cargaAplicada" required (change)="onBlurCargaAplicada()">
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
             </div>
@@ -208,26 +208,26 @@
               
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="falla">M&Oacute;DULO DE RUPTURA(kgf/cm<sup>2</sup></label> <!--disable-->
-                    <input type="text" id="resCompresion"  
+                    <label for="moduloRuptura">M&Oacute;DULO DE RUPTURA(kgf/cm<sup>2</sup></label> <!--disable-->
+                    <input type="text" id="moduloRuptura"  
                     class="form-control" 
-                    name="resCompresion" placeholder="" formControlName="resCompresion" (blur)="onBlurResCompresion()">                
+                    name="moduloRuptura" placeholder="" formControlName="moduloRuptura">                
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="falla">DEFECTOS ESPECIMEN</label> <!--disable-->
-                    <input type="text" id="resCompresion"  
+                    <label for="defectos">DEFECTOS ESPECIMEN</label> <!--disable-->
+                    <input type="text" id="defectos"  
                     class="form-control" 
-                    name="resCompresion" placeholder="" formControlName="resCompresion" (blur)="onBlurResCompresion()">                
+                    name="defectos" placeholder="" formControlName="defectos" (change)="onBlurDefectos()">                
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="falla">REALIZ&Oacute;</label> <!--disable-->
-                    <input type="text" id="resCompresion"  
+                    <label for="realizo">REALIZ&Oacute;</label> <!--disable-->
+                    <input type="text" id="realizo"  
                     class="form-control" 
-                    name="resCompresion" placeholder="" formControlName="resCompresion" (blur)="onBlurResCompresion()">                
+                    name="realizo" placeholder="" formControlName="realizo">                
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -241,7 +241,7 @@
               </div>
               <div class="col-md-2 col-12">
 
-                <button class="btn btn-success" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
+                <button class="btn btn-success" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="cambiarDatos();">
                     <span><b> Cambiar Datos. </b></span>
                   </button>
 

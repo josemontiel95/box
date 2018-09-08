@@ -25,9 +25,6 @@ export class PruebaCuboComponent implements OnInit{
 
   id_Footer:string;
   id_Registro: string;
-  id_orden: string;
-  id_registro: string;
-  id_formato: string;
   campo: "1"; //Esta variable es para seleccionar el campo que se insertara cuando pierda el foco.
   title = 'app';
   global: Global;
@@ -97,8 +94,8 @@ export class PruebaCuboComponent implements OnInit{
       'l1': new FormControl( {value: this.FormatoCCH.l1, disabled: this.hidden}),
       'l2': new FormControl( {value: this.FormatoCCH.l2, disabled: this.hidden}),
       'cargaKg': new FormControl( {value: this.FormatoCCH.cargaKg, disabled: this.hidden}),
-      'area': new FormControl( {value: this.FormatoCCH.area, disabled: this.hidden}),
-      'resCompresion': new FormControl( {value: this.FormatoCCH.resCompresion, disabled: this.hidden}),       
+      'area': new FormControl( {value: this.FormatoCCH.area, disabled: true}),
+      'resCompresion': new FormControl( {value: this.FormatoCCH.resCompresion, disabled: true}),       
       'falla': new FormControl( {value: this.FormatoCCH.falla, disabled: this.hidden})});
   }
   
@@ -146,7 +143,7 @@ export class PruebaCuboComponent implements OnInit{
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({
-     fechaColado:  respuesta.fecha,
+     fechaColado:  respuesta.fechaColado,
      infoNo: respuesta.informeNo,
      clave: respuesta.claveEspecimen,
      pesoKg: respuesta.diasEnsayeFinal,
@@ -166,47 +163,19 @@ export class PruebaCuboComponent implements OnInit{
     this.onBlurAreaResis();
      
   }
-  //DON'T TOUCH THIS!
-  descartaCambios(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'deactivate');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('id_registrosCampo', this.id_registro);  
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaDescartaCambios(res.json());                 
-                                            } );
-  }
 
   llenarDespues(){
-    /*this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '13');
-    formData.append('valor', '0');
-    formData.append('id_registrosRev', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } ); 
-    */
     this.router.navigate(['tecnico/pendientes/']);
   }
 
   registroCompletado(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/ensayoCubo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'completeEnsayo');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-    formData.append('id_ensayoCilindro', this.id_Registro);
+    formData.append('id_ensayoCubo', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -264,22 +233,6 @@ export class PruebaCuboComponent implements OnInit{
                                             } );
   }
  
-  onBlurFalla(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '9');
-    formData.append('valor', this.formatoCCHForm.value.falla);
-    formData.append('id_registrosRev', this.id_registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-
   onBlurAreaResis(){
     let url = `${this.global.apiRoot}/ensayoCubo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -307,18 +260,6 @@ export class PruebaCuboComponent implements OnInit{
     
   }
 
-  respuestaDescartaCambios(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       location.reload();
-     }
-     else{
-          console.log(this.id_registro);
-          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);        
-     }
-   }
-
   respuestaSwitch(res: any){ 
      console.log(res);
      if(res.error!= 0){
@@ -326,9 +267,7 @@ export class PruebaCuboComponent implements OnInit{
        location.reload();
      }
      else{
-          
-          //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
-       
+                 
      }
    }
 

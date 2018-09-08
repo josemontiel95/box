@@ -16,7 +16,7 @@
                     <label for="fecha">FECHA DE COLADO</label> <!--disable-->
                     <input type="date" id="fecha"   
                     class="form-control" 
-                    name="fecha" placeholder="" formControlName="fechaColado" (blur)="onBlurFechaColado()">
+                    name="fecha" placeholder="" formControlName="fechaColado">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -25,7 +25,7 @@
                     <label for="infoNo">INFORME NO.</label> <!--disable-->
                     <input type="text" id="infoNo"   
                     class="form-control" 
-                    name="infoNo" placeholder="" formControlName="infoNo" (blur)="onBlurinformeNo()">
+                    name="infoNo" placeholder="" formControlName="infoNo">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -34,7 +34,7 @@
                     <label for="clave">CLAVE</label> <!--disable-->
                     <input type="text" id="clave"   
                     class="form-control" 
-                    name="clave" placeholder="" formControlName="clave" (blur)="onBlurClave()">
+                    name="clave" placeholder="" formControlName="clave">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -173,7 +173,7 @@
               </div>
               <div class="col-md-2 col-12">
 
-                <button class="btn btn-success" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
+                <button class="btn btn-success" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="cambiarDatos();">
                     <span><b> Cambiar Datos. </b></span>
                   </button>
 
