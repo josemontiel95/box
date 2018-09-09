@@ -35,7 +35,7 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label>Tipo de Especimen</label>
-                  <select type="text" id="especimen" required name="especimen" class="form-control" placeholder="Especimen" formControlName="especimen"  >
+                  <select type="text" id="especimen" required name="especimen" class="form-control" placeholder="Especimen" formControlName="especimen" (change)=onChangeTipoEspecimen();  >
                     <option value="" [disabled]="true">Selecciona el tipo de especimen...</option>
                     <option *ngFor="let especimen of espec" [value]="especimen.id">
                       {{especimen.especimen}}
@@ -68,7 +68,7 @@
               <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen1">Especimen 1</label> <!--disable-->
-                    <input type="text" id="especimen1" class="form-control" required name="especimen1" placeholder="" formControlName="especimen1">
+                    <input type="text" id="especimen1" class="form-control" required name="especimen1" placeholder="" formControlName="especimen1" (change)="onChangeEspecimen1()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -77,7 +77,7 @@
                     <label for="especimen2">Especimen 2</label> <!--disable-->
                     <input type="text" id="especimen2"   
                     class="form-control" 
-                    name="especimen2" placeholder="" formControlName="especimen2" required>
+                    name="especimen2" placeholder="" formControlName="especimen2" (change)="onChangeEspecimen2()" required>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -105,7 +105,7 @@
                   <label for="cono">Cono</label>
                   <select  class="form-control" id="cono" 
                     required name="cono"
-                    placeholder="Tipos"  formControlName="cono">
+                    placeholder="Tipos"  formControlName="cono" (change)="onChangeCono()">
                     <option value="" [disabled]="true">Selecciona un cono...</option>
                     
                     <option *ngFor="let cono of mis_conos" [value]="cono.id_herramienta">
@@ -124,7 +124,7 @@
                   <label for="varilla">Varilla</label>
                   <select  class="form-control" id="varilla" 
                     required name="varilla"
-                    placeholder="Tipos"  formControlName="varilla">
+                    placeholder="Tipos"  formControlName="varilla" (change)="onChangeVarilla()">
                     <option value="" [disabled]="true">Selecciona una varilla...</option>
                     
                     <option *ngFor="let varilla of mis_varillas" [value]="varilla.id_herramienta">
@@ -145,7 +145,7 @@
                   <label for="flexometro">Flexometro</label>
                   <select  class="form-control" id="flexometro" 
                     required name="flexometro"
-                    placeholder="Tipos"  formControlName="flexometro">
+                    placeholder="Tipos"  formControlName="flexometro" (change)="onChangeFlexometro()">
                     <option value="" [disabled]="true">Selecciona un flexometro...</option>
                     
                     <option *ngFor="let flexometro of mis_flexometro" [value]="flexometro.id_herramienta">
@@ -164,7 +164,7 @@
                   <label for="termometro">Termometro</label>
                   <select  class="form-control" id="termometro" 
                     required name="termometro"
-                    placeholder="Tipos"  formControlName="termometro">
+                    placeholder="Tipos"  formControlName="termometro" (change)="onChangeTermometro()">
                     <option value="" [disabled]="true">Selecciona un termometro...</option>       
                     
                     <option *ngFor="let termometro of mis_termometro" [value]="termometro.id_herramienta">
@@ -181,7 +181,7 @@
             </div>
 
             <div class="btn-group" style="float: right; padding-right: 10%;">
-            <button class="btn btn-success" [disabled]="creaCCHForm.invalid" (click)="crearFormatoCCH(); ">
+            <button class="btn btn-success" [disabled]="creaCCHForm.invalid" (click)="siguiente()">
               <span><b> Siguiente </b></span>
             </button>
           </div>

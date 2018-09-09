@@ -63,37 +63,16 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
    espec= [{"especimen":"CILINDRO", "id":"CILINDRO"},{"especimen":"CUBO", "id":"CUBO"},{"especimen":"VIGAS", "id":"VIGAS"}];
    tipoconcreto= [{"tconcreto":"Normal", "id": "N"},{"tconcreto":"Resistencia Rápida", "id": "RR"},{"tconcreto":"Con aditivo", "id": "CA"}];
   
-  crearFormatoCCH(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function',           'insertJefeBrigada');
-    formData.append('token',              this.global.token);
-    formData.append('rol_usuario_id',     this.global.rol);
-
-    formData.append('informeNo',          this.creaCCHForm.value.informe);
-    formData.append('ordenDeTrabajo_id',  this.id_orden);  
-    formData.append('tipoConcreto',       this.creaCCHForm.value.tconcreto); 
-    formData.append('prueba1',            this.creaCCHForm.getRawValue().especimen1);  
-    formData.append('prueba2',            this.creaCCHForm.getRawValue().especimen2);  
-    formData.append('prueba3',            this.creaCCHForm.getRawValue().especimen3);  
-    formData.append('prueba4',            this.creaCCHForm.getRawValue().especimen4);  
-    formData.append('tipo',               this.creaCCHForm.value.especimen);
-    formData.append('cono_id',            this.creaCCHForm.value.cono);
-    formData.append('varilla_id',         this.creaCCHForm.value.varilla);
-    formData.append('flexometro_id',      this.creaCCHForm.value.flexometro);
-    formData.append('termometro_id',      this.creaCCHForm.value.termometro);
-    formData.append('longitud',           this.creaCCHForm.value.longitud );
-    formData.append('latitud',            this.creaCCHForm.value.latitud );
-    this.http.post(url, formData).subscribe(res => {
-                                              this.recibeFormatoID(res.json());
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+  siguiente(){
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' + this.id_formato]);
   }
+
   onBlurEspecimen3(){
     this.creaCCHForm.patchValue({
       especimen4: this.creaCCHForm.value.especimen3,
     });
+    this.onChangeEspecimen3();
+    this.onChangeEspecimen4();
   }
   onBlurTipoConcreto(){
     if(this.creaCCHForm.value.tconcreto == "RR" || this.creaCCHForm.value.tconcreto == "CA" ){
@@ -116,6 +95,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
     this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
     //this.creaCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
+    this.onChangeTipoConcreto();
   }
 
   recibeFormatoID(res: any)
@@ -137,14 +117,13 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
        location.reload();
      }
      else{
-       this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' + this.id_formato]);
        
      }
    }
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id_orden=params.id);
+    this.route.params.subscribe( params => {this.id_orden=params.id; this.id_formato=params.id2});
     this.cargando=4;
 
 
@@ -154,24 +133,28 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     search.set('function', 'getForDroptdownJefeBrigadaCono');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
     this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
 
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownJefeBrigadaVarilla');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
     this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
 
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownJefeBrigadaFlexometro');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
     this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
 
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownJefeBrigadaTermometro');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
     this.http.get(url, {search}).subscribe(res => this.llenaTermometro(res.json()) );
     
     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
@@ -180,6 +163,14 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenatipo(res.json()) );
+
+    url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getInfoByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('id_formatoCampo', this.id_formato);
+    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
     
     this.creaCCHForm = new FormGroup({
       'cch_id':       new FormControl( { value:this.cch.cch_id, disabled: true}), 
@@ -219,6 +210,27 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   onSubmit() { this.submitted = true; }
+
+  llenado(respuesta: any){
+    console.log(respuesta);
+
+    this.creaCCHForm.patchValue({
+     informe:        respuesta.informeNo,
+     especimen:      respuesta.tipo_especimen,
+     tconcreto:      respuesta.tipoConcreto,
+     especimen1:     respuesta.prueba1,
+     especimen2:     respuesta.prueba2,
+     especimen3:     respuesta.prueba3,
+     especimen4:     respuesta.prueba4,
+     cono:           respuesta.cono_id,
+     varilla:        respuesta.varilla_id,
+     flexometro:     respuesta.flexometro_id,
+     termometro:     respuesta.termometro_id
+    });
+
+    //this.cargando=this.cargando-1;
+     
+  }
 
   llenatipo(resp: any){
     console.log(resp);
@@ -285,6 +297,176 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     }
     this.cargando=this.cargando-1;
     console.log("llenaTermometros this.cargando: "+this.cargando);
+  }
+
+  onChangeTipoEspecimen(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                           '2');
+    formData.append('valor',              this.creaCCHForm.value.especimen);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onChangeTipoConcreto(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                           '3');
+    formData.append('valor',              this.creaCCHForm.value.tconcreto);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onChangeEspecimen1(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                           '4');
+    formData.append('valor',              this.creaCCHForm.value.especimen1);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onChangeEspecimen2(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                           '5');
+    formData.append('valor',              this.creaCCHForm.value.especimen2);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onChangeEspecimen3(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                           '6');
+    formData.append('valor',              this.creaCCHForm.value.especimen3);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onChangeEspecimen4(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                           '7');
+    formData.append('valor',              this.creaCCHForm.value.especimen3);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onChangeCono(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                           '8');
+    formData.append('valor',                   this.creaCCHForm.value.cono);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onChangeVarilla(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                           '9');
+    formData.append('valor',                this.creaCCHForm.value.varilla);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onChangeFlexometro(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                          '10');
+    formData.append('valor',              this.creaCCHForm.value.flexometro);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onChangeTermometro(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                          '11');
+    formData.append('valor',              this.creaCCHForm.value.termometro);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
   }
   
 }
