@@ -28,7 +28,9 @@ export class OrdenTrabajoComponent implements OnInit{
   private gridApi;
   private gridColumnApi;
   rowSelection;
+  rowClassRules;
   columnDefs;
+  activeColor;
   cargando= 1;
   id:string;
 
@@ -42,8 +44,15 @@ export class OrdenTrabajoComponent implements OnInit{
     {headerName: 'Fecha de Inicio', field: 'fechaInicio' },
     {headerName: 'Fecha de Fin', field: 'fechaFin' },
     {headerName: 'Activo', field: 'active' },
+
   ];
     this.rowSelection = "single";
+    this.rowClassRules = {
+      "row-red-warning": function(params) {
+        var activeColor = params.data.activeColor;
+        return activeColor == 0;
+      }
+    };
   }
 	  
   ngOnInit() {
@@ -93,26 +102,24 @@ export class OrdenTrabajoComponent implements OnInit{
     var fechaInicio = "";
     var fechaFin = "";
     var active= "";
+    var activeColor= "";
 
 
     selectedRows.forEach(function(selectedRow, index) {
-      id_ordenDeTrabajo += selectedRow.id_ordenDeTrabajo;
-      obra += selectedRow.obra;
-      nombre_jefe_brigada_id += selectedRow.nombre_jefe_brigada_id;
-      actividades += selectedRow.actividades;
-      condicionesTrabajo += selectedRow.condicionesTrabajo;
-      fechaInicio += selectedRow.fechaInicio;
-      fechaFin += selectedRow.fechaFin;
-      active += selectedRow.active;
-
+      id_ordenDeTrabajo = selectedRow.id_ordenDeTrabajo;
+      obra = selectedRow.obra;
+      nombre_jefe_brigada_id = selectedRow.nombre_jefe_brigada_id;
+      actividades = selectedRow.actividades;
+      condicionesTrabajo = selectedRow.condicionesTrabajo;
+      fechaInicio = selectedRow.fechaInicio;
+      fechaFin = selectedRow.fechaFin;
+      active = selectedRow.active;
+      activeColor = selectedRow.activeColor;
     });
-    this.displayShortDescription(id_ordenDeTrabajo, obra, nombre_jefe_brigada_id, actividades, condicionesTrabajo, fechaInicio, fechaFin, active);
+    this.displayShortDescription(id_ordenDeTrabajo, obra, nombre_jefe_brigada_id, actividades, condicionesTrabajo, fechaInicio, fechaFin, active,activeColor);
   }
 
-  displayShortDescription(id_ordenDeTrabajo: any, obra: any, nombre_jefe_brigada_id: any,  actividades: any, condicionesTrabajo: any, fechaInicio: any, fechaFin: any, active: any )
-  {
-    
-
+  displayShortDescription(id_ordenDeTrabajo: any, obra: any, nombre_jefe_brigada_id: any,  actividades: any, condicionesTrabajo: any, fechaInicio: any, fechaFin: any, active: any , activeColor: any){
     this.hidden=true;
     //activar 
     this.id_ordenDeTrabajo=id_ordenDeTrabajo;
@@ -123,22 +130,20 @@ export class OrdenTrabajoComponent implements OnInit{
     this.fechaInicio=fechaInicio;
     this.fechaFin=fechaFin;
     this.active=active;
-    if(this.foto== "null"){
-      this.imgUrl="../assets/img/gabino.jpg";
-    }else{
-      this.imgUrl= this.global.assetsRoot+this.foto;
-    }
+    this.activeColor=activeColor;
+    this.imgUrl="../assets/img/gabino.jpg";
     
-    if(active == 1)
-    {
+    console.log("displayShortDescription :: "+activeColor);
+
+    if(activeColor == 1){
+      console.log("if :: "+activeColor);
       this.desBut = true;
       this.actBut= false;
     }
-    else{
-      if (active == 0) {
-        this.desBut = false;
-        this.actBut= true;
-      }
+    else if (activeColor == 0) {
+      console.log("else :: "+activeColor);
+      this.desBut = false;
+      this.actBut= true;
     }
   }
 
