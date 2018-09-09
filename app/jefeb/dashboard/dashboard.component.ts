@@ -36,6 +36,8 @@ export class DashboardComponent implements OnInit {
   tipoForm: FormGroup;
   paseForm: FormGroup;
    id: string;
+   id2: string;
+   id_formato: string;
    ids: string;
    mis_cli: Array<any>;
    mis_obras: Array<any>;
@@ -428,13 +430,33 @@ export class DashboardComponent implements OnInit {
     this.hiddenFormato = !this.hiddenFormato;
   }
 
+  creaIDFormatoCCH(){
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'initInsertCCH');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('id_ordenDeTrabajo', this.id);
+    this.http.post(url, formData).subscribe(res => {
+      console.log(res);
+                                              this.asignaIDFormato(res.json());
+                                              this.respuestaSwitch(res.json());                 
+    });
+  }
+
+  asignaIDFormato(res:any){
+    this.id_formato = res.id_formatoCampo;
+    this.id2 = this.id_formato;
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id + "/" + this.id2]); 
+  }
+
   seleccionaFormato(){
 
     if(this.tipoForm.value.formato_tipo_id == 0){
       window.alert("Por favor selecciona un Formato");
     }else{
       if(this.tipoForm.value.formato_tipo_id == 1){
-        this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
+        this.creaIDFormatoCCH();
       }
       else if(this.tipoForm.value.formato_tipo_id == 2){
         this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaRevenimiento/'+this.id]);

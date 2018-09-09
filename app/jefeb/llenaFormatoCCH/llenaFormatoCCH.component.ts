@@ -272,7 +272,7 @@ export class llenaFormatoCCHComponent implements OnInit{
      empresa:             respuesta.razonSocial,
      direccion:           respuesta.direccion,
      observaciones:       respuesta.observaciones,
-     tipo_especimen:      respuesta.tipo,
+     tipo_especimen:      respuesta.tipo_especimen,
      tconcreto:           respuesta.tipoConcreto,
      especimen1:          respuesta.prueba1,
      especimen2:          respuesta.prueba2,
