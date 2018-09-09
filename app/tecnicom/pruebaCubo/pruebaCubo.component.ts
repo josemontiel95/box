@@ -75,7 +75,10 @@ export class PruebaCuboComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_ensayoCubo', this.id_Registro);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+    this.http.get(url, {search}).subscribe(res => {
+                                                    this.llenado(res.json());
+                                                    this.desactivaCampos(res.json());
+                                                  });
 
 
     url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
@@ -271,13 +274,44 @@ export class PruebaCuboComponent implements OnInit{
      }
    }
 
+   desactivaCampos(res:any){
+    if(res.completado == "SI"){
+      this.ocultar();
+    } 
+   }
+
+  ocultar(){
+    this.hidden = !this.hidden;
+    const state = this.hidden ? 'disable' : 'enable'; 
+    Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
+        this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
+    });    
+  }
+  
+  cambiarDatos(){
+    if(window.confirm("¿Estas seguro de cambiar los datos de este registro?.")){
+            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+            if(window.confirm("ESTA ACCIÓN PROVOCARÁ QUE SE ENVIE UN NUEVO CORREO NOTIFICANDO AL CLIENTE DEL CAMBIO. EL ADMINISTRADOR SERA NOTIFICADO DE ESTE CAMBIO. ¿Esta seguro de continuar?")){
+            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+            this.mostrar();
+            }
+    }
+  }
+
   
   mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable'; 
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
         this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
-    });    
+    });
+
+    this.formatoCCHForm.controls['fechaColado']['disable']();
+    this.formatoCCHForm.controls['infoNo']['disable']();
+    this.formatoCCHForm.controls['clave']['disable']();
+    this.formatoCCHForm.controls['edadEnsaye']['disable']();
+    this.formatoCCHForm.controls['area']['disable']();
+    this.formatoCCHForm.controls['resCompresion']['disable']();    
   }
 
   validaCamposVacios(){
