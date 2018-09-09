@@ -16,6 +16,7 @@ export class TecnicosGridAgregaComponent implements OnInit  {
   private gridColumnApi;
   rowSelection;
   columnDefs;
+  id;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -28,6 +29,7 @@ export class TecnicosGridAgregaComponent implements OnInit  {
   rowData: any;
 
   ngOnInit() {
+    this.route.params.subscribe( params => this.id=params.id);
   }
 
 
@@ -47,9 +49,10 @@ export class TecnicosGridAgregaComponent implements OnInit  {
     this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getTecnicosForDroptdown');
+    search.set('function', 'getTecnicosAvailableForLab');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());

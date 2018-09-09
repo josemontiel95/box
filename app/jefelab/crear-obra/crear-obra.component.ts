@@ -240,7 +240,7 @@ export class CrearObraComponent implements OnInit
       
     }
     setTimeout(()=>{ 
-      this.router.navigate(['administrador/obras']);
+      this.router.navigate(['jefeLaboratorio/obras']);
     }, 1800);
 
   }
