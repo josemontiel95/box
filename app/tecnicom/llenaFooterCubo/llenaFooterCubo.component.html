@@ -1,0 +1,107 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaUsuario();"></i>
+          OBSERVACIONES</h5>
+        </div>
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=creaCCHForm #formDir="ngForm">
+            <div class="row">
+
+              <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="vAplicacion">LA VELOCIDAD DE APLICACI&Oacute;N DE CARGA ES DE: </label>
+                  <input type="text" id="vAplicacion" class="form-control" required 
+                  name="vAplicacion" placeholder="" formControlName="vAplicacion" (change)="onChangeObservaciones()">
+                </div>
+              </div>
+                          
+            </div> <!--FIN ROW-->
+            <h6>INVENTARIO DE INSTRUMENTO</h6>
+            <div class="row">
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="bascula">BASCULA</label>
+                  <select  class="form-control" id="bascula" 
+                    required name="bascula"
+                    placeholder="Tipos"  formControlName="bascula" (change)="onChangeBascula()">
+                    <option value="" [disabled]="true">Selecciona una bascula...</option>
+                    
+                    <option *ngFor="let bascula of mis_basculas" [value]="bascula.id_herramienta">
+                      {{bascula.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="bascula.invalid && (bascula.dirty || bascula.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="bascula.errors.required">
+                       Bascula requerida.
+                    </div>
+                    <div *ngIf="bascula.errors.pattern">La Localizacion solo debe contener numeros</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-12">
+                 <div class="form-group">
+                  <label for="prensa">PRENSA</label>
+                  <select  class="form-control" id="prensa" 
+                    required name="prensa"
+                    placeholder="Tipos"  formControlName="prensa" (change)="onChangePrensa()">
+                    <option value="" [disabled]="true">Selecciona una prensa...</option>
+                    
+                    <option *ngFor="let prensa of mis_prensas" [value]="prensa.id_herramienta">
+                      {{prensa.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="prensa.invalid && (prensa.dirty || prensa.touched)" class="alert alert-danger">
+                   <div *ngIf="prensa.errors.required">
+                   Prensa Requerida.
+                   </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-12">
+                 <div class="form-group">
+                  <label for="regla">REGLA</label>
+                  <select  class="form-control" id="regla" 
+                    required name="regla"
+                    placeholder="Tipos"  formControlName="regla" (change)="onChangeRegla()">
+                    <option value="" [disabled]="true">Selecciona un cono...</option>
+                    
+                    <option *ngFor="let regla of mis_reglas" [value]="regla.id_herramienta">
+                      {{regla.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="regla.invalid && (regla.dirty || regla.touched)" class="alert alert-danger">
+                   <div *ngIf="regla.errors.required">
+                   Regla, Vernier o Flexo Requerido.
+                   </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+            <div class="btn-group" style="float: right; padding-right: 10%;">
+            <button class="btn btn-success" [disabled]="creaCCHForm.invalid" (click)="ValidaSiguiente(); ">
+              <span><b> Siguiente </b></span>
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>

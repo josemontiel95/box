@@ -1,0 +1,42 @@
+<!-- Este bloque es para hacer la animación de Loading con flechas-->
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div> <!-- Fin bloque de animación loading-->
+
+<!-- Este primer div contiene el panel header-->
+<div class="panel-header panel-header-sm">
+</div> 
+<!--Fin panel header-->
+<div class="main-content"> <!--INICIO MAIN-CONTENT-->
+  <div class="row"> <!--INICIO ROW PRINCIPAL-->
+   <div class="col-md-12">
+      <div class="card">
+        
+        <div class="card-header">
+          <h4 class="card-title">Especimenes Pendientes:</h4>
+        </div>
+        <div class="card-body">
+         <ag-grid-angular 
+            #agGrid
+            id="myGrid"
+            style="width: 100%; height: 450px;" 
+            class="ag-theme-balham"
+            [enableSorting]="true"
+            [rowData]="rowData" 
+            [columnDefs]="columnDefs"
+            [enableFilter]="true"
+            [enableColResize]="true"
+            [colResizeDefault]="false"
+            [suppressAutoSize]="true"
+            [rowSelection]="rowSelection"
+            (selectionChanged)="onSelectionChanged($event)"
+            (gridReady)="onGridReady($event)"
+            >
+          </ag-grid-angular>
+          </div>
+        </div>
+      </div>
+    </div> <!--FIN ROW PRINCIPAL-->
+</div>

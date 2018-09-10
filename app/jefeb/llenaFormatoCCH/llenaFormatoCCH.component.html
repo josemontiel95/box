@@ -1,0 +1,332 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+
+<div class="row">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-body">
+          <div class="btn-group" style=" padding-left: 40%;">
+                  <button class="btn btn-default" (click)="obtenStatusReg();">
+                    <span><b>FORMATO COMPLETADO</b></span>
+                  </button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-12 col-md-12">
+      <div class="card card-chart">
+        
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            
+            <div class="row"> <!--PRIMER ROW -->
+
+              <div class="col-md-10 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i>
+                    <label for="obra">NOMBRE DE LA OBRA</label> <!--disable-->
+                    <input type="text" id="obra"   
+                    class="form-control" 
+                    name="obra" placeholder="" required   formControlName="obra">
+                     <div *ngIf="obra.invalid && (obra.dirty || obra.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="obra.errors.required">
+                        Obra requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div> <!--FIN PRIMER ROW -->
+
+            <div class="row">
+              <div class="col-md-10 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="localizacion">LOCALIZACION DE LA OBRA</label> <!--disable-->
+                    <input type="text" id="localizacion"   
+                    class="form-control" 
+                    name="localizacion" placeholder="" required   formControlName="localizacion">
+                     <div *ngIf="localizacion.invalid && (localizacion.dirty || localizacion.touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="localizacion.errors.required">
+                          Localizacion requerida.
+                        </div>
+                      </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-2 col-12"> <!--SEGUNDO GRID -->
+                <div class="row"> <!--PRIMER ROW DEL SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="informe">INFORME No</label>
+                    <input type="text" id="informe"  
+                    class="form-control" 
+                    name="informe" placeholder="" formControlName="informe">
+                     <div *ngIf="informe.invalid && (informe.dirty || informe.touched)"
+                      class="alert alert-danger">
+                        <div *ngIf="informe.errors.required">
+                          No. de orden requerido.
+                        </div>
+                      </div>
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN DEL PRIMER ROW DEL SEGUNDO GRID -->
+                
+              </div> <!--FIN SEGUNDO GRID -->
+
+            </div>
+
+            <div class="row">
+              <div class="col-md-10 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="empresa">NOMBRE DE LA EMPRESA</label> <!--disable-->
+                    <input type="text" id="empresa"   
+                    class="form-control" 
+                    name="empresa" placeholder="" required   formControlName="empresa">
+                     <div *ngIf="empresa.invalid && (empresa.dirty || empresa.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="empresa.errors.required">
+                        Empresa requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div class="col-md-2 col-12">
+                 
+                    <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
+                      <span><b> Cambiar Datos. </b></span>
+                    </button>
+                  <button class="btn btn-success" *ngIf="!hidden" [disabled]="formatoCCHForm.invalid" (click)="actualizarInformeNo();">
+                    <span><b> Guardar Cambios. </b></span>
+                  </button>
+                
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-10 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="direccion">DIRECCION DE LA EMPRESA</label> <!--disable-->
+                    <input type="text" id="direccion"   
+                    class="form-control" 
+                    name="direccion" placeholder="" required   formControlName="direccion">
+                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="direccion.errors.required">
+                        Empresa requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-12 col-12">
+      <div class="card  card-tasks">
+        <div class="card-header ">
+          <h4 style="text-align: center;" class="card-title">CONTROL DE CONCRETO HIDRAULICO.</h4>
+            <div class="btn-group" style=" padding-left: 80%;">
+                  <button class="btn btn-success" (click)="agregaRegistro();">
+                    <span><b>AGREGAR REGISTRO</b></span>
+                  </button>
+            </div>
+        </div>
+        <div class="card-body ">
+          <app-formato-cch-grid></app-formato-cch-grid>
+        </div> 
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            <div class="row">
+              <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="observaciones">OBSERVACIONES</label>
+                  <textarea  id="observaciones" class="form-control" 
+                  name="observaciones" placeholder="" formControlName="observaciones"> </textarea>
+                </div>
+              </div>
+            </div> <!--FIN ROW-->
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label>Tipos de Especimen</label>
+                  <select type="text" id="especimen" required name="especimen" class="form-control" placeholder="Especimen" formControlName="tipo_especimen">
+                    <option value="" [disabled]="true">Selecciona el tipo de especimen...</option>
+                    <option *ngFor="let especimen of espec" [value]="especimen.id">
+                      {{especimen.especimen}}
+                    </option>
+                  </select>
+                  <div *ngIf="tipo_especimen.invalid && (tipo_especimen.dirty || tipo_especimen.touched)" class="alert alert-danger">
+                   <div *ngIf="tipo_especimen.errors.required">
+                   Tipo Especimen Requerido.
+                   </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                 <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="tconcreto">TIPO DE CONCRETO</label> <!--disable-->
+                    <select  class="form-control" required id="tconcreto" name="tconcreto" formControlName="tconcreto" (change)="onBlurTipoConcreto()">
+                          <option value="0" [disabled]="true">Selecciona un tipo de concreto...</option>
+                          <option *ngFor="let tconcreto of tipoconcreto" [value]="tconcreto.id">
+                                {{tconcreto.tconcreto}}
+                          </option>
+                    </select>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div> <!--FIN ROW-->
+            <div class="row">
+              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="especimen1">Especimen 1</label> <!--disable-->
+                    <input type="text" id="especimen1" class="form-control" required name="especimen1" placeholder="" formControlName="especimen1">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="especimen2">Especimen 2</label> <!--disable-->
+                    <input type="text" id="especimen2"   
+                    class="form-control" 
+                    name="especimen2" placeholder="" formControlName="especimen2" required>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="especimen3">Especimen 3</label> <!--disable-->
+                    <input type="text" id="especimen3"   
+                    class="form-control" 
+                    name="especimen3" placeholder="" formControlName="especimen3" required (change)="onBlurEspecimen3()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="especimen4">Especimen 4</label> <!--disable-->
+                    <input type="text" id="especimen4"  class="form-control" 
+                    name="especimen4" placeholder="" formControlName="especimen4" required>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div> <!--FIN ROW-->
+            
+            <h6>Inventario de Intrumento</h6>
+            <div class="row">
+              <div class="col-md-6 col-12">
+                 <div class="form-group">
+                  <label for="cono">Cono</label>
+                  <select  class="form-control" id="cono" 
+                    required name="cono"
+                    placeholder="Tipos"  formControlName="cono">
+                    <option value="" [disabled]="true">Selecciona un cono...</option>
+                    
+                    <option *ngFor="let cono of mis_conos" [value]="cono.id_herramienta">
+                      {{cono.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="cono.invalid && (cono.dirty || cono.touched)" class="alert alert-danger">
+                   <div *ngIf="cono.errors.required">
+                   Cono Requerido.
+                   </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                 <div class="form-group">
+                  <label for="varilla">Varilla</label>
+                  <select  class="form-control" id="varilla" 
+                    required name="varilla"
+                    placeholder="Tipos"  formControlName="varilla">
+                    <option value="" [disabled]="true">Selecciona una varilla...</option>
+                    
+                    <option *ngFor="let varilla of mis_varillas" [value]="varilla.id_herramienta">
+                      {{varilla.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="varilla.invalid && (varilla.dirty || varilla.touched)" class="alert alert-danger">
+                   <div *ngIf="varilla.errors.required">
+                   Varilla Requerido.
+                   </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-12">
+                 <div class="form-group">
+                  <label for="flexometro">Flexometro</label>
+                  <select  class="form-control" id="flexometro" 
+                    required name="flexometro"
+                    placeholder="Tipos"  formControlName="flexometro">
+                    <option value="" [disabled]="true">Selecciona un termometro...</option>
+                    
+                    <option *ngFor="let flexometro of mis_flexometro" [value]="flexometro.id_herramienta">
+                      {{flexometro.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="flexometro.invalid && (flexometro.dirty || flexometro.touched)" class="alert alert-danger">
+                   <div *ngIf="flexometro.errors.required">
+                   Flexometro Requerido.
+                   </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                 <div class="form-group">
+                  <label for="termometro">Termometro</label>
+                  <select  class="form-control" id="termometro" 
+                    required name="termometro"
+                    placeholder="Tipos"  formControlName="termometro">
+                    <option value="" [disabled]="true">Selecciona un termometro...</option>    
+                    
+                    <option *ngFor="let termometro of mis_termometro" [value]="termometro.id_herramienta">
+                      {{termometro.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="termometro.invalid && (termometro.dirty || termometro.touched)" class="alert alert-danger">
+                   <div *ngIf="termometro.errors.required">
+                   Termometro Requerido.
+                   </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="btn-group"  style="float: right; padding-right: 10%;">
+              <button class="btn btn-info" *ngIf="hiddenf == true"  (click)="mostrarFooter()">
+                <span><b> Cambiar Datos. </b></span>
+              </button>
+            <button class="btn btn-success" *ngIf="!hiddenf" [disabled]="formatoCCHForm.invalid" (click)="actualizarFooter();">
+              <span><b> Guardar Cambios. </b></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+  
+
+
+
+</div>

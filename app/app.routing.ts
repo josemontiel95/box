@@ -3,7 +3,9 @@ import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 import { JefebLayoutComponent } from './layouts/jefeb-layout/jefeb-layout.component';
+import { JefeLabLayoutComponent } from './layouts/JefeLab-layout/jefelab-layout.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { TecnicoMLayoutComponent } from './layouts/tecnicom-layout/tecnicom-layout.component';
 import { SubAdminLayoutComponent } from './layouts/subadmin-layout/subadmin-layout.component';
 import { LoginComponent } from './login/login.component';
 import { AppGuard } from './app.guard';
@@ -14,7 +16,7 @@ const routes: Routes =[
     redirectTo: 'login',
     pathMatch: 'full',
   },{
-    path: 'jefeb',
+    path: 'jefeBrigada',
     component:JefebLayoutComponent,
     children: [
         {
@@ -34,11 +36,32 @@ const routes: Routes =[
    {
     path: 'administrador',
     component: AdminLayoutComponent,
-    canActivate: [AppGuard],
+    canActivateChild: [AppGuard],
     children: [
         {
       path: '',
       loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
+
+  }]},
+
+   {
+    path: 'jefeLaboratorio',
+    component: JefeLabLayoutComponent,
+    canActivateChild: [AppGuard],
+    children: [
+        {
+      path: '',
+      loadChildren: './layouts/JefeLab-layout/jefelab-layout.module#JefeLabLayoutModule'
+
+  }]},
+  {
+    path: 'tecnico',
+    component: TecnicoMLayoutComponent,
+    canActivateChild: [AppGuard],
+    children: [
+        {
+      path: '',
+      loadChildren: './layouts/tecnicom-layout/tecnicom-layout.module#TecnicoMLayoutModule'
 
   }]},
  /* {

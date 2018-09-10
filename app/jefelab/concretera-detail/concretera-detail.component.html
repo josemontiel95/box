@@ -1,0 +1,76 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaConcreteras();"></i>
+            Concretera No. {{this.concreteraForm.value.id_concretera}}
+          </h5>
+        </div>
+        <div class="card-body">
+                    <form (ngSubmit)="onSubmit()" [formGroup]=concreteraForm #formDir="ngForm">
+                      <div class="row">
+                  <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label for="id_concretera">ID Concretera.</label>
+                    <input type="text"  id="id_concretera"  
+                    class="form-control" 
+                    name="id_concretera" formControlName="id_concretera">
+                  </div>
+                  </div>
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="concretera">Nombre de la concretera.</label>
+                  <input type="text"  id="concretera"  
+                  class="form-control" 
+                 formControlName="concretera">
+                </div>
+                  <div *ngIf="concretera.invalid && (concretera.dirty || concretera.touched)" class="alert alert-danger">
+                   <div *ngIf="concretera.errors.required">
+                   Concretera requerida.
+                   </div>
+                  </div>
+              </div>
+              </div>
+
+            <div class="btn-group"  style="float: right; padding-right: 10%;">
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
+                <span><b> Cambiar Datos. </b></span>
+              </button>
+            <button class="btn btn-success" *ngIf="!hidden" [disabled]="concreteraForm.invalid" (click)="actualizarHerramienta( ); ">
+              <span><b> Guardar Cambios. </b></span>
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="card card">
+         <div class="image">
+          <img src="../assets/img/Labo.jpg" alt="...">
+            </div>
+        <div class="card-body">
+          <div class="author">
+           
+              <div class="col-md-6 ml-auto mr-auto">
+                    <button type="button" class="btn btn-danger btn-round " (click)="desactivarConcretera()" *ngIf="desBut">Desactivar</button>
+                    <button type="button" class="btn btn-success btn-round " (click)="activarConcretera()" *ngIf="actBut">Activar</button>
+                </div>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>

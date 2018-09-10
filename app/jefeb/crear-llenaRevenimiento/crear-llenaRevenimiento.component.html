@@ -1,0 +1,122 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaUsuario();"></i>
+          INFORME EN LA DETERMINACI&Oacute;N DEL REVENIMIENTO EN EL CONCRETO FRESCO</h5>
+        </div>
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=creaCCHForm #formDir="ngForm">
+            <div class="row">
+
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="reg">REG. No.</label>
+                  <input type="text" id="reg" class="form-control" required 
+                  name="reg" placeholder="Escriba el REG No." formControlName="reg">
+                </div>
+              </div>
+
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="localizacion">LOCALIZACIÓN</label>
+                  <input type="text" id="localizacion" class="form-control" required 
+                  name="localizacion" placeholder="Escriba la Inceritumbre" formControlName="localizacion">
+                  <div *ngIf="localizacion.invalid && (localizacion.dirty || localizacion.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="localizacion.errors.required">
+                       Localizaci&oacute;n requerida.
+                    </div>
+                    <div *ngIf="localizacion.errors.pattern">La Localizacion solo debe contener numeros</div>
+                  </div>
+                </div>
+              </div>
+              
+            </div> <!--FIN ROW-->
+            <h6>Inventario de Intrumento</h6>
+            <div class="row">
+              <div class="col-md-6 col-12">
+                 <div class="form-group">
+                  <label for="cono">Cono</label>
+                  <select  class="form-control" id="cono" 
+                    required name="cono"
+                    placeholder="Tipos"  formControlName="cono">
+                    <option value="" [disabled]="true">Selecciona un cono...</option>
+                    
+                    <option *ngFor="let cono of mis_conos" [value]="cono.id_herramienta">
+                      {{cono.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="cono.invalid && (cono.dirty || cono.touched)" class="alert alert-danger">
+                   <div *ngIf="cono.errors.required">
+                   Cono Requerido.
+                   </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                 <div class="form-group">
+                  <label for="varilla">Varilla</label>
+                  <select  class="form-control" id="varilla" 
+                    required name="varilla"
+                    placeholder="Tipos"  formControlName="varilla">
+                    <option value="" [disabled]="true">Selecciona una varilla...</option>
+                    
+                    <option *ngFor="let varilla of mis_varillas" [value]="varilla.id_herramienta">
+                      {{varilla.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="varilla.invalid && (varilla.dirty || varilla.touched)" class="alert alert-danger">
+                   <div *ngIf="varilla.errors.required">
+                   Varilla Requerido.
+                   </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+             <div class="row">
+              <div class="col-md-12 col-12">
+                 <div class="form-group">
+                  <label for="flexometro">Flexometro</label>
+                  <select  class="form-control" id="flexometro" 
+                    required name="flexometro"
+                    placeholder="Tipos"  formControlName="flexometro">
+                    <option value="" [disabled]="true">Selecciona un flexometro...</option>
+                    
+                    <option *ngFor="let flexometro of mis_flexometro" [value]="flexometro.id_herramienta">
+                      {{flexometro.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="flexometro.invalid && (flexometro.dirty || flexometro.touched)" class="alert alert-danger">
+                   <div *ngIf="flexometro.errors.required">
+                   Flexometro Requerido.
+                   </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+
+            <div class="btn-group" style="float: right; padding-right: 10%;">
+            <button class="btn btn-success" [disabled]="creaCCHForm.invalid" (click)="crearFormatoCCH(); ">
+              <span><b> Siguiente </b></span>
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>

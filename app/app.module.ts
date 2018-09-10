@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 
 import { AppRoutingModule } from './app.routing';
@@ -12,16 +13,21 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { JefebLayoutComponent } from './layouts/jefeb-layout/jefeb-layout.component';
 
+import { UserProfileComponent } from './user-profile/user-profile.component';
+
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { SubAdminLayoutComponent } from './layouts/subadmin-layout/subadmin-layout.component';
+import { JefeLabLayoutComponent } from './layouts/JefeLab-layout/jefelab-layout.component';
+import { TecnicoMLayoutComponent } from './layouts/tecnicom-layout/tecnicom-layout.component';
 
 import { DataTablesModule } from 'angular-datatables';
-;
+
 import { HttpClientModule }    from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { DataService } from "./data.service";
 import { AppGuard } from './app.guard';
 
+import { MatProgressBarModule } from '@angular/material';
 
 
 @NgModule({
@@ -32,6 +38,7 @@ import { AppGuard } from './app.guard';
     ComponentsModule,
     RouterModule,
     DataTablesModule,
+    MatProgressBarModule,
     AppRoutingModule,
     HttpClientModule,
     NgbModule.forRoot(),
@@ -42,11 +49,14 @@ import { AppGuard } from './app.guard';
     AppComponent,
     AdminLayoutComponent,
     SubAdminLayoutComponent,
+    TecnicoMLayoutComponent,
     LoginComponent,
     JefebLayoutComponent,
+    JefeLabLayoutComponent,
+    UserProfileComponent
   ],
   providers: [DataService,
-  AppGuard],
+  AppGuard, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

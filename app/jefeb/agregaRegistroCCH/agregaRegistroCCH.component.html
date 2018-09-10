@@ -1,0 +1,216 @@
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+<div class="row">
+    <div class="col-lg-12 col-12 col-md-12">
+      <div class="card card-chart">
+        
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            <h5>AGREGA REGISTRO</h5>
+            <div class="row"> <!--PRIMER ROW -->
+              
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="cesp">CLAVE DEL ESPECIMEN</label> <!--disable-->
+                    <input type="text" id="cesp"   
+                    class="form-control" 
+                    name="cesp" placeholder="" formControlName="cesp" (blur)="onBlurClaveEspecimen()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="herramienta">Herramienta</label> <!--disable-->
+                    <select  class="form-control" id="herramienta" name="herramienta" formControlName="herramienta" (change)="onBlurHerramienta()">
+                          <option value="0" [disabled]="true">Selecciona la herramienta</option>
+                          <option *ngFor="let herr of herramientas" [value]="herr.id_herramienta">
+                                {{herr.placas}}
+                          </option>
+                    </select>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="fecha">FECHA</label> <!--disable-->
+                    <input type="date" id="fecha"   
+                    class="form-control" 
+                    name="fecha" placeholder="" formControlName="fecha" (change)="onBlurFecha()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+
+            </div> <!--FIN PRIMER ROW -->
+
+          
+            <div class="row">
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="fc">F'C (kg/cm<sup>2</sup>)</label> <!--disable-->
+                    <input type="text" id="fc"   
+                    class="form-control" 
+                    name="fc" placeholder="" formControlName="fc" (change)="onBlurFC()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="revp">REVENIMIENTO(cm): PROYECTO</label>
+                    <input type="text" id="revp"  
+                    class="form-control" 
+                    name="revp" placeholder="" formControlName="revp" (change)="onBlurRevProy()">
+                     <div *ngIf="revp.invalid && (revp.dirty || revp.touched)"
+                      class="alert alert-danger">
+                        <div *ngIf="revp.errors.required">
+                          No. de orden requerido.
+                        </div>
+                      </div>
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="revo">REVENIMIENTO(cm): OBRA</label> <!--disable-->
+                    <input type="text" id="revo"   
+                    class="form-control" 
+                    name="revo" placeholder="" formControlName="revo" (change)="onBlurRevObra()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+             
+
+            </div>
+
+            <div class="row">
+
+               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="tamano">TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm)</label> <!--disable-->
+                    <input type="text" id="tamano"   
+                    class="form-control" 
+                    name="tamano" placeholder="" formControlName="tamano" (blur)="onBlurTamNomAg()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="volumen">VOLUMEN(m<sup>3</sup>)</label>
+                    <input type="text" id="volumen"  
+                    class="form-control" 
+                    name="volumen" placeholder="" formControlName="volumen" (change)="onBlurVolumen()">
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="diasEnsaye">Dias antes de ensayar</label> <!--disable-->
+                    <select  class="form-control" id="diasEnsaye" name="diasEnsaye" formControlName="diasEnsaye" (change)="onBlurdiasEnsaye()">
+                          <option value="0" [disabled]="true">Selecciona los dias</option>
+                          <option *ngFor="let day of days" [value]="day.id">
+                                {{day.value}}
+                          </option>
+                    </select>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+                
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="unidad">UNIDAD</label> <!--disable-->
+                    <input type="text" id="unidad"   
+                    class="form-control" 
+                    name="unidad" placeholder="" formControlName="unidad" (change)="onBlurUnidad()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="hmobra">HORA DE MUESTREO EN OBRA</label>
+                    <input type="time" id="hmobra"  
+                    class="form-control" 
+                    name="hmobra" placeholder="" formControlName="hmobra" (change)="onBlurHoraMuestreo()">
+                     <div *ngIf="hmobra.invalid && (hmobra.dirty || hmobra.touched)"
+                      class="alert alert-danger">
+                        <div *ngIf="hmobra.errors.required">
+                          No. de orden requerido.
+                        </div>
+                      </div>
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="tempamb">TEMPERATURA AMBIENTE DE MUESTREO (&#176;C)</label> <!--disable-->
+                    <input type="text" id="tempamb"   
+                    class="form-control" 
+                    name="tempamb" placeholder="" formControlName="tempamb" (change)="onBlurTemperaturaMuestreo()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="tempambrec">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C)</label> <!--disable-->
+                    <input type="text" id="tempambrec"  
+                    class="form-control" 
+                    name="tempambrec" placeholder="" formControlName="tempambrec" (change)="onBlurTemperaturaRecoleccion()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="localizacion">LOCALIZACI&Oacute;N</label> <!--disable-->
+                    <input type="textarea" id="localizacion"   
+                    class="form-control" 
+                    name="localizacion" placeholder="" formControlName="localizacion" (change)="onBlurLocalizacion()">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+            <div class="row">
+              <div class="col-md-2 col-12">
+                 
+                    <button class="btn btn-danger" *ngIf="!hidden"  (click)="descartaCambios()">
+                      <span><b> Eliminar Registro </b></span>
+                    </button>
+                  
+
+                  <button class="btn btn-default" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="registroCompletado();">
+                    <span><b> Regresar. </b></span>
+                  </button>
+
+                  
+                
+              </div>
+              <div class="col-md-6 col-md-offset-6 col-12">
+
+              </div>
+              <div class="col-md-2 col-12">
+
+               <button class="btn btn-success" *ngIf="hidden && !locked" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
+                    <span><b> Cambiar Datos. </b></span>
+                  </button>
+                <button class="btn btn-default" *ngIf="!hidden" (click)="llenarDespues()">
+                      <span><b> Llenar mas tarde. </b></span>
+                </button>
+              </div>
+              <div class="col-md-2 col-12">
+                <button class="btn btn-success" *ngIf="!hidden" (click)="validaCamposVacios()">
+                      <span><b> Registro Completo. </b></span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

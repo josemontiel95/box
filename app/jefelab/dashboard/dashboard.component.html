@@ -1,0 +1,337 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-lg-12 col-12 col-md-12">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">
+            Orden de trabajo No.{{this.id}}</h5>
+          <h4 class="card-title">Orden de trabajo.</h4>
+        </div>
+        <div class="card-body">
+          <div class="btn-group">
+            <button class="btn btn-info" *ngIf="hiddenDetail == true" (click)="evaluaHerra();">
+                <span><b> Evaluar Herramienta</b></span>
+            </button>   
+          </div>    
+          <form (ngSubmit)="onSubmit()" [formGroup]=ordenForm #formDir="ngForm">
+            <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="area">&Aacute;rea</label>
+                  <select type="text" id="area" required name="area" class="form-control" placeholder="Area" formControlName="area">
+                    <option value="" [disabled]="true">Selecciona el &Aacute;rea...</option>
+                    <option *ngFor="let are of areas" [value]="are.id">
+                      {{are.are}}
+                    </option>
+                  </select>
+                  <div *ngIf="area.invalid && (area.dirty || area.touched)"class="alert alert-danger">
+                    <div *ngIf="area.errors.required">Area requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div class="col-md-4 col-12"> <!-- CAMPO -->
+                <div class="form-group">
+                  <label for="jefe_brigada_id">Jefe de Brigada que Realiza la Actividad</label>
+                  <select type="text" id="jefe_brigada_id" class="form-control" name="jefe_brigada_id" placeholder="" required   formControlName="jefe_brigada_id">
+                    <option value="" [disabled]="true">Selecciona el Jefe...</option>                  
+                    <option *ngFor="let jefeb of mis_jefes" [value]="jefeb.id_usuario">
+                      {{jefeb.nombre}}
+                    </option> 
+                  </select>
+                  <div *ngIf="jefe_brigada_id.invalid && (jefe_brigada_id.dirty || jefe_brigada_id.touched)" class="alert alert-danger">
+                    <div *ngIf="jefe_brigada_id.errors.required">Jefe de Brigada requerido.</div>
+                  </div>
+                </div>
+              </div> <!--FIN  CAMPO -->
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--SEGUNDO CAMPO -->
+                  <label for="id_ordenDeTrabajo">Ctrl</label>
+                  <input type="text" id="id_ordenDeTrabajo"  class="form-control" name="id_ordenDeTrabajo" placeholder="" formControlName="id_ordenDeTrabajo">
+                  <div *ngIf="id_ordenDeTrabajo.invalid && (id_ordenDeTrabajo.dirty || id_ordenDeTrabajo.touched)"class="alert alert-danger">
+                    <div *ngIf="id_ordenDeTrabajo.errors.required"> No. de orden requerido.</div>
+                  </div>
+                </div> 
+              </div><!--FIN SEGUNDO CAMPO -->
+            </div>
+            <div class="row"> <!--SEGUNDO ROW -->
+              <div class="col-md-6 col-12"> <!--UNICA GRID -->
+                <div class="form-group"><!--CUARTO CAMPO -->
+                  <label for="id_cliente">Nombre del Cliente/Empresa</label>
+                  <select  class="form-control" id="id_cliente" required name="id_cliente" formControlName="id_cliente">
+                    <option value="" [disabled]="true">Selecciona el cliente...</option>
+                    <option *ngFor="let cliente of mis_cli" [value]="cliente.id_cliente">
+                      {{cliente.nombre}}
+                    </option>
+                  </select>
+                  <div *ngIf="id_cliente.invalid && (id_cliente.dirty || id_cliente.touched)" class="alert alert-danger">
+                    <div *ngIf="id_cliente.errors.required"> Cliente requerido.</div>
+                  </div>
+                </div><!--FIN CUARTO CAMPO -->
+              </div> <!--FIN UNICA GRID -->
+              <div class="col-md-6 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="obra_id">Nombre de la Obra</label>
+                  <select  class="form-control" id="obra_id" required name="obra_id" formControlName="obra_id">
+                    <option value="" [disabled]="true">Selecciona el obra...</option>  
+                    <option *ngFor="let obra of mis_obras" [value]="obra.id_obra">
+                      {{obra.obra}}
+                    </option>   
+                  </select>              
+                  <div *ngIf="obra_id.invalid && (obra_id.dirty || obra_id.touched)"class="alert alert-danger">
+                    <div *ngIf="obra.errors.required">Obra requerida.</div>
+                  </div>
+                </div>
+              </div> <!--FIN PRIMER CAMPO -->
+            </div> <!--FIN TERCER ROW -->
+            <div class="row"  *ngIf="!hiddenDetail">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="lugar">Direcci&oacute;n de la Actividad</label>
+                  <input type="text" id="direccion" class="form-control" name="lugar" placeholder="" required   formControlName="lugar">
+                  <div *ngIf="lugar.invalid && (lugar.dirty || lugar.touched)"class="alert alert-danger">
+                    <div *ngIf="lugar.errors.required">Direcci&oacute;n requerida.</div>
+                  </div>
+                </div>
+              </div> <!--FIN PRIMER CAMPO -->
+            </div>
+            <div class="row">
+              <div class="col-md-7 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="nombreContacto">Personas a Contactar</label>
+                  <input type="text" id="nombreContacto"class="form-control" name="nombreContacto" placeholder="" required  formControlName="nombreContacto">
+                  <div *ngIf="nombreContacto.invalid && (nombreContacto.dirty || nombreContacto.touched)" class="alert alert-danger">
+                    <div *ngIf="nombreContacto.errors.required">Nombre de contacto requerido.</div>
+                  </div>
+                </div>
+              </div> <!--FIN PRIMER CAMPO -->
+              <div class="col-md-5 col-12">
+                <div class="form-group">
+                  <label for="telefonoDeContacto">Tel&eacute;fono</label>
+                  <input type="text" id="telefonoDeContacto" class="form-control"  name="telefonoDeContacto" placeholder="" formControlName="telefonoDeContacto">
+                  <div *ngIf="telefonoDeContacto.invalid && (telefonoDeContacto.dirty || telefonoDeContacto.touched)" class="alert alert-danger">
+                    <div *ngIf="telefonoDeContacto.errors.required">Tel&eacute;fono requerido.</div>
+                    <div *ngIf="telefonoDeContacto.errors.pattern">Tel&eacute;fono solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row"  *ngIf="!hiddenDetail">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="actividades">Actividades a Realizar</label>
+                  <textarea type="text" id="actividades"  class="form-control" name="actividades" placeholder="" required formControlName="actividades"></textarea>
+                  <div *ngIf="actividades.invalid && (actividades.dirty || actividades.touched)" class="alert alert-danger">
+                    <div *ngIf="actividades.errors.required">Actividades a Realizar requeridas.</div>
+                  </div>
+                </div>
+              </div> <!--FIN PRIMER CAMPO -->
+            </div>
+            <div class="row"  *ngIf="!hiddenDetail">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="condicionesTrabajo">Condiciones del Area de Trabajo</label>
+                  <textarea type="text" id="condicionesTrabajo" class="form-control" name="condicionesTrabajo" placeholder="" required   formControlName="condicionesTrabajo"></textarea>
+                  <div *ngIf="condicionesTrabajo.invalid && (condicionesTrabajo.dirty || condicionesTrabajo.touched)" class="alert alert-danger">
+                    <div *ngIf="condicionesTrabajo.errors.required">Condiciones requeridas.
+                  </div>
+                </div>
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+          </div>
+         
+          <div class="row"  *ngIf="!hiddenDetail">
+            <div class="col-md-6 col-12"> <!-- CAMPO -->
+              <div class="form-group">
+                <label for="fechaInicio">Fecha de Inicio</label>
+                <input type="date" id="fechaInicio"   class="form-control" name="fechaInicio" placeholder="" required  formControlName="fechaInicio">
+                <div *ngIf="fechaInicio.invalid && (fechaInicio.dirty || fechaInicio.touched)" class="alert alert-danger">
+                  <div *ngIf="fechaInicio.errors.required"> Fecha de Inicio requerida.</div>
+                </div>
+              </div>
+            </div> <!--FIN  CAMPO -->
+            <div class="col-md-6 col-12"> <!-- CAMPO -->
+              <div class="form-group">
+                <label for="fechaFin">Fecha de Termino</label>
+                <input type="date" id="fechaFin"  class="form-control" name="fechaFin" placeholder="" required  formControlName="fechaFin">
+                <div *ngIf="fechaFin.invalid && (fechaFin.dirty || fechaFin.touched)" class="alert alert-danger">
+                  <div *ngIf="fechaFin.errors.required"> Fecha de Termino requerida.</div>
+                </div>
+              </div>
+            </div> <!--FIN  CAMPO -->
+          </div>
+          <div class="row"  *ngIf="!hiddenDetail">
+            <div class="col-md-6 col-12"> <!-- CAMPO -->
+              <div class="form-group">
+                <label for="horaInicio">Hora de Inicio</label>
+                <input type="time" id="horaInicio"  class="form-control" name="horaInicio" placeholder="" required  formControlName="horaInicio">
+                <div *ngIf="horaInicio.invalid && (horaInicio.dirty || horaInicio.touched)"class="alert alert-danger">
+                  <div *ngIf="horaInicio.errors.required">Hora de Inicio requerida.</div>
+                </div>
+              </div>
+            </div> <!--FIN  CAMPO -->
+            <div class="col-md-6 col-12"> <!-- CAMPO -->
+              <div class="form-group">
+                <label for="horaFin">Hora de Termino</label>
+                <input type="time" id="horaFin"  class="form-control" name="horaFin" placeholder="" required  formControlName="horaFin">
+                <div *ngIf="horaFin.invalid && (horaFin.dirty || horaFin.touched)" class="alert alert-danger">
+                  <div *ngIf="horaFin.errors.required">Nombre de contacto requerido.</div>
+                </div>
+              </div>
+            </div> <!--FIN  CAMPO -->
+          </div> 
+          <div class="row"  *ngIf="!hiddenDetail">
+            <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+              <div class="form-group">
+                <label for="observaciones">Observacionesnes</label>
+                <textarea type="text" id="observaciones" class="form-control" name="observaciones" placeholder=""   formControlName="observaciones"></textarea>
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+          </div>
+          <div class="btn-group"  >
+            <button class="btn btn-info" *ngIf="hiddenDetail == true" (click)="mostrarDetalles()">
+              <span><b> Mas detalles </b></span>
+            </button>   
+            <button class="btn btn-info" *ngIf="!hiddenDetail && hidden"  (click)="mostrarDetalles2()">
+              <span><b> Menos detalles </b></span>
+            </button>    
+            <div class="btn-group"  style="float: right; padding-left: 10%;">
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar(); mostrarDetalles();">
+                <span><b> Cambiar Datos </b></span>
+              </button>
+              <button class="btn btn-success" *ngIf="!hidden" [disabled]="ordenForm.invalid" (click)="mostrar(); mostrarDetalles(); actualizarOrden();" >
+                <span><b> Guardar Cambios </b></span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="row">
+    <div class="col-md-6 col-12">
+      <div class="card  card-tasks">
+        <div class="card-header ">
+          <h5 class="card-category">Herramientas asignado a esta orden.</h5>
+          <h4 class="card-title">Equipo asignado a esta orden.</h4>
+        </div>
+        <div class="card-body ">
+             <div class="btn-group">
+            <button  class="btn btn-danger" *ngIf="hiddenHerramienta == true" (click)="eliminarHerramienta();">
+              <span><b> Desasignar herramienta </b></span>
+            </button>
+            <button  class="btn btn-danger" *ngIf="!hiddenHerramienta" (click)="mostrarHerramienta();">
+              <span><b> Cancelar </b></span>
+            </button>
+            <div class="btn-group"  style=" padding-left: 15%;">              
+              <button class="btn btn-info" *ngIf="hiddenHerramienta == true"  (click)="mostrarHerramienta()">
+                <span><b> Agregar Herramienta </b></span>
+              </button>
+            <button class="btn btn-success" *ngIf="!hiddenHerramienta" [disabled]="false" (click)="actualizarHerramienta(); mostrarHerramienta();">
+              <span><b> Agregar </b></span>
+            </button>
+          </div>
+          </div>
+          <div *ngIf="this.hiddenHerramienta == true">
+          <app-herramienta-grid (eliminaHerra)="eliminaHerra($event)"></app-herramienta-grid>
+          </div>
+          <div *ngIf="!this.hiddenHerramienta && !this.hiddenTotal">
+            <form (ngSubmit)="onSubmit()" [formGroup]=tipoForm #formDir="ngForm">
+               <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="herramienta_tipo_id">Tipos</label>
+                  <select  class="form-control" id="herramienta_tipo_id"
+                    required (change)="mostrarHerramientaDisponible();" 
+                    name="herramienta_tipo_id"
+                    placeholder="Tipos"  formControlName="herramienta_tipo_id">
+                    <option value="" [disabled]="true">Selecciona el tipo...</option>
+                    <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo" >
+                      {{tipo.tipo}}
+                    </option>
+                  </select>
+                 <div *ngIf="herramienta_tipo_id.invalid && (herramienta_tipo_id.dirty || herramienta_tipo_id.touched)" class="alert alert-danger">
+                   <div *ngIf="herramienta_tipo_id.errors.required">
+                   Tipo de herramienta requerido.
+                   </div>
+                </div>
+                </div>
+              </div>
+            </form>
+                  
+          <div *ngIf="!this.hiddenHerramientaDispo">
+
+          <app-herramienta-grida [idh]="this.tipoForm.value.herramienta_tipo_id" (agregaHerra)="addHerra($event)"></app-herramienta-grida>          
+          </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-6 col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-category">Tecnicos.</h5>
+          <h4 class="card-title"> T&eacute;cnicos asignados a la orden de servicio.</h4>
+        </div>
+        <div class="card-body">
+          <div class="btn-group">
+             <button  class="btn btn-danger" *ngIf="hiddenTecnicos == true" (click)="eliminarTecni();">
+              <span><b> Desasignar Tecnico </b></span>
+            </button>
+            <button  class="btn btn-danger" *ngIf="!hiddenTecnicos" (click)="mostrarTecnicos();">
+              <span><b> Cancelar </b></span>
+            </button>            
+          <div class="btn-group"  style=" padding-left: 15%;">
+              <button class="btn btn-info" *ngIf="hiddenTecnicos == true"  (click)="mostrarTecnicos()">
+                <span><b> Agregar Tecnico</b></span>
+              </button>
+            <button class="btn btn-success" *ngIf="!hiddenTecnicos " [disabled]="false" (click)="mostrarTecnicos();  actualizarTecnicos();">
+              <span><b>Agregar</b></span>
+            </button>
+          </div>
+        </div>
+          <div *ngIf="this.hiddenTecnicos == true">
+          <app-tecnicos-grid (eliminaTecn)="eliminaTec($event)"></app-tecnicos-grid>
+        </div>
+          <div *ngIf="!this.hiddenTecnicos && !this.hiddenTotal">
+          <app-tecnicos-grida  (agregaTecn)="addTec($event)"></app-tecnicos-grida>          
+          </div>        
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="row">
+    <div class="col-md-12 col-12 col-lg-12">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Formatos</h5>
+          <h4 class="card-title">Formatos</h4>
+                    <div class="btn-group" style=" padding-left: 80%;">
+            <button class="btn btn-success" (click)="crearFormato();">
+              <span><b>Crea Formatos</b></span>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+     <!--aqui va el grid--><app-grid></app-grid>
+        </div>
+
+        <div class="card-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

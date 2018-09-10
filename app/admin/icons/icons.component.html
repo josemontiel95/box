@@ -1,22 +1,103 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
   <div class="row">
    <div class="col-md-12">
       <div class="card">
-        
         <div class="card-header">
-          <div class="btn-group" style="float: right; padding-right: 20%;">
+          <div class="btn-group" style="float: right; padding-right: 5%;">
             <button class="btn btn-success" (click)="crearUsuario();">
               <span><b> Nuevo Usuario </b></span>
             </button>
           </div>
-          <h4 class="card-title"> Usuarios:</h4>
+          <h4 class="card-title"> Usuarios: </h4>
         </div>
-        <div style="">
-          
+        <div class="card-body">
+          <div id="tarjetaMasDetalles" *ngIf="hidden">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="row">  
+                      <img class="img-usuario" src="{{this.imgUrl}}" alt="..."> 
+                </div>
+              </div>
+              <div class="col-md-9">
+                 <div class="row">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <b>ID</b>
+                            </td>
+                            <td>
+                              {{id}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <b>Rol</b>
+                            </td>
+                            <td>
+                              {{rol}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div> 
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9">
+                  <div class="row">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <b>Nombre</b>
+                            </td>
+                            <td>
+                              {{nombre}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <b>Apellido</b>
+                            </td>
+                            <td>
+                              {{apellido}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div> 
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="row" align="center">
+                    <button type="button" class="btn btn-default btn-round" (click)="detalleUsuario();">Detalles</button>
+                    <button type="button" class="btn btn-danger btn-round " (click)="desactivarUsuario()" *ngIf="desBut">Desactivar</button>
+                    <button type="button" class="btn btn-success btn-round " (click)="activarUsuario()" *ngIf="actBut">Activar</button>
+                </div>
+                <div id="MenosDetalles">
+                  <div class="row">
+                      <button type="button" class="btn btn-primary btn-link" (click)="menosDetalles()">Menos detalles</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <ag-grid-angular 
-            style="width: 800px; height: 800px;" 
+            #agGrid
+            id="myGrid"
+            style="width: 100%; height: 600px;" 
             class="ag-theme-balham"
             [enableSorting]="true"
             [rowData]="rowData" 
@@ -25,205 +106,12 @@
             [enableColResize]="true"
             [colResizeDefault]="false"
             [suppressAutoSize]="true"
+            [rowSelection]="rowSelection"
+            (selectionChanged)="onSelectionChanged($event)"
             (gridReady)="onGridReady($event)"
             >
           </ag-grid-angular>
-
-          
-          <!--
-          
-            <table class="table table-striped table-bordered">
-              <thead class=" text-primary">
-                <th>
-                  Registro.
-                </th>
-                <th>
-                  Nombre de la obra.
-                </th>
-                <th>
-                  Nombre del Cliente.
-                </th>
-                <th>
-                  Estatus.
-                </th>
-                <th class="text-right">
-                  Fecha.
-                </th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    RG20349
-                  </td>
-                  <td>
-                    Hospital del Niño Poblano.
-                  </td>
-                  <td>
-                    Juan Perez.
-                  </td>
-                  <td>
-                    Concluido
-                  </td>
-                  <td class="text-right">
-                    22 Feb 2017
-                  </td>
-                </tr>
-                    <tr>
-                  <td>
-                    RG20455
-                  </td>
-                  <td>
-                    Carretera Federal 187.
-                  </td>
-                  <td>
-                    Carlos Reed.
-                  </td>
-                  <td>
-                    Concluido
-                  </td>
-                  <td class="text-right">
-                    12 de Nov 2017
-                  </td>
-                </tr>
-                    <tr>
-                  <td>
-                    RG18102
-                  </td>
-                  <td>
-                    Puente de la Maria.
-                  </td>
-                  <td>
-                    Jaime Cruz.
-                  </td>
-                  <td>
-                    Concluido
-                  </td>
-                  <td class="text-right">
-                    21 Dic 2016
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    RG19092
-                  </td>
-                  <td>
-                    Puente de la Resurección.
-                  </td>
-                  <td>
-                    Damian Rivera.
-                  </td>
-                  <td>
-                    Concluido
-                  </td>
-                  <td class="text-right">
-                    12 Jul 2015
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    RG17892
-                  </td>
-                  <td>
-                    Puente de las Torres.
-                  </td>
-                  <td>
-                    Luis Guerra.
-                  </td>
-                  <td>
-                    Concluido
-                  </td>
-                  <td class="text-right">
-                    11 Mar 2014
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    RG20349
-                  </td>
-                  <td>
-                    Hospital del Niño Poblano.
-                  </td>
-                  <td>
-                    Juan Perez.
-                  </td>
-                  <td>
-                    Concluido
-                  </td>
-                  <td class="text-right">
-                    22 Feb 2017
-                  </td>
-                </tr>
-                    <tr>
-                  <td>
-                    RG20455
-                  </td>
-                  <td>
-                    Carretera Federal 187.
-                  </td>
-                  <td>
-                    Carlos Reed.
-                  </td>
-                  <td>
-                    Concluido
-                  </td>
-                  <td class="text-right">
-                    12 de Nov 2017
-                  </td>
-                </tr>
-                    <tr>
-                  <td>
-                    RG18102
-                  </td>
-                  <td>
-                    Puente de la Maria.
-                  </td>
-                  <td>
-                    Jaime Cruz.
-                  </td>
-                  <td>
-                    Concluido
-                  </td>
-                  <td class="text-right">
-                    21 Dic 2016
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    RG19092
-                  </td>
-                  <td>
-                    Puente de la Resurección.
-                  </td>
-                  <td>
-                    Damian Rivera.
-                  </td>
-                  <td>
-                    Concluido
-                  </td>
-                  <td class="text-right">
-                    12 Jul 2015
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    RG17892
-                  </td>
-                  <td>
-                    Puente de las Torres.
-                  </td>
-                  <td>
-                    Luis Guerra.
-                  </td>
-                  <td>
-                    Concluido
-                  </td>
-                  <td class="text-right">
-                    11 Mar 2014
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-             -->
+         
           </div>
        
         </div>

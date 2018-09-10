@@ -1,0 +1,314 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i>
+          Crear Orden de Trabajo</h5>
+        </div>
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=ordenForm #formDir="ngForm">
+            
+            <div class="row"> <!--PRIMER ROW -->
+
+              <div class="col-md-9 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="area">Area</label> <!--disable-->
+                    <input type="text" id="area"   
+                    class="form-control" 
+                    name="area" placeholder="" required   formControlName="area">
+                     <div *ngIf="area.invalid && (area.dirty || area.touched)"
+              class="alert alert-danger">
+              <div *ngIf="area.errors.required">
+                Area requerido.
+              </div>
+            </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-3 col-12"> <!--SEGUNDO GRID -->
+                <div class="row"> <!--PRIMER ROW DEL SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="orden">No. De Orden</label>
+                    <input type="text" id="orden"  
+                    class="form-control" 
+                    name="orden" placeholder="" formControlName="orden">
+                     <div *ngIf="orden.invalid && (orden.dirty || orden.touched)"
+              class="alert alert-danger">
+              <div *ngIf="orden.errors.required">
+                Numero de orden requerido.
+              </div>
+            </div>
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN DEL PRIMER ROW DEL SEGUNDO GRID -->
+                <div class="row"><!--SEGUNDO ROW DEL SEGUNDO GRID -->
+                  <div class="form-group"><!--TERCER CAMPO -->
+                      <label for="cotizacion">No. De Cotizaci&oacute;n</label>
+                      <input type="text" id="placas"  
+                      class="form-control" 
+                      name="cotizacion" placeholder="" formControlName="cotizacion">
+                       <div *ngIf="cotizacion.invalid && (cotizacion.dirty || cotizacion.touched)"
+              class="alert alert-danger">
+              <div *ngIf="cotizacion.errors.required">
+                No. De Cotizaci&oacute;n requerido.
+              </div>
+            </div>
+                  </div> <!--FIN TERCER CAMPO -->
+                </div><!--FIN SEGUNDO ROW DEL SEGUNDO GRID -->
+              </div> <!--FIN SEGUNDO GRID -->
+
+            </div> <!--FIN PRIMER ROW -->
+
+            <div class="row"> <!--SEGUNDO ROW -->
+              <div class="col-md-12 col-12"> <!--UNICA GRID -->
+                <div class="form-group"><!--CUARTO CAMPO -->
+                  <label for="cliente">Nombre del Cliente/Empresa</label>
+                  <select  class="form-control" id="cliente" required name="cliente" formControlName="cliente">
+                  <option value="" [disabled]="true">Selecciona el cliente...</option>
+                    <option *ngFor="let cliente of mis_cli" [value]="cliente.id_cliente">
+                      {{cliente.nombre}}
+                    </option>
+                  </select>
+                   <div *ngIf="cliente.invalid && (cliente.dirty || cliente.touched)"
+              class="alert alert-danger">
+              <div *ngIf="cliente.errors.required">
+                Cliente requerido.
+              </div>
+            </div>
+                </div><!--FIN CUARTO CAMPO -->
+              </div> <!--FIN UNICA GRID -->
+            </div> <!--FIN SEGUNDO ROW -->
+
+            <div class="row"> <!--TERCER ROW -->
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="obra">Nombre de la Obra</label>
+                  <select  class="form-control" id="obra" required name="obra" formControlName="obra">
+                  <option value="" [disabled]="true">Selecciona el obra...</option>  
+                    <option *ngFor="let obra of mis_obras" [value]="obra.id_obra">
+                      {{obra.obra}}
+                    </option>   
+                    </select>              
+                    <div *ngIf="obra.invalid && (obra.dirty || obra.touched)"
+              class="alert alert-danger">
+
+              <div *ngIf="obra.errors.required">
+                Obra requerida.
+              </div>
+            </div>
+                </div>
+              </div> <!--FIN PRIMER CAMPO -->
+            </div> <!--FIN TERCER ROW -->
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="direccion">Direcci&oacute;n de la Actividad</label>
+                  <input type="text" id="direccion" class="form-control" name="direccion" placeholder="" required   formControlName="direccion">
+                   <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
+              class="alert alert-danger">
+              <div *ngIf="direccion.errors.required">
+                Direcci&oacute;n requerida.
+              </div>
+            </div>
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-7 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="nombre">Personas a Contactar</label>
+                  <input type="text" id="nombre"  
+                  class="form-control" 
+                  name="nombre" placeholder="" required  formControlName="nombre">
+                   <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
+              class="alert alert-danger">
+              <div *ngIf="nombre.errors.required">
+                Nombre de contacto requerido.
+              </div>
+            </div>
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+            <div class="col-md-5 col-12">
+              <div class="form-group">
+                  <label for="telefono">Tel&eacute;fono</label>
+                  <input type="text" id="telefono"  
+                  class="form-control" 
+                  name="telefono" placeholder="" formControlName="telefono">
+                   <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)"
+              class="alert alert-danger">
+              <div *ngIf="telefono.errors.required">
+                Tel&eacute;fono requerido.
+              </div>
+               <div *ngIf="telefono.errors.pattern">Tel&eacute;fono solo debe contener numeros</div>              
+            </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="actividades">Actividades a Realizar</label>
+                  <textarea type="text" id="actividades"  
+                  class="form-control" 
+                  name="actividades" placeholder="" required formControlName="actividades">
+                  </textarea>
+                   <div *ngIf="actividades.invalid && (actividades.dirty || actividades.touched)"
+              class="alert alert-danger">
+              <div *ngIf="actividades.errors.required">
+                Actividades a Realizar requeridas.
+              </div>
+            </div>
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="condicion">Condiciones del Area de Trabajo</label>
+                  <textarea type="text" id="condicion"   
+                  class="form-control" 
+                  name="condicion" placeholder="" required   formControlName="condicion">
+                  </textarea>
+                   <div *ngIf="condicion.invalid && (condicion.dirty || condicion.touched)"
+              class="alert alert-danger">
+              <div *ngIf="condicion.errors.required">
+                Condiciones requeridas.
+              </div>
+            </div>
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="equipo">Equipo Designado para Realizar la Actividad</label>
+                  <textarea type="text" id="equipo"  
+                  class="form-control" name="equipo" placeholder="" required formControlName="equipo">
+                  </textarea>
+                   <div *ngIf="equipo.invalid && (equipo.dirty || equipo.touched)"
+              class="alert alert-danger">
+              <div *ngIf="equipo.errors.required">
+                Equipo requerido.
+              </div>
+            </div>
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!-- CAMPO -->
+                <div class="form-group">
+                  <label for="jefeb">Jefe de Brigada que Realiza la Actividad</label>
+                  <select type="text" id="jefeb" class="form-control" 
+                  name="jefeb" placeholder="" required   formControlName="jefeb">
+                   <option value="" [disabled]="true">Selecciona el Jefe...</option>                  
+                  <option *ngFor="let jefeb of mis_jefes" [value]="obra. id_usuario">
+                      {{jefeb.nombre}}
+                    </option> 
+                  </select>
+                   <div *ngIf="jefeb.invalid && (jefeb.dirty || jefeb.touched)"
+              class="alert alert-danger">
+              <div *ngIf="jefeb.errors.required">
+                Jefe de Brigada requerido.
+              </div>
+            </div>
+              </div>
+            </div> <!--FIN  CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-12"> <!-- CAMPO -->
+                <div class="form-group">
+                  <label for="fechainicio">Fecha de Inicio</label>
+                  <input type="date" id="fechainicio"   
+                  class="form-control" 
+                  name="fechainicio" placeholder="" required  formControlName="fechainicio">
+                   <div *ngIf="fechainicio.invalid && (fechainicio.dirty || fechainicio.touched)"
+              class="alert alert-danger">
+              <div *ngIf="fechainicio.errors.required">
+                Fecha de Inicio requerida.
+              </div>
+            </div>
+                </div>
+              </div> <!--FIN  CAMPO -->
+
+              <div class="col-md-6 col-12"> <!-- CAMPO -->
+                  <div class="form-group">
+                    <label for="fechatermnio">Fecha de Termino</label>
+                    <input type="date" id="fechatermnio"  
+                    class="form-control" 
+                    name="fechatermnio" placeholder="" required  formControlName="fechatermnio">
+                     <div *ngIf="fechatermnio.invalid && (fechatermnio.dirty || fechatermnio.touched)"
+              class="alert alert-danger">
+              <div *ngIf="fechatermnio.errors.required">
+                Fecha de Termino requerida.
+              </div>
+            </div>
+                  </div>
+              </div> <!--FIN  CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-12"> <!-- CAMPO -->
+                <div class="form-group">
+                  <label for="horainicio">Hora de Inicio</label>
+                  <input type="time" id="horainicio"  
+                  class="form-control" 
+                  name="horainicio" placeholder="" required  formControlName="horainicio">
+                   <div *ngIf="horainicio.invalid && (horainicio.dirty || horainicio.touched)"
+              class="alert alert-danger">
+              <div *ngIf="horainicio.errors.required">
+                Hora de Inicio requerida.
+              </div>
+            </div>
+                </div>
+              </div> <!--FIN  CAMPO -->
+
+              <div class="col-md-6 col-12"> <!-- CAMPO -->
+                  <div class="form-group">
+                    <label for="horatermino">Hora de Termino</label>
+                    <input type="time" id="horatermino"  
+                    class="form-control" 
+                    name="horatermino" placeholder="" required  formControlName="horatermino">
+                     <div *ngIf="horatermino.invalid && (horatermino.dirty || horatermino.touched)"
+              class="alert alert-danger">
+              <div *ngIf="horatermino.errors.required">
+                Nombre de contacto requerido.
+              </div>
+            </div>
+                  </div>
+              </div> <!--FIN  CAMPO -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                <div class="form-group">
+                  <label for="observacio">Observaciones</label>
+                  <textarea type="text" id="observacio"  
+                  class="form-control" 
+                  name="observacio" placeholder=""   formControlName="observacio">
+                  </textarea>
+              </div>
+            </div> <!--FIN PRIMER CAMPO -->
+            </div>
+
+            
+            <div class="btn-group" style="float: right; padding-right: 10%;">
+            <button class="btn btn-success" [disabled]="ordenForm.invalid"  (click)="crearOrdenTrabajo();">
+              <span><b> Guardar Cambios </b></span>
+            </button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+</div>

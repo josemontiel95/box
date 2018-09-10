@@ -3,5 +3,7 @@ export interface LoginResp {
     nombre: string,
     token: string,
     estatus: string,
-    error: number
+    error: number,
+    root: string,
+    rol: string
 }
