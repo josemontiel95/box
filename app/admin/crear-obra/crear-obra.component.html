@@ -33,7 +33,7 @@
                 <div class="form-group">
                   <label for="id_concretera">Concretera</label> <!--tipo de credencial referido al catalogo de clientes.-->
                   <select   class="form-control"  id="id_concretera" required name="id_concretera" placeholder="Concretera" formControlName="id_concretera" >
-                    <option value="Selecciona una Concretera..."  selected>Selecciona una Concretera...</option>
+                    <option value=""  selected>Selecciona una Concretera...</option>
                     <option *ngFor="let concretera of mis_con" [value]="concretera.id_concretera">
                       {{concretera.concretera}}
                     </option>
@@ -135,7 +135,7 @@
                 <div class="form-group">
                   <label for="id_cliente">Cliente</label> 
                   <select   class="form-control"  id="id_cliente"required placeholder="Cliente" formControlName="id_cliente">
-                    <option value="Selecciona un Cliente..." selected>Selecciona un Cliente...</option>
+                    <option value="" selected>Selecciona un Cliente...</option>
                     <option *ngFor="let cli of mis_cli" [value]="cli.id_cliente">
                       {{cli.nombre}}
                     </option>
@@ -151,7 +151,7 @@
                 <div class="form-group">
                   <label for="tipo">Tipo</label> 
                   <select   class="form-control"  id="tipo" required name="tipo" placeholder="Tipo" formControlName="tipo">
-                    <option value="Selecciona un Tipo..." selected>Selecciona un Tipo...</option>
+                    <option value="" selected>Selecciona un Tipo...</option>
                     <option  value="1">Iguala </option>
                     <option  value="2">Unitario</option>
                   </select>

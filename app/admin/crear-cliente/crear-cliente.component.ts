@@ -98,38 +98,38 @@ export class CrearClienteComponent implements OnInit{
     // se inicializan los campos del form y se añaden un validador personalizado para email que confirma la existencia del arroba "@"
 
     this.clienteForm = new FormGroup({
-      'rfc': new FormControl(this.cliente.rfc, [Validators.required, Validators.pattern("^(([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3}))|^(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) ") ]), 
-      'nombre': new FormControl(this.cliente.nombre, Validators.required), 
-      'razonSocial': new FormControl(this.cliente.razonSocial,  Validators.required), 
-      'calle': new FormControl({ value: this.cliente.calle, disabled: this.hidden },  [  Validators.required]), 
-      'noExt': new FormControl({ value: this.cliente.noExt, disabled: this.hidden },  [  Validators.required]), 
-      'noInt': new FormControl({ value: this.cliente.noInt, disabled: this.hidden }), 
-      'col': new FormControl({ value: this.cliente.col, disabled: this.hidden },  [  Validators.required]), 
-      'municipio': new FormControl({ value: this.cliente.municipio, disabled: this.hidden },  [  Validators.required]), 
-      'estado': new FormControl({ value: this.cliente.estado, disabled: this.hidden },  [  Validators.required]), 
-      'telefono': new FormControl(this.cliente.telefono, [ Validators.required, Validators.pattern("^([0-9])*")]), 
-      'nombreContacto': new FormControl(this.cliente.nombreContacto,  Validators.required), 
-      'telefonoDeContacto': new FormControl(this.cliente.telefonoDeContacto, [ Validators.required, Validators.pattern("^([0-9])*")]), 
-      'email': new FormControl(this.cliente.email, [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
+      'rfc':                 new FormControl(this.cliente.rfc,                 [ Validators.required, Validators.pattern("^(([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3}))|^(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) ") ]), 
+      'nombre':              new FormControl(this.cliente.nombre,                Validators.required), 
+      'razonSocial':         new FormControl(this.cliente.razonSocial,           Validators.required), 
+      'calle':               new FormControl(this.cliente.calle,               [ Validators.required]), 
+      'noExt':               new FormControl(this.cliente.noExt,               [ Validators.required]), 
+      'noInt':               new FormControl(this.cliente.noInt, ), 
+      'col':                 new FormControl(this.cliente.col,                 [ Validators.required]), 
+      'municipio':           new FormControl(this.cliente.municipio,           [ Validators.required]), 
+      'estado':              new FormControl(this.cliente.estado,              [ Validators.required]), 
+      'telefono':            new FormControl(this.cliente.telefono,            [ Validators.required, Validators.pattern("^([0-9])*")]), 
+      'nombreContacto':      new FormControl(this.cliente.nombreContacto,        Validators.required), 
+      'telefonoDeContacto':  new FormControl(this.cliente.telefonoDeContacto,  [ Validators.required, Validators.pattern("^([0-9])*")]), 
+      'email':               new FormControl(this.cliente.email,               [ Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
     });
   }
 
   // funcion para acceder de manera sencilla a los campos del form
   // referencia: https://angular.io/guide/reactive-forms
 
-  get rfc() { return this.clienteForm.get('rfc'); }
-  get nombre() { return this.clienteForm.get('nombre'); }
-  get razonSocial() { return this.clienteForm.get('razonSocial'); }
-  get calle() { return this.clienteForm.get('calle'); }
-  get noExt() { return this.clienteForm.get('noExt'); }
-  get noInt() { return this.clienteForm.get('noInt'); }
-  get col() { return this.clienteForm.get('col'); }
-  get municipio() { return this.clienteForm.get('municipio'); }
-  get estado() { return this.clienteForm.get('estado'); }
-  get telefono() { return this.clienteForm.get('telefono'); }
-  get nombreContacto() { return this.clienteForm.get('nombreContacto'); }
-  get telefonoDeContacto() { return this.clienteForm.get('telefonoDeContacto'); }
-  get email() { return this.clienteForm.get('email'); }
+  get rfc()                 { return this.clienteForm.get('rfc'); }
+  get nombre()              { return this.clienteForm.get('nombre'); }
+  get razonSocial()         { return this.clienteForm.get('razonSocial'); }
+  get calle()               { return this.clienteForm.get('calle'); }
+  get noExt()               { return this.clienteForm.get('noExt'); }
+  get noInt()               { return this.clienteForm.get('noInt'); }
+  get col()                 { return this.clienteForm.get('col'); }
+  get municipio()           { return this.clienteForm.get('municipio'); }
+  get estado()              { return this.clienteForm.get('estado'); }
+  get telefono()            { return this.clienteForm.get('telefono'); }
+  get nombreContacto()      { return this.clienteForm.get('nombreContacto'); }
+  get telefonoDeContacto()  { return this.clienteForm.get('telefonoDeContacto'); }
+  get email()               { return this.clienteForm.get('email'); }
 
 
 
@@ -142,6 +142,13 @@ export class CrearClienteComponent implements OnInit{
     for (var _i=0;_i<resp.length;_i++){
       this.mis_roles[_i]=resp[j];
       j--;
+    }
+  }
+  onChangeRazonSocial(){
+    if(this.clienteForm.value.nombre == ""){
+      this.clienteForm.patchValue({
+        nombre: this.clienteForm.value.razonSocial
+      });
     }
   }
 
@@ -174,22 +181,24 @@ export class CrearClienteComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/cliente/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertAdmin');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-    formData.append('razonSocial', this.clienteForm.value.razonSocial);
-    formData.append('nombre', this.clienteForm.value.nombre);
-    formData.append('telefono', this.clienteForm.value.telefono);  
-    formData.append('calle', this.clienteForm.value.calle);
-    formData.append('noExt', this.clienteForm.value.noExt);
-    formData.append('noInt', this.clienteForm.value.noInt);
-    formData.append('col', this.clienteForm.value.col);
-    formData.append('municipio', this.clienteForm.value.municipio);
-    formData.append('estado', this.clienteForm.value.estado);
-    formData.append('rfc', this.clienteForm.value.rfc);      
+    formData.append('function',           'insertAdmin');
+    formData.append('token',              this.global.token);
+    formData.append('rol_usuario_id',     this.global.rol);
+
+    formData.append('razonSocial',        this.clienteForm.value.razonSocial);
+    formData.append('nombre',             this.clienteForm.value.nombre);
+    formData.append('telefono',           this.clienteForm.value.telefono);  
+    formData.append('calle',              this.clienteForm.value.calle);
+    formData.append('noExt',              this.clienteForm.value.noExt);
+    formData.append('noInt',              this.clienteForm.value.noInt);
+    formData.append('col',                this.clienteForm.value.col);
+    formData.append('municipio',          this.clienteForm.value.municipio);
+    formData.append('estado',             this.clienteForm.value.estado);
+    formData.append('rfc',                this.clienteForm.value.rfc);      
     formData.append('telefonoDeContacto', this.clienteForm.value.telefonoDeContacto);     
-    formData.append('email',this.clienteForm.value.email);  
-    formData.append('nombreContacto', this.clienteForm.value.nombreContacto); 
+    formData.append('email',              this.clienteForm.value.email);  
+    formData.append('nombreContacto',     this.clienteForm.value.nombreContacto);
+
     this.cargandoMessage="Cargando...";
     this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );
 
