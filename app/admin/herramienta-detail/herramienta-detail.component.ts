@@ -34,13 +34,15 @@ export class HerramientaDetailComponent implements OnInit {
     condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
     onSubmit() { this.submitted = true; }
 
-      herramientaForm: FormGroup;
-      herramienta = {
-        herramienta_tipo_id: '',
-        placas:'',
-        condicion:'',
-        fechaDeCompra:'',
-        observaciones:'' }
+    herramientaForm: FormGroup;
+    herramienta = {
+      herramienta_tipo_id: '',
+      placas:'',
+      condicion:'',
+      fechaDeCompra:'',
+      laboratorio_id:'',
+      id_herramienta:'',
+      observaciones:'' }
 
 
     loginMessage: string= "";
@@ -81,7 +83,7 @@ export class HerramientaDetailComponent implements OnInit {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
     
-    this.cargando=2;
+    this.cargando=3;
 
     let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -90,6 +92,15 @@ export class HerramientaDetailComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
+
+    url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownAdmin');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', "1001");
+    this.http.get(url, {search}).subscribe(res => {this.llenaLaboratorio(res.json());
+                                                   this.labValidator(res.json());
+                                                 });
 
     url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
 	  search = new URLSearchParams();
@@ -100,29 +111,25 @@ export class HerramientaDetailComponent implements OnInit {
 	  this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
 
      this.herramientaForm = new FormGroup({
-      'herramienta_tipo_id': new FormControl( { value:this.herramienta.herramienta_tipo_id, disabled: this.hidden },  [Validators.required]), 
-      'placas': new FormControl({ value: this.herramienta.placas, disabled: this.hidden },  [ Validators.required]),
-      'condicion': new FormControl({ value: this.herramienta.condicion, disabled: this.hidden },  [  Validators.required]),
-      'fechaDeCompra': new FormControl({ value: this.herramienta.fechaDeCompra, disabled: this.hidden },  [  Validators.required]), 
-      'observaciones': new FormControl({ value: this.herramienta.observaciones, disabled: this.hidden }), 
-      'id_herramienta': new FormControl( { value:this.herramienta.herramienta_tipo_id, disabled: true },  [Validators.required]), 
-
-                                 });
+      'herramienta_tipo_id':     new FormControl( { value:this.herramienta.herramienta_tipo_id, disabled: this.hidden },  [Validators.required]), 
+      'placas':                  new FormControl({ value: this.herramienta.placas, disabled: this.hidden },  [ Validators.required]),
+      'condicion':               new FormControl({ value: this.herramienta.condicion, disabled: this.hidden },  [  Validators.required]),
+      'fechaDeCompra':           new FormControl({ value: this.herramienta.fechaDeCompra, disabled: this.hidden },  [  Validators.required]), 
+      'observaciones':           new FormControl({ value: this.herramienta.observaciones, disabled: this.hidden }), 
+      'id_herramienta':          new FormControl( { value: this.herramienta.id_herramienta, disabled: true },  [Validators.required]), 
+      'laboratorio_id':          new FormControl( { value:this.herramienta.laboratorio_id, disabled: true },  [Validators.required]), 
+      });
 
 
   }
 
     get herramienta_tipo_id() { return this.herramientaForm.get('herramienta_tipo_id'); }
-
-    get placas() { return this.herramientaForm.get('placas'); }
-
-    get condicion() { return this.herramientaForm.get('condicion'); }
-
-    get fechaDeCompra() { return this.herramientaForm.get('fechaDeCompra'); }
-
-    get observaciones() { return this.herramientaForm.get('observaciones'); }
-
-    get id_herramienta() { return this.herramientaForm.get('id_herramienta'); }
+    get placas()              { return this.herramientaForm.get('placas'); }
+    get condicion()           { return this.herramientaForm.get('condicion'); }
+    get fechaDeCompra()       { return this.herramientaForm.get('fechaDeCompra'); }
+    get observaciones()       { return this.herramientaForm.get('observaciones'); }
+    get id_herramienta()      { return this.herramientaForm.get('id_herramienta'); }
+    get laboratorio_id()      { return this.herramientaForm.get('laboratorio_id'); }
 
   switchAlerta(exitoCon: any){
     this.exitoCon = false;
@@ -132,6 +139,26 @@ export class HerramientaDetailComponent implements OnInit {
     this.router.navigate(['administrador/herramientas']);
   }
 
+
+  llenaLaboratorio(resp: any){
+    this.cargando=this.cargando-1;
+    this.mis_lab= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ )
+    {
+      this.mis_lab[_i]=resp[_i];
+
+    }
+  }
+
+  labValidator(repuesta: any){
+    console.log(repuesta)
+    if(repuesta.error==5 || repuesta.error==6){
+      window.alert(repuesta.estatus);
+    }
+    else{
+      
+    }
+  }
 
   llenaTipos(resp: any)
   {
@@ -155,23 +182,22 @@ export class HerramientaDetailComponent implements OnInit {
     this.herramientaForm.controls['id_herramienta']['disable']();
   }
 
-  actualizarHerramienta( )
-  {
+  actualizarHerramienta(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/herramienta/post/endpoint.php`;
     let formData:FormData = new FormData();
-    //let search = new URLSearchParams();
-    formData.append('function', 'upDateAdmin');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id',  this.global.rol);
-    //formData.append
-    formData.append('id_herramienta', this.id);
-    formData.append('fechaDeCompra',  this.herramientaForm.value.fechaDeCompra);
-    formData.append('placas', this.herramientaForm.value.placas );
-    formData.append('observaciones', this.herramientaForm.value.observaciones);
-    formData.append('condicion', this.herramientaForm.value.condicion);
-    formData.append('herramienta_tipo_id', this.herramientaForm.value.herramienta_tipo_id );
-    //post  formData
+    this.cargando=1;
+    formData.append('function',             'upDateAdmin');
+    formData.append('token',                this.global.token);
+    formData.append('rol_usuario_id',       this.global.rol);
+
+    formData.append('id_herramienta',       this.id);
+    formData.append('fechaDeCompra',        this.herramientaForm.value.fechaDeCompra);
+    formData.append('placas',               this.herramientaForm.value.placas );
+    formData.append('observaciones',        this.herramientaForm.value.observaciones);
+    formData.append('condicion',            this.herramientaForm.value.condicion);
+    formData.append('herramienta_tipo_id',  this.herramientaForm.value.herramienta_tipo_id );
+    formData.append('laboratorio_id',       this.herramientaForm.value.laboratorio_id );
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaError(res.json());
                                             } );
@@ -180,6 +206,7 @@ export class HerramientaDetailComponent implements OnInit {
 
   respuestaError(resp: any){
     console.log(resp);
+    this.cargando=this.cargando-1;
     if(resp.error!=0)
     {
       window.alert(resp.estatus);
@@ -187,7 +214,8 @@ export class HerramientaDetailComponent implements OnInit {
     }
     else
     {
-      this.router.navigate(['administrador/herramientas']);
+      this.mostrar();
+      //this.router.navigate(['administrador/herramientas']);
     }
   }
 
@@ -202,8 +230,7 @@ export class HerramientaDetailComponent implements OnInit {
       fechaDeCompra: respuesta.fechaDeCompra,
       observaciones: respuesta.observaciones,
       id_herramienta: respuesta.id_herramienta,
-
-
+      laboratorio_id: respuesta.laboratorio_id,
     });
 
     if(respuesta.isHerramienta_tipoActive==0){
@@ -238,8 +265,7 @@ export class HerramientaDetailComponent implements OnInit {
   }
  
 
-  status(active: any)
-  {
+  status(active: any){
     if (active == 1) {
      this.actBut = false;
      this.desBut = true;
@@ -252,16 +278,12 @@ export class HerramientaDetailComponent implements OnInit {
 
   }
 
-  statusHistorial(active: any)
-  {
+  statusHistorial(active: any){
     if (active == 1) {
      this.His = false;
-          }
-     else
-     {
+    }else{
      this.His= true;
-     }     
-
+     }
   }
 
   desactivarHerramienta(){

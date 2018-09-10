@@ -181,19 +181,19 @@ export class CrearObraComponent implements OnInit
     let url = `${this.global.apiRoot}/obra/post/endpoint.php`;
     let formData:FormData = new FormData();
 
-    formData.append('function',           'insertAdmin');
-    formData.append('token',              this.global.token);
-    formData.append('rol_usuario_id',     this.global.rol);
+    formData.append('function',             'insertAdmin');
+    formData.append('token',                this.global.token);
+    formData.append('rol_usuario_id',       this.global.rol);
     
-    formData.append('obra',               this.obraForm.value.obra);
-    formData.append('prefijo',            this.obraForm.value.prefijo );
-    formData.append('fechaDeCreacion',    this.obraForm.value.fechaDeCre);
-    formData.append('descripcion',        this.obraForm.value.descripcion);
-    formData.append('localizacion',       this.obraForm.value.localizacion);
-    formData.append('cliente_id',         this.obraForm.value.id_cliente);
-    formData.append('concretera',         this.obraForm.value.id_concretera);
-    formData.append('tipo',               this.obraForm.value.tipo);
-    formData.append('revenimiento',       this.obraForm.value.revenimiento  );
+    formData.append('obra',                 this.obraForm.value.obra);
+    formData.append('prefijo',              this.obraForm.value.prefijo );
+    formData.append('fechaDeCreacion',      this.obraForm.value.fechaDeCre);
+    formData.append('descripcion',          this.obraForm.value.descripcion);
+    formData.append('localizacion',         this.obraForm.value.localizacion);
+    formData.append('cliente_id',           this.obraForm.value.id_cliente);
+    formData.append('concretera',           this.obraForm.value.id_concretera);
+    formData.append('tipo',                 this.obraForm.value.tipo);
+    formData.append('revenimiento',         this.obraForm.value.revenimiento  );
     formData.append('incertidumbre',        this.obraForm.value.incertidumbre );
     formData.append('telefono_residente',   this.obraForm.value.telefono_residente );
     formData.append('cotizacion',           this.obraForm.value.cotizacion );

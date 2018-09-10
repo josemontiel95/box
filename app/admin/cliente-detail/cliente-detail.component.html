@@ -20,20 +20,19 @@
           <form [formGroup]=clienteForm #formDir="ngForm" >
 
             <div class="row"> <!--Inicia Row1-->
-              <div class="col-md-6 col-12">
+              <div class="col-md-12 col-12 ">
                 <div class="form-group">
-                  <label for="rfc">R.F.C.</label>
-                  <input id= "rfc"  required  class="form-control" placeholder="RFC"  formControlName="rfc">
-                  <div *ngIf="rfc.invalid && (rfc.dirty || rfc.touched)" class="alert alert-danger">
-                    <div *ngIf="rfc.errors.required">
-                      RFC requerido.
-                    </div>
-                    <div *ngIf="rfc.errors.pattern">
-                      Verifica tu R.F.C , recuerda que el R.F.C de personas físicas esta compuesto de 4 caracteres alfanuméricos, mas 6 numeros  y 3 carateres nuevamente alfanuméicos
+                  <label for="razonSocial">Raz&oacute;n social.</label> 
+                  <input type="text"  id= "razonSocial"   required class="form-control" name="razonSocial" placeholder="Tu Empresa S.A. de C.V."  formControlName="razonSocial" (change)="onChangeRazonSocial()">
+                  <div *ngIf="razonSocial.invalid && (razonSocial.dirty || razonSocial.touched)" class="alert alert-danger">
+                    <div *ngIf="razonSocial.errors.required">
+                      Raz&oacute;n social. requerida.
                     </div>
                   </div>
                 </div>
               </div>
+            </div> <!--Termina Row1-->
+            <div class="row"> <!--Inicia Row2-->
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="nombre">Nombre de la empresa.</label> 
@@ -45,16 +44,16 @@
                   </div>
                 </div>
               </div>
-            </div> <!--Termina Row1-->
-
-            <div class="row"> <!--Inicia Row2-->
-              <div class="col-md-12 col-12 ">
+              <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label for="razonSocial">Raz&oacute;n social.</label> 
-                  <input type="text"  id= "razonSocial"   required class="form-control" name="razonSocial" placeholder="Tu Empresa S.A. de C.V."  formControlName="razonSocial">
-                  <div *ngIf="razonSocial.invalid && (razonSocial.dirty || razonSocial.touched)" class="alert alert-danger">
-                    <div *ngIf="razonSocial.errors.required">
-                      Raz&oacute;n social. requerida.
+                  <label for="rfc">R.F.C.</label>
+                  <input id= "rfc"  required  class="form-control" placeholder="RFC"  formControlName="rfc">
+                  <div *ngIf="rfc.invalid && (rfc.dirty || rfc.touched)" class="alert alert-danger">
+                    <div *ngIf="rfc.errors.required">
+                      RFC requerido.
+                    </div>
+                    <div *ngIf="rfc.errors.pattern">
+                      Verifica tu R.F.C , recuerda que el R.F.C de personas físicas esta compuesto de 4 caracteres alfanuméricos, mas 6 numeros  y 3 carateres nuevamente alfanuméicos
                     </div>
                   </div>
                 </div>
@@ -198,6 +197,9 @@
               <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
+              <button class="btn btn-success" *ngIf="!hidden"  (click)="cambiarLabo();">
+                <span><b> Cambiar Labo </b></span>
+              </button>
               <button class="btn btn-success" *ngIf="!hidden" [disabled]="clienteForm.invalid"  (click)="actualizarCliente();">
                 <span><b> Guardar Cambios. </b></span>
               </button>
@@ -206,8 +208,6 @@
         </div>
       </div>
     </div>
-
-
     <div class="col-md-4">
       <div class="card card-user">
         <div class="image">
@@ -215,34 +215,67 @@
         </div>
         <div class="card-body">
           <form (ngSubmit)="onSubmit()" #passwordForm="ngForm">
-          <div class="author">
-            
+            <div class="author">
               <img class="avatar border-gray" src="{{this.imgUrl}}" (click)="subirFoto()" alt="...">
-              <!--{{imgUrl}} binding para la foto quitado con fines esteticos-->
               <h5 class="title">{{this.clienteForm.value.razonSocial}}</h5>
-           
-            <div class="form-group" [hidden]="desBut">
-                  <label>Contrase&ntilde;a</label>
-                  <input class="form-control"  required [(ngModel)]="model2.password1" placeholder="Contrase&ntilde;a" name="password1" type="password" #password1>
+              <div class="form-group" [hidden]="desBut">
+                <label>Contrase&ntilde;a</label>
+                <input class="form-control"  required [(ngModel)]="model2.password1" placeholder="Contrase&ntilde;a" name="password1" type="password" #password1>
+              </div>
+              <div class="form-group" [hidden]="desBut">
+                <label>Contrase&ntilde;a</label>
+                <input class="form-control" required [(ngModel)]="model2.npassword" placeholder="Repite Contrase&ntilde;a" name="npassword" type="password" #npassword>
+              </div>
+              <div [hidden]= "!resppass" class="alert alert-danger">
+                Las Contrase&ntilde;as no coinciden.
+              </div>
+              <div [hidden]= "!exitoCon" class="alert alert-success">
+                Nueva contrase&ntilde;a actualizada
+              </div>
             </div>
-            <div class="form-group" [hidden]="desBut">
-                  <label>Contrase&ntilde;a</label>
-                  <input class="form-control" required [(ngModel)]="model2.npassword" placeholder="Repite Contrase&ntilde;a" name="npassword" type="password" #npassword>
+            <div class="button-container">
+              <button type="button" class="btn btn-danger btn-round " (click)="cambiarContrasena()" *ngIf="desBut">Cambiar Contrase&ntilde;a</button>
+              <button type="button" class="btn btn-success btn-round " [disabled]="passwordForm.invalid" (click)="guardarContrasena(password1.value, npassword.value);" *ngIf="actBut">Guardar Contrase&ntilde;a</button>
             </div>
-
-            <div [hidden]= "!resppass" class="alert alert-danger">
-              Las Contrase&ntilde;as no coinciden.
-            </div>
-            <div [hidden]= "!exitoCon" class="alert alert-success">
-            Nueva contrase&ntilde;a actualizada</div>
-          </div>
-
-        <div class="button-container">
-          <button type="button" class="btn btn-danger btn-round " (click)="cambiarContrasena()" *ngIf="desBut">Cambiar Contrase&ntilde;a</button>
-          <button type="button" class="btn btn-success btn-round " [disabled]="passwordForm.invalid" (click)="guardarContrasena(password1.value, npassword.value);" *ngIf="actBut">Guardar Contrase&ntilde;a</button>
+          </form>
         </div>
-     
-    </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            Laboratorios en los que esta disponible
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row"> <!--Inicia Row1-->
+            <div class="col-md-12">
+              <p>Los laboratorios de color verde es en los cuales esta disponible este cliente.</p>
+              <p>Da click en sobre alguno de ellos para agregar o eliminar.</p>
+              <ag-grid-angular 
+              #agGrid
+              id="myGrid"
+              style="width: 100%; height: 600px;" 
+              class="ag-theme-balham"
+              [enableSorting]="true"
+              [rowData]="rowData" 
+              [columnDefs]="columnDefs"
+              [enableFilter]="true"
+              [enableColResize]="true"
+              [colResizeDefault]="false"
+              [suppressAutoSize]="true"
+              [rowSelection]="rowSelection"
+              [rowClassRules]="rowClassRules"
+              (selectionChanged)="onSelectionChanged($event)"
+              (gridReady)="onGridReady($event)"
+              ></ag-grid-angular>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
