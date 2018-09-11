@@ -245,16 +245,17 @@ export class DashboardComponent implements OnInit {
 
   pasarlista()
   {
-
      let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
      let formData:FormData = new FormData();
-        formData.append('function', 'insertAdmin');
-        formData.append('id_tecnicos_ordenDeTrabajo', this.ids);
+        formData.append('function', 'pasarLista');
+        formData.append('id_tecnicos_ordenDeTrabajo', this.id);
         formData.append('rol_usuario_id', this.global.rol);
         formData.append('token', this.global.token);
         formData.append('email', this.paseForm.value.correo);
         formData.append('contrasena', this.paseForm.value.pass);    
-        
+        console.log(this.ids);
+        console.log(this.paseForm.value.correo);
+        console.log(this.paseForm.value.pass);
         this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             });
