@@ -17,6 +17,7 @@ export class TecnicosGridComponent implements OnInit  {
   rowSelection;
   columnDefs;
   id: string;
+  iid: string;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -67,11 +68,15 @@ export class TecnicosGridComponent implements OnInit  {
 
   llenaTabla(repuesta: any){
     console.log(repuesta)
+
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
     }else{
       this.rowData =repuesta;
+       
+       this.iid = repuesta.id_tecnicos_ordenDeTrabajo;
+   
     }
   }
 
@@ -86,8 +91,9 @@ export class TecnicosGridComponent implements OnInit  {
     });
    if (estado == "NO") 
    {
+      
      this.paseL(false);
-     this.paseL(id)
+     this.paseL(this.iid);
    }
    else
    {

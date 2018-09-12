@@ -18,9 +18,10 @@ export class OrdenTrabajoComponent implements OnInit{
   condicionesTrabajo: string;
   fechaInicio: string;
   fechaFin: string;
-  desBut = false;
-  actBut= true;
+  desBut=true;
+  actBut=false;
   hidden= false;
+  active: any;
   foto= '';
   imgUrl="";
   global: Global;
@@ -38,6 +39,7 @@ export class OrdenTrabajoComponent implements OnInit{
     {headerName: 'Condiciones de trabajo', field: 'condicionesTrabajo' },
     {headerName: 'Fecha de Inicio', field: 'fechaInicio' },
     {headerName: 'Fecha de Fin', field: 'fechaFin' },
+    {headerName: 'Obra Activa', field: 'active' }
   ];
     this.rowSelection = "single";
   }
@@ -53,6 +55,51 @@ export class OrdenTrabajoComponent implements OnInit{
     detalleOrdenTrabajo(){
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+this.id_ordenDeTrabajo]);
   }
+
+     desactivarCliente(){
+     this.actBut= true;
+     this.desBut= false;
+     this.switchActive(0);
+  }
+
+   activarCliente(){
+     this.actBut = false;
+     this.desBut = true;
+     this.switchActive(1);
+   }
+
+      switchActive(active: number){
+     let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
+     let formData:FormData = new FormData();
+      
+      if(active == 0){
+        formData.append('function', 'deactivate');
+      }
+      else{
+        formData.append('function', 'activate');
+      }
+        formData.append('id_ordenDeTrabajo', this.id_ordenDeTrabajo);
+        formData.append('rol_usuario_id', this.global.rol);
+        formData.append('token', this.global.token);
+        this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());
+                                            });
+       
+
+      }
+
+               respuestaSwitch(res: any){
+     console.log(res);
+     if(res.error!= 0){
+       window.alert("Intentalo otra vez");
+       location.reload();
+     }
+     else{
+       location.reload();
+     }
+   }
+
+
 
      menosDetalles(){
      this.hidden=false;
@@ -96,6 +143,7 @@ export class OrdenTrabajoComponent implements OnInit{
       condicionesTrabajo += selectedRow.condicionesTrabajo;
       fechaInicio += selectedRow.fechaInicio;
       fechaFin += selectedRow.fechaFin;
+      active += selectedRow.active;
 
     });
     this.displayShortDescription(id_ordenDeTrabajo, obra, nombre_jefe_brigada_id, actividades, condicionesTrabajo, fechaInicio, fechaFin, active);
