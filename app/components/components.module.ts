@@ -11,7 +11,7 @@ import { SidebarJefebComponent } from './sidebars/sidebarJefeB/sidebarjefeb.comp
 import { SidebarJefeLab } from './sidebars/sidebarJefeLab/sidebarjefelab.component';
 import { SidebarSoporteComponent } from './sidebars/sidebarSoporte/sidebarSoporte.component';
 import { SidebarTecnicoMComponent } from './sidebars/sidebarTecnicoM/sidebartecnicom.component';
-
+import { SidebarSoporteComponent } from './sidebars/sidebarSoporte/sidebarSoporte.component';
 @NgModule({
   imports: [
     CommonModule,

@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SoporteLayoutRoutes } from './soporte-layout.routing';
-import { UserProfileComponent } from '../../administrativo/user-profile/user-profile.component';
+import { UserProfileComponent } from '../../soporte/user-profile/user-profile.component';
 /*
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 

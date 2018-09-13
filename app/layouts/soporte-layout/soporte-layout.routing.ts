@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { UserProfileComponent } from '../../administrativo/user-profile/user-profile.component';
+import { UserProfileComponent } from '../../soporte/user-profile/user-profile.component';
 /*
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { TableListComponent } from '../../table-list/table-list.component';
