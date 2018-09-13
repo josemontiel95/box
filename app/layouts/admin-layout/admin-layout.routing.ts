@@ -32,12 +32,14 @@ import { ConcreteraDetailComponent } from '../../admin/concretera-detail/concret
 import { TiposDeHerramientaComponent } from '../../admin/tipos-de-herramienta/tipos-de-herramienta.component';
 import { CrearTipoHerramientasComponent } from '../../admin/crear-tipo-de-herramienta/crear-tipo-de-herramienta.component';
 import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-detail/tipo-de-herramienta-detail.component';
+import { ConstruccionComponent } from '../../admin/construccion/construccion.component';
 
 
 export const AdminLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
+    { path: 'construccion',   component: ConstruccionComponent },
     
     { path: 'usuarios',          component: IconsComponent },
     { path: 'usuarios/user-detail/:id',   component: UserDetailComponent },

@@ -38,6 +38,7 @@ import { ConcreteraDetailComponent } from '../../admin/concretera-detail/concret
 import { TiposDeHerramientaComponent } from '../../admin/tipos-de-herramienta/tipos-de-herramienta.component';
 import { CrearTipoHerramientasComponent } from '../../admin/crear-tipo-de-herramienta/crear-tipo-de-herramienta.component';
 import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-detail/tipo-de-herramienta-detail.component';
+import { ConstruccionComponent } from '../../admin/construccion/construccion.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-
     PruebaComponent,
     IconsComponent,
     ObrasComponent,
+    ConstruccionComponent,
     MapsComponent,
     CrearUsuarioComponent,
     CrearObraComponent,
