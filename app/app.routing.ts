@@ -19,6 +19,7 @@ const routes: Routes =[
   },{
     path: 'jefeBrigada',
     component:JefebLayoutComponent,
+    canActivateChild: [AppGuard],
     children: [
         {
       path: '',
@@ -28,6 +29,7 @@ const routes: Routes =[
   {
     path: 'soporte',
     component:SoporteLayoutComponent,
+    canActivateChild: [AppGuard],
     children: [
         {
       path: '',
@@ -37,6 +39,7 @@ const routes: Routes =[
   {
     path: 'administrativo',
     component:SubAdminLayoutComponent,
+    canActivateChild: [AppGuard],
     children: [
         {
       path: '',
