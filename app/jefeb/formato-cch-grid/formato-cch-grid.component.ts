@@ -23,11 +23,12 @@ export class FormatoCCHGridComponent implements OnInit  {
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
     {headerName: 'CLAVE DEL ESPECIMEN', field: 'claveEspecimen' },
-    /*
     {headerName: 'FECHA', field: 'fecha' },
+    {headerName: 'LOCALIZACI&Oacute;N', field: 'localizacion' },
+    {headerName: 'Dias ensaye', field: 'diasEnsaye' },
+    /*
     {headerName: 'F&rsquo;C', field: 'fprima'},
-    {headerName: 'REVENIMIENTO: PROYECTO', field: 'revProyecto'},
-    {headerName: 'REVENIMIENTO: OBRA', field: 'revObra'},
+
     {headerName: 'TAMA&Ntilde;O NOMINAL DEL AGREGADO (mm)', field: 'tamagregado' },
     {headerName: 'VOLUMEN (m<sup>2</sup>)', field: 'volumen' },
     {headerName: 'TIPO DE CONCRETO', field: 'tipoConcreto' },
@@ -44,11 +45,18 @@ export class FormatoCCHGridComponent implements OnInit  {
     this.rowSelection = "single";
 
     this.rowClassRules = {
-      "sick-days-warning": function(params) {
-        var numSickDays = params.data.status;
-        return numSickDays === 0;
+      "row-blue-warning": function(params) {
+        var status = params.data.status;
+        return status == 1;
       },
-      "sick-days-breach": "data.status == 1"
+      "row-green-warning": function(params) {
+        var status = params.data.status;
+        return status == 2;
+      },
+      "row-red-warning": function(params) {
+        var herramienta_id = params.data.herramienta_id;
+        return herramienta_id == null;
+      }
     };
   }
 

@@ -13,45 +13,50 @@
         <div class="card-header">
           <h5 class="title">
             <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaHerramientas();"></i>
-            Herramienta No. {{this.id}}
+             Tipo de Herramienta No. {{this.id}}
           </h5>
         </div>
         <div class="card-body">
-                    <form (ngSubmit)="onSubmit()"  [formGroup]=herramientaForm #formDir="ngForm">
-                      <div class="row">
-                <div class="col-md-6 col-12">
+          <form (ngSubmit)="onSubmit()"  [formGroup]=herramientaForm #formDir="ngForm">
+            <div class="row">
+              <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="id_herramienta_tipo">ID Herramienta.</label>
-                  <input type="text" disabled="" id="id_herramienta_tipo"   
-                  class="form-control" 
-                  name="id_herramienta_tipo" placeholder="" formControlName="id_herramienta_tipo">
+                  <input type="text" disabled="" id="id_herramienta_tipo"    class="form-control"  name="id_herramienta_tipo" placeholder="" formControlName="id_herramienta_tipo">
                 </div>
-                </div>
-
-                  <div class="col-md-6 col-12">
+              </div>
+              <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="tipo">Tipo de herramienta</label>
-                  <input type="text"  id="tipo"  
-                  class="form-control" 
-                  name="tipo" placeholder="" formControlName="tipo">
-              </div>
-         <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)" class="alert alert-danger">
-                   <div *ngIf="tipo.errors.required">
-                   Tipo de herramienta requerido.
+                  <input type="text"  id="tipo"  required class="form-control"  name="tipo" placeholder="" formControlName="tipo">
+                </div>
+                <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)" class="alert alert-danger">
+                   <div *ngIf="tipo.errors.required">Tipo de herramienta requerido.</div>
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="asignableenOrdenDeTrabajo">Se asigna a una orden de trabajo</label>
+                  <select  id="asignableenOrdenDeTrabajo" required class="form-control" formControlName="asignableenOrdenDeTrabajo">
+                    <option value="1" >Si</option>
+                    <option value="0" >No</option>
+                  </select>                  
+                </div>
+                <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)" class="alert alert-danger">
+                   <div *ngIf="tipo.errors.required">Tipo de herramienta requerido.</div>
+                </div>
               </div>
-
-
+            </div>
             <div class="btn-group"  style="float: right; padding-right: 10%;">
               <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hidden" [disabled]="herramientaForm.invalid" (click)="actualizarHerramienta( );  ">
-              <span><b> Guardar Cambios. </b></span>
-            </button>
-          </div>
+              <button class="btn btn-success" *ngIf="!hidden" [disabled]="herramientaForm.invalid" (click)="actualizarHerramienta( );  ">
+                <span><b> Guardar Cambios. </b></span>
+              </button>
+            </div>
           </form>
         </div>
       </div>

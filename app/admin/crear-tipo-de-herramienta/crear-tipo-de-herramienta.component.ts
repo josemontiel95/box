@@ -22,35 +22,32 @@ import {
 })
 export class CrearTipoHerramientasComponent implements OnInit {
 
-
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   cargando= 1;
 
   constructor(private router: Router, private data: DataService, private http: Http) { }
   
-  model = new Herramienta('','');
 
   herramientaForm: FormGroup;
 
     herramienta= {
       tipo: '',
+      asignableenOrdenDeTrabajo:''
     }
   
-  crearTipoHerramienta(  )
-  {
-      this.data.currentGlobal.subscribe(global => this.global = global);
+  crearTipoHerramienta(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/herramienta_tipo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertAdmin');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', "1001");
 
-    formData.append('tipo', this.herramientaForm.value.tipo);
+    formData.append('tipo',                      this.herramientaForm.value.tipo);
+    formData.append('asignableenOrdenDeTrabajo', this.herramientaForm.value.asignableenOrdenDeTrabajo);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             } ); 
-
   }
 
 
@@ -70,17 +67,19 @@ export class CrearTipoHerramientasComponent implements OnInit {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando=0;
 
-   this.herramientaForm = new FormGroup({
-  'tipo': new FormControl(  this.herramienta.tipo, Validators.required),
-     });  
+    this.herramientaForm = new FormGroup({
+      'tipo':                      new FormControl(  this.herramienta.tipo, Validators.required),
+      'asignableenOrdenDeTrabajo': new FormControl(  this.herramienta.asignableenOrdenDeTrabajo, Validators.required),
+    });  
 
   }
 
-    get tipo() { return this.herramientaForm.get('tipo'); }
+  get tipo()                      { return this.herramientaForm.get('tipo'); }
+  get asignableenOrdenDeTrabajo() { return this.herramientaForm.get('asignableenOrdenDeTrabajo'); }
 
    submitted = false;
 
-   regresaUsuario(){
+  regresaUsuario(){
     this.router.navigate(['administrador/tipos-de-herramienta']);
   }
 

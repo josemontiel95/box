@@ -43,10 +43,9 @@ export class TipoHerramientaDetailComponent implements OnInit {
 
     herramientaForm: FormGroup;
     herramienta= {
-
-    id_herramienta_tipo: '',
-    tipo: '',
-
+      id_herramienta_tipo: '',
+      tipo: '',
+      asignableenOrdenDeTrabajo:'',
     }
 
     model: Herramienta= new Herramienta("","","");
@@ -68,16 +67,16 @@ export class TipoHerramientaDetailComponent implements OnInit {
 	  this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
 
      this.herramientaForm = new FormGroup({
-      'id_herramienta_tipo': new FormControl( { value: this.herramienta.id_herramienta_tipo, disabled: this.hidden },  [Validators.required]), 
-      'tipo': new FormControl({ value: this.herramienta.tipo, disabled: this.hidden },  [ Validators.required]),
+      'id_herramienta_tipo':          new FormControl({ value: this.herramienta.id_herramienta_tipo, disabled: this.hidden },  [Validators.required]), 
+      'tipo':                         new FormControl({ value: this.herramienta.tipo, disabled: this.hidden },  [ Validators.required]),
+      'asignableenOrdenDeTrabajo':    new FormControl({ value: this.herramienta.asignableenOrdenDeTrabajo, disabled: this.hidden },  [ Validators.required]),
      });   
-
   }
 
 
-  get id_herramienta_tipo() { return this.herramientaForm.get('id_herramienta_tipo'); }
-
-  get tipo() { return this.herramientaForm.get('tipo'); }
+  get id_herramienta_tipo()       { return this.herramientaForm.get('id_herramienta_tipo'); }
+  get tipo()                      { return this.herramientaForm.get('tipo'); }
+  get asignableenOrdenDeTrabajo() { return this.herramientaForm.get('asignableenOrdenDeTrabajo'); }
 
 
   switchAlerta(exitoCon: any){
@@ -90,8 +89,7 @@ export class TipoHerramientaDetailComponent implements OnInit {
 
 
 
-    mostrar()
-  {
+  mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
 
@@ -102,36 +100,33 @@ export class TipoHerramientaDetailComponent implements OnInit {
   }
 
 
-  actualizarHerramienta( )
-  {
+  actualizarHerramienta(){
+    this.cargando=1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/herramienta_tipo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    //let search = new URLSearchParams();
-    formData.append('function', 'upDateAdmin');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', '1001');
-    //formData.append
-    formData.append('id_herramienta_tipo', this.id);
-    formData.append('tipo',  this.herramientaForm.value.tipo);
-    //post  formData
+    formData.append('function',             'upDateAdmin');
+    formData.append('token',                this.global.token);
+    formData.append('rol_usuario_id',       '1001');
+
+    formData.append('id_herramienta_tipo',        this.id);
+    formData.append('tipo',                       this.herramientaForm.value.tipo);
+    formData.append('asignableenOrdenDeTrabajo',  this.herramientaForm.value.asignableenOrdenDeTrabajo);
     this.http.post(url, formData).subscribe(res =>  {
                                               this.respuestaError(res.json());
                                             } );
-
   }
 
 
   respuestaError(resp: any){
+    this.cargando=this.cargando-1;
     console.log(resp);
-    if(resp.error!=0)
-    {
+    if(resp.error!=0){
       window.alert(resp.estatus);
       location.reload();
-    }
-    else
-    {
-      this.router.navigate(['administrador/tipos-de-herramienta']);
+    }else{
+      this.mostrar();
+      //this.router.navigate(['administrador/tipos-de-herramienta']);
     }
   }
 
@@ -140,8 +135,9 @@ export class TipoHerramientaDetailComponent implements OnInit {
     console.log(respuesta);
      this.herramientaForm.patchValue({
       id_herramienta_tipo: respuesta.id_herramienta_tipo,
-      tipo: respuesta.tipo
-      });
+      tipo: respuesta.tipo,
+      asignableenOrdenDeTrabajo: respuesta.asignableenOrdenDeTrabajo
+     });
 
     setTimeout(()=>{ 
                      this.active= respuesta.active;
@@ -151,21 +147,14 @@ export class TipoHerramientaDetailComponent implements OnInit {
                      }, 0);  
   }
 
-
-  
-
-  status(active: any)
-  {
+  status(active: any){
     if (active == 1) {
-     this.actBut = false;
-     this.desBut = true;
-          }
-     else
-     {
-     this.actBut= true;
-     this.desBut= false;
-     }     
-
+      this.actBut = false;
+      this.desBut = true;
+    }else{
+      this.actBut= true;
+      this.desBut= false;
+    }     
   }
 
   desactivarHerramienta(){
