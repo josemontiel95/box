@@ -7,6 +7,7 @@ import { JefeLabLayoutComponent } from './layouts/JefeLab-layout/jefelab-layout.
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { TecnicoMLayoutComponent } from './layouts/tecnicom-layout/tecnicom-layout.component';
 import { SubAdminLayoutComponent } from './layouts/subadmin-layout/subadmin-layout.component';
+import { SoporteLayoutComponent } from './layouts/soporte-layout/soporte-layout.component';
 import { LoginComponent } from './login/login.component';
 import { AppGuard } from './app.guard';
 const routes: Routes =[
@@ -22,6 +23,15 @@ const routes: Routes =[
         {
       path: '',
       loadChildren: './layouts/jefeb-layout/jefeb-layout.module#JefebLayoutModule'
+
+  }]},
+  {
+    path: 'soporte',
+    component:SoporteLayoutComponent,
+    children: [
+        {
+      path: '',
+      loadChildren: './layouts/soporte-layout/soporte-layout.module#SoporteLayoutModule'
 
   }]},
   {
