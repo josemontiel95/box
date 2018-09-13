@@ -22,7 +22,7 @@ export class TiposDeHerramientaComponent implements OnInit{
     this.columnDefs = [
     {headerName: 'Ctrl', field: 'id_herramienta_tipo' },
     {headerName: 'Tipo', field: 'tipo' },
-    {headerName: 'Placas', field: 'createdON' },
+    {headerName: 'Asignable orden de trabajo', field: 'asignableenOrdenDeTrabajo' },
     {headerName: 'Editado en', field: 'lastEditedON'},
     {headerName: 'active', field: 'active' },
   ];

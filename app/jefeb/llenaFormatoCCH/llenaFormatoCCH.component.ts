@@ -43,12 +43,18 @@ export class llenaFormatoCCHComponent implements OnInit{
   mis_jefes: Array<any>;
   tipoconcreto= [{"tconcreto":"Normal", "id": "N"},{"tconcreto":"Resistencia Rápida", "id": "RR"},{"tconcreto":"Con aditivo", "id": "CA"}];
   
+  numberOfRegistros;
+  tipoModificable;
+
   notRR=true;
+  formatoStatus;
   atconcreto  ="";
   aespecimen1 ="";
   aespecimen2 ="";
   aespecimen3 ="";
   aespecimen4 ="";
+  maxNoOfRegistrosCCH ="";
+  multiplosNoOfRegistrosCCH ="";
   
   formatoCCHForm: FormGroup;
 
@@ -96,7 +102,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id}); 
-    this.cargando=5;
+    this.cargando=6;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -135,6 +141,20 @@ export class llenaFormatoCCHComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenatipo(res.json()) );
+
+     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getNumberOfRegistrosByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('id_formatoCampo', this.id_formato);
+    this.http.get(url, {search}).subscribe(res => {
+      this.numberOfRegistros =res.json().numberOfRegistrosByID;
+      this.tipoModificable =(res.json().tipoModificable == 1 ? true : false);
+     
+      console.log("numberOfRegistros: "+this.numberOfRegistros+" tipoModificable: "+this.tipoModificable);
+      this.cargando          =this.cargando-1;
+    }); 
 
     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     search = new URLSearchParams();
@@ -211,6 +231,8 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.aespecimen2= resp.cch_def_prueba2;
     this.aespecimen3= resp.cch_def_prueba3;
     this.aespecimen4= resp.cch_def_prueba4;
+    this.maxNoOfRegistrosCCH       = resp.maxNoOfRegistrosCCH;
+    this.multiplosNoOfRegistrosCCH = resp.multiplosNoOfRegistrosCCH;
 
   }
 
@@ -228,7 +250,9 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.formatoCCHForm.controls['direccion']['disable']();
     this.formatoCCHForm.controls['informe']['disable']();
     this.formatoCCHForm.controls['especimen4']['disable']();
-
+    if(!this.tipoModificable){
+      this.formatoCCHForm.controls['tipo_especimen']['disable']();
+    }
     this.onBlurTipoConcreto();
   }
 
@@ -284,6 +308,8 @@ export class llenaFormatoCCHComponent implements OnInit{
      termometro:          respuesta.termometro_id
     });
 
+    this.formatoStatus=(respuesta.status == 0 ? true : false);
+
     this.cargando=this.cargando-1;
      
   }
@@ -335,8 +361,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     let isValid = true;
     res.forEach(function (value) {
       if(value.status == "0"){
-         isValid = false;
-        //window.alert("Existe al menos un registro que no ha sido completado, verifica que todos los registros esten completados.");
+         //isValid = false;
       }
     });
 
@@ -350,10 +375,45 @@ export class llenaFormatoCCHComponent implements OnInit{
   } //FIN ValidaCamposVacios
 
   formatoCompletado(){
-    window.alert("Exito!");
+    this.cargando=1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'completeFormato');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('id_formatoCampo', this.id_formato);  
+    this.http.post(url, formData).subscribe(res => {
+      this.respuestaFormatoCompletado(res.json());
+    });
+    
   } 
+  respuestaFormatoCompletado(res: any){
+    this.cargando=this.cargando-1;
+    this.formatoStatus=false;
+    console.log(res);
+  }
 
   agregaRegistro(){
+    window.alert("this.maxNoOfRegistrosCCH: "+this.maxNoOfRegistrosCCH+" this.numberOfRegistros: "+this.numberOfRegistros+" this.multiplosNoOfRegistrosCCH: "+this.multiplosNoOfRegistrosCCH);
+    if(this.maxNoOfRegistrosCCH == this.numberOfRegistros){
+      window.alert("Has alcanzado el número máximo de registros.");
+      return;
+    }else if(0 == this.numberOfRegistros){
+       if(window.confirm("Estas creando tu primer registro. Ya no podrás cambiar el tipo de formato. El tipo actual es: "+this.formatoCCHForm.getRawValue().tipo_especimen+"\n ¿Deseas continuar?")){
+
+       }else{
+         return;
+       }
+    }else if(Number(this.numberOfRegistros)%Number(this.multiplosNoOfRegistrosCCH)==0){
+       if(window.confirm("Estas a punto de crear el registro número "+(Number(this.numberOfRegistros)+1)+". Recuerda que debes insertar de "+this.multiplosNoOfRegistrosCCH+" en "+this.multiplosNoOfRegistrosCCH+"\n ¿Deseas continuar?")){
+
+       }else{
+         return;
+       }
+    }
+
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -384,6 +444,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   }
 
   actualizarFooter(){
+    this.cargando=1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -393,9 +454,9 @@ export class llenaFormatoCCHComponent implements OnInit{
 
     formData.append('id_formatoCampo',   this.id_formato);  
     formData.append('observaciones',     this.formatoCCHForm.value.observaciones);
-    formData.append('tipo',              this.formatoCCHForm.value.tipo_especimen);
+    formData.append('tipo',              this.formatoCCHForm.getRawValue().tipo_especimen);
     formData.append('cono_id',           this.formatoCCHForm.value.cono);
-    formData.append('tipoConcreto',      this.formatoCCHForm.value.tconcreto); 
+    formData.append('tipoConcreto',      this.formatoCCHForm.getRawValue().tconcreto); 
     formData.append('prueba1',           this.formatoCCHForm.getRawValue().especimen1);  
     formData.append('prueba2',           this.formatoCCHForm.getRawValue().especimen2);  
     formData.append('prueba3',           this.formatoCCHForm.getRawValue().especimen3);  
@@ -421,6 +482,7 @@ export class llenaFormatoCCHComponent implements OnInit{
    }
 
    respuestaSwitchFooter(res: any){ 
+     this.cargando=this.cargando-1;
      console.log(res);
      if(res.error!= 0){
        window.alert(res.estatus);

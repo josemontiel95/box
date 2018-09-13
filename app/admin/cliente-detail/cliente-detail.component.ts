@@ -46,7 +46,8 @@ export class ClienteDetailComponent implements OnInit {
   hidden = true;
   imgUrl = "../assets/img/gabino.jpg";
   onSubmit() { this.submitted = true; }
-
+  cargandoMessageLabo: string= "";
+  actualizarMessageCargandoLabo: string= "";
   cargandoMessage: string= "";
   actualizarMessageCargando: string= "";
   global: Global;
@@ -212,11 +213,12 @@ export class ClienteDetailComponent implements OnInit {
   }
   changeLaboratorio_clienteState(id_laboratorio, estadoNo){
     this.cargando=1;
+    this.cargandoMessageLabo="Actualizando...";
     let url = `${this.global.apiRoot}/laboratorio_cliente/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function',           'changeLaboratorio_clienteState');
-    formData.append('token',              this.global.token);
-    formData.append('rol_usuario_id',     this.global.rol);
+    formData.append('function',               'changeLaboratorio_clienteState');
+    formData.append('token',                  this.global.token);
+    formData.append('rol_usuario_id',         this.global.rol);
 
 
     formData.append('id_laboratorio',         id_laboratorio);
@@ -225,11 +227,26 @@ export class ClienteDetailComponent implements OnInit {
 
     this.http.post(url, formData).subscribe(res => {
       this.respuestaError2(res.json());
+      this.reloadAGGrid();
     });
   }
 
   // Fin de Funciones de AG-Grid
-
+  reloadAGGrid(){
+    this.cargando=1;
+    let url = `${this.global.apiRoot}/laboratorio_cliente/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getAllLabsForCli');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('cliente_id', this.id);
+    this.http.get(url, {search}).subscribe(res => {
+                                            console.log(res.json());
+                                            this.rowData= res.json();
+                                            this.gridApi.sizeColumnsToFit();
+                                            this.cargando=this.cargando-1;
+                                          });
+  }
 
 
   llenadoValidator(respuesta: any){
@@ -366,11 +383,9 @@ export class ClienteDetailComponent implements OnInit {
     formData.append('municipio',          this.clienteForm.value.municipio);
     formData.append('estado',             this.clienteForm.value.estado);
     formData.append('telefonoDeContacto', this.clienteForm.value.telefonoDeContacto);
-
     this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
 
   }
-
 
   respuestaError2(resp: any){
     this.cargando=this.cargando-1;
@@ -378,12 +393,12 @@ export class ClienteDetailComponent implements OnInit {
       window.alert(resp.estatus);
       location.reload();
     }else{
-      location.reload();
+      //location.reload();
     }
-    this.cargandoMessage="";
-    this.actualizarMessageCargando=resp.estatus;
+    this.cargandoMessageLabo="";
+    this.actualizarMessageCargandoLabo=resp.estatus;
     setTimeout(()=>{ 
-                     this.actualizarMessageCargando="";
+                     this.actualizarMessageCargandoLabo="";
                      }, 3500); 
   }
 

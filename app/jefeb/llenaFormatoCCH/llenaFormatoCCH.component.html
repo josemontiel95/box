@@ -11,12 +11,16 @@
 <div class="row">
     <div class="col-md-12 ml-auto mr-auto">
       <div class="card">
+        <div class="card-header " *ngIf="!formatoStatus">
+          <h4 style="text-align: center;" class="card-title">Esta formato esta completado y la edicion ya no esta permitida</h4>
+        </div>
         <div class="card-body">
           <div class="btn-group" style=" padding-left: 40%;">
-                  <button class="btn btn-default" (click)="obtenStatusReg();">
+                  <button class="btn btn-default"  *ngIf="hiddenf == true && formatoStatus" (click)="obtenStatusReg();">
                     <span><b>FORMATO COMPLETADO</b></span>
                   </button>
           </div>
+
         </div>
       </div>
     </div>
@@ -141,7 +145,7 @@
         <div class="card-header ">
           <h4 style="text-align: center;" class="card-title">CONTROL DE CONCRETO HIDRAULICO.</h4>
             <div class="btn-group" style=" padding-left: 80%;">
-                  <button class="btn btn-success" (click)="agregaRegistro();">
+                  <button class="btn btn-success"  *ngIf="hiddenf == true && formatoStatus"  (click)="agregaRegistro();">
                     <span><b>AGREGAR REGISTRO</b></span>
                   </button>
             </div>
@@ -313,11 +317,11 @@
             </div>
           </form>
           <div class="btn-group"  style="float: right; padding-right: 10%;">
-              <button class="btn btn-info" *ngIf="hiddenf == true"  (click)="mostrarFooter()">
-                <span><b> Cambiar Datos. </b></span>
+              <button class="btn btn-info" *ngIf="hiddenf == true && formatoStatus"  (click)="mostrarFooter()">
+                <span><b> Cambiar Datos </b></span>
               </button>
             <button class="btn btn-success" *ngIf="!hiddenf" [disabled]="formatoCCHForm.invalid" (click)="actualizarFooter();">
-              <span><b> Guardar Cambios. </b></span>
+              <span><b> Guardar Cambios </b></span>
             </button>
           </div>
         </div>
