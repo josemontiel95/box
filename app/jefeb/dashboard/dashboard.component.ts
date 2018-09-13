@@ -262,13 +262,12 @@ export class DashboardComponent implements OnInit {
   }
 
    respuestaSwitch(res: any){
-     console.log(res);
      if(res.error!= 0){
        window.alert("Intentalo otra vez");
        location.reload();
      }
      else{
-       window.alert("Insertado con exito.");
+       //window.alert("Insertado con exito.");
      }
    }
 
@@ -430,6 +429,11 @@ export class DashboardComponent implements OnInit {
     this.hiddenFormato = !this.hiddenFormato;
   }
 
+  ocultarFormatos()
+  {
+    this.hiddenFormato = true;
+  }
+
   creaIDFormatoCCH(){
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -438,7 +442,6 @@ export class DashboardComponent implements OnInit {
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('id_ordenDeTrabajo', this.id);
     this.http.post(url, formData).subscribe(res => {
-      console.log(res);
                                               this.asignaIDFormato(res.json());
                                               this.respuestaSwitch(res.json());                 
     });
@@ -456,7 +459,10 @@ export class DashboardComponent implements OnInit {
       window.alert("Por favor selecciona un Formato");
     }else{
       if(this.tipoForm.value.formato_tipo_id == 1){
-        this.creaIDFormatoCCH();
+        if(window.confirm("¿Estas seguro de crear un nuevo Registro de CCH, ya no podras eliminarlo mas adelante.")){
+            this.creaIDFormatoCCH();
+          }
+
       }
       else if(this.tipoForm.value.formato_tipo_id == 2){
         this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaRevenimiento/'+this.id]);

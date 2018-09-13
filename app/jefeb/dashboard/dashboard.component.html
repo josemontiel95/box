@@ -404,11 +404,11 @@
                 <span><b> Selecciona Formato </b></span>
             </button>
 
-            <button class="btn btn-success" *ngIf="!hiddenFormato" [disabled]="false" (click)="seleccionaFormato();">
-              <span><b> Crear Formato </b></span>
+            <button class="btn btn-warning" *ngIf="!hiddenFormato" [disabled]="false" (click)="ocultarFormatos()">
+              <span><b> Cancelar </b></span>
             </button>
           </div>
-            <div class="col-md-12 col-12" [formGroup]=tipoForm>
+            <div class="col-md-12 col-12" [formGroup]=tipoForm (change)="seleccionaFormato();">
               <select  class="form-control" id="formatos" name="formatos" *ngIf="!hiddenFormato" formControlName="formato_tipo_id">
                           <option value="0" [disabled]="true">Selecciona un formato...</option>
                           <option *ngFor="let format of formatos" [value]="format.id">
@@ -420,7 +420,7 @@
             
             
 
-        <div class="card-body">
+        <div class="card-body" *ngIf="hiddenFormato">
      <!--aqui va el grid--><app-formatos-grid></app-formatos-grid>
         </div>
 

@@ -16,7 +16,7 @@
                     <label for="cesp">CLAVE DEL ESPECIMEN</label> <!--disable-->
                     <input type="text" id="cesp"   
                     class="form-control" 
-                    name="cesp" placeholder="" formControlName="cesp" (blur)="onBlurClaveEspecimen()">
+                    name="cesp" placeholder="" formControlName="cesp">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -29,6 +29,12 @@
                                 {{herr.placas}}
                           </option>
                     </select>
+                    <div *ngIf="herramienta.invalid && (herramienta.dirty || herramienta.touched)"
+                    class="alert alert-danger">            
+                      <div *ngIf="herramienta.errors.required">
+                       LOCALIZACI&Oacute;N requerida.
+                      </div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -37,7 +43,7 @@
                     <label for="fecha">FECHA</label> <!--disable-->
                     <input type="date" id="fecha"   
                     class="form-control" 
-                    name="fecha" placeholder="" formControlName="fecha" (change)="onBlurFecha()">
+                    name="fecha" placeholder="" formControlName="fecha">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -53,6 +59,12 @@
                     <input type="text" id="fc"   
                     class="form-control" 
                     name="fc" placeholder="" formControlName="fc" (change)="onBlurFC()">
+                    <div *ngIf="fc.invalid && (fc.dirty || fc.touched)"
+                    class="alert alert-danger">            
+                      <div *ngIf="fc.errors.required">
+                       F'C requerido.
+                      </div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -61,7 +73,7 @@
                     <label for="revp">REVENIMIENTO(cm): PROYECTO</label>
                     <input type="text" id="revp"  
                     class="form-control" 
-                    name="revp" placeholder="" formControlName="revp" (change)="onBlurRevProy()">
+                    name="revp" placeholder="" formControlName="revp">
                      <div *ngIf="revp.invalid && (revp.dirty || revp.touched)"
                       class="alert alert-danger">
                         <div *ngIf="revp.errors.required">
@@ -77,6 +89,11 @@
                     <input type="text" id="revo"   
                     class="form-control" 
                     name="revo" placeholder="" formControlName="revo" (change)="onBlurRevObra()">
+                    <div *ngIf="revo.errors && (revo.dirty || revo.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="revo.errors.required">REVENIMIENTO(cm): OBRA requerido.</div>
+                        <div *ngIf="revo.errors.pattern">EL REVENIMIENTO(cm): OBRA debe contener solo numeros</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -91,7 +108,12 @@
                     <label for="tamano">TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm)</label> <!--disable-->
                     <input type="text" id="tamano"   
                     class="form-control" 
-                    name="tamano" placeholder="" formControlName="tamano" (blur)="onBlurTamNomAg()">
+                    name="tamano" placeholder="" formControlName="tamano" (change)="onBlurTamNomAg()">
+                    <div *ngIf="tamano.errors && (tamano.dirty || tamano.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="tamano.errors.required">TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm) requerido.</div>
+                        <div *ngIf="tamano.errors.pattern">EL TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm) debe contener solo numeros</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -101,6 +123,11 @@
                     <input type="text" id="volumen"  
                     class="form-control" 
                     name="volumen" placeholder="" formControlName="volumen" (change)="onBlurVolumen()">
+                    <div *ngIf="volumen.errors && (volumen.dirty || volumen.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="volumen.errors.required">VOLUMEN(m<sup>3</sup>) requerido.</div>
+                        <div *ngIf="volumen.errors.pattern">VOLUMEN(m<sup>3</sup>) debe contener solo numeros</div>
+                    </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
 
@@ -126,6 +153,12 @@
                     <input type="text" id="unidad"   
                     class="form-control" 
                     name="unidad" placeholder="" formControlName="unidad" (change)="onBlurUnidad()">
+                    <div *ngIf="unidad.invalid && (unidad.dirty || unidad.touched)"
+                    class="alert alert-danger">            
+                      <div *ngIf="unidad.errors.required">
+                       UNIDAD requerida.
+                      </div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -136,11 +169,11 @@
                     class="form-control" 
                     name="hmobra" placeholder="" formControlName="hmobra" (change)="onBlurHoraMuestreo()">
                      <div *ngIf="hmobra.invalid && (hmobra.dirty || hmobra.touched)"
-                      class="alert alert-danger">
-                        <div *ngIf="hmobra.errors.required">
-                          No. de orden requerido.
-                        </div>
+                    class="alert alert-danger">            
+                      <div *ngIf="hmobra.errors.required">
+                       HORA DE MUESTREO requerida.
                       </div>
+                    </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
 
@@ -150,6 +183,11 @@
                     <input type="text" id="tempamb"   
                     class="form-control" 
                     name="tempamb" placeholder="" formControlName="tempamb" (change)="onBlurTemperaturaMuestreo()">
+                    <div *ngIf="tempamb.errors && (tempamb.dirty || tempamb.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="tempamb.errors.required">TEMPERATURA AMBIENTE DE MUESTREO (&#176;C) requerido.</div>
+                        <div *ngIf="tempamb.errors.pattern">TEMPERATURA AMBIENTE DE MUESTREO (&#176;C) debe contener solo numeros</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -163,6 +201,11 @@
                     <input type="text" id="tempambrec"  
                     class="form-control" 
                     name="tempambrec" placeholder="" formControlName="tempambrec" (change)="onBlurTemperaturaRecoleccion()">
+                    <div *ngIf="tempambrec.errors && (tempambrec.dirty || tempambrec.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="tempambrec.errors.required">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C) requerido.</div>
+                        <div *ngIf="tempambrec.errors.pattern">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C) debe contener solo numeros</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -172,16 +215,17 @@
                     <input type="textarea" id="localizacion"   
                     class="form-control" 
                     name="localizacion" placeholder="" formControlName="localizacion" (change)="onBlurLocalizacion()">
+                    <div *ngIf="localizacion.invalid && (localizacion.dirty || localizacion.touched)"
+                    class="alert alert-danger">            
+                      <div *ngIf="localizacion.errors.required">
+                       LOCALIZACI&Oacute;N requerida.
+                      </div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
             <div class="row">
-              <div class="col-md-2 col-12">
-                 
-                    <button class="btn btn-danger" *ngIf="!hidden"  (click)="descartaCambios()">
-                      <span><b> Eliminar Registro </b></span>
-                    </button>
-                  
+              <div class="col-md-2 col-12">                
 
                   <button class="btn btn-default" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="registroCompletado();">
                     <span><b> Regresar. </b></span>
