@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SubAdminLayoutRoutes } from './subadmin-layout.routing';
 import { UserProfileComponent } from '../../administrativo/user-profile/user-profile.component';
+import { OrdenesComponent } from '../../administrativo/ordenes/ordenes.component';
+
 /*
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 
@@ -30,6 +32,7 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   declarations: [
       UserProfileComponent,
+      OrdenesComponent,
    /* DashboardComponent,
 
     TableListComponent,
