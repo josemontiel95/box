@@ -39,6 +39,7 @@ import { TiposDeHerramientaComponent } from '../../admin/tipos-de-herramienta/ti
 import { CrearTipoHerramientasComponent } from '../../admin/crear-tipo-de-herramienta/crear-tipo-de-herramienta.component';
 import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-detail/tipo-de-herramienta-detail.component';
 import { CrearTicketComponent } from '../../admin/crear-ticket/crear-ticket.component';
+import { ConstruccionComponent } from '../../admin/construccion/construccion.component';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { CrearTicketComponent } from '../../admin/crear-ticket/crear-ticket.comp
     PruebaComponent,
     IconsComponent,
     ObrasComponent,
+    ConstruccionComponent,
     MapsComponent,
     CrearUsuarioComponent,
     CrearObraComponent,
