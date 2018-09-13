@@ -17,6 +17,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { SubAdminLayoutComponent } from './layouts/subadmin-layout/subadmin-layout.component';
+import { SoporteLayoutComponent } from './layouts/soporte-layout/soporte-layout.component';
 import { JefeLabLayoutComponent } from './layouts/JefeLab-layout/jefelab-layout.component';
 import { TecnicoMLayoutComponent } from './layouts/tecnicom-layout/tecnicom-layout.component';
 
@@ -50,6 +51,7 @@ import { MatProgressBarModule } from '@angular/material';
     AdminLayoutComponent,
     SubAdminLayoutComponent,
     TecnicoMLayoutComponent,
+    SoporteLayoutComponent,
     LoginComponent,
     JefebLayoutComponent,
     JefeLabLayoutComponent,
