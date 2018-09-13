@@ -361,7 +361,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     let isValid = true;
     res.forEach(function (value) {
       if(value.status == "0"){
-         //isValid = false;
+         isValid = false;
       }
     });
 
