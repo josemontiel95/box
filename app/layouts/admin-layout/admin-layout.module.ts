@@ -38,6 +38,7 @@ import { ConcreteraDetailComponent } from '../../admin/concretera-detail/concret
 import { TiposDeHerramientaComponent } from '../../admin/tipos-de-herramienta/tipos-de-herramienta.component';
 import { CrearTipoHerramientasComponent } from '../../admin/crear-tipo-de-herramienta/crear-tipo-de-herramienta.component';
 import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-detail/tipo-de-herramienta-detail.component';
+import { CrearTicketComponent } from '../../admin/crear-ticket/crear-ticket.component';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import { TipoHerramientaDetailComponent } from '../../admin/tipo-de-herramienta-
     ConcreteraDetailComponent,
     TiposDeHerramientaComponent,
     CrearTipoHerramientasComponent,
-    TipoHerramientaDetailComponent
+    TipoHerramientaDetailComponent,
+    CrearTicketComponent
 
   ]
 })
