@@ -7,6 +7,34 @@
 </div>
 <div class="main-content">
   <div class="row">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header ">
+          <h4 style="text-align: center;" class="card-title">{{this.mensajeStatus}}</h4>
+        </div>
+        <div class="card-body">
+          <div class="row" style="text-align: center;">
+            <div class="col-md-4 col-12" >
+                  <button class="btn btn-default" [ngClass]="{'btn':true ,'btn-success': formatoStatus == 0, 'btn-primary': formatoStatus > 0 }" [disabled]="!edicionJLab" (click)="enviarJbrigada();">
+                    <span><b>Enviar a Jefe de brigada</b></span>
+                  </button>
+            </div>
+            <div class="col-md-4 col-12" style="vertical-align: middle; padding-top: 1.5%;">
+                 <div class="stats">
+                    <i class="now-ui-icons arrows-1_minimal-right"></i>
+                  </div>
+            </div>
+            <div class="col-md-4 col-12">
+                  <button class="btn btn-default" [ngClass]="{'btn':true ,'btn-default': formatoStatus < 2, 'btn-success': formatoStatus == 2, 'btn-primary': formatoStatus > 2 }" [disabled]="!terminadoJBrigada"  (click)="enviarJbrigada();">
+                    <span><b>FORMATO COMPLETADO</b></span>
+                  </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-lg-12 col-12 col-md-12">
       <div class="card card-chart">
         <div class="card-header">
@@ -226,7 +254,7 @@
         </div>
         <div class="card-body ">
              <div class="btn-group">
-            <button  class="btn btn-danger" *ngIf="hiddenHerramienta == true" (click)="eliminarHerramienta();">
+            <button  class="btn btn-danger" *ngIf="hiddenHerramienta == true && edicionJLab == true" (click)="eliminarHerramienta();">
               <span><b> Desasignar herramienta </b></span>
             </button>
             <button  class="btn btn-danger" *ngIf="!hiddenHerramienta" (click)="mostrarHerramienta();">
@@ -285,7 +313,7 @@
         </div>
         <div class="card-body">
           <div class="btn-group">
-             <button  class="btn btn-danger" *ngIf="hiddenTecnicos == true" (click)="eliminarTecni();">
+             <button  class="btn btn-danger" *ngIf="hiddenTecnicos == true && edicionJLab == true" (click)="eliminarTecni();">
               <span><b> Desasignar Tecnico </b></span>
             </button>
             <button  class="btn btn-danger" *ngIf="!hiddenTecnicos" (click)="mostrarTecnicos();">
@@ -319,9 +347,9 @@
           <h5 class="card-category">Formatos</h5>
           <h4 class="card-title">Formatos</h4>
                     <div class="btn-group" style=" padding-left: 80%;">
-            <button class="btn btn-success" (click)="crearFormato();">
+            <!--<button class="btn btn-success" (click)="crearFormato();">
               <span><b>Crea Formatos</b></span>
-            </button>
+            </button> -->
           </div>
         </div>
         <div class="card-body">

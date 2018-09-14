@@ -46,6 +46,17 @@ export class DashboardComponent implements OnInit {
    mis_jefes: Array<any>;
    mis_tipos: Array<any>;
    hidden = true;
+   
+
+   hiddenf= true;
+   edicionJLab= false;
+   ejecucionJBrigada = false;
+   terminadoJBrigada = false;
+   terminadoJLab = false;
+
+   mensajeStatus = "";
+   formatoStatus;
+
    hiddenDetail = true;
    hiddenHerramienta= true;
    hiddenTecnicos= true;
@@ -453,11 +464,53 @@ export class DashboardComponent implements OnInit {
      horaFin:              respuesta.horaFin,
      observaciones:        respuesta.observaciones,
     });
+
+    this.formatoStatus= (Number(respuesta.status));
+
+    switch(Number(respuesta.status)){
+
+      case 0:
+        this.edicionJLab = true;
+        this.mensajeStatus = "ACTUALMENTE PUEDES HACER MODIFICACIONES EN LA ORDEN DE TRABAJO ";
+      break;
+
+      case 1:
+        this.ejecucionJBrigada = true;
+        this.mensajeStatus = "EN EJECUCI&Oacute;N DEL JEFE DE BRIGADA";
+      break;
+
+      case 2:
+        this.terminadoJBrigada = true;
+        this.mensajeStatus = "ORDEN TERMINADA POR EL JEFE DE BRIGADA";
+      break;
+
+      case 3:
+        this.terminadoJLab = true;
+        this.mensajeStatus = "ORDEN DE TRABAJO COMPLETADA, YA NO SE PUEDEN HACER MODIFICACIONES";
+      break;
+    }
+
     if(respuesta.isClienteActive==0)
     {
       this.addCliente(respuesta.id_cliente,respuesta.nombre);
     }
   }
+
+  enviarJbrigada(){
+    this.cargando=1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'completeFormato');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    //formData.append('id_formatoCampo', this.id_formato);  
+    this.http.post(url, formData).subscribe(res => {
+      //this.respuestaFormatoCompletado(res.json());
+    });
+    
+  } 
 
   addCliente(id_cliente: any,cliente: any){
     let aux= new Array(this.mis_cli.length+1);

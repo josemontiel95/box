@@ -16,21 +16,12 @@ export class GridComponent implements OnInit  {
   private gridColumnApi;
   rowSelection;
   columnDefs;
+  id_orden: string;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-      {headerName: 'ID', field: 'id_cliente'},
-      {headerName: 'Razón social.', field: 'razonSocial' },
-      {headerName: 'Nombre de la empresa.', field: 'nombre' },
-      {headerName: 'Direccion', field: 'direccion'},
-      {headerName: 'RFC', field: 'rfc' },      
-      {headerName: 'Email', field: 'email' },
-      {headerName: 'Nombre de contacto', field: 'nombreContacto' },
-      {headerName: 'Telefono de Contacto', field: 'telefonoDeContacto' },
-      {headerName: 'Telefono de la Empresa', field: 'telefono' },
-      {headerName: 'Activo', field: 'active' },
-
-      
+      {headerName: 'InformeNo.', field: 'formatoNo' },
+      {headerName: 'Tipo', field: 'tipo' }
     ];
     this.rowSelection = "single";
   }
@@ -38,19 +29,23 @@ export class GridComponent implements OnInit  {
   rowData: any;
 
   ngOnInit() {
+     this.data.currentGlobal.subscribe(global => this.global = global);
+      this.route.params.subscribe( params => this.id_orden=params.id);
   }
 
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
-
+    console.log("this.global.apiRoot"+this.global.apiRoot);
+    console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllAdmin');
+    search.set('function', 'getAllFormatos');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
