@@ -7,7 +7,7 @@ import { AgGridModule } from 'ag-grid-angular';
 
 import { MatProgressBarModule } from '@angular/material';
 
-
+import { GridComponent } from '../../tecnicom/grid/grid.component';
 import { UserProfileComponent } from '../../tecnicom/user-profile/user-profile.component';
 import { PendientesComponent } from '../../tecnicom/pendientes/pendientes.component';
 import { LlenaFooterComponent } from '../../tecnicom/llenaFooter/llenaFooter.component';
@@ -67,12 +67,13 @@ import { ToastrModule } from 'ngx-toastr';
   LlenaFooterVigaComponent,
   PruebaCilindroComponent,
   PruebaVigaComponent,
+  GridComponent,
   PruebaCuboComponent
   /*
     DashboardComponent,
     CrearOrdenTrabajoComponent,
     OrdenTrabajoComponent,
-    GridComponent,
+    
     llenaFormatoCCHComponent,
     llenaRevenimientoComponent,
     CrearLlenaFormatoCCHComponent,
