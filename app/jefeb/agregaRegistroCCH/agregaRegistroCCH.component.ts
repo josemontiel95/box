@@ -179,6 +179,14 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.llenadodiasEnsaye(respuesta.diasEnsaye);
   }
 
+  llenadoClaveEspecimen(respuesta: any){
+    console.log(respuesta);
+
+    this.formatoCCHForm.patchValue({
+     cesp:         respuesta.clave
+    });
+  }
+
   llenaDaysPrueba(res: any){
     console.log(res);
     if(res.error != 0){
@@ -279,7 +287,8 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.herramienta);
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());
+                                              this.llenadoClaveEspecimen(res.json()); //Experimental                 
                                             } );
   }
 
