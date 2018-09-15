@@ -516,6 +516,38 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  obtenStatusFormatos(){
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getAllFormatos');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id);
+    console.log(search);
+    this.http.get(url, {search}).subscribe(res => {
+                                            console.log(res.json());
+                                            this.validaFormatosVacios(res.json());
+                                          });
+  }
+
+  validaFormatosVacios(res: any){
+
+    let isValid = true;
+    res.forEach(function (value) {
+      if(value.status == "0"){
+         isValid = false;
+      }
+    });
+
+    if(!isValid){
+      window.alert("Tienes al menos un formato incompleto, todos los formatos deben estar en ESTATUS:1 para completar esta orden de trabajo.");     
+    }else{
+          if(window.confirm("¿Estas seguro de marcar como completado la orden de trabajo? ya no podra ser editarlo y seras redireccionado a evaluar la herramienta.")){
+            this.evaluaHerra();
+          }
+    } 
+  } //FIN ValidaCamposVacios
+
   validaEnviarJBrigada(){
 
     if(window.confirm("¿Estas Seguro de Enviar la Orden de Trabajo al Jefe de Brigada?. YA NO PODRAS ELIMINAR HERRAMIENTAS NI TECNICOS DE LA ORDEN") == true){
