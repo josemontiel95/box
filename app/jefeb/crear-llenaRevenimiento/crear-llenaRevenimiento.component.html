@@ -31,13 +31,12 @@
                 <div class="form-group">
                   <label for="localizacion">LOCALIZACIÓN</label>
                   <input type="text" id="localizacion" class="form-control" required 
-                  name="localizacion" placeholder="Escriba la Inceritumbre" formControlName="localizacion">
+                  name="localizacion" placeholder="Escriba la localizacion" formControlName="localizacion"  (change)="onChangeLocalizacion()" >
                   <div *ngIf="localizacion.invalid && (localizacion.dirty || localizacion.touched)"
                     class="alert alert-danger">
                     <div *ngIf="localizacion.errors.required">
                        Localizaci&oacute;n requerida.
                     </div>
-                    <div *ngIf="localizacion.errors.pattern">La Localizacion solo debe contener numeros</div>
                   </div>
                 </div>
               </div>
@@ -50,7 +49,7 @@
                   <label for="cono">Cono</label>
                   <select  class="form-control" id="cono" 
                     required name="cono"
-                    placeholder="Tipos"  formControlName="cono">
+                    placeholder="Tipos"  formControlName="cono" (change)="onChangeCono()">
                     <option value="" [disabled]="true">Selecciona un cono...</option>
                     
                     <option *ngFor="let cono of mis_conos" [value]="cono.id_herramienta">
@@ -69,7 +68,7 @@
                   <label for="varilla">Varilla</label>
                   <select  class="form-control" id="varilla" 
                     required name="varilla"
-                    placeholder="Tipos"  formControlName="varilla">
+                    placeholder="Tipos"  formControlName="varilla" (change)="onChangeVarilla()">
                     <option value="" [disabled]="true">Selecciona una varilla...</option>
                     
                     <option *ngFor="let varilla of mis_varillas" [value]="varilla.id_herramienta">
@@ -91,7 +90,7 @@
                   <label for="flexometro">Flexometro</label>
                   <select  class="form-control" id="flexometro" 
                     required name="flexometro"
-                    placeholder="Tipos"  formControlName="flexometro">
+                    placeholder="Tipos"  formControlName="flexometro" (change)="onChangeFlexometro()">
                     <option value="" [disabled]="true">Selecciona un flexometro...</option>
                     
                     <option *ngFor="let flexometro of mis_flexometro" [value]="flexometro.id_herramienta">
@@ -110,7 +109,7 @@
 
 
             <div class="btn-group" style="float: right; padding-right: 10%;">
-            <button class="btn btn-success" [disabled]="creaCCHForm.invalid" (click)="crearFormatoCCH(); ">
+            <button class="btn btn-success" [disabled]="creaCCHForm.invalid" (click)="siguiente(); ">
               <span><b> Siguiente </b></span>
             </button>
           </div>

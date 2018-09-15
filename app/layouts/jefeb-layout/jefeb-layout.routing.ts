@@ -27,7 +27,7 @@ export const JefebLayoutRoutes: Routes = [
     { path: 'orden-trabajo/dashboard/llenaFormatoCCH/:id2/:id',      component: llenaFormatoCCHComponent },
     { path: 'orden-trabajo/dashboard/llenaRevenimiento/:id2/:id',      component: llenaRevenimientoComponent },
     { path: 'orden-trabajo/dashboard/crear-llenaFormatoCCH/:id/:id2',      component: CrearLlenaFormatoCCHComponent },
-    { path: 'orden-trabajo/dashboard/crear-llenaRevenimiento/:id',      component: CrearLlenaRevenimientoComponent },
+    { path: 'orden-trabajo/dashboard/crear-llenaRevenimiento/:id/:id2',      component: CrearLlenaRevenimientoComponent },
     { path: 'orden-trabajo/dashboard/agregaRegistroCCH/:id/:id2/:id3',      component: agregaRegistroCCHComponent },
     { path: 'orden-trabajo/dashboard/agregaRegistroRevenimiento/:id/:id2/:id3',      component: agregaRegistroRevenimientoComponent }   
 ];

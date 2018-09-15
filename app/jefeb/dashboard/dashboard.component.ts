@@ -447,26 +447,53 @@ export class DashboardComponent implements OnInit {
                                               this.respuestaSwitch(res.json());                 
     });
   }
-
-  asignaIDFormato(res:any){
-    this.id_formato = res.id_formatoCampo;
-    this.id2 = this.id_formato;
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id + "/" + this.id2]); 
+    creaIDFormatoCCHRev(){
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'initInsertRev');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('id_ordenDeTrabajo', this.id);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.asignaIDFormatoRev(res.json());
+                                              this.respuestaSwitch(res.json());                 
+    });
   }
 
+  asignaIDFormato(res:any){
+
+    this.id_formato = res.id_formatoCampo;
+    this.id2 = this.id_formato;
+   this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id + "/" + this.id2]); 
+  }
+
+  asignaIDFormatoRev(res:any){
+
+    this.id_formato = res.id_formatoRegistroRev;
+    this.id2 = this.id_formato;
+
+     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaRevenimiento/'+this.id + "/" + this.id2]);
+  }
   seleccionaFormato(){
 
     if(this.tipoForm.value.formato_tipo_id == 0){
       window.alert("Por favor selecciona un Formato");
     }else{
       if(this.tipoForm.value.formato_tipo_id == 1){
-        if(window.confirm("¿Estas seguro de crear un nuevo Registro de CCH, ya no podras eliminarlo mas adelante.")){
+        if(window.confirm("¿Estas seguro de crear un nuevo Registro de CCH para concreto, ya no podras eliminarlo mas adelante.")){
             this.creaIDFormatoCCH();
           }
 
       }
-      else if(this.tipoForm.value.formato_tipo_id == 2){
-        this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaRevenimiento/'+this.id]);
+      else 
+        if(this.tipoForm.value.formato_tipo_id == 2){
+          if(window.confirm("¿Estas seguro de crear un nuevo Registro de CCH para Revenimiento, ya no podras eliminarlo mas adelante.")){
+            this.creaIDFormatoCCHRev();
+          }
+
+
+
+       
       }
     }
     
