@@ -500,7 +500,8 @@ export class DashboardComponent implements OnInit {
 
       case 1:
         this.ejecucionJBrigada = true;
-        this.mensajeStatus = "EN EJECUCI&Oacute;N DEL JEFE DE BRIGADA";
+        this.edicionJLab = false;
+        this.mensajeStatus = "EN EJECUCIÓN DEL JEFE DE BRIGADA";
       break;
 
       case 2:
@@ -515,21 +516,28 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  validaEnviarJBrigada(){
+
+    if(window.confirm("¿Estas Seguro de Enviar la Orden de Trabajo al Jefe de Brigada?. YA NO PODRAS ELIMINAR HERRAMIENTAS NI TECNICOS DE LA ORDEN") == true){
+      this.enviarJbrigada();
+    }
+  }
+
   enviarJbrigada(){
     this.cargando=1;
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'completeFormato');
+    formData.append('function', 'upStatusByID');
     formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    //formData.append('id_formatoCampo', this.id_formato);  
+    formData.append('rol_usuario_id', this.global.rol); 
+    formData.append('id_ordenDeTrabajo', this.id);
     this.http.post(url, formData).subscribe(res => {
-      //this.respuestaFormatoCompletado(res.json());
-    });
-    
-  } 
+                                                     this.respuestaSwitch(res.json());
+                                                     this.statusOrdenTrabajo(res.json());
+                                                                                      });
+
+  }
 
   addCliente(id_cliente: any,cliente: any){
     let aux= new Array(this.mis_cli.length+1);
