@@ -324,13 +324,17 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('token',                             this.global.token);
     formData.append('rol_usuario_id',                      this.global.rol);
     formData.append('campo',                                           '3');
-    formData.append('valor',              this.creaCCHForm.value.tconcreto);
+    formData.append('valor',              this.creaCCHForm.getRawValue().tconcreto);
     formData.append('id_formatoCampo',                     this.id_formato);
     
     this.http.post(url, formData).subscribe(res => {
                                                   
                                               this.respuestaSwitch(res.json());                 
                                             } );
+    this.onChangeEspecimen1();
+    this.onChangeEspecimen2();
+    this.onChangeEspecimen3();
+    this.onChangeEspecimen4();
   }
 
   onChangeEspecimen1(){
@@ -341,7 +345,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('token',                             this.global.token);
     formData.append('rol_usuario_id',                      this.global.rol);
     formData.append('campo',                                           '4');
-    formData.append('valor',              this.creaCCHForm.value.especimen1);
+    formData.append('valor',              this.creaCCHForm.getRawValue().especimen1);
     formData.append('id_formatoCampo',                     this.id_formato);
     
     this.http.post(url, formData).subscribe(res => {
@@ -358,7 +362,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('token',                             this.global.token);
     formData.append('rol_usuario_id',                      this.global.rol);
     formData.append('campo',                                           '5');
-    formData.append('valor',              this.creaCCHForm.value.especimen2);
+    formData.append('valor',              this.creaCCHForm.getRawValue().especimen2);
     formData.append('id_formatoCampo',                     this.id_formato);
     
     this.http.post(url, formData).subscribe(res => {
@@ -375,7 +379,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('token',                             this.global.token);
     formData.append('rol_usuario_id',                      this.global.rol);
     formData.append('campo',                                           '6');
-    formData.append('valor',              this.creaCCHForm.value.especimen3);
+    formData.append('valor',              this.creaCCHForm.getRawValue().especimen3);
     formData.append('id_formatoCampo',                     this.id_formato);
     
     this.http.post(url, formData).subscribe(res => {
@@ -392,7 +396,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('token',                             this.global.token);
     formData.append('rol_usuario_id',                      this.global.rol);
     formData.append('campo',                                           '7');
-    formData.append('valor',              this.creaCCHForm.value.especimen3);
+    formData.append('valor',              this.creaCCHForm.getRawValue().especimen3);
     formData.append('id_formatoCampo',                     this.id_formato);
     
     this.http.post(url, formData).subscribe(res => {
