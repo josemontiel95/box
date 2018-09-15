@@ -25,7 +25,7 @@
                   </div>
             </div>
             <div class="col-md-4 col-12">
-                  <button class="btn btn-default" [ngClass]="{'btn':true ,'btn-default': formatoStatus < 2, 'btn-success': formatoStatus == 2, 'btn-primary': formatoStatus > 2 }" [disabled]="!terminadoJBrigada"  (click)="enviarJbrigada();">
+                  <button class="btn btn-default" [ngClass]="{'btn':true ,'btn-default': formatoStatus < 2, 'btn-success': formatoStatus == 2, 'btn-primary': formatoStatus > 2 }" [disabled]="!terminadoJBrigada"  (click)="obtenStatusFormatos();">
                     <span><b>ORDEN COMPLETADA</b></span>
                   </button>
             </div>
