@@ -48,13 +48,13 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertJefeBrigada');
+    formData.append('function', 'insertRegistroJefeBrigada');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
-    formData.append('regNo', this.creaCCHForm.value.reg);
-    formData.append('ordenDeTrabajo_id', this.id_orden);
-    formData.append('localizacion', this.creaCCHForm.value.localizacion);  
+    formData.append('campo', this.creaCCHForm.value.reg);
+    formData.append('valor', this.id_orden);
+    formData.append('id_formatoRegistroRev', this.creaCCHForm.value.localizacion);  
     formData.append('cono_id', this.creaCCHForm.value.cono);
     formData.append('varilla_id', this.creaCCHForm.value.varilla);
     formData.append('flexometro_id', this.creaCCHForm.value.flexometro);
@@ -95,7 +95,7 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id_orden=params.id);
+    this.route.params.subscribe( params => {this.id_orden=params.id; this.id_formato=params.id2});
     this.cargando=3;
 
 
@@ -105,28 +105,39 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
     search.set('function', 'getForDroptdownJefeBrigadaCono');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
     this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
 
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownJefeBrigadaVarilla');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
     this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
 
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownJefeBrigadaFlexometro');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
     this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
 
-    this.creaCCHForm = new FormGroup({
-      'reg': new FormControl( this.cch.reg, Validators.required),
-      'localizacion': new FormControl( this.cch.localizacion, Validators.required),
-      'cono': new FormControl( this.cch.cono),
-      'varilla': new FormControl( this.cch.varilla ),
-      'flexometro': new FormControl( this.cch.flexometro ),
-      'latitud': new FormControl( this.cch.latitud ),
-      'longitud': new FormControl( this.cch.longitud ),
+    url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getInfoByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('id_formatoRegistroRev', this.id_formato);
+    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+
+    this.creaCCHForm = new FormGroup({                   
+      'reg': new FormControl( {value: this.cch.reg, disabled: true  }, [Validators.required]),
+      'localizacion': new FormControl(  {value:this.cch.localizacion}, [Validators.required]),
+      'cono': new FormControl( {value:this.cch.cono}),
+      'varilla': new FormControl(  {value: this.cch.varilla} ),
+      'flexometro': new FormControl(  {value: this.cch.flexometro} ),
+      'latitud': new FormControl(  {value: this.cch.latitud }),
+      'longitud': new FormControl( {value:  this.cch.longitud }),
        });
   }
 
@@ -191,7 +202,89 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
     console.log("llenaFlexometros this.cargando: "+this.cargando);
   }
 
+    llenado(respuesta: any){
+    console.log(respuesta);
+
+    this.creaCCHForm.patchValue({
+     reg:        respuesta.regNo,
+     localizacion:      respuesta.localizacion,
+     cono:           respuesta.cono_id,
+     varilla:        respuesta.varilla_id,
+     flexometro:     respuesta.flexometro_id,
+     termometro:     respuesta.termometro_id
+    });}
+
+      onChangeLocalizacion(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                           '2');
+    formData.append('valor',              this.creaCCHForm.value.especimen);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
   
+    onChangeCono(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                           '3');
+    formData.append('valor',                   this.creaCCHForm.value.cono);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onChangeVarilla(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                           '4');
+    formData.append('valor',                this.creaCCHForm.value.varilla);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+  onChangeFlexometro(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function',                        'insertJefeBrigada');
+    formData.append('token',                             this.global.token);
+    formData.append('rol_usuario_id',                      this.global.rol);
+    formData.append('campo',                                          '5');
+    formData.append('valor',              this.creaCCHForm.value.flexometro);
+    formData.append('id_formatoCampo',                     this.id_formato);
+    
+    this.http.post(url, formData).subscribe(res => {
+                                                  
+                                              this.respuestaSwitch(res.json());                 
+                                            } );
+  }
+
+    siguiente(){
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+this.id_orden + '/' + this.id_formato]);
+  }
   
 }
 
