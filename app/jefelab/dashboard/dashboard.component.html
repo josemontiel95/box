@@ -281,7 +281,7 @@
           <div *ngIf="this.hiddenHerramienta == true">
           <app-herramienta-grid (eliminaHerra)="eliminaHerra($event)"></app-herramienta-grid>
           </div>
-          <div *ngIf="!this.hiddenHerramienta && !this.hiddenTotal">
+          <div *ngIf="!this.hiddenHerramienta && !this.hiddenTotalHerramienta">
             <form (ngSubmit)="onSubmit()" [formGroup]=tipoForm #formDir="ngForm">
                <div class="col-md-12 col-12">
                 <div class="form-group">
@@ -340,7 +340,7 @@
           <div *ngIf="this.hiddenTecnicos == true">
           <app-tecnicos-grid (eliminaTecn)="eliminaTec($event)"></app-tecnicos-grid>
         </div>
-          <div *ngIf="!this.hiddenTecnicos && !this.hiddenTotal">
+          <div *ngIf="!this.hiddenTecnicos && !this.hiddenTotalTecnicos">
           <app-tecnicos-grida  (agregaTecn)="addTec($event)"></app-tecnicos-grida>          
           </div>        
         </div>

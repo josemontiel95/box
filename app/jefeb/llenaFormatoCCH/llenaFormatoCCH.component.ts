@@ -396,7 +396,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   }
 
   agregaRegistro(){
-    window.alert("this.maxNoOfRegistrosCCH: "+this.maxNoOfRegistrosCCH+" this.numberOfRegistros: "+this.numberOfRegistros+" this.multiplosNoOfRegistrosCCH: "+this.multiplosNoOfRegistrosCCH);
+    /*window.alert("this.maxNoOfRegistrosCCH: "+this.maxNoOfRegistrosCCH+" this.numberOfRegistros: "+this.numberOfRegistros+" this.multiplosNoOfRegistrosCCH: "+this.multiplosNoOfRegistrosCCH);*/
     if(this.maxNoOfRegistrosCCH == this.numberOfRegistros){
       window.alert("Has alcanzado el número máximo de registros.");
       return;

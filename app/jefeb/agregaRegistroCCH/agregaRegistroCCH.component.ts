@@ -33,6 +33,9 @@ export class agregaRegistroCCHComponent implements OnInit{
   rowSelection;
   columnDefs;
   cargando= 1;
+  hiddenA = false;
+  hiddenB = false;
+  hiddenC = false;
   hidden = false;
   locked =false;
   notRR = false;
@@ -145,10 +148,27 @@ export class agregaRegistroCCHComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_registrosCampo', this.id_registro);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) ); 
+    this.http.get(url, {search}).subscribe(res => {
+                                                    this.llenaRapido(res.json());
+                                                    this.llenado(res.json()); 
+                                                    }); 
   }
   onSubmit() { this.submitted = true; } 
     
+    llenaRapido(respuesta: any){
+      if(respuesta.status == 1){
+        this.hiddenB = true;
+        this.mostrar();
+      }else if(respuesta.status >= 2){
+        this.hiddenA = true;
+        this.locked=true;
+        this.mostrar();
+      }else if(respuesta.status == 0){
+        this.hiddenC = true;
+
+      }
+      this.llenadodiasEnsaye(respuesta.diasEnsaye);
+    }
 
     llenado(respuesta: any){
     console.log(respuesta);
@@ -169,14 +189,6 @@ export class agregaRegistroCCHComponent implements OnInit{
      localizacion: respuesta.localizacion,
      herramienta:  respuesta.herramienta_id
     });
-
-    if(respuesta.status == 1){
-      this.mostrar();
-    }else if(respuesta.status==2){
-      this.mostrar();
-      this.locked=true;
-    }
-    this.llenadodiasEnsaye(respuesta.diasEnsaye);
   }
 
   llenadoClaveEspecimen(respuesta: any){
@@ -518,7 +530,6 @@ export class agregaRegistroCCHComponent implements OnInit{
        
      }
    }
-
   
   mostrar(){
     this.hidden = !this.hidden;
@@ -526,6 +537,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
         this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
     });    
+    this.formatoCCHForm.controls['cesp']['disable']();
     this.formatoCCHForm.controls['revp']['disable']();
     this.formatoCCHForm.controls['fecha']['disable'](); 
   }

@@ -233,7 +233,7 @@
             <div class="row">
               <div class="col-md-2 col-12">                
 
-                  <button class="btn btn-default" *ngIf="hidden" [disabled]="formatoCCHForm.invalid" (click)="registroCompletado();">
+                  <button class="btn btn-default" *ngIf="hiddenA || hiddenB" [disabled]="formatoCCHForm.invalid" (click)="registroCompletado();">
                     <span><b> Regresar. </b></span>
                   </button>
 
@@ -245,15 +245,15 @@
               </div>
               <div class="col-md-2 col-12">
 
-               <button class="btn btn-success" *ngIf="hidden && !locked" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
+               <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
                     <span><b> Cambiar Datos. </b></span>
                   </button>
-                <button class="btn btn-default" *ngIf="!hidden" (click)="llenarDespues()">
+                <button class="btn btn-default" *ngIf="hiddenC" (click)="llenarDespues()">
                       <span><b> Llenar mas tarde. </b></span>
                 </button>
               </div>
               <div class="col-md-2 col-12">
-                <button class="btn btn-success" *ngIf="!hidden" (click)="validaCamposVacios()">
+                <button class="btn btn-success" *ngIf="hiddenC" (click)="validaCamposVacios()">
                       <span><b> Registro Completo. </b></span>
                 </button>
               </div>

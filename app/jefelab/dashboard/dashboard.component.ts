@@ -62,7 +62,8 @@ export class DashboardComponent implements OnInit {
    hiddenTecnicos= true;
    hiddenHerramientaDispo= true;
    hiddenTecnicosDispo= true; 
-   hiddenTotal= true;  
+   hiddenTotalTecnicos= true;  
+   hiddenTotalHerramienta= true;  
    herra = {
 
      herramienta_tipo_id: ''
@@ -265,7 +266,7 @@ export class DashboardComponent implements OnInit {
 
   mostrarHerramienta(){
     this.hiddenHerramienta = !this.hiddenHerramienta;
-    this.hiddenTotal = !this.hiddenTotal;
+    this.hiddenTotalHerramienta = !this.hiddenTotalHerramienta;
   }
   respuestaSwitchE(res: any){
     console.log(res);
@@ -393,7 +394,7 @@ export class DashboardComponent implements OnInit {
   
   mostrarTecnicos(){
     this.hiddenTecnicos = !this.hiddenTecnicos;
-    this.hiddenTotal = !this.hiddenTotal;
+    this.hiddenTotalTecnicos = !this.hiddenTotalTecnicos;
     console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
