@@ -134,12 +134,18 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="diasEnsaye">Dias antes de ensayar</label> <!--disable-->
-                    <select  class="form-control" id="diasEnsaye" name="diasEnsaye" formControlName="diasEnsaye" (change)="onBlurdiasEnsaye()">
+                    <select  class="form-control" id="diasEnsaye" name="diasEnsaye" formControlName="diasEnsaye" required (change)="onBlurdiasEnsaye()">
                           <option value="0" [disabled]="true">Selecciona los dias</option>
                           <option *ngFor="let day of days" [value]="day.id">
                                 {{day.value}}
                           </option>
                     </select>
+                    <div *ngIf="diasEnsaye.invalid && (diasEnsaye.dirty || diasEnsaye.touched)"
+                    class="alert alert-danger">            
+                      <div *ngIf="diasEnsaye.errors.required">
+                       DIAS ENSAYE requerido.
+                      </div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
                 

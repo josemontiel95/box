@@ -233,10 +233,19 @@
               <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar(); mostrarDetalles();">
                 <span><b> Cambiar Datos </b></span>
               </button>
-              <button class="btn btn-success" *ngIf="!hidden" [disabled]="ordenForm.invalid" (click)="mostrar(); mostrarDetalles(); actualizarOrden();" >
+
+              <button class="btn btn-danger" *ngIf="!hidden" [disabled]="ordenForm.invalid" (click)="mostrar(); mostrarDetalles2(); rollbackCambiarDatos();" >
+                  <span><b> Cancelar </b></span>
+              </button>
+ 
+            </div>
+            <div class="btn-group" style=" padding-left: 15%;">
+              <button class="btn btn-success" *ngIf="!hidden" [disabled]="ordenForm.invalid" (click)="mostrar(); mostrarDetalles(); actualizarOrden();">
                 <span><b> Guardar Cambios </b></span>
               </button>
             </div>
+              
+            
           </div>
         </form>
       </div>

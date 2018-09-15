@@ -146,7 +146,9 @@ export class DashboardComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_ordenDeTrabajo', this.id);
-	  this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+	  this.http.get(url, {search}).subscribe(res =>
+                                                 {this.llenado(res.json());
+                                                  this.statusOrdenTrabajo(res.json());});
 
 
     
@@ -219,6 +221,19 @@ export class DashboardComponent implements OnInit {
                                             } );
   }
 
+  rollbackCambiarDatos(){
+    let search = new URLSearchParams();
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getByIDAdmin');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id);
+    this.http.get(url, {search}).subscribe(res =>
+                                                 {this.llenado(res.json());
+                                                  this.statusOrdenTrabajo(res.json());});
+  }
+
   crearFormato(){
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
   }
@@ -265,7 +280,8 @@ export class DashboardComponent implements OnInit {
       }
     }
     else{
-      window.alert("Acción Cancelada.");   
+      window.alert("Acción Cancelada.");
+      this.cargando = this.cargando-1;   
     }
   }
   respuestaSwitch(res: any){
@@ -463,8 +479,15 @@ export class DashboardComponent implements OnInit {
      horaInicio:           respuesta.horaInicio,
      horaFin:              respuesta.horaFin,
      observaciones:        respuesta.observaciones,
-    });
+    });    
 
+    if(respuesta.isClienteActive==0)
+    {
+      this.addCliente(respuesta.id_cliente,respuesta.nombre);
+    }
+  }
+
+  statusOrdenTrabajo(respuesta:any){
     this.formatoStatus= (Number(respuesta.status));
 
     switch(Number(respuesta.status)){
@@ -488,11 +511,6 @@ export class DashboardComponent implements OnInit {
         this.terminadoJLab = true;
         this.mensajeStatus = "ORDEN DE TRABAJO COMPLETADA, YA NO SE PUEDEN HACER MODIFICACIONES";
       break;
-    }
-
-    if(respuesta.isClienteActive==0)
-    {
-      this.addCliente(respuesta.id_cliente,respuesta.nombre);
     }
   }
 
