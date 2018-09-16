@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
    hiddenFormato= true;
    hiddenFormatoDispo = true;
    hiddenTecnicos: any;
-
+   pL;
    
    forma={
      formato_tipo_id:'0'
@@ -243,23 +243,21 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  pasarlista()
-  {
-     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
-     let formData:FormData = new FormData();
-        formData.append('function', 'pasarLista');
-        formData.append('id_tecnicos_ordenDeTrabajo', this.id);
-        formData.append('rol_usuario_id', this.global.rol);
-        formData.append('token', this.global.token);
-        formData.append('email', this.paseForm.value.correo);
-        formData.append('contrasena', this.paseForm.value.pass);    
-        console.log(this.ids);
-        console.log(this.paseForm.value.correo);
-        console.log(this.paseForm.value.pass);
-        this.http.post(url, formData).subscribe(res => {
+  pasarlista(){
+    let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'pasarLista');
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('token', this.global.token);
+
+    formData.append('id_tecnicos_ordenDeTrabajo', this.ids);
+    formData.append('email',                      this.paseForm.value.correo);
+    formData.append('contrasena',                 this.paseForm.value.pass);  
+
+    this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             });
-        this.hiddenTecnicos = true;
+    this.hiddenTecnicos = true;
   }
 
    respuestaSwitch(res: any){
@@ -279,21 +277,15 @@ export class DashboardComponent implements OnInit {
 
    submitted = false;
 
-    pasaTec(pL: any) 
-     {
-        console.log(pL);
-        console.log(pL);
-    this.hiddenTecnicos=pL;
-    if (this.hiddenTecnicos == false)
-    {
-    this.ids=pL;
-  }
-   this.auxx= this.ids;
-   this.ids= this.hiddenTecnicos;
-   this.hiddenTecnicos=this.auxx;
-    console.log(this.ids); false 
-    console.log(this.hiddenTecnicos); 1034
+  pasaTec(pL: any) {
+    console.log("pasaTec :: pL[0].id: "+pL[0].id);
+    this.pL=pL[0];
 
+    this.hiddenTecnicos=pL[0].estado;
+    this.ids= pL[0].id;
+
+    console.log("pasaTec :: this.ids: "+this.ids); false 
+    console.log("pasaTec :: this.hiddenTecnicos: "+this.hiddenTecnicos); 1034
   }   
 
   mostrarDetalles()
@@ -396,7 +388,7 @@ export class DashboardComponent implements OnInit {
      
   }
 
-    addCliente(id_cliente: any,cliente: any){
+  addCliente(id_cliente: any,cliente: any){
     let aux= new Array(this.mis_cli.length+1);
     let index=0;
     for (var _i = 0; _i < aux.length; _i++ ){
@@ -480,14 +472,14 @@ export class DashboardComponent implements OnInit {
       window.alert("Por favor selecciona un Formato");
     }else{
       if(this.tipoForm.value.formato_tipo_id == 1){
-        if(window.confirm("¿Estas seguro de crear un nuevo Registro de CCH para concreto, ya no podras eliminarlo mas adelante.")){
+        if(window.confirm("¿Estas seguro de crear un nuevo Formato de CCH para concreto, ya no podras eliminarlo mas adelante.")){
             this.creaIDFormatoCCH();
           }
 
       }
       else 
         if(this.tipoForm.value.formato_tipo_id == 2){
-          if(window.confirm("¿Estas seguro de crear un nuevo Registro de CCH para Revenimiento, ya no podras eliminarlo mas adelante.")){
+          if(window.confirm("¿Estas seguro de crear un nuevo Formato  Revenimiento, ya no podras eliminarlo mas adelante.")){
             this.creaIDFormatoCCHRev();
           }
 

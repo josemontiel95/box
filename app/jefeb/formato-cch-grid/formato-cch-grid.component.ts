@@ -51,7 +51,7 @@ export class FormatoCCHGridComponent implements OnInit  {
       },
       "row-green-warning": function(params) {
         var status = params.data.status;
-        return status == 2;
+        return status > 1;
       },
       "row-red-warning": function(params) {
         var herramienta_id = params.data.herramienta_id;

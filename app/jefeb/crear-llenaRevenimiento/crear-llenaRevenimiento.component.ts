@@ -84,11 +84,10 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
    respuestaSwitch(res: any){ 
      console.log(res);
      if(res.error!= 0){
-       window.alert("Intentalo otra vez");
+       window.alert("Ocurrio un error");
        location.reload();
      }
      else{
-       this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+this.id_orden + '/' +this.id_formato]);
        
      }
    }
@@ -142,32 +141,25 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
   }
 
 
-   get reg() { return this.creaCCHForm.get('reg'); }
-
+   get reg()          { return this.creaCCHForm.get('reg'); }
    get localizacion() { return this.creaCCHForm.get('localizacion'); }
-
-   get cono() { return this.creaCCHForm.get('cono'); }
-   
-   get varilla() { return this.creaCCHForm.get('varilla'); }
-   
-   get flexometro() { return this.creaCCHForm.get('flexometro'); }
-
-   get latitud() { return this.creaCCHForm.get('latitud'); }
-
-   get longitud() { return this.creaCCHForm.get('longitud'); }
+   get cono()         { return this.creaCCHForm.get('cono'); }
+   get varilla()      { return this.creaCCHForm.get('varilla'); }
+   get flexometro()   { return this.creaCCHForm.get('flexometro'); }
+   get latitud()      { return this.creaCCHForm.get('latitud'); }
+   get longitud()     { return this.creaCCHForm.get('longitud'); }
  
   
 
    submitted = false;
 
-   regresaUsuario(){
+  regresaUsuario(){
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+ this.id_orden]);
   }
 
   onSubmit() { this.submitted = true; }
 
-  llenaConos(resp: any)
-  {
+  llenaConos(resp: any){
     console.log(resp);
     this.mis_conos= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
@@ -178,8 +170,7 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
     console.log("llenaConos this.cargando: "+this.cargando);
   }
 
-  llenaVarillas(resp: any)
-  {
+  llenaVarillas(resp: any){
     console.log(resp);
     this.mis_varillas= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
@@ -190,8 +181,7 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
     console.log("llenaVarillas this.cargando: "+this.cargando);
   }
 
-  llenaFlexometro(resp: any)
-  {
+  llenaFlexometro(resp: any){
     console.log(resp);
     this.mis_flexometro= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
@@ -202,9 +192,8 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
     console.log("llenaFlexometros this.cargando: "+this.cargando);
   }
 
-    llenado(respuesta: any){
+  llenado(respuesta: any){
     console.log(respuesta);
-
     this.creaCCHForm.patchValue({
      reg:        respuesta.regNo,
      localizacion:      respuesta.localizacion,
@@ -214,7 +203,7 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
      termometro:     respuesta.termometro_id
     });}
 
-      onChangeLocalizacion(){
+  onChangeLocalizacion(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -223,7 +212,7 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
     formData.append('rol_usuario_id',                      this.global.rol);
     formData.append('campo',                                           '2');
     formData.append('valor',              this.creaCCHForm.value.especimen);
-    formData.append('id_formatoCampo',                     this.id_formato);
+    formData.append('id_formatoRegistroRev',               this.id_formato);
     
     this.http.post(url, formData).subscribe(res => {
                                                   
@@ -231,7 +220,7 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
                                             } );
   }
   
-    onChangeCono(){
+  onChangeCono(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -240,7 +229,7 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
     formData.append('rol_usuario_id',                      this.global.rol);
     formData.append('campo',                                           '3');
     formData.append('valor',                   this.creaCCHForm.value.cono);
-    formData.append('id_formatoCampo',                     this.id_formato);
+    formData.append('id_formatoRegistroRev',               this.id_formato);
     
     this.http.post(url, formData).subscribe(res => {
                                                   
@@ -257,7 +246,7 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
     formData.append('rol_usuario_id',                      this.global.rol);
     formData.append('campo',                                           '4');
     formData.append('valor',                this.creaCCHForm.value.varilla);
-    formData.append('id_formatoCampo',                     this.id_formato);
+    formData.append('id_formatoRegistroRev',               this.id_formato);
     
     this.http.post(url, formData).subscribe(res => {
                                                   
@@ -272,9 +261,9 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
     formData.append('function',                        'insertJefeBrigada');
     formData.append('token',                             this.global.token);
     formData.append('rol_usuario_id',                      this.global.rol);
-    formData.append('campo',                                          '5');
-    formData.append('valor',              this.creaCCHForm.value.flexometro);
-    formData.append('id_formatoCampo',                     this.id_formato);
+    formData.append('campo',                                           '5');
+    formData.append('valor',             this.creaCCHForm.value.flexometro);
+    formData.append('id_formatoRegistroRev',               this.id_formato);
     
     this.http.post(url, formData).subscribe(res => {
                                                   
@@ -282,7 +271,7 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
                                             } );
   }
 
-    siguiente(){
+  siguiente(){
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+this.id_orden + '/' + this.id_formato]);
   }
   

@@ -353,43 +353,40 @@
           <h4 class="card-title"> Tecnicos Asignados para la Orden de Trabajo.</h4>
         </div>
         <div class="card-body">
-          <div *ngIf="this.hiddenTecnicos == true">
+          <div *ngIf="this.hiddenTecnicos">
           <app-tecnicos-grid (pasaLista)="pasaTec($event)"></app-tecnicos-grid>
         </div>
           <div *ngIf="!this.hiddenTecnicos">
            <form (ngSubmit)="onSubmit()" [formGroup]=paseForm #formDir="ngForm">
-                    <div class="form-group">
-                  <label>Correo</label>
-                  <input type="text" id="correo"   
-                    class="form-control" 
-                    name="correo" placeholder="" required   formControlName="correo">
-                </div>
-             <div *ngIf="correo.invalid && (correo.dirty || correo.touched)"
-              class="alert alert-danger">
-              <div *ngIf="correo.errors.required">
-                Correo requerido.
+              <div class="form-group">
+                <label>Correo</label>
+                <input type="text" id="correo" class="form-control" name="correo" placeholder="" required   formControlName="correo">
               </div>
-            </div>                
-                <div class="form-group">
-                  <label>Contrase&ntilde;a</label>
-                  <input class="form-control" id="pass"  name="pass" placeholder="Contrase&ntilde;a" type="password"  formControlName="pass">
+              <div *ngIf="correo.invalid && (correo.dirty || correo.touched)" class="alert alert-danger">
+                <div *ngIf="correo.errors.required">
+                  Correo requerido.
                 </div>
-                 <div *ngIf="pass.invalid && (pass.dirty || pass.touched)"
-              class="alert alert-danger">
-              <div *ngIf="pass.errors.required">
-                Contrase&ntilde;a requerido.
+              </div>                
+              <div class="form-group">
+                <label>Contrase&ntilde;a</label>
+                <input class="form-control" id="pass"  name="pass" placeholder="Contrase&ntilde;a" type="password"  formControlName="pass">
               </div>
-            </div>
-          <div class="btn-group"  style=" padding-left: 45%;">
-              <button class="btn btn-info"  type="button" *ngIf="!hiddenTecnicos"  (click)="pasarlista();">
-                <span><b> Pasar lista </b></span>
-              </button>
-          </div>               
-                </form>      
+              <div *ngIf="pass.invalid && (pass.dirty || pass.touched)" class="alert alert-danger">
+                <div *ngIf="pass.errors.required">
+                  Contrase&ntilde;a requerido.
+                </div>
+              </div>
+              <div class="btn-group"  style=" padding-left: 45%;">
+                <button class="btn btn-info"  type="button" *ngIf="!hiddenTecnicos"  (click)="pasarlista();">
+                  <span><b> Pasar lista </b></span>
+                </button>
+              </div>               
+            </form>      
           </div>        
         </div>
       </div>
     </div>
+
   </div>
 
   

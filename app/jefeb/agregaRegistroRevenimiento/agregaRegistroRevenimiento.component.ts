@@ -40,19 +40,19 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
   
   formatoCCHForm: FormGroup;
 
-        FormatoCCH = {
-        fechaDet: '',
-        revProy: '',
-        revObtenido: '',
-        tamAgregado: '',
-        idConcreto: '' ,
-        hDet:'',
-        unidad: '',
-        provCon: '',
-        numRem: '',
-        hsalida: '',
-        hllegada: ''         
-    }
+  FormatoCCH = {
+    fechaDet: '',
+    revProy: '',
+    revObtenido: '',
+    tamAgregado: '',
+    idConcreto: '' ,
+    hDet:'',
+    unidad: '',
+    provCon: '',
+    numRem: '',
+    hsalida: '',
+    hllegada: ''         
+  }
 
 
 
@@ -87,40 +87,31 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => this.llenaConcreteras(res.json()) );
 
     this.formatoCCHForm = new FormGroup({
-      'fechaDet': new FormControl( {value: this.FormatoCCH.fechaDet, disabled: this.hidden}),
-      'revProy': new FormControl( {value: this.FormatoCCH.revProy, disabled: this.hidden}),
-      'revObtenido': new FormControl( {value: this.FormatoCCH.revObtenido, disabled: this.hidden}),
-      'tamAgregado': new FormControl( {value: this.FormatoCCH.tamAgregado, disabled: this.hidden}),
-      'idConcreto': new FormControl( {value: this.FormatoCCH.idConcreto, disabled: this.hidden}),
-      'hDet': new FormControl( {value: this.FormatoCCH.hDet, disabled: this.hidden}),
-      'unidad': new FormControl( {value: this.FormatoCCH.unidad, disabled: this.hidden}),       
-      'provCon': new FormControl( {value: this.FormatoCCH.provCon, disabled: this.hidden}),
-      'numRem': new FormControl( {value: this.FormatoCCH.numRem, disabled: this.hidden}),
-      'hsalida': new FormControl( {value: this.FormatoCCH.hsalida, disabled: this.hidden}),
-      'hllegada': new FormControl( {value: this.FormatoCCH.hllegada, disabled: this.hidden})          });
+      'fechaDet':     new FormControl( {value: this.FormatoCCH.fechaDet, disabled: true},    [Validators.required]),
+      'revProy':      new FormControl( {value: this.FormatoCCH.revProy, disabled: true},     [Validators.required,Validators.pattern("^[0-9]+$")]),
+      'revObtenido':  new FormControl( {value: this.FormatoCCH.revObtenido, disabled: this.hidden}, [Validators.required,Validators.pattern("^[0-9]+$")]),
+      'tamAgregado':  new FormControl( {value: this.FormatoCCH.tamAgregado, disabled: this.hidden}, [Validators.required,Validators.pattern("^[0-9]+$")]),
+      'idConcreto':   new FormControl( {value: this.FormatoCCH.idConcreto, disabled: this.hidden},  [Validators.required]),
+      'hDet':         new FormControl( {value: this.FormatoCCH.hDet, disabled: this.hidden},        [Validators.required]),
+      'unidad':       new FormControl( {value: this.FormatoCCH.unidad, disabled: this.hidden},      [Validators.required]),       
+      'provCon':      new FormControl( {value: this.FormatoCCH.provCon, disabled: this.hidden},     [Validators.required]),
+      'numRem':       new FormControl( {value: this.FormatoCCH.numRem, disabled: this.hidden},      [Validators.required]),
+      'hsalida':      new FormControl( {value: this.FormatoCCH.hsalida, disabled: this.hidden},     [Validators.required]),
+      'hllegada':     new FormControl( {value: this.FormatoCCH.hllegada, disabled: this.hidden},    [Validators.required])          
+    });
   }
   
-   get fechaDet() { return this.formatoCCHForm.get('fechaDet'); }
-
-   get revProy() { return this.formatoCCHForm.get('revProy'); }
-
-   get revObtenido() { return this.formatoCCHForm.get('revObtenido'); }
-
-   get tamAgregado() { return this.formatoCCHForm.get('tamAgregado'); }
-   
-   get idConcreto() { return this.formatoCCHForm.get('idConcreto'); }
-
-   get hDet() { return this.formatoCCHForm.get('hDet'); }              
-   
-   get unidad() { return this.formatoCCHForm.get('unidad'); }              
-
-   get provCon() { return this.formatoCCHForm.get('provCon'); }                          
-
-   get numRem() { return this.formatoCCHForm.get('numRem'); }              
-
-   get hsalida() { return this.formatoCCHForm.get('hsalida'); }              
-   
-   get hllegada() { return this.formatoCCHForm.get('hllegada'); }              
+  get fechaDet()     { return this.formatoCCHForm.get('fechaDet'); }
+  get revProy()      { return this.formatoCCHForm.get('revProy'); }
+  get revObtenido()  { return this.formatoCCHForm.get('revObtenido'); }
+  get tamAgregado()  { return this.formatoCCHForm.get('tamAgregado'); }
+  get idConcreto()   { return this.formatoCCHForm.get('idConcreto'); }
+  get hDet()         { return this.formatoCCHForm.get('hDet'); }              
+  get unidad()       { return this.formatoCCHForm.get('unidad'); }              
+  get provCon()      { return this.formatoCCHForm.get('provCon'); }                          
+  get numRem()       { return this.formatoCCHForm.get('numRem'); }              
+  get hsalida()      { return this.formatoCCHForm.get('hsalida'); }              
+  get hllegada()     { return this.formatoCCHForm.get('hllegada'); }              
 
   submitted = false;
 
@@ -144,17 +135,17 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({
-     fechaDet:  respuesta.fecha,
-     revProy: respuesta.revProyecto,
-     revObtenido: respuesta.revObtenido,
-     tamAgregado:  respuesta.tamAgregado,
-     idConcreto: respuesta.idenConcreto,
-     hDet: respuesta.horaDeterminacion,
-     unidad: respuesta.unidad,
-     provCon: respuesta.concretera_id,
-     numRem: respuesta.remisionNo,
-     hsalida: respuesta.horaSalida,
-     hllegada: respuesta.horaLlegada
+     fechaDet:       respuesta.fecha,
+     revProy:        respuesta.revProyecto,
+     revObtenido:    respuesta.revObtenido,
+     tamAgregado:    respuesta.tamAgregado,
+     idConcreto:     respuesta.idenConcreto,
+     hDet:           respuesta.horaDeterminacion,
+     unidad:         respuesta.unidad,
+     provCon:        respuesta.concretera_id,
+     numRem:         respuesta.remisionNo,
+     hsalida:        respuesta.horaSalida,
+     hllegada:       respuesta.horaLlegada
     });
 
     if(respuesta.status == 1){
@@ -221,7 +212,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '1');
-    formData.append('valor', this.formatoCCHForm.value.fechaDet);
+    formData.append('valor', this.formatoCCHForm.getRawValue().fechaDet);
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
@@ -237,7 +228,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '2');
-    formData.append('valor', this.formatoCCHForm.value.revProy);
+    formData.append('valor', this.formatoCCHForm.getRawValue().revProy);
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
@@ -421,7 +412,9 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     const state = this.hidden ? 'disable' : 'enable'; 
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
         this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
-    });    
+    });  
+    this.formatoCCHForm.controls['fechaDet']['disable'](); 
+    this.formatoCCHForm.controls['revProy']['disable'](); 
   }
 
   validaCamposVacios(){
@@ -429,6 +422,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
         if(this.formatoCCHForm.controls[controlName].value == "" || this.formatoCCHForm.controls[controlName].value == null || this.formatoCCHForm.controls[controlName].value == "null"){
           warning = true;
+          console.log("validaCamposVacios :: controlName: "+controlName);
         }// disables/enables each form control based on 'this.formDisabled'
     });
 
