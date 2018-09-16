@@ -41,6 +41,7 @@ export class llenaRevenimientoComponent implements OnInit{
   mis_cli: Array<any>;
   mis_obras: Array<any>;
   mis_jefes: Array<any>;
+  formatoStatus;
   
   formatoCCHForm: FormGroup;
 
@@ -89,18 +90,21 @@ export class llenaRevenimientoComponent implements OnInit{
     search.set('function', 'getForDroptdownJefeBrigadaCono');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
     this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
 
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownJefeBrigadaVarilla');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
     this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
 
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownJefeBrigadaFlexometro');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
     this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
 
 
@@ -114,43 +118,32 @@ export class llenaRevenimientoComponent implements OnInit{
 
 
     this.formatoCCHForm = new FormGroup({
-      'obra': new FormControl( {value: this.FormatoCCH.obra, disabled: this.hidden },  [Validators.required]),
-      'localizacion': new FormControl( {value: this.FormatoCCH.localizacion, disabled: this.hidden },  [Validators.required]),
-      'informe': new FormControl( {value: this.FormatoCCH.informe, disabled: this.hidden },  [Validators.required]),
-      'empresa': new FormControl( {value: this.FormatoCCH.empresa, disabled: this.hidden },  [Validators.required]),
-      'direccion': new FormControl( {value: this.FormatoCCH.direccion, disabled: this.hidden },  [Validators.required]),
-      'observaciones': new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden }),       
-      'tipo_especimen': new FormControl( {value: this.FormatoCCH.tipo_especimen, disabled: this.hidden },  [Validators.required]),
-      'cono': new FormControl( {value: this.FormatoCCH.cono, disabled: this.hidden },  [Validators.required]),
-      'varilla': new FormControl( {value: this.FormatoCCH.varilla, disabled: this.hidden },  [Validators.required]),
-      'flexometro': new FormControl( {value: this.FormatoCCH.flexometro, disabled: this.hidden },  [Validators.required]),
-          });
+      'obra':            new FormControl( {value: this.FormatoCCH.obra, disabled: this.hidden },  [Validators.required]),
+      'localizacion':    new FormControl( {value: this.FormatoCCH.localizacion, disabled: this.hidden },  [Validators.required]),
+      'informe':         new FormControl( {value: this.FormatoCCH.informe, disabled: this.hidden },  [Validators.required]),
+      'empresa':         new FormControl( {value: this.FormatoCCH.empresa, disabled: this.hidden },  [Validators.required]),
+      'direccion':       new FormControl( {value: this.FormatoCCH.direccion, disabled: this.hidden },  [Validators.required]),
+      'observaciones':   new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden }),       
+      'tipo_especimen':  new FormControl( {value: this.FormatoCCH.tipo_especimen, disabled: this.hidden },  [Validators.required]),
+      'cono':            new FormControl( {value: this.FormatoCCH.cono, disabled: this.hidden },  [Validators.required]),
+      'varilla':         new FormControl( {value: this.FormatoCCH.varilla, disabled: this.hidden },  [Validators.required]),
+      'flexometro':      new FormControl( {value: this.FormatoCCH.flexometro, disabled: this.hidden },  [Validators.required]),
+    });
   }
 
-   get obra() { return this.formatoCCHForm.get('obra'); }
-  
-   get localizacion() { return this.formatoCCHForm.get('localizacion'); }
-
-   get informe() { return this.formatoCCHForm.get('informe'); }
-   
-   get empresa() { return this.formatoCCHForm.get('empresa'); }
-
-   get direccion() { return this.formatoCCHForm.get('direccion'); }
-  
-   get observaciones() { return this.formatoCCHForm.get('observaciones'); }
-
+   get obra()           { return this.formatoCCHForm.get('obra'); }
+   get localizacion()   { return this.formatoCCHForm.get('localizacion'); }
+   get informe()        { return this.formatoCCHForm.get('informe'); }
+   get empresa()        { return this.formatoCCHForm.get('empresa'); }
+   get direccion()      { return this.formatoCCHForm.get('direccion'); }
+   get observaciones()  { return this.formatoCCHForm.get('observaciones'); }
    get tipo_especimen() { return this.formatoCCHForm.get('tipo_especimen'); }
-      
-   get cono() { return this.formatoCCHForm.get('cono'); }
-
-   get varilla() { return this.formatoCCHForm.get('varilla'); }
-   
-   get flexometro() { return this.formatoCCHForm.get('flexometro'); }
-   
-   get termometro() { return this.formatoCCHForm.get('termometro'); } 
-
-    mostrar()
-  {
+   get cono()           { return this.formatoCCHForm.get('cono'); }
+   get varilla()        { return this.formatoCCHForm.get('varilla'); }
+   get flexometro()     { return this.formatoCCHForm.get('flexometro'); }
+   get termometro()     { return this.formatoCCHForm.get('termometro'); } 
+  
+  mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
 
@@ -205,8 +198,7 @@ export class llenaRevenimientoComponent implements OnInit{
 
 
     
-    llenaObra(resp: any)
-  {
+  llenaObra(resp: any){
     this.mis_obras= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
@@ -218,34 +210,36 @@ export class llenaRevenimientoComponent implements OnInit{
   }
 
   
-    llenado(respuesta: any){
+  llenado(respuesta: any){
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({
-     obra: respuesta.obra,
-     localizacion:  respuesta.localizacion,
-     informe:  respuesta.regNo,
-     empresa:  respuesta.razonSocial,
-     direccion: respuesta.direccion,
-     observaciones:  respuesta.observaciones,
-     tipo_especimen:  respuesta.localizacion,
-     cono:   respuesta.cono_id,
-     varilla:  respuesta.varilla_id,
-     flexometro:  respuesta.flexometro_id,
-     termometro:  respuesta.termometro_id
+      obra:            respuesta.obra,
+      localizacion:    respuesta.localizacion,
+      informe:         respuesta.regNo,
+      empresa:         respuesta.razonSocial,
+      direccion:       respuesta.direccion,
+      observaciones:   respuesta.observaciones,
+      tipo_especimen:  respuesta.localizacion,
+      cono:            respuesta.cono_id,
+      varilla:         respuesta.varilla_id,
+      flexometro:      respuesta.flexometro_id,
+      termometro:      respuesta.termometro_id
     });
+
+    this.formatoStatus=(respuesta.status == 0 ? true : false);
 
     this.cargando=this.cargando-1;
      
   }
 
   obtenStatusReg(){
-    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllRegistrosByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('id_formatoCampo', this.id_formato);
+    search.set('id_formatoRegistroRev', this.id_formato);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
@@ -264,17 +258,35 @@ export class llenaRevenimientoComponent implements OnInit{
     });
 
     if(!isValid){
-      window.alert("Tienes al menos un registro vacio, todos los registros deben estar en ESTATUS:1 para completar el formato.");     
+      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para completar el formato.");     
     }else{
-          if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podra ser editarlo.")){
+          if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
             this.formatoCompletado();
           }
     } 
-  } //FIN ValidaCamposVacios
+  } 
 
   formatoCompletado(){
-    window.alert("Exito!");
+    console.log("formatoCompletado :: Sigo vivo");
+    this.cargando=1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'completeFormato');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('id_formatoRegistroRev', this.id_formato);  
+    this.http.post(url, formData).subscribe(res => {
+      this.respuestaFormatoCompletado(res.json());
+    });
   } 
+  
+  respuestaFormatoCompletado(res: any){
+    this.cargando=this.cargando-1;
+    this.formatoStatus=false;
+    console.log(res);
+  }
   
   agregaRegistro(){
     this.data.currentGlobal.subscribe(global => this.global = global);

@@ -18,15 +18,13 @@ export class TecnicosGridComponent implements OnInit  {
   columnDefs;
   id: string;
   iid: string;
+  eventWraper= new Array();
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
       {headerName: 'ID', field: 'id_usuario'},
       {headerName: 'Tecnico.', field: 'nombre' },
       {headerName: '¿Paso lista?', field: 'estado' },
-
-
-      
     ];
     this.rowSelection = "single";
   }
@@ -34,18 +32,16 @@ export class TecnicosGridComponent implements OnInit  {
   rowData: any;
 
   ngOnInit() {
-            this.data.currentGlobal.subscribe(global => this.global = global);
+    this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
   }
 
   @Output() pasaLista = new EventEmitter<any>();
 
-   paseL(pL: any) {
-    this.pasaLista.emit(pL);
 
-    //this.id= h
-    console.log(pL);
-
+  paseL() {
+    console.log("paseL :: eventWraper: "+this.eventWraper);
+    this.pasaLista.emit(this.eventWraper);
   }
 
   onGridReady(params) {
@@ -60,7 +56,7 @@ export class TecnicosGridComponent implements OnInit  {
     search.set('id_ordenDeTrabajo', this.id);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
+                                            console.log("getTecAsistencia:"+res.json());
                                             this.llenaTabla(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
@@ -73,33 +69,28 @@ export class TecnicosGridComponent implements OnInit  {
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
     }else{
-      this.rowData =repuesta;
-       
-       this.iid = repuesta.id_tecnicos_ordenDeTrabajo;
-   
+      this.rowData =repuesta;   
     }
   }
 
    
- onSelectionChanged(event: EventListenerObject){
+  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
     var estado = "";
     var id = "";
     selectedRows.forEach(function(selectedRow, index) {
-      estado += selectedRow.estado;
-      id += selectedRow.id_usuario;
+      estado = selectedRow.estado;
+      id = selectedRow.id_tecnicos_ordenDeTrabajo;
     });
-   if (estado == "NO") 
-   {
-      
-     this.paseL(false);
-     this.paseL(this.iid);
-   }
-   else
-   {
-     this.paseL( true );
-   }
+    if (estado == "NO") {
+      this.eventWraper.push({'estado' : false, 'id' : id});
+
+      this.paseL();
+      //this.paseL(this.iid);
+    }
+    else{
+      this.eventWraper.push({'estado' : true, 'id' : id});
+      this.paseL();
+    }
   }
-
-
 }
