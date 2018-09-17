@@ -20,13 +20,10 @@ export class GridComponent implements OnInit  {
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'FECHA DE COLADO', field: 'fecha'},
-    {headerName: 'INFORME N&Uacute;MERO', field: 'informeNo' },    
-    {headerName: 'CLAVE', field: 'claveEspecimen' },    
-    {headerName: 'EDAD DE ENSAYE EN D&Iacute;AS', field: 'diasEnsaye' },
-    {headerName: 'TIPO', field: 'tipo' },
-    {headerName: 'ESTADO', field: 'estado' },
-    {headerName: 'COMPLETADO', field: 'completado' },
+    {headerName: 'Ctrl', field: 'id_footerEnsayo'},
+    {headerName: 'TMU', field: 'nombre' },   
+    {headerName: 'Tipo', field: 'tipo' },
+    {headerName: 'Creado', field: 'fecha' },    
   ];
     this.rowSelection = "single";
   }
@@ -46,9 +43,9 @@ export class GridComponent implements OnInit  {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getRegistrosForToday');
+    search.set('function', 'getAllFooterPendientes');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => {
