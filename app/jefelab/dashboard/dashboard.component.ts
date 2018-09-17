@@ -268,23 +268,29 @@ export class DashboardComponent implements OnInit {
     this.hiddenHerramienta = !this.hiddenHerramienta;
     this.hiddenTotalHerramienta = !this.hiddenTotalHerramienta;
   }
-  respuestaSwitchE(res: any){
-    console.log(res);
+
+  confirmaEliminaHerramienta(){
+    this.cargando = this.cargando+1;
     if(window.confirm("Estas seguro de la eliminación.") == true){
-      if(res.error!= 0){
-        window.alert("Intentalo otra vez");
-        location.reload();
-      }
-      else{
-        console.log("holaa");
-        this.cargando = this.cargando-1;
-      }
+      this.eliminarHerramienta();
     }
     else{
       window.alert("Acción Cancelada.");
       this.cargando = this.cargando-1;   
     }
   }
+
+  confirmaEliminaTecnico(){
+    this.cargando = this.cargando+1;
+    if(window.confirm("Estas seguro de la eliminación.") == true){
+      this.eliminarTecni();
+    }
+    else{
+      window.alert("Acción Cancelada.");
+      this.cargando = this.cargando-1;   
+    }
+  }
+
   respuestaSwitch(res: any){
     console.log(res);
     if(res.error!= 0){
@@ -333,7 +339,7 @@ export class DashboardComponent implements OnInit {
     formData.append('token', this.global.token);
     formData.append('herramientasArray', JSON.stringify(this.aux3));
     this.http.post(url, formData).subscribe(res => {
-                                            this.respuestaSwitchE(res.json());
+                                            this.respuestaSwitch(res.json());
                                           });
     this.hiddenHerramienta  = false;
     setTimeout(() =>{ this.hiddenHerramienta  = true},1000);
@@ -350,7 +356,7 @@ export class DashboardComponent implements OnInit {
     formData.append('rol_usuario_id',  this.global.rol);
     formData.append('tecnicosArray',  JSON.stringify(this.aux2));
     this.http.post(url, formData).subscribe(res =>  {
-                                              this.respuestaSwitchE(res.json());
+                                              this.respuestaSwitch(res.json());
                                             } );
     this.hiddenTecnicos  = false;
     setTimeout(() =>{ this.hiddenTecnicos  = true},1000);

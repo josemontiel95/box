@@ -263,7 +263,7 @@
         </div>
         <div class="card-body ">
              <div class="btn-group">
-            <button  class="btn btn-danger" *ngIf="hiddenHerramienta == true && edicionJLab == true" (click)="eliminarHerramienta();">
+            <button  class="btn btn-danger" *ngIf="hiddenHerramienta == true && edicionJLab == true" (click)="confirmaEliminaHerramienta();">
               <span><b> Desasignar herramienta </b></span>
             </button>
             <button  class="btn btn-danger" *ngIf="!hiddenHerramienta" (click)="mostrarHerramienta();">
@@ -322,7 +322,7 @@
         </div>
         <div class="card-body">
           <div class="btn-group">
-             <button  class="btn btn-danger" *ngIf="hiddenTecnicos == true && edicionJLab == true" (click)="eliminarTecni();">
+             <button  class="btn btn-danger" *ngIf="hiddenTecnicos == true && edicionJLab == true" (click)="confirmaEliminaTecnico();">
               <span><b> Desasignar Tecnico </b></span>
             </button>
             <button  class="btn btn-danger" *ngIf="!hiddenTecnicos" (click)="mostrarTecnicos();">
