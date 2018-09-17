@@ -42,6 +42,8 @@ export class llenaRevenimientoComponent implements OnInit{
   mis_obras: Array<any>;
   mis_jefes: Array<any>;
   formatoStatus;
+  maxNoOfRegistrosRev;
+  numberOfRegistros;
   
   formatoCCHForm: FormGroup;
 
@@ -81,7 +83,7 @@ export class llenaRevenimientoComponent implements OnInit{
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id}); 
-    this.cargando=4;
+    this.cargando=6;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -106,6 +108,29 @@ export class llenaRevenimientoComponent implements OnInit{
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
     this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
+
+    url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getformatoDefoults');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {  
+      this.maxNoOfRegistrosRev = res.json().maxNoOfRegistrosRev;
+      this.cargando=this.cargando-1;
+      console.log("getformatoDefoults :: this.maxNoOfRegistrosRev: "+this.maxNoOfRegistrosRev);
+    });
+
+    url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getNumberOfRegistrosByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('formatoRegistroRev_id', this.id_formato);
+    this.http.get(url, {search}).subscribe(res => {
+      this.numberOfRegistros =res.json().numberOfRegistrosByID;
+      this.cargando          =this.cargando-1;
+      console.log("getNumberOfRegistrosByID :: this.numberOfRegistros: "+this.numberOfRegistros);
+    }); 
 
 
     url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
@@ -289,6 +314,10 @@ export class llenaRevenimientoComponent implements OnInit{
   }
   
   agregaRegistro(){
+    if(this.maxNoOfRegistrosRev == this.numberOfRegistros){
+      window.alert("Has alcanzado el número máximo de registros.");
+      return;
+    }
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();

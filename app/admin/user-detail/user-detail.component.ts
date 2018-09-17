@@ -14,15 +14,6 @@ import {
     FormBuilder
 } from '@angular/forms';
 
-export class Password
-{
-  constructor(
-    public password1: string, 
-    public npassword: string, 
-
-    ) {  }
-
-}
 
 @Component({
   selector: 'app-user-detail',
@@ -30,19 +21,23 @@ export class Password
   styleUrls: ['./user-detail.component.css','../../loadingArrows.css']
 })
 export class UserDetailComponent implements OnInit {
+  foto: string;
+  estatus: string;
+  submitted = false;
+  hidden = true;
+  mis_rolesActivos: Array<any>;
+  mis_lab: Array<any>;
+  imgUrl = "";
+  cargando= 3;
+  onSubmit() { this.submitted = true; }
 
-    id_usuario: string ;
-    foto: string;
-    estatus: string;
-    submitted = false;
-    hidden = true;
-    mis_rolesActivos: Array<any>;
-    mis_lab: Array<any>;
-    imgUrl = "";
-    cargando= 3;
-    onSubmit() { this.submitted = true; }
+  userForm: FormGroup;
 
-     userForm: FormGroup;
+  passwordForm: FormGroup;
+
+  Password={
+            password1: '',
+            npassword: ''};
 
   Usuario= {
             id_usuario: '',
@@ -62,8 +57,7 @@ export class UserDetailComponent implements OnInit {
     actBut=false;
     resppass= false;
     exitoCon = false;
-    password1: string;
-    npassword: string;
+
     id: string;
     size: number;
     
@@ -106,25 +100,33 @@ export class UserDetailComponent implements OnInit {
 
 
     this.userForm = new FormGroup({
-      'id_usuario':         new FormControl( { value:this.Usuario.id_usuario, disabled: true },  [Validators.required]), 
-      'apellido':           new FormControl( { value:this.Usuario.apellido, disabled: this.hidden },  [Validators.required]), 
-      'nombre':             new FormControl( { value:this.Usuario.nombre, disabled: this.hidden },  [Validators.required]), 
-      'rol_usuario_id':     new FormControl( { value:this.Usuario.rol_usuario_id, disabled: this.hidden },  [Validators.required]), 
-      'nss':                new FormControl( { value:this.Usuario.nss, disabled: this.hidden }, ), 
-      'laboratorio_id':     new FormControl( { value:this.Usuario.laboratorio_id, disabled: this.hidden },  [Validators.required]), 
-      'contrasena':         new FormControl( { value:this.Usuario.contrasena, disabled: this.hidden },  [Validators.required]), 
-      'fechaDeNac':         new FormControl( { value:this.Usuario.fechaDeNac, disabled: this.hidden },  [Validators.required]), 
-      'email':              new FormControl( { value: this.Usuario.email, disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
+      'id_usuario':         new FormControl( { value:this.Usuario.id_usuario,       disabled: true },  [Validators.required]), 
+      'apellido':           new FormControl( { value:this.Usuario.apellido,         disabled: this.hidden },  [Validators.required]), 
+      'nombre':             new FormControl( { value:this.Usuario.nombre,           disabled: this.hidden },  [Validators.required]), 
+      'rol_usuario_id':     new FormControl( { value:this.Usuario.rol_usuario_id,   disabled: this.hidden },  [Validators.required]), 
+      'nss':                new FormControl( { value:this.Usuario.nss,              disabled: this.hidden }), 
+      'laboratorio_id':     new FormControl( { value:this.Usuario.laboratorio_id,   disabled: this.hidden },  [Validators.required]), 
+      'fechaDeNac':         new FormControl( { value:this.Usuario.fechaDeNac,       disabled: this.hidden },  [Validators.required]), 
+      'email':              new FormControl( { value:this.Usuario.email,            disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
     });
 
+
+    this.passwordForm = new FormGroup({
+      'password1':          new FormControl( { value:this.Password.password1,    disabled: false },  [Validators.required]), 
+      'npassword':          new FormControl( { value:this.Password.npassword,    disabled: false },  [Validators.required]), 
+    });
   }
 
+  get password1()       { return this.passwordForm.get('password1'); }
+  get npassword()       { return this.passwordForm.get('npassword'); }
+
+
+  get id_usuario()       { return this.userForm.get('id_usuario'); }
   get apellido()         { return this.userForm.get('apellido'); }
   get nombre()           { return this.userForm.get('nombre'); }
   get rol_usuario_id()   { return this.userForm.get('rol_usuario_id'); }
   get direccion()        { return this.userForm.get('direccion'); }
   get laboratorio_id()   { return this.userForm.get('laboratorio_id'); }
-  get contrasena()       { return this.userForm.get('contrasena'); }
   get fechaDeNac()       { return this.userForm.get('fechaDeNac'); }
   get email()            { return this.userForm.get('email'); }
 
@@ -166,35 +168,33 @@ export class UserDetailComponent implements OnInit {
      this.exitoCon = false;
   }
 
-   guardarContrasena(password1: string, npassword: string){
-     this.actBut = false;
-     this.desBut = true;
-     if(password1 == npassword && password1 != null)
-     {
-       this.postContrasena(password1);
-       this.exitoCon = true;
-       //setTimeout(this.switchAlerta(this.exitoCon), 8000);
-     }
-     else{
-       this.resppass = true;
-     }
-     
-   }
+  guardarContrasena(){
+    this.actBut = false;
+    this.desBut = true;
+    if(this.passwordForm.value.password1 == this.passwordForm.value.npassword && this.passwordForm.value.password1 != null){
+      this.postContrasena();
+      this.exitoCon = true;
+      //setTimeout(this.switchAlerta(this.exitoCon), 8000);
+    }
+    else{
+      this.resppass = true;
+    }
+  }
 
-   postContrasena(password1: string){
-     let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
-     this.data.currentGlobal.subscribe(global => this.global = global);
-     let formData:FormData = new FormData();
-     formData.append('function', 'upDateContrasena');
-     formData.append('constrasena', password1);
-     formData.append('id_usuario', this.id);
+  postContrasena(){
+    let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let formData:FormData = new FormData();
+    formData.append('function', 'upDateContrasena');
+    formData.append('constrasena', this.passwordForm.value.password1);
+    formData.append('id_usuario', this.id);
 
-        formData.append('rol_usuario_id', "1001");
-        formData.append('token', this.global.token);
-        this.http.post(url, formData).subscribe(res => {
-                                              res.json();
-                                              this.upContValidator(res.json());
-                                            });
+    formData.append('rol_usuario_id', "1001");
+    formData.append('token', this.global.token);
+    this.http.post(url, formData).subscribe(res => {
+                                          res.json();
+                                          this.upContValidator(res.json());
+                                        });
    }
 
    upContValidator(respuesta: any){
@@ -233,9 +233,8 @@ export class UserDetailComponent implements OnInit {
     console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
-  llenaLaboratorio(resp: any)
-  {
-        console.log(resp);
+  llenaLaboratorio(resp: any){
+    console.log(resp);
     this.mis_lab= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
@@ -247,8 +246,7 @@ export class UserDetailComponent implements OnInit {
   }
 
 
-  mostrar()
-  {
+  mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
 
@@ -269,7 +267,7 @@ export class UserDetailComponent implements OnInit {
     formData.append('rol_usuario_id',     '1001');
 
 
-    formData.append('id_usuario',         this.userForm.value.id_usuario);
+    formData.append('id_usuario',         this.userForm.getRawValue().id_usuario);
     formData.append('nombre',             this.userForm.value.nombre);
     formData.append('apellido',           this.userForm.value.apellido);
     formData.append('laboratorio_id',     this.userForm.value.laboratorio_id);
@@ -300,15 +298,15 @@ export class UserDetailComponent implements OnInit {
   llenado(respuesta: any){
     console.log(respuesta);
     this.userForm.patchValue({
-      id_usuario: respuesta.id_usuario,
-      apellido: respuesta.apellido,
-      nombre: respuesta.nombre,
-      email: respuesta.email,
-      rol_usuario_id: respuesta.rol_usuario_id,
-      nss: respuesta.nss,
-      laboratorio_id: respuesta.laboratorio_id,
-      contrasena: respuesta.contrasena,
-      fechaDeNac:respuesta.fechaDeNac,
+      id_usuario:       respuesta.id_usuario,
+      apellido:         respuesta.apellido,
+      nombre:           respuesta.nombre,
+      email:            respuesta.email,
+      rol_usuario_id:   respuesta.rol_usuario_id,
+      nss:              respuesta.nss,
+      laboratorio_id:   respuesta.laboratorio_id,
+      contrasena:       respuesta.contrasena,
+      fechaDeNac:       respuesta.fechaDeNac,
 
     });
     if(respuesta.isRolActive==0){
@@ -325,9 +323,9 @@ export class UserDetailComponent implements OnInit {
       this.imgUrl= this.global.assetsRoot+respuesta.foto;
     }
     setTimeout(()=>{  
-                     this.cargando=this.cargando-1;
-                     console.log("llenado this.cargando: "+this.cargando);
-                     }, 0);
+      this.cargando=this.cargando-1;
+      console.log("llenado this.cargando: "+this.cargando);
+    }, 0);
   }
 
   addRol(rol_usuario_id: any,rol: any){
@@ -364,8 +362,4 @@ export class UserDetailComponent implements OnInit {
     }
   }
 
-   model2= new Password(
-                         this.password1,
-                         this.npassword
-                        )
 }
