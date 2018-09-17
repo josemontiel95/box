@@ -18,12 +18,12 @@ import {
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'] 
+  styleUrls: ['./dashboard.component.css','../../loadingArrows.css'] 
 })
 export class DashboardComponent implements OnInit {
 
   global: Global;
-  cargando= 1;
+  cargando= 5;
       mis_tipos: Array<any>;
     mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
@@ -46,8 +46,19 @@ export class DashboardComponent implements OnInit {
    hiddenDetail = true;
    hiddenHerramienta =true;
    hiddenFormato= true;
+   hiddenBotonFormato = false;
    hiddenFormatoDispo = true;
    hiddenTecnicos: any;
+
+   edicionJLab= false;
+   ejecucionJBrigada = false;
+   terminadoJBrigada = false;
+   terminadoJLab = false;
+
+   mensajeStatus = "";
+   formatoStatus;
+
+
    pL;
    
    forma={
@@ -89,7 +100,7 @@ export class DashboardComponent implements OnInit {
        this.hiddenTecnicos = true;
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
-    this.cargando=2;
+    this.cargando=5;
 
     let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -142,28 +153,27 @@ export class DashboardComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_ordenDeTrabajo', this.id);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+    this.http.get(url, {search}).subscribe(res => {this.llenado(res.json());
+                                                  this.statusOrdenTrabajo(res.json());});
 
-    this.ordenForm = new FormGroup({
-      'area': new FormControl( {value: this.Orden.area, disabled: this.hidden },  [Validators.required]), 
-      'id_ordenDeTrabajo': new FormControl({value: this.Orden.id_ordenDeTrabajo , disabled: this.hidden },  [ Validators.required]),
-      'cotizacion_id': new FormControl({value: this.Orden.cotizacion_id, disabled: this.hidden },  [  Validators.required]),
-      'id_cliente': new FormControl({value: this.Orden.id_cliente, disabled: this.hidden },  [  Validators.required]), 
-      'obra_id': new FormControl({value: this.Orden.obra_id, disabled: this.hidden },  [  Validators.required]),
-      'lugar': new FormControl({value: this.Orden.lugar, disabled: this.hidden },  [  Validators.required]), 
-      'telefonoDeContacto': new FormControl( {value: this.Orden.telefonoDeContacto, disabled: this.hidden },  [  Validators.required,Validators.pattern("^([0-9])*$")]),
-      'nombreContacto': new FormControl({value: this.Orden.nombreContacto, disabled: this.hidden },  [  Validators.required]), 
-      'actividades': new FormControl({value: this.Orden.actividades, disabled: this.hidden },  [  Validators.required]), 
-      'condicionesTrabajo': new FormControl({value: this.Orden.condicionesTrabajo, disabled: this.hidden },  [  Validators.required]), 
-      'jefe_brigada_id': new FormControl({value: this.Orden.jefe_brigada_id, disabled: this.hidden },  [  Validators.required]), 
-      'fechaInicio': new FormControl({value: this.Orden.fechaInicio, disabled: this.hidden },  [  Validators.required]), 
-      'fechaFin': new FormControl({value: this.Orden.fechaFin, disabled: this.hidden },  [  Validators.required]), 
-      'horaInicio': new FormControl({value: this.Orden.horaInicio, disabled: this.hidden },  [  Validators.required]), 
-      'horaFin': new FormControl({value: this.Orden.horaFin, disabled: this.hidden },  [  Validators.required]), 
-      'observaciones': new FormControl({value: this.Orden.observaciones, disabled: this.hidden }),       
-      'laboratorio_id': new FormControl({value: this.Orden.laboratorio_id, disabled: this.hidden }, [  Validators.required]), 
-
-          });
+   this.ordenForm = new FormGroup({
+      'area':                 new FormControl({value: this.Orden.area,                 disabled: true },  [Validators.required]), 
+      'id_ordenDeTrabajo':    new FormControl({value: this.Orden.id_ordenDeTrabajo ,   disabled: true },  [ Validators.required]),
+      'id_cliente':           new FormControl({value: this.Orden.id_cliente,           disabled: true },  [  Validators.required]), 
+      'obra_id':              new FormControl({value: this.Orden.obra_id,              disabled: true },  [  Validators.required]),
+      'lugar':                new FormControl({value: this.Orden.lugar,                disabled: true },  [  Validators.required]), 
+      'telefonoDeContacto':   new FormControl({value: this.Orden.telefonoDeContacto,   disabled: true },  [  Validators.required,Validators.pattern("^([0-9])*$")]),
+      'nombreContacto':       new FormControl({value: this.Orden.nombreContacto,       disabled: true },  [  Validators.required]), 
+      'actividades':          new FormControl({value: this.Orden.actividades,          disabled: true },  [  Validators.required]), 
+      'condicionesTrabajo':   new FormControl({value: this.Orden.condicionesTrabajo,   disabled: true },  [  Validators.required]), 
+      'jefe_brigada_id':      new FormControl({value: this.Orden.jefe_brigada_id,      disabled: true },  [  Validators.required]), 
+      'fechaInicio':          new FormControl({value: this.Orden.fechaInicio,          disabled: true },  [  Validators.required]), 
+      'fechaFin':             new FormControl({value: this.Orden.fechaFin,             disabled: true },  [  Validators.required]), 
+      'horaInicio':           new FormControl({value: this.Orden.horaInicio,           disabled: true },  [  Validators.required]), 
+      'horaFin':              new FormControl({value: this.Orden.horaFin,              disabled: true },  [  Validators.required]), 
+      'observaciones':        new FormControl({value: this.Orden.observaciones,        disabled: this.hidden }),       
+    });
+  
 
       this.tipoForm = new FormGroup({'formato_tipo_id': new FormControl(  this.forma.formato_tipo_id)
           });
@@ -179,37 +189,21 @@ export class DashboardComponent implements OnInit {
 
       
 
-   get area() { return this.ordenForm.get('area'); }
-
-   get id_ordenDeTrabajo() { return this.ordenForm.get('id_ordenDeTrabajo'); }
-  
-   get cotizacion_id() { return this.ordenForm.get('cotizacion_id'); }
-
-   get id_cliente() { return this.ordenForm.get('id_cliente'); }
-   
-   get obra_id() { return this.ordenForm.get('obra_id'); }
-  
-   get lugar() { return this.ordenForm.get('lugar'); }
-
-   get telefonoDeContacto() { return this.ordenForm.get('telefonoDeContacto'); }
-   
-   get nombreContacto() { return this.ordenForm.get('nombreContacto'); }
-   
-   get actividades() { return this.ordenForm.get('actividades'); }
-   
-   get condicionesTrabajo() { return this.ordenForm.get('condicionesTrabajo'); }
-   
-   get jefe_brigada_id() { return this.ordenForm.get('jefe_brigada_id'); } 
-
-   get fechaInicio() { return this.ordenForm.get('fechaInicio'); } 
-
-   get fechaFin() { return this.ordenForm.get('fechaFin'); } 
-
-   get horaInicio() { return this.ordenForm.get('horaInicio'); } 
-
-   get horaFin() { return this.ordenForm.get('horaFin'); } 
-
-   get observaciones() { return this.ordenForm.get('observaciones'); } 
+   get area()                 { return this.ordenForm.get('area'); }
+   get id_ordenDeTrabajo()    { return this.ordenForm.get('id_ordenDeTrabajo'); }
+   get id_cliente()           { return this.ordenForm.get('id_cliente'); }
+   get obra_id()              { return this.ordenForm.get('obra_id'); }
+   get lugar()                { return this.ordenForm.get('lugar'); }
+   get telefonoDeContacto()   { return this.ordenForm.get('telefonoDeContacto'); }
+   get nombreContacto()       { return this.ordenForm.get('nombreContacto'); }
+   get actividades()          { return this.ordenForm.get('actividades'); }
+   get condicionesTrabajo()   { return this.ordenForm.get('condicionesTrabajo'); }
+   get jefe_brigada_id()      { return this.ordenForm.get('jefe_brigada_id'); } 
+   get fechaInicio()          { return this.ordenForm.get('fechaInicio'); } 
+   get fechaFin()             { return this.ordenForm.get('fechaFin'); } 
+   get horaInicio()           { return this.ordenForm.get('horaInicio'); } 
+   get horaFin()              { return this.ordenForm.get('horaFin'); } 
+   get observaciones()        { return this.ordenForm.get('observaciones'); }  
 
    get laboratorio_id() { return this.ordenForm.get('laboratorio_id'); } 
 
@@ -219,29 +213,46 @@ export class DashboardComponent implements OnInit {
 
    get pass() { return this.paseForm.get('pass'); }
 
-    mostrar()
-  {
+  mostrarDetalles(){
+    this.hiddenDetail = !this.hiddenDetail;
+    if(this.hiddenDetail == true)
+    {
+     this.hiddenDetail = false;
+    }
+  }
 
+  mostrarDetalles2(){
+     this.hiddenDetail = !this.hiddenDetail;
+  }
+  mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
-
     Object.keys(this.ordenForm.controls).forEach((controlName) => {
         this.ordenForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
     });
+    this.ordenForm.controls["id_ordenDeTrabajo"]['disable']();
+    this.ordenForm.controls["telefonoDeContacto"]['disable']();
+    this.ordenForm.controls["nombreContacto"]['disable']();
+    this.ordenForm.controls["id_cliente"]['disable']();
+
+    this.ordenForm.controls["area"]['disable']();
+    this.ordenForm.controls["jefe_brigada_id"]['disable']();
+    this.ordenForm.controls["obra_id"]['disable']();
+    this.ordenForm.controls["lugar"]['disable']();
+
+    this.ordenForm.controls["actividades"]['disable']();
+    this.ordenForm.controls["condicionesTrabajo"]['disable']();
+    this.ordenForm.controls["fechaInicio"]['disable']();
+    this.ordenForm.controls["fechaFin"]['disable']();
+
+    this.ordenForm.controls["horaInicio"]['disable']();
+    this.ordenForm.controls["horaFin"]['disable']();
   }
 
   mostrarHerramienta()
   {
     this.hiddenHerramienta = !this.hiddenHerramienta;
-
-
   }
-
-          mostrarDetalles2()
-  {
-     this.hiddenDetail = !this.hiddenDetail;
-  }
-
 
   pasarlista(){
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
@@ -266,6 +277,7 @@ export class DashboardComponent implements OnInit {
        location.reload();
      }
      else{
+          this.cargando=0;
        //window.alert("Insertado con exito.");
      }
    }
@@ -287,11 +299,6 @@ export class DashboardComponent implements OnInit {
     console.log("pasaTec :: this.ids: "+this.ids); false 
     console.log("pasaTec :: this.hiddenTecnicos: "+this.hiddenTecnicos); 1034
   }   
-
-  mostrarDetalles()
-  {
-     this.hiddenDetail = !this.hiddenDetail;
-  }
 
    regresaOrdenTrabajo(){
     this.router.navigate(['jefeBrigada/orden-trabajo']);
@@ -386,6 +393,73 @@ export class DashboardComponent implements OnInit {
     }
 
      
+  }//Fin llenado
+
+  obtenStatusFormatos(){
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getAllFormatos');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id);
+    console.log(search);
+    this.http.get(url, {search}).subscribe(res => {
+                                            console.log(res.json());
+                                            this.validaFormatosVacios(res.json());
+                                          });
+  }
+
+  validaFormatosVacios(res: any){
+
+    let isValid = true;
+    res.forEach(function (value) {
+      if(value.status == "0"){
+         isValid = false;
+      }
+    });
+
+    if(!isValid){
+      window.alert("Tienes al menos un formato incompleto, todos los formatos deben estar en ESTATUS:1 para completar esta orden de trabajo.");     
+    }else{
+          if(window.confirm("¿Estas seguro de marcar como completado la orden de trabajo? ya no podra ser editado.")){
+            this.completarOrden();
+          }
+    } 
+  } //FIN ValidaCamposVacios
+
+  completarOrden(){
+    this.cargando=1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'upStatusByID');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol); 
+    formData.append('id_ordenDeTrabajo', this.id);
+    this.http.post(url, formData).subscribe(res => {
+
+                                                     this.respuestaSwitch(res.json());
+                                                     this.statusOrdenTrabajo(res.json());
+                                                                                      });
+
+  }
+
+  statusOrdenTrabajo(respuesta:any){
+    this.formatoStatus= (Number(respuesta.status));
+
+    switch(Number(respuesta.status)){
+      case 1:
+        this.ejecucionJBrigada = true;
+        this.edicionJLab = true;
+        this.mensajeStatus = "ORDEN DE TRABAJO EN EJECUCIÓN";
+      break;
+
+      case 2:
+        this.edicionJLab = false;
+        this.hiddenBotonFormato = true;
+        this.mensajeStatus = "ORDEN TERMINADA POR EL JEFE DE BRIGADA";
+      break;
+    }
   }
 
   addCliente(id_cliente: any,cliente: any){
@@ -491,32 +565,31 @@ export class DashboardComponent implements OnInit {
     
   }
 
-    actualizarOrden()
-  {
+    actualizarOrden(){
+    console.log("crearOrdenTrabajo :: "+this.ordenForm.value.obra_id);
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    this.cargando=1;
     let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'upDateAdmin');
-    formData.append('token', this.global.token);           
-    formData.append('id_ordenDeTrabajo', this.id);
-     formData.append('rol_usuario_id',  this.global.rol);
-    formData.append('cotizacion_id',  this.ordenForm.value.cotizacion_id);
-    formData.append('area', this.ordenForm.value.area);           
-    formData.append('obra_id', this.ordenForm.value.obra_id);
-    formData.append('actividades',  this.ordenForm.value.actividades);
-    formData.append('condicionesTrabajo', this.ordenForm.value.condicionesTrabajo);
-    formData.append('fechaInicio', this.ordenForm.value.fechaInicio);           
-    formData.append('fechaFin', this.ordenForm.value.fechaFin);
-    formData.append('horaInicio',  this.ordenForm.value.horaInicio);
-    formData.append('horaFin', this.ordenForm.value.horaFin);           
-    formData.append('observaciones',this.ordenForm.value.observaciones);
-    formData.append('lugar',  this.ordenForm.value.lugar);
-    formData.append('jefe_brigada_id', this.ordenForm.value.jefe_brigada_id);
-    formData.append('laboratorio_id',  this.ordenForm.value.laboratorio_id);
+    formData.append('function', 'updateJefeLabo');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('area',                this.ordenForm.getRawValue().area);  
+    formData.append('id_ordenDeTrabajo',   this.ordenForm.getRawValue().id_ordenDeTrabajo);
+    formData.append('obra_id',             this.ordenForm.getRawValue().obra_id);
+    formData.append('lugar',               this.ordenForm.getRawValue().lugar);  
+    formData.append('actividades',         this.ordenForm.getRawValue().actividades);
+    formData.append('condicionesTrabajo',  this.ordenForm.getRawValue().condicionesTrabajo);  
+    formData.append('jefe_brigada_id',     this.ordenForm.getRawValue().jefe_brigada_id);
+    formData.append('fechaInicio',         this.ordenForm.getRawValue().fechaInicio);
+    formData.append('fechaFin',            this.ordenForm.getRawValue().fechaFin);
+    formData.append('horaInicio',          this.ordenForm.getRawValue().horaInicio);
+    formData.append('horaFin',             this.ordenForm.getRawValue().horaFin);
+    formData.append('observaciones',       this.ordenForm.value.observaciones);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
-                                            });
-    this.cargando = 1;
-    console.log(this.cargando);
+                                            } );
   }
  
 
