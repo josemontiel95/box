@@ -34,7 +34,11 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
   rowSelection;
   columnDefs;
   cargando= 1;
+  hiddenA = false;
+  hiddenB = false;
+  hiddenC = false;
   hidden = false;
+  locked =false;
   mis_concreteras: Array<any>;
  
   
@@ -76,7 +80,10 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_registrosRev', this.id_registro);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+    this.http.get(url, {search}).subscribe(res => {
+                                                    this.llenaRapido(res.json());
+                                                    this.llenado(res.json()); 
+                                                                              });
 
 
     url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
@@ -130,6 +137,18 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
 
     } 
     
+    llenaRapido(respuesta: any){
+      if(respuesta.status == 1){
+        this.hiddenB = true;
+        //this.mostrar();
+      }else if(respuesta.status >= 2){
+        this.hiddenA = true;
+        this.locked=true;
+        this.mostrar();
+      }else if(respuesta.status == 0){
+        this.hiddenC = true;
+      }
+    }
 
     llenado(respuesta: any){
     console.log(respuesta);
