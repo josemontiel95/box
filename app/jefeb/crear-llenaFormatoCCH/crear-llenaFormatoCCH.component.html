@@ -56,7 +56,7 @@
                  <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="tconcreto">TIPO DE CONCRETO</label> <!--disable-->
                     <select  class="form-control" required id="tconcreto" name="tconcreto" formControlName="tconcreto" (change)="onBlurTipoConcreto()">
-                          <option value="0" [disabled]="true">Selecciona un tipo de concreto...</option>
+                          <option value="" [disabled]="true">Selecciona un tipo de concreto...</option>
                           <option *ngFor="let tconcreto of tipoconcreto" [value]="tconcreto.id">
                                 {{tconcreto.tconcreto}}
                           </option>

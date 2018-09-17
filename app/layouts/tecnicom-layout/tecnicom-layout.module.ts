@@ -13,6 +13,7 @@ import { PendientesComponent } from '../../tecnicom/pendientes/pendientes.compon
 import { LlenaFooterComponent } from '../../tecnicom/llenaFooter/llenaFooter.component';
 import { LlenaFooterCuboComponent } from '../../tecnicom/llenaFooterCubo/llenaFooterCubo.component';
 import { LlenaFooterVigaComponent } from '../../tecnicom/llenaFooterViga/llenaFooterViga.component';
+import { dashboardCilindroComponent } from '../../tecnicom/dashboardCilindro/dashboardCilindro.component';
 import { PruebaCilindroComponent } from '../../tecnicom/pruebaCilindro/pruebaCilindro.component';
 import { PruebaVigaComponent } from '../../tecnicom/pruebaViga/pruebaViga.component';
 import { PruebaCuboComponent } from '../../tecnicom/pruebaCubo/pruebaCubo.component';
@@ -65,6 +66,7 @@ import { ToastrModule } from 'ngx-toastr';
   LlenaFooterComponent,
   LlenaFooterCuboComponent,
   LlenaFooterVigaComponent,
+  dashboardCilindroComponent,
   PruebaCilindroComponent,
   PruebaVigaComponent,
   GridComponent,
