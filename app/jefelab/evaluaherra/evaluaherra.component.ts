@@ -39,6 +39,7 @@ export class EvaluaHerraComponent implements OnInit {
   tipoForm: FormGroup;
   paseForm: FormGroup;
    id: string;
+   idher: string;
  
    mis_cli: Array<any>;
    mis_obras: Array<any>;
@@ -70,7 +71,7 @@ export class EvaluaHerraComponent implements OnInit {
         'observaciones': new FormControl( this.forma.observaciones,  [Validators.required])
           });
 
- 
+       console.log(this.id);
       }
 
       
@@ -91,16 +92,13 @@ export class EvaluaHerraComponent implements OnInit {
         formData.append('condicion', this.tipoForm.value.condicion);
         formData.append('rol_usuario_id', this.global.rol);
         formData.append('token', this.global.token);
-        formData.append('id_herramienta', this.id );
+        formData.append('id_herramienta', this.idher );
         formData.append('observaciones', this.tipoForm.value.observaciones);    
         
         this.http.post(url, formData).subscribe(res => {
                                                   console.log(res);
                                               this.respuestaSwitch(res.json());
                                             });
-        this.hiddenw = false
-   setTimeout(() =>{this.hiddenw = true},1000);   
-   this.hidden = !this.hidden;  
   }
 
    respuestaSwitch(res: any){
@@ -111,6 +109,26 @@ export class EvaluaHerraComponent implements OnInit {
      }
      else{
        window.alert("Insertado con exito.");
+       this.cargando = 0;
+       //this.regresaOrdenTrabajo2();
+       this.hiddenw = false
+       setTimeout(() =>{this.hiddenw = true},1000);   
+       this.hidden = !this.hidden;  
+     }
+   }
+
+   respuestaSwitchFinOrden(res: any){
+     console.log(res);
+     if(res.error!= 0){
+       //window.alert("Intentalo otra vez");
+       window.alert(res.estatus);
+       location.reload();
+     }
+     else{
+       window.alert("Insertado con exito.");
+       this.cargando = 0;
+       //this.regresaOrdenTrabajo2();
+       this.regresaOrdenTrabajo2();
      }
    }
 
@@ -120,63 +138,70 @@ export class EvaluaHerraComponent implements OnInit {
     
  
 
-   regresaOrdenTrabajo(){
+  regresaOrdenTrabajo(){
     this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/'+ this.id]);
   }
 
 
-     regresaOrdenTrabajo2(){
+  regresaOrdenTrabajo2(){
     this.router.navigate(['jefeLaboratorio/orden-trabajo/']);
   }
 
 
   onSubmit() { this.submitted = true; }
 
+  TerminaOrdenTrabajo(){
+    this.cargando=1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'completeOrden');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol); 
+    formData.append('id_ordenDeTrabajo', this.id);
+    this.http.post(url, formData).subscribe(res => {
+                                                     this.respuestaSwitchFinOrden(res.json());
+                                                     
+                                                                                      });
+  }
+
+/*SHIT TO BE DELETED
+  this.auxx=aux3;
+*/
+
  
-    evaHerra(aux3: any)
-     {
+  evaHerra(aux3: any){
+    console.log(aux3);
+    this.idher = aux3.ids;
+    console.log(this.idher);
    
-    this.auxx=aux3;
     if(this.hidden  == true){
-   this.hidden  = !this.hidden;
-  }
-  else{
-    this.hidden = true;
-     setTimeout(() =>{this.hidden = false},1000);
-   }
+      this.hidden  = !this.hidden;
+    }
+    else{
+       this.hidden = true;
+       setTimeout(() =>{this.hidden = false},1000);
+    }
 
-     console.log(aux3);
-     if( isNaN(aux3) == true )
-     {
-     this.tipoForm.patchValue({
-       condicion: aux3,
-       observaciones: ""
-        });
-     }
-     else
-     {
-       if(aux3 == 5)
-       {
-         this.hidden  = !this.hidden;
-         this.regresaOrdenTrabajo2();
-       }
-   
-       this.id = aux3;         
+    console.log(aux3);
+
+    if(!aux3.error){
+      this.tipoForm.patchValue({
+        condicion: aux3.cond,
+        observaciones: ""
+      });
+    }
+    else{
+        this.hidden  = !this.hidden;
+        this.TerminaOrdenTrabajo();
+        this.idher = aux3.ids;         
      
-
-     }
-
-
-   console.log(this.tipoForm.value.condicion);
-   console.log(this.id);
-   console.log(this.error);
-   console.log(this.hidden);
+      
+    }
+    console.log(this.tipoForm.value.condicion);
+    console.log(this.id);
+    console.log(aux3.error);
+    console.log(this.hidden);
+    
   }
-
-
-
- 
-
- 
-
 }

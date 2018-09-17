@@ -74,8 +74,6 @@ export class HerramientaGridComponent implements OnInit  {
   eliminaHerr(ids: any) 
   {
     this.eliminaHerra.emit(ids);
-
-
   }
 
 
@@ -88,8 +86,9 @@ export class HerramientaGridComponent implements OnInit  {
       this.rowData =repuesta;
       if(this.error == 5)
       {
-        this.evaluaHerr(this.error);
+        this.evaluaHerr({"error":true});
         console.log(this.error);
+        //this.router.navigate(['jefeLaboratorio/orden-trabajo/']);
       }
     }
   }
@@ -107,8 +106,9 @@ export class HerramientaGridComponent implements OnInit  {
       ids += selectedRow.id_herramienta;
     });
    this.eliminaHerr(id);
-   this.evaluaHerr(ids);
-   this.evaluaHerr(cond);
+   //this.evaluaHerr(ids);
+   this.evaluaHerr({"ids":ids,"cond":cond,"error":false});
+   //this.evaluaHerr(cond);
 
 
   }
