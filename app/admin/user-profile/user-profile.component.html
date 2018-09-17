@@ -19,10 +19,7 @@
               <div class="col-md-6 col-12 ">
                 <div class="form-group">
                   <label for="id_usuario">Ctrl</label> 
-                  <input type="text" class="form-control" id="id_usuario"
-                    required 
-                    name="id_usuario"
-                    placeholder="Puesto" formControlName="id_usuario" >
+                  <input type="text" class="form-control" id="id_usuario"required name="id_usuario"placeholder="Puesto" formControlName="id_usuario" >
                 </div>
               </div>
 
@@ -127,7 +124,7 @@
               <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-              <button class="btn btn-success" *ngIf="!hidden" [disabled]="userForm.invalid" (click)="actualizarUsuario(  ); ">
+              <button class="btn btn-success" *ngIf="!hidden" [disabled]="userForm.invalid" (click)="actualizarUsuario(); ">
                 <span><b> Guardar Cambios. </b></span>
               </button>
           </div>

@@ -84,11 +84,11 @@ export class UserProfileComponent implements OnInit {
                                                  this.llenadoValidator(res.json());});
 
     this.userForm = new FormGroup({
-      'id_usuario':     new FormControl( { value:this.Usuario.id_usuario, disabled: true },  [Validators.required]), 
+      'id_usuario':     new FormControl( { value:this.Usuario.id_usuario, disabled: true }), 
       'apellido':       new FormControl( { value:this.Usuario.apellido, disabled: this.hidden },  [Validators.required]), 
       'nombre':         new FormControl( { value:this.Usuario.nombre, disabled: this.hidden },  [Validators.required]), 
       'rol_usuario_id': new FormControl( { value:this.Usuario.rol_usuario_id, disabled: this.hidden },  [Validators.required]), 
-      'nss':            new FormControl( { value:this.Usuario.nss, disabled: this.hidden }, ), 
+      'nss':            new FormControl( { value:this.Usuario.nss, disabled: this.hidden } ), 
       'laboratorio_id': new FormControl( { value:this.Usuario.laboratorio_id, disabled: this.hidden },  [Validators.required]), 
       'fechaDeNac':     new FormControl( { value:this.Usuario.fechaDeNac, disabled: this.hidden },  [Validators.required]), 
       'email':          new FormControl( { value: this.Usuario.email, disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
@@ -177,7 +177,7 @@ export class UserProfileComponent implements OnInit {
     formData.append('rol_usuario_id',     '1001');
 
 
-    formData.append('id_usuario',         this.userForm.value.id_usuario);
+    formData.append('id_usuario',         this.userForm.getRawValue().id_usuario);
     formData.append('nombre',             this.userForm.value.nombre);
     formData.append('apellido',           this.userForm.value.apellido);
     formData.append('laboratorio_id',     this.userForm.value.laboratorio_id);

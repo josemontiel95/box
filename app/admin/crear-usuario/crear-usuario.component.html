@@ -18,7 +18,7 @@
                 <div class="form-group">
                   <label for="rol_usuario_id">Rol</label> <!--tipo de credencial referido a puestos tales como jefe de laboratorio-->
                   <select   class="form-control"  id="rol_usuario_id" required  name="rol_usuario_id" placeholder="Puesto" formControlName="rol_usuario_id">
-                    <option value="Selecciona un rol..."  selected>Selecciona un rol...</option>
+                    <option value="" selected>Selecciona un rol...</option>
                     <option *ngFor="let puesto of mis_roles" [value]="puesto.id_rol_usuario">
                       {{puesto.rol}}
                     </option>
@@ -32,7 +32,7 @@
                 <div class="form-group">
                   <label for="laboratorio_id">Laboratorio</label> 
                   <select   class="form-control"  id="laboratorio_id" required name="laboratorio_id" placeholder="Laboratorio" formControlName="laboratorio_id">
-                    <option value="Selecciona un Laboratorio..." selected>Selecciona un Laboratorio...</option>
+                    <option value="" selected>Selecciona un Laboratorio...</option>
                     <option *ngFor="let lab of mis_lab" [value]="lab.id_laboratorio">
                       {{lab.laboratorio}}
                     </option>

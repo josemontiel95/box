@@ -56,16 +56,16 @@ export class UserProfileComponent implements OnInit {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando=3;
 
-  let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
-  let search = new URLSearchParams();
-  search.set('function', 'getForDroptdownAdmin');
-  search.set('token', this.global.token);
-  search.set('rol_usuario_id', this.global.rol);
-  this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
+    let url = `${this.global.apiRoot}/rol/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getForDroptdownAdmin');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {this.llenaRoles(res.json());
                                                  this.rolValidator(res.json());
                                                 });
 
-     url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
+    url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
@@ -76,39 +76,33 @@ export class UserProfileComponent implements OnInit {
 
 
     url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
-	 search = new URLSearchParams();
-	search.set('function', 'getIDByToken');
+	  search = new URLSearchParams();
+	  search.set('function', 'getIDByToken');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-	this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
+	  this.http.get(url, {search}).subscribe(res => {this.llenado(res.json()); 
                                                  this.llenadoValidator(res.json());});
 
     this.userForm = new FormGroup({
-  'id_usuario': new FormControl( { value:this.Usuario.id_usuario, disabled: true },  [Validators.required]), 
-  'apellido': new FormControl( { value:this.Usuario.apellido, disabled: this.hidden },  [Validators.required]), 
-  'nombre': new FormControl( { value:this.Usuario.nombre, disabled: this.hidden },  [Validators.required]), 
-  'rol_usuario_id': new FormControl( { value:this.Usuario.rol_usuario_id, disabled: this.hidden },  [Validators.required]), 
-  'nss': new FormControl( { value:this.Usuario.nss, disabled: this.hidden }, ), 
-  'laboratorio_id': new FormControl( { value:this.Usuario.laboratorio_id, disabled: this.hidden },  [Validators.required]), 
-  'fechaDeNac': new FormControl( { value:this.Usuario.fechaDeNac, disabled: this.hidden },  [Validators.required]), 
-   'email': new FormControl({ value: this.Usuario.email, disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
-   });
+      'id_usuario':         new FormControl( { value:this.Usuario.id_usuario,       disabled: true },  [Validators.required]), 
+      'apellido':           new FormControl( { value:this.Usuario.apellido,         disabled: this.hidden },  [Validators.required]), 
+      'nombre':             new FormControl( { value:this.Usuario.nombre,           disabled: this.hidden },  [Validators.required]), 
+      'rol_usuario_id':     new FormControl( { value:this.Usuario.rol_usuario_id,   disabled: this.hidden },  [Validators.required]), 
+      'nss':                new FormControl( { value:this.Usuario.nss,              disabled: this.hidden }), 
+      'laboratorio_id':     new FormControl( { value:this.Usuario.laboratorio_id,   disabled: this.hidden },  [Validators.required]), 
+      'fechaDeNac':         new FormControl( { value:this.Usuario.fechaDeNac,       disabled: this.hidden },  [Validators.required]), 
+      'email':              new FormControl( { value:this.Usuario.email,            disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*") ])
+    });
 
   }
 
-  get apellido() { return this.userForm.get('apellido'); }
-
-  get nombre() { return this.userForm.get('nombre'); }
-
+  get apellido()       { return this.userForm.get('apellido'); }
+  get nombre()         { return this.userForm.get('nombre'); }
   get rol_usuario_id() { return this.userForm.get('rol_usuario_id'); }
-
-  get direccion() { return this.userForm.get('direccion'); }
-
+  get direccion()      { return this.userForm.get('direccion'); }
   get laboratorio_id() { return this.userForm.get('laboratorio_id'); }
-
-  get fechaDeNac() { return this.userForm.get('fechaDeNac'); }
-
-  get email() { return this.userForm.get('email'); }
+  get fechaDeNac()     { return this.userForm.get('fechaDeNac'); }
+  get email()          { return this.userForm.get('email'); }
 
 
   rolValidator(repuesta: any){
@@ -117,7 +111,6 @@ export class UserProfileComponent implements OnInit {
       window.alert(repuesta.estatus);
     }
     else{
-      
     }
   }
 
@@ -127,7 +120,6 @@ export class UserProfileComponent implements OnInit {
       window.alert(repuesta.estatus);
     }
     else{
-      
     }
   }
 
@@ -141,62 +133,61 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-
-    llenaRoles(resp: any)
+  llenaRoles(resp: any){
+    console.log(resp);
+    this.mis_roles= new Array(resp.length);
+    var j=resp.length-1;
+    for (var _i = 0; _i < resp.length; _i++ )
     {
-        console.log(resp);
-      this.mis_roles= new Array(resp.length);
-      var j=resp.length-1;
-      for (var _i = 0; _i < resp.length; _i++ )
-      {
-        this.mis_roles[_i]=resp[j];
-        j--;
-      }
-      this.cargando=this.cargando-1;
-      console.log("llenaTipos this.cargando: "+this.cargando);
+      this.mis_roles[_i]=resp[j];
+      j--;
     }
+    this.cargando=this.cargando-1;
+    console.log("llenaTipos this.cargando: "+this.cargando);
+  }
 
-    llenaLaboratorio(resp: any)
+  llenaLaboratorio(resp: any){
+    console.log(resp);
+
+    this.mis_lab= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ )
     {
-       console.log(resp);
-
-      this.mis_lab= new Array(resp.length);
-      for (var _i = 0; _i < resp.length; _i++ )
-      {
-        this.mis_lab[_i]=resp[_i];
-      }
-      this.cargando=this.cargando-1;
-      console.log("llenaTipos this.cargando: "+this.cargando);
+      this.mis_lab[_i]=resp[_i];
     }
+    this.cargando=this.cargando-1;
+    console.log("llenaTipos this.cargando: "+this.cargando);
+  }
 
-  mostrar()
-  {
+  mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
 
     Object.keys(this.userForm.controls).forEach((controlName) => {
         this.userForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
     });
+    this.userForm.controls['id_usuario']['disable']();
+    this.userForm.controls['laboratorio_id']['disable']();
+    this.userForm.controls['nss']['disable']();
+    this.userForm.controls['email']['disable']();
+    this.userForm.controls['rol_usuario_id']['disable']();
   }
 
 
-  actualizarUsuario()
-  {
+  actualizarUsuario(){
     let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'upDateAdmin');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', '1001');
+    formData.append('function',           'upDateAdmin');
+    formData.append('token',              this.global.token);
+    formData.append('rol_usuario_id',     this.global.rol);
 
-
-    formData.append('id_usuario', this.userForm.value.id_usuario);
-    formData.append('nombre', this.userForm.value.nombre);
-    formData.append('apellido', this.userForm.value.apellido);
-    formData.append('laboratorio_id', this.userForm.value.laboratorio_id);
-    formData.append('nss', this.userForm.value.nss);
-    formData.append('email', this.userForm.value.email);
-    formData.append('fechaDeNac', this.userForm.value.fechaDeNac);
-    formData.append('rol_usuario_id_new', this.userForm.value.rol_usuario_id);
+    formData.append('id_usuario',         this.userForm.getRawValue().id_usuario);
+    formData.append('nombre',             this.userForm.value.nombre);
+    formData.append('apellido',           this.userForm.value.apellido);
+    formData.append('laboratorio_id',     this.userForm.getRawValue().laboratorio_id);
+    formData.append('nss',                this.userForm.getRawValue().nss);
+    formData.append('email',              this.userForm.getRawValue().email);
+    formData.append('fechaDeNac',         this.userForm.value.fechaDeNac);
+    formData.append('rol_usuario_id_new', this.userForm.getRawValue().rol_usuario_id);
 
     this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
 
@@ -204,14 +195,11 @@ export class UserProfileComponent implements OnInit {
   }
 
   respuestaError(resp: any){
-    if(resp.error!=0)
-    {
+    if(resp.error!=0){
       window.alert(resp.estatus);
       location.reload();
-    }
-    else
-    {
-      location.reload();
+    }else{
+      this.mostrar();
     }
   }
 
@@ -220,8 +208,7 @@ export class UserProfileComponent implements OnInit {
     this.router.navigate(['jefeLaboratorio/insertar-foto/'+this.id]);
   }
 
-    llenado(respuesta: any)
-  {
+  llenado(respuesta: any){
     console.log(respuesta);
     this.userForm.patchValue({
       id_usuario: respuesta.id_usuario,
