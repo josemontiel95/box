@@ -37,6 +37,7 @@ export class PendientesComponent implements OnInit{
     {headerName: 'INFORME N&Uacute;MERO', field: 'informeNo' },    
     {headerName: 'CLAVE', field: 'claveEspecimen' },    
     {headerName: 'EDAD DE ENSAYE EN D&Iacute;AS', field: 'diasEnsaye' },
+    {headerName: 'Fecha de ensayo', field: 'fechaEnsayeAsignado' },
     {headerName: 'TIPO', field: 'tipo' },
     {headerName: 'ESTADO', field: 'estado' },
     {headerName: 'COMPLETADO', field: 'completado' },
