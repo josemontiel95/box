@@ -44,7 +44,7 @@ export class OrdenTrabajoComponent implements OnInit{
     {headerName: 'Fecha de Inicio', field: 'fechaInicio' },
     {headerName: 'Fecha de Fin', field: 'fechaFin' },
     {headerName: 'Activo', field: 'active' },
-
+    {headerName: 'Estatus', field: 'odtStatus' },
   ];
     this.rowSelection = "single";
     this.rowClassRules = {

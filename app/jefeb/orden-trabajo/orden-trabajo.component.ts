@@ -39,7 +39,7 @@ export class OrdenTrabajoComponent implements OnInit{
     {headerName: 'Condiciones de trabajo', field: 'condicionesTrabajo' },
     {headerName: 'Fecha de Inicio', field: 'fechaInicio' },
     {headerName: 'Fecha de Fin', field: 'fechaFin' },
-    {headerName: 'Obra Activa', field: 'active' }
+    {headerName: 'Estatus', field: 'odtStatus' },
   ];
     this.rowSelection = "single";
   }

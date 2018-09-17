@@ -220,7 +220,7 @@
               <span><b> Menos detalles </b></span>
             </button>    
             <div class="btn-group"  style="float: right; padding-left: 10%;">
-              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar(); mostrarDetalles();">
+              <button class="btn btn-info" *ngIf="hidden == true && !hiddenBotonFormato"  (click)="mostrar(); mostrarDetalles();">
                 <span><b> Cambiar Datos </b></span>
               </button>
 
@@ -311,7 +311,7 @@
           
           <h4 class="card-title">Formatos</h4>
            <div class="btn-group" style=" padding-left: 80%;" >
-            <button class="btn btn-info" *ngIf="!hiddenBotonFormato"  (click)="mostrarFormatos()">
+            <button class="btn btn-info" *ngIf="hiddenFormato && !hiddenBotonFormato"  (click)="mostrarFormatos()">
                 <span><b> Selecciona Formato </b></span>
             </button>
 
