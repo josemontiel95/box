@@ -93,7 +93,7 @@ export class GridComponent implements OnInit  {
     var tipo = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id   = selectedRow.id_herramienta;
+      id   = selectedRow.id_footerEnsayo;
       tipo = selectedRow.tipo;
     });
     switch(tipo){
