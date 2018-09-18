@@ -193,7 +193,7 @@ export class PruebaCilindroComponent implements OnInit{
   }
 
   llenarDespues(){
-    this.router.navigate(['tecnico/pendientes/']);
+    this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+this.id_Footer]);
   }
 
   registroCompletado(){
