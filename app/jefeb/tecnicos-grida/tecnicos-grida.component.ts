@@ -21,9 +21,6 @@ export class TecnicosGridAgregaComponent implements OnInit  {
 	  this.columnDefs = [
       {headerName: 'ID', field: 'id_cliente'},
       {headerName: 'Tecnico.', field: 'nombre'+'apellido' },
-
-
-      
     ];
     this.rowSelection = "single";
   }

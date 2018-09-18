@@ -61,25 +61,20 @@ export class HerramientaGridComponent implements OnInit  {
 
       //@Input( ) idh: any;
 
-    @Output() eliminaHerra = new EventEmitter<any>();
-    @Output() evaluaHerra = new EventEmitter<any>();
+  @Output() eliminaHerra = new EventEmitter<any>();
+  @Output() evaluaHerra = new EventEmitter<any>();
 
-    evaluaHerr(cond: any)
-    {
+  evaluaHerr(cond: any){
     this.evaluaHerra.emit(cond);
- 
+  }
 
-    }
-
-  eliminaHerr(ids: any) 
-  {
+  eliminaHerr(ids: any) {
     this.eliminaHerra.emit(ids);
   }
 
 
   llenaTabla(repuesta: any){
-
-      if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
+    if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
     }else{
@@ -94,7 +89,7 @@ export class HerramientaGridComponent implements OnInit  {
   }
 
    
- onSelectionChanged(event: EventListenerObject){
+  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
     var id = []; //array
     var cond = "";

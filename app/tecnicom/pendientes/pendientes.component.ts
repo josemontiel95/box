@@ -30,6 +30,7 @@ export class PendientesComponent implements OnInit{
   id = "";
   tipo = "";
   ruta = 0;
+  rowClassRules;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -43,6 +44,17 @@ export class PendientesComponent implements OnInit{
     {headerName: 'COMPLETADO', field: 'completado' },
   ];
     this.rowSelection = "single";
+    this.rowClassRules = {
+      "row-blue-warning": function(params) {
+        var color = params.data.color;
+        return color == 1;
+      },
+      "row-red-warning": function(params) {
+        var color = params.data.color;
+        return color == 2;
+      }
+    };
+
   }
 	  
   ngOnInit() {
