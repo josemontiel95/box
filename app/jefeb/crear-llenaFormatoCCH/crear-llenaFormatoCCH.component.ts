@@ -82,7 +82,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
       //window.alert("notRR es true, this.creaCCHForm.value.tconcreto: "+this.creaCCHForm.value.tconcreto);
       this.notRR = true;
       this.creaCCHForm.patchValue({
-         tconcreto: this.atconcreto,
+         tconcreto:  this.atconcreto,
          especimen1: this.aespecimen1,
          especimen2: this.aespecimen2,
          especimen3: this.aespecimen3,
