@@ -55,7 +55,8 @@ export class LlenaFooterComponent implements OnInit {
     }else{
           if(window.confirm("¿Estas seguro dar como completado el Footer de Cilindros del día?.")){
             //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
-            this.router.navigate(['tecnico/pruebaCilindro/'+this.id_Footer + '/'+this.id_Registro]);
+            //this.router.navigate(['tecnico/pruebaCilindro/'+this.id_Footer + '/'+this.id_Registro]);
+            this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+this.id_Footer]);
           }
     }
 

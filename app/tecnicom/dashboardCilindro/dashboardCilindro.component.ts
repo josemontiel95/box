@@ -24,6 +24,7 @@ import {
 export class dashboardCilindroComponent implements OnInit{
 
   id: string = "1001";
+  id_footer: string;
   id_orden: string;
   id_formato: string;
   id_registro: string;
@@ -39,8 +40,12 @@ export class dashboardCilindroComponent implements OnInit{
   mis_tipos: Array<any>;
   mis_lab: Array<any>;
   mis_cli: Array<any>;
-  mis_obras: Array<any>;
   mis_jefes: Array<any>;
+
+  mis_basculas: Array<any>;
+  mis_reglas: Array<any>;
+  mis_prensas: Array<any>;
+
   formatoStatus;
   maxNoOfRegistrosRev;
   numberOfRegistros;
@@ -48,23 +53,16 @@ export class dashboardCilindroComponent implements OnInit{
   formatoCCHForm: FormGroup;
 
         FormatoCCH = {
-        obra:'',
-        localizacion: '',
-        informe: '',
-        empresa:'',
-        direccion: '',
+        fechaEnsayo: '',
         observaciones:'',
-        tipo_especimen:'',
-        cono:'',
-        varilla:'',
-        flexometro:'',
-        termometro:''
+        bascula:'',
+        regla:'',
+        prensa:''
     }
 
    mis_conos: Array<any>;
    mis_varillas: Array<any>;
    mis_flexometro: Array<any>;
-   mis_termometro: Array<any>;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -82,8 +80,47 @@ export class dashboardCilindroComponent implements OnInit{
 	  
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id}); 
-    this.cargando=6;
+    this.route.params.subscribe( params => this.id_footer=params.id); 
+    this.cargando=0;
+
+    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getFooterByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_footerEnsayo', this.id_footer);
+    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+
+    url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    search = new URLSearchParams();
+
+    search.set('function', 'getForDroptdownBasculas');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {
+                                                    this.cargando = this.cargando+1
+                                                    this.llenaBascula(res.json()); 
+                                                    });
+
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownReglasVerFlex');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {
+                                                    this.cargando = this.cargando+1
+                                                    this.llenaReglas(res.json()); 
+                                                    });
+
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownPrensas');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {
+                                                    this.cargando = this.cargando+1
+                                                    this.llenaPrensas(res.json()); 
+                                                    });
+
+    /*
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -141,32 +178,23 @@ export class dashboardCilindroComponent implements OnInit{
     search.set('id_formatoRegistroRev', this.id_formato);
     this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) ); 
 
+    */
+
 
     this.formatoCCHForm = new FormGroup({
-      'obra':            new FormControl( {value: this.FormatoCCH.obra, disabled: this.hidden },  [Validators.required]),
-      'localizacion':    new FormControl( {value: this.FormatoCCH.localizacion, disabled: this.hidden },  [Validators.required]),
-      'informe':         new FormControl( {value: this.FormatoCCH.informe, disabled: this.hidden },  [Validators.required]),
-      'empresa':         new FormControl( {value: this.FormatoCCH.empresa, disabled: this.hidden },  [Validators.required]),
-      'direccion':       new FormControl( {value: this.FormatoCCH.direccion, disabled: this.hidden },  [Validators.required]),
+      'fechaEnsayo':         new FormControl( {value: this.FormatoCCH.fechaEnsayo, disabled: true }),
       'observaciones':   new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden }),       
-      'tipo_especimen':  new FormControl( {value: this.FormatoCCH.tipo_especimen, disabled: this.hidden },  [Validators.required]),
-      'cono':            new FormControl( {value: this.FormatoCCH.cono, disabled: this.hidden },  [Validators.required]),
-      'varilla':         new FormControl( {value: this.FormatoCCH.varilla, disabled: this.hidden },  [Validators.required]),
-      'flexometro':      new FormControl( {value: this.FormatoCCH.flexometro, disabled: this.hidden },  [Validators.required]),
+      'bascula':            new FormControl( {value: this.FormatoCCH.bascula, disabled: this.hidden },  [Validators.required]),
+      'regla':         new FormControl( {value: this.FormatoCCH.regla, disabled: this.hidden },  [Validators.required]),
+      'prensa':      new FormControl( {value: this.FormatoCCH.prensa, disabled: this.hidden },  [Validators.required]),
     });
   }
 
-   get obra()           { return this.formatoCCHForm.get('obra'); }
-   get localizacion()   { return this.formatoCCHForm.get('localizacion'); }
-   get informe()        { return this.formatoCCHForm.get('informe'); }
-   get empresa()        { return this.formatoCCHForm.get('empresa'); }
-   get direccion()      { return this.formatoCCHForm.get('direccion'); }
+   get fechaEnsayo()        { return this.formatoCCHForm.get('fechaEnsayo'); }
    get observaciones()  { return this.formatoCCHForm.get('observaciones'); }
-   get tipo_especimen() { return this.formatoCCHForm.get('tipo_especimen'); }
-   get cono()           { return this.formatoCCHForm.get('cono'); }
-   get varilla()        { return this.formatoCCHForm.get('varilla'); }
-   get flexometro()     { return this.formatoCCHForm.get('flexometro'); }
-   get termometro()     { return this.formatoCCHForm.get('termometro'); } 
+   get bascula()           { return this.formatoCCHForm.get('bascula'); }
+   get regla()        { return this.formatoCCHForm.get('regla'); }
+   get prensa()     { return this.formatoCCHForm.get('prensa'); }  
   
   mostrar(){
     this.hidden = !this.hidden;
@@ -176,17 +204,14 @@ export class dashboardCilindroComponent implements OnInit{
         this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
     });
     
-    this.formatoCCHForm.controls['obra']['disable']();
-    this.formatoCCHForm.controls['localizacion']['disable']();
-    this.formatoCCHForm.controls['empresa']['disable']();
-    this.formatoCCHForm.controls['direccion']['disable']();
-
     this.formatoCCHForm.controls['observaciones']['disable']();
     
-    this.formatoCCHForm.controls['cono']['disable']();
-    this.formatoCCHForm.controls['varilla']['disable']();
-    this.formatoCCHForm.controls['flexometro']['disable']();
+    this.formatoCCHForm.controls['bascula']['disable']();
+    this.formatoCCHForm.controls['regla']['disable']();
+    this.formatoCCHForm.controls['prensa']['disable']();
   }
+
+
 
   mostrarFooter(){
     this.hiddenf = !this.hiddenf;
@@ -196,12 +221,7 @@ export class dashboardCilindroComponent implements OnInit{
         this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
     });
 
-    this.formatoCCHForm.controls['obra']['disable']();
-    this.formatoCCHForm.controls['localizacion']['disable']();
-    this.formatoCCHForm.controls['informe']['disable']();
-    this.formatoCCHForm.controls['empresa']['disable']();
-    this.formatoCCHForm.controls['direccion']['disable']();
-    this.formatoCCHForm.controls['tipo_especimen']['disable']();
+    this.formatoCCHForm.controls['fechaEnsayo']['disable']();
 
   }
 
@@ -221,31 +241,28 @@ export class dashboardCilindroComponent implements OnInit{
     }
   }
 
+  llenado(respuesta:any){
+    console.log(respuesta);
 
-    
-  llenaObra(resp: any){
-    this.mis_obras= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
-      this.mis_obras[_i]=resp[_i];
-
-    }
-    console.log(this.mis_obras);
-    //this.cargando=this.cargando-1;
+    this.formatoCCHForm.patchValue({
+     fechaEnsayo:      respuesta.fecha,
+     observaciones:    respuesta.observaciones,
+     bascula:             respuesta.buscula_id,
+     regla:          respuesta.regVerFle_id,
+     prensa:       respuesta.prensa_id
+    });
+     this.formatoStatus=(respuesta.status == 0 ? true : false);
+     //this.cargando=this.cargando-1;
   }
 
-  
+ 
+  /*
   llenado(respuesta: any){
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({
-      obra:            respuesta.obra,
-      localizacion:    respuesta.localizacion,
-      informe:         respuesta.regNo,
-      empresa:         respuesta.razonSocial,
-      direccion:       respuesta.direccion,
+      fechaEnsayo:     respuesta.fechaEnsayo, //Falta ver el nombre real de la respuesta
       observaciones:   respuesta.observaciones,
-      tipo_especimen:  respuesta.localizacion,
       cono:            respuesta.cono_id,
       varilla:         respuesta.varilla_id,
       flexometro:      respuesta.flexometro_id,
@@ -256,7 +273,7 @@ export class dashboardCilindroComponent implements OnInit{
 
     this.cargando=this.cargando-1;
      
-  }
+  } */
 
   obtenStatusReg(){
     let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
@@ -312,45 +329,7 @@ export class dashboardCilindroComponent implements OnInit{
     this.formatoStatus=false;
     console.log(res);
   }
-  
-  agregaRegistro(){
-    if(this.maxNoOfRegistrosRev == this.numberOfRegistros){
-      window.alert("Has alcanzado el número máximo de registros.");
-      return;
-    }
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'initInsert');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('id_formatoRegistroRev', this.id_formato);  
-    this.http.post(url, formData).subscribe(res => {
-                                              console.log(res);
-                                              this.respuestaRegistro(res.json());                 
-                                            } );
     
-  }
-
-  actualizarInformeNo(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'updateHeader');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('id_formatoRegistroRev', this.id_formato);  
-    formData.append('regNo', this.formatoCCHForm.value.informe);
-    formData.append('localizacion', this.formatoCCHForm.value.tipo_especimen);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-
-
-  }
-
   actualizarFooter(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
@@ -361,9 +340,9 @@ export class dashboardCilindroComponent implements OnInit{
 
     formData.append('id_formatoRegistroRev', this.id_formato);  
     formData.append('observaciones', this.formatoCCHForm.value.observaciones);
-    formData.append('cono_id', this.formatoCCHForm.value.cono);
-    formData.append('varilla_id', this.formatoCCHForm.value.varilla);
-    formData.append('flexometro_id', this.formatoCCHForm.value.flexometro);
+    formData.append('cono_id', this.formatoCCHForm.value.bascula);
+    formData.append('varilla_id', this.formatoCCHForm.value.regla);
+    formData.append('flexometro_id', this.formatoCCHForm.value.prensa);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitchFooter(res.json());                 
                                             } );
@@ -406,47 +385,103 @@ export class dashboardCilindroComponent implements OnInit{
      }
    }
 
-  llenaConos(resp: any)
-  {
+  llenaBascula(resp: any){
     console.log(resp);
-    this.mis_conos= new Array(resp.length);
+    this.mis_basculas= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
-      this.mis_conos[_i]=resp[_i];
+      this.mis_basculas[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
-    console.log("llenaConos this.cargando: "+this.cargando);
+    console.log("llenaBascula this.cargando: "+this.cargando);
   }
 
-  llenaVarillas(resp: any)
-  {
+   llenaReglas(resp: any){
     console.log(resp);
-    this.mis_varillas= new Array(resp.length);
+    this.mis_reglas= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
-      this.mis_varillas[_i]=resp[_i];
+      this.mis_reglas[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
     console.log("llenaVarillas this.cargando: "+this.cargando);
   }
 
-  llenaFlexometro(resp: any)
-  {
+  llenaPrensas(resp: any){
     console.log(resp);
-    this.mis_flexometro= new Array(resp.length);
+    this.mis_prensas= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
-      this.mis_flexometro[_i]=resp[_i];
+      this.mis_prensas[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
-    console.log("llenaFlexometros this.cargando: "+this.cargando);
+    console.log("llenaPrensas this.cargando: "+this.cargando);
   }
 
-  regresaDashboard(){
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+ this.id_orden]);
+   onChangeBascula(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '1');
+    formData.append('valor', this.formatoCCHForm.value.bascula);
+    formData.append('id_footerEnsayo', this.id_footer);
+    this.http.post(url, formData).subscribe(res => {
+                                              console.log(this.id_footer);
+                                              this.validaRespuesta(res.json());                 
+                                            } );
   }
 
+  onChangeRegla(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '2');
+    formData.append('valor', this.formatoCCHForm.value.regla);
+    formData.append('id_footerEnsayo', this.id_footer);
+    this.http.post(url, formData).subscribe(res => {
+                                              console.log(this.id_footer);
+                                              this.validaRespuesta(res.json());                 
+                                            } );
+  }
+
+  onChangePrensa(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '3');
+    formData.append('valor', this.formatoCCHForm.value.prensa);
+    formData.append('id_footerEnsayo', this.id_footer);
+    this.http.post(url, formData).subscribe(res => {
+                                              console.log(this.id_footer);
+                                              this.validaRespuesta(res.json());                 
+                                            } );
+  }  
 
 
+  validaRespuesta(res:any){
+     console.log(res);
+     if(res.error!= 0){
+       window.alert("Intentalo otra vez");
+     }
+     else{
+               
+     }
+   }
+
+  regresaPendientes(){
+    this.router.navigate(['tecnico/pendientes/']);
+  }
 
 }
