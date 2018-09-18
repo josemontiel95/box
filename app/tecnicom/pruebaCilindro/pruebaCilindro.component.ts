@@ -36,7 +36,11 @@ export class PruebaCilindroComponent implements OnInit{
   rowSelection;
   columnDefs;
   cargando= 1;
+  hiddenA = false;
+  hiddenB = false;
+  hiddenC = false;
   hidden = false;
+  locked =false;
   mis_fallas: Array<any>;
  
   
@@ -79,11 +83,11 @@ export class PruebaCilindroComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_ensayoCilindro', this.id_Registro);
-    this.http.get(url, {search}).subscribe(res => {
+    this.http.get(url, {search}).subscribe(res =>{
+                                                    this.llenaRapido(res.json());
                                                     this.llenado(res.json());
-                                                    this.desactivaCampos(res.json());
-                                                  });
-
+                                                    //this.desactivaCampos(res.json()); 
+                                                                              });
 
     url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
     search = new URLSearchParams();
@@ -207,7 +211,7 @@ export class PruebaCilindroComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
-    this.router.navigate(['tecnico/pendientes/']);
+    this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+this.id_Footer]);
   }
 
   
@@ -397,12 +401,13 @@ export class PruebaCilindroComponent implements OnInit{
      }
    }
 
+/*
   desactivaCampos(res:any){
     if(res.completado == "SI"){
       this.ocultar();
     } 
    }
-
+*/
   ocultar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable'; 
@@ -452,4 +457,20 @@ export class PruebaCilindroComponent implements OnInit{
           }
     }
   } //FIN ValidaCamposVacios
+
+  llenaRapido(respuesta: any){
+    if(respuesta.status == 1){
+      this.hiddenB = true;
+      //this.mostrar();
+    }else if(respuesta.status >= 2){
+      this.hiddenA = true;
+      this.locked=true;
+      this.mostrar();
+    }else if(respuesta.status == 0){
+      this.hiddenC = true;
+      this.hidden = false;
+
+    }
+  }
+
 }

@@ -18,6 +18,7 @@ export class GridCilindrosComponent implements OnInit  {
   columnDefs;
   id_orden: string;
   id_footer: string;
+   rowClassRules;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -26,7 +27,19 @@ export class GridCilindrosComponent implements OnInit  {
     {headerName: 'CLAVE', field: 'claveEspecimen'},
     {headerName: 'ENSAYE EN DIAS', field: 'diasEnsayeFinal' }
   ];
+
     this.rowSelection = "single";
+
+    this.rowClassRules = {
+      "row-blue-warning": function(params) {
+        var status = params.data.status;
+        return status == 1;
+      },
+      "row-green-warning": function(params) {
+        var status = params.data.status;
+        return status > 1;
+      }
+    };
   }
 
   ngOnInit() {
