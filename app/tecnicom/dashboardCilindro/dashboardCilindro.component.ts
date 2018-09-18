@@ -247,11 +247,12 @@ export class dashboardCilindroComponent implements OnInit{
     this.formatoCCHForm.patchValue({
      fechaEnsayo:      respuesta.fecha,
      observaciones:    respuesta.observaciones,
-     bascula:             respuesta.buscula_id,
-     regla:          respuesta.regVerFle_id,
-     prensa:       respuesta.prensa_id
+     bascula:          respuesta.buscula_id,
+     regla:            respuesta.regVerFle_id,
+     prensa:           respuesta.prensa_id
     });
      this.formatoStatus=(respuesta.status == 0 ? true : false);
+     console.log(this.formatoStatus);
      //this.cargando=this.cargando-1;
   }
 
@@ -276,13 +277,12 @@ export class dashboardCilindroComponent implements OnInit{
   } */
 
   obtenStatusReg(){
-    let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllRegistrosByID');
+    search.set('function', 'getAllRegistrosFromFooterByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('id_formatoRegistroRev', this.id_formato);
-    console.log(search);
+    search.set('footerEnsayo_id', this.id_footer);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.validaRegistrosVacios(res.json());
@@ -312,13 +312,12 @@ export class dashboardCilindroComponent implements OnInit{
     console.log("formatoCompletado :: Sigo vivo");
     this.cargando=1;
     this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'completeFormato');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('id_formatoRegistroRev', this.id_formato);  
+    formData.append('id_footerEnsayo', this.id_footer);  
     this.http.post(url, formData).subscribe(res => {
       this.respuestaFormatoCompletado(res.json());
     });
@@ -327,29 +326,14 @@ export class dashboardCilindroComponent implements OnInit{
   respuestaFormatoCompletado(res: any){
     this.cargando=this.cargando-1;
     this.formatoStatus=false;
-    console.log(res);
+    console.log(res.status);
+    if(res.error==0){
+      window.alert("¡Exito! El Formato Se ha Completado");
+    }else{
+      window.alert(res.estatus);
+    }
   }
     
-  actualizarFooter(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'updateFooter');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('id_formatoRegistroRev', this.id_formato);  
-    formData.append('observaciones', this.formatoCCHForm.value.observaciones);
-    formData.append('cono_id', this.formatoCCHForm.value.bascula);
-    formData.append('varilla_id', this.formatoCCHForm.value.regla);
-    formData.append('flexometro_id', this.formatoCCHForm.value.prensa);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitchFooter(res.json());                 
-                                            } );
-
-
-  }
-
   respuestaSwitch(res: any){ 
      console.log(res);
      if(res.error!= 0){
@@ -358,17 +342,6 @@ export class dashboardCilindroComponent implements OnInit{
      }
      else{
           this.mostrar();         
-     }
-   }
-
-   respuestaSwitchFooter(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       location.reload();
-     }
-     else{
-          this.mostrarFooter();         
      }
    }
 

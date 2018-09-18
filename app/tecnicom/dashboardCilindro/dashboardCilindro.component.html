@@ -13,11 +13,12 @@
       <div class="card">
         <div class="card-header " >
           <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaPendientes();"></i>
+          <h4 style="text-align: center;" *ngIf="formatoStatus"class="card-title">En Ensaye por el Tecnico de Muestras</h4>
           <h4 style="text-align: center;" *ngIf="!formatoStatus"class="card-title">Esta formato esta completado y la edicion ya no esta permitida</h4>
         </div>
         <div class="card-body">
           <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
-              <button class="btn btn-default"  *ngIf="hiddenf == true && formatoStatus" (click)="obtenStatusReg();">
+              <button class="btn btn-success"  *ngIf="formatoStatus" (click)="obtenStatusReg();">
                 <span><b>FORMATO COMPLETADO</b></span>
               </button>
           </div>
@@ -32,7 +33,7 @@
       <div class="card  card-tasks">
         <div class="card-header" >
             <div class="card-header " >
-                  <h4 style="text-align: center;" *ngIf="!formatoStatus"class="card-title">ENSAYO A COMPRESI&Oacute;N DE CILINDROS DE CONCRETO HIDR&Aacute;ULICO</h4>
+                  <h4 style="text-align: center;" class="card-title">ENSAYO A COMPRESI&Oacute;N DE CILINDROS DE CONCRETO HIDR&Aacute;ULICO</h4>
             </div>
         </div>
         <div class="card-body">
@@ -149,10 +150,10 @@
             </div>
           </form>
           <div class="btn-group"  style="float: right; padding-right: 10%;">
-              <button class="btn btn-info" *ngIf="hiddenf"  (click)="mostrarFooter()">
+              <button class="btn btn-info" *ngIf="hiddenf && formatoStatus"  (click)="mostrarFooter()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hiddenf" [disabled]="formatoCCHForm.invalid" (click)="actualizarFooter();">
+            <button class="btn btn-success" *ngIf="!hiddenf && formatoStatus" [disabled]="formatoCCHForm.invalid" (click)="mostrarFooter();">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>
