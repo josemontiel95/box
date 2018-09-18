@@ -259,6 +259,16 @@ export class llenaRevenimientoComponent implements OnInit{
   }
 
   obtenStatusReg(){
+    window.alert("obtenStatusReg :: this.id_formato: "+this.id_formato);
+    if(0 == this.numberOfRegistros){
+      if(window.confirm("¿Estas seguro de que quieres marcar como completado sin agregar un solo registro?")){
+        this.formatoCompletado();
+        return;
+      }else{
+        return;
+      }
+    }
+
     let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllRegistrosByID');

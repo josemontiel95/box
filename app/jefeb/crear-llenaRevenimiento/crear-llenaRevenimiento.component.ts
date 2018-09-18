@@ -69,8 +69,7 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
     
   }
 
-  recibeFormatoID(res: any)
-  {
+  recibeFormatoID(res: any){
     this.id_formato= res.id_formatoRegistroRev;
     console.log(this.id_formato); 
   }
@@ -81,16 +80,16 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
      Si la respuesta es 0 siginifica que la insercion fue exitosa y
      Por lo tanto lo enviara a la ruta de llenaFormatoCCH con su id_formato 
      Parametrizado. */
-   respuestaSwitch(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert("Ocurrio un error");
-       location.reload();
-     }
-     else{
-       
-     }
-   }
+  respuestaSwitch(res: any){ 
+    console.log(res);
+    if(res.error!= 0){
+      window.alert("Ocurrio un error");
+      location.reload();
+    }
+    else{
+     
+    }
+  }
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);

@@ -343,6 +343,20 @@ export class llenaFormatoCCHComponent implements OnInit{
   }
 
   obtenStatusReg(){
+    if(0 == this.numberOfRegistros){
+       if(window.confirm("¿Estas seguro de que quieres marcar como completado sin agregar un solo registro?")){
+         this.formatoCompletado();
+         return;
+       }else{
+         return;
+       }
+    }else if(Number(this.numberOfRegistros)<Number(this.multiplosNoOfRegistrosCCH)){
+       if(window.confirm("Estas a punto mandar un formato con solo "+(Number(this.numberOfRegistros))+" registro. Recuerda que debes insertar de "+this.multiplosNoOfRegistrosCCH+" en "+this.multiplosNoOfRegistrosCCH+"\n ¿Deseas continuar?")){
+
+       }else{
+         return;
+       }
+    }
     let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllRegistrosByID');
@@ -357,19 +371,6 @@ export class llenaFormatoCCHComponent implements OnInit{
   }
 
   validaRegistrosVacios(res: any){
-    if(0 == this.numberOfRegistros){
-       if(window.confirm("¿Estas seguro de que quieres marcar como completado sin agregar un solo registro?")){
-
-       }else{
-         return;
-       }
-    }else if(Number(this.numberOfRegistros)<Number(this.multiplosNoOfRegistrosCCH)){
-       if(window.confirm("Estas a punto mandar un formato con solo "+(Number(this.numberOfRegistros))+" registro. Recuerda que debes insertar de "+this.multiplosNoOfRegistrosCCH+" en "+this.multiplosNoOfRegistrosCCH+"\n ¿Deseas continuar?")){
-
-       }else{
-         return;
-       }
-    }
     let isValid = true;
     res.forEach(function (value) {
       if(value.status == "0"){

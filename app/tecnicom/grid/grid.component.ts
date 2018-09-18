@@ -17,15 +17,35 @@ export class GridComponent implements OnInit  {
   rowSelection;
   columnDefs;
   id_orden: string;
+  rowClassRules;
+
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'Ctrl', field: 'id_footerEnsayo'},
-    {headerName: 'TMU', field: 'nombre' },   
-    {headerName: 'Tipo', field: 'tipo' },
-    {headerName: 'Creado', field: 'fecha' },    
-  ];
+      {headerName: 'Ctrl', field: 'id_footerEnsayo'},
+      {headerName: 'TMU', field: 'nombre' },   
+      {headerName: 'Tipo', field: 'tipo' },
+      {headerName: 'Creado', field: 'fecha' },    
+    ];
     this.rowSelection = "single";
+    this.rowClassRules = {
+      "row-blue-warning": function(params) {
+        var color = params.data.color;
+        return color == 1;
+      },
+      "row-yelloy-warning": function(params) {
+        var color = params.data.color;
+        return color == 2;
+      },
+      "row-orange-warning": function(params) {
+        var color = params.data.color;
+        return color == 3;
+      },
+      "row-red-warning": function(params) {
+        var color = params.data.color;
+        return color == 4;
+      }
+    };
   }
 
  
@@ -70,12 +90,26 @@ export class GridComponent implements OnInit  {
  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
     var id = "";
+    var tipo = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_herramienta;
-      
+      id   = selectedRow.id_herramienta;
+      tipo = selectedRow.tipo;
     });
-    //this.router.navigate(['jefeb/herramientas/herramienta-detail/'+id]);
+    switch(tipo){
+      case 'CILINDRO':
+        //window.alert("El mike no se apura...");
+        this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+id]);
+      break;
+      case 'CUBO':
+        window.alert("CUBO :: El mike no se apura...");
+        //this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+id]);
+      break;
+      case 'VIGA':
+        window.alert("VIGA :: El mike no se apura...");
+        //this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+id]);
+      break;
+    }
   }
 
 
