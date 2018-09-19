@@ -9,12 +9,15 @@ import { MatProgressBarModule } from '@angular/material';
 
 import { GridComponent } from '../../tecnicom/grid/grid.component';
 import { GridCilindrosComponent } from '../../tecnicom/grid-cilindros/grid-cilindros.component';
+import { GridCuboComponent } from '../../tecnicom/grid-cubo/grid-cubo.component';
 import { UserProfileComponent } from '../../tecnicom/user-profile/user-profile.component';
 import { PendientesComponent } from '../../tecnicom/pendientes/pendientes.component';
 import { LlenaFooterComponent } from '../../tecnicom/llenaFooter/llenaFooter.component';
 import { LlenaFooterCuboComponent } from '../../tecnicom/llenaFooterCubo/llenaFooterCubo.component';
 import { LlenaFooterVigaComponent } from '../../tecnicom/llenaFooterViga/llenaFooterViga.component';
 import { dashboardCilindroComponent } from '../../tecnicom/dashboardCilindro/dashboardCilindro.component';
+import { dashboardCuboComponent } from '../../tecnicom/dashboardCubo/dashboardCubo.component';
+import { dashboardVigaComponent } from '../../tecnicom/dashboardViga/dashboardViga.component';
 import { PruebaCilindroComponent } from '../../tecnicom/pruebaCilindro/pruebaCilindro.component';
 import { PruebaVigaComponent } from '../../tecnicom/pruebaViga/pruebaViga.component';
 import { PruebaCuboComponent } from '../../tecnicom/pruebaCubo/pruebaCubo.component';
@@ -68,10 +71,13 @@ import { ToastrModule } from 'ngx-toastr';
   LlenaFooterCuboComponent,
   LlenaFooterVigaComponent,
   dashboardCilindroComponent,
+  dashboardCuboComponent,
+  dashboardVigaComponent,
   PruebaCilindroComponent,
   PruebaVigaComponent,
   GridComponent,
   GridCilindrosComponent,
+  GridCuboComponent,
   PruebaCuboComponent
   /*
     DashboardComponent,

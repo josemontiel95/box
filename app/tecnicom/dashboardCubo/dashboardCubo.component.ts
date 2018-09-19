@@ -17,11 +17,11 @@ import {
 //FIN DE LOS IMPORTS
 
 @Component({
-  selector: 'app-dashboardCilindro',
-  templateUrl: './dashboardCilindro.component.html',
-  styleUrls: ['./dashboardCilindro.component.scss','../../loadingArrows.css']
+  selector: 'app-dashboardCubo',
+  templateUrl: './dashboardCubo.component.html',
+  styleUrls: ['./dashboardCubo.component.scss','../../loadingArrows.css']
 })
-export class dashboardCilindroComponent implements OnInit{
+export class dashboardCuboComponent implements OnInit{
 
   id: string = "1001";
   id_footer: string;
@@ -457,7 +457,7 @@ export class dashboardCilindroComponent implements OnInit{
                                               console.log(this.id_footer);
                                               this.validaRespuesta(res.json());                 
                                             } );
-  }    
+  }  
 
 
   validaRespuesta(res:any){

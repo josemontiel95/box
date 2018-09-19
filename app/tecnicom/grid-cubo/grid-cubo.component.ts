@@ -5,11 +5,11 @@ import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-grid',
-  templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.css']
+  selector: 'app-grid-cubo',
+  templateUrl: './grid-cubo.component.html',
+  styleUrls: ['./grid-cubo.component.css']
 })
-export class GridComponent implements OnInit  {
+export class GridCuboComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
@@ -17,42 +17,34 @@ export class GridComponent implements OnInit  {
   rowSelection;
   columnDefs;
   id_orden: string;
-  rowClassRules;
-
+  id_footer: string;
+   rowClassRules;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-      {headerName: 'Ctrl', field: 'id_footerEnsayo'},
-      {headerName: 'TMU', field: 'nombre' },   
-      {headerName: 'Tipo', field: 'tipo' },
-      {headerName: 'Creado', field: 'fecha' },    
-    ];
+    {headerName: 'FECHA DE COLADO', field: 'fechaColado'},
+    {headerName: 'INFORME NUMERO', field: 'informeNo'},
+    {headerName: 'CLAVE', field: 'claveEspecimen'},
+    {headerName: 'ENSAYE EN DIAS', field: 'diasEnsayeFinal' }
+  ];
+
     this.rowSelection = "single";
+
     this.rowClassRules = {
       "row-blue-warning": function(params) {
-        var color = params.data.color;
-        return color == 1;
+        var status = params.data.status;
+        return status == 1;
       },
-      "row-yelloy-warning": function(params) {
-        var color = params.data.color;
-        return color == 2;
-      },
-      "row-orange-warning": function(params) {
-        var color = params.data.color;
-        return color == 3;
-      },
-      "row-red-warning": function(params) {
-        var color = params.data.color;
-        return color == 4;
+      "row-green-warning": function(params) {
+        var status = params.data.status;
+        return status > 1;
       }
     };
   }
 
- 
-
   ngOnInit() {
      this.data.currentGlobal.subscribe(global => this.global = global);
- 
+     this.route.params.subscribe( params => this.id_footer=params.id); 
   }
 
 
@@ -63,11 +55,12 @@ export class GridComponent implements OnInit  {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllFooterPendientes');
+    search.set('function', 'getAllRegistrosFromFooterByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('footerEnsayo_id', this.id_footer);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.rowData= res.json();
@@ -87,27 +80,15 @@ export class GridComponent implements OnInit  {
   }
 
    
- onSelectionChanged(event: EventListenerObject){
+  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
     var id = "";
-    var tipo = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id   = selectedRow.id_footerEnsayo;
-      tipo = selectedRow.tipo;
+      id += selectedRow.id_ensayoCilindro;
+      
     });
-    switch(tipo){
-      case 'CILINDRO':
-        this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+id]);
-      break;
-      case 'CUBO':
-        this.router.navigate(['tecnico/pendientes/dashboardCubo/'+id]);
-      break;
-      case 'VIGA':
-        window.alert("VIGA :: El Chema no me hace las funciones...");
-        //this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+id]);
-      break;
-    }
+    this.router.navigate(['tecnico/pendientes/dashboardCilindro/pruebaCilindro/'+this.id_footer +'/' +id]);
   }
 
 
