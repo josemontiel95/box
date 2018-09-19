@@ -52,7 +52,7 @@ export class LlenaFooterVigaComponent implements OnInit {
     }else{
           if(window.confirm("¿Estas seguro dar como completado el Footer de Cilindros del día?.")){
             //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
-            this.router.navigate(['tecnico/pruebaViga/'+this.id_Footer + '/'+this.id_Registro]);
+            this.router.navigate(['tecnico/pendientes/dashboardViga/'+this.id_Footer]);
           }
     }
 

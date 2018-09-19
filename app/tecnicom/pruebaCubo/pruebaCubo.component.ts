@@ -187,7 +187,7 @@ export class PruebaCuboComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
-    //this.router.navigate(['tecnico/pendientes/dashboardCubo/'+this.id_Footer]);
+    this.router.navigate(['tecnico/pendientes/dashboardCubo/'+this.id_Footer]);
   }
   
   onBlurL1(){

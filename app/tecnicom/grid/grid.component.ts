@@ -103,9 +103,8 @@ export class GridComponent implements OnInit  {
       case 'CUBO':
         this.router.navigate(['tecnico/pendientes/dashboardCubo/'+id]);
       break;
-      case 'VIGA':
-        window.alert("VIGA :: El Chema no me hace las funciones...");
-        //this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+id]);
+      case 'VIGAS':
+        this.router.navigate(['tecnico/pendientes/dashboardViga/'+id]);
       break;
     }
   }
