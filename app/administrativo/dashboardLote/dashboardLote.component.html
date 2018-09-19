@@ -1,0 +1,114 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+
+<div class="row">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header " >
+          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaPendientes();"></i>
+          <h4 style="text-align: center;" *ngIf="formatoStatus"class="card-title">En Ensaye por el Tecnico de Muestras</h4>
+          <h4 style="text-align: center;" *ngIf="!formatoStatus"class="card-title">Este Lote esta completado y su edicion ya no esta permitida</h4>
+        </div>
+        <div class="card-body">
+          <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
+              <button class="btn btn-success"  *ngIf="formatoStatus" (click)="obtenStatusReg();">
+                <span><b>LOTE COMPLETADO</b></span>
+              </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+</div>
+
+  <div class="row">
+    <div class="col-md-12 col-12">
+      <div class="card  card-tasks">
+        <div class="card-header" >
+            <div class="card-header " >
+                  <h4 style="text-align: center;" class="card-title">LOTE DE CORREOS</h4>
+            </div>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            
+            <div class="row">
+              <div class="col-md-8 col-12">
+                <!-- ESTO ES PARA POSICIONAR LA FECHA -->
+              </div>
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                <div class="form-group"><!--SEGUNDO CAMPO -->
+                  <label for="fechaEnsayo">FECHA DE ENSAYE</label>
+                  <input type="text" id="fechaEnsayo"  
+                  class="form-control" 
+                  name="fechaEnsayo" placeholder="" formControlName="fechaEnsayo">
+                   
+                </div> <!--FIN SEGUNDO CAMPO -->                
+              </div> <!--FIN SEGUNDO GRID -->
+            </div>
+            
+          </form>
+          <div>
+           <app-grid-correos></app-grid-correos>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            
+            <h6>Informaci&oacute;n General Del Lote de Correos</h6>
+            <div class="row">
+              <div class="col-md-4 col-12">
+                 <div class="form-group">
+                  <label for="ctrl">CTRL</label>
+                  <input  class="form-control" id="ctrl" 
+                    name="ctrl" formControlName="ctrl">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                 <div class="form-group">
+                  <label for="encargado">ENCARGADO DE ENVIAR EL LOTE</label>
+                  <input  class="form-control" id="encargado" 
+                   name="encargado" formControlName="encargado">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                 <div class="form-group">
+                  <label for="noCorreos">N&uacute;mero de Correos</label>
+                  <input  class="form-control" id="noCorreos" 
+                   name="noCorreos" formControlName="noCorreos">
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="btn-group"  style="float: right; padding-right: 10%;">
+              <button class="btn btn-info" *ngIf="hiddenf && formatoStatus"  (click)="mostrarFooter()">
+                <span><b> Cambiar Datos. </b></span>
+              </button>
+            <button class="btn btn-success" *ngIf="!hiddenf && formatoStatus" [disabled]="formatoCCHForm.invalid" (click)="mostrarFooter();">
+              <span><b> Guardar Cambios. </b></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+  
+  
+
+
+
+</div>

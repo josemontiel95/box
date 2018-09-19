@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { UserProfileComponent } from '../../administrativo/user-profile/user-profile.component';
 import { OrdenesComponent } from '../../administrativo/ordenes/ordenes.component';
+import { dashboardLoteComponent } from '../../administrativo/dashboardLote/dashboardLote.component';
 import { ObraDetailComponent } from '../../administrativo/obra-detail/obra-detail.component';
 import { ObrasComponent } from '../../administrativo/obras/obras.component';
 /*
@@ -20,6 +21,7 @@ export const SubAdminLayoutRoutes: Routes = [
     { path: 'obras',          component: ObrasComponent },
     { path: 'obras/obra-detail/:id',   component: ObraDetailComponent },
     { path: 'ordenes',   component: OrdenesComponent },
+    { path: 'dashboardLote',   component: dashboardLoteComponent },
 
     /*
     { path: 'dashboard',      component: DashboardComponent },

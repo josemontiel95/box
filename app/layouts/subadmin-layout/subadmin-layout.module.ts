@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SubAdminLayoutRoutes } from './subadmin-layout.routing';
 import { UserProfileComponent } from '../../administrativo/user-profile/user-profile.component';
 import { OrdenesComponent } from '../../administrativo/ordenes/ordenes.component';
+import { dashboardLoteComponent } from '../../administrativo/dashboardLote/dashboardLote.component';
 import { ObraDetailComponent } from '../../administrativo/obra-detail/obra-detail.component';
 import { ObrasComponent } from '../../administrativo/obras/obras.component';
 import { GridLotesComponent } from '../../administrativo/grid-lotes/grid-lotes.component';
@@ -41,6 +42,7 @@ import { ToastrModule } from 'ngx-toastr';
       OrdenesComponent,
       ObraDetailComponent,
       ObrasComponent,
+      dashboardLoteComponent,
       GridLotesComponent,
       GridCorreosComponent
    /* DashboardComponent,
