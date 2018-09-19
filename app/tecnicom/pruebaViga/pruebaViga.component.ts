@@ -33,8 +33,11 @@ export class PruebaVigaComponent implements OnInit{
   rowSelection;
   columnDefs;
   cargando= 1;
+  hiddenA = false;
+  hiddenB = false;
+  hiddenC = false;
   hidden = false;
-   
+  locked =false;   
   formatoCCHForm: FormGroup;
 
         FormatoCCH = {
@@ -84,9 +87,10 @@ export class PruebaVigaComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_ensayoViga', this.id_Registro);
-    this.http.get(url, {search}).subscribe(res => {
+    this.http.get(url, {search}).subscribe(res => { 
+                                                    this.llenaRapido(res.json());
                                                     this.llenado(res.json());
-                                                    this.desactivaCampos(res.json());
+                                                    //this.desactivaCampos(res.json());
                                                   });
 
 
@@ -197,7 +201,7 @@ export class PruebaVigaComponent implements OnInit{
   
 
   llenarDespues(){
-    this.router.navigate(['tecnico/pendientes/']);
+    this.router.navigate(['tecnico/pendientes/dashboardViga/'+this.id_Footer]);
   }
 
   registroCompletado(){
@@ -212,7 +216,7 @@ export class PruebaVigaComponent implements OnInit{
                                               this.respuestaSwitch(res.json());
                                               this.updateFechaEnsaye(res.json());                 
                                             } );
-    this.router.navigate(['tecnico/pendientes/']);
+    this.router.navigate(['tecnico/pendientes/dashboardViga/'+this.id_Footer]);
   }
 
   onBlurCurado(){
@@ -540,13 +544,13 @@ export class PruebaVigaComponent implements OnInit{
         moduloRuptura: res.modulo
       });
   }
-
+/*
   desactivaCampos(res:any){
     if(res.completado == "SI"){
       this.ocultar();
     } 
    }
-
+*/
   ocultar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable'; 
@@ -586,4 +590,19 @@ export class PruebaVigaComponent implements OnInit{
           }
     }
   } //FIN ValidaCamposVacios
+
+  llenaRapido(respuesta: any){
+    if(respuesta.status == 1){
+      this.hiddenB = true;
+      //this.mostrar();
+    }else if(respuesta.status >= 2){
+      this.hiddenA = true;
+      this.locked=true;
+      this.mostrar();
+    }else if(respuesta.status == 0){
+      this.hiddenC = true;
+      this.hidden = false;
+
+    }
+  }
 }

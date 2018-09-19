@@ -24,7 +24,7 @@ export class GridVigaComponent implements OnInit  {
     this.columnDefs = [
     {headerName: 'FECHA DE COLADO', field: 'fechaColado'},
     {headerName: 'INFORME NUMERO', field: 'informeNo'},
-    {headerName: 'CLAVE', field: 'claveEspecimen'},
+    {headerName: 'IDENTIFICACI&Oacute;N DE LA PRUEBA', field: 'claveEspecimen'},
     {headerName: 'ENSAYE EN DIAS', field: 'diasEnsayeFinal' }
   ];
 
@@ -55,7 +55,7 @@ export class GridVigaComponent implements OnInit  {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.global.apiRoot}/ensayoCubo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllRegistrosFromFooterByID');
     search.set('token', this.global.token);
@@ -85,10 +85,10 @@ export class GridVigaComponent implements OnInit  {
     var id = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_ensayoCubo;
+      id += selectedRow.id_ensayoViga;
       
     });
-    this.router.navigate(['tecnico/pendientes/dashboardCubo/pruebaCubo/'+this.id_footer +'/' +id]);
+    this.router.navigate(['tecnico/pendientes/dashboardViga/pruebaViga/'+this.id_footer +'/' +id]);
   }
 
 
