@@ -59,11 +59,10 @@
                     <input type="text" id="fc"   
                     class="form-control" 
                     name="fc" placeholder="" formControlName="fc" (change)="onBlurFC()">
-                    <div *ngIf="fc.invalid && (fc.dirty || fc.touched)"
-                    class="alert alert-danger">            
-                      <div *ngIf="fc.errors.required">
-                       F'C requerido.
-                      </div>
+                    <div *ngIf="fc.errors && (fc.dirty || fc.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="fc.errors.required">F'C requerido.</div>
+                        <div *ngIf="fc.errors.pattern">F'C debe contener solo numeros,recuerda que si es viga MR, solo escribe el numero del MR.</div>
                     </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->

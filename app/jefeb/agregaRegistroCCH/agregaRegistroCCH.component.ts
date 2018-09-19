@@ -108,8 +108,8 @@ export class agregaRegistroCCHComponent implements OnInit{
   this.formatoCCHForm = new FormGroup({
     'cesp':             new FormControl( {value: this.FormatoCCH.cesp, disabled: true}),
     'fecha':            new FormControl( {value: this.FormatoCCH.fecha, disabled: true}),
-    'fc':               new FormControl( {value: this.FormatoCCH.fc, disabled: this.hidden},[Validators.required]),
-    'revp':             new FormControl( {value: this.FormatoCCH.revp, disabled: true}),
+    'fc':               new FormControl( {value: this.FormatoCCH.fc, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+$")]),
+    'revp':             new FormControl( {value: this.FormatoCCH.revp, disabled: true}), 
     'revo':             new FormControl( {value: this.FormatoCCH.revo, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+$")]),
     'tamano':           new FormControl( {value: this.FormatoCCH.tamano, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+$")]),
     'volumen':          new FormControl( {value: this.FormatoCCH.volumen, disabled: this.hidden}, [Validators.required,Validators.pattern("^[0-9]+$")]),       
