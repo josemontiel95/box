@@ -10,6 +10,7 @@ import { MatProgressBarModule } from '@angular/material';
 import { GridComponent } from '../../tecnicom/grid/grid.component';
 import { GridCilindrosComponent } from '../../tecnicom/grid-cilindros/grid-cilindros.component';
 import { GridCuboComponent } from '../../tecnicom/grid-cubo/grid-cubo.component';
+import { GridVigaComponent } from '../../tecnicom/grid-viga/grid-viga.component';
 import { UserProfileComponent } from '../../tecnicom/user-profile/user-profile.component';
 import { PendientesComponent } from '../../tecnicom/pendientes/pendientes.component';
 import { LlenaFooterComponent } from '../../tecnicom/llenaFooter/llenaFooter.component';
@@ -78,6 +79,7 @@ import { ToastrModule } from 'ngx-toastr';
   GridComponent,
   GridCilindrosComponent,
   GridCuboComponent,
+  GridVigaComponent,
   PruebaCuboComponent
   /*
     DashboardComponent,

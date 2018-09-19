@@ -55,7 +55,7 @@ export class GridCuboComponent implements OnInit  {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/ensayoCubo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllRegistrosFromFooterByID');
     search.set('token', this.global.token);
@@ -85,10 +85,10 @@ export class GridCuboComponent implements OnInit  {
     var id = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_ensayoCilindro;
+      id += selectedRow.id_ensayoCubo;
       
     });
-    this.router.navigate(['tecnico/pendientes/dashboardCilindro/pruebaCilindro/'+this.id_footer +'/' +id]);
+    this.router.navigate(['tecnico/pendientes/dashboardCubo/pruebaCubo/'+this.id_footer +'/' +id]);
   }
 
 

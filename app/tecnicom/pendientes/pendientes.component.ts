@@ -101,7 +101,7 @@ export class PendientesComponent implements OnInit{
          tipoo = selectedRow.tipo;
          //window.alert(selectedRow.id_formato);
          rutaa = 2;
-      }else if(selectedRow.tipo == "VIGA"){
+      }else if(selectedRow.tipo == "VIGAS"){
         idd= selectedRow.id_registrosCampo;
          tipoo = selectedRow.tipo;
          //window.alert(selectedRow.id_formato);
@@ -132,6 +132,16 @@ export class PendientesComponent implements OnInit{
    }
 
    respuestaSwitch(res: any){
+     console.log(res);
+     if(res.error!= 0){
+       window.alert(res.estatus);
+       location.reload();
+     }
+     else{
+          //EXITO         
+     }
+
+
      let id_footer= "";
      let id_RegistroCCH= "";
      console.log("HOLA!!: "+ res.id_RegistroGabs);
