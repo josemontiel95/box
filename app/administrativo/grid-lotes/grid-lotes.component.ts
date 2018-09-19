@@ -19,14 +19,14 @@ export class GridLotesComponent implements OnInit  {
   id_orden: string;
   id_footer: string;
   rowClassRules;
-  status="1";
+  status="0";
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'FECHA DE COLADO', field: 'fechaColado'},
-    {headerName: 'INFORME NUMERO', field: 'informeNo'},
-    {headerName: 'CLAVE', field: 'claveEspecimen'},
-    {headerName: 'ENSAYE EN DIAS', field: 'diasEnsayeFinal' }
+    {headerName: 'Ctrl', field: 'id_loteCorreos'},
+    {headerName: 'Encargado', field: 'encargado'},
+    {headerName: 'Estado', field: 'estado' }
+    //{headerName: 'ENSAYE EN DIAS', field: 'status' }
   ];
 
     this.rowSelection = "single";
@@ -61,7 +61,7 @@ export class GridLotesComponent implements OnInit  {
     search.set('function', 'getAllAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('satus', this.status);
+    search.set('status', this.status);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.rowData= res.json();

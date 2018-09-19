@@ -24,8 +24,8 @@ export class DashboardComponent implements OnInit {
 
   global: Global;
   cargando= 5;
-      mis_tipos: Array<any>;
-    mis_lab: Array<any>;
+  mis_tipos: Array<any>;
+  mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
   
  formatos = [{"format":"CONTROL DE CONCRETO HIDRAULICO", "id": "1"},{"format":"REVENIMIENTO", "id":"2"}]
@@ -174,18 +174,16 @@ export class DashboardComponent implements OnInit {
       'observaciones':        new FormControl({value: this.Orden.observaciones,        disabled: this.hidden }),       
     });
   
+    this.tipoForm = new FormGroup({
+      'formato_tipo_id': new FormControl(  this.forma.formato_tipo_id)
+    });
+    
+    this.paseForm = new FormGroup({
+      'correo': new FormControl(  this.pase.correo, [  Validators.required]),
+      'pass': new FormControl(  this.pase.pass, [  Validators.required])
+    });
 
-      this.tipoForm = new FormGroup({'formato_tipo_id': new FormControl(  this.forma.formato_tipo_id)
-          });
-
- 
-
-             this.paseForm = new FormGroup({
-          'correo': new FormControl(  this.pase.correo, [  Validators.required]),
-          'pass': new FormControl(  this.pase.pass, [  Validators.required])
-          });
-
-      }
+  }
 
       
 
@@ -206,11 +204,8 @@ export class DashboardComponent implements OnInit {
    get observaciones()        { return this.ordenForm.get('observaciones'); }  
 
    get laboratorio_id() { return this.ordenForm.get('laboratorio_id'); } 
-
    get formato_tipo_id() {return this.tipoForm.get('formato_tipo_id');}
-  
    get correo() { return this.paseForm.get('correo'); }
-
    get pass() { return this.paseForm.get('pass'); }
 
   mostrarDetalles(){
