@@ -141,17 +141,17 @@ export class PendientesComponent implements OnInit{
           id_footer = res.id_footerEnsayo;
           id_RegistroCCH = res.id_RegistroGabs;
           window.alert("CILINDRO");
-          this.router.navigate(['tecnico/pruebaCilindro/'+id_footer + '/'+id_RegistroCCH]);
+          this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+id_footer]);
        }else if(this.ruta == 2) {
           id_footer = res.id_footerEnsayo;
           window.alert("CUBO");
           id_RegistroCCH = res.id_RegistroGabs;
-          this.router.navigate(['tecnico/pruebaCubo/'+id_footer + '/'+id_RegistroCCH]);
+          this.router.navigate(['tecnico/pendientes/dashboardCubo'+id_footer]);
        }else if(this.ruta == 3) {
           id_footer = res.id_footerEnsayo;
           window.alert("VIGA");
           id_RegistroCCH = res.id_RegistroGabs;          
-          this.router.navigate(['tecnico/pruebaViga/'+id_footer + '/'+id_RegistroCCH]);
+          this.router.navigate(['tecnico/pendientes/dashboardViga/'+id_footer]);
        }
      }else{
 
