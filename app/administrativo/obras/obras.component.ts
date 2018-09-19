@@ -3,6 +3,14 @@ import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angu
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
+import {
+    ReactiveFormsModule,
+    FormsModule,
+    FormGroup,
+    FormControl,
+    Validators,
+    FormBuilder
+} from '@angular/forms';
 
 @Component({
   selector: 'obras',
@@ -27,6 +35,16 @@ export class ObrasComponent implements OnInit{
   actBut=false;
   imgUrl="";
   cargando= 1;
+  tipoForm: FormGroup;
+  mis_tipos: Array<any>;
+  formatosSeleccionados: Array<any>;
+  status="0";
+
+  forma={
+    formato_tipo_id:'0'
+  };
+
+
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
       {headerName: 'Ctrl', field: 'id_formatoCampo' },
@@ -37,14 +55,40 @@ export class ObrasComponent implements OnInit{
       {headerName: 'Obra', field: 'obra' },
 
     ];
-    this.rowSelection = "single";
+    this.rowSelection = "multiple";
   }
   selectLote= false;
   rowData: any;
 
   ngOnInit() {
     this.route.params.subscribe( params => this.id=params.id );
-    this.cargando=1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    this.cargando=2;
+
+    let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getAllAdmin');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('status', this.status);
+    this.http.get(url, {search}).subscribe(res => this.llenaLotes(res.json()) );
+
+    this.tipoForm = new FormGroup({
+      'lotes': new FormControl(  this.forma.formato_tipo_id)
+    });
+  }
+
+   get lotes() { return this.tipoForm.get('lotes'); } 
+
+  llenaLotes(resp: any){
+    console.log(resp);
+    this.mis_tipos= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ )
+    {
+      this.mis_tipos[_i]=resp[_i];
+    }
+    this.cargando=this.cargando-1;
+    console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
 
@@ -55,7 +99,32 @@ export class ObrasComponent implements OnInit{
   detalleObra(){ //Cambialo a detalleObra
     this.router.navigate(['administrador/obras/obra-detail/'+this.id]);
   }
-  
+  seleccionaLote(){
+    if(this.tipoForm.value.lotes == -1){
+      //window.alert("seleccionaLote :: IF : -1");
+        if(window.confirm("¿Estas seguro de crear un nuevo lote de correos? Ya NO podrás eliminarlo despues.")){
+          this.agregaFormatos(this.tipoForm.value.lotes);
+        }else{
+          return;
+        }
+    }else{
+      this.agregaFormatos(this.tipoForm.value.lotes);
+      //window.alert("seleccionaLote :: ELSE: "+this.tipoForm.value.lotes);
+    }
+  }
+
+  agregaFormatos(lote){
+    let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'deleteHerra');
+    formData.append('ordenDeTrabajo_id', this.id);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('token', this.global.token);
+    formData.append('herramientasArray', JSON.stringify(this.formatosSeleccionados));
+    this.http.post(url, formData).subscribe(res => {
+      this.respuestaSwitch(res.json());
+    });
+  }
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -88,7 +157,7 @@ export class ObrasComponent implements OnInit{
     this.cargando=this.cargando-1;
   }
   agregaLote(){
-    
+    this.selectLote=!this.selectLote;
   }
 
   llenadoValidator(respuesta: any){
@@ -147,55 +216,19 @@ export class ObrasComponent implements OnInit{
      }
    }
 
-
    onSelectionChanged(event: EventListenerObject) {
     var selectedRows = this.gridApi.getSelectedRows();
-    var id = "";
-    var nombre = "";
-    var prefijo = "";
-    var foto = "";
-    var cliente = "";
-    var active = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_obra;
-      nombre += selectedRow.obra;
-      prefijo += selectedRow.prefijo;
-      foto += selectedRow.foto;
-      cliente += selectedRow.nombre;
-      active += selectedRow.active;
+      this.formatosSeleccionados.push(selectedRow.id_formatoCampo);
     });
-    this.displayShortDescription(id, nombre, prefijo, foto, cliente, active);
   }
 
-  displayShortDescription(id: any, nombre: any, prefijo: any, foto: any, cliente: any, active: any){
-    
-    
-    this.hidden=true;
-    //activar 
-    this.id=id;
-    this.nombre=nombre;
-    this.prefijo=prefijo;
-    this.foto=foto;
-    this.cliente=cliente;
-
-    if(this.foto== "null"){
-      this.imgUrl="../assets/img/gabino.jpg";
-    }else{
-      this.imgUrl= this.global.assetsRoot+this.foto;
-    }
-
-
-    if(active == "Si")
-    {
-      this.desBut = true;
-      this.actBut= false;
-    }
-    else{
-      if (active == "No") {
-        this.desBut = false;
-        this.actBut= true;
-      }
-    }
-  }
 }
+
+
+
+
+
+
+
