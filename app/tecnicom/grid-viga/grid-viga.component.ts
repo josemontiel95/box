@@ -5,11 +5,11 @@ import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-grid-cubo',
-  templateUrl: './grid-cubo.component.html',
-  styleUrls: ['./grid-cubo.component.css']
+  selector: 'app-grid-viga',
+  templateUrl: './grid-viga.component.html',
+  styleUrls: ['./grid-viga.component.css']
 })
-export class GridCuboComponent implements OnInit  {
+export class GridVigaComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
