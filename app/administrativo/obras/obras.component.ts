@@ -29,22 +29,17 @@ export class ObrasComponent implements OnInit{
   cargando= 1;
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-      {headerName: 'Ctrl', field: 'id_obra' },
-      {headerName: 'Obra', field: 'obra' },
-      {headerName: 'Fecha de Creacion', field: 'fechaDeCreacion' },
-      {headerName: 'Nombre de Residente', field: 'nombre_residente' },
-      {headerName: 'Concretera', field: 'concretera' },
+      {headerName: 'Ctrl', field: 'id_formatoCampo' },
+      {headerName: 'No. Informe', field: 'informeNo' },
       {headerName: 'Tipo', field: 'tipo' },
-      {headerName: 'Cliente', field: 'nombre' },
-      {headerName: 'Created', field: 'createdON' },
-      {headerName: 'Last Edited', field: 'lastEditedON' },
-      {headerName: 'Incertidumbre', field: 'incertidumbre' },
-      {headerName: 'Active', field: 'active' },
+      {headerName: 'No. Cotizaci&oacute;n', field: 'cotizacion' },
+      {headerName: 'Cliente', field: 'razonSocial' },
+      {headerName: 'Obra', field: 'obra' },
 
     ];
     this.rowSelection = "single";
   }
-
+  selectLote= false;
   rowData: any;
 
   ngOnInit() {
@@ -69,9 +64,9 @@ export class ObrasComponent implements OnInit{
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.global.apiRoot}/obra/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllAdmin');
+    search.set('function', 'getAllAdministrativo');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => {
@@ -91,6 +86,9 @@ export class ObrasComponent implements OnInit{
       this.rowData =repuesta;
     }
     this.cargando=this.cargando-1;
+  }
+  agregaLote(){
+    
   }
 
   llenadoValidator(respuesta: any){
