@@ -277,7 +277,7 @@ export class dashboardCuboComponent implements OnInit{
   } */
 
   obtenStatusReg(){
-    let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/ensayoCubo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllRegistrosFromFooterByID');
     search.set('token', this.global.token);

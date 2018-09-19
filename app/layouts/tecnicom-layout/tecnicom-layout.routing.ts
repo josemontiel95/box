@@ -43,7 +43,7 @@ export const TecnicoMLayoutRoutes: Routes = [
     { path: 'llenaFooterViga/:id/:id2',   component: LlenaFooterVigaComponent },
     { path: 'pendientes/dashboardCilindro/pruebaCilindro/:id/:id2',   component: PruebaCilindroComponent },
     { path: 'pruebaViga/:id/:id2',   component: PruebaVigaComponent },
-    { path: 'pruebaCubo/:id/:id2',   component: PruebaCuboComponent },
+    { path: 'pendientes/dashboardCubo/pruebaCubo/:id/:id2',   component: PruebaCuboComponent },
 
 /*    
     { path: 'orden-trabajo/dashboard/:id',      component: DashboardComponent },    
