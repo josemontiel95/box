@@ -48,6 +48,11 @@
                     <input type="text" id="pesoKg"   
                     class="form-control" 
                     name="pesoKg" placeholder="" formControlName="pesoKg" (blur)="onBlurPesoKg()">
+                    <div *ngIf="pesoKg.errors && (pesoKg.dirty || pesoKg.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="pesoKg.errors.required">PESO EN KG REQUERIDO.</div>
+                        <div *ngIf="pesoKg.errors.pattern">EL PESO EN KG DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -73,6 +78,11 @@
                     <input type="text" id="diametro1"   
                     class="form-control" 
                     name="diametro1" placeholder="" formControlName="diametro1" (blur)="onBlurDiametro1()">
+                    <div *ngIf="diametro1.errors && (diametro1.dirty || diametro1.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="diametro1.errors.required">DIAMETRO 1 REQUERIDO.</div>
+                        <div *ngIf="diametro1.errors.pattern">EL DIAMETRO 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -82,6 +92,11 @@
                     <input type="text" id="diametro2"   
                     class="form-control" 
                     name="diametro2" placeholder="" formControlName="diametro2" (blur)="onBlurDiametro2()">
+                    <div *ngIf="diametro2.errors && (diametro2.dirty || diametro2.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="diametro2.errors.required">DIAMETRO 2 REQUERIDO.</div>
+                        <div *ngIf="diametro2.errors.pattern">EL DIAMETRO 2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -95,6 +110,11 @@
                     <input type="text" id="altura1"   
                     class="form-control" 
                     name="altura1" placeholder="" formControlName="altura1" (blur)="onBlurAltura1()">
+                    <div *ngIf="altura1.errors && (altura1.dirty || altura1.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="altura1.errors.required">ALTURA 1 REQUERIDA.</div>
+                        <div *ngIf="altura1.errors.pattern">LA ALTURA 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -104,6 +124,11 @@
                     <input type="text" id="altura2"   
                     class="form-control" 
                     name="altura2" placeholder="" formControlName="altura2" (blur)="onBlurAltura2()">
+                    <div *ngIf="altura2.errors && (altura2.dirty || altura2.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="altura2.errors.required">ALTURA 2 REQUERIDA.</div>
+                        <div *ngIf="altura2.errors.pattern">LA ALTURA 2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -115,12 +140,11 @@
                     <input type="text" id="cargaKg"  
                     class="form-control" 
                     name="cargaKg" placeholder="" formControlName="cargaKg" (blur)="onBlurCargaKg()">
-                     <div *ngIf="cargaKg.invalid && (cargaKg.dirty || cargaKg.touched)"
-                      class="alert alert-danger">
-                        <div *ngIf="cargaKg.errors.required">
-                          No. de orden requerido.
-                        </div>
-                      </div>
+                     <div *ngIf="cargaKg.errors && (cargaKg.dirty || cargaKg.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="cargaKg.errors.required">CARGA KG REQUERIDA.</div>
+                        <div *ngIf="cargaKg.errors.pattern">LA CARGA KG DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
 

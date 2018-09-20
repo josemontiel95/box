@@ -61,6 +61,11 @@
                     <input type="text" id="l1"   
                     class="form-control" 
                     name="l1" placeholder="" formControlName="l1" required (change)="onBlurL1()">
+                    <div *ngIf="l1.errors && (l1.dirty || l1.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="l1.errors.required">L1 REQUERIDA.</div>
+                        <div *ngIf="l1.errors.pattern">LA L1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -70,6 +75,11 @@
                     <input type="text" id="l2"   
                     class="form-control" 
                     name="l2" placeholder="" formControlName="l2" required (change)="onBlurL2()">
+                    <div *ngIf="l2.errors && (l2.dirty || l2.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="l2.errors.required">L2 REQUERIDA.</div>
+                        <div *ngIf="l2.errors.pattern">LA L2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -84,6 +94,11 @@
                     <input type="text" id="cargaKg"  
                     class="form-control" 
                     name="cargaKg" placeholder="" formControlName="cargaKg" required (change)="onBlurCargaKg()">
+                    <div *ngIf="cargaKg.errors && (cargaKg.dirty || cargaKg.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="cargaKg.errors.required">RESISTENCIA A COMPRESI&Oacute;N K REQUERIDA.</div>
+                        <div *ngIf="cargaKg.errors.pattern">LA RESISTENCIA A COMPRESI&Oacute;N K DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->              
 

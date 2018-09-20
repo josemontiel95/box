@@ -99,9 +99,9 @@ export class PruebaCuboComponent implements OnInit{
       'clave': new FormControl( {value: this.FormatoCCH.clave, disabled: true}),
       'pesoKg': new FormControl( {value: this.FormatoCCH.pesoKg, disabled: this.hidden}),
       'edadEnsaye': new FormControl( {value: this.FormatoCCH.edadEnsaye, disabled: true}),
-      'l1': new FormControl( {value: this.FormatoCCH.l1, disabled: this.hidden}),
-      'l2': new FormControl( {value: this.FormatoCCH.l2, disabled: this.hidden}),
-      'cargaKg': new FormControl( {value: this.FormatoCCH.cargaKg, disabled: this.hidden}),
+      'l1': new FormControl( {value: this.FormatoCCH.l1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'l2': new FormControl( {value: this.FormatoCCH.l2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'cargaKg': new FormControl( {value: this.FormatoCCH.cargaKg, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
       'area': new FormControl( {value: this.FormatoCCH.area, disabled: true}),
       'resCompresion': new FormControl( {value: this.FormatoCCH.resCompresion, disabled: true}),       
       'falla': new FormControl( {value: this.FormatoCCH.falla, disabled: this.hidden})});
