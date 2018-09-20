@@ -21,7 +21,7 @@
         <br><br><br>
 
         <form  [formGroup]=tipoForm #formDir="ngForm">
-          <div class="col-md-12 col-12" *ngIf="!selectLote" [formGroup]=tipoForm (change)="seleccionaLote();">
+          <div class="col-md-12 col-12" *ngIf="selectLote" [formGroup]=tipoForm (change)="seleccionaLote();">
             <select  class="form-control" id="lotes" name="lotes" *ngIf="!hiddenFormato" formControlName="lotes">
               <option value="" disabled selected>Selecciona un lote...</option>
               <option value="-1" >Crear un nuevo lote</option>
@@ -29,6 +29,7 @@
                     {{format.id_loteCorreos}}
               </option>
             </select>
+            <br><br><br>
           </div>  
         </form>
         <div class="card-body" *ngIf="!selectLote">
