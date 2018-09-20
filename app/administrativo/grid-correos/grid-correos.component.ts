@@ -19,7 +19,7 @@ export class GridCorreosComponent implements OnInit  {
   id_orden: string;
   id_footer: string;
   lote: string;
-   rowClassRules;
+  rowClassRules;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -53,7 +53,7 @@ export class GridCorreosComponent implements OnInit  {
   }
 
 
- rowData: any;
+  rowData: any;
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
