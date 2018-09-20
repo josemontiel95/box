@@ -19,7 +19,7 @@ export class GridLotesComponent implements OnInit  {
   id_orden: string;
   id_footer: string;
   rowClassRules;
-  status="0";
+  status="2";
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -86,10 +86,10 @@ export class GridLotesComponent implements OnInit  {
     var id = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_ensayoCilindro;
+      id += selectedRow.id_loteCorreos;
       
     });
-    this.router.navigate(['tecnico/pendientes/dashboardCilindro/pruebaCilindro/'+this.id_footer +'/' +id]);
+       this.router.navigate(['administrativo/obras/dashboardLote/'+id]);
   }
 
 

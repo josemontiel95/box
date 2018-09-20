@@ -38,7 +38,7 @@ export class ObrasComponent implements OnInit{
   tipoForm: FormGroup;
   mis_tipos: Array<any>;
   formatosSeleccionados: Array<any>;
-  status="0";
+  status="1";
 
   forma={
     formato_tipo_id:'0'
@@ -133,7 +133,7 @@ export class ObrasComponent implements OnInit{
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllAdministrativo');
     search.set('token', this.global.token);
