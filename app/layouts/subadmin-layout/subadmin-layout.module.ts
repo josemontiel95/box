@@ -8,6 +8,7 @@ import { OrdenesComponent } from '../../administrativo/ordenes/ordenes.component
 import { dashboardLoteComponent } from '../../administrativo/dashboardLote/dashboardLote.component';
 import { ObraDetailComponent } from '../../administrativo/obra-detail/obra-detail.component';
 import { ObrasComponent } from '../../administrativo/obras/obras.component';
+import { TerminadosComponent } from '../../administrativo/terminados/terminados.component';
 import { GridLotesComponent } from '../../administrativo/grid-lotes/grid-lotes.component';
 import { GridCorreosComponent } from '../../administrativo/grid-correos/grid-correos.component';
 
@@ -42,6 +43,7 @@ import { ToastrModule } from 'ngx-toastr';
       OrdenesComponent,
       ObraDetailComponent,
       ObrasComponent,
+      TerminadosComponent,
       dashboardLoteComponent,
       GridLotesComponent,
       GridCorreosComponent

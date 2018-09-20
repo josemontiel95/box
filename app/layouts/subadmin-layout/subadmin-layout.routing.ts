@@ -4,6 +4,7 @@ import { OrdenesComponent } from '../../administrativo/ordenes/ordenes.component
 import { dashboardLoteComponent } from '../../administrativo/dashboardLote/dashboardLote.component';
 import { ObraDetailComponent } from '../../administrativo/obra-detail/obra-detail.component';
 import { ObrasComponent } from '../../administrativo/obras/obras.component';
+import { TerminadosComponent } from '../../administrativo/terminados/terminados.component';
 /*
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { TableListComponent } from '../../table-list/table-list.component';
@@ -17,7 +18,7 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 export const SubAdminLayoutRoutes: Routes = [
     { path: '',                redirectTo: 'user-profile', pathMatch: 'full' },
     { path: 'user-profile',   component: UserProfileComponent },
-
+    { path: 'terminados',          component: TerminadosComponent },
     { path: 'obras',          component: ObrasComponent },
     { path: 'obras/obra-detail/:id',   component: ObraDetailComponent },
     { path: 'ordenes',   component: OrdenesComponent },
