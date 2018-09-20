@@ -26,7 +26,6 @@ export class GridLotesComponent implements OnInit  {
     {headerName: 'Ctrl', field: 'id_loteCorreos'},
     {headerName: 'Encargado', field: 'encargado'},
     {headerName: 'Estado', field: 'estado' }
-    //{headerName: 'ENSAYE EN DIAS', field: 'status' }
   ];
 
     this.rowSelection = "single";

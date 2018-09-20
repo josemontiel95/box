@@ -321,10 +321,10 @@
           </div>
             <div class="col-md-12 col-12" [formGroup]=tipoForm (change)="seleccionaFormato();">
               <select  class="form-control" id="formatos" name="formatos" *ngIf="!hiddenFormato" formControlName="formato_tipo_id">
-                          <option value="0" [disabled]="true">Selecciona un formato...</option>
-                          <option *ngFor="let format of formatos" [value]="format.id">
-                                {{format.format}}
-                          </option>
+                <option value="0" [disabled]="true">Selecciona un formato...</option>
+                <option *ngFor="let format of formatos" [value]="format.id">
+                      {{format.format}}
+                </option>
              </select>
             </div>
         </div>
@@ -332,7 +332,7 @@
             
 
         <div class="card-body" *ngIf="hiddenFormato">
-     <!--aqui va el grid--><app-formatos-grid></app-formatos-grid>
+          <app-formatos-grid></app-formatos-grid>
         </div>
 
         <div class="card-footer">

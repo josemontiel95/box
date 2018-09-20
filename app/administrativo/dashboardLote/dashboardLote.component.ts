@@ -40,6 +40,7 @@ export class dashboardLoteComponent implements OnInit{
   formatoStatus;
   maxNoOfRegistrosRev;
   numberOfRegistros;
+  hiddenFormato=true;
 
   mensajeEstado="";
   
@@ -155,6 +156,9 @@ export class dashboardLoteComponent implements OnInit{
   }
 
   generarPDF(){
+    this.cargando=1;
+    this.hiddenFormato=false;
+
     let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'generateAllFormatosByLote');
@@ -168,6 +172,9 @@ export class dashboardLoteComponent implements OnInit{
                                           });
   }
   validaRespuesta(res: any){
+    this.cargando=this.cargando-1;
+    this.hiddenFormato=true;
+
     if(res.error==0){
       window.alert("server regreso con exito");
     }else{
@@ -176,13 +183,26 @@ export class dashboardLoteComponent implements OnInit{
   }
 
   mandarCorreo(){
-
+    this.cargando=1;
+    this.hiddenFormato=false;
+    let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'sentAllEmailFormatosByLote');
+    search.set('token',           this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('lote',            this.loteCorreos);
+    this.http.get(url, {search}).subscribe(res => {
+                                            console.log(res.json());
+                                            this.validaRespuesta(res.json());
+                                          });
   } 
 
   
   
     
   respuestaSwitch(res: any){ 
+    this.cargando=this.cargando-1;
+    this.hiddenFormato=true;
      console.log(res);
      if(res.error!= 0){
        window.alert(res.estatus);
