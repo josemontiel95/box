@@ -27,7 +27,7 @@ export class GridCorreosComponent implements OnInit  {
     {headerName: 'COTIZACI&Oacute;N', field: 'cotizacion'},
     {headerName: 'OBRA', field: 'obra'},
     {headerName: 'RAZ&Oacute;N SOCIAL', field: 'razonSocial' },
-    {headerName: 'PDF', field: 'pdf' }
+    {headerName: 'PDF', field: 'PDF' }
   ];
 
     this.rowSelection = "single";
@@ -84,13 +84,19 @@ export class GridCorreosComponent implements OnInit  {
    
   onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
-    var id = "";
+    var pdf = "";
+    var link = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_ensayoCilindro;
-      
+      pdf = selectedRow.PDF;
+      link = selectedRow.link;
     });
-    this.router.navigate(['tecnico/pendientes/dashboardCilindro/pruebaCilindro/'+this.id_footer +'/' +id]);
+    if(pdf == "No"){
+      window.alert("No hay PDF generado");
+    }else{
+      window.alert("Redireccionando");
+    }
+    //this.router.navigate(['tecnico/pendientes/dashboardCilindro/pruebaCilindro/'+this.id_footer +'/' +id]);
   }
 
 

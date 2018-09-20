@@ -40,11 +40,17 @@ export class dashboardLoteComponent implements OnInit{
   formatoStatus;
   maxNoOfRegistrosRev;
   numberOfRegistros;
-  
-  formatoCCHForm: FormGroup;
 
-    FormatoCCH  = {
-    fechaEnsayo: '',
+  mensajeEstado="";
+  
+  fechaForm: FormGroup;
+
+  fecha  = {
+    fechaEnsayo: ''
+  }
+  footerForm: FormGroup;
+
+  footer  = {
     noCorreos:'',
     encargado:'',
     ctrl:''
@@ -71,54 +77,37 @@ export class dashboardLoteComponent implements OnInit{
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.loteCorreos=params.id); 
-    this.cargando=0;
-/*
-    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
+    this.cargando=1;
+    let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getFooterByID');
+    search.set('function', 'getLoteByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('id_footerEnsayo', this.id_footer);
+    search.set('lote', this.loteCorreos);
     this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
 
-   */
-  this.formatoCCHForm = new FormGroup({
-      'fechaEnsayo':      new FormControl( {value: this.FormatoCCH.fechaEnsayo, disabled: true }),
-      'noCorreos':        new FormControl( {value: this.FormatoCCH.noCorreos,   disabled: true }),
-      'encargado':        new FormControl( {value: this.FormatoCCH.encargado,   disabled: true }),
-      'ctrl':             new FormControl( {value: this.FormatoCCH.ctrl,        disabled: true }),
+   
+    this.fechaForm = new FormGroup({
+      'fechaEnsayo':      new FormControl( {value: this.fecha.fechaEnsayo, disabled: true })
+    });
+    this.footerForm = new FormGroup({
+      'noCorreos':        new FormControl( {value: this.footer.noCorreos,   disabled: true }),
+      'encargado':        new FormControl( {value: this.footer.encargado,   disabled: true }),
+      'ctrl':             new FormControl( {value: this.footer.ctrl,        disabled: true }),
     });
   }
 
-   get fechaEnsayo()    { return this.formatoCCHForm.get('fechaEnsayo'); }
-   get noCorreos()      { return this.formatoCCHForm.get('noCorreos'); }
-   get encargado()      { return this.formatoCCHForm.get('encargado'); }
-   get ctrl()           { return this.formatoCCHForm.get('ctrl'); }  
+   get fechaEnsayo()    { return this.fechaForm.get('fechaEnsayo'); }
+   get noCorreos()      { return this.footerForm.get('noCorreos'); }
+   get encargado()      { return this.footerForm.get('encargado'); }
+   get ctrl()           { return this.footerForm.get('ctrl'); }  
   
   mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
-
-    Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
-        this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
-    });
-        
-    this.formatoCCHForm.controls['noCorreos']['disable']();
-    this.formatoCCHForm.controls['encargado']['disable']();
-    this.formatoCCHForm.controls['ctrl']['disable']();
   }
 
-  mostrarFooter(){
-    this.hiddenf = !this.hiddenf;
-    const state = this.hiddenf ? 'disable' : 'enable';
 
-    Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
-        this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
-    });
-
-    this.formatoCCHForm.controls['fechaEnsayo']['disable']();
-
-  }
 
   submitted = false;
   onSubmit() { this.submitted = true; }
@@ -135,75 +124,63 @@ export class dashboardLoteComponent implements OnInit{
 
   llenado(respuesta:any){
     console.log(respuesta);
+    console.log("llenado :: respuesta.correosNo: "+respuesta.correosNo);
+    console.log("llenado :: respuesta.id_loteCorreos: "+respuesta.id_loteCorreos);
+    console.log("llenado :: respuesta.encargado: "+respuesta.encargado);
 
-    this.formatoCCHForm.patchValue({
-     fechaEnsayo:   respuesta.fecha,
-     noCorreos:     respuesta.buscula_id,
-     encargado:     respuesta.regVerFle_id,
-     ctrl:          respuesta.prensa_id
+
+    this.footerForm.patchValue({
+     noCorreos:     respuesta.correosNo,
+     encargado:     respuesta.encargado,
+     ctrl:          respuesta.id_loteCorreos
     });
-    this.formatoStatus=(respuesta.status == 0 ? true : false);
+    this.fechaForm.patchValue({
+     fechaEnsayo:   respuesta.fecha
+    });
+    this.formatoStatus=respuesta.status;
+
+    switch(Number(respuesta.status)){
+      case 0:
+        this.mensajeEstado = "Listo para generar PDFs";
+      break;
+      case 1:
+        this.mensajeEstado = "Listo para mandar correos";
+      break;
+      case 2:
+        this.mensajeEstado = "Correos enviados";
+      break;
+    }
     console.log(this.formatoStatus);
     this.cargando=this.cargando-1;
   }
 
-  obtenStatusReg(){
-    let url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
+  generarPDF(){
+    let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllRegistrosFromFooterByID');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('footerEnsayo_id', this.id_footer);
+    search.set('function', 'generateAllFormatosByLote');
+    search.set('token',           this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('lote',            this.loteCorreos);
+    console.log(this.loteCorreos);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
-                                            this.validaRegistrosVacios(res.json());
+                                            this.validaRespuesta(res.json());
                                           });
   }
-
-  validaRegistrosVacios(res: any){
-
-    let isValid = true;
-    res.forEach(function (value) {
-      if(value.status == "0"){
-         isValid = false;
-        //window.alert("Existe al menos un registro que no ha sido completado, verifica que todos los registros esten completados.");
-      }
-    });
-
-    if(!isValid){
-      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para completar el formato.");     
-    }else{
-          if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
-            this.formatoCompletado();
-          }
-    } 
-  } 
-
-  formatoCompletado(){
-    //console.log("formatoCompletado :: Sigo vivo");
-    this.cargando=1;
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'completeFormato');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-    formData.append('id_footerEnsayo', this.id_footer);  
-    this.http.post(url, formData).subscribe(res => {
-      this.respuestaFormatoCompletado(res.json());
-    });
-  } 
-  
-  respuestaFormatoCompletado(res: any){
-    this.cargando=this.cargando-1;
-    this.formatoStatus=false;
-    console.log(res.status);
+  validaRespuesta(res: any){
     if(res.error==0){
-      window.alert("¡Exito! El Formato Se ha Completado");
+      window.alert("server regreso con exito");
     }else{
-      window.alert(res.estatus);
+      window.alert("server regreso con error, estatus: "+res.estatus+" error: "+res.error);
     }
   }
+
+  mandarCorreo(){
+
+  } 
+
+  
+  
     
   respuestaSwitch(res: any){ 
      console.log(res);
@@ -216,28 +193,7 @@ export class dashboardLoteComponent implements OnInit{
      }
    }
 
-  respuestaRegistro(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       location.reload();
-     }
-     else{
-          this.id_registro= res.id_registrosRev;
-          console.log(this.id_registro);
-          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroRevenimiento/'+this.id_orden + '/' + this.id_formato + '/' +this.id_registro]);        
-     }
-   }
 
-  validaRespuesta(res:any){
-     console.log(res);
-     if(res.error!= 0){
-       window.alert("Intentalo otra vez");
-     }
-     else{
-               
-     }
-   }
 
   regresaPendientes(){
     this.router.navigate(['administrativo/obras/']);
