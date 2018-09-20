@@ -18,14 +18,16 @@ export class GridCorreosComponent implements OnInit  {
   columnDefs;
   id_orden: string;
   id_footer: string;
+  lote: string;
    rowClassRules;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'FECHA DE COLADO', field: 'fechaColado'},
     {headerName: 'INFORME NUMERO', field: 'informeNo'},
-    {headerName: 'CLAVE', field: 'claveEspecimen'},
-    {headerName: 'ENSAYE EN DIAS', field: 'diasEnsayeFinal' }
+    {headerName: 'COTIZACI&Oacute;N', field: 'cotizacion'},
+    {headerName: 'OBRA', field: 'obra'},
+    {headerName: 'RAZ&Oacute;N SOCIAL', field: 'razonSocial' },
+    {headerName: 'PDF', field: 'pdf' }
   ];
 
     this.rowSelection = "single";
@@ -44,7 +46,7 @@ export class GridCorreosComponent implements OnInit  {
 
   ngOnInit() {
      this.data.currentGlobal.subscribe(global => this.global = global);
-     this.route.params.subscribe( params => this.id_footer=params.id); 
+     this.route.params.subscribe( params => this.lote=params.id); 
   }
 
 
@@ -55,12 +57,12 @@ export class GridCorreosComponent implements OnInit  {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllRegistrosFromFooterByID');
+    search.set('function', 'getAllFormatosByLote');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('footerEnsayo_id', this.id_footer);
+    search.set('lote', this.lote);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.rowData= res.json();

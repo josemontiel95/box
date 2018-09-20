@@ -103,26 +103,26 @@ export class ObrasComponent implements OnInit{
     if(this.tipoForm.value.lotes == -1){
       //window.alert("seleccionaLote :: IF : -1");
         if(window.confirm("¿Estas seguro de crear un nuevo lote de correos? Ya NO podrás eliminarlo despues.")){
-          this.agregaFormatos(this.tipoForm.value.lotes);
+          this.agregaFormatos();
         }else{
           return;
         }
     }else{
-      this.agregaFormatos(this.tipoForm.value.lotes);
+      this.agregaFormatos();
       //window.alert("seleccionaLote :: ELSE: "+this.tipoForm.value.lotes);
     }
   }
 
-  agregaFormatos(lote){
-    let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/post/endpoint.php`;
+  agregaFormatos(){
+    let url = `${this.global.apiRoot}/loteCorreos/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'deleteHerra');
-    formData.append('ordenDeTrabajo_id', this.id);
+    formData.append('function', 'agregaFormatos');
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('token', this.global.token);
-    formData.append('herramientasArray', JSON.stringify(this.formatosSeleccionados));
+    formData.append('lote', this.tipoForm.value.lotes);
+    formData.append('formatosSeleccionados', JSON.stringify(this.formatosSeleccionados));
     this.http.post(url, formData).subscribe(res => {
-      this.respuestaSwitch(res.json());
+                                                    this.respuestaSwitch(res.json());
     });
   }
 
@@ -156,10 +156,7 @@ export class ObrasComponent implements OnInit{
     }
     this.cargando=this.cargando-1;
   }
-  agregaLote(){
-    this.selectLote=!this.selectLote;
-  }
-
+  
   llenadoValidator(respuesta: any){
     console.log(respuesta)
     if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
@@ -212,16 +209,26 @@ export class ObrasComponent implements OnInit{
        location.reload();
      }
      else{
-       location.reload();
+       this.router.navigate(['administrativo/obras/dashboardLote/'+res.lote]);
      }
    }
 
+   agregaLote(){
+    this.selectLote=!this.selectLote;
+
+  }
+
    onSelectionChanged(event: EventListenerObject) {
     var selectedRows = this.gridApi.getSelectedRows();
-
+    var id = []; //array
     selectedRows.forEach(function(selectedRow, index) {
-      this.formatosSeleccionados.push(selectedRow.id_formatoCampo);
+      id.push(selectedRow.id_formatoCampo);
+      //this.formatosSeleccionados.push(selectedRow.id_formatoCampo);
     });
+    this.formatosSeleccionados = [];
+    this.formatosSeleccionados = id;
+
+    console.log(this.formatosSeleccionados);
   }
 
 }

@@ -21,7 +21,7 @@ export const SubAdminLayoutRoutes: Routes = [
     { path: 'obras',          component: ObrasComponent },
     { path: 'obras/obra-detail/:id',   component: ObraDetailComponent },
     { path: 'ordenes',   component: OrdenesComponent },
-    { path: 'dashboardLote',   component: dashboardLoteComponent },
+    { path: 'obras/dashboardLote/:id',   component: dashboardLoteComponent },
 
     /*
     { path: 'dashboard',      component: DashboardComponent },
