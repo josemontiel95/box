@@ -98,6 +98,11 @@
                     <input type="text" id="ancho1"   
                     class="form-control" 
                     name="ancho1" placeholder="" formControlName="ancho1" required (change)="onBlurAncho1()">
+                    <div *ngIf="ancho1.errors && (ancho1.dirty || ancho1.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="ancho1.errors.required">LECTURA DE ANCHO 1 REQUERIDO.</div>
+                        <div *ngIf="ancho1.errors.pattern">LA LECTURA DEL ANCHO1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
