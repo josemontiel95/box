@@ -26,7 +26,10 @@ export class GridCorreosComponent implements OnInit  {
     {headerName: 'INFORME NUMERO', field: 'informeNo'},
     {headerName: 'COTIZACI&Oacute;N', field: 'cotizacion'},
     {headerName: 'OBRA', field: 'obra'},
+    {headerName: 'Email Cliente', field: 'emailCliente' },
+    {headerName: 'Email Residente de obra', field: 'emailResidente' },
     {headerName: 'RAZ&Oacute;N SOCIAL', field: 'razonSocial' },
+
     {headerName: 'PDF', field: 'PDF' }
   ];
 
