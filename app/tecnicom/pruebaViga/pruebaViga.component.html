@@ -101,7 +101,7 @@
                     <div *ngIf="ancho1.errors && (ancho1.dirty || ancho1.touched)"
                               class="alert alert-danger">
                         <div *ngIf="ancho1.errors.required">LECTURA DE ANCHO 1 REQUERIDO.</div>
-                        <div *ngIf="ancho1.errors.pattern">LA LECTURA DEL ANCHO1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                        <div *ngIf="ancho1.errors.pattern">LA LECTURA DEL ANCHO 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
                     </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
@@ -112,6 +112,11 @@
                     <input type="text" id="ancho2"   
                     class="form-control" 
                     name="ancho2" placeholder="" formControlName="ancho2" required (change)="onBlurAncho2()">
+                    <div *ngIf="ancho2.errors && (ancho2.dirty || ancho2.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="ancho2.errors.required">LECTURA DE ANCHO 2 REQUERIDO.</div>
+                        <div *ngIf="ancho2.errors.pattern">LA LECTURA DEL ANCHO 2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -123,6 +128,11 @@
                     <input type="text" id="per1"   
                     class="form-control" 
                     name="per1" placeholder="" formControlName="per1" required (change)="onBlurPer1()">
+                    <div *ngIf="per1.errors && (per1.dirty || per1.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="per1.errors.required">LECTURA DE PERALTE 1 REQUERIDO.</div>
+                        <div *ngIf="per1.errors.pattern">LA LECTURA DEL PERALTE 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -132,6 +142,11 @@
                     <input type="text" id="per2"   
                     class="form-control" 
                     name="per2" placeholder="" formControlName="per2" required (change)="onBlurPer2()">
+                    <div *ngIf="per2.errors && (per2.dirty || per2.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="per2.errors.required">LECTURA DE PERALTE 2 REQUERIDO.</div>
+                        <div *ngIf="per2.errors.pattern">LA LECTURA DEL PERALTE 2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>
@@ -181,12 +196,11 @@
                     <input type="text" id="disApoyos"  
                     class="form-control" 
                     name="disApoyos" placeholder="" formControlName="disApoyos" required (change)="onBlurDisApoyos()">
-                     <div *ngIf="disApoyos.invalid && (disApoyos.dirty || disApoyos.touched)"
-                      class="alert alert-danger">
-                        <div *ngIf="disApoyos.errors.required">
-                          Distancia entre apoyos.
-                        </div>
-                      </div>
+                      <div *ngIf="disApoyos.errors && (disApoyos.dirty || disApoyos.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="disApoyos.errors.required">DISTANCIA ENTRE APOYOS REQUERIDA.</div>
+                        <div *ngIf="disApoyos.errors.pattern">LA DISTANCIA ENTRE APOYOS DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
 
@@ -196,6 +210,11 @@
                     <input type="text" id="disCarga"   
                     class="form-control" 
                     name="disCarga" placeholder="" formControlName="disCarga" required (change)="onBlurDisCarga()">
+                    <div *ngIf="disCarga.errors && (disCarga.dirty || disCarga.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="disCarga.errors.required">DISTANCIA ENTRE PUNTOS DE CARGA REQUERIDA.</div>
+                        <div *ngIf="disCarga.errors.pattern">LA DISTANCIA ENTRE PUNTOS DE CARGA DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -205,6 +224,11 @@
                     <input type="text" id="cargaAplicada"  
                     class="form-control" 
                     name="cargaAplicada" placeholder="" formControlName="cargaAplicada" required (change)="onBlurCargaAplicada()">
+                    <div *ngIf="cargaAplicada.errors && (cargaAplicada.dirty || cargaAplicada.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="cargaAplicada.errors.required">CARGA APLICADA REQUERIDA.</div>
+                        <div *ngIf="cargaAplicada.errors.pattern">LA CARGA APLICADA DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
             </div>

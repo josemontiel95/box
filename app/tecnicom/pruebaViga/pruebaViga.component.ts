@@ -102,17 +102,17 @@ export class PruebaVigaComponent implements OnInit{
       'condiCurado': new FormControl( {value: this.FormatoCCH.condiCurado, disabled: this.hidden}),
       'lijado': new FormControl( {value: this.FormatoCCH.lijado, disabled: this.hidden}),
       'cuero': new FormControl( {value: this.FormatoCCH.cuero, disabled: this.hidden}),
-      'ancho1': new FormControl( {value:   this.FormatoCCH.ancho1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([,][0-9]+)?$")]),
-      'ancho2': new FormControl( {value: this.FormatoCCH.ancho2, disabled: this.hidden}),
-      'per1': new FormControl( {value:   this.FormatoCCH.per1, disabled: this.hidden}),      
-      'per2': new FormControl( {value:   this.FormatoCCH.per2, disabled: this.hidden}),      
+      'ancho1': new FormControl( {value:   this.FormatoCCH.ancho1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'ancho2': new FormControl( {value: this.FormatoCCH.ancho2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'per1': new FormControl( {value:   this.FormatoCCH.per1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),      
+      'per2': new FormControl( {value:   this.FormatoCCH.per2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),      
       'l1': new FormControl( {value:   this.FormatoCCH.l1, disabled: this.hidden}),      
       'l2': new FormControl( {value:   this.FormatoCCH.l2, disabled: this.hidden}),            
       'l3': new FormControl( {value:   this.FormatoCCH.l3, disabled: this.hidden}),            
       'prom': new FormControl( {value:   this.FormatoCCH.prom, disabled: true}),            
-      'disApoyos': new FormControl( {value: this.FormatoCCH.disApoyos, disabled: this.hidden}),
-      'disCarga': new FormControl( {value: this.FormatoCCH.disCarga, disabled: this.hidden}),
-      'cargaAplicada': new FormControl( {value: this.FormatoCCH.cargaAplicada, disabled: this.hidden}),       
+      'disApoyos': new FormControl( {value: this.FormatoCCH.disApoyos, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'disCarga': new FormControl( {value: this.FormatoCCH.disCarga, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'cargaAplicada': new FormControl( {value: this.FormatoCCH.cargaAplicada, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),       
       'moduloRuptura': new FormControl( {value: this.FormatoCCH.moduloRuptura, disabled: true}),       
       'defectos': new FormControl( {value: this.FormatoCCH.defectos, disabled: this.hidden}), 
       'realizo': new FormControl( {value: this.FormatoCCH.realizo, disabled: true})  });
@@ -572,7 +572,7 @@ export class PruebaVigaComponent implements OnInit{
   validaCamposVacios(){
     let warning = false;
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
-      if(controlName == "l1" || controlName == "l2" || controlName == "l3" || controlName == "prom"){ 
+      if(controlName == "l1" || controlName == "l2" || controlName == "l3" || controlName == "prom" || controlName == "defectos"){ 
         //DO NOTHING
       }else{
         if(this.formatoCCHForm.controls[controlName].value == "" || this.formatoCCHForm.controls[controlName].value == null || this.formatoCCHForm.controls[controlName].value == "null"){
