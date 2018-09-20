@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SoporteLayoutRoutes } from './soporte-layout.routing';
 import { UserProfileComponent } from '../../soporte/user-profile/user-profile.component';
+import { DashboardComponent } from '../../soporte/dashboard/dashboard.component';
 /*
-import { DashboardComponent } from '../../dashboard/dashboard.component';
+ 
 
 import { TableListComponent } from '../../table-list/table-list.component';
 import { TypographyComponent } from '../../typography/typography.component';
@@ -30,7 +31,8 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   declarations: [
       UserProfileComponent,
-   /* DashboardComponent,
+      DashboardComponent
+   /*  
 
     TableListComponent,
     TypographyComponent,

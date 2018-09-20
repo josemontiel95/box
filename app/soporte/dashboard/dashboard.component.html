@@ -1,0 +1,226 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+ 
+<div class="row">
+    <div class="col-lg-12 col-12 col-md-12">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">
+            Orden de trabajo No.{{this.id}}</h5>
+          <h4 class="card-title">Orden de trabajo.</h4>
+        </div>
+        <div class="card-body">
+  
+          <form (ngSubmit)="onSubmit()" [formGroup]=ordenForm #formDir="ngForm">
+            <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="apiRoot ">&Aacute;rea</label>
+                  <input type="text" id="apiRoot " required name="apiRoot " class="form-control" placeholder="apiRoot " formControlName="apiRoot "> 
+                  <div *ngIf="apiRoot .invalid && (apiRoot .dirty || apiRoot .touched)"class="alert alert-danger">
+                    <div *ngIf="apiRoot .errors.required">apiRoot  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> </div>
+            <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="cch_def_prueba1 ">&Aacute;rea</label>
+                  <input type="text" id="cch_def_prueba1 " required name="cch_def_prueba1 " class="form-control" placeholder="cch_def_prueba1 " formControlName="cch_def_prueba1 "> 
+                  <div *ngIf="cch_def_prueba1 .invalid && (cch_def_prueba1 .dirty || cch_def_prueba1 .touched)"class="alert alert-danger">
+                    <div *ngIf="cch_def_prueba1 .errors.required">cch_def_prueba1  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> 
+              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="cch_def_prueba2 ">&Aacute;rea</label>
+                  <input type="text" id="cch_def_prueba2 " required name="cch_def_prueba2 " class="form-control" placeholder="cch_def_prueba2 " formControlName="cch_def_prueba2 "> 
+                  <div *ngIf="cch_def_prueba2 .invalid && (cch_def_prueba2 .dirty || cch_def_prueba2 .touched)"class="alert alert-danger">
+                    <div *ngIf="cch_def_prueba2 .errors.required">cch_def_prueba2  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->  
+              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="cch_def_prueba3 ">&Aacute;rea</label>
+                  <input type="text" id="cch_def_prueba3 " required name="cch_def_prueba3 " class="form-control" placeholder="cch_def_prueba3 " formControlName="cch_def_prueba3 "> 
+                  <div *ngIf="cch_def_prueba3 .invalid && (cch_def_prueba3 .dirty || cch_def_prueba3 .touched)"class="alert alert-danger">
+                    <div *ngIf="cch_def_prueba3 .errors.required">cch_def_prueba3  requerido.</div>
+                  </div>
+                      </div> <!--FIN PRIMERA GRID -->
+                </div><!--FIN PRIMER CAMPO -->
+                <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="cch_def_prueba4 ">&Aacute;rea</label>
+                  <input type="text" id="cch_def_prueba4 " required name="cch_def_prueba4 " class="form-control" placeholder="cch_def_prueba4 " formControlName="cch_def_prueba4 "> 
+                  <div *ngIf="cch_def_prueba4 .invalid && (cch_def_prueba4 .dirty || cch_def_prueba4 .touched)"class="alert alert-danger">
+                    <div *ngIf="cch_def_prueba4 .errors.required">cch_def_prueba4  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> 
+           </div>
+          <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="ensayo_def_buscula_id ">&Aacute;rea</label>
+                  <input type="text" id="ensayo_def_buscula_id " required name="ensayo_def_buscula_id " class="form-control" placeholder="ensayo_def_buscula_id " formControlName="ensayo_def_buscula_id "> 
+                  <div *ngIf="ensayo_def_buscula_id .invalid && (ensayo_def_buscula_id .dirty || ensayo_def_buscula_id .touched)"class="alert alert-danger">
+                    <div *ngIf="ensayo_def_buscula_id .errors.required">ensayo_def_buscula_id  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> 
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="ensayo_def_prensa_id ">&Aacute;rea</label>
+                  <input type="text" id="ensayo_def_prensa_id " required name="ensayo_def_prensa_id " class="form-control" placeholder="ensayo_def_prensa_id " formControlName="ensayo_def_prensa_id "> 
+                  <div *ngIf="ensayo_def_prensa_id .invalid && (ensayo_def_prensa_id .dirty || ensayo_def_prensa_id .touched)"class="alert alert-danger">
+                    <div *ngIf="ensayo_def_prensa_id .errors.required">ensayo_def_prensa_id  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> 
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="ensayo_def_regVerFle_id ">&Aacute;rea</label>
+                  <input type="text" id="ensayo_def_regVerFle_id " required name="ensayo_def_regVerFle_id " class="form-control" placeholder="ensayo_def_regVerFle_id " formControlName="ensayo_def_regVerFle_id "> 
+                  <div *ngIf="ensayo_def_regVerFle_id .invalid && (ensayo_def_regVerFle_id .dirty || ensayo_def_regVerFle_id .touched)"class="alert alert-danger">
+                    <div *ngIf="ensayo_def_regVerFle_id .errors.required">ensayo_def_regVerFle_id  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> </div>
+   <div class="row"> <!--PRIMER ROW -->
+</div>
+   <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="ensayo_def_observaciones ">&Aacute;rea</label>
+                  <input type="text" id="ensayo_def_observaciones " required name="ensayo_def_observaciones " class="form-control" placeholder="ensayo_def_observaciones " formControlName="ensayo_def_observaciones "> 
+                  <div *ngIf="ensayo_def_observaciones .invalid && (ensayo_def_observaciones .dirty || ensayo_def_observaciones .touched)"class="alert alert-danger">
+                    <div *ngIf="ensayo_def_observaciones .errors.required">ensayo_def_observaciones  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> </div>
+   <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="ensayo_def_pi ">&Aacute;rea</label>
+                  <input type="text" id="ensayo_def_pi " required name="ensayo_def_pi " class="form-control" placeholder="ensayo_def_pi " formControlName="ensayo_def_pi "> 
+                  <div *ngIf="ensayo_def_pi .invalid && (ensayo_def_pi .dirty || ensayo_def_pi .touched)"class="alert alert-danger">
+                    <div *ngIf="ensayo_def_pi .errors.required">ensayo_def_pi  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> </div>
+   <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="ensayo_def_distanciaApoyos ">&Aacute;rea</label>
+                  <input type="text" id="ensayo_def_distanciaApoyos " required name="ensayo_def_distanciaApoyos " class="form-control" placeholder="ensayo_def_distanciaApoyos " formControlName="ensayo_def_distanciaApoyos "> 
+                  <div *ngIf="ensayo_def_distanciaApoyos .invalid && (ensayo_def_distanciaApoyos .dirty || ensayo_def_distanciaApoyos .touched)"class="alert alert-danger">
+                    <div *ngIf="ensayo_def_distanciaApoyos .errors.required">ensayo_def_distanciaApoyos  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> </div>
+   <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="ensayo_def_kN ">&Aacute;rea</label>
+                  <input type="text" id="ensayo_def_kN " required name="ensayo_def_kN " class="form-control" placeholder="ensayo_def_kN " formControlName="ensayo_def_kN "> 
+                  <div *ngIf="ensayo_def_kN .invalid && (ensayo_def_kN .dirty || ensayo_def_kN .touched)"class="alert alert-danger">
+                    <div *ngIf="ensayo_def_kN .errors.required">ensayo_def_kN  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> </div>
+   <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="ensayo_def_MPa ">&Aacute;rea</label>
+                  <input type="text" id="ensayo_def_MPa " required name="ensayo_def_MPa " class="form-control" placeholder="ensayo_def_MPa " formControlName="ensayo_def_MPa "> 
+                  <div *ngIf="ensayo_def_MPa .invalid && (ensayo_def_MPa .dirty || ensayo_def_MPa .touched)"class="alert alert-danger">
+                    <div *ngIf="ensayo_def_MPa .errors.required">ensayo_def_MPa  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> </div>
+    <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="ensayo_def_divisorKn ">&Aacute;rea</label>
+                  <input type="text" id="ensayo_def_divisorKn " required name="ensayo_def_divisorKn " class="form-control" placeholder="ensayo_def_divisorKn " formControlName="ensayo_def_divisorKn "> 
+                  <div *ngIf="ensayo_def_divisorKn .invalid && (ensayo_def_divisorKn .dirty || ensayo_def_divisorKn .touched)"class="alert alert-danger">
+                    <div *ngIf="ensayo_def_divisorKn .errors.required">ensayo_def_divisorKn  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> </div>       
+      <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="maxNoOfRegistrosCCH ">&Aacute;rea</label>
+                  <input type="text" id="maxNoOfRegistrosCCH " required name="maxNoOfRegistrosCCH " class="form-control" placeholder="maxNoOfRegistrosCCH " formControlName="maxNoOfRegistrosCCH "> 
+                  <div *ngIf="maxNoOfRegistrosCCH .invalid && (maxNoOfRegistrosCCH .dirty || maxNoOfRegistrosCCH .touched)"class="alert alert-danger">
+                    <div *ngIf="maxNoOfRegistrosCCH .errors.required">maxNoOfRegistrosCCH  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> 
+ 
+          
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="maxNoOfRegistrosRev ">&Aacute;rea</label>
+                  <input type="text" id="maxNoOfRegistrosRev " required name="maxNoOfRegistrosRev " class="form-control" placeholder="maxNoOfRegistrosRev " formControlName="maxNoOfRegistrosRev "> 
+                  <div *ngIf="maxNoOfRegistrosRev .invalid && (maxNoOfRegistrosRev .dirty || maxNoOfRegistrosRev .touched)"class="alert alert-danger">
+                    <div *ngIf="maxNoOfRegistrosRev .errors.required">maxNoOfRegistrosRev  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> 
+      
+            </div>       
+        <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="multiplosNoOfRegistrosCCH ">&Aacute;rea</label>
+                  <input type="text" id="multiplosNoOfRegistrosCCH " required name="multiplosNoOfRegistrosCCH " class="form-control" placeholder="multiplosNoOfRegistrosCCH " formControlName="multiplosNoOfRegistrosCCH "> 
+                  <div *ngIf="multiplosNoOfRegistrosCCH .invalid && (multiplosNoOfRegistrosCCH .dirty || multiplosNoOfRegistrosCCH .touched)"class="alert alert-danger">
+                    <div *ngIf="multiplosNoOfRegistrosCCH .errors.required">multiplosNoOfRegistrosCCH  requerido.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID --> </div>
+ 
+        
+
+          <div class="btn-group"  >
+            <button class="btn btn-info" *ngIf="hiddenDetail == true" (click)="mostrarDetalles()">
+              <span><b> Mas detalles </b></span>
+            </button>   
+            <button class="btn btn-info" *ngIf="!hiddenDetail && hidden"  (click)="mostrarDetalles2()">
+              <span><b> Menos detalles </b></span>
+            </button>    
+            <div class="btn-group"  style="float: right; padding-left: 10%;">
+              <button class="btn btn-info" *ngIf="hidden == true && !hiddenBotonFormato"  (click)="mostrar(); mostrarDetalles();">
+                <span><b> Cambiar Datos </b></span>
+              </button>
+
+              <button class="btn btn-danger" *ngIf="!hidden" (click)="mostrar(); mostrarDetalles2(); rollbackCambiarDatos();" >
+                  <span><b> Cancelar </b></span>
+              </button>
+ 
+            </div>
+            <div class="btn-group" style=" padding-left: 15%;">
+              <button class="btn btn-success" *ngIf="!hidden" [disabled]="ordenForm.invalid" (click)="mostrar(); mostrarDetalles(); actualizarOrden();">
+                <span><b> Guardar Cambios </b></span>
+              </button>
+            </div>
+              
+            
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+</div>
