@@ -114,6 +114,7 @@ export class ObrasComponent implements OnInit{
   }
 
   agregaFormatos(){
+    window.alert("POR EL MOMENTO EL FORMATO DE VIGAS NO DISPONIBLE. IGNORANDO ESTOS FORMATOS");
     let url = `${this.global.apiRoot}/loteCorreos/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'agregaFormatos');
@@ -222,7 +223,11 @@ export class ObrasComponent implements OnInit{
     var selectedRows = this.gridApi.getSelectedRows();
     var id = []; //array
     selectedRows.forEach(function(selectedRow, index) {
-      id.push(selectedRow.id_formatoCampo);
+      if(selectedRow.tipo == "VIGAS"){
+
+      }else{
+            id.push(selectedRow.id_formatoCampo);
+      }
       //this.formatosSeleccionados.push(selectedRow.id_formatoCampo);
     });
     this.formatosSeleccionados = [];

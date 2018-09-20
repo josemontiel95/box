@@ -94,7 +94,9 @@ export class GridCorreosComponent implements OnInit  {
     if(pdf == "No"){
       window.alert("No hay PDF generado");
     }else{
-      window.alert("Redireccionando");
+      //window.alert("Redireccionando");
+      //this.router.navigate(selectedRows.link);
+      window.open(link, "_blank");
     }
     //this.router.navigate(['tecnico/pendientes/dashboardCilindro/pruebaCilindro/'+this.id_footer +'/' +id]);
   }

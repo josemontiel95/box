@@ -102,7 +102,7 @@ export class PruebaVigaComponent implements OnInit{
       'condiCurado': new FormControl( {value: this.FormatoCCH.condiCurado, disabled: this.hidden}),
       'lijado': new FormControl( {value: this.FormatoCCH.lijado, disabled: this.hidden}),
       'cuero': new FormControl( {value: this.FormatoCCH.cuero, disabled: this.hidden}),
-      'ancho1': new FormControl( {value:   this.FormatoCCH.ancho1, disabled: this.hidden}),
+      'ancho1': new FormControl( {value:   this.FormatoCCH.ancho1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([,][0-9]+)?$")]),
       'ancho2': new FormControl( {value: this.FormatoCCH.ancho2, disabled: this.hidden}),
       'per1': new FormControl( {value:   this.FormatoCCH.per1, disabled: this.hidden}),      
       'per2': new FormControl( {value:   this.FormatoCCH.per2, disabled: this.hidden}),      
