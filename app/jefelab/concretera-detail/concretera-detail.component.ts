@@ -107,6 +107,7 @@ export class ConcreteraDetailComponent implements OnInit {
 
     Object.keys(this.concreteraForm.controls).forEach((controlName) => {
         this.concreteraForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
+         this.concreteraForm.controls['id_concretera']['disable']();
     });
   }
 
