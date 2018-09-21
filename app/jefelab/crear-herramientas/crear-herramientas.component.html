@@ -10,71 +10,112 @@
           Crear Herramienta</h5>
         </div>
         <div class="card-body">
-         <form (ngSubmit)="onSubmit()" #herramientaForm="ngForm">
+          <form (ngSubmit)="onSubmit()" [formGroup]=herramientaForm #formDir="ngForm">
             <div class="row">
-
               <div class="col-md-6 col-12">
-                 <div class="form-group">
+                <div class="form-group">
+                  <label for="id_herramienta">Ctrl</label>
+                  <input type="text"  id="id_herramienta" class="form-control"  required name="id_herramienta" placeholder="" formControlName="id_herramienta">
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="laboratorio_id">Laboratorio</label> 
+                  <select   class="form-control"  id="laboratorio_id" required name="laboratorio_id" placeholder="Laboratorio" formControlName="laboratorio_id">
+                    <option value="Selecciona un Laboratorio..." selected>Selecciona un Laboratorio...</option>
+                    <option *ngFor="let lab of mis_lab" [value]="lab.id_laboratorio">
+                      {{lab.laboratorio}}
+                    </option>
+                  </select>
+                  <div *ngIf="laboratorio_id.invalid && (laboratorio_id.dirty || laboratorio_id.touched)" class="alert alert-danger">
+                    <div *ngIf="laboratorio_id.errors.required">Laboratorio requerido.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="form-group">
                   <label for="herramienta_tipo_id">Tipos</label>
                   <select  class="form-control" id="herramienta_tipo_id"
-                    required [(ngModel)]="model.herramienta_tipo_id"
+                    required 
                     name="herramienta_tipo_id"
-                    placeholder="Tipos" #herramienta_tipo_id="ngModel">
+                    placeholder="Tipos"  formControlName="herramienta_tipo_id">
                     <option value="" [disabled]="true">Selecciona el tipo...</option>
                     <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo">
                       {{tipo.tipo}}
                     </option>
                   </select>
-                  <div [hidden]="herramienta_tipo_id.valid || herramienta_tipo_id.pristine"  class="alert alert-danger">
-                    Rol requerido.
-                  </div>
+                 <div *ngIf="herramienta_tipo_id.invalid && (herramienta_tipo_id.dirty || herramienta_tipo_id.touched)" class="alert alert-danger">
+                   <div *ngIf="herramienta_tipo_id.errors.required">
+                   Tipo de herramienta requerido.
+                   </div>
+                </div>
                 </div>
               </div>
 
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label for="placas">Placas</label>
-                  <input type="text" id="placas"  
-                   [(ngModel)]="model.placas" 
-                  class="form-control" 
-                  name="placas" placeholder="" #placas="ngModel">
+              <div class="col-md-6 col-12">
+                  <div class="form-group">
+                  <label for="placas">Placas/Identificador</label>
+                  <input type="text" id="placas" class="form-control" 
+                  name="placas" placeholder="" formControlName="placas">
               </div>
-                </div>
+              </div>
             </div>
 
             <div class="row">
-                
+                <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="fechaDeCompra"> Fecha de compra.</label>
+                  <input type="date" id="fechaDeCompra" class="form-control" name="fechaDeCompra" placeholder="" required formControlName="fechaDeCompra" >
+                 <div *ngIf="fechaDeCompra.invalid && (fechaDeCompra.dirty || fechaDeCompra.touched)" class="alert alert-danger">
+                   <div *ngIf="fechaDeCompra.errors.required">
+                   Fecha de compra requerida.
+                </div>
+              </div>
+                </div>
+              </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label>Condicion</label>
-                  <select type="text" id="condicion" required [(ngModel)]="model.condicion" name="condicion" class="form-control" placeholder="Condicion" #condicion="ngModel">
-                    <option value="" [disabled]="true">Selecciona el condici&oacute;n...</option>
+                  <label for="condicion">Condicion</label>
+                  <select type="text" id="condicion" required name="condicion" class="form-control" placeholder="Condicion" formControlName="condicion"  >
+                    <option value="" [disabled]="true">Selecciona la condici&oacute;n...</option>
                     <option *ngFor="let condicion of condi" [value]="condicion.id">
                       {{condicion.condicion}}
                     </option>
                   </select>
-                   <div [hidden]="condicion.valid ||condicion.pristine"  class="alert alert-danger">
-                    Condicion de la herramienta requerida.
-                </div>
+                <div *ngIf="condicion.invalid && (condicion.dirty || condicion.touched)" class="alert alert-danger">
+                   <div *ngIf="condicion.errors.required">
+                   Condicion requerida.
                 </div>
               </div>
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label for="fechaDeCompra"> Fecha de compra.</label>
-                  <input type="date" id="fechaDeCompra" required [(ngModel)]="model.fechaDeCompra" class="form-control" name="fechaDeCompra" placeholder="" #fechaDeCompra="ngModel">
-                  <div [hidden]="fechaDeCompra.valid ||fechaDeCompra.pristine"  class="alert alert-danger">
-                    Fecha de compra requerida.
-                </div>
                 </div>
               </div>
             </div>
 
-            
+            <div class="row">
+              <div class="col-md-12 col-12">
+                  <div class="form-group">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea type="text" id="observaciones"  
+                    class="form-control" 
+                    name="observaciones" placeholder="" formControlName="observaciones">
+                    </textarea>
+                  </div>
+              </div>
+            </div>
             <div class="btn-group" style="float: right; padding-right: 10%;">
-            <button class="btn btn-success" (click)="crearHerramienta(placas.value, herramienta_tipo_id.value, condicion.value, fechaDeCompra.value ); aver(placas.value, herramienta_tipo_id.value, condicion.value, fechaDeCompra.value);">
-              <span><b> Guardar Cambios </b></span>
-            </button>
-          </div>
+              <button class="btn btn-success" [disabled]="herramientaForm.invalid" (click)="crearHerramienta(0); ">
+                <span><b> Guardar Cambios </b></span>
+              </button>
+
+              
+            </div>
+            <div class="btn-group" style="float: right; padding-right: 10%;">
+              <button class="btn btn-info" [disabled]="herramientaForm.invalid" (click)="crearHerramienta(1); ">
+                  <span><b> Guardar y otro mas </b></span>
+              </button>
+            </div>
           </form>
         </div>
       </div>

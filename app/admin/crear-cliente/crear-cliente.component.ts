@@ -19,7 +19,7 @@ import {
 @Component({
   selector: 'app-crear-cliente',
   templateUrl: './crear-cliente.component.html',
-  styleUrls: ['./crear-cliente.component.scss']
+  styleUrls: ['./crear-cliente.component.scss', '../../loadingArrows.css']
 })
 export class CrearClienteComponent implements OnInit{
   global: Global;

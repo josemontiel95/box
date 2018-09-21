@@ -3,6 +3,7 @@
         <i class="now-ui-icons loader_refresh spin"></i> 
     </div>
 </div>
+ 
 
 <div class="panel-header panel-header-sm">
 </div>
@@ -17,43 +18,49 @@
         <div class="card-body">
           <form [formGroup]=clienteForm #formDir="ngForm" >
             <div class="row">
+              <div class="col-md-12 col-12 ">
+                <p>El nombre del cliente es el que usaras en el sistema para poder relacionar obras con clientes. La razon social se usa para documentos oficiales.</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-12 ">
+                <div class="form-group">
+                  <label for="razonSocial">Raz&oacute;n social.</label> 
+                  <input type="text"  id= "razonSocial"   required  class="form-control" name="razonSocial" placeholder="Tu Empresa S.A. de C.V."  formControlName="razonSocial" (change)="onChangeRazonSocial()">
+                  <div *ngIf="razonSocial.invalid && (razonSocial.dirty || razonSocial.touched)"class="alert alert-danger">
+                    <div *ngIf="razonSocial.errors.required">
+                      Raz&oacute;n social. requerida.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="nombre">Nombre de la empresa.</label> 
+                  <input type="text"  id= "nombre" required  class="form-control" name="nombre" placeholder="Nombre coloquial o marca comercial"  formControlName="nombre">
+                  <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="alert alert-danger">            
+                    <div *ngIf="nombre.errors.required">
+                      Nombre de la empresa requerido.
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="rfc">R.F.C.</label>
-                  <input  type="text" id= "rfc"  required [disabled]="!hidden"  class="form-control" placeholder="RFC"  formControlName="rfc">
+                  <input  type="text" id= "rfc"  required  class="form-control" placeholder="RFC"  formControlName="rfc">
                   <div *ngIf="rfc.invalid && (rfc.dirty || rfc.touched)" class="alert alert-danger">
                     <div *ngIf="rfc.errors.required">
                       RFC requerido.
                     </div>
-                  <div *ngIf="rfc.errors.pattern">Verifica tu R.F.C , recuerda que el R.F.C de personas físicas esta compuesto de 4 caracteres alfanuméricos, mas 6 numeros  y 3 carateres nuevamente alfanuméicos</div>                
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-12">
-              <div class="form-group">
-                <label for="nombre">Nombre de la empresa.</label> 
-                <input type="text"  id= "nombre" required [disabled]="!hidden"  class="form-control" name="nombre" placeholder="Tu Empresa S.A. de C.V."  formControlName="nombre">
-                <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="alert alert-danger">            
-                  <div *ngIf="nombre.errors.required">
-                    Nombre de la empresa requerido.
+                    <div *ngIf="rfc.errors.pattern">Verifica tu R.F.C , recuerda que el R.F.C de personas físicas esta compuesto de 4 caracteres alfanuméricos, mas 6 numeros  y 3 carateres nuevamente alfanuméicos</div>                
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12 col-12 ">
-              <div class="form-group">
-                <label for="razonSocial">Raz&oacute;n social.</label> 
-                <input type="text"  id= "razonSocial"   required [disabled]="!hidden" class="form-control" name="razonSocial" placeholder="Tu Empresa S.A. de C.V."  formControlName="razonSocial">
-                <div *ngIf="razonSocial.invalid && (razonSocial.dirty || razonSocial.touched)"class="alert alert-danger">
-                  <div *ngIf="razonSocial.errors.required">
-                    Raz&oacute;n social. requerida.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            
           <div class="row"><!--Inicia Row3-->
             <div class="col-md-6 col-12">
               <div class="form-group">
@@ -132,7 +139,7 @@
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="telefono">Tel&eacute;fono de la Empresa.</label>
-                <input type="text"   id= "telefono" required [disabled]="!hidden"  name="telefono"  class="form-control" placeholder="555501234" formControlName="telefono" >
+                <input type="text"   id= "telefono" required   name="telefono"  class="form-control" placeholder="555501234" formControlName="telefono" >
                 <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">
                   <div *ngIf="telefono.errors.required">
                     Tel&eacute;fono de la Empresa requerido.
@@ -144,7 +151,7 @@
             <div class="col-md-6 col-12 ">
               <div class="form-group">
                 <label for="email">Correo Electronico.</label>
-                <input type="text"  id= "email"   required [disabled]="!hidden"   class="form-control" name="email"  formControlName="email" placeholder="mail@lacocs.com" >
+                <input type="text"  id= "email"   required   class="form-control" name="email"  formControlName="email" placeholder="mail@lacocs.com" >
                 <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
                   <div *ngIf="email.errors.required">Correo requerido.</div>
                   <div *ngIf="email.errors.pattern">El correo debe contener @</div>
@@ -156,7 +163,7 @@
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="nombreContacto">Nombre de contacto.</label>
-                <input type="text"  id= "nombreContacto"  required [disabled]="!hidden"   name="nombreContacto" class="form-control" placeholder="Nombre Contacto" formControlName="nombreContacto">
+                <input type="text"  id= "nombreContacto"  required   name="nombreContacto" class="form-control" placeholder="Nombre Contacto" formControlName="nombreContacto">
                 <div *ngIf="nombreContacto.invalid && (nombreContacto.dirty || nombreContacto.touched)" class="alert alert-danger">
                   <div *ngIf="nombreContacto.errors.required">
                     Nombre de contacto requerido.
@@ -167,7 +174,7 @@
             <div class="col-md-6 col-12">
               <div class="form-group">
                 <label for="telefonoDeContacto"> Tel&eacute;fono de Contacto.</label>
-                <input type="text"  id= "telefonoDeContacto" required [disabled]="!hidden"  class="form-control" name="telefonoDeContacto" placeholder="555501234" formControlName="telefonoDeContacto">
+                <input type="text"  id= "telefonoDeContacto" required class="form-control" name="telefonoDeContacto" placeholder="555501234" formControlName="telefonoDeContacto">
                 <div *ngIf="telefonoDeContacto.invalid && (telefonoDeContacto.dirty || telefonoDeContacto.touched)" class="alert alert-danger">
                   <div *ngIf="telefonoDeContacto.errors.required">
                     Tel&eacute;fono de contacto requerido.
