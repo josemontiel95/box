@@ -23,7 +23,7 @@ import {
 export class CrearOrdenTrabajoComponent implements OnInit {
 
 
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
+ 
   global: Global;
   cargando= 1;
       mis_tipos: Array<any>;

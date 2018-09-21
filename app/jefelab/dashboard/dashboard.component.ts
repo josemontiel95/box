@@ -22,7 +22,7 @@ import {
 })
 export class DashboardComponent implements OnInit {
 
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
+ 
   global: Global;
   cargando= 1;
   areas= [{"are":"CONCRETO", "id":"CONCRETO"},{"are":"GEOTECNIA", "id":"GEOTECNIA"},{"are":"ASFALTOS", "id":"ASFALTOS"}];

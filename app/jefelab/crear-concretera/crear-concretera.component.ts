@@ -23,7 +23,7 @@ import {
 export class CrearConcreteraComponent implements OnInit {
 
   
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
+  
   global: Global;
   concreteraForm: FormGroup;
       Concretera = {
