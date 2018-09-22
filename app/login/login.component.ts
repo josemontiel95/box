@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
   diplay(loginresp: LoginResp){
     if(loginresp.error==0){
       console.log(loginresp);
-      this.data.changeGlobal(new Global(loginresp.id_usuario,loginresp.token,"http://lacocs.montielpalacios.com/API", "http://lacocs.montielpalacios.com/", loginresp.rol));
+      this.data.changeGlobal(new Global(loginresp.id_usuario,loginresp.token,"http://lacocsmex.com.mx/laboratorio/API", "http://lacocsmex.com.mx/laboratorio/", loginresp.rol));
       this.router.navigate([loginresp.root+"/"]);
     }else{
       this.cargando= 0;

@@ -5,7 +5,7 @@ import { Global } from "./interfaces/int.Global";
 @Injectable()
 export class DataService {
 
-	private globalSource = new BehaviorSubject<Global>(new Global(0,localStorage.getItem("token"),"http://lacocs.montielpalacios.com/API","http://lacocs.montielpalacios.com/", localStorage.getItem("rol")) );
+	private globalSource = new BehaviorSubject<Global>(new Global(0,localStorage.getItem("token"),"http://lacocsmex.com.mx/laboratorio/API","http://lacocsmex.com.mx/laboratorio/", localStorage.getItem("rol")) );
 	currentGlobal = this.globalSource.asObservable();
 
 	constructor() { }
