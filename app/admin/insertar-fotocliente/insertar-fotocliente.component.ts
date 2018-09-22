@@ -30,6 +30,10 @@ export class InsertarFotoClienteComponent implements OnInit {
 
   fileToUpload: File = null; //Variable default para un archivo seleccionado.
 
+    cancelar()
+  {
+    this.router.navigate(['administrador/usuarios']);
+  }
   
   
   handleFileInput(files: FileList) {   
