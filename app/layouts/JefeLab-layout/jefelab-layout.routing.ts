@@ -26,7 +26,11 @@ import { EvaluaHerraComponent } from '../../jefelab/evaluaherra/evaluaherra.comp
 import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid.component';
 import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
 import { TecnicosGridAgregaComponent } from '../../jefelab/tecnicos-grida/tecnicos-grida.component';
+
+import { llenaFormatoCCHComponent } from '../../jefelab/llenaFormatoCCH/llenaFormatoCCH.component';
+import { llenaRevenimientoComponent } from '../../jefelab/llenaRevenimiento/llenaRevenimiento.component';
 import { agregaRegistroCCHComponent } from '../../jefelab/agregaRegistroCCH/agregaRegistroCCH.component';
+import { agregaRegistroRevenimientoComponent } from '../../jefelab/agregaRegistroRevenimiento/agregaRegistroRevenimiento.component';
 
 
 export const JefeLabLayoutRoutes: Routes = [
@@ -38,10 +42,15 @@ export const JefeLabLayoutRoutes: Routes = [
     { path: 'obras/crear-obra',   component: CrearObraComponent },
 
     { path: 'orden-trabajo/dashboard/:id',      component: DashboardComponent },
-    { path: 'orden-trabajo/dashboard/agregaRegistroCCH/:id/:id2/:id3',      component: agregaRegistroCCHComponent },
     { path: 'orden-trabajo',      component: OrdenTrabajoComponent },
     { path: 'orden-trabajo/crear-orden-trabajo',   component: CrearOrdenTrabajoComponent }, 
     { path: 'orden-trabajo/dashboard/evaluaherra/:id',      component: EvaluaHerraComponent },
+    { path: 'orden-trabajo/dashboard/llenaFormatoCCH/:id2/:id',      component: llenaFormatoCCHComponent },
+    { path: 'orden-trabajo/dashboard/llenaRevenimiento/:id2/:id',      component: llenaRevenimientoComponent },
+    { path: 'orden-trabajo/dashboard/agregaRegistroCCH/:id/:id2/:id3',      component: agregaRegistroCCHComponent },
+    { path: 'orden-trabajo/dashboard/agregaRegistroRevenimiento/:id/:id2/:id3',      component: agregaRegistroRevenimientoComponent },   
+
+
 
     { path: 'herramientas',  component: HerramientasComponent },
     { path: 'herramientas/herramienta-detail/:id',   component: HerramientaDetailComponent },
