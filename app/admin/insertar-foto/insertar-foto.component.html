@@ -20,9 +20,12 @@
               <mat-progress-bar  [value]="value" ></mat-progress-bar>
             <div class="form-group">
                 <button class="btn btn-info" for="file">Elige una foto</button>
+
                 <input type="file"
                        id="file"
                        (change)="handleFileInput($event.target.files)">
+
+                       <button type="button" class="btn btn-default"  (click)="cancelar()">Omitir Foto</button>
             </div>
           </div>
           <!--<div id="si" class="col-md-2 ml-auto mr-auto ">
