@@ -38,6 +38,9 @@ import { llenaFormatoCCHComponent } from '../../jefelab/llenaFormatoCCH/llenaFor
 import { llenaRevenimientoComponent } from '../../jefelab/llenaRevenimiento/llenaRevenimiento.component';
 import { agregaRegistroCCHComponent } from '../../jefelab/agregaRegistroCCH/agregaRegistroCCH.component';
 import { agregaRegistroRevenimientoComponent } from '../../jefelab/agregaRegistroRevenimiento/agregaRegistroRevenimiento.component';
+import { FormatoCCHGridComponent } from '../../jefelab/formato-cch-grid/formato-cch-grid.component';
+import { FormatosGridComponent } from '../../jefelab/formatos-grid/formatos-grid.component';
+import { RegistrosRevGridComponent } from '../../jefelab/registrosrev-grid/registrosrev-grid.component';
 
 @NgModule({
   imports: [
@@ -81,7 +84,10 @@ import { agregaRegistroRevenimientoComponent } from '../../jefelab/agregaRegistr
     llenaFormatoCCHComponent,
     llenaRevenimientoComponent,
     agregaRegistroCCHComponent,
-    agregaRegistroRevenimientoComponent
+    agregaRegistroRevenimientoComponent,
+    FormatoCCHGridComponent,
+    FormatosGridComponent,
+    RegistrosRevGridComponent
   ]
 })
 
