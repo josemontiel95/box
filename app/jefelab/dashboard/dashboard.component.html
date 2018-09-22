@@ -371,4 +371,30 @@
     </div>
   </div>
 
+<div class="col-md-12 col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-category">Tecnicos.</h5>
+          <h4 class="card-title">Pase de lista de los t&eacute;cnicos.</h4>
+        </div>
+        <div class="card-body">
+          <div class="btn-group">
+             
+            <button  class="btn btn-danger" *ngIf="!hiddenTecnicosP" (click)="mostrarTecnicos();">
+              <span><b> Cancelar </b></span>
+            </button>            
+
+          </div>
+        </div>
+          <div *ngIf="this.hiddenTecnicosP== true">
+          <tec-app-grid (mandaTecn)="pasaTec($event)"></tec-app-grid>
+        </div>
+          <div *ngIf="!this.hiddenTecnicosP ">
+          <fehcas-app-grid [idte]="this.id_tec"></fehcas-app-grid>          
+          </div>        
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

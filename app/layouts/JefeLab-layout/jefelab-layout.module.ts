@@ -41,6 +41,8 @@ import { agregaRegistroRevenimientoComponent } from '../../jefelab/agregaRegistr
 import { FormatoCCHGridComponent } from '../../jefelab/formato-cch-grid/formato-cch-grid.component';
 import { FormatosGridComponent } from '../../jefelab/formatos-grid/formatos-grid.component';
 import { RegistrosRevGridComponent } from '../../jefelab/registrosrev-grid/registrosrev-grid.component';
+import { TecGridComponent } from '../../jefelab/tecgrid/tecgrid.component';
+import { FechasGridComponent } from '../../jefelab/fechasgrid/fechasgrid.component';
 
 @NgModule({
   imports: [
@@ -88,7 +90,9 @@ import { RegistrosRevGridComponent } from '../../jefelab/registrosrev-grid/regis
     agregaRegistroRevenimientoComponent,
     FormatoCCHGridComponent,
     FormatosGridComponent,
-    RegistrosRevGridComponent
+    RegistrosRevGridComponent,
+    TecGridComponent,
+    FechasGridComponent
 
   ]
 })
