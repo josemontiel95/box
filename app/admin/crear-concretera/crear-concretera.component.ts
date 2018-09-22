@@ -19,7 +19,7 @@ import {
 @Component({
   selector: 'app-crear-concretera',
   templateUrl: './crear-concretera.component.html',
-  styleUrls: ['./crear-concretera.component.scss']
+  styleUrls: ['./crear-concretera.component.scss', '../../loadingArrows.css']
 })
 export class CrearConcreteraComponent implements OnInit {
 

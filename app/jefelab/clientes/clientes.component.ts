@@ -10,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./clientes.component.css','../../loadingArrows.css']
 })
 export class ClientesComponent implements OnInit  {
-  title = 'app';
+	title = 'app';
   global: Global;
   private gridApi;
   private gridColumnApi;
@@ -35,7 +35,8 @@ export class ClientesComponent implements OnInit  {
   cargando= 1;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
-    this.columnDefs = [
+	  this.columnDefs = [
+      {headerName: 'Ctrl', field: 'id_cliente'},
       {headerName: 'Razón social.', field: 'razonSocial' },
       {headerName: 'Nombre de la empresa.', field: 'nombre' },
       {headerName: 'RFC', field: 'rfc' },      

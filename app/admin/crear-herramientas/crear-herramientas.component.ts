@@ -22,7 +22,7 @@ import {
 export class CrearHerramientasComponent implements OnInit {
 
 
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
+  
   global: Global;
   cargando= 1;
   mis_tipos: Array<any>;
