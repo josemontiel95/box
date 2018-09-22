@@ -34,6 +34,9 @@ import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid
 import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
 import { TecnicosGridAgregaComponent } from '../../jefelab/tecnicos-grida/tecnicos-grida.component';
 
+import { agregaRegistroCCHComponent } from '../../jefelab/agregaRegistroCCH/agregaRegistroCCH.component';
+
+
 
 @NgModule({
   imports: [
@@ -73,7 +76,8 @@ import { TecnicosGridAgregaComponent } from '../../jefelab/tecnicos-grida/tecnic
     TecnicosGridComponent,
     HerramientaGridAgregaComponent,
     TecnicosGridAgregaComponent,
-    EvaluaHerraComponent
+    EvaluaHerraComponent,
+    agregaRegistroCCHComponent
   ]
 })
 
