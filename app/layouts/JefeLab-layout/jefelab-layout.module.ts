@@ -81,6 +81,7 @@ import { RegistrosRevGridComponent } from '../../jefelab/registrosrev-grid/regis
     HerramientaGridAgregaComponent,
     TecnicosGridAgregaComponent,
     EvaluaHerraComponent,
+
     llenaFormatoCCHComponent,
     llenaRevenimientoComponent,
     agregaRegistroCCHComponent,
@@ -88,6 +89,7 @@ import { RegistrosRevGridComponent } from '../../jefelab/registrosrev-grid/regis
     FormatoCCHGridComponent,
     FormatosGridComponent,
     RegistrosRevGridComponent
+
   ]
 })
 

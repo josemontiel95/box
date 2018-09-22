@@ -266,6 +266,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
+    
     this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' + this.id_formato]);
   }
 
@@ -284,7 +285,9 @@ export class agregaRegistroCCHComponent implements OnInit{
                                               this.respuestaSwitch(res.json());                 
                                             } );
     //window.alert("Si procedes ")
+    
     this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
+
   }
 
   onBlurHerramienta(){
@@ -505,6 +508,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     }
     else{
       console.log(this.id_registro);
+
       this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' + this.id_formato]);        
     }
   }*/
@@ -527,6 +531,7 @@ export class agregaRegistroCCHComponent implements OnInit{
      else{
           
           //this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
+
        
      }
    }
