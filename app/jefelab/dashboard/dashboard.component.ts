@@ -60,6 +60,7 @@ export class DashboardComponent implements OnInit {
    hiddenDetail = true;
    hiddenHerramienta= true;
    hiddenTecnicos= true;
+   hiddenTecnicosP= true;
    hiddenHerramientaDispo= true;
    hiddenTecnicosDispo= true; 
    hiddenTotalTecnicos= true;  
@@ -319,6 +320,19 @@ export class DashboardComponent implements OnInit {
     this.aux2=aux2;
     console.log(this.aux2);
   }
+
+
+  pasaTec(pL: any) {
+    console.log("pasaTec :: pL[0].id: "+pL[0].id);
+    this.id_tec=pL[0];
+
+    this.hiddenTecnicosP=pL[0].estado;
+    this.id_tec= pL[0].id;
+
+    console.log("pasaTec :: this.ids: "+this.id_tec);  
+    console.log("pasaTec :: this.hiddenTecnicos: "+this.hiddenTecnicos);  
+  }   
+
   
   mostrarHerramientaDisponible(){
     if(this.hiddenHerramientaDispo == true){
@@ -493,6 +507,9 @@ export class DashboardComponent implements OnInit {
       this.addCliente(respuesta.id_cliente,respuesta.nombre);
     }
   }
+
+
+
 
   statusOrdenTrabajo(respuesta:any){
     this.formatoStatus= (Number(respuesta.status));
