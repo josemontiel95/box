@@ -87,7 +87,7 @@
              <div class="col-md-6 col-12"> <!-- INICIO SEGUNDO CAMPO -->
                 <div class="form-group">
                   <label>Consecutivo de documentos</label>
-                  <input type="text" id="consecutivoDocumentos"  required name="consecutivoDocumentos" class="form-control" placeholder="consecutivoDocumentos" formControlName="consecutivoDocumentos">
+                  <input type="text" id="consecutivoDocumentos"  required  class="form-control" placeholder="consecutivoDocumentos" formControlName="consecutivoDocumentos">
                   <div *ngIf="consecutivoDocumentos.invalid && (consecutivoDocumentos.dirty || consecutivoDocumentos.touched)"
                     class="alert alert-danger">    
                     <div *ngIf="consecutivoDocumentos.errors.required">
@@ -100,7 +100,7 @@
               <div class="col-md-6 col-12"> <!-- INICIO DECIMO CAMPO -->
                 <div class="form-group">
                   <label>Consecutivo de Probeta</label>
-                  <input type="text" id="consecutivoProbeta" name="consecutivoProbeta" class="form-control" placeholder="Consecutivo" value="1" formControlName="consecutivoProbeta">
+                  <input type="text" id="consecutivoProbeta" required  class="form-control" placeholder="Consecutivo" value="1" formControlName="consecutivoProbeta">
                   <div *ngIf="consecutivoProbeta.invalid && (consecutivoProbeta.dirty || consecutivoProbeta.touched)" class="alert alert-danger">            
                     <div *ngIf="consecutivoProbeta.errors.required">Consecutivo de Probeta requerido.</div>
                     <div *ngIf="consecutivoProbeta.errors.pattern">Consecutivo de Probeta solo debe contener numeros</div>              
@@ -121,11 +121,43 @@
               </div><!-- FIN NOVENO CAMPO -->  
               <div class="col-md-6 col-12"> <!-- INICIO DECIMO CAMPO -->
                 <div class="form-group">
-                  <label>Incertidumbre</label>
+                  <label>Incertidumbre de Revenimiento</label>
                   <input type="text" id="incertidumbre" name="incertidumbre" class="form-control" placeholder="Incertidumbre" formControlName="incertidumbre">
                   <div *ngIf="incertidumbre.invalid && (incertidumbre.dirty || incertidumbre.touched)" class="alert alert-danger">            
                     <div *ngIf="incertidumbre.errors.required">Incertidumbre requerido.</div>
-                    <div *ngIf="incertidumbre.errors.pattern">Incertidumbre solo debe contener numeros</div>              
+                    <div *ngIf="incertidumbre.errors.pattern">Incertidumbre solo debe contener decimales (precisi&oacute;n a centecimas) o enteros</div>              
+                  </div>
+                </div>
+              </div><!-- FIN DECIMO CAMPO --> 
+            </div> <!-- FIN SEXTO ROW -->
+            <div class="row"> <!-- INICIO TERCER ROW -->
+              <div class="col-md-4 col-12"> <!-- INICIO DECIMO CAMPO -->
+                <div class="form-group">
+                  <label for="incertidumbreCilindro">Incertidumbre de Cilindros</label>
+                  <input type="text" id="incertidumbreCilindro" name="incertidumbreCilindro" required class="form-control" placeholder="Incertidumbre Cilindros" formControlName="incertidumbreCilindro">
+                  <div *ngIf="incertidumbreCilindro.invalid && (incertidumbreCilindro.dirty || incertidumbreCilindro.touched)" class="alert alert-danger">            
+                    <div *ngIf="incertidumbreCilindro.errors.required">Incertidumbre requerido.</div>
+                    <div *ngIf="incertidumbreCilindro.errors.pattern">Incertidumbre solo debe contener decimales (precisi&oacute;n a centecimas) o enteros</div>              
+                  </div>
+                </div>
+              </div><!-- FIN DECIMO CAMPO --> 
+              <div class="col-md-4 col-12"> <!-- INICIO DECIMO CAMPO -->
+                <div class="form-group">
+                  <label for="incertidumbreCubo">Incertidumbre Cubos</label>
+                  <input type="text" id="incertidumbreCubo" name="incertidumbreCubo" required class="form-control" placeholder="Incertidumbre Cubos" formControlName="incertidumbreCubo">
+                  <div *ngIf="incertidumbreCubo.invalid && (incertidumbreCubo.dirty || incertidumbreCubo.touched)" class="alert alert-danger">            
+                    <div *ngIf="incertidumbreCubo.errors.required">Incertidumbre requerido.</div>
+                    <div *ngIf="incertidumbreCubo.errors.pattern">Incertidumbre solo debe contener decimales (precisi&oacute;n a centecimas) o enteros</div>              
+                  </div>
+                </div>
+              </div><!-- FIN DECIMO CAMPO --> 
+              <div class="col-md-4 col-12"> <!-- INICIO DECIMO CAMPO -->
+                <div class="form-group">
+                  <label for="incertidumbreVigas">Incertidumbre Vigas</label>
+                  <input type="text" id="incertidumbreVigas" name="incertidumbreVigas" required class="form-control" placeholder="Incertidumbre Vigas" formControlName="incertidumbreVigas">
+                  <div *ngIf="incertidumbreVigas.invalid && (incertidumbreVigas.dirty || incertidumbreVigas.touched)" class="alert alert-danger">            
+                    <div *ngIf="incertidumbreVigas.errors.required">Incertidumbre requerido.</div>
+                    <div *ngIf="incertidumbreVigas.errors.pattern">Incertidumbre solo debe contener decimales (precisi&oacute;n a centecimas) o enteros</div>              
                   </div>
                 </div>
               </div><!-- FIN DECIMO CAMPO --> 
