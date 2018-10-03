@@ -43,6 +43,9 @@ export class CrearObraComponent implements OnInit
      obra:                '',
      revenimiento:        '',
      incertidumbre:       '',
+     incertidumbreCilindro: '',
+     incertidumbreCubo: '',
+     incertidumbreVigas: '',
      prefijo:             '',
      id_cliente:          '',
      id_concretera:       '',
@@ -86,7 +89,10 @@ export class CrearObraComponent implements OnInit
       'id_obra':              new FormControl({ value:this.Obra.id_obra,           disabled: true }),         
       'obra':                 new FormControl({ value:this.Obra.obra,              disabled: this.hidden },  [Validators.required]), 
       'revenimiento':         new FormControl({ value:this.Obra.revenimiento,      disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'incertidumbre':        new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'incertidumbre':        new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
+      'incertidumbreCilindro':new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
+      'incertidumbreCubo':    new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
+      'incertidumbreVigas':   new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
       'prefijo':              new FormControl({ value:this.Obra.prefijo,           disabled: this.hidden },  [Validators.required]), 
       'id_cliente':           new FormControl({ value:this.Obra.id_cliente,        disabled: this.hidden },  [Validators.required]), 
       'id_concretera':        new FormControl({ value:this.Obra.id_concretera,     disabled: this.hidden },  [Validators.required]), 
@@ -103,10 +109,14 @@ export class CrearObraComponent implements OnInit
     });
   }
 
+
   get id_obra()               { return this.obraForm.get('id_obra'); }
   get obra()                  { return this.obraForm.get('obra'); }
   get revenimiento()          { return this.obraForm.get('revenimiento'); }
   get incertidumbre()         { return this.obraForm.get('incertidumbre'); }
+  get incertidumbreCilindro() { return this.obraForm.get('incertidumbreCilindro'); }
+  get incertidumbreCubo()     { return this.obraForm.get('incertidumbreCubo'); }
+  get incertidumbreVigas()    { return this.obraForm.get('incertidumbreVigas'); }
   get prefijo()               { return this.obraForm.get('prefijo'); }
   get id_cliente()            { return this.obraForm.get('id_cliente'); }
   get id_concretera()         { return this.obraForm.get('id_concretera'); }
@@ -120,6 +130,7 @@ export class CrearObraComponent implements OnInit
   get consecutivoDocumentos() { return this.obraForm.get('consecutivoDocumentos'); }
   get nombre_residente()      { return this.obraForm.get('nombre_residente'); }
   get correo_residente()      { return this.obraForm.get('correo_residente'); }
+
 
   rolValidator(repuesta: any){
     console.log(repuesta)
@@ -195,6 +206,9 @@ export class CrearObraComponent implements OnInit
     formData.append('tipo',               this.obraForm.value.tipo);
     formData.append('revenimiento',       this.obraForm.value.revenimiento  );
     formData.append('incertidumbre',        this.obraForm.value.incertidumbre );
+    formData.append('incertidumbreCilindro',this.obraForm.value.incertidumbreCilindro );
+    formData.append('incertidumbreCubo',    this.obraForm.value.incertidumbreCubo );
+    formData.append('incertidumbreVigas',   this.obraForm.value.incertidumbreVigas );
     formData.append('telefono_residente',   this.obraForm.value.telefono_residente );
     formData.append('cotizacion',           this.obraForm.value.cotizacion );
     formData.append('consecutivoDocumentos',this.obraForm.getRawValue().consecutivoDocumentos );

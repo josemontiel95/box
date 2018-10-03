@@ -35,23 +35,26 @@ export class ObraDetailComponent implements OnInit {
    obraForm: FormGroup;
 
   Obra = {
-   id_obra:'',
-   obra:'',
-   revenimiento:'',
-   incertidumbre:'',
-   prefijo:'',
-   id_cliente:'',
-   id_concretera:'',
-   tipo:'',
-   localizacion:'',
-   descripcion:'',
-   fechaDeCre:'' ,
-   telefono_residente:'',
-   nombre_residente: '',
-   correo_residente: '' ,
-   cotizacion :          '',
-   consecutivoProbeta :  '',
-   consecutivoDocumentos:'1'
+    id_obra:'',
+    obra:'',
+    revenimiento:'',
+    incertidumbre:'',
+    incertidumbreCilindro: '',
+    incertidumbreCubo: '',
+    incertidumbreVigas: '',
+    prefijo:'',
+    id_cliente:'',
+    id_concretera:'',
+    tipo:'',
+    localizacion:'',
+    descripcion:'',
+    fechaDeCre:'' ,
+    telefono_residente:'',
+    nombre_residente: '',
+    correo_residente: '' ,
+    cotizacion :          '',
+    consecutivoProbeta :  '',
+    consecutivoDocumentos:'1'
   }
 
   cargandoMessage: string= "";
@@ -111,23 +114,26 @@ export class ObraDetailComponent implements OnInit {
     });
 
     this.obraForm = new FormGroup({
-      'id_obra':            new FormControl({ value:this.Obra.id_obra,           disabled: true },         [Validators.required]),         
-      'obra':               new FormControl({ value:this.Obra.obra,              disabled: this.hidden },  [Validators.required]), 
-      'revenimiento':       new FormControl({ value:this.Obra.revenimiento,      disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'incertidumbre':      new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'prefijo':            new FormControl({ value:this.Obra.prefijo,           disabled: this.hidden },  [Validators.required]), 
-      'id_cliente':         new FormControl({ value:this.Obra.id_cliente,        disabled: this.hidden },  [Validators.required]), 
-      'id_concretera':      new FormControl({ value:this.Obra.id_concretera,     disabled: this.hidden },  [Validators.required]), 
-      'tipo':               new FormControl({ value:this.Obra.tipo,              disabled: this.hidden },  [Validators.required]), 
-      'localizacion':       new FormControl({ value:this.Obra.localizacion,      disabled: this.hidden },  [Validators.required]), 
-      'descripcion':        new FormControl({ value:this.Obra.descripcion,       disabled: this.hidden },  [Validators.required]), 
-      'fechaDeCre':         new FormControl({ value:this.Obra.fechaDeCre,        disabled: this.hidden },  [Validators.required]), 
-      'telefono_residente': new FormControl({ value:this.Obra.telefono_residente,disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'cotizacion':         new FormControl({ value:this.Obra.cotizacion,        disabled: this.hidden },  [Validators.required]), 
-      'consecutivoProbeta': new FormControl({ value:this.Obra.consecutivoProbeta,disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'id_obra':              new FormControl({ value:this.Obra.id_obra,           disabled: true },         [Validators.required]),         
+      'obra':                 new FormControl({ value:this.Obra.obra,              disabled: this.hidden },  [Validators.required]), 
+      'revenimiento':         new FormControl({ value:this.Obra.revenimiento,      disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
+      'incertidumbre':        new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
+      'incertidumbreCilindro':new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
+      'incertidumbreCubo':    new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
+      'incertidumbreVigas':   new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
+      'prefijo':              new FormControl({ value:this.Obra.prefijo,           disabled: this.hidden },  [Validators.required]), 
+      'id_cliente':           new FormControl({ value:this.Obra.id_cliente,        disabled: this.hidden },  [Validators.required]), 
+      'id_concretera':        new FormControl({ value:this.Obra.id_concretera,     disabled: this.hidden },  [Validators.required]), 
+      'tipo':                 new FormControl({ value:this.Obra.tipo,              disabled: this.hidden },  [Validators.required]), 
+      'localizacion':         new FormControl({ value:this.Obra.localizacion,      disabled: this.hidden },  [Validators.required]), 
+      'descripcion':          new FormControl({ value:this.Obra.descripcion,       disabled: this.hidden },  [Validators.required]), 
+      'fechaDeCre':           new FormControl({ value:this.Obra.fechaDeCre,        disabled: this.hidden },  [Validators.required]), 
+      'telefono_residente':   new FormControl({ value:this.Obra.telefono_residente,disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'cotizacion':           new FormControl({ value:this.Obra.cotizacion,        disabled: this.hidden },  [Validators.required]), 
+      'consecutivoProbeta':   new FormControl({ value:this.Obra.consecutivoProbeta,disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
       'consecutivoDocumentos':new FormControl({ value:this.Obra.consecutivoDocumentos,disabled: this.hidden  },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'nombre_residente':   new FormControl({ value:this.Obra.nombre_residente,  disabled: this.hidden },  [Validators.required]),  
-      'correo_residente':   new FormControl({ value:this.Obra.correo_residente,  disabled: this.hidden },  [Validators.required])   
+      'nombre_residente':     new FormControl({ value:this.Obra.nombre_residente,  disabled: this.hidden },  [Validators.required]),  
+      'correo_residente':     new FormControl({ value:this.Obra.correo_residente,  disabled: this.hidden },  [Validators.required])   
     });
   }
 
@@ -135,6 +141,9 @@ export class ObraDetailComponent implements OnInit {
   get obra()                  { return this.obraForm.get('obra'); }
   get revenimiento()          { return this.obraForm.get('revenimiento'); }
   get incertidumbre()         { return this.obraForm.get('incertidumbre'); }
+  get incertidumbreCilindro() { return this.obraForm.get('incertidumbreCilindro'); }
+  get incertidumbreCubo()     { return this.obraForm.get('incertidumbreCubo'); }
+  get incertidumbreVigas()    { return this.obraForm.get('incertidumbreVigas'); }
   get prefijo()               { return this.obraForm.get('prefijo'); }
   get id_cliente()            { return this.obraForm.get('id_cliente'); }
   get id_concretera()         { return this.obraForm.get('id_concretera'); }
@@ -241,6 +250,9 @@ export class ObraDetailComponent implements OnInit {
     formData.append('tipo',               this.obraForm.value.tipo);
     formData.append('revenimiento',       this.obraForm.value.revenimiento  );
     formData.append('incertidumbre',      this.obraForm.value.incertidumbre );
+    formData.append('incertidumbreCilindro',   this.obraForm.value.incertidumbreCilindro );
+    formData.append('incertidumbreCubo',       this.obraForm.value.incertidumbreCubo );
+    formData.append('incertidumbreVigas',      this.obraForm.value.incertidumbreVigas );
     formData.append('cotizacion',         this.obraForm.value.cotizacion );
     formData.append('consecutivoProbeta', this.obraForm.getRawValue().consecutivoProbeta );
     formData.append('consecutivoDocumentos', this.obraForm.getRawValue().consecutivoDocumentos );
@@ -286,6 +298,9 @@ export class ObraDetailComponent implements OnInit {
       tipo:                 respuesta.tipo,
       revenimiento:         respuesta.revenimiento,
       incertidumbre:        respuesta.incertidumbre,
+      incertidumbreCilindro:respuesta.incertidumbreCilindro,
+      incertidumbreCubo:    respuesta.incertidumbreCubo,
+      incertidumbreVigas:   respuesta.incertidumbreVigas,
       cotizacion:           respuesta.cotizacion,
       consecutivoDocumentos:respuesta.consecutivoDocumentos,
       consecutivoProbeta:   respuesta.consecutivoProbeta,
