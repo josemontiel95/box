@@ -506,11 +506,12 @@ export class llenaFormatoCCHComponent implements OnInit{
      }
    }
 
-  respuestaRegistro(res: any){ 
+  respuestaRegistro(res: any){
+     console.log("Hola Perro"); 
      console.log(res);
      if(res.error!= 0){
        window.alert(res.estatus);
-       location.reload();
+       //location.reload();
      }
      else{
           this.id_registro= res.id_registrosCampo;

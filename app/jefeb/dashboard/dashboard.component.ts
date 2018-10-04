@@ -504,6 +504,7 @@ export class DashboardComponent implements OnInit {
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('id_ordenDeTrabajo', this.id);
     this.http.post(url, formData).subscribe(res => {
+                                              //console.log(res);
                                               this.asignaIDFormato(res.json());
                                               this.respuestaSwitch(res.json());                 
     });

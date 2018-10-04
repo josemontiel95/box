@@ -27,7 +27,7 @@ export class CrearConcreteraComponent implements OnInit {
   concreteraForm: FormGroup;
   Concretera = { concretera:'' }
   submitted = false;
-  cargando= 1;
+  cargando= 0;
   cargandoMessage: string= "";
   actualizarMessageCargando: string= "";
 
