@@ -38,7 +38,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   aespecimen4 ="";
   notRR=true;
   hidden=false;
-  
+  tipoMuestra = true;
 
   constructor(private router: Router, private route: ActivatedRoute, private data: DataService, private http: Http) { }
   
@@ -213,6 +213,12 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
 
   llenado(respuesta: any){
     console.log(respuesta);
+    //this.cargando = 1;
+    if(respuesta.tipo_especimen == "VIGAS"){
+      this.tipoMuestra = false;
+    }else{
+      this.tipoMuestra = true;
+    }
 
     this.creaCCHForm.patchValue({
      informe:        respuesta.informeNo,
@@ -228,7 +234,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
      termometro:     respuesta.termometro_id
     });
 
-    //this.cargando=this.cargando-1;
+    //this.cargando = 0;
      
   }
 
@@ -312,8 +318,19 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     
     this.http.post(url, formData).subscribe(res => {
                                                   
-                                              this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());
+                                              this.updateTipoEspecimen();                 
                                             } );
+  }
+
+  updateTipoEspecimen(){
+    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getInfoByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('id_formatoCampo', this.id_formato);
+    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
   }
 
   onChangeTipoConcreto(){
