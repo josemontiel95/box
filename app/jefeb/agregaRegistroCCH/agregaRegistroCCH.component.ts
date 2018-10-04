@@ -299,7 +299,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   }
 
   llenadoClaveEspecimen(respuesta: any){
-    
+    this.cargando = this.cargando -1;
     console.log("llenadoClaveEspecimen :: respuesta:")
     console.log(respuesta);
 
@@ -410,7 +410,8 @@ export class agregaRegistroCCHComponent implements OnInit{
   }
 
   llenadoHerramienta1(res: any, res1: any){
-    if(res=="null"){
+
+    if(res==null){
 
     }else{
           this.herramientas.push({'id_herramienta' : res, 'placas' : res1 });     
@@ -418,7 +419,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   }
 
   llenadoHerramienta2(res: any, res1: any){
-    if(res=="null"){
+    if(res==null){
 
     }else{
           this.herramientas1.push({'id_herramienta' : res, 'placas' : res1 });     
@@ -426,7 +427,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   }
 
   llenadoHerramienta3(res: any, res1: any){
-    if(res=="null"){
+    if(res==null){
 
     }else{
           this.herramientas2.push({'id_herramienta' : res, 'placas' : res1 });     
@@ -434,7 +435,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   }
 
   llenadoHerramienta4(res: any, res1: any){
-    if(res=="null"){
+    if(res==null){
 
     }else{
           this.herramientas3.push({'id_herramienta' : res, 'placas' : res1 });     
@@ -507,6 +508,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   onBlurHerramienta(){
     //Se llama a limpiaHerramientas para cargar mas adelante los datos sin tener basura.
     this.limpiaHerramientas();
+    this.cargando = this.cargando +1;
 
     //Llamada al back para Insertar la herramienta.
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -521,7 +523,8 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('id_registrosCampo', this.groupMembers[0].id_registrosCampo);
     this.http.post(url, formData).subscribe(res => {
                                               //this.respuestaSwitch(res.json());
-                                              this.llenadoClaveEspecimen(res.json()); //Experimental
+                                              this.cargando = this.cargando -1;
+                                              //this.llenadoClaveEspecimen(res.json()); //Experimental
                                               this.cargaDatos();
                                               this.rellenadoHerramientas(res.json());                
                                             } );
@@ -531,6 +534,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   onBlurHerramienta1(){
     //Se llama a limpiaHerramientas para cargar mas adelante los datos sin tener basura.
     this.limpiaHerramientas();
+    this.cargando = this.cargando +1;
 
     //Llamada al back para Insertar la herramienta.
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -545,7 +549,8 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('id_registrosCampo', this.groupMembers[1].id_registrosCampo);
     this.http.post(url, formData).subscribe(res => {
                                               //this.respuestaSwitch(res.json());
-                                              this.llenadoClaveEspecimen(res.json()); //Experimental                                              
+                                              this.cargando = this.cargando -1;
+                                              //this.llenadoClaveEspecimen(res.json()); //Experimental                                              
                                               this.cargaDatos();
                                               this.rellenadoHerramientas(res.json());                 
                                             } );
@@ -555,7 +560,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   onBlurHerramienta2(){
     //Se llama a limpiaHerramientas para cargar mas adelante los datos sin tener basura.
     this.limpiaHerramientas();
-
+    this.cargando = this.cargando +1;
     //Llamada al back para Insertar la herramienta.
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
@@ -569,7 +574,8 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('id_registrosCampo', this.groupMembers[2].id_registrosCampo);
     this.http.post(url, formData).subscribe(res => {
                                               //this.respuestaSwitch(res.json());
-                                              this.llenadoClaveEspecimen(res.json()); //Experimental
+                                              //this.llenadoClaveEspecimen(res.json()); //Experimental
+                                              this.cargando = this.cargando -1;
                                               this.cargaDatos();
                                               this.rellenadoHerramientas(res.json());                 
                                             } );
@@ -579,6 +585,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   onBlurHerramienta3(){
     //Se llama a limpiaHerramientas para cargar mas adelante los datos sin tener basura.
     this.limpiaHerramientas();
+    this.cargando = this.cargando +1;
 
     //Llamada al back para Insertar la herramienta.
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -670,6 +677,7 @@ export class agregaRegistroCCHComponent implements OnInit{
   }
   
   onBlurTamNomAg(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();

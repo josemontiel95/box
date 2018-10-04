@@ -403,9 +403,15 @@ export class llenaFormatoCCHComponent implements OnInit{
     
   } 
   respuestaFormatoCompletado(res: any){
-    this.cargando=this.cargando-1;
-    this.formatoStatus=false;
-    console.log(res);
+    if(res.error==0){
+      this.cargando=this.cargando-1;
+      this.formatoStatus=false;
+      console.log(res);
+    }else{
+      window.alert(res.estatus);
+      location.reload();
+    }
+    
   }
 
   agregaRegistro(){
