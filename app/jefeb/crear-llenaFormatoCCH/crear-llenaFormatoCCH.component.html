@@ -65,7 +65,7 @@
               </div> <!--FIN PRIMERA GRID -->
             </div> <!--FIN ROW-->
             <div class="row">
-              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="tipoMuestra"> <!--PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
                   <!--Especimen 1 para Cilindro y Cubo -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen1">Especimen 1</label> <!--disable-->
@@ -73,36 +73,18 @@
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
               <!--Especimen 2 para Cilindro y Cubo -->
-              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="tipoMuestra"> <!--PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen2">Especimen 2</label> <!--disable-->
                     <input type="text" id="especimen2"   
                     class="form-control" 
-                    name="especimen2" placeholder="" formControlName="especimen2" (change)="onChangeEspecimen2()" required>
-                  </div><!--FIN PRIMER CAMPO -->
-              </div> <!--FIN PRIMERA GRID -->
-              <!--Especimen 1 SOLO PARA VIGA -->
-              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="!tipoMuestra"> <!--PRIMERA GRID -->
-                  <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="especimen2">Especimen 1</label> <!--disable-->
-                    <input type="text" id="especimen2"   
-                    class="form-control" 
-                    name="especimen2" placeholder="" formControlName="especimen2" (change)="onChangeEspecimen2()" required>
+                    name="especimen2" placeholder="" formControlName="especimen2" (change)="onBlurEspecimen2()" required>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
               <!--Especimen 3 para Cilindro y Cubo -->
-              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="tipoMuestra"> <!--PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen3">Especimen 3</label> <!--disable-->
-                    <input type="text" id="especimen3"   
-                    class="form-control" 
-                    name="especimen3" placeholder="" formControlName="especimen3" required (change)="onBlurEspecimen3()">
-                  </div><!--FIN PRIMER CAMPO -->
-              </div> <!--FIN PRIMERA GRID -->
-               <!--Especimen 2 SOLO PARA VIGA -->
-              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="!tipoMuestra"> <!--PRIMERA GRID -->
-                  <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="especimen3">Especimen 2</label> <!--disable-->
                     <input type="text" id="especimen3"   
                     class="form-control" 
                     name="especimen3" placeholder="" formControlName="especimen3" required (change)="onBlurEspecimen3()">
@@ -112,14 +94,6 @@
               <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="tipoMuestra"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen4">Especimen 4</label> <!--disable-->
-                    <input type="text" id="especimen4"  class="form-control" 
-                    name="especimen4" placeholder="" formControlName="especimen4" required>
-                  </div><!--FIN PRIMER CAMPO -->
-              </div> <!--FIN PRIMERA GRID -->
-              <!--Especimen 3 SOLO PARA VIGA -->
-              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="!tipoMuestra"> <!--PRIMERA GRID -->
-                  <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="especimen4">Especimen 3</label> <!--disable-->
                     <input type="text" id="especimen4"  class="form-control" 
                     name="especimen4" placeholder="" formControlName="especimen4" required>
                   </div><!--FIN PRIMER CAMPO -->
