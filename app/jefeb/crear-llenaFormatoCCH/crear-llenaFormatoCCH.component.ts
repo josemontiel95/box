@@ -6,12 +6,12 @@ import { CrearResp } from "../../interfaces/int.CrearResp";
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import * as moment from 'moment';
 import {
-    ReactiveFormsModule,
-    FormsModule,
-    FormGroup,
-    FormControl,
-    Validators,
-    FormBuilder
+  ReactiveFormsModule,
+  FormsModule,
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder
 } from '@angular/forms';
 
 @Component({
@@ -30,7 +30,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   mis_lab: Array<any>;
   id_orden = "";
   id_formato: "";
-
+  tipoGlobal: "CILINDRO";
   atconcreto ="";
   aespecimen1 ="";
   aespecimen2 = "";
@@ -41,7 +41,6 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   tipoMuestra = true;
 
   constructor(private router: Router, private route: ActivatedRoute, private data: DataService, private http: Http) { }
-  
   
     creaCCHForm: FormGroup;
       cch = {
@@ -60,11 +59,23 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
       longitud: '-98.1996779',
       latitud: '19.0437584' }
 
-   espec= [{"especimen":"CILINDRO", "id":"CILINDRO"},{"especimen":"CUBO", "id":"CUBO"},{"especimen":"VIGAS", "id":"VIGAS"}];
-   tipoconcreto= [{"tconcreto":"Normal", "id": "N"},{"tconcreto":"Resistencia Rápida", "id": "RR"},{"tconcreto":"Con aditivo", "id": "CA"}];
+    espec= [{"especimen":"CILINDRO", "id":"CILINDRO"},{"especimen":"CUBO", "id":"CUBO"},{"especimen":"VIGAS", "id":"VIGAS"}];
+    tipoconcreto= [{"tconcreto":"Normal", "id": "N"},{"tconcreto":"Resistencia Rápida", "id": "RR"},{"tconcreto":"Con aditivo", "id": "CA"}];
   
   siguiente(){
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' + this.id_formato]);
+  }
+
+  onBlurEspecimen2(){
+    if(this.tipoMuestra == false){
+      this.creaCCHForm.patchValue({
+      especimen3: this.creaCCHForm.value.especimen2,
+      });
+      this.onChangeEspecimen2();
+      this.onChangeEspecimen3();
+    }else{
+      this.onChangeEspecimen2();
+    }
   }
 
   onBlurEspecimen3(){
@@ -81,45 +92,52 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     }else{
       //window.alert("notRR es true, this.creaCCHForm.value.tconcreto: "+this.creaCCHForm.value.tconcreto);
       this.notRR = true;
+      this.updateDays();
       this.creaCCHForm.patchValue({
-         tconcreto:  this.atconcreto,
-         especimen1: this.aespecimen1,
-         especimen2: this.aespecimen2,
-         especimen3: this.aespecimen3,
-         especimen4: this.aespecimen4
+        especimen1: this.aespecimen1,
+        especimen2: this.aespecimen2,
+        especimen3: this.aespecimen3,
+        especimen4: this.aespecimen4
       });
     }
     //this.notRR = !this.notRR;
-    const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
-    this.creaCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
-    this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
-    this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
-    //this.creaCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
+    if(this.tipoMuestra == false){
+      const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
+      this.creaCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
+      this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
+      //this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
+      //this.creaCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
+    }else{
+      const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
+      this.creaCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
+      this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
+      this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
+      //this.creaCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
+    }
     this.onChangeTipoConcreto();
   }
 
-  recibeFormatoID(res: any)
-  {
+  recibeFormatoID(res: any){
     this.id_formato= res.id_formatoCampo;
     console.log(this.id_formato); 
   }
 
-   /*respuestaSwitch
-     Si la respuesta es distinta 0 siginifica que hubo algun error
-     por lo que mandara una alerta y recargara la pagina
-     Si la respuesta es 0 siginifica que la insercion fue exitosa y
-     Por lo tanto lo enviara a la ruta de llenaFormatoCCH con su id_formato 
-     Parametrizado. */
-   respuestaSwitch(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert("Intentalo otra vez");
-       location.reload();
-     }
-     else{
-       
-     }
-   }
+  /*respuestaSwitch
+  Si la respuesta es distinta 0 siginifica que hubo algun error
+  por lo que mandara una alerta y recargara la pagina
+  Si la respuesta es 0 siginifica que la insercion fue exitosa y
+  Por lo tanto lo enviara a la ruta de llenaFormatoCCH con su id_formato 
+  Parametrizado. */
+  respuestaSwitch(res: any){ 
+  console.log(res);
+    if(res.error!= 0){
+      window.alert("Intentalo otra vez");
+      location.reload();
+    }
+    else{
+         
+    }
+  }
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -156,21 +174,23 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
     this.http.get(url, {search}).subscribe(res => this.llenaTermometro(res.json()) );
-    
+   
+    /* 
     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getformatoDefoults');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('tipo', this.tipoGlobal);
     this.http.get(url, {search}).subscribe(res => this.llenatipo(res.json()) );
-
+    */
     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getInfoByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_formatoCampo', this.id_formato);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenadoDefault(res.json()) );
     
     this.creaCCHForm = new FormGroup({
       'cch_id':       new FormControl( { value:this.cch.cch_id, disabled: true}), 
@@ -191,21 +211,21 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
 
-   get informe()     { return this.creaCCHForm.get('informe'); }
-   get especimen()   { return this.creaCCHForm.get('especimen'); }
-   get tconcreto()   { return this.creaCCHForm.get('tconcreto'); }
-   get especimen1()  { return this.creaCCHForm.get('especimen1'); }
-   get especimen2()  { return this.creaCCHForm.get('especimen2'); }
-   get especimen3()  { return this.creaCCHForm.get('especimen3'); }
-   get especimen4()  { return this.creaCCHForm.get('especimen4'); }
-   get cono()        { return this.creaCCHForm.get('cono'); }
-   get varilla()     { return this.creaCCHForm.get('varilla')}; 
-   get flexometro()  { return this.creaCCHForm.get('flexometro')};
-   get termometro()  { return this.creaCCHForm.get('termometro');}
+  get informe()     { return this.creaCCHForm.get('informe'); }
+  get especimen()   { return this.creaCCHForm.get('especimen'); }
+  get tconcreto()   { return this.creaCCHForm.get('tconcreto'); }
+  get especimen1()  { return this.creaCCHForm.get('especimen1'); }
+  get especimen2()  { return this.creaCCHForm.get('especimen2'); }
+  get especimen3()  { return this.creaCCHForm.get('especimen3'); }
+  get especimen4()  { return this.creaCCHForm.get('especimen4'); }
+  get cono()        { return this.creaCCHForm.get('cono'); }
+  get varilla()     { return this.creaCCHForm.get('varilla')}; 
+  get flexometro()  { return this.creaCCHForm.get('flexometro')};
+  get termometro()  { return this.creaCCHForm.get('termometro');}
 
-   submitted = false;
+  submitted = false;
 
-   regresaOrdenTrabajo(){
+  regresaOrdenTrabajo(){
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+this.id_orden]);
   }
 
@@ -213,11 +233,66 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
 
   llenado(respuesta: any){
     console.log(respuesta);
+    this.tipoGlobal = respuesta.tipo_especimen;
     //this.cargando = 1;
     if(respuesta.tipo_especimen == "VIGAS"){
       this.tipoMuestra = false;
     }else{
       this.tipoMuestra = true;
+    }
+    this.updateDays();
+    
+    this.creaCCHForm.patchValue({
+      informe:        respuesta.informeNo,
+      especimen:      respuesta.tipo_especimen,
+      tconcreto:      respuesta.tipoConcreto,
+      especimen1:     respuesta.prueba1,
+      especimen2:     respuesta.prueba2,
+      especimen3:     respuesta.prueba3,
+      especimen4:     respuesta.prueba4,
+      cono:           respuesta.cono_id,
+      varilla:        respuesta.varilla_id,
+      flexometro:     respuesta.flexometro_id,
+      termometro:     respuesta.termometro_id
+    });
+    //this.cargando = 0;   
+  }
+
+  llenadoDefault(respuesta: any){
+    console.log(respuesta);
+    this.tipoGlobal = respuesta.tipo_especimen;
+    //this.cargando = 1;
+    if(respuesta.tipo_especimen == "VIGAS"){
+      this.tipoMuestra = false;
+    }else{
+      this.tipoMuestra = true;
+    }
+
+    //ESTO ES PARA QUE CUANDO CARGUE BLOQUEE LOS CAMPOS 3 o 4 DIAS ENSAYE.
+    if(this.tipoMuestra == false){ //SI ES VIGA
+      if(respuesta.tipoConcreto == "N"){//SI ES NORMAL
+
+      }else{//SI NO ES NORMAL
+        this.notRR = true;
+        const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
+        this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
+        //this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
+      }
+    }else{ //SI CILINDRO O CUBO
+      if(respuesta.tipoConcreto == "N"){
+        //NADA PASA
+        }else{ //SI ES RR O CA.
+          this.notRR = true;
+          const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
+          this.creaCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
+              
+        }
+    }
+
+    if(respuesta.tipoConcreto == "N"){
+      this.updateDays();
+    }else{
+      //No modificar a valores por default
     }
 
     this.creaCCHForm.patchValue({
@@ -233,27 +308,51 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
      flexometro:     respuesta.flexometro_id,
      termometro:     respuesta.termometro_id
     });
+    //this.cargando = 0; 
+  }
 
-    //this.cargando = 0;
-     
+  updateDays(){
+    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getformatoDefoults');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('tipo', this.tipoGlobal);
+    this.http.get(url, {search}).subscribe(res => this.llenatipo(res.json()) );
   }
 
   llenatipo(resp: any){
     console.log(resp);
+    if(this.tipoMuestra == false){
     this.notRR=true;
     this.atconcreto= "N";
-    this.aespecimen1= resp.cch_def_prueba1;
-    this.aespecimen2= resp.cch_def_prueba2;
-    this.aespecimen3= resp.cch_def_prueba3;
-    this.aespecimen4= resp.cch_def_prueba4;
-
+    this.aespecimen1= resp.cch_vigaDef_prueba1;
+    this.aespecimen2= resp.cch_vigaDef_prueba2;
+    this.aespecimen3= resp.cch_vigaDef_prueba3;
+          
     this.creaCCHForm.patchValue({
-       tconcreto: this.atconcreto,
-       especimen1: this.aespecimen1,
-       especimen2: this.aespecimen2,
-       especimen3: this.aespecimen3,
-       especimen4: this.aespecimen4
+      tconcreto: this.atconcreto,
+      especimen1: this.aespecimen1,
+      especimen2: this.aespecimen2,
+      especimen3: this.aespecimen3            
     });
+
+    }else{
+      this.notRR=true;
+      this.atconcreto= "N";
+      this.aespecimen1= resp.cch_def_prueba1;
+      this.aespecimen2= resp.cch_def_prueba2;
+      this.aespecimen3= resp.cch_def_prueba3;
+      this.aespecimen4= resp.cch_def_prueba4;
+
+      this.creaCCHForm.patchValue({
+        tconcreto: this.atconcreto,
+        especimen1: this.aespecimen1,
+        especimen2: this.aespecimen2,
+        especimen3: this.aespecimen3,
+        especimen4: this.aespecimen4
+      });
+    }
     const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
     this.creaCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
     this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
@@ -264,8 +363,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   llenaConos(resp: any){
     console.log(resp);
     this.mis_conos= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
+    for (var _i = 0; _i < resp.length; _i++ ){
       this.mis_conos[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
@@ -275,8 +373,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   llenaVarillas(resp: any){
     console.log(resp);
     this.mis_varillas= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
+    for (var _i = 0; _i < resp.length; _i++ ){
       this.mis_varillas[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
@@ -286,8 +383,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   llenaFlexometro(resp: any){
     console.log(resp);
     this.mis_flexometro= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
+    for (var _i = 0; _i < resp.length; _i++ ){
       this.mis_flexometro[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
@@ -297,8 +393,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   llenaTermometro(resp: any){
     console.log(resp);
     this.mis_termometro= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
+    for (var _i = 0; _i < resp.length; _i++ ){
       this.mis_termometro[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
@@ -315,12 +410,10 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('campo',                                           '2');
     formData.append('valor',              this.creaCCHForm.value.especimen);
     formData.append('id_formatoCampo',                     this.id_formato);
-    
-    this.http.post(url, formData).subscribe(res => {
-                                                  
-                                              this.respuestaSwitch(res.json());
-                                              this.updateTipoEspecimen();                 
-                                            } );
+    this.http.post(url, formData).subscribe(res => {   
+      this.respuestaSwitch(res.json());
+      this.updateTipoEspecimen();
+    });
   }
 
   updateTipoEspecimen(){
@@ -330,7 +423,9 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_formatoCampo', this.id_formato);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+    this.http.get(url, {search}).subscribe(res => {
+      this.llenado(res.json());
+    });
   }
 
   onChangeTipoConcreto(){
@@ -365,10 +460,9 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('valor',              this.creaCCHForm.getRawValue().especimen1);
     formData.append('id_formatoCampo',                     this.id_formato);
     
-    this.http.post(url, formData).subscribe(res => {
-                                                  
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+    this.http.post(url, formData).subscribe(res => {       
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onChangeEspecimen2(){
@@ -382,10 +476,9 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('valor',              this.creaCCHForm.getRawValue().especimen2);
     formData.append('id_formatoCampo',                     this.id_formato);
     
-    this.http.post(url, formData).subscribe(res => {
-                                                  
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+    this.http.post(url, formData).subscribe(res => {   
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onChangeEspecimen3(){
@@ -398,11 +491,9 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('campo',                                           '6');
     formData.append('valor',              this.creaCCHForm.getRawValue().especimen3);
     formData.append('id_formatoCampo',                     this.id_formato);
-    
-    this.http.post(url, formData).subscribe(res => {
-                                                  
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+    this.http.post(url, formData).subscribe(res => {    
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onChangeEspecimen4(){
@@ -417,9 +508,8 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('id_formatoCampo',                     this.id_formato);
     
     this.http.post(url, formData).subscribe(res => {
-                                                  
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onChangeCono(){
@@ -433,10 +523,9 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('valor',                   this.creaCCHForm.value.cono);
     formData.append('id_formatoCampo',                     this.id_formato);
     
-    this.http.post(url, formData).subscribe(res => {
-                                                  
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+    this.http.post(url, formData).subscribe(res => {   
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onChangeVarilla(){
@@ -450,10 +539,9 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('valor',                this.creaCCHForm.value.varilla);
     formData.append('id_formatoCampo',                     this.id_formato);
     
-    this.http.post(url, formData).subscribe(res => {
-                                                  
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+    this.http.post(url, formData).subscribe(res => {    
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onChangeFlexometro(){
@@ -467,10 +555,9 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('valor',              this.creaCCHForm.value.flexometro);
     formData.append('id_formatoCampo',                     this.id_formato);
     
-    this.http.post(url, formData).subscribe(res => {
-                                                  
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+    this.http.post(url, formData).subscribe(res => {  
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onChangeTermometro(){
@@ -485,13 +572,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     formData.append('id_formatoCampo',                     this.id_formato);
     
     this.http.post(url, formData).subscribe(res => {
-                                                  
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-  }
-  
+      this.respuestaSwitch(res.json());                 
+    });
+  } 
 }
-
-
-
-
