@@ -159,7 +159,7 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label>Tipos de Especimen</label>
-                  <select type="text" id="especimen" required name="especimen" class="form-control" placeholder="Especimen" formControlName="tipo_especimen">
+                  <select type="text" id="especimen" required name="especimen" class="form-control" placeholder="Especimen" formControlName="tipo_especimen" (change)=onChangeTipoEspecimen();>
                     <option value="" [disabled]="true">Selecciona el tipo de especimen...</option>
                     <option *ngFor="let especimen of espec" [value]="especimen.id">
                       {{especimen.especimen}}
@@ -185,23 +185,23 @@
               </div> <!--FIN PRIMERA GRID -->
             </div> <!--FIN ROW-->
             <div class="row">
-              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen1">Especimen 1</label> <!--disable-->
                     <input type="text" id="especimen1" class="form-control" required name="especimen1" placeholder="" formControlName="especimen1">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
-              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen2">Especimen 2</label> <!--disable-->
                     <input type="text" id="especimen2"   
                     class="form-control" 
-                    name="especimen2" placeholder="" formControlName="especimen2" required>
+                    name="especimen2" placeholder="" formControlName="especimen2" required required (change)="onBlurEspecimen2()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
-              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen3">Especimen 3</label> <!--disable-->
                     <input type="text" id="especimen3"   
@@ -209,7 +209,7 @@
                     name="especimen3" placeholder="" formControlName="especimen3" required (change)="onBlurEspecimen3()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
-              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="tipoMuestra"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen4">Especimen 4</label> <!--disable-->
                     <input type="text" id="especimen4"  class="form-control" 
