@@ -44,6 +44,7 @@ export class llenaRevenimientoComponent implements OnInit{
   formatoStatus;
   maxNoOfRegistrosRev;
   numberOfRegistros;
+  isValid=false;
   
   formatoCCHForm: FormGroup;
 
@@ -221,7 +222,9 @@ export class llenaRevenimientoComponent implements OnInit{
     }
   }
 
-
+  statusFormReciver(isValid){
+    this.isValid=isValid;
+  }
     
   llenaObra(resp: any){
     this.mis_obras= new Array(resp.length);

@@ -65,13 +65,11 @@ export class HerramientaDetailComponent implements OnInit {
     
   constructor(private router: Router, private http: Http, private data: DataService, private route: ActivatedRoute) {
     this.columnDefs = [
-    {headerName: 'Orden de Servicio', field: 'ordenDeServicio_id' },
-    {headerName: 'ID J.Brigada', field: 'jefe_brigada_id' },
-    {headerName: 'Nombre J.Brigada', field: 'nombre_jefe_brigada' },
+    {headerName: 'O.D.T.', field: 'ordenDeTrabajo_id' },
+    {headerName: 'J.Brigada', field: 'nombre_jefe_brigada' },
     {headerName: 'Condici&oacute;n', field: 'status' },
-    {headerName: 'Fecha de Prestamo', field: 'fechaDePrestamo' },
-    {headerName: 'Fecha de Devoluci&oacute;n', field: 'fechaDevolucion'},
-    {headerName: 'Placa/Identificador', field: 'placas' },
+    {headerName: 'F. Pre', field: 'fechaDePrestamo' },
+    {headerName: 'F. Dev', field: 'FECHA_DE_DEVOLUCION'},
     {headerName: 'Estado', field: 'estado' }
   ];
     this.rowSelection = "single";
@@ -356,7 +354,7 @@ export class HerramientaDetailComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.global.apiRoot}/herramienta_ordenDeServicio/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getByIDAdminHerra');
     search.set('token', this.global.token);

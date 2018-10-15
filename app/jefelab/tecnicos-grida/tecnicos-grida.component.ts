@@ -34,15 +34,20 @@ export class TecnicosGridAgregaComponent implements OnInit  {
 
 
 
-    @Output() agregaTecn = new EventEmitter<any>();
+  @Output() agregaTecn = new EventEmitter<any>();
+  @Output() cambiarCargando = new EventEmitter<any>();
 
   agregaTec(idt: any) {
     this.agregaTecn.emit(idt);
     console.log(idt);
   }
+  cargando(num){
+    this.cambiarCargando.emit(num)
+  }
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
+    this.cargando(+1);
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
@@ -62,12 +67,17 @@ export class TecnicosGridAgregaComponent implements OnInit  {
   }
 
   llenaTabla(repuesta: any){
+    this.cargando(-1);
     console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
     }else{
-      this.rowData =repuesta;
+      if(repuesta.registros == 0){
+        this.rowData =[];
+      }else{
+        this.rowData =repuesta;
+      }
     }
   }
 

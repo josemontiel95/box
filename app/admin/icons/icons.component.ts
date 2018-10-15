@@ -31,10 +31,9 @@ export class IconsComponent implements OnInit{
 	  this.columnDefs = [
       {headerName: 'Ctrl', field: 'id_usuario' },
       {headerName: 'Nombre', field: 'nombre' },
-      {headerName: 'Apellido', field: 'apellido'},
       {headerName: 'Email', field: 'email' },
       {headerName: 'Fecha de Nacimiento', field: 'fechaDeNac' },
-      //{headerName: 'Foto', field: 'foto'},
+      {headerName: 'Laboratorio', field: 'laboratorio'},
       {headerName: 'Rol', field: 'rol' },
       {headerName: 'Activo', field: 'active' },
 

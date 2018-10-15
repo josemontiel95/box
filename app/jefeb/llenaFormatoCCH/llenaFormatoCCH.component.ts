@@ -42,7 +42,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   mis_obras: Array<any>;
   mis_jefes: Array<any>;
   tipoconcreto= [{"tconcreto":"Normal", "id": "N"},{"tconcreto":"Resistencia Rápida", "id": "RR"},{"tconcreto":"Con aditivo", "id": "CA"}];
-  
+  isValid=false;
   numberOfRegistros;
   tipoModificable;
   tipo_especimeng;
@@ -106,7 +106,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id}); 
-    this.cargando=5;
+    this.cargando=6;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -141,7 +141,7 @@ export class llenaFormatoCCHComponent implements OnInit{
 
 
 
-     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getNumberOfRegistrosByID');
     search.set('token', this.global.token);
@@ -150,9 +150,8 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => {
       this.numberOfRegistros =res.json().numberOfRegistrosByID;
       this.tipoModificable =(res.json().tipoModificable == 1 ? true : false);
-     
       console.log("numberOfRegistros: "+this.numberOfRegistros+" tipoModificable: "+this.tipoModificable);
-      this.cargando          =this.cargando-1;
+      this.cargando=this.cargando-1;
     }); 
 
     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
@@ -263,6 +262,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   }
 
   llenatipo(resp: any,tipo){
+    this.cargando=this.cargando-1;
     console.log("llenatipo :: resp");
     console.log(resp);
 
@@ -279,7 +279,7 @@ export class llenaFormatoCCHComponent implements OnInit{
       this.maxNoOfRegistrosCCH       = resp.maxNoOfRegistrosCCH;
       this.multiplosNoOfRegistrosCCH = resp.multiplosNoOfRegistrosCCH;
     }
-  
+
 
   }
 
@@ -558,6 +558,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     }
     let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     let search = new URLSearchParams();
+    this.cargando=this.cargando+1;
     search.set('function', 'getAllRegistrosByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
@@ -570,6 +571,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   }
 
   validaRegistrosVacios(res: any){
+    this.cargando=this.cargando-1;
     let isValid = true;
     res.forEach(function (value) {
       if(value.status == "0"){
@@ -612,6 +614,9 @@ export class llenaFormatoCCHComponent implements OnInit{
     }
     
   }
+  statusFormReciver(isValid){
+    this.isValid=isValid;
+  }
 
   agregaRegistro(){
     /*window.alert("this.maxNoOfRegistrosCCH: "+this.maxNoOfRegistrosCCH+" this.numberOfRegistros: "+this.numberOfRegistros+" this.multiplosNoOfRegistrosCCH: "+this.multiplosNoOfRegistrosCCH);*/
@@ -631,7 +636,7 @@ export class llenaFormatoCCHComponent implements OnInit{
          return;
        }
     }
-
+    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -712,7 +717,8 @@ export class llenaFormatoCCHComponent implements OnInit{
    }
 
   respuestaRegistro(res: any){
-     console.log("Hola Perro"); 
+    this.cargando=this.cargando-1;
+
      console.log(res);
      if(res.error!= 0){
        window.alert(res.estatus);

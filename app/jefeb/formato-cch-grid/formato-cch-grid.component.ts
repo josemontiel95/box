@@ -1,4 +1,4 @@
-import { Component, ViewChild ,OnInit} from '@angular/core';
+import { Component, ViewChild ,OnInit, Output, EventEmitter} from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -19,6 +19,8 @@ export class FormatoCCHGridComponent implements OnInit  {
   rowSelection;
   columnDefs;
   rowClassRules;
+
+  @Output() statusForm = new EventEmitter<any>();
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -96,10 +98,17 @@ export class FormatoCCHGridComponent implements OnInit  {
     }else{
       this.rowData =repuesta;
     }
+    let isValid=true;
+    repuesta.forEach(function (value) {
+      if(value.status == "0"){
+         isValid = false;
+      }
+    });
+    this.statusForm.emit(isValid);
   }
 
    
- onSelectionChanged(event: EventListenerObject){
+  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
     var id = "";
 

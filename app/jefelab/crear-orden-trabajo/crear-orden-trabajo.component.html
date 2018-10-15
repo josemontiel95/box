@@ -1,3 +1,8 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
@@ -97,6 +102,7 @@
                   <input type="date" id="fechaInicio" class="form-control" name="fechaInicio" placeholder="" required  formControlName="fechaInicio">
                   <div *ngIf="fechaInicio.invalid && (fechaInicio.dirty || fechaInicio.touched)" class="alert alert-danger">
                     <div *ngIf="fechaInicio.errors.required"> Fecha de Inicio requerida.</div>
+                    <div *ngIf="fechaInicio.errors.pattern">Formato debe ser AAAA-MM-DD</div>
                   </div>
                 </div>
               </div> <!--FIN  CAMPO -->
@@ -106,6 +112,7 @@
                   <input type="date" id="fechaFin" class="form-control" name="fechaFin" placeholder="" required  formControlName="fechaFin">
                   <div *ngIf="fechaFin.invalid && (fechaFin.dirty || fechaFin.touched)" class="alert alert-danger">
                     <div *ngIf="fechaFin.errors.required">Fecha de Termino requerida.</div>
+                    <div *ngIf="fechaFin.errors.pattern">Formato debe ser AAAA-MM-DD</div>
                   </div>
                 </div>
               </div> <!--FIN  CAMPO -->
@@ -140,7 +147,7 @@
             </div>
             
             <div class="btn-group" style="float: right; padding-right: 10%;">
-            <button class="btn btn-success" [disabled]="ordenForm.invalid"  (click)="crearOrdenTrabajo();">
+            <button class="btn btn-success" [disabled]="ordenForm.invalid"  (click)="validateTimes();">
               <span><b> Guardar Cambios </b></span>
             </button>
           </div>
