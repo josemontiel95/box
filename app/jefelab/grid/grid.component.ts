@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,  Output, EventEmitter} from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -27,19 +27,23 @@ export class GridComponent implements OnInit  {
   }
 
   rowData: any;
+  @Output() cambiarCargando = new EventEmitter<any>();
 
   ngOnInit() {
      this.data.currentGlobal.subscribe(global => this.global = global);
       this.route.params.subscribe( params => this.id_orden=params.id);
   }
 
-
+  cargando(num){
+    this.cambiarCargando.emit(num)
+  }
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    this.cargando(+1);
     let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllFormatos');
@@ -55,6 +59,7 @@ export class GridComponent implements OnInit  {
   }
 
   llenaTabla(repuesta: any){
+    this.cargando(-1);
     console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);

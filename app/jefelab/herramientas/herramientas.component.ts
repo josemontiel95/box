@@ -23,7 +23,7 @@ export class HerramientasComponent implements OnInit{
     {headerName: 'Placas', field: 'placas' },
     {headerName: 'Condicion', field: 'condicion'},
     {headerName: 'Fecha de compra', field: 'fechaDeCompra' },
-    {headerName: 'Editado en', field: 'lastEditedON'},
+    {headerName: 'Asignacion', field: 'asignacion'},
 
   ];
     this.rowSelection = "single";

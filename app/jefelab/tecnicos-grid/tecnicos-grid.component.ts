@@ -36,16 +36,20 @@ export class TecnicosGridComponent implements OnInit  {
     this.route.params.subscribe( params => this.id=params.id);
   }
 
-      @Output() eliminaTecn = new EventEmitter<any>();
+  @Output() eliminaTecn = new EventEmitter<any>();
+  @Output() cambiarCargando = new EventEmitter<any>();
 
   agregaTec(idt: any) {
     this.eliminaTecn.emit(idt);
     console.log(idt);
   }
+  cargando(num){
+    this.cambiarCargando.emit(num)
+  }
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
-
+    this.cargando(+1);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/get/endpoint.php`;
@@ -63,12 +67,17 @@ export class TecnicosGridComponent implements OnInit  {
   }
 
   llenaTabla(repuesta: any){
+    this.cargando(-1);
     console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
     }else{
-      this.rowData =repuesta;
+      if(repuesta.registros == 0){
+        this.rowData =[];
+      }else{
+        this.rowData =repuesta;
+      }
     }
   }
 

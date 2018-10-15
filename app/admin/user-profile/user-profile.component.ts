@@ -196,7 +196,7 @@ export class UserProfileComponent implements OnInit {
       window.alert(resp.estatus);
       location.reload();
     }else{
-      location.reload();
+      this.mostrar();
     }
   }
 

@@ -21,10 +21,8 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="informe">INFORME No</label>
-                  <input type="text" id="informe" class="form-control"  
-                  name="informe" placeholder="Escriba el no. Informe" formControlName="informe">
-                  <div *ngIf="informe.invalid && (informe.dirty || informe.touched)"
-                    class="alert alert-danger">
+                  <input type="text" id="informe" class="form-control"  name="informe" placeholder="Escriba el no. Informe" formControlName="informe">
+                  <div *ngIf="informe.invalid && (informe.dirty || informe.touched)"class="alert alert-danger">
                     <div *ngIf="informe.errors.required">
                        Informe No. requerido.
                     </div>
@@ -56,10 +54,10 @@
                  <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="tconcreto">TIPO DE CONCRETO</label> <!--disable-->
                     <select  class="form-control" required id="tconcreto" name="tconcreto" formControlName="tconcreto" (change)="onBlurTipoConcreto()">
-                          <option value="" [disabled]="true">Selecciona un tipo de concreto...</option>
-                          <option *ngFor="let tconcreto of tipoconcreto" [value]="tconcreto.id">
-                                {{tconcreto.tconcreto}}
-                          </option>
+                      <option value="" [disabled]="true">Selecciona un tipo de concreto...</option>
+                      <option *ngFor="let tconcreto of tipoconcreto" [value]="tconcreto.id">
+                        {{tconcreto.tconcreto}}
+                      </option>
                     </select>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->

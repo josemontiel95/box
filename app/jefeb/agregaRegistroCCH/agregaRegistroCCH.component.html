@@ -70,8 +70,8 @@
               </div> <!--FIN PRIMERA GRID -->
               <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="diasEnsaye">D&Iacute;AS ANTES DE ENSAYAR II</label> <!--disable-->
-                    <select class="form-control" id="diasEnsaye" name="diasEnsaye" formControlName="diasEnsaye2"  (change)="onBlurdiasEnsaye()">
+                    <label for="diasEnsaye2">D&Iacute;AS ANTES DE ENSAYAR II</label> <!--disable-->
+                    <select class="form-control" id="diasEnsaye2" name="diasEnsaye2" formControlName="diasEnsaye2"  (change)="onBlurdiasEnsaye()">
                           <option value="0" [disabled]="true">Selecciona los dias</option>
                           <option *ngFor="let day of days2" [value]="day.id">
                                 {{day.value}}
@@ -82,8 +82,8 @@
               </div> <!--FIN PRIMERA GRID -->
               <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="diasEnsaye">D&Iacute;AS ANTES DE ENSAYAR III</label> <!--disable-->
-                    <select class="form-control" id="diasEnsaye" name="diasEnsaye" formControlName="diasEnsaye3"  (change)="onBlurdiasEnsaye()">
+                    <label for="diasEnsaye3">D&Iacute;AS ANTES DE ENSAYAR III</label> <!--disable-->
+                    <select class="form-control" id="diasEnsaye3" name="diasEnsaye3" formControlName="diasEnsaye3"  (change)="onBlurdiasEnsaye()">
                           <option value="0" [disabled]="true">Selecciona los dias</option>
                           <option *ngFor="let day of days3" [value]="day.id">
                                 {{day.value}}
@@ -94,8 +94,8 @@
               </div> <!--FIN PRIMERA GRID -->
               <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="tipoMuestra"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label  for="diasEnsaye">D&Iacute;AS ANTES DE ENSAYAR IV</label> <!--disable-->
-                    <select class="form-control" id="diasEnsaye" name="diasEnsaye" formControlName="diasEnsaye4"  (change)="onBlurdiasEnsaye()">
+                    <label  for="diasEnsaye4">D&Iacute;AS ANTES DE ENSAYAR IV</label> <!--disable-->
+                    <select class="form-control" id="diasEnsaye4" name="diasEnsaye4" formControlName="diasEnsaye4"  (change)="onBlurdiasEnsaye()">
                           <option value="0" [disabled]="true">Selecciona los dias</option>
                           <option *ngFor="let day of days4" [value]="day.id">
                                 {{day.value}}
@@ -143,8 +143,8 @@
               </div> <!--FIN PRIMERA GRID -->
               <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="herramienta">MOLDE 3</label> <!--disable-->
-                    <select  class="form-control" id="herramienta" name="herramienta" formControlName="herramienta2" (change)="onBlurHerramienta2()">
+                    <label for="herramienta2">MOLDE 3</label> <!--disable-->
+                    <select  class="form-control" id="herramienta2" name="herramienta2" formControlName="herramienta2" (change)="onBlurHerramienta2()">
                           <option value="0" [disabled]="true">Selecciona la herramienta</option>
                           <option *ngFor="let herr of herramientas2" [value]="herr.id_herramienta">
                                 {{herr.placas}}
@@ -160,8 +160,8 @@
               </div> <!--FIN PRIMERA GRID -->
               <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="tipoMuestra"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="herramienta">MOLDE 4</label> <!--disable-->
-                    <select  class="form-control" id="herramienta" name="herramienta" formControlName="herramienta3" (change)="onBlurHerramienta3()">
+                    <label for="herramienta3">MOLDE 4</label> <!--disable-->
+                    <select  class="form-control" id="herramienta3" name="herramienta3" formControlName="herramienta3" (change)="onBlurHerramienta3()">
                           <option value="0" [disabled]="true">Selecciona la herramienta</option>
                           <option *ngFor="let herr of herramientas3" [value]="herr.id_herramienta">
                                 {{herr.placas}}
@@ -251,7 +251,7 @@
                     <div *ngIf="volumen.errors && (volumen.dirty || volumen.touched)"
                               class="alert alert-danger">
                         <div *ngIf="volumen.errors.required">VOLUMEN(m<sup>3</sup>) requerido.</div>
-                        <div *ngIf="volumen.errors.pattern">VOLUMEN(m<sup>3</sup>) debe contener solo numeros</div>
+                        <div *ngIf="volumen.errors.pattern">VOLUMEN(m<sup>3</sup>) debe contener solo numeros enteros o decimales con precisi&oacute;n a centecimas</div>
                     </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
               </div> <!--FIN SEGUNDO GRID -->

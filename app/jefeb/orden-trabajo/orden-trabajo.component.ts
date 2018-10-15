@@ -30,6 +30,7 @@ export class OrdenTrabajoComponent implements OnInit{
   rowSelection;
   columnDefs;
   cargando= 1;
+  rowClassRules;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -39,9 +40,28 @@ export class OrdenTrabajoComponent implements OnInit{
     {headerName: 'Condiciones de trabajo', field: 'condicionesTrabajo' },
     {headerName: 'Fecha de Inicio', field: 'fechaInicio' },
     {headerName: 'Fecha de Fin', field: 'fechaFin' },
+    {headerName: 'Ejecuci&oacute;n', field: 'estado' },
     {headerName: 'Estatus', field: 'odtStatus' },
   ];
     this.rowSelection = "single";
+    this.rowClassRules = {
+      "row-red-warning": function(params) {
+        var color = params.data.color;
+        return color == 0;
+      },
+      "row-yelloy-warning": function(params) {
+        var color = params.data.color;
+        return color == 1;
+      },
+      "row-blue-warning": function(params) {
+        var color = params.data.color;
+        return color == 2;
+      },
+      "row-green-warning": function(params) {
+        var color = params.data.color;
+        return color == 3;
+      }
+    };
   }
 	  
   ngOnInit() {

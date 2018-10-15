@@ -43,7 +43,7 @@ export class HerramientaGridComponent implements OnInit  {
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
-
+    this.cargando(+1);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
@@ -53,7 +53,7 @@ export class HerramientaGridComponent implements OnInit  {
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id);
     this.http.get(url, {search}).subscribe(res => {
-                                                this.error = res.json().error;
+                                            this.error = res.json().error;
                                             this.llenaTabla(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
@@ -63,6 +63,7 @@ export class HerramientaGridComponent implements OnInit  {
 
   @Output() eliminaHerra = new EventEmitter<any>();
   @Output() evaluaHerra = new EventEmitter<any>();
+  @Output() cambiarCargando = new EventEmitter<any>();
 
   evaluaHerr(cond: any){
     this.evaluaHerra.emit(cond);
@@ -71,19 +72,23 @@ export class HerramientaGridComponent implements OnInit  {
   eliminaHerr(ids: any) {
     this.eliminaHerra.emit(ids);
   }
+  cargando(num){
+    this.cambiarCargando.emit(num)
+  }
 
 
   llenaTabla(repuesta: any){
+    this.cargando(-1);
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
     }else{
-      this.rowData =repuesta;
-      if(this.error == 5)
-      {
+      if(repuesta.registros == 0){
+        this.rowData =[];
         this.evaluaHerr({"error":true});
         console.log(this.error);
-        //this.router.navigate(['jefeLaboratorio/orden-trabajo/']);
+      }else{
+        this.rowData =repuesta;
       }
     }
   }

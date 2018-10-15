@@ -17,7 +17,7 @@
         </div>
         <div class="card-body">
           <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
-                  <button class="btn btn-default"  *ngIf="hiddenf == true && formatoStatus" (click)="obtenStatusReg();">
+                  <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid }" *ngIf="hiddenf == true && formatoStatus" (click)="obtenStatusReg();">
                     <span><b>FORMATO COMPLETADO</b></span>
                   </button>
           </div>
@@ -135,7 +135,7 @@
         </div>
         <br> <br> <br>
         <div class="card-body ">
-          <app-formato-cch-grid></app-formato-cch-grid>
+          <app-formato-cch-grid (statusForm)="statusFormReciver($event)"></app-formato-cch-grid>
         </div> 
       </div>
     </div>

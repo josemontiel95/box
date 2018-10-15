@@ -127,13 +127,22 @@
     </div>
   </div>
   <div *ngIf="!this.His" class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
       <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            Historial de pr&eacute;stamos
+          </h5>
+          <p><b>Nomeclatura:</b></p>
+          <p><b>- O.D.T. :</b> Orden de Trabajo</p>
+          <p><b>- F. Pre :</b> Fecha de Prestamo</p>
+          <p><b>- F. Dev :</b> Fecha de Devoluci&oacute;n</p>
+        </div>
         <div class="card-body">
           <ag-grid-angular 
             #agGrid
             id="myGrid"
-            style="width: 100%; height: 600px;" 
+            style="width: 100%; height: 350px;" 
             class="ag-theme-balham"
             [enableSorting]="true"
             [rowData]="rowData" 

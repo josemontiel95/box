@@ -133,7 +133,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     'revp':             new FormControl( {value: this.FormatoCCH.revp, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+$")]), 
     'revo':             new FormControl( {value: this.FormatoCCH.revo, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+$")]),
     'tamano':           new FormControl( {value: this.FormatoCCH.tamano, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+$")]),
-    'volumen':          new FormControl( {value: this.FormatoCCH.volumen, disabled: this.hidden}, [Validators.required,Validators.pattern("^[0-9]+$")]),       
+    'volumen':          new FormControl( {value: this.FormatoCCH.volumen, disabled: this.hidden}, [Validators.required,Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]),       
     'diasEnsaye1':      new FormControl( {value: this.FormatoCCH.diasEnsaye1, disabled: true}),
     'diasEnsaye2':      new FormControl( {value: this.FormatoCCH.diasEnsaye2, disabled: true}),
     'diasEnsaye3':      new FormControl( {value: this.FormatoCCH.diasEnsaye3, disabled: true}),
@@ -865,7 +865,13 @@ export class agregaRegistroCCHComponent implements OnInit{
     let warning = false;
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
         if(this.formatoCCHForm.controls[controlName].value == "" || this.formatoCCHForm.controls[controlName].value == null || this.formatoCCHForm.controls[controlName].value == "null"){
-          warning = true;
+          if(!this.tipoMuestra && (controlName=="cesp4" || controlName=="diasEnsaye4" || controlName=="herramienta3")){ // Viga
+            
+          }else if(!this.tipoMuestra){
+            warning = true;
+          }else if(this.tipoMuestra){
+            warning = true;
+          }
         }// disables/enables each form control based on 'this.formDisabled'
     });
 

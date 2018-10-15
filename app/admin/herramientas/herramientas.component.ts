@@ -25,8 +25,10 @@ export class HerramientasComponent implements OnInit{
     {headerName: 'Placas', field: 'placas' },
     {headerName: 'Condicion', field: 'condicion'},
     {headerName: 'Fecha de compra', field: 'fechaDeCompra' },
-    {headerName: 'Editado en', field: 'lastEditedON'},
-    {headerName: 'Observaciones', field: 'observaciones'},
+    //{headerName: 'Fecha de creaci&oacute;n', field: 'createdON'},
+    {headerName: 'Laboratorio', field: 'laboratorio'},
+    {headerName: 'Asignacion', field: 'asignacion'},
+    {headerName: 'Fecha de Asignacion', field: 'asignadoEn'},
     {headerName: 'active', field: 'active' },
   ];
     this.rowSelection = "single";

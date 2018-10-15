@@ -3,16 +3,11 @@ import { Component, OnInit,  Output, EventEmitter, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
-import * as moment from 'moment';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
     Validators,
-    FormBuilder
 } from '@angular/forms';
 
 @Component({
@@ -196,10 +191,34 @@ export class DashboardComponent implements OnInit {
    get observaciones()        { return this.ordenForm.get('observaciones'); } 
    get herramienta_tipo_id()  { return this.tipoForm.get('herramienta_tipo_id'); }
 
+   validateTimes(){
+    this.cargando=this.cargando+1;
+
+    let startDate = new Date(this.ordenForm.value.fechaInicio);
+    let temp = this.ordenForm.value.horaInicio.split(":");
+    startDate.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+    startDate.setMinutes(parseInt(temp[1]));
+
+    let endDate = new Date(this.ordenForm.value.fechaFin);
+    temp = this.ordenForm.value.horaFin.split(":");
+    endDate.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+    endDate.setMinutes(parseInt(temp[1]));
+
+    if(startDate >= endDate){
+      window.alert("La fecha de inicio debe ser menor que la fecha de fin");
+      this.cargando=this.cargando-1;
+      return;
+    }else if(startDate < endDate){
+      
+    }
+    this.cargando=this.cargando-1;
+    this.actualizarOrden();
+  }
+
   actualizarOrden(){
     console.log("crearOrdenTrabajo :: "+this.ordenForm.value.obra_id);
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.cargando=1;
+    this.cargando=this.cargando+1;
     let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'updateJefeLabo');
@@ -221,6 +240,10 @@ export class DashboardComponent implements OnInit {
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             } );
+  }
+
+  cambiarCargando(num){
+    this.cargando=this.cargando + num;
   }
 
   rollbackCambiarDatos(){
@@ -340,7 +363,11 @@ export class DashboardComponent implements OnInit {
     }
     else{
       this.hiddenHerramientaDispo = true;
-      setTimeout(() =>{this.hiddenHerramientaDispo = false},1000);
+      this.cambiarCargando(+1);
+      setTimeout(() =>{
+        this.hiddenHerramientaDispo = false;
+        this.cambiarCargando(-1);
+      },700);
     }
   }
 

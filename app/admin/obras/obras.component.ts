@@ -36,8 +36,7 @@ export class ObrasComponent implements OnInit{
       {headerName: 'Concretera', field: 'concretera' },
       {headerName: 'Tipo', field: 'tipo' },
       {headerName: 'Cliente', field: 'nombre' },
-      {headerName: 'Created', field: 'createdON' },
-      {headerName: 'Last Edited', field: 'lastEditedON' },
+      {headerName: 'Laboratorio', field: 'laboratorio'},
       {headerName: 'Incertidumbre', field: 'incertidumbre' },
       {headerName: 'Active', field: 'active' },
 

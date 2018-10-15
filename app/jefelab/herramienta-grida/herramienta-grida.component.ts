@@ -36,13 +36,16 @@ export class HerramientaGridAgregaComponent implements OnInit  {
 
   ngOnInit() {
         this.data.currentGlobal.subscribe(global => this.global = global);
+        this.route.params.subscribe( params => this.id=params.id);
 
   }
 
  
 
   onGridReady(params) {
+    this.route.params.subscribe( params => this.id=params.id);
 
+    this.cargando(+1);
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -52,10 +55,11 @@ export class HerramientaGridAgregaComponent implements OnInit  {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('herramienta_tipo_id', this.idh);
+    search.set('id_ordenDeTrabajo', this.id);
+    
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
-
                                             this.llenaTabla(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
@@ -63,24 +67,33 @@ export class HerramientaGridAgregaComponent implements OnInit  {
     @Input( ) idh: any;
 
     @Output() agregaHerra = new EventEmitter<any>();
+    @Output() cambiarCargando = new EventEmitter<any>();
 
   agregaHerr(ids: any) {
     this.agregaHerra.emit(ids);
     //this.id= h
     console.log(ids);
+  }
 
+  cargando(num){
+    this.cambiarCargando.emit(num)
   }
 
 
 
   llenaTabla(repuesta: any){
-    console.log(repuesta)
+    this.cargando(-1);
 
+    console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
     }else{
-      this.rowData =repuesta;
+      if(repuesta.registros == 0){
+        this.rowData =[];
+      }else{
+        this.rowData =repuesta;
+      }
     }
   }
 

@@ -105,14 +105,11 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
       const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
       this.creaCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
       this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
-      //this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
-      //this.creaCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
     }else{
       const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
       this.creaCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
       this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
       this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
-      //this.creaCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
     }
     this.onChangeTipoConcreto();
   }
@@ -129,7 +126,8 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   Por lo tanto lo enviara a la ruta de llenaFormatoCCH con su id_formato 
   Parametrizado. */
   respuestaSwitch(res: any){ 
-  console.log(res);
+    this.cargando=this.cargando-1;
+    console.log(res);
     if(res.error!= 0){
       window.alert("Intentalo otra vez");
       location.reload();
@@ -232,6 +230,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   onSubmit() { this.submitted = true; }
 
   llenado(respuesta: any){
+    this.cargando=this.cargando-1;
     console.log(respuesta);
     this.tipoGlobal = respuesta.tipo_especimen;
     //this.cargando = 1;
@@ -261,7 +260,6 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   llenadoDefault(respuesta: any){
     console.log(respuesta);
     this.tipoGlobal = respuesta.tipo_especimen;
-    //this.cargando = 1;
     if(respuesta.tipo_especimen == "VIGAS"){
       this.tipoMuestra = false;
     }else{
@@ -312,6 +310,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   updateDays(){
+    this.cargando=this.cargando+1;
     let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getformatoDefoults');
@@ -322,21 +321,22 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   llenatipo(resp: any){
+    this.cargando=this.cargando-1;
     console.log(resp);
-    if(this.tipoMuestra == false){
-    this.notRR=true;
-    this.atconcreto= "N";
-    this.aespecimen1= resp.cch_vigaDef_prueba1;
-    this.aespecimen2= resp.cch_vigaDef_prueba2;
-    this.aespecimen3= resp.cch_vigaDef_prueba3;
+    if(!this.tipoMuestra){ // Vigas
+      this.notRR=true;
+      this.atconcreto= "N";
+      this.aespecimen1= resp.cch_vigaDef_prueba1;
+      this.aespecimen2= resp.cch_vigaDef_prueba2;
+      this.aespecimen3= resp.cch_vigaDef_prueba3;
           
-    this.creaCCHForm.patchValue({
-      tconcreto: this.atconcreto,
-      especimen1: this.aespecimen1,
-      especimen2: this.aespecimen2,
-      especimen3: this.aespecimen3            
-    });
-
+      this.creaCCHForm.patchValue({
+        tconcreto: this.atconcreto,
+        especimen1: this.aespecimen1,
+        especimen2: this.aespecimen2,
+        especimen3: this.aespecimen3            
+      });
+      // llamar al server.., para tconcreto
     }else{
       this.notRR=true;
       this.atconcreto= "N";
@@ -353,12 +353,14 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
         especimen4: this.aespecimen4
       });
     }
+
     const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
     this.creaCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
     this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
     this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
     this.creaCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
-  }
+    this.onChangeTipoConcreto();
+  }  
 
   llenaConos(resp: any){
     console.log(resp);
@@ -401,6 +403,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   onChangeTipoEspecimen(){
+    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -417,6 +420,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   updateTipoEspecimen(){
+    this.cargando=this.cargando+1;
     let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getInfoByID');
@@ -429,6 +433,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   onChangeTipoConcreto(){
+    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -443,13 +448,22 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
                                                   
                                               this.respuestaSwitch(res.json());                 
                                             } );
-    this.onChangeEspecimen1();
-    this.onChangeEspecimen2();
-    this.onChangeEspecimen3();
-    this.onChangeEspecimen4();
+    if(!this.tipoMuestra){ //viga
+      this.onChangeEspecimen1();
+      this.onChangeEspecimen2();
+      this.onChangeEspecimen3();
+    }else{
+      this.onChangeEspecimen1();
+      this.onChangeEspecimen2();
+      this.onChangeEspecimen3();
+      this.onChangeEspecimen4();
+    }
   }
 
+
+
   onChangeEspecimen1(){
+    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -466,6 +480,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   onChangeEspecimen2(){
+    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -482,6 +497,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   onChangeEspecimen3(){
+    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -497,6 +513,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   onChangeEspecimen4(){
+    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -513,6 +530,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   onChangeCono(){
+    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -529,6 +547,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   onChangeVarilla(){
+    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -545,6 +564,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   onChangeFlexometro(){
+    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -561,6 +581,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   }
 
   onChangeTermometro(){
+    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();

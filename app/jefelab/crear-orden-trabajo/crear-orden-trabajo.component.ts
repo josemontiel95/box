@@ -18,13 +18,13 @@ import {
 @Component({
   selector: 'app-crear-orden-trabajo',
   templateUrl: './crear-orden-trabajo.component.html',
-  styleUrls: ['./crear-orden-trabajo.component.scss']
+  styleUrls: ['./crear-orden-trabajo.component.scss','../../loadingArrows.css']
 })
 export class CrearOrdenTrabajoComponent implements OnInit {
 
  
   global: Global;
-  cargando= 1;
+  cargando= 0;
       mis_tipos: Array<any>;
 
   constructor(private router: Router, private data: DataService, private http: Http) { }
@@ -52,8 +52,34 @@ export class CrearOrdenTrabajoComponent implements OnInit {
      jefe_brigada_id: '',
      area:''
    };  
+
+  validateTimes(){
+    this.cargando=this.cargando+1;
+
+    let startDate = new Date(this.ordenForm.value.fechaInicio);
+    let temp = this.ordenForm.value.horaInicio.split(":");
+    startDate.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+    startDate.setMinutes(parseInt(temp[1]));
+
+    let endDate = new Date(this.ordenForm.value.fechaFin);
+    temp = this.ordenForm.value.horaFin.split(":");
+    endDate.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+    endDate.setMinutes(parseInt(temp[1]));
+
+    if(startDate >= endDate){
+      window.alert("La fecha de inicio debe ser menor que la fecha de fin");
+      this.cargando=this.cargando-1;
+      return;
+    }else if(startDate < endDate){
+      
+    }
+    this.cargando=this.cargando-1;
+    this.crearOrdenTrabajo();
+  }
   
   crearOrdenTrabajo(){
+    this.cargando=this.cargando+1;
+
     console.log("crearOrdenTrabajo :: "+this.ordenForm.value.obra_id);
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
@@ -81,6 +107,7 @@ export class CrearOrdenTrabajoComponent implements OnInit {
 
 
    respuestaSwitch(res: any){
+    this.cargando=this.cargando-1;
      console.log(res);
      if(res.error!= 0){
        window.alert("Intentalo otra vez");
@@ -95,29 +122,11 @@ export class CrearOrdenTrabajoComponent implements OnInit {
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.cargando=2;
+    this.cargando=this.cargando+3;
 
 
-    let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/obra/get/endpoint.php`;
     let search = new URLSearchParams();
-    
-    search.set('function', 'getForDroptdownAdmin');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
-
-    url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
-    search = new URLSearchParams();
-    search.set('function', 'getForDroptdownAdmin');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => {this.llenaClientes(res.json());
-                                                   this.labValidator(res.json());
-                                                 });
-
-
-    url = `${this.global.apiRoot}/obra/get/endpoint.php`;
-    search = new URLSearchParams();
     search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
@@ -147,8 +156,8 @@ export class CrearOrdenTrabajoComponent implements OnInit {
       'obra_id':             new FormControl(this.Orden.obra_id,  [ Validators.required]),
       'actividades':         new FormControl(this.Orden.actividades,  [  Validators.required]),
       'condicionesTrabajo':  new FormControl(this.Orden.condicionesTrabajo,  [  Validators.required]),
-      'fechaInicio':         new FormControl(this.Orden.fechaInicio,  [  Validators.required]), 
-      'fechaFin':            new FormControl(this.Orden.fechaFin,  [  Validators.required]),
+      'fechaInicio':         new FormControl(this.Orden.fechaInicio,  [  Validators.required, Validators.pattern("[0-9]{4}[-][0-1][0-9][-][0-3][0-9]")]), 
+      'fechaFin':            new FormControl(this.Orden.fechaFin,  [  Validators.required, Validators.pattern("[0-9]{4}[-][0-1][0-9][-][0-3][0-9]")]),
       'horaInicio':          new FormControl(this.Orden.horaInicio,  [  Validators.required]), 
       'horaFin':             new FormControl(this.Orden.horaFin,  [  Validators.required]), 
       'observaciones':       new FormControl(this.Orden.observaciones,  [  Validators.required]), 
@@ -179,16 +188,6 @@ export class CrearOrdenTrabajoComponent implements OnInit {
 
   onSubmit() { this.submitted = true; }
 
-  llenaTipos(resp: any){
-    console.log(resp);
-    this.mis_tipos= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
-      this.mis_tipos[_i]=resp[_i];
-    }
-    this.cargando=this.cargando-1;
-    console.log("llenaTipos this.cargando: "+this.cargando);
-  }
 
 
 
@@ -202,16 +201,6 @@ export class CrearOrdenTrabajoComponent implements OnInit {
     }
   }
 
-  llenaClientes(resp: any){
-    this.mis_cli= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
-      this.mis_cli[_i]=resp[_i];
-
-    }
-    console.log(this.mis_cli);
-    this.cargando=this.cargando-1;
-  }
 
   llenaObra(resp: any){
     this.mis_obras= new Array(resp.length);

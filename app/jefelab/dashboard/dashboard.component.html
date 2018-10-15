@@ -240,7 +240,7 @@
  
             </div>
             <div class="btn-group" style=" padding-left: 15%;">
-              <button class="btn btn-success" *ngIf="!hidden" [disabled]="ordenForm.invalid" (click)="mostrar(); mostrarDetalles(); actualizarOrden();">
+              <button class="btn btn-success" *ngIf="!hidden" [disabled]="ordenForm.invalid" (click)="mostrar(); mostrarDetalles(); validateTimes();">
                 <span><b> Guardar Cambios </b></span>
               </button>
             </div>
@@ -279,17 +279,14 @@
           </div>
           </div>
           <div *ngIf="this.hiddenHerramienta == true">
-          <app-herramienta-grid (eliminaHerra)="eliminaHerra($event)"></app-herramienta-grid>
+            <app-herramienta-grid (eliminaHerra)="eliminaHerra($event)" (cambiarCargando)="cambiarCargando($event)"></app-herramienta-grid>
           </div>
           <div *ngIf="!this.hiddenHerramienta && !this.hiddenTotalHerramienta">
             <form (ngSubmit)="onSubmit()" [formGroup]=tipoForm #formDir="ngForm">
                <div class="col-md-12 col-12">
                 <div class="form-group">
                   <label for="herramienta_tipo_id">Tipos</label>
-                  <select  class="form-control" id="herramienta_tipo_id"
-                    required (change)="mostrarHerramientaDisponible();" 
-                    name="herramienta_tipo_id"
-                    placeholder="Tipos"  formControlName="herramienta_tipo_id">
+                  <select  class="form-control" id="herramienta_tipo_id" required (change)="mostrarHerramientaDisponible();"   formControlName="herramienta_tipo_id">
                     <option value="" [disabled]="true">Selecciona el tipo...</option>
                     <option *ngFor="let tipo of mis_tipos" [value]="tipo.id_herramienta_tipo" >
                       {{tipo.tipo}}
@@ -306,7 +303,7 @@
                   
           <div *ngIf="!this.hiddenHerramientaDispo">
 
-          <app-herramienta-grida [idh]="this.tipoForm.value.herramienta_tipo_id" (agregaHerra)="addHerra($event)"></app-herramienta-grida>          
+          <app-herramienta-grida [idh]="this.tipoForm.value.herramienta_tipo_id" (agregaHerra)="addHerra($event)" (cambiarCargando)="cambiarCargando($event)"></app-herramienta-grida>          
           </div>
           </div> 
         </div>
@@ -338,10 +335,10 @@
           </div>
         </div>
           <div *ngIf="this.hiddenTecnicos == true">
-          <app-tecnicos-grid (eliminaTecn)="eliminaTec($event)"></app-tecnicos-grid>
+          <app-tecnicos-grid (eliminaTecn)="eliminaTec($event)" (cambiarCargando)="cambiarCargando($event)"></app-tecnicos-grid>
         </div>
           <div *ngIf="!this.hiddenTecnicos && !this.hiddenTotalTecnicos">
-          <app-tecnicos-grida  (agregaTecn)="addTec($event)"></app-tecnicos-grida>          
+          <app-tecnicos-grida  (agregaTecn)="addTec($event)" (cambiarCargando)="cambiarCargando($event)"></app-tecnicos-grida>          
           </div>        
         </div>
       </div>
@@ -362,7 +359,7 @@
           </div>
         </div>
         <div class="card-body">
-     <!--aqui va el grid--><app-grid></app-grid>
+     <!--aqui va el grid--><app-grid (cambiarCargando)="cambiarCargando($event)"></app-grid>
         </div>
 
         <div class="card-footer">
@@ -371,7 +368,8 @@
     </div>
   </div>
 
-<div class="col-md-12 col-12">
+  <div class="row">
+    <div class="col-md-12 col-12">
       <div class="card">
         <div class="card-header">
           <h5 class="card-category">Tecnicos.</h5>
@@ -379,20 +377,19 @@
         </div>
         <div class="card-body">
           <div class="btn-group">
-             
             <button  class="btn btn-danger" *ngIf="!hiddenTecnicosP" (click)="mostrarTecnicos();">
               <span><b> Cancelar </b></span>
             </button>            
-
           </div>
-        </div>
           <div *ngIf="this.hiddenTecnicosP== true">
-          <tec-app-grid (mandaTecn)="pasaTec($event)"></tec-app-grid>
-        </div>
+            <tec-app-grid (mandaTecn)="pasaTec($event)"></tec-app-grid>
+          </div>
           <div *ngIf="!this.hiddenTecnicosP ">
-          <fehcas-app-grid [idte]="this.id_tec"></fehcas-app-grid>          
-          </div>        
+            <fehcas-app-grid [idte]="this.id_tec"></fehcas-app-grid>          
+          </div> 
         </div>
       </div>
-    </div> <!--FIN MAIN-CONTENT-->
+    </div>
+  </div> <!--FIN MAIN-CONTENT-->
+</div> <!--FIN MAIN-CONTENT-->
   
