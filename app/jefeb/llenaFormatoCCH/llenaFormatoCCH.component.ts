@@ -31,6 +31,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   global: Global;
   private gridApi;
   private gridColumnApi;
+  link = "";
   rowSelection;
   columnDefs;
   cargando= 5;
@@ -48,6 +49,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   tipo_especimeng;
   notRR=true;
   formatoStatus;
+  preliminar = false;
   atconcreto  ="";
   vespecimen1
   vespecimen2
@@ -302,7 +304,11 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.formatoCCHForm.controls['informe']['disable']();
     this.formatoCCHForm.controls['especimen4']['disable']();
 
-    if(!this.tipoModificable){
+    /*Se realiza una validación mediante numberOfRegistros
+      Para saber si existen registros, en caso positivo
+      Se bloquea el campo tipo de especimen. */
+
+    if(this.numberOfRegistros != 0){
       this.formatoCCHForm.controls['tipo_especimen']['disable']();
     }
     this.onBlurTipoConcreto(); //¿Vale la pena la llamada?
@@ -373,11 +379,12 @@ export class llenaFormatoCCHComponent implements OnInit{
      termometro:          respuesta.termometro_id
     });
 
+    this.link = respuesta.preliminar;
+
     this.tipo_especimeng=respuesta.tipo_especimen;
     this.cargaDefaults(this.tipo_especimeng);
     this.formatoStatus=(respuesta.status == 0 ? true : false);
-    this.cargando=this.cargando-1;
-    
+    this.cargando=this.cargando-1;    
   }
 
 
@@ -387,6 +394,12 @@ export class llenaFormatoCCHComponent implements OnInit{
       this.tipoMuestra = false;
     }else{
       this.tipoMuestra = true;
+    }
+    //Esta if verifica si ya fue generado un PDF mediante respuesta.preliminar, si fue generado activa Visuarlizar PDF.
+    if(respuesta.preliminar == null){
+      this.preliminar = false;
+    }else{
+      this.preliminar = true;
     }
 
 
@@ -541,6 +554,62 @@ export class llenaFormatoCCHComponent implements OnInit{
     });
   }
 
+  reloadData(){
+    this.cargando = this.cargando +1;
+    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getInfoByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('id_formatoCampo', this.id_formato);
+    this.http.get(url, {search}).subscribe(res => {
+      this.llenado(res.json());
+      this.sinNombre(res.json());
+    }); 
+  }
+
+  obtenStatusGenPDF(){
+    if(0 == this.numberOfRegistros){
+        window.alert("Para Generar el PDF: Primero debes Agregar una Muestra y Completarla.");
+        return;
+    }
+    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    this.cargando=this.cargando+1;
+    search.set('function', 'getAllRegistrosByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_formatoCampo', this.id_formato);
+    console.log(search);
+    this.http.get(url, {search}).subscribe(res => {
+                                            console.log(res.json());
+                                            this.validaRegistrosVaciosGEN(res.json());
+                                          });
+    
+  }
+
+  obtenStatusVisualizarPDF(){
+      if(0 == this.numberOfRegistros){
+        window.alert("Para Visualizar PDF: Primero debes Agregar una Muestra y Completarla.");
+        return;
+      }     
+
+      let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+      let search = new URLSearchParams();
+      this.cargando=this.cargando+1;
+      search.set('function', 'getAllRegistrosByID');
+      search.set('token', this.global.token);
+      search.set('rol_usuario_id', this.global.rol);
+      search.set('id_formatoCampo', this.id_formato);
+      console.log(search);
+      this.http.get(url, {search}).subscribe(res => {
+                                              console.log(res.json());
+                                              this.validaRegistrosVaciosVisualizar(res.json());
+                                            });
+    
+    
+  }
+
   obtenStatusReg(){
     if(0 == this.numberOfRegistros){
        if(window.confirm("¿Estas seguro de que quieres marcar como completado sin agregar un solo registro?")){
@@ -580,13 +649,52 @@ export class llenaFormatoCCHComponent implements OnInit{
     });
 
     if(!isValid){
-      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para completar el formato.");     
-    }else{
-          if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
-            this.formatoCompletado();
-          }
+      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para Completar el Formato.");     
+    }else if(!this.preliminar){
+            window.alert("Para Completar el formato: Primero debes Generar el PDF.");
+    } else{
+        if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
+              this.formatoCompletado();
+        }
+    }
+  } //FIN ValidaCamposVacios
+
+  validaRegistrosVaciosGEN(res: any){
+    this.cargando=this.cargando-1;
+    let isValid = true;
+    res.forEach(function (value) {
+      if(value.status == "0"){
+         isValid = false;
+      } 
+    });
+
+    if(!isValid){
+      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para poder Generar un PDF.");     
+    }else if(window.confirm("¿Estas seguro de Generar el PDF?")){
+      this.generatePDF();
     } 
   } //FIN ValidaCamposVacios
+
+  validaRegistrosVaciosVisualizar(res: any){
+    this.cargando=this.cargando-1;
+    let isValid = true;
+    res.forEach(function (value) {
+      if(value.status == "0"){
+         isValid = false;
+      }
+    });
+
+    if(!isValid){
+      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para Visualizar un PDF.");     
+    }else{
+      if(!this.preliminar){
+        window.alert("Para Visualizar PDF: Primero debes Generar el PDF dando click al botón Generar PDF.");
+      }else if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
+        let link = this.link;
+        window.open(link, "_blank");
+      } 
+    } 
+  } //FIN  
 
   formatoCompletado(){
     this.cargando=1;
@@ -603,17 +711,49 @@ export class llenaFormatoCCHComponent implements OnInit{
     });
     
   } 
-  respuestaFormatoCompletado(res: any){
+
+  generatePDF(){
+    this.cargando= this.cargando + 1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'generatePDF');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('id_formatoCampo', this.id_formato);  
+    this.http.post(url, formData).subscribe(res => {
+      this.respuestaGeneratePDF(res.json());
+    });
+    
+  } 
+
+  respuestaGeneratePDF(res: any){
     if(res.error==0){
+      console.log(res);
       this.cargando=this.cargando-1;
-      this.formatoStatus=false;
+      this.reloadData();
       console.log(res);
     }else{
       window.alert(res.estatus);
       location.reload();
-    }
-    
+    } 
   }
+
+
+  respuestaFormatoCompletado(res: any){
+    console.log(res);
+    if(res.error==0){
+      
+      this.cargando=this.cargando-1;
+      this.formatoStatus=false;
+      
+    }else{
+      window.alert(res.estatus);
+      location.reload();
+    } 
+  }
+
   statusFormReciver(isValid){
     this.isValid=isValid;
   }

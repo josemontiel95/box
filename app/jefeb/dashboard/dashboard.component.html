@@ -3,6 +3,9 @@
         <i class="now-ui-icons loader_refresh spin"></i> 
     </div>
 </div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
@@ -16,7 +19,8 @@
             
             <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
                   <button class="btn btn-default" [ngClass]="{'btn':true ,'btn-success': formatoStatus == 1, 'btn-default': formatoStatus > 1 }" style="" [disabled]="!edicionJLab" (click)="obtenStatusFormatos();">
-                    <span><b>COMPLETAR ORDEN DE TRABAJO</b></span>
+                    <span><b>COMPLETAR ORDEN DE TRABAJO &nbsp;&nbsp;</b></span>
+                    <i class="fa fa-check-square-o" style="font-size:18px; display: inline-block; "></i>
                   </button>
             </div>
             
