@@ -229,7 +229,7 @@
               <div class="col-md-6 col-12"> <!-- INICIO SEXTO CAMPO -->
                 <div class="form-group">
                   <label>Nombre de Residente</label>
-                  <input type="text"  id="nombre_residente" required   name="nombre_residente"  class="form-control" formControlName="nombre_residente">
+                  <input type="text"  id="nombre_residente" required  placeholder="Nombre de Residente" name="nombre_residente"  class="form-control" formControlName="nombre_residente">
                   <div *ngIf="nombre_residente.invalid && (nombre_residente.dirty || nombre_residente.touched)" class="alert alert-danger">            
                     <div *ngIf="nombre_residente.errors.required">
                       Nombre de Residente requerido.
@@ -242,10 +242,13 @@
               <div class="col-md-6 col-12"> <!-- INICIO SEXTO CAMPO -->
                 <div class="form-group">
                   <label>Correo de Residente</label>
-                  <input type="text"  id="correo_residente" required   name="correo_residente"  class="form-control" formControlName="correo_residente">
+                  <input type="text"  id="correo_residente" required  placeholder="Correo de Residente" name="correo_residente"  class="form-control" formControlName="correo_residente">
                   <div *ngIf="correo_residente.invalid && (correo_residente.dirty || correo_residente.touched)" class="alert alert-danger">            
                     <div *ngIf="correo_residente.errors.required">
-                      Correo de Residente requerido.
+                      Correo de Residente requerido
+                    </div>
+                    <div *ngIf="correo_residente.errors.pattern">
+                      Formato incorrecto para correo electr&oacute;nico.
                     </div>
                   </div>
                 </div>
@@ -253,12 +256,28 @@
               <div class="col-md-6 col-12"> <!-- INICIO SEXTO CAMPO -->
                 <div class="form-group">
                   <label>Tel&eacute;fono de Residente</label>
-                  <input type="text"  id="telefono_residente" required   name="telefono_residente"  class="form-control" formControlName="telefono_residente">
+                  <input type="text"  id="telefono_residente" required  placeholder="Tel&eacute;fono de Residente" name="telefono_residente"  class="form-control" formControlName="telefono_residente">
                   <div *ngIf="telefono_residente.invalid && (telefono_residente.dirty || telefono_residente.touched)" class="alert alert-danger">            
                     <div *ngIf="telefono_residente.errors.required">
-                      Tel&eacute;fono de Residente requerido.
+                      Tel&eacute;fono de Residente requerido
                     </div>
                     <div *ngIf="telefono_residente.errors.pattern">Tel&eacute;fono solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div> <!-- FIN SEXTO CAMPO -->
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-12"> <!-- INICIO SEXTO CAMPO -->
+                <div class="form-group">
+                  <label>Correo Alterno</label>
+                  <input type="text"  id="correo_alterno" required  placeholder="Correo Alterno" name="correo_alterno"  class="form-control" formControlName="correo_alterno">
+                  <div *ngIf="correo_alterno.invalid && (correo_alterno.dirty || correo_alterno.touched)" class="alert alert-danger">            
+                    <div *ngIf="correo_alterno.errors.required">
+                      Correo Alterno requerido
+                    </div>
+                    <div *ngIf="correo_alterno.errors.pattern">
+                      Formato incorrecto para correo electr&oacute;nico.
+                    </div>
                   </div>
                 </div>
               </div> <!-- FIN SEXTO CAMPO -->

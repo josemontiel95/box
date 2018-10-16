@@ -54,7 +54,8 @@ export class ObraDetailComponent implements OnInit {
     correo_residente: '' ,
     cotizacion :          '',
     consecutivoProbeta :  '',
-    consecutivoDocumentos:'1'
+    consecutivoDocumentos:'1',
+    correo_alterno:''
   }
 
   cargandoMessage: string= "";
@@ -133,7 +134,9 @@ export class ObraDetailComponent implements OnInit {
       'consecutivoProbeta':   new FormControl({ value:this.Obra.consecutivoProbeta,disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
       'consecutivoDocumentos':new FormControl({ value:this.Obra.consecutivoDocumentos,disabled: this.hidden  },  [Validators.required, Validators.pattern("^([0-9])*")]), 
       'nombre_residente':     new FormControl({ value:this.Obra.nombre_residente,  disabled: this.hidden },  [Validators.required]),  
-      'correo_residente':     new FormControl({ value:this.Obra.correo_residente,  disabled: this.hidden },  [Validators.required])   
+      'correo_residente':     new FormControl({ value:this.Obra.correo_residente,  disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*")]),
+      'correo_alterno':       new FormControl({ value:this.Obra.correo_alterno,  disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*")])   
+
     });
   }
 
@@ -157,6 +160,7 @@ export class ObraDetailComponent implements OnInit {
   get telefono_residente()    { return this.obraForm.get('telefono_residente'); }
   get nombre_residente()      { return this.obraForm.get('nombre_residente'); }
   get correo_residente()      { return this.obraForm.get('correo_residente'); }
+  get correo_alterno()        { return this.obraForm.get('correo_alterno'); }
 
 
   llenadoValidator(respuesta: any){
@@ -259,7 +263,8 @@ export class ObraDetailComponent implements OnInit {
     formData.append('telefono_residente', this.obraForm.value.telefono_residente );
     formData.append('nombre_residente',   this.obraForm.value.nombre_residente );
     formData.append('correo_residente',   this.obraForm.value.correo_residente );
-    
+    formData.append('correo_alterno',       this.obraForm.value.correo_alterno );
+
     this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
 
 
@@ -306,7 +311,8 @@ export class ObraDetailComponent implements OnInit {
       consecutivoProbeta:   respuesta.consecutivoProbeta,
       telefono_residente:   respuesta.telefono_residente,
       nombre_residente:     respuesta.nombre_residente,
-      correo_residente:     respuesta.correo_residente
+      correo_residente:     respuesta.correo_residente,
+      correo_alterno:       respuesta.correo_alterno
     });
 
     if(respuesta.isConcreteraActive==0 ){

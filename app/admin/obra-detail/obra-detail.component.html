@@ -247,6 +247,9 @@
                     <div *ngIf="correo_residente.errors.required">
                       Correo de Residente requerido.
                     </div>
+                    <div *ngIf="correo_residente.errors.pattern">
+                      Formato incorrecto para correo electr&oacute;nico.
+                    </div>
                   </div>
                 </div>
               </div> <!-- FIN SEXTO CAMPO -->
@@ -259,6 +262,22 @@
                       Tel&eacute;fono de Residente requerido.
                     </div>
                     <div *ngIf="telefono_residente.errors.pattern">Tel&eacute;fono solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div> <!-- FIN SEXTO CAMPO -->
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-12"> <!-- INICIO SEXTO CAMPO -->
+                <div class="form-group">
+                  <label>Correo Alterno</label>
+                  <input type="text"  id="correo_alterno" required  placeholder="Correo Alterno" name="correo_alterno"  class="form-control" formControlName="correo_alterno">
+                  <div *ngIf="correo_alterno.invalid && (correo_alterno.dirty || correo_alterno.touched)" class="alert alert-danger">            
+                    <div *ngIf="correo_alterno.errors.required">
+                      Correo Alterno requerido
+                    </div>
+                    <div *ngIf="correo_alterno.errors.pattern">
+                      Formato incorrecto para correo electr&oacute;nico.
+                    </div>
                   </div>
                 </div>
               </div> <!-- FIN SEXTO CAMPO -->
