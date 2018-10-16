@@ -135,7 +135,7 @@ export class ClienteDetailComponent implements OnInit {
  // se inicializan los campos del form y se añaden un validador personalizado para email que confirma la existencia del arroba "@"
 
     this.clienteForm = new FormGroup({
-      'rfc':                new FormControl({ value:this.cliente.rfc, disabled: this.hidden },  [Validators.required, Validators.pattern("^(([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3}))|^(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3})) ") ]), 
+      'rfc':                new FormControl({ value:this.cliente.rfc, disabled: this.hidden },  [Validators.required, Validators.pattern("([A-ZÑ&]{3,4})([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01]))(([A-Z]|[0-9]){2})([A]|[0-9])") ]), 
       'nombre':             new FormControl({ value: this.cliente.nombre, disabled: this.hidden },  [ Validators.required]),
       'razonSocial':        new FormControl({ value: this.cliente.razonSocial, disabled: this.hidden },  [  Validators.required]),
       'calle':              new FormControl({ value: this.cliente.calle, disabled: this.hidden },  [  Validators.required]), 

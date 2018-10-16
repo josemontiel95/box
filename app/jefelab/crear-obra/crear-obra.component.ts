@@ -58,7 +58,9 @@ export class CrearObraComponent implements OnInit
      correo_residente:    '', 
      cotizacion :          '',
      consecutivoProbeta :  '1',
-     consecutivoDocumentos:'1'
+     consecutivoDocumentos:'1',
+     correo_alterno: ''
+
    }
 
   cargandoMessage: string= "";
@@ -105,7 +107,8 @@ export class CrearObraComponent implements OnInit
       'cotizacion':           new FormControl({ value:this.Obra.cotizacion,        disabled: this.hidden },  [Validators.required]), 
       'consecutivoProbeta':   new FormControl({ value:this.Obra.consecutivoProbeta,disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
       'consecutivoDocumentos':new FormControl({ value:this.Obra.consecutivoDocumentos,disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'correo_residente':     new FormControl({ value:this.Obra.correo_residente,  disabled: this.hidden },  [Validators.required])   
+      'correo_residente':     new FormControl({ value:this.Obra.correo_residente,  disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*")]),
+      'correo_alterno':       new FormControl({ value:this.Obra.correo_alterno,  disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*")])   
     });
   }
 
@@ -130,6 +133,7 @@ export class CrearObraComponent implements OnInit
   get consecutivoDocumentos() { return this.obraForm.get('consecutivoDocumentos'); }
   get nombre_residente()      { return this.obraForm.get('nombre_residente'); }
   get correo_residente()      { return this.obraForm.get('correo_residente'); }
+  get correo_alterno()        { return this.obraForm.get('correo_alterno'); }
 
 
   rolValidator(repuesta: any){
@@ -215,6 +219,8 @@ export class CrearObraComponent implements OnInit
     formData.append('consecutivoProbeta',   this.obraForm.getRawValue().consecutivoProbeta );
     formData.append('nombre_residente',     this.obraForm.value.nombre_residente );
     formData.append('correo_residente',     this.obraForm.value.correo_residente );
+    formData.append('correo_alterno',       this.obraForm.value.correo_alterno );
+
     this.cargandoMessage="Cargando...";
     this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );
     
