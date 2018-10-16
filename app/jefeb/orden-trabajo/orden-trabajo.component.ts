@@ -21,6 +21,7 @@ export class OrdenTrabajoComponent implements OnInit{
   desBut=true;
   actBut=false;
   hidden= false;
+  historial= false;
   active: any;
   foto= '';
   imgUrl="";
@@ -124,6 +125,40 @@ export class OrdenTrabajoComponent implements OnInit{
      menosDetalles(){
      this.hidden=false;
    }
+
+  reloadHistorial(){
+    this.cargando=this.cargando+1;
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getFULLByJefeBrigada');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {
+                                            console.log(res.json());
+                                            this.rowData= res.json();
+                                            this.gridApi.sizeColumnsToFit();
+                                            this.cargando=this.cargando-1;
+                                            this.historial = true;
+                                          });
+  }
+
+  reloadMainGrid(){
+    this.cargando=this.cargando+1;
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getAllByJefeBrigada');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {
+                                            console.log(res.json());
+                                            this.rowData= res.json();
+                                            this.gridApi.sizeColumnsToFit();
+                                            this.cargando=this.cargando-1;
+                                            this.historial = false;
+                                          });
+  }
+
+
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);

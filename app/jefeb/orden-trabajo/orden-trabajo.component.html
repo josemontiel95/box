@@ -10,12 +10,32 @@
 </div> 
 <!--Fin panel header-->
 <div class="main-content"> <!--INICIO MAIN-CONTENT-->
+
   <div class="row"> <!--INICIO ROW PRINCIPAL-->
    <div class="col-md-12">
       <div class="card">
         
         <div class="card-header">
           <h4 class="card-title">Ordenes de Trabajo:</h4>
+        </div>
+        <div class="row">
+          <div class="card-body">
+              <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
+                    <div class="col-md-10">
+
+                    </div>
+                    <div class="col-md-2">
+                      <button class="btn btn-info" (click)="reloadHistorial();" *ngIf="!historial">
+                        <span><b>Mostrar Historial&nbsp;&nbsp;</b></span>
+                        <i class="fa fa-history" style="font-size:18px;"></i>
+                      </button>
+                      <button class="btn btn-primary" (click)="reloadMainGrid();" *ngIf="historial">
+                        <span><b>Ocultar Historial&nbsp;&nbsp;</b></span>
+                        <i class="fa fa-reply" style="font-size:18px;"></i>
+                      </button>  
+                    </div>
+              </div>
+          </div>
         </div>
         <div class="card-body">
           <div id="tarjetaMasDetalles" *ngIf="hidden">
@@ -81,8 +101,7 @@
                 </div>
               </div>
             </div>
-
-          </div>          
+          </div> 
          <ag-grid-angular 
             #agGrid
             id="myGrid"
