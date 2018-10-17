@@ -497,6 +497,27 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
   }
 
+  cambioRegistroIncompleto(){
+    this.cargando = this.cargando +1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '12');
+    formData.append('valor', '0');
+    formData.append('id_registrosCampo', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {                                             
+                                              this.respuestaSwitchCambioRegistro(res.json());                 
+                                            } );
+
+    
+    //window.alert("Si procedes ")
+    //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
+  }
+
   limpiaHerramientas(){
     //Este metodo limpia los arreglos.
     this.herramientas = new Array();
@@ -842,6 +863,23 @@ export class agregaRegistroCCHComponent implements OnInit{
      }
      else{
           
+          //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
+       
+     }
+   }
+
+   respuestaSwitchCambioRegistro(res: any){
+     this.cargando = this.cargando -1; 
+     console.log(res);
+     if(res.error!= 0){
+       window.alert(res.estatus);
+       //location.reload();
+     }
+     else{
+          this.cargaDatos();
+          this.hiddenB = false;
+          this.hiddenA = false;
+          this.mostrar();
           //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
        
      }

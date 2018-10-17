@@ -335,7 +335,7 @@
               </div>
               <div class="col-md-2 col-12">
 
-               <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
+               <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="cambioRegistroIncompleto();">
                     <span><b> Cambiar Datos. </b></span>
                   </button>
                 <button class="btn btn-default" *ngIf="hiddenC" (click)="llenarDespues()">
