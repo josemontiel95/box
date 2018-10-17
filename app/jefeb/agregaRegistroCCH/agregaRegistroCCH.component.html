@@ -183,13 +183,10 @@
 
 
             <div class="row">
-
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="fc">F'C (kg/cm<sup>2</sup>)/<b>MR</b></label> <!--disable-->
-                    <input type="text" id="fc"   
-                    class="form-control" 
-                    name="fc" placeholder="" formControlName="fc" (change)="onBlurFC()">
+                    <input type="number" id="fc" required   class="form-control"  name="fc" placeholder="" formControlName="fc" (change)="onBlurFC()">
                     <div *ngIf="fc.errors && (fc.dirty || fc.touched)"
                               class="alert alert-danger">
                         <div *ngIf="fc.errors.required">F'C requerido.</div>
@@ -201,9 +198,7 @@
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="revp">REVENIMIENTO(cm): PROYECTO</label>
-                    <input type="text" id="revp"  
-                    class="form-control" 
-                    name="revp" placeholder="" formControlName="revp" (change)="onBlurRevProy()">
+                    <input type="number" id="revp"  required class="form-control"  placeholder="" formControlName="revp" (change)="onBlurRevProy()">
                     <div *ngIf="revp.errors && (revp.dirty || revp.touched)" class="alert alert-danger">
                         <div *ngIf="revp.errors.required">REVENIMIENTO(cm): PROYECTO requerido.</div>
                         <div *ngIf="revp.errors.pattern">REVENIMIENTO(cm): PROYECTO debe contener solo numeros</div>
@@ -214,11 +209,8 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="revo">REVENIMIENTO(cm): OBRA</label> <!--disable-->
-                    <input type="text" id="revo"   
-                    class="form-control" 
-                    name="revo" placeholder="" formControlName="revo" (change)="onBlurRevObra()">
-                    <div *ngIf="revo.errors && (revo.dirty || revo.touched)"
-                              class="alert alert-danger">
+                    <input type="number" id="revo"  required  class="form-control"  name="revo" placeholder="" formControlName="revo" (change)="onBlurRevObra()">
+                    <div *ngIf="revo.errors && (revo.dirty || revo.touched)" class="alert alert-danger">
                         <div *ngIf="revo.errors.required">REVENIMIENTO(cm): OBRA requerido.</div>
                         <div *ngIf="revo.errors.pattern">EL REVENIMIENTO(cm): OBRA debe contener solo numeros</div>
                     </div>
@@ -231,9 +223,7 @@
                <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="tamano">TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm)</label> <!--disable-->
-                    <input type="text" id="tamano"   
-                    class="form-control" 
-                    name="tamano" placeholder="" formControlName="tamano" (change)="onBlurTamNomAg()">
+                    <input type="number" id="tamano"  required class="form-control" name="tamano" placeholder="" formControlName="tamano" (change)="onBlurTamNomAg()">
                     <div *ngIf="tamano.errors && (tamano.dirty || tamano.touched)"
                               class="alert alert-danger">
                         <div *ngIf="tamano.errors.required">TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm) requerido.</div>
@@ -245,9 +235,7 @@
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="volumen">VOLUMEN(m<sup>3</sup>)</label>
-                    <input type="text" id="volumen"  
-                    class="form-control" 
-                    name="volumen" placeholder="" formControlName="volumen" (change)="onBlurVolumen()">
+                    <input type="number" id="volumen"  required class="form-control"  name="volumen" placeholder="" formControlName="volumen" (change)="onBlurVolumen()">
                     <div *ngIf="volumen.errors && (volumen.dirty || volumen.touched)"
                               class="alert alert-danger">
                         <div *ngIf="volumen.errors.required">VOLUMEN(m<sup>3</sup>) requerido.</div>
@@ -258,9 +246,7 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="fecha">FECHA</label> <!--disable-->
-                    <input type="date" id="fecha"   
-                    class="form-control" 
-                    name="fecha" placeholder="" formControlName="fecha">
+                    <input type="date" id="fecha"  required class="form-control" name="fecha" placeholder="" formControlName="fecha">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
               
@@ -272,9 +258,7 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="unidad">UNIDAD</label> <!--disable-->
-                    <input type="text" id="unidad"   
-                    class="form-control" 
-                    name="unidad" placeholder="" formControlName="unidad" (change)="onBlurUnidad()">
+                    <input type="text" id="unidad"   class="form-control"  required placeholder="" formControlName="unidad" (change)="onBlurUnidad()">
                     <div *ngIf="unidad.invalid && (unidad.dirty || unidad.touched)"
                     class="alert alert-danger">            
                       <div *ngIf="unidad.errors.required">
@@ -287,9 +271,7 @@
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="hmobra">HORA DE MUESTREO EN OBRA</label>
-                    <input type="time" id="hmobra"  
-                    class="form-control" 
-                    name="hmobra" placeholder="" formControlName="hmobra" (change)="onBlurHoraMuestreo()">
+                    <input type="time" id="hmobra"  class="form-control" required placeholder="" formControlName="hmobra" (change)="onBlurHoraMuestreo()">
                      <div *ngIf="hmobra.invalid && (hmobra.dirty || hmobra.touched)"
                     class="alert alert-danger">            
                       <div *ngIf="hmobra.errors.required">
@@ -302,9 +284,7 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="tempamb">TEMPERATURA AMBIENTE DE MUESTREO (&#176;C)</label> <!--disable-->
-                    <input type="text" id="tempamb"   
-                    class="form-control" 
-                    name="tempamb" placeholder="" formControlName="tempamb" (change)="onBlurTemperaturaMuestreo()">
+                    <input type="number" id="tempamb"   class="form-control" required placeholder="" formControlName="tempamb" (change)="onBlurTemperaturaMuestreo()">
                     <div *ngIf="tempamb.errors && (tempamb.dirty || tempamb.touched)"
                               class="alert alert-danger">
                         <div *ngIf="tempamb.errors.required">TEMPERATURA AMBIENTE DE MUESTREO (&#176;C) requerido.</div>
@@ -320,9 +300,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="tempambrec">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C)</label> <!--disable-->
-                    <input type="text" id="tempambrec"  
-                    class="form-control" 
-                    name="tempambrec" placeholder="" formControlName="tempambrec" (change)="onBlurTemperaturaRecoleccion()">
+                    <input type="number" id="tempambrec"   class="form-control" required  placeholder="" formControlName="tempambrec" (change)="onBlurTemperaturaRecoleccion()">
                     <div *ngIf="tempambrec.errors && (tempambrec.dirty || tempambrec.touched)"
                               class="alert alert-danger">
                         <div *ngIf="tempambrec.errors.required">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C) requerido.</div>
@@ -334,9 +312,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="localizacion">LOCALIZACI&Oacute;N</label> <!--disable-->
-                    <input type="textarea" id="localizacion"   
-                    class="form-control" 
-                    name="localizacion" placeholder="" formControlName="localizacion" (change)="onBlurLocalizacion()">
+                    <input type="textarea" id="localizacion"  class="form-control"  required placeholder="" formControlName="localizacion" (change)="onBlurLocalizacion()">
                     <div *ngIf="localizacion.invalid && (localizacion.dirty || localizacion.touched)"
                     class="alert alert-danger">            
                       <div *ngIf="localizacion.errors.required">
@@ -349,8 +325,8 @@
             <div class="row">
               <div class="col-md-2 col-12">                
 
-                  <button class="btn btn-default" *ngIf="hiddenA || hiddenB" [disabled]="formatoCCHForm.invalid" (click)="registroCompletado();">
-                    <span><b> Regresar. </b></span>
+                  <button class="btn btn-default" *ngIf="hiddenA || hiddenB"  (click)="registroCompletado();">
+                    <span><b> Regresar </b></span>
                   </button>
 
               </div>
@@ -367,7 +343,7 @@
                 </button>
               </div>
               <div class="col-md-2 col-12">
-                <button class="btn btn-success" *ngIf="hiddenC" (click)="validaCamposVacios()">
+                <button class="btn btn-success" *ngIf="hiddenC" [disabled]="formatoCCHForm.invalid"  (click)="validaCamposVacios()">
                       <span><b> Registro Completo. </b></span>
                 </button>
               </div>
