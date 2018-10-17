@@ -219,9 +219,11 @@
           <div class="btn-group"  >
             <button class="btn btn-info" *ngIf="hiddenDetail == true" (click)="mostrarDetalles()">
               <span><b> Mas detalles </b></span>
+             
             </button>   
             <button class="btn btn-info" *ngIf="!hiddenDetail && hidden"  (click)="mostrarDetalles2()">
               <span><b> Menos detalles </b></span>
+              
             </button>    
             <div class="btn-group"  style="float: right; padding-left: 10%;">
               <button class="btn btn-info" *ngIf="hidden == true && !hiddenBotonFormato"  (click)="mostrar(); mostrarDetalles();">

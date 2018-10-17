@@ -118,6 +118,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
 
     search = new URLSearchParams();
@@ -125,6 +126,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
 
     search = new URLSearchParams();
@@ -132,6 +134,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
 
     search = new URLSearchParams();
@@ -139,6 +142,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaTermometro(res.json()) );
 
 
@@ -224,6 +228,46 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.formatoCCHForm.controls['flexometro']['disable']();
     this.formatoCCHForm.controls['termometro']['disable']();
 
+  }
+
+
+  //Metodo que servira para recargar las herramientas cuando se termino el formato.
+  recargaHerramientas(){
+    this.cargando = this.cargando +4;
+
+    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    let search = new URLSearchParams();
+   
+    search.set('function', 'getForDroptdownJefeBrigadaCono');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '-1');
+    this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
+
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownJefeBrigadaVarilla');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '-1');
+    this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
+
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownJefeBrigadaFlexometro');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '-1');
+    this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
+
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownJefeBrigadaTermometro');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '-1');
+    this.http.get(url, {search}).subscribe(res => this.llenaTermometro(res.json()) );
   }
 
   loadDefaultsVigas(){
@@ -385,6 +429,9 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.tipo_especimeng=respuesta.tipo_especimen;
     this.cargaDefaults(this.tipo_especimeng);
     this.formatoStatus=(respuesta.status == 0 ? true : false);
+    if(!this.formatoStatus){
+      this.recargaHerramientas();
+    }
     this.cargando=this.cargando-1;    
   }
 
