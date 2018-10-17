@@ -358,6 +358,7 @@ export class llenaFormatoCCHComponent implements OnInit{
 
   
   llenado(respuesta: any){
+    console.log("llenado :: respuesta:");
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({

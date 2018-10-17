@@ -22,17 +22,21 @@ export class FormatosGridComponent implements OnInit  {
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
     {headerName: 'InformeNo.', field: 'formatoNo' },
-    {headerName: 'Tipo', field: 'tipo' }
+    {headerName: 'Tipo', field: 'tipo2' },
+    {headerName: 'Formato', field: 'tipo' }
       
     ];
     this.rowSelection = "single";
 
     this.rowClassRules = {
-      "sick-days-warning": function(params) {
-        var numSickDays = params.data.status;
-        return numSickDays === 0;
+      "row-blue-warning": function(params) {
+        var status = params.data.status;
+        return status == 1;
       },
-      "sick-days-breach": "data.status == 1"
+      "row-green-warning": function(params) {
+        var status = params.data.status;
+        return status > 1;
+      }
     };
   }
 
