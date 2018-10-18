@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit {
 
    mensajeStatus = "";
    formatoStatus;
-
+   botonHerramientaDesElimini="Eliminar Herramienta";
    hiddenDetail = true;
    hiddenHerramienta= true;
    hiddenTecnicos= true;
@@ -296,7 +296,11 @@ export class DashboardComponent implements OnInit {
   confirmaEliminaHerramienta(){
     this.cargando = this.cargando+1;
     if(window.confirm("Estas seguro de la eliminación.") == true){
-      this.eliminarHerramienta();
+      if(this.edicionJLab){
+        this.eliminarHerramienta();
+      }else{
+        this.desactivaHerramienta();
+      }
     }
     else{
       window.alert("Acción Cancelada.");
@@ -378,6 +382,24 @@ export class DashboardComponent implements OnInit {
     formData.append('ordenDeTrabajo_id', this.id);
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('token', this.global.token);
+    formData.append('ordenDeTrabajo_id', this.id);
+    formData.append('herramientasArray', JSON.stringify(this.aux3));
+    this.http.post(url, formData).subscribe(res => {
+                                            this.respuestaSwitch(res.json());
+                                          });
+    this.hiddenHerramienta  = false;
+    setTimeout(() =>{ this.hiddenHerramienta  = true},1000);
+    this.cargando = 1;
+    console.log(this.cargando);
+  }
+  desactivaHerramienta(){
+    let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'deactivateHerra');
+    formData.append('ordenDeTrabajo_id', this.id);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('token', this.global.token);
+    formData.append('ordenDeTrabajo_id', this.id);
     formData.append('herramientasArray', JSON.stringify(this.aux3));
     this.http.post(url, formData).subscribe(res => {
                                             this.respuestaSwitch(res.json());
@@ -545,23 +567,28 @@ export class DashboardComponent implements OnInit {
 
       case 0:
         this.edicionJLab = true;
+        this.botonHerramientaDesElimini="Eliminar Asignacion";
         this.mensajeStatus = "ACTUALMENTE PUEDES HACER MODIFICACIONES EN LA ORDEN DE TRABAJO ";
       break;
 
       case 1:
         this.ejecucionJBrigada = true;
         this.edicionJLab = false;
+        this.botonHerramientaDesElimini="Desasignar Herramienta";
         this.mensajeStatus = "EN EJECUCIÓN DEL JEFE DE BRIGADA";
       break;
 
       case 2:
         this.terminadoJBrigada = true;
+        this.botonHerramientaDesElimini="Desasignar Herramienta";
         this.mensajeStatus = "ORDEN TERMINADA POR EL JEFE DE BRIGADA";
       break;
 
       case 3:
-        this.terminadoJLab = true;
-        this.mensajeStatus = "ORDEN DE TRABAJO COMPLETADA, YA NO SE PUEDEN HACER MODIFICACIONES";
+      this.terminadoJBrigada = false;
+      this.terminadoJLab = true;
+      this.botonHerramientaDesElimini="Desasignar Herramienta";
+      this.mensajeStatus = "ORDEN DE TRABAJO COMPLETADA, YA NO SE PUEDEN HACER MODIFICACIONES";
       break;
     }
   }

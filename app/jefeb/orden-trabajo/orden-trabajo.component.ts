@@ -18,6 +18,7 @@ export class OrdenTrabajoComponent implements OnInit{
   condicionesTrabajo: string;
   fechaInicio: string;
   fechaFin: string;
+  lugar;
   desBut=true;
   actBut=false;
   hidden= false;
@@ -37,8 +38,6 @@ export class OrdenTrabajoComponent implements OnInit{
     this.columnDefs = [
     {headerName: 'ID Orden de trabajo', field: 'id_ordenDeTrabajo'},
     {headerName: 'Obra', field: 'obra' },    
-    {headerName: 'Actividades', field: 'actividades' },    
-    {headerName: 'Condiciones de trabajo', field: 'condicionesTrabajo' },
     {headerName: 'Fecha de Inicio', field: 'fechaInicio' },
     {headerName: 'Fecha de Fin', field: 'fechaFin' },
     {headerName: 'Ejecuci&oacute;n', field: 'estado' },
@@ -188,7 +187,7 @@ export class OrdenTrabajoComponent implements OnInit{
     var fechaInicio = "";
     var fechaFin = "";
     var active= "";
-
+    var lugar="";
 
     selectedRows.forEach(function(selectedRow, index) {
       id_ordenDeTrabajo += selectedRow.id_ordenDeTrabajo;
@@ -199,17 +198,11 @@ export class OrdenTrabajoComponent implements OnInit{
       fechaInicio += selectedRow.fechaInicio;
       fechaFin += selectedRow.fechaFin;
       active += selectedRow.active;
-
+      lugar = selectedRow.lugar;
     });
-    this.displayShortDescription(id_ordenDeTrabajo, obra, nombre_jefe_brigada_id, actividades, condicionesTrabajo, fechaInicio, fechaFin, active);
-  }
-
-  displayShortDescription(id_ordenDeTrabajo: any, obra: any, nombre_jefe_brigada_id: any,  actividades: any, condicionesTrabajo: any, fechaInicio: any, fechaFin: any, active: any )
-  {
-    
 
     this.hidden=true;
-    //activar 
+
     this.id_ordenDeTrabajo=id_ordenDeTrabajo;
     this.obra=obra;
     this.nombre_jefe_brigada_id=nombre_jefe_brigada_id;
@@ -217,20 +210,14 @@ export class OrdenTrabajoComponent implements OnInit{
     this.condicionesTrabajo=condicionesTrabajo;
     this.fechaInicio=fechaInicio;
     this.fechaFin=fechaFin;
+    this.lugar=lugar;
  
-    if(active == 1)
-    {
+    if(Number(active) == 1){
       this.desBut = true;
-      this.actBut= false;
-    }
-    else{
-      if (active == 0) {
-        this.desBut = false;
-        this.actBut= true;
-      }
+      this.actBut = false;
+    }else if (Number(active) == 0) {
+      this.desBut = false;
+      this.actBut = true;
     }
   }
-
-
-
 }
