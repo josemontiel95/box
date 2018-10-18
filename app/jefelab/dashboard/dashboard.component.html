@@ -263,14 +263,14 @@
         </div>
         <div class="card-body ">
              <div class="btn-group">
-            <button  class="btn btn-danger" *ngIf="hiddenHerramienta == true && edicionJLab == true" (click)="confirmaEliminaHerramienta();">
-              <span><b> Desasignar herramienta </b></span>
+            <button  class="btn btn-danger" *ngIf="hiddenHerramienta && (edicionJLab || ejecucionJBrigada)" (click)="confirmaEliminaHerramienta();">
+              <span><b> {{botonHerramientaDesElimini}} </b></span>
             </button>
             <button  class="btn btn-danger" *ngIf="!hiddenHerramienta" (click)="mostrarHerramienta();">
               <span><b> Cancelar </b></span>
             </button>
             <div class="btn-group"  style=" padding-left: 15%;">              
-              <button class="btn btn-info" *ngIf="hiddenHerramienta == true"  (click)="mostrarHerramienta()">
+              <button class="btn btn-info" *ngIf="hiddenHerramienta"  (click)="mostrarHerramienta()">
                 <span><b> Agregar Herramienta </b></span>
               </button>
             <button class="btn btn-success" *ngIf="!hiddenHerramienta" [disabled]="false" (click)="actualizarHerramienta(); mostrarHerramienta();">
