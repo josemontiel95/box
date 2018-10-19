@@ -213,7 +213,7 @@ export class CrearLlenaRevenimientoComponent implements OnInit {
     formData.append('token',                             this.global.token);
     formData.append('rol_usuario_id',                      this.global.rol);
     formData.append('campo',                                           '2');
-    formData.append('valor',              this.creaCCHForm.value.especimen);
+    formData.append('valor',              this.creaCCHForm.value.localizacion);
     formData.append('id_formatoRegistroRev',               this.id_formato);
     
     this.http.post(url, formData).subscribe(res => {

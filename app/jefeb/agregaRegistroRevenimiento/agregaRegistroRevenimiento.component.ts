@@ -94,8 +94,8 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => this.llenaConcreteras(res.json()) );
 
     this.formatoCCHForm = new FormGroup({
-      'fechaDet':     new FormControl( {value: this.FormatoCCH.fechaDet, disabled: true},    [Validators.required]),
-      'revProy':      new FormControl( {value: this.FormatoCCH.revProy, disabled: true},     [Validators.required,Validators.pattern("^[0-9]+$")]),
+      'fechaDet':     new FormControl( {value: this.FormatoCCH.fechaDet, disabled: true},           [Validators.required]),
+      'revProy':      new FormControl( {value: this.FormatoCCH.revProy, disabled: this.hidden},     [Validators.required,Validators.pattern("^[0-9]+$")]),
       'revObtenido':  new FormControl( {value: this.FormatoCCH.revObtenido, disabled: this.hidden}, [Validators.required,Validators.pattern("^[0-9]+$")]),
       'tamAgregado':  new FormControl( {value: this.FormatoCCH.tamAgregado, disabled: this.hidden}, [Validators.required,Validators.pattern("^[0-9]+$")]),
       'idConcreto':   new FormControl( {value: this.FormatoCCH.idConcreto, disabled: this.hidden},  [Validators.required]),
@@ -172,6 +172,22 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     }
      
   }
+
+  cargaDatos(){
+    //this.cargando = this.cargando+1;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getRegistrosByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('id_registrosRev', this.id_registro);
+    this.http.get(url, {search}).subscribe(res => {
+                                                    this.llenaRapido(res.json());
+                                                    this.llenado(res.json()); 
+                                                                              });
+  }
+
+
   //DON'T TOUCH THIS!
   descartaCambios(){
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -221,6 +237,43 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);
   }
 
+  cambioRegistroIncompleto(){
+    this.cargando = this.cargando +1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '13');
+    formData.append('valor', '0');
+    formData.append('id_registrosRev', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {                                             
+                                              this.respuestaSwitchCambioRegistro(res.json());                 
+                                            } );
+
+    
+    //window.alert("Si procedes ")
+    //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
+  }
+
+   respuestaSwitchCambioRegistro(res: any){
+     this.cargando = this.cargando -1; 
+     console.log(res);
+     if(res.error!= 0){
+       window.alert(res.estatus);
+       //location.reload();
+     }
+     else{
+          this.cargaDatos();
+          this.hiddenB = false;
+          this.hiddenA = false;
+          this.mostrar();
+          //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
+       
+     }
+   }
 
    onBlurFechaDet(){
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -432,8 +485,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
         this.formatoCCHForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
     });  
-    this.formatoCCHForm.controls['fechaDet']['disable'](); 
-    this.formatoCCHForm.controls['revProy']['disable'](); 
+    this.formatoCCHForm.controls['fechaDet']['disable']();
   }
 
   validaCamposVacios(){

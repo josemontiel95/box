@@ -31,7 +31,7 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="revProy">REV. DE PROYECTO EN cm.</label> <!--disable-->
-                    <input type="text" id="revProy"    class="form-control"  name="revProy" placeholder="" formControlName="revProy" (blur)="onBlurRevProy()">
+                    <input type="text" id="revProy"  required  class="form-control"  name="revProy" placeholder="" formControlName="revProy" (blur)="onBlurRevProy()">
                     <div *ngIf="revProy.invalid && (revProy.dirty || revProy.touched)" class="alert alert-danger">
                       <div *ngIf="revProy.errors.required">
                         REV. DE PROYECTO requerido.
@@ -44,7 +44,7 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="revObtenido">REV. OBTENIDO EN cm.</label> <!--disable-->
-                    <input type="text" id="revObtenido"    class="form-control"  name="revObtenido" placeholder="" formControlName="revObtenido" (blur)="onBlurRevObtenido()">
+                    <input type="text" id="revObtenido" required  class="form-control"  name="revObtenido" placeholder="" formControlName="revObtenido" (blur)="onBlurRevObtenido()">
                     <div *ngIf="revObtenido.invalid && (revObtenido.dirty || revObtenido.touched)" class="alert alert-danger">
                       <div *ngIf="revObtenido.errors.required">
                         REV. OBTENIDO requerido.
@@ -61,7 +61,7 @@
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="tamAgregado">TAMAÑO NOMINAL DEL AGREGADO mm</label>
-                    <input type="text" id="tamAgregado"   class="form-control"  name="tamAgregado" placeholder="" formControlName="tamAgregado" (blur)="onBlurTamNomAg()">
+                    <input type="text" id="tamAgregado" required  class="form-control"  name="tamAgregado" placeholder="" formControlName="tamAgregado" (blur)="onBlurTamNomAg()">
                     <div *ngIf="tamAgregado.invalid && (tamAgregado.dirty || tamAgregado.touched)" class="alert alert-danger">
                       <div *ngIf="tamAgregado.errors.required">
                         TAMAÑO NOMINAL DEL AGREGADO requerido.
@@ -74,7 +74,7 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="idConcreto">IDENTIFICACI&Oacute;N DEL CONCRETO</label> <!--disable-->
-                    <input type="text" id="idConcreto"    class="form-control"  name="idConcreto" placeholder="" formControlName="idConcreto" (blur)="onBlurIdConcreto()">
+                    <input type="text" id="idConcreto" required class="form-control"  name="idConcreto" placeholder="" formControlName="idConcreto" (blur)="onBlurIdConcreto()">
                     <div *ngIf="idConcreto.invalid && (idConcreto.dirty || idConcreto.touched)" class="alert alert-danger">
                       <div *ngIf="idConcreto.errors.required">
                         IDENTIFICACI&Oacute;N DEL CONCRETO requerido.
@@ -86,7 +86,7 @@
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="hDet">HORA DE LA DETERMINACI&Oacute;N</label>
-                    <input type="time" id="hDet"   class="form-control"  name="hDet" placeholder="" formControlName="hDet" (blur)="onBlurHoraMuestreo()">
+                    <input type="time" id="hDet"  required class="form-control"  name="hDet" placeholder="" formControlName="hDet" (blur)="onBlurHoraMuestreo()">
                     <div *ngIf="hDet.invalid && (hDet.dirty || hDet.touched)" class="alert alert-danger">
                       <div *ngIf="hDet.errors.required">
                         HORA DE LA DETERMINACI&Oacute;N requerido.
@@ -100,7 +100,7 @@
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="unidad">UNIDAD</label>
-                    <input type="text" id="unidad"   class="form-control"  name="unidad" placeholder="" formControlName="unidad" (blur)="onBlurUnidad()">
+                    <input type="text" id="unidad"  required class="form-control"  name="unidad" placeholder="" formControlName="unidad" (blur)="onBlurUnidad()">
                     <div *ngIf="unidad.invalid && (unidad.dirty || unidad.touched)" class="alert alert-danger">
                       <div *ngIf="unidad.errors.required">
                         UNIDAD requerido.
@@ -112,7 +112,7 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="tconcreto">PROVEEDOR DEL CONCRETO</label> <!--disable-->
-                    <select  class="form-control" id="provCon"  name="provCon" placeholder="Concreteras"  formControlName="provCon" (change)="onBlurTipoConcreto()">
+                    <select  class="form-control" id="provCon" required name="provCon" placeholder="Concreteras"  formControlName="provCon" (change)="onBlurTipoConcreto()">
                       <option value="" [disabled]="true">Selecciona un proveedor de concreto...</option>
                       <option *ngFor="let provCon of mis_concreteras" [value]="provCon.id_concretera">
                         {{provCon.concretera}}
@@ -124,7 +124,7 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="numRem">NUMERO DE REMISI&Oacute;N</label> <!--disable-->
-                    <input type="text" id="numRem"    class="form-control"  name="numRem" placeholder="" formControlName="numRem" (blur)="onBlurNumeroRemision()">
+                    <input type="text" id="numRem" required   class="form-control"  name="numRem" placeholder="" formControlName="numRem" (blur)="onBlurNumeroRemision()">
                     <div *ngIf="numRem.invalid && (numRem.dirty || numRem.touched)" class="alert alert-danger">
                       <div *ngIf="numRem.errors.required">
                         NUMERO DE REMISI&Oacute;N requerido.
@@ -139,7 +139,7 @@
              <div class="col-md-6 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="hsalida">HORA DE SALIDA DE PLANTA</label>
-                    <input type="time" id=""   class="form-control"  name="hsalida" placeholder="" formControlName="hsalida" (blur)="onBlurHoraSalida()">
+                    <input type="time" id=""  required class="form-control"  name="hsalida" placeholder="" formControlName="hsalida" (blur)="onBlurHoraSalida()">
                     <div *ngIf="hsalida.invalid && (hsalida.dirty || hsalida.touched)" class="alert alert-danger">
                       <div *ngIf="hsalida.errors.required">
                         HORA DE SALIDA requerido.
@@ -151,7 +151,7 @@
                 <div class="col-md-6 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="hllegada">HORA DE LLEGADA A OBRA</label>
-                    <input type="time" id="hllegada"   class="form-control"  name="hllegada" placeholder="" formControlName="hllegada" (blur)="onBlurHoraLlegada()">
+                    <input type="time" id="hllegada" required  class="form-control"  name="hllegada" placeholder="" formControlName="hllegada" (blur)="onBlurHoraLlegada()">
                     <div *ngIf="hllegada.invalid && (hllegada.dirty || hllegada.touched)" class="alert alert-danger">
                       <div *ngIf="hllegada.errors.required">
                         HORA DE LLEGADA requerido.
@@ -174,7 +174,7 @@
               </div>
               <div class="col-md-2 col-12">
 
-               <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
+               <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="cambioRegistroIncompleto();">
                     <span><b> Cambiar Datos. </b></span>
                   </button>
                 <button class="btn btn-default" *ngIf="hiddenC" (click)="llenarDespues()">
@@ -182,7 +182,7 @@
                 </button>
               </div>
               <div class="col-md-2 col-12">
-                <button class="btn btn-success" *ngIf="hiddenC" (click)="validaCamposVacios()">
+                <button class="btn btn-success" *ngIf="hiddenC" [disabled]="formatoCCHForm.invalid" (click)="validaCamposVacios()">
                       <span><b> Registro Completo. </b></span>
                 </button>
               </div>
