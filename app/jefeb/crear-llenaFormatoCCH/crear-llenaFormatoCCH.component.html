@@ -106,7 +106,7 @@
                   <select  class="form-control" id="cono" 
                     required name="cono"
                     placeholder="Tipos"  formControlName="cono" (change)="onChangeCono()">
-                    <option value="" [disabled]="true">Selecciona un cono...</option>
+                    <option value="" [disabled]="true"selected>Selecciona un cono...</option>
                     
                     <option *ngFor="let cono of mis_conos" [value]="cono.id_herramienta">
                       {{cono.placas}}
@@ -125,7 +125,7 @@
                   <select  class="form-control" id="varilla" 
                     required name="varilla"
                     placeholder="Tipos"  formControlName="varilla" (change)="onChangeVarilla()">
-                    <option value="" [disabled]="true">Selecciona una varilla...</option>
+                    <option value="" [disabled]="true"selected>Selecciona una varilla...</option>
                     
                     <option *ngFor="let varilla of mis_varillas" [value]="varilla.id_herramienta">
                       {{varilla.placas}}
@@ -146,7 +146,7 @@
                   <select  class="form-control" id="flexometro" 
                     required name="flexometro"
                     placeholder="Tipos"  formControlName="flexometro" (change)="onChangeFlexometro()">
-                    <option value="" [disabled]="true">Selecciona un flexometro...</option>
+                    <option value="" [disabled]="true"selected>Selecciona un flexometro...</option>
                     
                     <option *ngFor="let flexometro of mis_flexometro" [value]="flexometro.id_herramienta">
                       {{flexometro.placas}}
@@ -165,7 +165,7 @@
                   <select  class="form-control" id="termometro" 
                     required name="termometro"
                     placeholder="Tipos"  formControlName="termometro" (change)="onChangeTermometro()">
-                    <option value="" [disabled]="true">Selecciona un termometro...</option>       
+                    <option value="" [disabled]="true" selected>Selecciona un termometro...</option>       
                     
                     <option *ngFor="let termometro of mis_termometro" [value]="termometro.id_herramienta">
                       {{termometro.placas}}

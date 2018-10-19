@@ -146,7 +146,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     'herramienta':      new FormControl( {value: this.FormatoCCH.herramienta, disabled: this.hidden},[Validators.required]),
     'herramienta1':     new FormControl( {value: this.FormatoCCH.herramienta1, disabled: this.hidden},[Validators.required]),
     'herramienta2':     new FormControl( {value: this.FormatoCCH.herramienta2, disabled: this.hidden},[Validators.required]),
-    'herramienta3':     new FormControl( {value: this.FormatoCCH.herramienta3, disabled: this.hidden},[Validators.required])
+    'herramienta3':     new FormControl( {value: this.FormatoCCH.herramienta3, disabled: this.hidden})
      }); 
   }
 

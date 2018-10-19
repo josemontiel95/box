@@ -150,6 +150,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
 
     search = new URLSearchParams();
@@ -157,6 +158,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
 
     search = new URLSearchParams();
@@ -164,6 +166,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
 
     search = new URLSearchParams();
@@ -171,6 +174,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaTermometro(res.json()) );
    
     /* 
