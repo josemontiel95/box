@@ -41,9 +41,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
   locked =false;
   mis_concreteras: Array<any>;
  
-  
   formatoCCHForm: FormGroup;
-
   FormatoCCH = {
     fechaDet: '',
     revProy: '',
@@ -58,18 +56,13 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     hllegada: ''         
   }
 
-
-
-
-  constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
-    
-  }
+  constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){}
 	  
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_orden=params.id; this.id_formato=params.id2; this.id_registro=params.id3}); //Recibe tre parametros
     //El primer parametro es para recibir el numero de registro y el segundo el numero de formato.
-    this.cargando=0;
+    this.cargando=2;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -84,7 +77,6 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
                                                     this.llenaRapido(res.json());
                                                     this.llenado(res.json()); 
                                                                               });
-
 
     url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
     search = new URLSearchParams();
@@ -124,57 +116,52 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
 
   onSubmit() { this.submitted = true; }
 
-    llenaConcreteras(resp: any){
-     
-    console.log(resp);
+  llenaConcreteras(resp: any){
+    this.cargando = this.cargando -1;
     this.mis_concreteras= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
       this.mis_concreteras[_i]=resp[_i];
     }
-    //this.cargando=this.cargando-1;
-    console.log("llenaConcreteras this.cargando: "+this.cargando);
-
-    } 
+  } 
     
-    llenaRapido(respuesta: any){
-      if(respuesta.status == 1){
-        this.hiddenB = true;
-        //this.mostrar();
-      }else if(respuesta.status >= 2){
-        this.hiddenA = true;
-        this.locked=true;
-        this.mostrar();
-      }else if(respuesta.status == 0){
-        this.hiddenC = true;
-      }
+  llenaRapido(respuesta: any){
+    if(respuesta.status == 1){
+      this.hiddenB = true;
+      //this.mostrar();
+    }else if(respuesta.status >= 2){
+      this.hiddenA = true;
+      this.locked=true;
+      this.mostrar();
+    }else if(respuesta.status == 0){
+      this.hiddenC = true;
     }
+  }
 
-    llenado(respuesta: any){
-    console.log(respuesta);
-
+  llenado(respuesta: any){
+    this.cargando = this.cargando -1;
     this.formatoCCHForm.patchValue({
-     fechaDet:       respuesta.fecha,
-     revProy:        respuesta.revProyecto,
-     revObtenido:    respuesta.revObtenido,
-     tamAgregado:    respuesta.tamAgregado,
-     idConcreto:     respuesta.idenConcreto,
-     hDet:           respuesta.horaDeterminacion,
-     unidad:         respuesta.unidad,
-     provCon:        respuesta.concretera_id,
-     numRem:         respuesta.remisionNo,
-     hsalida:        respuesta.horaSalida,
-     hllegada:       respuesta.horaLlegada
+    fechaDet:       respuesta.fecha,
+    revProy:        respuesta.revProyecto,
+    revObtenido:    respuesta.revObtenido,
+    tamAgregado:    respuesta.tamAgregado,
+    idConcreto:     respuesta.idenConcreto,
+    hDet:           respuesta.horaDeterminacion,
+    unidad:         respuesta.unidad,
+    provCon:        respuesta.concretera_id,
+    numRem:         respuesta.remisionNo,
+    hsalida:        respuesta.horaSalida,
+    hllegada:       respuesta.horaLlegada
     });
 
     if(respuesta.status == 1){
       this.mostrar();
     }
-     
+   
   }
 
   cargaDatos(){
-    //this.cargando = this.cargando+1;
+    this.cargando = this.cargando+1;
     let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getRegistrosByID');
@@ -182,9 +169,9 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_registrosRev', this.id_registro);
     this.http.get(url, {search}).subscribe(res => {
-                                                    this.llenaRapido(res.json());
-                                                    this.llenado(res.json()); 
-                                                                              });
+      this.llenaRapido(res.json());
+      this.llenado(res.json()); 
+    });
   }
 
 
@@ -221,6 +208,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
   }
 
   registroCompletado(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -232,9 +220,18 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('valor', '1');
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);
+                                              this.respuestaSwitchRegistroCompletado(res.json());                 
+    });
+  }
+
+  respuestaSwitchRegistroCompletado(res){
+    if(res.error!= 0){
+      this.cargando = this.cargando -1; 
+      window.alert(res.estatus);
+    }
+    else{
+      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);
+    }
   }
 
   cambioRegistroIncompleto(){
@@ -258,24 +255,22 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
   }
 
-   respuestaSwitchCambioRegistro(res: any){
-     this.cargando = this.cargando -1; 
-     console.log(res);
+  respuestaSwitchCambioRegistro(res: any){
+     this.cargando = this.cargando -1;
      if(res.error!= 0){
        window.alert(res.estatus);
-       //location.reload();
      }
      else{
-          this.cargaDatos();
-          this.hiddenB = false;
-          this.hiddenA = false;
-          this.mostrar();
-          //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
+        this.cargaDatos();
+        this.hiddenB = false;
+        this.hiddenA = false;
+        this.mostrar();
+        //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
        
      }
    }
 
-   onBlurFechaDet(){
+  onBlurFechaDet(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -287,8 +282,8 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.getRawValue().fechaDet);
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onBlurRevProy(){
@@ -304,7 +299,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
-                                            } );
+    });
   }
 
 
@@ -321,7 +316,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
-                                            } );
+    });
   }
 
   onBlurTamNomAg(){
@@ -337,7 +332,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
-                                            } );
+    });
   }
   
 
@@ -354,7 +349,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
-                                            } );
+    });
   }
 
   onBlurHoraMuestreo(){
@@ -370,7 +365,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
-                                            } );
+    });
   }
  
   onBlurUnidad(){
@@ -386,7 +381,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
-                                            } );
+    });
   }
 
   onBlurTipoConcreto(){
@@ -402,7 +397,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
-                                            } );
+    });
   }
 
   onBlurNumeroRemision(){
@@ -418,7 +413,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
-                                            } );
+    });
   }
 
   onBlurHoraSalida(){
@@ -434,7 +429,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
-                                            } );
+    });
   }
 
   onBlurHoraLlegada(){
@@ -450,32 +445,27 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
-                                            } );
+    });
   }
 
   respuestaDescartaCambios(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       location.reload();
-     }
-     else{
-          console.log(this.id_registro);
-          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);        
-     }
+    if(res.error!= 0){
+      window.alert(res.estatus);
+      location.reload();
+    }
+    else{
+      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);        
+    }
    }
 
   respuestaSwitch(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       location.reload();
-     }
-     else{
-          
-          //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
-       
-     }
+    if(res.error!= 0){
+      window.alert(res.estatus);
+      location.reload();
+    }
+    else{
+        //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
+    }
    }
 
   
@@ -491,19 +481,18 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
   validaCamposVacios(){
     let warning = false;
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
-        if(this.formatoCCHForm.controls[controlName].value == "" || this.formatoCCHForm.controls[controlName].value == null || this.formatoCCHForm.controls[controlName].value == "null"){
-          warning = true;
-          console.log("validaCamposVacios :: controlName: "+controlName);
-        }// disables/enables each form control based on 'this.formDisabled'
+      if(this.formatoCCHForm.controls[controlName].value == "" || this.formatoCCHForm.controls[controlName].value == null || this.formatoCCHForm.controls[controlName].value == "null"){
+        warning = true;
+      }// disables/enables each form control based on 'this.formDisabled'
     });
 
     if(warning){
       window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
     }else{
-          if(window.confirm("¿Estas seguro de marcar como completado el registro? ya no podras editarlo.")){
-            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
-            this.registroCompletado();
-          }
+      if(window.confirm("¿Estas seguro de marcar como completado el registro? ya no podras editarlo.")){
+        //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+        this.registroCompletado();
+      }
     }
   } //FIN ValidaCamposVacios
 }
