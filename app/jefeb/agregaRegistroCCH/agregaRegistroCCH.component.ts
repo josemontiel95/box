@@ -207,13 +207,8 @@ export class agregaRegistroCCHComponent implements OnInit{
 
     
   llenaRapido(respuesta: any){
-    
-    console.log("llenaRapido :: respuesta");
-    console.log(respuesta);
-
     // Se Copio groupsMember para poderlo manipular.
     this.groupMembers=respuesta.groupMembers;
-    console.log(this.groupMembers);
     //Aqui se asignan las banderas del status en el que se encuentre la muestra.
     if(respuesta.status == 1){
       this.hiddenB = true;
@@ -245,12 +240,6 @@ export class agregaRegistroCCHComponent implements OnInit{
       this.tipoMuestra = true;
     } 
     // Hacer lo mismo para herramienta.
-
-    
-    
-
-    console.log(this.groupMembers);
-
   }
 
   llenado(respuesta: any){
@@ -509,14 +498,12 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {                                             
                                               this.respuestaSwitchRegistroCompletado(res.json());                 
-                                            } );
+    });
   }
   respuestaSwitchRegistroCompletado(res){
-    console.log(res);
     if(res.error!= 0){
       this.cargando = this.cargando -1; 
       window.alert(res.estatus);
-      //location.reload();
     }
     else{
       this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
@@ -859,18 +846,7 @@ export class agregaRegistroCCHComponent implements OnInit{
                                             } );
   }
 
-  /*respuestaDescartaCambios(res: any){ 
-    console.log(res);
-    if(res.error!= 0){
-      window.alert(res.estatus);
-      location.reload();
-    }
-    else{
-      console.log(this.id_registro);
-      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' + this.id_formato]);        
-    }
-  }*/
-
+  
 /* 
   Este metodo valida la respuesta de tipo de Concreto
   En caso de ser de tipo RR, la variable notRR pasara a ser falsa
@@ -885,7 +861,6 @@ export class agregaRegistroCCHComponent implements OnInit{
      console.log(res);
      if(res.error!= 0){
        window.alert(res.estatus);
-       //location.reload();
      }
      else{
           
@@ -894,22 +869,18 @@ export class agregaRegistroCCHComponent implements OnInit{
      }
    }
 
-   respuestaSwitchCambioRegistro(res: any){
-     this.cargando = this.cargando -1; 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       //location.reload();
-     }
-     else{
-          this.cargaDatos();
-          this.hiddenB = false;
-          this.hiddenA = false;
-          this.mostrar();
-          //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
-       
-     }
-   }
+  respuestaSwitchCambioRegistro(res: any){
+    this.cargando = this.cargando -1; 
+    if(res.error!= 0){
+      window.alert(res.estatus);
+    }
+    else{
+      this.cargaDatos();
+      this.hiddenB = false;
+      this.hiddenA = false;
+      this.mostrar();       
+    }
+  }
   
   mostrar(){
     this.hidden = !this.hidden;
