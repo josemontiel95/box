@@ -230,7 +230,7 @@
               <span><b> Menos detalles </b></span>
             </button>    
             <div class="btn-group"  style="float: right; padding-left: 10%;">
-              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar(); mostrarDetalles();">
+              <button class="btn btn-info" *ngIf="hidden && (edicionJLab || ejecucionJBrigada)"  (click)="mostrar(); mostrarDetalles();">
                 <span><b> Cambiar Datos </b></span>
               </button>
 
@@ -263,14 +263,14 @@
         </div>
         <div class="card-body ">
              <div class="btn-group">
-            <button  class="btn btn-danger" *ngIf="hiddenHerramienta && (edicionJLab || ejecucionJBrigada)" (click)="confirmaEliminaHerramienta();">
+            <button  class="btn btn-danger" *ngIf="hiddenHerramienta && (edicionJLab || ejecucionJBrigada || terminadoJBrigada)" (click)="confirmaEliminaHerramienta();">
               <span><b> {{botonHerramientaDesElimini}} </b></span>
             </button>
             <button  class="btn btn-danger" *ngIf="!hiddenHerramienta" (click)="mostrarHerramienta();">
               <span><b> Cancelar </b></span>
             </button>
             <div class="btn-group"  style=" padding-left: 15%;">              
-              <button class="btn btn-info" *ngIf="hiddenHerramienta"  (click)="mostrarHerramienta()">
+              <button class="btn btn-info" *ngIf="hiddenHerramienta && (edicionJLab || ejecucionJBrigada)"  (click)="mostrarHerramienta()">
                 <span><b> Agregar Herramienta </b></span>
               </button>
             <button class="btn btn-success" *ngIf="!hiddenHerramienta" [disabled]="false" (click)="actualizarHerramienta(); mostrarHerramienta();">
@@ -319,14 +319,14 @@
         </div>
         <div class="card-body">
           <div class="btn-group">
-             <button  class="btn btn-danger" *ngIf="hiddenTecnicos == true && edicionJLab == true" (click)="confirmaEliminaTecnico();">
+             <button  class="btn btn-danger" *ngIf="hiddenTecnicos && edicionJLab" (click)="confirmaEliminaTecnico();">
               <span><b> Desasignar Tecnico </b></span>
             </button>
             <button  class="btn btn-danger" *ngIf="!hiddenTecnicos" (click)="mostrarTecnicos();">
               <span><b> Cancelar </b></span>
             </button>            
           <div class="btn-group"  style=" padding-left: 15%;">
-              <button class="btn btn-info" *ngIf="hiddenTecnicos == true"  (click)="mostrarTecnicos()">
+              <button class="btn btn-info" *ngIf="hiddenTecnicos && (edicionJLab || ejecucionJBrigada)"  (click)="mostrarTecnicos()">
                 <span><b> Agregar Tecnico</b></span>
               </button>
             <button class="btn btn-success" *ngIf="!hiddenTecnicos " [disabled]="false" (click)="mostrarTecnicos();  actualizarTecnicos();">
