@@ -393,6 +393,7 @@ export class DashboardComponent implements OnInit {
     console.log(this.cargando);
   }
   desactivaHerramienta(){
+    console.log(this.aux3);
     let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'deactivateHerra');

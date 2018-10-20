@@ -95,15 +95,14 @@ export class agregaRegistroCCHComponent implements OnInit{
     
     this.cargando =3;
 
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-    let search = new URLSearchParams();
 
-    url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
-    search = new URLSearchParams();
+    let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
+    let search = new URLSearchParams();
     search.set('function', 'getHerramientaForDropdownRegistro');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_formatoCampo', this.id_formato);
+    search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaHerraPrueba( res.json()) );
 
     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
@@ -177,6 +176,17 @@ export class agregaRegistroCCHComponent implements OnInit{
 
   submitted = false;
 
+  reloadHerra(){
+    this.cargando =this.cargando+1;
+    let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getHerramientaForDropdownRegistro');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_formatoCampo', this.id_formato);
+    search.set('status', '-1');
+    this.http.get(url, {search}).subscribe(res => this.llenaHerraPrueba( res.json()) );
+  }
 
   cargaDatos(){
     this.cargando = this.cargando+1;
@@ -212,6 +222,7 @@ export class agregaRegistroCCHComponent implements OnInit{
       this.hiddenA = true;
       this.locked=true;
       this.mostrar();
+      this.reloadHerra();
     }else if(respuesta.status == 0){
       this.hiddenC = true;
 
@@ -285,10 +296,16 @@ export class agregaRegistroCCHComponent implements OnInit{
   }
 
   rellenadoHerramientas(respuesta:any){
+
     this.cargando = this.cargando +1;
     //Aqui va la llamada para recargar los dropdowns actualizando la herramienta que se consumio
     let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
+    if(respuesta.status > 1){
+      search.set('status', '-1');
+    }else{
+      search.set('status', '0');
+    }
     search.set('function', 'getHerramientaForDropdownRegistro');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
@@ -491,10 +508,19 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('valor', '1');
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {                                             
-                                              this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitchRegistroCompletado(res.json());                 
                                             } );
-    //window.alert("Si procedes ")
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
+  }
+  respuestaSwitchRegistroCompletado(res){
+    console.log(res);
+    if(res.error!= 0){
+      this.cargando = this.cargando -1; 
+      window.alert(res.estatus);
+      //location.reload();
+    }
+    else{
+      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
+    }
   }
 
   cambioRegistroIncompleto(){
@@ -895,11 +921,15 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.formatoCCHForm.controls['cesp2']['disable']();
     this.formatoCCHForm.controls['cesp3']['disable']();
     this.formatoCCHForm.controls['cesp4']['disable']();
-    this.formatoCCHForm.controls['revp']['disable']();
+    this.formatoCCHForm.controls['diasEnsaye1']['disable']();
+    this.formatoCCHForm.controls['diasEnsaye2']['disable']();
+    this.formatoCCHForm.controls['diasEnsaye3']['disable']();
+    this.formatoCCHForm.controls['diasEnsaye4']['disable']();
     this.formatoCCHForm.controls['fecha']['disable'](); 
   }
 
   validaCamposVacios(){
+    this.cargando=this.cargando+1;
     let warning = false;
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
         if(this.formatoCCHForm.controls[controlName].value == "" || this.formatoCCHForm.controls[controlName].value == null || this.formatoCCHForm.controls[controlName].value == "null"){
@@ -912,6 +942,7 @@ export class agregaRegistroCCHComponent implements OnInit{
           }
         }// disables/enables each form control based on 'this.formDisabled'
     });
+    this.cargando=this.cargando-1;
 
     if(warning){
       window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
