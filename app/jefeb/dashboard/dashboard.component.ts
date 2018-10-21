@@ -1,11 +1,8 @@
-import { GridComponent } from '../grid/grid.component';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
-import * as moment from 'moment';
 import {
     ReactiveFormsModule,
     FormsModule,
@@ -277,32 +274,27 @@ export class DashboardComponent implements OnInit {
      }
    }
 
-    mostrarTecnicos()
-  {
+  mostrarTecnicos(){
     this.hiddenTecnicos = !this.hiddenTecnicos;
   }
 
    submitted = false;
 
   pasaTec(pL: any) {
-    console.log("pasaTec :: pL[0].id: "+pL[0].id);
-    this.pL=pL[0];
-
-    this.hiddenTecnicos=pL[0].estado;
-    this.ids= pL[0].id;
-
-    console.log("pasaTec :: this.ids: "+this.ids); false 
-    console.log("pasaTec :: this.hiddenTecnicos: "+this.hiddenTecnicos); 1034
+    if(this.ejecucionJBrigada){
+      this.pL=pL[0];
+      this.hiddenTecnicos=pL[0].estado;
+      this.ids= pL[0].id;
+    }
   }   
 
-   regresaOrdenTrabajo(){
+  regresaOrdenTrabajo(){
     this.router.navigate(['jefeBrigada/orden-trabajo']);
   }
 
   onSubmit() { this.submitted = true; }
 
-  llenaTipos(resp: any)
-  {
+  llenaTipos(resp: any){
     console.log(resp);
     this.mis_tipos= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
@@ -315,18 +307,16 @@ export class DashboardComponent implements OnInit {
 
 
 
-    labValidator(repuesta: any){
+  labValidator(repuesta: any){
     console.log(repuesta)
     if(repuesta.error==5 || repuesta.error==6){
       window.alert(repuesta.estatus);
     }
     else{
-      
     }
   }
 
-  llenaClientes(resp: any)
-  {
+  llenaClientes(resp: any){
     this.mis_cli= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
@@ -337,13 +327,10 @@ export class DashboardComponent implements OnInit {
     this.cargando=this.cargando-1;
   }
 
-    llenaObra(resp: any)
-  {
+  llenaObra(resp: any){
     this.mis_obras= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
+    for (var _i = 0; _i < resp.length; _i++ ){
       this.mis_obras[_i]=resp[_i];
-
     }
     console.log(this.mis_obras);
     this.cargando=this.cargando-1;
@@ -353,41 +340,38 @@ export class DashboardComponent implements OnInit {
     this.mis_jefes= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ ){
       this.mis_jefes[_i]=resp[_i];
-
     }
     console.log(this.mis_jefes);
     this.cargando=this.cargando-1;
   }
 
-    llenado(respuesta: any){
+  llenado(respuesta: any){
     console.log(respuesta);
 
     this.ordenForm.patchValue({
-     area: respuesta.area,
-     id_ordenDeTrabajo: respuesta.id_ordenDeTrabajo,
-     cotizacion_id:  respuesta.cotizacion_id,
-     id_cliente:  respuesta.id_cliente,
-     obra_id:  respuesta.obra_id,
-     lugar:  respuesta.lugar,
-     nombreContacto: respuesta.nombreContacto,
-     telefonoDeContacto:  respuesta.telefonoDeContacto,
-     actividades:  respuesta.actividades,
-     condicionesTrabajo:  respuesta.condicionesTrabajo,
-     jefe_brigada_id:  respuesta.jefe_brigada_id,
-     fechaInicio:   respuesta.fechaInicio,
-     fechaFin:  respuesta.fechaFin,
-     horaInicio:  respuesta.horaInicio,
-     horaFin:  respuesta.horaFin,
-     observaciones: respuesta.observaciones,
-     laboratorio_id: respuesta.laboratorio_id
+     area:                  respuesta.area,
+     id_ordenDeTrabajo:     respuesta.id_ordenDeTrabajo,
+     cotizacion_id:         respuesta.cotizacion_id,
+     id_cliente:            respuesta.id_cliente,
+     obra_id:               respuesta.obra_id,
+     lugar:                 respuesta.lugar,
+     nombreContacto:        respuesta.nombreContacto,
+     telefonoDeContacto:    respuesta.telefonoDeContacto,
+     actividades:           respuesta.actividades,
+     condicionesTrabajo:    respuesta.condicionesTrabajo,
+     jefe_brigada_id:       respuesta.jefe_brigada_id,
+     fechaInicio:           respuesta.fechaInicio,
+     fechaFin:              respuesta.fechaFin,
+     horaInicio:            respuesta.horaInicio,
+     horaFin:               respuesta.horaFin,
+     observaciones:         respuesta.observaciones,
+     laboratorio_id:        respuesta.laboratorio_id
 
     });
 
     if(respuesta.isClienteActive==0){
       this.addCliente(respuesta.id_cliente,respuesta.nombre);
-    }
-
-     
+    } 
   }//Fin llenado
 
   obtenStatusFormatos(){
@@ -397,11 +381,10 @@ export class DashboardComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id);
-    console.log(search);
     this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
-                                            this.validaFormatosVacios(res.json());
-                                          });
+      console.log(res.json());
+      this.validaFormatosVacios(res.json());
+    });
   }
 
   validaFormatosVacios(res: any){
@@ -432,10 +415,9 @@ export class DashboardComponent implements OnInit {
     formData.append('rol_usuario_id', this.global.rol); 
     formData.append('id_ordenDeTrabajo', this.id);
     this.http.post(url, formData).subscribe(res => {
-
-                                                     this.respuestaSwitch(res.json());
-                                                     this.statusOrdenTrabajo(res.json());
-                                                                                      });
+      this.respuestaSwitch(res.json());
+      this.statusOrdenTrabajo(res.json());
+    });
 
   }
 
@@ -453,6 +435,12 @@ export class DashboardComponent implements OnInit {
         this.edicionJLab = false;
         this.hiddenBotonFormato = true;
         this.mensajeStatus = "ORDEN TERMINADA POR EL JEFE DE BRIGADA";
+      break;
+      case 3:
+        this.edicionJLab = false;
+        this.hiddenBotonFormato = true;
+        this.terminadoJLab = true;
+        this.mensajeStatus = "ORDEN COMPLETADA";
       break;
     }
   }
@@ -473,26 +461,21 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-    llenaLaboratorio(resp: any)
-  {
-        console.log(resp);
+  llenaLaboratorio(resp: any){
+    console.log(resp);
     this.mis_lab= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
+    for (var _i = 0; _i < resp.length; _i++ ){
       this.mis_lab[_i]=resp[_i];
-
     }
     this.cargando=this.cargando-1;
     console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
-  mostrarFormatos()
-  {
+  mostrarFormatos(){
     this.hiddenFormato = !this.hiddenFormato;
   }
 
-  ocultarFormatos()
-  {
+  ocultarFormatos(){
     this.hiddenFormato = true;
   }
 
@@ -504,12 +487,12 @@ export class DashboardComponent implements OnInit {
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('id_ordenDeTrabajo', this.id);
     this.http.post(url, formData).subscribe(res => {
-                                              //console.log(res);
-                                              this.asignaIDFormato(res.json());
-                                              this.respuestaSwitch(res.json());                 
+      this.asignaIDFormato(res.json());
+      this.respuestaSwitch(res.json());                 
     });
   }
-    creaIDFormatoCCHRev(){
+  
+  creaIDFormatoCCHRev(){
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'initInsertRev');
@@ -523,21 +506,18 @@ export class DashboardComponent implements OnInit {
   }
 
   asignaIDFormato(res:any){
-
     this.id_formato = res.id_formatoCampo;
     this.id2 = this.id_formato;
-   this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id + "/" + this.id2]); 
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id + "/" + this.id2]); 
   }
 
   asignaIDFormatoRev(res:any){
-
     this.id_formato = res.id_formatoRegistroRev;
     this.id2 = this.id_formato;
-
-     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaRevenimiento/'+this.id + "/" + this.id2]);
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaRevenimiento/'+this.id + "/" + this.id2]);
   }
-  seleccionaFormato(){
 
+  seleccionaFormato(){
     if(this.tipoForm.value.formato_tipo_id == 0){
       window.alert("Por favor selecciona un Formato");
     }else{
@@ -552,19 +532,13 @@ export class DashboardComponent implements OnInit {
           if(window.confirm("¿Estas seguro de crear un nuevo Formato  Revenimiento, ya no podras eliminarlo mas adelante.")){
             this.creaIDFormatoCCHRev();
           }
-
-
-
-       
       }
     }
-    
   }
 
-    actualizarOrden(){
-    console.log("crearOrdenTrabajo :: "+this.ordenForm.value.obra_id);
+  actualizarOrden(){
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.cargando=1;
+    this.cargando=this.cargando+1;
     let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'updateJefeLabo');
@@ -584,8 +558,8 @@ export class DashboardComponent implements OnInit {
     formData.append('horaFin',             this.ordenForm.getRawValue().horaFin);
     formData.append('observaciones',       this.ordenForm.value.observaciones);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());
-                                            } );
+      this.respuestaSwitch(res.json());
+    } );
   }
  
 
