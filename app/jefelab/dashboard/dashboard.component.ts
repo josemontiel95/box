@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit {
    mensajeStatus = "";
    formatoStatus;
    botonHerramientaDesElimini="Eliminar Herramienta";
+   botonTecnicosDesElimini="Eliminar Tecnico";
    hiddenDetail = true;
    hiddenHerramienta= true;
    hiddenTecnicos= true;
@@ -309,13 +310,15 @@ export class DashboardComponent implements OnInit {
   }
 
   confirmaEliminaTecnico(){
-    this.cargando = this.cargando+1;
     if(window.confirm("Estas seguro de la eliminación.") == true){
-      this.eliminarTecni();
+      if(this.edicionJLab){
+        this.eliminarTecni();
+      }else{
+        this.desactivarTecni();
+      }
     }
     else{
       window.alert("Acción Cancelada.");
-      this.cargando = this.cargando-1;   
     }
   }
 
@@ -376,6 +379,7 @@ export class DashboardComponent implements OnInit {
   }
 
   eliminarHerramienta(){
+    this.cargando = this.cargando + 1;
     let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'deleteHerra');
@@ -385,15 +389,14 @@ export class DashboardComponent implements OnInit {
     formData.append('ordenDeTrabajo_id', this.id);
     formData.append('herramientasArray', JSON.stringify(this.aux3));
     this.http.post(url, formData).subscribe(res => {
-                                            this.respuestaSwitch(res.json());
-                                          });
-    this.hiddenHerramienta  = false;
-    setTimeout(() =>{ this.hiddenHerramienta  = true},1000);
-    this.cargando = 1;
-    console.log(this.cargando);
+      this.respuestaSwitch(res.json());
+      this.hiddenHerramienta  = false;
+      setTimeout(() =>{ this.hiddenHerramienta  = true},1000);
+    });
+    
   }
   desactivaHerramienta(){
-    console.log(this.aux3);
+    this.cargando = this.cargando + 1;
     let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'deactivateHerra');
@@ -403,15 +406,16 @@ export class DashboardComponent implements OnInit {
     formData.append('ordenDeTrabajo_id', this.id);
     formData.append('herramientasArray', JSON.stringify(this.aux3));
     this.http.post(url, formData).subscribe(res => {
-                                            this.respuestaSwitch(res.json());
-                                          });
-    this.hiddenHerramienta  = false;
-    setTimeout(() =>{ this.hiddenHerramienta  = true},1000);
-    this.cargando = 1;
-    console.log(this.cargando);
+      this.respuestaSwitch(res.json());
+      this.hiddenHerramienta  = false;
+      setTimeout(() =>{ this.hiddenHerramienta  = true},1000);
+    });
+
+    
   }
   
   eliminarTecni(){
+    this.cargando = this.cargando + 1;
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'deleteTec');
@@ -420,19 +424,31 @@ export class DashboardComponent implements OnInit {
     formData.append('rol_usuario_id',  this.global.rol);
     formData.append('tecnicosArray',  JSON.stringify(this.aux2));
     this.http.post(url, formData).subscribe(res =>  {
-                                              this.respuestaSwitch(res.json());
-                                            } );
-    this.hiddenTecnicos  = false;
-    setTimeout(() =>{ this.hiddenTecnicos  = true},1000);
-    this.cargando = 1;
-    console.log(this.cargando);
+      this.respuestaSwitch(res.json());
+      this.hiddenTecnicos  = false;
+      setTimeout(() =>{ this.hiddenTecnicos  = true},1000);
+    } );
+    
+  }
+
+  desactivarTecni(){
+    this.cargando = this.cargando + 1;
+    let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'deactivateTecnicos');
+    formData.append('token', this.global.token);           
+    formData.append('ordenDeTrabajo_id', this.id);
+    formData.append('rol_usuario_id',  this.global.rol);
+    formData.append('tecnicosArray',  JSON.stringify(this.aux2));
+    this.http.post(url, formData).subscribe(res =>  {
+      this.respuestaSwitch(res.json());
+      this.hiddenTecnicos  = false;
+      setTimeout(() =>{ this.hiddenTecnicos  = true},1000);
+    });
   }
 
   actualizarHerramienta(){
-    this.cargando = 1;
-    console.log(this.cargando);
-    console.log(typeof this.aux3);
-    
+    this.cargando = this.cargando + 1;    
     let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertAdmin');
@@ -441,12 +457,13 @@ export class DashboardComponent implements OnInit {
     formData.append('token', this.global.token);
     formData.append('herramientasArray', JSON.stringify(this.aux3));
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());
-                                            });
-    this.hiddenHerramientaDispo = true;  
-  }
+      this.respuestaSwitch(res.json());
+      this.hiddenHerramientaDispo = true;  
+    });
+}
   
   actualizarTecnicos(){
+    this.cargando = this.cargando + 1;
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertAdmin');
@@ -455,11 +472,9 @@ export class DashboardComponent implements OnInit {
     formData.append('rol_usuario_id',  this.global.rol);
     formData.append('tecnicosArray',  JSON.stringify(this.aux2));
     this.http.post(url, formData).subscribe(res =>  {
-                                              this.respuestaSwitch(res.json());
-                                            } );
-    this.cargando = 1;
-    this.hiddenTecnicos = true;
-    console.log(this.cargando);
+      this.respuestaSwitch(res.json());
+      this.hiddenTecnicos = true;
+    } );
   }
   
   mostrarTecnicos(){
@@ -565,30 +580,34 @@ export class DashboardComponent implements OnInit {
     this.formatoStatus= (Number(respuesta.status));
 
     switch(Number(respuesta.status)){
-
+      
       case 0:
         this.edicionJLab = true;
-        this.botonHerramientaDesElimini="Eliminar Asignacion";
+        this.botonHerramientaDesElimini="Eliminar Asignacion/es";
+        this.botonTecnicosDesElimini="Eliminar Asignacion/es";
         this.mensajeStatus = "ACTUALMENTE PUEDES HACER MODIFICACIONES EN LA ORDEN DE TRABAJO ";
       break;
 
       case 1:
         this.ejecucionJBrigada = true;
         this.edicionJLab = false;
-        this.botonHerramientaDesElimini="Desasignar Herramienta";
+        this.botonHerramientaDesElimini="Desasignar Herramienta/as";
+        this.botonTecnicosDesElimini="Desasignar Tecnico/os";
         this.mensajeStatus = "EN EJECUCIÓN DEL JEFE DE BRIGADA";
       break;
 
       case 2:
         this.terminadoJBrigada = true;
-        this.botonHerramientaDesElimini="Desasignar Herramienta";
+        this.botonHerramientaDesElimini="Desasignar Herramienta/as";
+        this.botonTecnicosDesElimini="Desasignar Tecnico/os";
         this.mensajeStatus = "ORDEN TERMINADA POR EL JEFE DE BRIGADA";
       break;
 
       case 3:
       this.terminadoJBrigada = false;
       this.terminadoJLab = true;
-      this.botonHerramientaDesElimini="Desasignar Herramienta";
+      this.botonHerramientaDesElimini="Desasignar Herramienta/as";
+      this.botonTecnicosDesElimini="Desasignar Tecnico/os";
       this.mensajeStatus = "ORDEN DE TRABAJO COMPLETADA, YA NO SE PUEDEN HACER MODIFICACIONES";
       break;
     }

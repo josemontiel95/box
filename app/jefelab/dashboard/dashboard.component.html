@@ -319,8 +319,8 @@
         </div>
         <div class="card-body">
           <div class="btn-group">
-             <button  class="btn btn-danger" *ngIf="hiddenTecnicos && edicionJLab" (click)="confirmaEliminaTecnico();">
-              <span><b> Desasignar Tecnico </b></span>
+             <button  class="btn btn-danger" *ngIf="hiddenTecnicos && !terminadoJLab" (click)="confirmaEliminaTecnico();">
+              <span><b> {{botonTecnicosDesElimini}} </b></span>
             </button>
             <button  class="btn btn-danger" *ngIf="!hiddenTecnicos" (click)="mostrarTecnicos();">
               <span><b> Cancelar </b></span>
