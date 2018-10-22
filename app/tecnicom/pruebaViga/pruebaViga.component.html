@@ -1,3 +1,8 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
 
 <div class="panel-header panel-header-sm">
 </div>
@@ -67,27 +72,52 @@
               </div> <!--FIN PRIMERA GRID -->
             </div>
             
-            <h6>PUNTOS DE APOYO (SI/NO)</h6>
-
             <div class="row">
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="lijado">LIJADO</label> <!--disable-->
-                    <input type="text" id="lijado"   
-                    class="form-control" 
-                    name="lijado" placeholder="" formControlName="lijado" required (change)="onBlurLijado()">
+                  <label for="condiCurado">PUNTOS DE APOYO</label>                    
+                    <select  class="form-control" id="apoyo" name="apoyo" formControlName="apoyo" required (change)="onBlurCurado()">
+                          <option value="null" [disabled]="true">Selecciona el apoyo a utilizar...</option>
+                          <option *ngFor="let tapoyo of apoyos" [value]="tapoyo.id">
+                                {{tapoyo.tapoyo}}
+                          </option>
+                    </select>
+
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="cuero">CUERO</label> <!--disable-->
+                  <label for="condiCurado">TIPO DE FRACTURA EN LA VIGA</label>                      
+                    <select  class="form-control" id="fractura" name="fractura" formControlName="fractura" required (change)="onBlurCurado()">
+                          <option value="null" [disabled]="true">Selecciona el tipo de Fractura de la Viga...</option>
+                          <option *ngFor="let frac of fracture" [value]="frac.id">
+                                {{frac.frac}}
+                          </option>
+                    </select>
+
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+            </div>
+            <!--  <div class="col-md-6 col-12"> 
+                  <div class="form-group">
+                    <label for="lijado">LIJADO</label> 
+                    <input type="text" id="lijado"   
+                    class="form-control" 
+                    name="lijado" placeholder="" formControlName="lijado" required (change)="onBlurLijado()">
+                  </div>
+              </div> 
+
+              <div class="col-md-6 col-12"> 
+                  <div class="form-group">
+                    <label for="cuero">CUERO</label> 
                     <input type="text" id="cuero"   
                     class="form-control" 
                     name="cuero" placeholder="" formControlName="cuero" required (change)="onBlurCuero()">
-                  </div><!--FIN PRIMER CAMPO -->
-              </div> <!--FIN PRIMERA GRID -->
-            </div>
+                  </div>
+              </div> -->
+            
 
             <h6>ANCHO(cm)</h6>
 
