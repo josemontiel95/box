@@ -1,5 +1,5 @@
 import { Component, OnInit,Output, EventEmitter} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,18 +13,16 @@ export class TecnicosGridComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   id: string;
+  noRowDataError;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
       {headerName: 'ID', field: 'id_usuario'},
-      {headerName: 'Tecnico.', field: 'nombre' },
-      {headerName: '', field: 'apellido' },
-
-      
+      {headerName: 'Nombre', field: 'nombre' },
+      {headerName: 'Apellido', field: 'apellido' }
     ];
     this.rowSelection = "multiple";
   }
@@ -38,6 +36,7 @@ export class TecnicosGridComponent implements OnInit  {
 
   @Output() eliminaTecn = new EventEmitter<any>();
   @Output() cambiarCargando = new EventEmitter<any>();
+  @Output() rows = new EventEmitter<any>();
 
   agregaTec(idt: any) {
     this.eliminaTecn.emit(idt);
@@ -51,7 +50,6 @@ export class TecnicosGridComponent implements OnInit  {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando(+1);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllTecOrden');
@@ -60,10 +58,9 @@ export class TecnicosGridComponent implements OnInit  {
     search.set('id_ordenDeTrabajo', this.id);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
-
-                                            this.llenaTabla(res.json());
-                                            this.gridApi.sizeColumnsToFit();
-                                          });
+      this.llenaTabla(res.json());
+      this.gridApi.sizeColumnsToFit();
+    });
   }
 
   llenaTabla(repuesta: any){
@@ -72,26 +69,25 @@ export class TecnicosGridComponent implements OnInit  {
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.registros == 0){
+      this.rowData =[];
+      this.noRowDataError="No existen técnicos asignados a esta orden.";   
+      this.rows.emit(false);
     }else{
-      if(repuesta.registros == 0){
-        this.rowData =[];
-      }else{
-        this.rowData =repuesta;
-      }
+      this.rowData =repuesta;
+      this.rows.emit(true);
     }
   }
 
    
- onSelectionChanged(event: EventListenerObject){
+  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
-     var id = []; //array
+    var id = []; //array
 
     selectedRows.forEach(function(selectedRow, index) {
       id.push(selectedRow.id_usuario);
-      
     });
-   this.agregaTec(id);
+
+    this.agregaTec(id);
   }
-
-
 }

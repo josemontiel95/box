@@ -1,5 +1,5 @@
 import { Component, OnInit,  Output, EventEmitter} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +13,7 @@ export class TecnicosGridComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
+  noRowDataError;
   rowSelection;
   columnDefs;
   id: string;
@@ -47,7 +47,6 @@ export class TecnicosGridComponent implements OnInit  {
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getTecAsistencia');
@@ -68,6 +67,9 @@ export class TecnicosGridComponent implements OnInit  {
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.error==5){
+      this.rowData =[];
+      this.noRowDataError="No existen técnicos asignados a esta orden.";   
     }else{
       this.rowData =repuesta;   
     }

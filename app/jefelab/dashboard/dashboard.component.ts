@@ -1,9 +1,8 @@
-import { GridComponent } from '../grid/grid.component';
-import { Component, OnInit,  Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import {
     FormGroup,
     FormControl,
@@ -19,83 +18,82 @@ export class DashboardComponent implements OnInit {
 
  
   global: Global;
-  cargando= 1;
+  cargando= 0;
   areas= [{"are":"CONCRETO", "id":"CONCRETO"},{"are":"GEOTECNIA", "id":"GEOTECNIA"},{"are":"ASFALTOS", "id":"ASFALTOS"}];
 
-    mis_lab: Array<any>;
+  mis_lab: Array<any>;
   constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
   
- condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
-   aux= 1;  
-   auxx: any;   
+  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
+  aux= 1;  
+  auxx: any;   
   ordenForm: FormGroup; //se crea un formulario de tipo form group
   tipoForm: FormGroup;
-   id: string;
-   id_herra: string;
-   id_tec: string;
-   aux2: Array<any>;
+  id: string;
+  id_herra: string;
+  id_tecnicos_ordenDeTrabajo: string;
+  aux2: Array<any>;
 
-   aux3: Array<any>;
-   mis_cli: Array<any>;
-   mis_obras: Array<any>;
-   mis_jefes: Array<any>;
-   mis_tipos: Array<any>;
-   hidden = true;
+  aux3: Array<any>;
+  mis_cli: Array<any>;
+  mis_obras: Array<any>;
+  mis_jefes: Array<any>;
+  mis_tipos: Array<any>;
+  hidden = true
    
 
-   hiddenf= true;
-   edicionJLab= false;
-   ejecucionJBrigada = false;
-   terminadoJBrigada = false;
-   terminadoJLab = false;
+  hiddenf= true;
+  edicionJLab= false;
+  ejecucionJBrigada = false;
+  terminadoJBrigada = false;
+  terminadoJLab = false;
+  rowsHerra=true;
+  rowsTecnicos=true;
 
-   mensajeStatus = "";
-   formatoStatus;
-   botonHerramientaDesElimini="Eliminar Herramienta";
-   botonTecnicosDesElimini="Eliminar Tecnico";
-   hiddenDetail = true;
-   hiddenHerramienta= true;
-   hiddenTecnicos= true;
-   hiddenTecnicosP= true;
-   hiddenHerramientaDispo= true;
-   hiddenTecnicosDispo= true; 
-   hiddenTotalTecnicos= true;  
-   hiddenTotalHerramienta= true;  
-   herra = {
-
-     herramienta_tipo_id: ''
-   }
-   Orden = {
-     area: '',
-     id_ordenDeTrabajo: '',
-     id_cliente: '',
-     obra_id: '',
-     lugar: '',
-     nombreContacto: '',
-     telefonoDeContacto: '',
-     actividades: '',
-     condicionesTrabajo: '',
-     jefe_brigada_id: '',
-     fechaInicio: '',
-     fechaFin: '',
-     horaInicio: '',
-     horaFin: '',
-     observaciones: ''
-
-        //se creo un arreglo llamado cliente con los campos del form
-        };  
+  mensajeStatus = "";
+  formatoStatus;
+  botonHerramientaDesElimini="Eliminar Herramienta";
+  botonTecnicosDesElimini="Eliminar Tecnico";
+  hiddenDetail = true;
+  hiddenHerramienta= true;
+  hiddenTecnicos= true;
+  hiddenTecnicosP= true;
+  hiddenHerramientaDispo= true;
+  hiddenTecnicosDispo= true; 
+  hiddenTotalTecnicos= true;  
+  hiddenTotalHerramienta= true;  
+  herra = {
+    herramienta_tipo_id: ''
+  }
+  Orden = {
+    area: '',
+    id_ordenDeTrabajo: '',
+    id_cliente: '',
+    obra_id: '',
+    lugar: '',
+    nombreContacto: '',
+    telefonoDeContacto: '',
+    actividades: '',
+    condicionesTrabajo: '',
+    jefe_brigada_id: '',
+    fechaInicio: '',
+    fechaFin: '',
+    horaInicio: '',
+    horaFin: '',
+    observaciones: ''
+  };  
   
 
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
-    this.cargando=5;
+    this.cargando=this.cargando+4;
 
 
     let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
     let search = new URLSearchParams();
     
-    search.set('function', 'getForDroptdownAdmin');
+    search.set('function', 'getForDroptdownForOrdenServicio');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
@@ -125,18 +123,10 @@ export class DashboardComponent implements OnInit {
     search.set('function', 'getJefesBrigadaForDroptdown');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => {this.llenaJefe(res.json());
-                                                   this.labValidator(res.json());
-                                                 });
-
-    url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-    search = new URLSearchParams();
-    
-    search.set('function', 'getForDroptdownTipo');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
-
+    this.http.get(url, {search}).subscribe(res => {
+      this.llenaJefe(res.json());
+      this.labValidator(res.json());
+    });
 
     url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
 	  search = new URLSearchParams();
@@ -144,12 +134,10 @@ export class DashboardComponent implements OnInit {
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_ordenDeTrabajo', this.id);
-	  this.http.get(url, {search}).subscribe(res =>
-                                                 {this.llenado(res.json());
-                                                  this.statusOrdenTrabajo(res.json());});
-
-
-    
+	  this.http.get(url, {search}).subscribe(res =>{
+      this.llenado(res.json());
+      this.statusOrdenTrabajo(res.json());
+    });
 
     this.ordenForm = new FormGroup({
       'area':                 new FormControl({value: this.Orden.area,                 disabled: this.hidden },  [Validators.required]), 
@@ -260,9 +248,6 @@ export class DashboardComponent implements OnInit {
                                                   this.statusOrdenTrabajo(res.json());});
   }
 
-  crearFormato(){
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/crear-llenaFormatoCCH/'+this.id]);
-  }
 
   evaluaHerra(){
     this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/evaluaherra/'+this.id]);
@@ -295,7 +280,6 @@ export class DashboardComponent implements OnInit {
   }
 
   confirmaEliminaHerramienta(){
-    this.cargando = this.cargando+1;
     if(window.confirm("Estas seguro de la eliminación.") == true){
       if(this.edicionJLab){
         this.eliminarHerramienta();
@@ -305,7 +289,6 @@ export class DashboardComponent implements OnInit {
     }
     else{
       window.alert("Acción Cancelada.");
-      this.cargando = this.cargando-1;   
     }
   }
 
@@ -325,11 +308,11 @@ export class DashboardComponent implements OnInit {
   respuestaSwitch(res: any){
     console.log(res);
     if(res.error!= 0){
-      window.alert("Intentalo otra vez");
+      window.alert("ERROR. Intentalo otra vez");
       location.reload();
     }
     else{
-      window.alert("Insertado con exito.");
+      window.alert("Exito.");
       this.cargando = this.cargando-1;
     }
   }   
@@ -352,21 +335,14 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  pasaTec(pL: any) {
-    console.log("pasaTec :: pL[0].id: "+pL[0].id);
-    this.id_tec=pL[0];
-
-    this.hiddenTecnicosP=pL[0].estado;
-    this.id_tec= pL[0].id;
-
-    console.log("pasaTec :: this.ids: "+this.id_tec);  
-    console.log("pasaTec :: this.hiddenTecnicos: "+this.hiddenTecnicos);  
-  }   
-
+  mandaTecn(id) {
+    this.id_tecnicos_ordenDeTrabajo=id;
+    this.hiddenTecnicosP=false;
+  }
   
   mostrarHerramientaDisponible(){
-    if(this.hiddenHerramientaDispo == true){
-      this.hiddenHerramientaDispo = !this.hiddenHerramientaDispo;
+    if(this.hiddenHerramientaDispo){
+      this.hiddenHerramientaDispo = false;
     }
     else{
       this.hiddenHerramientaDispo = true;
@@ -391,9 +367,19 @@ export class DashboardComponent implements OnInit {
     this.http.post(url, formData).subscribe(res => {
       this.respuestaSwitch(res.json());
       this.hiddenHerramienta  = false;
-      setTimeout(() =>{ this.hiddenHerramienta  = true},1000);
+      this.cargando = this.cargando + 1;
+      setTimeout(() =>{ 
+        this.hiddenHerramienta  = true;
+        this.cargando = this.cargando - 1;
+      },1000);    
     });
     
+  }
+  rowsHerramientaHandler(rows){
+    this.rowsHerra=rows;
+  }
+  rowsTecnicosHandler(rows){
+    this.rowsTecnicos=rows;
   }
   desactivaHerramienta(){
     this.cargando = this.cargando + 1;
@@ -408,7 +394,11 @@ export class DashboardComponent implements OnInit {
     this.http.post(url, formData).subscribe(res => {
       this.respuestaSwitch(res.json());
       this.hiddenHerramienta  = false;
-      setTimeout(() =>{ this.hiddenHerramienta  = true},1000);
+      this.cargando = this.cargando + 1;
+      setTimeout(() =>{ 
+        this.hiddenHerramienta  = true;
+        this.cargando = this.cargando - 1;
+      },1000);
     });
 
     
@@ -426,7 +416,11 @@ export class DashboardComponent implements OnInit {
     this.http.post(url, formData).subscribe(res =>  {
       this.respuestaSwitch(res.json());
       this.hiddenTecnicos  = false;
-      setTimeout(() =>{ this.hiddenTecnicos  = true},1000);
+      this.cargando = this.cargando + 1;
+      setTimeout(() =>{ 
+        this.hiddenTecnicos  = true;
+        this.cargando = this.cargando - 1;
+      },1000);
     } );
     
   }
@@ -443,7 +437,11 @@ export class DashboardComponent implements OnInit {
     this.http.post(url, formData).subscribe(res =>  {
       this.respuestaSwitch(res.json());
       this.hiddenTecnicos  = false;
-      setTimeout(() =>{ this.hiddenTecnicos  = true},1000);
+      this.cargando = this.cargando + 1;
+      setTimeout(() =>{ 
+        this.hiddenTecnicos  = true;
+        this.cargando = this.cargando - 1;
+      },1000);
     });
   }
 
@@ -458,7 +456,7 @@ export class DashboardComponent implements OnInit {
     formData.append('herramientasArray', JSON.stringify(this.aux3));
     this.http.post(url, formData).subscribe(res => {
       this.respuestaSwitch(res.json());
-      this.hiddenHerramientaDispo = true;  
+      this.mostrarHerramienta();
     });
 }
   
@@ -473,14 +471,13 @@ export class DashboardComponent implements OnInit {
     formData.append('tecnicosArray',  JSON.stringify(this.aux2));
     this.http.post(url, formData).subscribe(res =>  {
       this.respuestaSwitch(res.json());
-      this.hiddenTecnicos = true;
+      this.mostrarTecnicos();
     } );
   }
   
   mostrarTecnicos(){
     this.hiddenTecnicos = !this.hiddenTecnicos;
     this.hiddenTotalTecnicos = !this.hiddenTotalTecnicos;
-    console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
    submitted = false;
@@ -500,7 +497,6 @@ export class DashboardComponent implements OnInit {
       this.mis_tipos[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
-    console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
   labValidator(repuesta: any){

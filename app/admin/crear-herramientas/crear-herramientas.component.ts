@@ -1,17 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
-import * as moment from 'moment';
+import { Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 @Component({
@@ -85,12 +80,8 @@ export class CrearHerramientasComponent implements OnInit {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando=2;
 
-
-    let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
     let search = new URLSearchParams();
-
-    url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
-    search = new URLSearchParams();
     search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', "1001");

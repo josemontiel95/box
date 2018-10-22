@@ -1,17 +1,12 @@
-import { GridComponent } from '../grid/grid.component';
 import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import {  Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 //FIN DE LOS IMPORTS
@@ -29,8 +24,6 @@ export class llenaRevenimientoComponent implements OnInit{
   id_registro: string;
   title = 'app';
   global: Global;
-  private gridApi;
-  private gridColumnApi;
   link = "";
   rowSelection;
   columnDefs;
@@ -145,7 +138,10 @@ export class llenaRevenimientoComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_formatoRegistroRev', this.id_formato);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) ); 
+    this.http.get(url, {search}).subscribe(res => {
+      this.llenado(res.json());
+      this.sinNombre(res.json());
+    } ); 
 
 
     this.formatoCCHForm = new FormGroup({
@@ -379,6 +375,7 @@ export class llenaRevenimientoComponent implements OnInit{
         window.alert("Para Generar el PDF: Primero debes Agregar una Muestra y Completarla.");
         return;
     }
+    this.cargando=this.cargando+1;
     let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllRegistrosByID');
@@ -445,7 +442,10 @@ export class llenaRevenimientoComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_formatoRegistroRev', this.id_formato);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) ); 
+    this.http.get(url, {search}).subscribe(res => {
+      this.llenado(res.json());
+      this.sinNombre(res.json());
+    } ); 
   }
 
   validaRegistrosVacios(res: any){
@@ -484,9 +484,15 @@ export class llenaRevenimientoComponent implements OnInit{
   } 
   
   respuestaFormatoCompletado(res: any){
-    this.cargando=this.cargando-1;
-    this.formatoStatus=false;
-    console.log(res);
+    if(res.error==0){
+      this.cargando=this.cargando-1;
+      this.formatoStatus=false;
+      console.log(res);
+    }else{
+      this.cargando=this.cargando-1;
+      window.alert(res.estatus);
+    }
+    
   }
   
   agregaRegistro(){

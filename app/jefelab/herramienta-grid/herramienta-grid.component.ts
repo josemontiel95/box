@@ -1,9 +1,8 @@
 import { Component, OnInit,  Output, EventEmitter} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
-import { DashboardComponent } from '../dashboard/dashboard.component';
 
 
 @Component({
@@ -15,20 +14,20 @@ export class HerramientaGridComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   id_formato: string;
   rowSelection;
   columnDefs;
   id: string;
   error: any;
+  noRowDataError;
+
+
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
     {headerName: 'ID', field: 'id_herramienta' },  
     {headerName: 'Tipo', field: 'tipo' },
     {headerName: 'Placas', field: 'placas' },
-    {headerName: 'Condicion', field: 'condicion'},
-
-      
+    {headerName: 'Condicion', field: 'condicion'}
     ];
     this.rowSelection = "multiple";
   }
@@ -45,7 +44,6 @@ export class HerramientaGridComponent implements OnInit  {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando(+1);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllHerraOrden');
@@ -64,6 +62,7 @@ export class HerramientaGridComponent implements OnInit  {
   @Output() eliminaHerra = new EventEmitter<any>();
   @Output() evaluaHerra = new EventEmitter<any>();
   @Output() cambiarCargando = new EventEmitter<any>();
+  @Output() rows = new EventEmitter<any>();
 
   evaluaHerr(cond: any){
     this.evaluaHerra.emit(cond);
@@ -82,14 +81,13 @@ export class HerramientaGridComponent implements OnInit  {
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.registros == 0){
+      this.rowData =[];
+      this.noRowDataError="No existen herramientas asignadas a esta orden.";   
+      this.rows.emit(false);
     }else{
-      if(repuesta.registros == 0){
-        this.rowData =[];
-        this.evaluaHerr({"error":true});
-        console.log(this.error);
-      }else{
-        this.rowData =repuesta;
-      }
+      this.rowData =repuesta;
+      this.rows.emit(true);
     }
   }
 

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,15 +13,16 @@ export class FechasGridComponent implements OnInit  {
    title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   id;
     eventWraper= new Array();
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
- 
-      {headerName: 'Fechas de pase de lista.', field: 'nombre' },
+      {headerName: 'Dia', field: 'dia' },
+      {headerName: 'Hora', field: 'hora' },
+      {headerName: 'Mes', field: 'mes' },
+      {headerName: 'A&ntilde;o', field: 'anio' },
     ];
     this.rowSelection = "single";
   }
@@ -33,19 +34,19 @@ export class FechasGridComponent implements OnInit  {
   }
 
 @Input( ) idte: any;
- 
-  onGridReady(params) {
-    this.data.currentGlobal.subscribe(global => this.global = global);
+@Output() cambiarCargando = new EventEmitter<any>();
+
+onGridReady(params) {
+  this.cambiarCargando.emit(+1);
+  this.data.currentGlobal.subscribe(global => this.global = global);
  
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-    let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getTecnicosAvailableForLab');
+    search.set('function', 'getAllPasesLista');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('id_tecnico', this.idte);
-    search.set('id_ordenDeTrabajo', this.id);
+    search.set('id_tecnicos_ordenDeTrabajo', this.idte);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
@@ -55,6 +56,7 @@ export class FechasGridComponent implements OnInit  {
   }
 
   llenaTabla(repuesta: any){
+    this.cambiarCargando.emit(-1);
     console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
@@ -70,10 +72,8 @@ export class FechasGridComponent implements OnInit  {
     var id = 22; //array
 
     selectedRows.forEach(function(selectedRow, index) {
-      //id.push(selectedRow.id_usuario);
       id += selectedRow.id_usuario;
     });
- 
   }
 
 

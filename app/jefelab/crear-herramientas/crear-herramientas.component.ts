@@ -85,11 +85,8 @@ export class CrearHerramientasComponent implements OnInit {
     this.cargando=2;
 
 
-    let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
     let search = new URLSearchParams();
-
-    url = `${this.global.apiRoot}/laboratorio/get/endpoint.php`;
-    search = new URLSearchParams();
     search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);

@@ -2,14 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 @Component({
@@ -21,94 +18,81 @@ export class DashboardComponent implements OnInit {
 
   global: Global;
   cargando= 5;
-  mis_tipos: Array<any>;
   mis_lab: Array<any>;
-  constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { }
-  
- formatos = [{"format":"CONTROL DE CONCRETO HIDRAULICO", "id": "1"},{"format":"REVENIMIENTO", "id":"2"}]
- condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
- areas= [{"are":"CONCRETO", "id":"CONCRETO"},{"are":"GEOTECNIA", "id":"GEOTECNIA"},{"are":"ASFALTOS", "id":"ASFALTOS"}];
-   auxx: any;    
+  formatos = [{"format":"CONTROL DE CONCRETO HIDRAULICO", "id": "1"},{"format":"REVENIMIENTO", "id":"2"}]
+  condi= [{"condicion":"Muy Dañado", "id":"Muy Dañado"},{"condicion":"Dañado", "id":"Dañado"},{"condicion":"Regular", "id":"Regular"},{"condicion":"Buena", "id":"Buena"},{"condicion":"Muy Buena", "id":"Muy Buena"}];
+  areas= [{"are":"CONCRETO", "id":"CONCRETO"},{"are":"GEOTECNIA", "id":"GEOTECNIA"},{"are":"ASFALTOS", "id":"ASFALTOS"}];
+  auxx: any;    
   ordenForm: FormGroup; //se crea un formulario de tipo form group
   tipoForm: FormGroup;
   paseForm: FormGroup;
-   id: string;
-   id2: string;
-   id_formato: string;
-   ids: string;
-   mis_cli: Array<any>;
-   mis_obras: Array<any>;
-   mis_jefes: Array<any>;
-   hidden = true;
-   hiddenDetail = true;
-   hiddenHerramienta =true;
-   hiddenFormato= true;
-   hiddenBotonFormato = false;
-   hiddenFormatoDispo = true;
-   hiddenTecnicos: any;
+  id: string;
+  id2: string;
+  id_formato: string;
+  ids: string;
+  mis_cli: Array<any>;
+  mis_obras: Array<any>;
+  mis_jefes: Array<any>;
+  hidden = true;
+  hiddenDetail = true;
+  hiddenHerramienta =true;
+  hiddenFormato= true;
+  hiddenBotonFormato = false;
+  hiddenFormatoDispo = true;
+  hiddenTecnicos: any;
 
-   edicionJLab= false;
-   ejecucionJBrigada = false;
-   terminadoJBrigada = false;
-   terminadoJLab = false;
+  edicionJLab= false;
+  ejecucionJBrigada = false;
+  terminadoJBrigada = false;
+  terminadoJLab = false;
 
-   mensajeStatus = "";
-   formatoStatus;
+  mensajeStatus = "";
+  formatoStatus;
 
-
-   pL;
+  pL;
    
-   forma={
-     formato_tipo_id:'0'
-   };
+  forma={
+    formato_tipo_id:'0'
+  };
 
-   pase=
-   {
-     pass: '',
-     correo: ''
+  pase={
+    pass: '',
+    correo: ''
+  }
 
-   }
-
-   Orden = {
-     area: '',
-     id_ordenDeTrabajo: '',
-     cotizacion_id: '',
-     id_cliente: '',
-     obra_id: '',
-     lugar: '',
-     nombreContacto: '',
-     telefonoDeContacto: '',
-     actividades: '',
-     condicionesTrabajo: '',
-     jefe_brigada_id: '',
-     fechaInicio: '',
-     fechaFin: '',
-     horaInicio: '',
-     horaFin: '',
-     laboratorio_id: '',
-     observaciones: ''
-
-        //se creo un arreglo llamado cliente con los campos del form
-        };  
+  Orden = {
+    area: '',
+    id_ordenDeTrabajo: '',
+    cotizacion_id: '',
+    id_cliente: '',
+    obra_id: '',
+    lugar: '',
+    nombreContacto: '',
+    telefonoDeContacto: '',
+    actividades: '',
+    condicionesTrabajo: '',
+    jefe_brigada_id: '',
+    fechaInicio: '',
+    fechaFin: '',
+    horaInicio: '',
+    horaFin: '',
+    laboratorio_id: '',
+    observaciones: ''
+  };  
   
-  
+  constructor(private router: Router, private data: DataService, private http: Http,private route: ActivatedRoute) { 
+    // Empty Constructor
+  }
+
 
   ngOnInit(){
-       this.hiddenTecnicos = true;
+    this.hiddenTecnicos = true;
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
-    this.cargando=5;
+    this.cargando=4;
 
-    let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
     let search = new URLSearchParams();
-    
-    search.set('function', 'getForDroptdownAdmin');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaTipos(res.json()) );
-
-    url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
-    search = new URLSearchParams();
     search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
@@ -294,16 +278,7 @@ export class DashboardComponent implements OnInit {
 
   onSubmit() { this.submitted = true; }
 
-  llenaTipos(resp: any){
-    console.log(resp);
-    this.mis_tipos= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
-      this.mis_tipos[_i]=resp[_i];
-    }
-    this.cargando=this.cargando-1;
-    console.log("llenaTipos this.cargando: "+this.cargando);
-  }
+
 
 
 
@@ -468,7 +443,6 @@ export class DashboardComponent implements OnInit {
       this.mis_lab[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
-    console.log("llenaTipos this.cargando: "+this.cargando);
   }
 
   mostrarFormatos(){

@@ -1,5 +1,5 @@
 import { Component, OnInit ,Output, EventEmitter} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,10 +13,10 @@ export class TecnicosGridAgregaComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   id;
+  noRowDataError;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -51,7 +51,6 @@ export class TecnicosGridAgregaComponent implements OnInit  {
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getTecnicosAvailableForLab');
@@ -72,12 +71,11 @@ export class TecnicosGridAgregaComponent implements OnInit  {
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.registros == 0){
+      this.rowData =[];
+      this.noRowDataError="No existen técnicos disponibles para a esta orden.";   
     }else{
-      if(repuesta.registros == 0){
-        this.rowData =[];
-      }else{
-        this.rowData =repuesta;
-      }
+      this.rowData =repuesta;
     }
   }
 
