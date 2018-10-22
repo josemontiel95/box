@@ -1,5 +1,5 @@
 import { Component, OnInit,  Output, EventEmitter} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,10 +13,10 @@ export class GridComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   id_orden: string;
+  noRowDataError;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -42,7 +42,6 @@ export class GridComponent implements OnInit  {
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
     this.cargando(+1);
     let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -64,6 +63,9 @@ export class GridComponent implements OnInit  {
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.error==5){
+      this.rowData =[];
+      this.noRowDataError="No existen formatos para esta orden.";   
     }else{
       this.rowData =repuesta;
     }

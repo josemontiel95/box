@@ -258,28 +258,28 @@
     <div class="col-md-6 col-12">
       <div class="card  card-tasks">
         <div class="card-header ">
-          <h5 class="card-category">Herramientas asignado a esta orden.</h5>
+          <h5 class="card-category">Herramientas.</h5>
           <h4 class="card-title">Equipo asignado a esta orden.</h4>
         </div>
         <div class="card-body ">
-             <div class="btn-group">
-            <button  class="btn btn-danger" *ngIf="hiddenHerramienta && (edicionJLab || ejecucionJBrigada || terminadoJBrigada)" (click)="confirmaEliminaHerramienta();">
+          <div class="btn-group">
+            <button  class="btn btn-danger" *ngIf="hiddenHerramienta && (edicionJLab || ejecucionJBrigada || terminadoJBrigada)" [disabled]="!rowsHerra" (click)="confirmaEliminaHerramienta();">
               <span><b> {{botonHerramientaDesElimini}} </b></span>
             </button>
             <button  class="btn btn-danger" *ngIf="!hiddenHerramienta" (click)="mostrarHerramienta();">
               <span><b> Cancelar </b></span>
             </button>
-            <div class="btn-group"  style=" padding-left: 15%;">              
+            <div class="btn-group"  style=" padding-left: 10%;">              
               <button class="btn btn-info" *ngIf="hiddenHerramienta && (edicionJLab || ejecucionJBrigada)"  (click)="mostrarHerramienta()">
                 <span><b> Agregar Herramienta </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hiddenHerramienta" [disabled]="false" (click)="actualizarHerramienta(); mostrarHerramienta();">
-              <span><b> Agregar </b></span>
-            </button>
-          </div>
+              <button class="btn btn-success" *ngIf="!hiddenHerramienta" [disabled]="false" (click)="actualizarHerramienta() ">
+                <span><b> Agregar </b></span>
+              </button>
+            </div>
           </div>
           <div *ngIf="this.hiddenHerramienta == true">
-            <app-herramienta-grid (eliminaHerra)="eliminaHerra($event)" (cambiarCargando)="cambiarCargando($event)"></app-herramienta-grid>
+            <app-herramienta-grid (rows)="rowsHerramientaHandler($event)" (eliminaHerra)="eliminaHerra($event)" (cambiarCargando)="cambiarCargando($event)"></app-herramienta-grid>
           </div>
           <div *ngIf="!this.hiddenHerramienta && !this.hiddenTotalHerramienta">
             <form (ngSubmit)="onSubmit()" [formGroup]=tipoForm #formDir="ngForm">
@@ -315,27 +315,27 @@
       <div class="card">
         <div class="card-header">
           <h5 class="card-category">Tecnicos.</h5>
-          <h4 class="card-title"> T&eacute;cnicos asignados a la orden de servicio.</h4>
+          <h4 class="card-title"> T&eacute;cnicos asignados a esta orden.</h4>
         </div>
         <div class="card-body">
           <div class="btn-group">
-             <button  class="btn btn-danger" *ngIf="hiddenTecnicos && !terminadoJLab" (click)="confirmaEliminaTecnico();">
+             <button  class="btn btn-danger" *ngIf="hiddenTecnicos && !terminadoJLab"  [disabled]="!rowsTecnicos" (click)="confirmaEliminaTecnico();">
               <span><b> {{botonTecnicosDesElimini}} </b></span>
             </button>
             <button  class="btn btn-danger" *ngIf="!hiddenTecnicos" (click)="mostrarTecnicos();">
               <span><b> Cancelar </b></span>
             </button>            
           <div class="btn-group"  style=" padding-left: 15%;">
-              <button class="btn btn-info" *ngIf="hiddenTecnicos && (edicionJLab || ejecucionJBrigada)"  (click)="mostrarTecnicos()">
-                <span><b> Agregar Tecnico</b></span>
-              </button>
-            <button class="btn btn-success" *ngIf="!hiddenTecnicos " [disabled]="false" (click)="mostrarTecnicos();  actualizarTecnicos();">
+            <button class="btn btn-info" *ngIf="hiddenTecnicos && (edicionJLab || ejecucionJBrigada)"  (click)="mostrarTecnicos()">
+              <span><b> Agregar Tecnico</b></span>
+            </button>
+            <button class="btn btn-success" *ngIf="!hiddenTecnicos " [disabled]="false" (click)="actualizarTecnicos();">
               <span><b>Agregar</b></span>
             </button>
           </div>
         </div>
-          <div *ngIf="this.hiddenTecnicos == true">
-          <app-tecnicos-grid (eliminaTecn)="eliminaTec($event)" (cambiarCargando)="cambiarCargando($event)"></app-tecnicos-grid>
+        <div *ngIf="this.hiddenTecnicos == true">
+          <app-tecnicos-grid (rows)="rowsTecnicosHandler($event)"  (eliminaTecn)="eliminaTec($event)" (cambiarCargando)="cambiarCargando($event)"></app-tecnicos-grid>
         </div>
           <div *ngIf="!this.hiddenTecnicos && !this.hiddenTotalTecnicos">
           <app-tecnicos-grida  (agregaTecn)="addTec($event)" (cambiarCargando)="cambiarCargando($event)"></app-tecnicos-grida>          
@@ -346,20 +346,15 @@
   </div>
 
   
-  <div class="row">
+  <div class="row" *ngIf="!edicionJLab">
     <div class="col-md-12 col-12 col-lg-12">
       <div class="card card-chart">
         <div class="card-header">
           <h5 class="card-category">Formatos</h5>
           <h4 class="card-title">Formatos</h4>
-                    <div class="btn-group" style=" padding-left: 80%;">
-            <!--<button class="btn btn-success" (click)="crearFormato();">
-              <span><b>Crea Formatos</b></span>
-            </button> -->
-          </div>
         </div>
         <div class="card-body">
-     <!--aqui va el grid--><app-grid (cambiarCargando)="cambiarCargando($event)"></app-grid>
+          <app-grid (cambiarCargando)="cambiarCargando($event)"></app-grid>
         </div>
 
         <div class="card-footer">
@@ -368,7 +363,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" *ngIf="!edicionJLab">
     <div class="col-md-12 col-12">
       <div class="card">
         <div class="card-header">
@@ -377,15 +372,17 @@
         </div>
         <div class="card-body">
           <div class="btn-group">
-            <button  class="btn btn-danger" *ngIf="!hiddenTecnicosP" (click)="mostrarTecnicos();">
-              <span><b> Cancelar </b></span>
-            </button>            
+            <button  class="btn btn-danger" *ngIf="!hiddenTecnicosP" (click)="hiddenTecnicosP=!hiddenTecnicosP;">
+              <span><b> Regresar &nbsp;&nbsp;</b></span>
+              <i class="fa fa-reply" style="font-size:18px;"></i>
+            </button>
           </div>
-          <div *ngIf="this.hiddenTecnicosP== true">
-            <tec-app-grid (mandaTecn)="pasaTec($event)"></tec-app-grid>
+          <div *ngIf="this.hiddenTecnicosP">
+            <tec-app-grid (cambiarCargando)="cambiarCargando($event)" (mandaTecn)="mandaTecn($event)"></tec-app-grid>
           </div>
-          <div *ngIf="!this.hiddenTecnicosP ">
-            <fehcas-app-grid [idte]="this.id_tec"></fehcas-app-grid>          
+          <div *ngIf="!this.hiddenTecnicosP">
+            <p>Este</p>
+            <fehcas-app-grid (cambiarCargando)="cambiarCargando($event)" [idte]="id_tecnicos_ordenDeTrabajo"></fehcas-app-grid>          
           </div> 
         </div>
       </div>

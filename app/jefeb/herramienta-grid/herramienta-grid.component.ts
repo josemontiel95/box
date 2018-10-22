@@ -1,5 +1,5 @@
 import { Component, OnInit,Output, EventEmitter} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,10 +13,11 @@ export class HerramientaGridComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
+  gridColumnApi;
   rowSelection;
   columnDefs;
   id: string;
+  noRowDataError;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -71,6 +72,9 @@ export class HerramientaGridComponent implements OnInit  {
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.registros == 0){
+      this.rowData =[];
+      this.noRowDataError="No existen herramientas asignadas a esta orden.";   
     }else{
       this.rowData =repuesta;
     }

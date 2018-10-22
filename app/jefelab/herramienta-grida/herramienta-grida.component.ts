@@ -1,9 +1,8 @@
 import { Component, OnInit,  Output, EventEmitter,Input} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
-import { DashboardComponent } from '../dashboard/dashboard.component';
 
 
 @Component({
@@ -15,10 +14,10 @@ export class HerramientaGridAgregaComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   id: any;
+  noRowDataError;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -48,7 +47,6 @@ export class HerramientaGridAgregaComponent implements OnInit  {
     this.cargando(+1);
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllFromTipo');
@@ -65,7 +63,6 @@ export class HerramientaGridAgregaComponent implements OnInit  {
                                           });
   }
     @Input( ) idh: any;
-
     @Output() agregaHerra = new EventEmitter<any>();
     @Output() cambiarCargando = new EventEmitter<any>();
 
@@ -91,6 +88,7 @@ export class HerramientaGridAgregaComponent implements OnInit  {
     }else{
       if(repuesta.registros == 0){
         this.rowData =[];
+        this.noRowDataError="No existen herramientas disponibles de este tipo para a esta orden.";   
       }else{
         this.rowData =repuesta;
       }
