@@ -35,7 +35,7 @@ export class PruebaCilindroComponent implements OnInit{
   private gridColumnApi;
   rowSelection;
   columnDefs;
-  cargando= 1;
+  cargando;
   hiddenA = false;
   hiddenB = false;
   hiddenC = false;
@@ -84,10 +84,10 @@ export class PruebaCilindroComponent implements OnInit{
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_ensayoCilindro', this.id_Registro);
     this.http.get(url, {search}).subscribe(res =>{
-                                                    this.llenaRapido(res.json());
-                                                    this.llenado(res.json());
-                                                    //this.desactivaCampos(res.json()); 
-                                                                              });
+      this.llenaRapido(res.json());
+      this.llenado(res.json());
+      //this.desactivaCampos(res.json()); 
+    });
 
     url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
     search = new URLSearchParams();
@@ -142,47 +142,45 @@ export class PruebaCilindroComponent implements OnInit{
 
   onSubmit() { this.submitted = true; }
 
-    llenaFallas(resp: any){
-     
+  llenaFallas(resp: any){
     console.log(resp);
     this.mis_fallas= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
+    for (var _i = 0; _i < resp.length; _i++ ){
       this.mis_fallas[_i]=resp[_i];
     }
-    //this.cargando=this.cargando-1;
     console.log("llenaFallas this.cargando: "+this.cargando);
-
-    } 
+  } 
     
 
-    llenado(respuesta: any){
+  llenado(respuesta: any){
     console.log(respuesta);
+    this.cargando = this.cargando-1;
 
     this.formatoCCHForm.patchValue({
-     fechaColado:  respuesta.fechaColado,
-     infoNo: respuesta.informeNo,
-     clave: respuesta.claveEspecimen,
-     pesoKg: respuesta.peso,
-     edadEnsaye: respuesta.diasEnsayeFinal,
-     diametro1: respuesta.d1,
-     diametro2: respuesta.d2,
-     altura1: respuesta.h1,
-     altura2:  respuesta.h2,
-     cargaKg:  respuesta.carga,
-     area: respuesta.area,
-     resCompresion: respuesta.resCompresion,
-     falla: respuesta.falla});
+      fechaColado:  respuesta.fechaColado,
+      infoNo: respuesta.informeNo,
+      clave: respuesta.claveEspecimen,
+      pesoKg: respuesta.peso,
+      edadEnsaye: respuesta.diasEnsayeFinal,
+      diametro1: respuesta.d1,
+      diametro2: respuesta.d2,
+      altura1: respuesta.h1,
+      altura2:  respuesta.h2,
+      cargaKg:  respuesta.carga,
+      area: respuesta.area,
+      resCompresion: respuesta.resCompresion,
+      falla: respuesta.falla});
 
-     this.onBlurAreaResis();
+    this.onBlurAreaResis();
 
     if(respuesta.status == 1){
       this.mostrar();
-    }
-     
+    }  
   }
+
   //DON'T TOUCH THIS!
   descartaCambios(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -193,14 +191,16 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('id_registrosCampo', this.id_registro);  
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaDescartaCambios(res.json());                 
-                                            } );
+                                            });
   }
 
   llenarDespues(){
+    this.cargando = this.cargando +1;
     this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+this.id_Footer]);
   }
 
   registroCompletado(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -216,6 +216,7 @@ export class PruebaCilindroComponent implements OnInit{
 
   
   onBlurPesoKg(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -232,6 +233,7 @@ export class PruebaCilindroComponent implements OnInit{
   }
   
   onBlurDiametro1(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -249,6 +251,7 @@ export class PruebaCilindroComponent implements OnInit{
   }
 
   onBlurDiametro2(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -266,6 +269,7 @@ export class PruebaCilindroComponent implements OnInit{
   }
 
   onBlurAltura1(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -282,6 +286,7 @@ export class PruebaCilindroComponent implements OnInit{
   }
 
   onBlurAltura2(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -299,6 +304,7 @@ export class PruebaCilindroComponent implements OnInit{
 
 
   onBlurCargaKg(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -317,6 +323,7 @@ export class PruebaCilindroComponent implements OnInit{
   
 
   onBlurAreaResis(){
+    this.cargando = this.cargando +1;
     let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
     let search = new URLSearchParams();
     
@@ -327,7 +334,7 @@ export class PruebaCilindroComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => { 
                                                     console.log(res); 
                                                     this.onChangeArea(res.json());
-                                                    //this.respuestaSwitch(res.json());
+                                                    this.respuestaSwitch(res.json());
                                                     });
   }
 
@@ -344,6 +351,7 @@ export class PruebaCilindroComponent implements OnInit{
   }
  
   onBlurResCompresion(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -360,6 +368,7 @@ export class PruebaCilindroComponent implements OnInit{
   }
 
   onBlurFalla(){
+    this.cargando = this.cargando + 1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -388,18 +397,17 @@ export class PruebaCilindroComponent implements OnInit{
      }
    }
 
-  respuestaSwitch(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       location.reload();
-     }
-     else{
-          
-          //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
-       
-     }
-   }
+  respuestaSwitch(res: any){
+    this.cargando = this.cargando -1; 
+    console.log(res);
+    if(res.error!= 0){
+      window.alert(res.estatus);
+      location.reload();
+    }
+    else{    
+        //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
+    }
+  }
 
 /*
   desactivaCampos(res:any){
@@ -418,11 +426,11 @@ export class PruebaCilindroComponent implements OnInit{
   
   cambiarDatos(){
     if(window.confirm("¿Estas seguro de cambiar los datos de este registro?.")){
-            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
-            if(window.confirm("ESTA ACCIÓN PROVOCARÁ QUE SE ENVIE UN NUEVO CORREO NOTIFICANDO AL CLIENTE DEL CAMBIO. EL ADMINISTRADOR SERA NOTIFICADO DE ESTE CAMBIO. ¿Esta seguro de continuar?")){
-            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
-            this.mostrar();
-            }
+      //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+      if(window.confirm("ESTA ACCIÓN PROVOCARÁ QUE SE ENVIE UN NUEVO CORREO NOTIFICANDO AL CLIENTE DEL CAMBIO. EL ADMINISTRADOR SERA NOTIFICADO DE ESTE CAMBIO. ¿Esta seguro de continuar?")){
+      //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+      this.mostrar();
+      }
     }
   }
 

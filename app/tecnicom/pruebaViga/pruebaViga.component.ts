@@ -46,6 +46,8 @@ export class PruebaVigaComponent implements OnInit{
         fechaEnsayo: '',
         edadEnsaye: '',
         condiCurado: '',
+        apoyo: '',
+        fractura: '',
         lijado: '',
         cuero: '',
         ancho1: '',
@@ -65,6 +67,8 @@ export class PruebaVigaComponent implements OnInit{
       }
 
  curado= [{"condicion":"Humedo", "id":"Humedo"},{"condicion":"Seco", "id":"Seco"},{"condicion":"Intemperie", "id":"Intemperie"}];
+ apoyos= [{"tapoyo":"Lijado", "id":"1"},{"tapoyo":"Cuero", "id":"2"}];
+ fracture= [{"frac":"Dentro del Claro", "id":"1"},{"frac":"Fuera del Claro", "id":"2"}];
 
 
 
@@ -76,7 +80,7 @@ export class PruebaVigaComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_Footer=params.id; this.id_Registro=params.id2}); //Recibe tre parametros
     //El primer parametro es para recibir el numero de registro y el segundo el numero de formato.
-    this.cargando=1;
+    this.cargando= 1;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -100,6 +104,8 @@ export class PruebaVigaComponent implements OnInit{
       'fechaEnsayo': new FormControl( {value: this.FormatoCCH.fechaEnsayo, disabled: true}),      
       'edadEnsaye': new FormControl( {value: this.FormatoCCH.edadEnsaye, disabled: true}),
       'condiCurado': new FormControl( {value: this.FormatoCCH.condiCurado, disabled: this.hidden}),
+      'apoyo': new FormControl( {value: this.FormatoCCH.apoyo, disabled: this.hidden}),
+      'fractura': new FormControl( {value: this.FormatoCCH.fractura, disabled: this.hidden}),
       'lijado': new FormControl( {value: this.FormatoCCH.lijado, disabled: this.hidden}),
       'cuero': new FormControl( {value: this.FormatoCCH.cuero, disabled: this.hidden}),
       'ancho1': new FormControl( {value:   this.FormatoCCH.ancho1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
@@ -127,6 +133,10 @@ export class PruebaVigaComponent implements OnInit{
    get edadEnsaye() { return this.formatoCCHForm.get('edadEnsaye'); }
    
    get condiCurado() { return this.formatoCCHForm.get('condiCurado'); }
+
+   get apoyo() { return this.formatoCCHForm.get('apoyo'); }
+
+   get fractura() { return this.formatoCCHForm.get('fractura'); }
 
    get lijado() { return this.formatoCCHForm.get('lijado'); }
 
@@ -165,6 +175,7 @@ export class PruebaVigaComponent implements OnInit{
   onSubmit() { this.submitted = true; } 
 
     llenado(respuesta: any){
+    this.cargando = this.cargando -1;
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({
@@ -173,6 +184,8 @@ export class PruebaVigaComponent implements OnInit{
      fechaEnsayo:  respuesta.fechaEnsayo,
      edadEnsaye: respuesta.diasEnsayeFinal,
      condiCurado: respuesta.condiciones,
+     apoyo: respuesta.apoyos,
+     fractura: respuesta.fractura,
      lijado: respuesta.lijado,
      cuero: respuesta.cuero,
      ancho1: respuesta.ancho1,
@@ -205,6 +218,7 @@ export class PruebaVigaComponent implements OnInit{
   }
 
   registroCompletado(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -220,6 +234,7 @@ export class PruebaVigaComponent implements OnInit{
   }
 
   onBlurCurado(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -237,6 +252,7 @@ export class PruebaVigaComponent implements OnInit{
   }
   
   onBlurLijado(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -254,6 +270,7 @@ export class PruebaVigaComponent implements OnInit{
   }
 
   onBlurCuero(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -267,10 +284,11 @@ export class PruebaVigaComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.updateFechaEnsaye(res.json());                 
                                               this.respuestaSwitch(res.json());                 
-                                            } );
+                                            });
   }
 
   onBlurAncho1(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -284,11 +302,12 @@ export class PruebaVigaComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
-                                              //this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());                 
                                             } );
   }
 
   onBlurAncho2(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -300,13 +319,14 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.ancho2);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              //this.updateFechaEnsaye(res.json());
+                                              this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
-                                              //this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());                 
                                             } );
   }
 
   onBlurPer1(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -320,11 +340,12 @@ export class PruebaVigaComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
-                                              //this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());                 
                                             } );
   }
 
   onBlurPer2(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -338,11 +359,12 @@ export class PruebaVigaComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
-                                              //this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());                 
                                             } );
   }
 
   onBlurL1(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -356,11 +378,12 @@ export class PruebaVigaComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.updateFechaEnsaye(res.json());
                                               this.onBlurPromedio();
-                                              //this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());                 
                                             } );
   }
 
   onBlurL2(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -374,11 +397,12 @@ export class PruebaVigaComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.updateFechaEnsaye(res.json());
                                               this.onBlurPromedio();
-                                              //this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());                 
                                             } );
   }
 
   onBlurL3(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -392,11 +416,12 @@ export class PruebaVigaComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.updateFechaEnsaye(res.json());
                                               this.onBlurPromedio();
-                                              //this.respuestaSwitch(res.json());                
+                                              this.respuestaSwitch(res.json());                
                                             } );
   }
 
   onBlurDisApoyos(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -415,6 +440,7 @@ export class PruebaVigaComponent implements OnInit{
   
 
   onBlurDisCarga(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -432,6 +458,7 @@ export class PruebaVigaComponent implements OnInit{
   }
  
   onBlurCargaAplicada(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -445,11 +472,12 @@ export class PruebaVigaComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
-                                              //this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());                 
                                             } );
   }
 
   onBlurDefectos(){
+    this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -466,20 +494,18 @@ export class PruebaVigaComponent implements OnInit{
                                             } );
   }
 
-  respuestaSwitch(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       location.reload();
-     }
-     else{
-          
+  respuestaSwitch(res: any){
+    this.cargando = this.cargando -1; 
+    console.log(res);
+    if(res.error!= 0){
+      window.alert(res.estatus);
+      location.reload();
+    }
+    else{    
           //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
-       
      }
    }
-
-  
+ 
   mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable'; 
@@ -496,6 +522,7 @@ export class PruebaVigaComponent implements OnInit{
   }
 
   onBlurPromedio(){
+    this.cargando = this. cargando +1;
     let url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
     let search = new URLSearchParams();
     
@@ -506,7 +533,7 @@ export class PruebaVigaComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => { 
                                                     console.log(res); 
                                                     this.onChangeProm(res.json());
-                                                    //this.respuestaSwitch(res.json());
+                                                    this.respuestaSwitch(res.json());
                                                     });
   }
 
@@ -525,6 +552,7 @@ export class PruebaVigaComponent implements OnInit{
   }
 
   onBlurModuloRuptura(){
+    this.cargando = this. cargando +1;
     let url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
     let search = new URLSearchParams();
     
@@ -535,7 +563,7 @@ export class PruebaVigaComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => { 
                                                     console.log(res); 
                                                     this.onChangeModuloRup(res.json());
-                                                    //this.respuestaSwitch(res.json());
+                                                    this.respuestaSwitch(res.json());
                                                     });
   }
 
