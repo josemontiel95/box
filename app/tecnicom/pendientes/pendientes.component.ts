@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -22,7 +22,6 @@ export class PendientesComponent implements OnInit{
   imgUrl="";
   global: Global;
   private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   cargando= 1;
@@ -68,7 +67,6 @@ export class PendientesComponent implements OnInit{
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
 
     let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -140,8 +138,6 @@ export class PendientesComponent implements OnInit{
      else{
           //EXITO         
      }
-
-
      let id_footer= "";
      let id_RegistroCCH= "";
      console.log("HOLA!!: "+ res.id_RegistroGabs);
@@ -164,7 +160,6 @@ export class PendientesComponent implements OnInit{
           this.router.navigate(['tecnico/pendientes/dashboardViga/'+id_footer]);
        }
      }else{
-
        if(this.ruta == 1){
           id_footer = res.id_footerEnsayo;
           window.alert("CILINDRO");
@@ -181,9 +176,6 @@ export class PendientesComponent implements OnInit{
           id_RegistroCCH = res.id_RegistroGabs;  
           this.router.navigate(['tecnico/llenaFooterViga/'+id_footer + '/'+id_RegistroCCH]);
        }
-
-     }
-     
-   }
-
+    }
+  }
 }
