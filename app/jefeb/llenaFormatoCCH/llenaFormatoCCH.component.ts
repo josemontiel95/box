@@ -424,6 +424,9 @@ export class llenaFormatoCCHComponent implements OnInit{
      termometro:          respuesta.termometro_id
     });
 
+    this.link = respuesta.preliminar;
+
+
     this.tipo_especimeng=respuesta.tipo_especimen;
     this.cargaDefaults(this.tipo_especimeng);
     this.formatoStatus=(respuesta.status == 0 ? true : false);

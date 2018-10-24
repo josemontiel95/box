@@ -26,6 +26,7 @@ export class GridComponent implements OnInit  {
       {headerName: 'TMU', field: 'nombre' },   
       {headerName: 'Tipo', field: 'tipo' },
       {headerName: 'Creado', field: 'fecha' },    
+      {headerName: 'Estado', field: 'estado'}
     ];
     this.rowSelection = "single";
     this.rowClassRules = {
@@ -44,6 +45,10 @@ export class GridComponent implements OnInit  {
       "row-red-warning": function(params) {
         var color = params.data.color;
         return color == 4;
+      },
+      "row-green-warning": function(params) {
+        var color = params.data.color;
+        return color == 0;
       }
     };
   }
