@@ -75,8 +75,8 @@
             <div class="row">
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                  <label for="condiCurado">PUNTOS DE APOYO</label>                    
-                    <select  class="form-control" id="apoyo" name="apoyo" formControlName="apoyo" required (change)="onBlurCurado()">
+                  <label for="apoyo">PUNTOS DE APOYO</label>                    
+                    <select  class="form-control" id="apoyo" name="apoyo" formControlName="apoyo" required (change)="onBlurApoyo()">
                           <option value="null" [disabled]="true">Selecciona el apoyo a utilizar...</option>
                           <option *ngFor="let tapoyo of apoyos" [value]="tapoyo.id">
                                 {{tapoyo.tapoyo}}
@@ -88,8 +88,8 @@
 
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                  <label for="condiCurado">TIPO DE FRACTURA EN LA VIGA</label>                      
-                    <select  class="form-control" id="fractura" name="fractura" formControlName="fractura" required (change)="onBlurCurado()">
+                  <label for="fractura">TIPO DE FRACTURA EN LA VIGA</label>                      
+                    <select  class="form-control" id="fractura" name="fractura" formControlName="fractura" required (change)="onBlurFractura()">
                           <option value="null" [disabled]="true">Selecciona el tipo de Fractura de la Viga...</option>
                           <option *ngFor="let frac of fracture" [value]="frac.id">
                                 {{frac.frac}}
@@ -267,7 +267,7 @@
               
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="moduloRuptura">M&Oacute;DULO DE RUPTURA(kgf/cm<sup>2</sup></label> <!--disable-->
+                    <label for="moduloRuptura">M&Oacute;DULO DE RUPTURA(kgf/cm<sup>2</sup>)</label> <!--disable-->
                     <input type="text" id="moduloRuptura"  
                     class="form-control" 
                     name="moduloRuptura" placeholder="" formControlName="moduloRuptura">                
@@ -287,6 +287,36 @@
                     <input type="text" id="realizo"  
                     class="form-control" 
                     name="realizo" placeholder="" formControlName="realizo">                
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="velocidad">VELOCIDAD DE APLICACI&Oacute;N DE CARGA EXPERIMENTAL</label> <!--disable-->
+                    <input type="text" id="velocidad"   
+                    class="form-control" 
+                    name="velocidad" placeholder="" formControlName="velocidad" required (change)="onBlurVelocidad()">
+                    <div *ngIf="velocidad.errors && (velocidad.dirty || velocidad.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="velocidad.errors.required">VELOCIDAD REQUERIDA.</div>
+                        <div *ngIf="velocidad.errors.pattern">LA VELOCIDAD DEBE CONTENER SOLO NUMEROS.</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="tiempo">TIEMPO</label> <!--disable-->
+                    <input type="text" id="tiempo"   
+                    class="form-control" 
+                    name="tiempo" placeholder="" formControlName="tiempo" required (change)="onBlurTiempo()">
+                    <div *ngIf="tiempo.errors && (tiempo.dirty || tiempo.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="tiempo.errors.required">TIEMPO REQUERIDO.</div>
+                        <div *ngIf="tiempo.errors.pattern">EL TIEMPO DEBE CONTENER SOLO NUMEROS.</div>
+                    </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
             </div>

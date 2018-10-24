@@ -185,26 +185,28 @@ export class dashboardVigaComponent implements OnInit{
 
     */
 
+    //Esta Función no existe en el back pero supondria darme el estado para poder generar el PDF 0 No listo | 1 Listo.
+
     url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getNumberOfRegistrosByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
-    search.set('id_formatoCampo', this.id_formato);
+    search.set('id_formatoRegistroRev', this.id_formato);
     this.http.get(url, {search}).subscribe(res => {
-      this.numberOfRegistros =res.json().numberOfRegistrosByID;
-      this.tipoModificable =(res.json().tipoModificable == 1 ? true : false);
-      console.log("numberOfRegistros: "+this.numberOfRegistros+" tipoModificable: "+this.tipoModificable);
-      this.cargando=this.cargando-1;
+      //this.numberOfRegistros =res.json().numberOfRegistrosByID;
+      //this.tipoModificable =(res.json().tipoModificable == 1 ? true : false);
+      //console.log("numberOfRegistros: "+this.numberOfRegistros+" tipoModificable: "+this.tipoModificable);
+      //this.cargando=this.cargando-1;
     }); 
 
 
     this.formatoCCHForm = new FormGroup({
-      'fechaEnsayo':         new FormControl( {value: this.FormatoCCH.fechaEnsayo, disabled: true }),
-      'observaciones':   new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden }),       
-      'bascula':            new FormControl( {value: this.FormatoCCH.bascula, disabled: this.hidden },  [Validators.required]),
-      'regla':         new FormControl( {value: this.FormatoCCH.regla, disabled: this.hidden },  [Validators.required]),
-      'prensa':      new FormControl( {value: this.FormatoCCH.prensa, disabled: this.hidden },  [Validators.required]),
+      'fechaEnsayo':      new FormControl( {value: this.FormatoCCH.fechaEnsayo, disabled: true }),
+      'observaciones':    new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden }),       
+      'bascula':          new FormControl( {value: this.FormatoCCH.bascula, disabled: this.hidden },  [Validators.required]),
+      'regla':            new FormControl( {value: this.FormatoCCH.regla, disabled: this.hidden },  [Validators.required]),
+      'prensa':           new FormControl( {value: this.FormatoCCH.prensa, disabled: this.hidden },  [Validators.required]),
     });
   }
 
@@ -270,13 +272,15 @@ export class dashboardVigaComponent implements OnInit{
      regla:            respuesta.regVerFle_id,
      prensa:           respuesta.prensa_id
     });
-     this.formatoStatus=(respuesta.status == 0 ? true : false);
-     console.log(this.formatoStatus);
-     //this.cargando=this.cargando-1;
+
+    this.link = respuesta.preliminar;
+
+    this.formatoStatus=(respuesta.status == 0 ? true : false);
+    console.log(this.formatoStatus);
+    //this.cargando=this.cargando-1;
   }
 
   sinNombre(respuesta: any){
-    console.log(respuesta.tipo_especimen);
     //Esta if verifica si ya fue generado un PDF mediante respuesta.preliminar, si fue generado activa Visuarlizar PDF.
     if(respuesta.preliminar == null){
       this.preliminar = false;
@@ -287,17 +291,13 @@ export class dashboardVigaComponent implements OnInit{
 
 
   obtenStatusGenPDF(){
-    if(0 == this.numberOfRegistros){
-        window.alert("Para Generar el PDF: Primero debes Agregar una Muestra y Completarla.");
-        return;
-    }
-    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
+    this.cargando = this.cargando +1;
+    let url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
     let search = new URLSearchParams();
-    this.cargando=this.cargando+1;
-    search.set('function', 'getAllRegistrosByID');
+    search.set('function', 'getAllRegistrosFromFooterByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('id_formatoCampo', this.id_formato);
+    search.set('footerEnsayo_id', this.id_footer);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
@@ -310,13 +310,14 @@ export class dashboardVigaComponent implements OnInit{
     this.cargando=this.cargando-1;
     let isValid = true;
     res.forEach(function (value) {
-      if(value.status == "0"){
+      console.log(value.status);
+      if(value.status == "0"){ 
          isValid = false;
       } 
     });
 
     if(!isValid){
-      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para poder Generar un PDF.");     
+      window.alert("No hay vigas ensayadas, para poder Generar un PDF tiene que haber al menos una ensayada.");     
     }else if(window.confirm("¿Estas seguro de Generar el PDF?")){
       this.generatePDF();
     } 
@@ -364,11 +365,6 @@ export class dashboardVigaComponent implements OnInit{
   }
 
   obtenStatusVisualizarPDF(){
-      if(0 == this.numberOfRegistros){
-        window.alert("Para Visualizar PDF: Primero debes Agregar una Muestra y Completarla.");
-        return;
-      }     
-
       let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
       let search = new URLSearchParams();
       this.cargando=this.cargando+1;
@@ -393,7 +389,7 @@ export class dashboardVigaComponent implements OnInit{
     });
 
     if(!isValid){
-      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para Visualizar un PDF.");     
+      window.alert("No hay vigas ensayadas, para poder Visualizar un PDF tiene que haber al menos una ensayada..");     
     }else{
       if(!this.preliminar){
         window.alert("Para Visualizar PDF: Primero debes Generar el PDF dando click al botón Generar PDF.");
