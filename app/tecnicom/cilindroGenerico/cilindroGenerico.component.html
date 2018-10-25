@@ -1,19 +1,8 @@
-<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
-    <div class="loader-container">
-        <i class="now-ui-icons loader_refresh spin"></i> 
-    </div>
-</div>
-
-<div class="panel-header panel-header-sm">
-</div>
-<div class="main-content">
-<div class="row">
-    <div class="col-lg-12 col-12 col-md-12">
-      <div class="card card-chart">
+    <!--<div class="col-lg-12 col-12 col-md-12">   tag del padre-->
+        <div class="card card-chart">
         
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
-            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="llenarDespues();"></i>
             <h5>ENSAYO A COMPRESI&Oacute;N DE CILINDROS DE CONCRETO HIDR&Aacute;ULICO </h5>
             <hr>
             <h6>INFORMACI&Oacute;N GENERAL DEL ENSAYO</h6>
@@ -21,27 +10,21 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="fecha">FECHA DE COLADO</label> <!--disable-->
-                    <input type="date" id="fecha"   
-                    class="form-control" 
-                    name="fecha" placeholder="" formControlName="fechaColado">
+                    <input type="date" id="fecha" class="form-control" placeholder="" formControlName="fechaColado">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="infoNo">INFORME NO.</label> <!--disable-->
-                    <input type="text" id="infoNo"   
-                    class="form-control" 
-                    name="infoNo" placeholder="" formControlName="infoNo">
+                    <input type="text" id="infoNo" class="form-control" placeholder="" formControlName="infoNo">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="clave">CLAVE</label> <!--disable-->
-                    <input type="text" id="clave"   
-                    class="form-control" 
-                    name="clave" placeholder="" formControlName="clave">
+                    <input type="text" id="clave" class="form-control" placeholder="" formControlName="clave">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
@@ -52,9 +35,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="pesoKg">PESO EN Kg</label> <!--disable-->
-                    <input type="text" id="pesoKg"   
-                    class="form-control" 
-                    name="pesoKg" placeholder="" formControlName="pesoKg" (blur)="onBlurPesoKg()">
+                    <input type="text" id="pesoKg" class="form-control" placeholder="" formControlName="pesoKg">
                     <div *ngIf="pesoKg.errors && (pesoKg.dirty || pesoKg.touched)"
                               class="alert alert-danger">
                         <div *ngIf="pesoKg.errors.required">PESO EN KG REQUERIDO.</div>
@@ -66,14 +47,9 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="edadEnsaye">EDAD DE ENSAYE EN DIAS</label> <!--disable-->
-                    <input type="text" id="edadEnsaye"   
-                    class="form-control" 
-                    name="edadEnsaye" placeholder="" formControlName="edadEnsaye">
+                    <input type="text" id="edadEnsaye" class="form-control" placeholder="" formControlName="edadEnsaye">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
-              
-              
-
             </div> <!--FIN PRIMER ROW -->
 
             <h6>DIAMETROS (cm)</h6>
@@ -82,9 +58,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="diametro1">D1</label> <!--disable-->
-                    <input type="text" id="diametro1"   
-                    class="form-control" 
-                    name="diametro1" placeholder="" formControlName="diametro1" (blur)="onBlurDiametro1()">
+                    <input type="text" id="diametro1" class="form-control" placeholder="" formControlName="diametro1">
                     <div *ngIf="diametro1.errors && (diametro1.dirty || diametro1.touched)"
                               class="alert alert-danger">
                         <div *ngIf="diametro1.errors.required">DIAMETRO 1 REQUERIDO.</div>
@@ -98,7 +72,7 @@
                     <label for="diametro2">D2</label> <!--disable-->
                     <input type="text" id="diametro2"   
                     class="form-control" 
-                    name="diametro2" placeholder="" formControlName="diametro2" (blur)="onBlurDiametro2()">
+                    name="diametro2" placeholder="" formControlName="diametro2">
                     <div *ngIf="diametro2.errors && (diametro2.dirty || diametro2.touched)"
                               class="alert alert-danger">
                         <div *ngIf="diametro2.errors.required">DIAMETRO 2 REQUERIDO.</div>
@@ -116,7 +90,7 @@
                     <label for="altura1">H1</label> <!--disable-->
                     <input type="text" id="altura1"   
                     class="form-control" 
-                    name="altura1" placeholder="" formControlName="altura1" (blur)="onBlurAltura1()">
+                    name="altura1" placeholder="" formControlName="altura1">
                     <div *ngIf="altura1.errors && (altura1.dirty || altura1.touched)"
                               class="alert alert-danger">
                         <div *ngIf="altura1.errors.required">ALTURA 1 REQUERIDA.</div>
@@ -130,7 +104,7 @@
                     <label for="altura2">H2</label> <!--disable-->
                     <input type="text" id="altura2"   
                     class="form-control" 
-                    name="altura2" placeholder="" formControlName="altura2" (blur)="onBlurAltura2()">
+                    name="altura2" placeholder="" formControlName="altura2">
                     <div *ngIf="altura2.errors && (altura2.dirty || altura2.touched)"
                               class="alert alert-danger">
                         <div *ngIf="altura2.errors.required">ALTURA 2 REQUERIDA.</div>
@@ -147,7 +121,7 @@
                     <label for="  ">CARGA kg</label>
                     <input type="text" id="cargaKg"  
                     class="form-control" 
-                    name="cargaKg" placeholder="" formControlName="cargaKg" (blur)="onBlurCargaKg()">
+                    name="cargaKg" placeholder="" formControlName="cargaKg">
                      <div *ngIf="cargaKg.errors && (cargaKg.dirty || cargaKg.touched)"
                               class="alert alert-danger">
                         <div *ngIf="cargaKg.errors.required">CARGA KG REQUERIDA.</div>
@@ -170,7 +144,7 @@
                     <label for="resCompresion">RESISTENCIA A COMPRESI&Oacute;N Kg/cm<sup>2</sup></label>
                     <input type="text" id="resCompresion"  
                     class="form-control" 
-                    name="resCompresion" placeholder="" formControlName="resCompresion" (blur)="onBlurResCompresion()">
+                    name="resCompresion" placeholder="" formControlName="resCompresion">
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->
             </div>
@@ -184,7 +158,7 @@
                     
                    <select  class="form-control" id="falla" 
                     name="falla"
-                    placeholder="falla No"  formControlName="falla" (change)="onBlurFalla()">
+                    placeholder="falla No"  formControlName="falla">
                     <option value="0" [disabled]="true">Selecciona una falla...</option>
                     
                     <option *ngFor="let falla of fallas" [value]="falla.id">
@@ -194,42 +168,7 @@
                     
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
-
-            </div>
-
-            <div class="row">
-              <div class="col-md-2 col-12">                
-
-                  <button class="btn btn-default" *ngIf="hiddenA || hiddenB" [disabled]="formatoCCHForm.invalid" (click)="llenarDespues();">
-                    <span><b> Regresar. </b></span>
-                  </button>
-              </div>
-              <div class="col-md-6 col-md-offset-6 col-12">
-
-              </div>
-              <div class="col-md-2 col-12">
-
-               <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
-                    <span><b> Cambiar Datos. </b></span>
-                  </button>
-                <button class="btn btn-default" *ngIf="hiddenC" (click)="llenarDespues()">
-                      <span><b> Llenar mas tarde. </b></span>
-                </button>
-              </div>
-              <div class="col-md-2 col-12">
-                <button class="btn btn-success" *ngIf="hiddenC" (click)="validaCamposVacios()">
-                      <span><b> Registro Completo. </b></span>
-                </button>
-              </div>
             </div>
           </form>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12 col-12 col-md-12">
-      <app-cilindroGenerico *ngFor="let member of oldmembers" [id_Registro]="member.id_ensayoCilindro" (cambiarCargando)="cambiarCargando($event)"></app-cilindroGenerico>
-    </div>
-  </div>
-</div>

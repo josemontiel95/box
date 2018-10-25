@@ -74,7 +74,7 @@ export class VigaGenericoComponent implements OnInit{
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     //El primer parametro es para recibir el numero de registro y el segundo el numero de formato.
-    this.cambiarCargando.emit(+1)
+    this.cambiarCargando.emit(+1);
 
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
