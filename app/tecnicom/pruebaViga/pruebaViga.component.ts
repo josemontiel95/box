@@ -3,15 +3,11 @@ import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 //FIN DE LOS IMPORTS
@@ -28,8 +24,6 @@ export class PruebaVigaComponent implements OnInit{
   campo: "1"; //Esta variable es para seleccionar el campo que se insertara cuando pierda el foco.
   title = 'app';
   global: Global;
-  private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   cargando= 1;
@@ -38,6 +32,7 @@ export class PruebaVigaComponent implements OnInit{
   hiddenC = false;
   hidden = false;
   locked =false;   
+  oldmembers;
   formatoCCHForm: FormGroup;
 
         FormatoCCH = {
@@ -82,101 +77,88 @@ export class PruebaVigaComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_Footer=params.id; this.id_Registro=params.id2}); //Recibe tre parametros
     //El primer parametro es para recibir el numero de registro y el segundo el numero de formato.
-    this.cargando= 1;
+    this.cargando= this.cargando+1;
 
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-    let search = new URLSearchParams();
+
     
-    url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
-    search = new URLSearchParams();
+    let url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
+    let search = new URLSearchParams();
     search.set('function', 'getRegistrosByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_ensayoViga', this.id_Registro);
     this.http.get(url, {search}).subscribe(res => { 
-                                                    this.llenaRapido(res.json());
-                                                    this.llenado(res.json());
-                                                    //this.desactivaCampos(res.json());
-                                                  });
+      this.llenaRapido(res.json());
+      this.llenado(res.json());
+      //this.desactivaCampos(res.json());
+    });
+
+    url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getOldMembers');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('id_ensayoViga', this.id_Registro);
+    this.http.get(url, {search}).subscribe(res => { 
+      this.llemaOldMembers(res.json());
+    });
+
+                                              
 
 
     this.formatoCCHForm = new FormGroup({
-      'idMuestra': new FormControl( {value: this.FormatoCCH.idMuestra, disabled: true}),
-      'fechaColado': new FormControl( {value: this.FormatoCCH.fechaColado, disabled: true}),
-      'fechaEnsayo': new FormControl( {value: this.FormatoCCH.fechaEnsayo, disabled: true}),      
-      'edadEnsaye': new FormControl( {value: this.FormatoCCH.edadEnsaye, disabled: true}),
-      'condiCurado': new FormControl( {value: this.FormatoCCH.condiCurado, disabled: this.hidden}),
-      'apoyo': new FormControl( {value: this.FormatoCCH.apoyo, disabled: this.hidden}),
-      'fractura': new FormControl( {value: this.FormatoCCH.fractura, disabled: this.hidden}),
-      'lijado': new FormControl( {value: this.FormatoCCH.lijado, disabled: this.hidden}),
-      'cuero': new FormControl( {value: this.FormatoCCH.cuero, disabled: this.hidden}),
-      'ancho1': new FormControl( {value:   this.FormatoCCH.ancho1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
-      'ancho2': new FormControl( {value: this.FormatoCCH.ancho2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
-      'per1': new FormControl( {value:   this.FormatoCCH.per1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),      
-      'per2': new FormControl( {value:   this.FormatoCCH.per2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),      
-      'l1': new FormControl( {value:   this.FormatoCCH.l1, disabled: this.hidden}),      
-      'l2': new FormControl( {value:   this.FormatoCCH.l2, disabled: this.hidden}),            
-      'l3': new FormControl( {value:   this.FormatoCCH.l3, disabled: this.hidden}),            
-      'prom': new FormControl( {value:   this.FormatoCCH.prom, disabled: true}),            
-      'disApoyos': new FormControl( {value: this.FormatoCCH.disApoyos, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
-      'disCarga': new FormControl( {value: this.FormatoCCH.disCarga, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
-      'cargaAplicada': new FormControl( {value: this.FormatoCCH.cargaAplicada, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),       
-      'moduloRuptura': new FormControl( {value: this.FormatoCCH.moduloRuptura, disabled: true}),       
-      'defectos': new FormControl( {value: this.FormatoCCH.defectos, disabled: this.hidden}),       
-      'velocidad': new FormControl( {value: this.FormatoCCH.velocidad, disabled: this.hidden}),
-      'tiempo': new FormControl( {value: this.FormatoCCH.tiempo, disabled: this.hidden}),
-      'realizo': new FormControl( {value: this.FormatoCCH.realizo, disabled: true})  });
+      'idMuestra':        new FormControl( {value: this.FormatoCCH.idMuestra, disabled: true}),
+      'fechaColado':      new FormControl( {value: this.FormatoCCH.fechaColado, disabled: true}),
+      'fechaEnsayo':      new FormControl( {value: this.FormatoCCH.fechaEnsayo, disabled: true}),      
+      'edadEnsaye':       new FormControl( {value: this.FormatoCCH.edadEnsaye, disabled: true}),
+      'condiCurado':      new FormControl( {value: this.FormatoCCH.condiCurado, disabled: this.hidden}),
+      'apoyo':            new FormControl( {value: this.FormatoCCH.apoyo, disabled: this.hidden}),
+      'fractura':         new FormControl( {value: this.FormatoCCH.fractura, disabled: this.hidden}),
+      'lijado':           new FormControl( {value: this.FormatoCCH.lijado, disabled: this.hidden}),
+      'cuero':            new FormControl( {value: this.FormatoCCH.cuero, disabled: this.hidden}),
+      'ancho1':           new FormControl( {value: this.FormatoCCH.ancho1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'ancho2':           new FormControl( {value: this.FormatoCCH.ancho2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'per1':             new FormControl( {value: this.FormatoCCH.per1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),      
+      'per2':             new FormControl( {value: this.FormatoCCH.per2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),      
+      'l1':               new FormControl( {value: this.FormatoCCH.l1, disabled: this.hidden}),      
+      'l2':               new FormControl( {value: this.FormatoCCH.l2, disabled: this.hidden}),            
+      'l3':               new FormControl( {value: this.FormatoCCH.l3, disabled: this.hidden}),            
+      'prom':             new FormControl( {value: this.FormatoCCH.prom, disabled: true}),            
+      'disApoyos':        new FormControl( {value: this.FormatoCCH.disApoyos, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'disCarga':         new FormControl( {value: this.FormatoCCH.disCarga, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'cargaAplicada':    new FormControl( {value: this.FormatoCCH.cargaAplicada, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),       
+      'moduloRuptura':    new FormControl( {value: this.FormatoCCH.moduloRuptura, disabled: true}),       
+      'defectos':         new FormControl( {value: this.FormatoCCH.defectos, disabled: this.hidden}),       
+      'velocidad':        new FormControl( {value: this.FormatoCCH.velocidad, disabled: true}),
+      'tiempo':           new FormControl( {value: this.FormatoCCH.tiempo, disabled: this.hidden}),
+      'realizo':          new FormControl( {value: this.FormatoCCH.realizo, disabled: true})  });
   }
   
-   get idMuestra() { return this.formatoCCHForm.get('idMuestra'); }
-
-   get fechaColado() { return this.formatoCCHForm.get('fechaColado'); }
-
-   get fechaEnsayo() { return this.formatoCCHForm.get('fechaEnsayo'); }
-
-   get edadEnsaye() { return this.formatoCCHForm.get('edadEnsaye'); }
-   
-   get condiCurado() { return this.formatoCCHForm.get('condiCurado'); }
-
-   get apoyo() { return this.formatoCCHForm.get('apoyo'); }
-
-   get fractura() { return this.formatoCCHForm.get('fractura'); }
-
-   get lijado() { return this.formatoCCHForm.get('lijado'); }
-
-   get cuero() { return this.formatoCCHForm.get('cuero'); }
-   
-   get ancho1() { return this.formatoCCHForm.get('ancho1'); }
-
-   get ancho2() { return this.formatoCCHForm.get('ancho2'); }
-
-   get per1() { return this.formatoCCHForm.get('per1'); }
-
-   get per2() { return this.formatoCCHForm.get('per2'); }
-
-   get l1() { return this.formatoCCHForm.get('l1'); }
-
-   get l2() { return this.formatoCCHForm.get('l2'); }
-
-   get l3() { return this.formatoCCHForm.get('l3'); }
-
-   get prom() { return this.formatoCCHForm.get('prom'); }
-
-   get disApoyos() { return this.formatoCCHForm.get('disApoyos'); }
-   
-   get disCarga() { return this.formatoCCHForm.get('disCarga'); }
-   
-   get cargaAplicada() { return this.formatoCCHForm.get('cargaAplicada'); }              
-
-   get moduloRuptura() { return this.formatoCCHForm.get('moduloRuptura'); }              
-
-   get defectos() { return this.formatoCCHForm.get('defectos'); }   
-
-   get velocidad() { return this.formatoCCHForm.get('velocidad'); }        
-
-   get tiempo() { return this.formatoCCHForm.get('tiempo'); }                               
-
-   get realizo() { return this.formatoCCHForm.get('realizo'); }                          
+   get idMuestra()       { return this.formatoCCHForm.get('idMuestra'); }
+   get fechaColado()     { return this.formatoCCHForm.get('fechaColado'); }
+   get fechaEnsayo()     { return this.formatoCCHForm.get('fechaEnsayo'); }
+   get edadEnsaye()      { return this.formatoCCHForm.get('edadEnsaye'); }
+   get condiCurado()     { return this.formatoCCHForm.get('condiCurado'); }
+   get apoyo()           { return this.formatoCCHForm.get('apoyo'); }
+   get fractura()        { return this.formatoCCHForm.get('fractura'); }
+   get lijado()          { return this.formatoCCHForm.get('lijado'); }
+   get cuero()           { return this.formatoCCHForm.get('cuero'); }
+   get ancho1()          { return this.formatoCCHForm.get('ancho1'); }
+   get ancho2()          { return this.formatoCCHForm.get('ancho2'); }
+   get per1()            { return this.formatoCCHForm.get('per1'); }
+   get per2()            { return this.formatoCCHForm.get('per2'); }
+   get l1()              { return this.formatoCCHForm.get('l1'); }
+   get l2()              { return this.formatoCCHForm.get('l2'); }
+   get l3()              { return this.formatoCCHForm.get('l3'); }
+   get prom()            { return this.formatoCCHForm.get('prom'); }
+   get disApoyos()       { return this.formatoCCHForm.get('disApoyos'); }
+   get disCarga()        { return this.formatoCCHForm.get('disCarga'); }
+   get cargaAplicada()   { return this.formatoCCHForm.get('cargaAplicada'); }              
+   get moduloRuptura()   { return this.formatoCCHForm.get('moduloRuptura'); }              
+   get defectos()        { return this.formatoCCHForm.get('defectos'); }   
+   get velocidad()       { return this.formatoCCHForm.get('velocidad'); }        
+   get tiempo()          { return this.formatoCCHForm.get('tiempo'); }                               
+   get realizo()         { return this.formatoCCHForm.get('realizo'); }                          
    
   submitted = false;
 
@@ -187,31 +169,31 @@ export class PruebaVigaComponent implements OnInit{
     console.log(respuesta);
 
     this.formatoCCHForm.patchValue({
-     idMuestra: respuesta.claveEspecimen,
-     fechaColado:  respuesta.fechaColado,
-     fechaEnsayo:  respuesta.fechaEnsayo,
-     edadEnsaye: respuesta.diasEnsayeFinal,
-     condiCurado: respuesta.condiciones,
-     apoyo: respuesta.apoyo,
-     fractura: respuesta.posFractura,
-     lijado: respuesta.lijado,
-     cuero: respuesta.cuero,
-     ancho1: respuesta.ancho1,
-     ancho2:  respuesta.ancho2,
-     per1: respuesta.per1,
-     per2: respuesta.per2,
-     l1: respuesta.l1,
-     l2: respuesta.l2,
-     l3: respuesta.l3,
-     prom: respuesta.prom,
-     disApoyos:  respuesta.disApoyo,
-     disCarga: respuesta.disCarga,
-     cargaAplicada: respuesta.carga,
-     moduloRuptura: respuesta.moduloRuptura,
-     defectos: respuesta.defectos,
-     velocidad: respuesta.velAplicacionExp,
-     tiempo: respuesta.tiempoDeCarga, 
-     realizo: respuesta.nombre 
+     idMuestra:       respuesta.claveEspecimen,
+     fechaColado:     respuesta.fechaColado,
+     fechaEnsayo:     respuesta.fechaEnsayo,
+     edadEnsaye:      respuesta.diasEnsayeFinal,
+     condiCurado:     respuesta.condiciones,
+     apoyo:           respuesta.apoyo,
+     fractura:        respuesta.posFractura,
+     lijado:          respuesta.lijado,
+     cuero:           respuesta.cuero,
+     ancho1:          respuesta.ancho1,
+     ancho2:          respuesta.ancho2,
+     per1:            respuesta.per1,
+     per2:            respuesta.per2,
+     l1:              respuesta.l1,
+     l2:              respuesta.l2,
+     l3:              respuesta.l3,
+     prom:            respuesta.prom,
+     disApoyos:       respuesta.disApoyo,
+     disCarga:        respuesta.disCarga,
+     cargaAplicada:   respuesta.carga,
+     moduloRuptura:   respuesta.moduloRuptura,
+     defectos:        respuesta.defectos,
+     velocidad:       respuesta.velAplicacionExp,
+     tiempo:          respuesta.tiempoDeCarga, 
+     realizo:         respuesta.nombre 
    });
 
     if(respuesta.status == 1){
@@ -221,12 +203,15 @@ export class PruebaVigaComponent implements OnInit{
      this.onBlurModuloRuptura();
   }
   //DON'T TOUCH THIS!
-  
+
 
   llenarDespues(){
     this.router.navigate(['tecnico/pendientes/dashboardViga/'+this.id_Footer]);
   }
 
+  cambiarCargando(num){
+    this.cargando=this.cargando + num;
+  }
   registroCompletado(){
     this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -523,9 +508,8 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.defectos);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              //this.updateFechaEnsaye(res.json());
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.respuestaSwitch(res.json());                 
+    } );
   }
 
   onBlurTiempo(){
@@ -538,11 +522,11 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '16');
-    formData.append('valor', this.formatoCCHForm.value.defectos);
+    formData.append('valor', this.formatoCCHForm.value.tiempo);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              //this.updateFechaEnsaye(res.json());
-                                              this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());   
+                                              this.onBlurCalcularVelocidad();          
                                             } );
   }
 
@@ -551,10 +535,8 @@ export class PruebaVigaComponent implements OnInit{
     console.log(res);
     if(res.error!= 0){
       window.alert(res.estatus);
-      //location.reload();
     }
     else{    
-          //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
      }
    }
  
@@ -571,6 +553,7 @@ export class PruebaVigaComponent implements OnInit{
     this.formatoCCHForm.controls['prom']['disable']();
     this.formatoCCHForm.controls['moduloRuptura']['disable']();
     this.formatoCCHForm.controls['realizo']['disable']();    
+    this.formatoCCHForm.controls['velocidad']['disable']();    
   }
 
   onBlurPromedio(){
@@ -613,16 +596,18 @@ export class PruebaVigaComponent implements OnInit{
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ensayoViga', this.id_Registro);
     this.http.get(url, {search}).subscribe(res => { 
-                                                    console.log(res); 
-                                                    this.onChangeModuloRup(res.json());
-                                                    this.respuestaSwitch(res.json());
-                                                    });
+      console.log("onBlurModuloRuptura :: ");
+      console.log(res.json()); 
+      this.onChangeModuloRup(res.json());
+      this.respuestaSwitch(res.json());
+    });
   }
 
    onChangeModuloRup(res: any){
         this.formatoCCHForm.patchValue({
         moduloRuptura: res.modulo
       });
+      this.onBlurCalcularVelocidad();
   }
 
   onBlurCalcularVelocidad(){
@@ -635,10 +620,11 @@ export class PruebaVigaComponent implements OnInit{
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ensayoViga', this.id_Registro);
     this.http.get(url, {search}).subscribe(res => { 
-                                                    console.log(res); 
-                                                    this.respuestaCalcularVelocidad(res.json());
-                                                    this.respuestaSwitch(res.json());
-                                                    });
+      console.log("onBlurCalcularVelocidad :: ");
+      console.log(res.json()); 
+      this.respuestaCalcularVelocidad(res.json());
+      this.respuestaSwitch(res.json());
+    });
   }
 
   respuestaCalcularVelocidad(res: any){
@@ -709,4 +695,23 @@ export class PruebaVigaComponent implements OnInit{
 
     }
   }
+
+  /*
+    Manejo de los Old Members
+  */
+
+  llemaOldMembers(res){
+    this.cargando=this.cargando-1;
+    console.log("llemaOldMembers :: res:");
+    console.log(res);
+    if(res.error == 12){
+      this.oldmembers=[];
+    }else if(res.error > 0){
+      window.alert(res.estatus);
+    }else{
+      this.oldmembers= res;
+    }
+  }
 }
+
+
