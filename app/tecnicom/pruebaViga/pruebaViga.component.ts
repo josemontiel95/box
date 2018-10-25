@@ -120,17 +120,17 @@ export class PruebaVigaComponent implements OnInit{
       'ancho2':           new FormControl( {value: this.FormatoCCH.ancho2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
       'per1':             new FormControl( {value: this.FormatoCCH.per1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),      
       'per2':             new FormControl( {value: this.FormatoCCH.per2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),      
-      'l1':               new FormControl( {value: this.FormatoCCH.l1, disabled: this.hidden}),      
-      'l2':               new FormControl( {value: this.FormatoCCH.l2, disabled: this.hidden}),            
-      'l3':               new FormControl( {value: this.FormatoCCH.l3, disabled: this.hidden}),            
+      'l1':               new FormControl( {value: this.FormatoCCH.l1, disabled: this.hidden}, [Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),      
+      'l2':               new FormControl( {value: this.FormatoCCH.l2, disabled: this.hidden}, [Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),            
+      'l3':               new FormControl( {value: this.FormatoCCH.l3, disabled: this.hidden}, [Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),            
       'prom':             new FormControl( {value: this.FormatoCCH.prom, disabled: true}),            
       'disApoyos':        new FormControl( {value: this.FormatoCCH.disApoyos, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
       'disCarga':         new FormControl( {value: this.FormatoCCH.disCarga, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
       'cargaAplicada':    new FormControl( {value: this.FormatoCCH.cargaAplicada, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),       
       'moduloRuptura':    new FormControl( {value: this.FormatoCCH.moduloRuptura, disabled: true}),       
-      'defectos':         new FormControl( {value: this.FormatoCCH.defectos, disabled: this.hidden}),       
+      'defectos':         new FormControl( {value: this.FormatoCCH.defectos, disabled: this.hidden}, [Validators.pattern("^[0-9]+$")]),       
       'velocidad':        new FormControl( {value: this.FormatoCCH.velocidad, disabled: true}),
-      'tiempo':           new FormControl( {value: this.FormatoCCH.tiempo, disabled: this.hidden}),
+      'tiempo':           new FormControl( {value: this.FormatoCCH.tiempo, disabled: this.hidden}, [Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
       'realizo':          new FormControl( {value: this.FormatoCCH.realizo, disabled: true})  });
   }
   

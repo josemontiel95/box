@@ -33,6 +33,7 @@ export class dashboardVigaComponent implements OnInit{
   private gridApi;
   private gridColumnApi;
   link = "";
+  linkFormatoCampo = "";
   rowSelection;
   columnDefs;
   cargando= 4;
@@ -41,6 +42,7 @@ export class dashboardVigaComponent implements OnInit{
   isValid=false;
   tipoModificable;
   preliminar = false;
+  preliminarGabs= false;
   mis_tipos: Array<any>;
   mis_lab: Array<any>;
   mis_cli: Array<any>;
@@ -273,7 +275,8 @@ export class dashboardVigaComponent implements OnInit{
      prensa:           respuesta.prensa_id
     });
 
-    this.link = respuesta.preliminar;
+    this.link = respuesta.preliminarGabs;
+    this.linkFormatoCampo = respuesta.preliminar;
 
     this.formatoStatus=(respuesta.status == 0 ? true : false);
     console.log(this.formatoStatus);
@@ -287,8 +290,22 @@ export class dashboardVigaComponent implements OnInit{
     }else{
       this.preliminar = true;
     }
+
+    if(respuesta.preliminarGabs == null){
+      this.preliminarGabs = false;
+    }else{
+      this.preliminarGabs = true;
+    }
   }
 
+  visualizarFormatoCampo(){
+    if(!this.preliminar){
+        window.alert("Para Visualizar PDF: Primero debes Generar el PDF dando click al botón Generar PDF.");
+      }else if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
+        let link = this.link;
+        window.open(link, "_blank");
+      } 
+  }
 
   obtenStatusGenPDF(){
     this.cargando = this.cargando +1;
@@ -391,7 +408,7 @@ export class dashboardVigaComponent implements OnInit{
     if(!isValid){
       window.alert("No hay vigas ensayadas, para poder Visualizar un PDF tiene que haber al menos una ensayada..");     
     }else{
-      if(!this.preliminar){
+      if(!this.preliminarGabs){
         window.alert("Para Visualizar PDF: Primero debes Generar el PDF dando click al botón Generar PDF.");
       }else if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
         let link = this.link;
