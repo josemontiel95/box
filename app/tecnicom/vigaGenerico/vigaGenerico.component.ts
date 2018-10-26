@@ -151,7 +151,7 @@ export class VigaGenericoComponent implements OnInit{
   onSubmit() { this.submitted = true; } 
 
     llenado(respuesta: any){
-    this.cambiarCargando.emit(-1)
+    this.cambiarCargando.emit(-1);
 
     console.log(respuesta);
 

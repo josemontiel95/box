@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -10,7 +10,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./grid-cilindros.component.css']
 })
 export class GridCilindrosComponent implements OnInit  {
-	title = 'app';
+	@Output() cambiarCargando = new EventEmitter<any>();
+  title = 'app';
   global: Global;
   private gridApi;
   rowSelection;
@@ -43,7 +44,8 @@ export class GridCilindrosComponent implements OnInit  {
 
   ngOnInit() {
      this.data.currentGlobal.subscribe(global => this.global = global);
-     this.route.params.subscribe( params => this.id_footer=params.id); 
+     this.route.params.subscribe( params => this.id_footer=params.id);
+     this.cambiarCargando.emit(+1); 
   }
 
 
@@ -63,8 +65,17 @@ export class GridCilindrosComponent implements OnInit  {
                                             console.log(res.json());
                                             this.rowData= res.json();
                                             this.gridApi.sizeColumnsToFit();
-                                            //this.cargando=this.cargando-1;
+                                            this.llenadoValidator(res.json(), "getAllRegistrosFromFooterByID");
                                           });
+  }
+
+  llenadoValidator(respuesta: any, caller){
+    this.cambiarCargando.emit(-1);
+    if(respuesta.error>0){
+      window.alert(caller + " :: GridCilindro :: " +respuesta.estatus);
+    }else{
+      //EXITO. 
+    } 
   }
 
   llenaTabla(repuesta: any){

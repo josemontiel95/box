@@ -34,7 +34,7 @@ export class dashboardCilindroComponent implements OnInit{
   private gridColumnApi;
   rowSelection;
   columnDefs;
-  cargando= 4;
+  cargando= 0;
   hidden = true;
   hiddenf= true;
   mis_tipos: Array<any>;
@@ -81,7 +81,7 @@ export class dashboardCilindroComponent implements OnInit{
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id_footer=params.id); 
-    this.cargando=0;
+    this.cargando=4;
 
     let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -89,7 +89,10 @@ export class dashboardCilindroComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_footerEnsayo', this.id_footer);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+    this.http.get(url, {search}).subscribe(res =>{ 
+      this.llenado(res.json());
+      this.llenadoValidator(res.json(), "getFooterByID");
+    });
 
     url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     search = new URLSearchParams();
@@ -97,89 +100,28 @@ export class dashboardCilindroComponent implements OnInit{
     search.set('function', 'getForDroptdownBasculas');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => {
-                                                    this.cargando = this.cargando+1
-                                                    this.llenaBascula(res.json()); 
-                                                    });
+    this.http.get(url, {search}).subscribe(res => {                                                    
+      this.llenaBascula(res.json());
+      this.llenadoValidator(res.json(), "getForDroptdownBasculas"); 
+    });
 
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownReglasVerFlex');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => {
-                                                    this.cargando = this.cargando+1
-                                                    this.llenaReglas(res.json()); 
-                                                    });
+    this.http.get(url, {search}).subscribe(res => {                                                    
+      this.llenaReglas(res.json());
+      this.llenadoValidator(res.json(), "getForDroptdownReglasVerFlex");  
+    });
 
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownPrensas');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => {
-                                                    this.cargando = this.cargando+1
-                                                    this.llenaPrensas(res.json()); 
-                                                    });
-
-    /*
-
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-    let search = new URLSearchParams();
-    
-   
-    search.set('function', 'getForDroptdownJefeBrigadaCono');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_ordenDeTrabajo', this.id_orden);
-    this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
-
-    search = new URLSearchParams();
-    search.set('function', 'getForDroptdownJefeBrigadaVarilla');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_ordenDeTrabajo', this.id_orden);
-    this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
-
-    search = new URLSearchParams();
-    search.set('function', 'getForDroptdownJefeBrigadaFlexometro');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_ordenDeTrabajo', this.id_orden);
-    this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
-
-    url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
-    search = new URLSearchParams();
-    search.set('function', 'getformatoDefoults');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => {  
-      this.maxNoOfRegistrosRev = res.json().maxNoOfRegistrosRev;
-      this.cargando=this.cargando-1;
-      console.log("getformatoDefoults :: this.maxNoOfRegistrosRev: "+this.maxNoOfRegistrosRev);
+    this.http.get(url, {search}).subscribe(res => {                                                  
+      this.llenaPrensas(res.json());
+      this.llenadoValidator(res.json(), "getForDroptdownPrensas");
     });
-
-    url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
-    search = new URLSearchParams();
-    search.set('function', 'getNumberOfRegistrosByID');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id',  this.global.rol);
-    search.set('formatoRegistroRev_id', this.id_formato);
-    this.http.get(url, {search}).subscribe(res => {
-      this.numberOfRegistros =res.json().numberOfRegistrosByID;
-      this.cargando          =this.cargando-1;
-      console.log("getNumberOfRegistrosByID :: this.numberOfRegistros: "+this.numberOfRegistros);
-    }); 
-
-
-    url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
-    search = new URLSearchParams();
-    search.set('function', 'getInfoByID');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id',  this.global.rol);
-    search.set('id_formatoRegistroRev', this.id_formato);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) ); 
-
-    */
-
 
     this.formatoCCHForm = new FormGroup({
       'fechaEnsayo':         new FormControl( {value: this.FormatoCCH.fechaEnsayo, disabled: true }),
@@ -256,25 +198,9 @@ export class dashboardCilindroComponent implements OnInit{
      //this.cargando=this.cargando-1;
   }
 
- 
-  /*
-  llenado(respuesta: any){
-    console.log(respuesta);
-
-    this.formatoCCHForm.patchValue({
-      fechaEnsayo:     respuesta.fechaEnsayo, //Falta ver el nombre real de la respuesta
-      observaciones:   respuesta.observaciones,
-      cono:            respuesta.cono_id,
-      varilla:         respuesta.varilla_id,
-      flexometro:      respuesta.flexometro_id,
-      termometro:      respuesta.termometro_id
-    });
-
-    this.formatoStatus=(respuesta.status == 0 ? true : false);
-
-    this.cargando=this.cargando-1;
-     
-  } */
+  cambiarCargando(num){
+    this.cargando=this.cargando + num;
+  }
 
   obtenStatusReg(){
     let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
@@ -365,7 +291,6 @@ export class dashboardCilindroComponent implements OnInit{
     {
       this.mis_basculas[_i]=resp[_i];
     }
-    this.cargando=this.cargando-1;
     console.log("llenaBascula this.cargando: "+this.cargando);
   }
 
@@ -376,7 +301,6 @@ export class dashboardCilindroComponent implements OnInit{
     {
       this.mis_reglas[_i]=resp[_i];
     }
-    this.cargando=this.cargando-1;
     console.log("llenaVarillas this.cargando: "+this.cargando);
   }
 
@@ -387,7 +311,6 @@ export class dashboardCilindroComponent implements OnInit{
     {
       this.mis_prensas[_i]=resp[_i];
     }
-    this.cargando=this.cargando-1;
     console.log("llenaPrensas this.cargando: "+this.cargando);
   }
 
@@ -474,4 +397,14 @@ export class dashboardCilindroComponent implements OnInit{
     this.router.navigate(['tecnico/pendientes/']);
   }
 
+  /* VALIDATORS ZONE */
+
+  llenadoValidator(respuesta: any, caller){
+    this.cargando = this.cargando -1;
+    if(respuesta.error>0){
+      window.alert(caller + " :: " +respuesta.estatus);
+    }else{
+      //EXITO. 
+    } 
+  }
 }
