@@ -356,8 +356,16 @@ export class PruebaCilindroComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => { 
                                                     console.log(res); 
                                                     this.onChangeArea(res.json());
-                                                    this.respuestaSwitch(res.json());
+                                                    this.onChangeAreaValidator(res.json());
                                                     });
+  }
+
+  onChangeAreaValidator(res: any){
+    this.cargando = this.cargando -1;
+    console.log(res.area + res.resistencia);
+    if(res.error != 0){
+      window.alert(res.estatus);
+    }
   }
 
   onChangeArea(res: any){
@@ -478,15 +486,14 @@ export class PruebaCilindroComponent implements OnInit{
 
   respuestaSwitch(res: any){
     this.cargando = this.cargando -1; 
-    console.log(res);
     if(res.error!= 0){
-      window.alert("Hola");
       window.alert(res.estatus);
       //location.reload();
     }
     else{    
         //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
     }
+    console.log(res); 
   }
 
 /*
