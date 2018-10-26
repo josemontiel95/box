@@ -35,7 +35,7 @@ export class PruebaCilindroComponent implements OnInit{
   private gridColumnApi;
   rowSelection;
   columnDefs;
-  cargando= 2;
+  cargando= 0;
   hiddenA = false;
   hiddenB = false;
   hiddenC = false;
@@ -48,19 +48,22 @@ export class PruebaCilindroComponent implements OnInit{
   formatoCCHForm: FormGroup;
 
         FormatoCCH = {
-        fechaColado: '',
-        infoNo: '',
-        pesoKg: '',
-        clave: '',
-        edadEnsaye: '',
-        diametro1: '',
-        diametro2: '',
-        altura1: '',
-        altura2: '',
-        cargaKg: '',
-        area: '',
-        resCompresion: '',
-        falla: ''}
+        fechaColado:     '',
+        infoNo:          '',
+        pesoKg:          '',
+        clave:           '',
+        edadEnsaye:      '',
+        diametro1:       '',
+        diametro2:       '',
+        altura1:         '',
+        altura2:         '',
+        cargaKg:         '',
+        area:            '',
+        resCompresion:   '',
+        velocidad:       '',
+        tiempo:          '',
+        falla:           ''
+      }
 
 
         fallas= [{"falla":1, "id": 1},{"falla":2, "id": 2},{"falla":3, "id": 3},{"falla":4, "id": 4},{"falla":5, "id": 5},{"falla":6, "id": 6}];
@@ -73,7 +76,7 @@ export class PruebaCilindroComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_Footer=params.id; this.id_Registro=params.id2}); //Recibe dos parametros
     //El primer parametro es para recibir el numero de registro y el segundo el numero de formato.
-    this.cargando = this.cargando + 1;
+    this.cargando = this.cargando + 3;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -111,45 +114,37 @@ export class PruebaCilindroComponent implements OnInit{
       this.llamaOldMembers(res.json());
     });
     this.formatoCCHForm = new FormGroup({
-      'fechaColado': new FormControl( {value: this.FormatoCCH.fechaColado, disabled: true}),
-      'infoNo': new FormControl( {value: this.FormatoCCH.infoNo, disabled: true}),
-      'clave': new FormControl( {value: this.FormatoCCH.clave, disabled: true}),
-      'pesoKg': new FormControl( {value: this.FormatoCCH.pesoKg, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
-      'edadEnsaye': new FormControl( {value: this.FormatoCCH.edadEnsaye, disabled: true}),
-      'diametro1': new FormControl( {value: this.FormatoCCH.diametro1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
-      'diametro2': new FormControl( {value: this.FormatoCCH.diametro2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
-      'altura1': new FormControl( {value:   this.FormatoCCH.altura1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
-      'altura2': new FormControl( {value: this.FormatoCCH.altura2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
-      'cargaKg': new FormControl( {value: this.FormatoCCH.cargaKg, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
-      'area': new FormControl( {value: this.FormatoCCH.area, disabled: true}),
-      'resCompresion': new FormControl( {value: this.FormatoCCH.resCompresion, disabled: true}),       
-      'falla': new FormControl( {value: this.FormatoCCH.falla, disabled: this.hidden})});
+      'fechaColado':      new FormControl( {value: this.FormatoCCH.fechaColado, disabled: true}),
+      'infoNo':           new FormControl( {value: this.FormatoCCH.infoNo, disabled: true}),
+      'clave':            new FormControl( {value: this.FormatoCCH.clave, disabled: true}),
+      'pesoKg':           new FormControl( {value: this.FormatoCCH.pesoKg, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'edadEnsaye':       new FormControl( {value: this.FormatoCCH.edadEnsaye, disabled: true}),
+      'diametro1':        new FormControl( {value: this.FormatoCCH.diametro1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'diametro2':        new FormControl( {value: this.FormatoCCH.diametro2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'altura1':          new FormControl( {value:   this.FormatoCCH.altura1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'altura2':          new FormControl( {value: this.FormatoCCH.altura2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'cargaKg':          new FormControl( {value: this.FormatoCCH.cargaKg, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'area':             new FormControl( {value: this.FormatoCCH.area, disabled: true}),
+      'resCompresion':    new FormControl( {value: this.FormatoCCH.resCompresion, disabled: true}),
+      'velocidad':        new FormControl( {value: this.FormatoCCH.velocidad, disabled: true}),
+      'tiempo':           new FormControl( {value: this.FormatoCCH.tiempo, disabled: this.hidden}, [Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),       
+      'falla':            new FormControl( {value: this.FormatoCCH.falla, disabled: this.hidden})});
   }
   
    get fechaColado() { return this.formatoCCHForm.get('fechaColado'); }
-
    get infoNo() { return this.formatoCCHForm.get('infoNo'); }
-
    get clave() { return this.formatoCCHForm.get('clave'); }
-
    get pesoKg() { return this.formatoCCHForm.get('pesoKg'); }
-
    get edadEnsaye() { return this.formatoCCHForm.get('edadEnsaye'); }
-
    get diametro1() { return this.formatoCCHForm.get('diametro1'); }
-
-   get diametro2() { return this.formatoCCHForm.get('diametro2'); }
-   
+   get diametro2() { return this.formatoCCHForm.get('diametro2'); } 
    get altura1() { return this.formatoCCHForm.get('altura1'); }
-
    get altura2() { return this.formatoCCHForm.get('altura2'); }
-
-   get cargaKg() { return this.formatoCCHForm.get('cargaKg'); }
-   
-   get area() { return this.formatoCCHForm.get('area'); }
-   
-   get resCompresion() { return this.formatoCCHForm.get('resCompresion'); }              
-
+   get cargaKg() { return this.formatoCCHForm.get('cargaKg'); }  
+   get area() { return this.formatoCCHForm.get('area'); }   
+   get resCompresion() { return this.formatoCCHForm.get('resCompresion'); }
+   get velocidad()       { return this.formatoCCHForm.get('velocidad'); }        
+   get tiempo()          { return this.formatoCCHForm.get('tiempo'); }               
    get falla() { return this.formatoCCHForm.get('falla'); }                          
    
   submitted = false;
@@ -178,19 +173,21 @@ export class PruebaCilindroComponent implements OnInit{
   llenado(respuesta: any){
     console.log(respuesta);
     this.formatoCCHForm.patchValue({
-      fechaColado:  respuesta.fechaColado,
-      infoNo: respuesta.informeNo,
-      clave: respuesta.claveEspecimen,
-      pesoKg: respuesta.peso,
-      edadEnsaye: respuesta.diasEnsayeFinal,
-      diametro1: respuesta.d1,
-      diametro2: respuesta.d2,
-      altura1: respuesta.h1,
-      altura2:  respuesta.h2,
-      cargaKg:  respuesta.carga,
-      area: respuesta.area,
-      resCompresion: respuesta.resCompresion,
-      falla: respuesta.falla});
+      fechaColado:      respuesta.fechaColado,
+      infoNo:           respuesta.informeNo,
+      clave:            respuesta.claveEspecimen,
+      pesoKg:           respuesta.peso,
+      edadEnsaye:       respuesta.diasEnsayeFinal,
+      diametro1:        respuesta.d1,
+      diametro2:        respuesta.d2,
+      altura1:          respuesta.h1,
+      altura2:          respuesta.h2,
+      cargaKg:          respuesta.carga,
+      area:             respuesta.area,
+      resCompresion:    respuesta.resCompresion,
+      velocidad:        respuesta.velAplicacionExp,
+      tiempo:           respuesta.tiempoDeCarga, 
+      falla:            respuesta.falla});
 
     this.onBlurAreaResis();
 
@@ -392,6 +389,64 @@ export class PruebaCilindroComponent implements OnInit{
                                             } );
   }
 
+  onBlurVelocidad(){
+    this.cargando = this. cargando +1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '9'); //Falta cambiar el numero de campo
+    formData.append('valor', this.formatoCCHForm.value.velocidad);
+    formData.append('id_ensayoCilindro', this.id_Registro);
+    this.http.post(url, formData).subscribe(res => {
+      this.respuestaSwitch(res.json());                 
+    } );
+  }
+
+  onBlurTiempo(){
+    this.cargando = this. cargando +1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '10'); //Falta cambiar el numero de campo
+    formData.append('valor', this.formatoCCHForm.value.tiempo);
+    formData.append('id_ensayoCilindro', this.id_Registro);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());   
+                                              this.onBlurCalcularVelocidad();          
+                                            } );
+  }
+
+  onBlurCalcularVelocidad(){
+    this.cargando = this. cargando +1;
+    let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
+    let search = new URLSearchParams();
+    
+    search.set('function', 'calcularVelocidad');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ensayoCilindro', this.id_Registro);
+    this.http.get(url, {search}).subscribe(res => { 
+      console.log("onBlurCalcularVelocidad :: ");
+      console.log(res.json()); 
+      this.respuestaCalcularVelocidad(res.json());
+      this.respuestaSwitch(res.json());
+    });
+  }
+
+  respuestaCalcularVelocidad(res: any){
+        this.formatoCCHForm.patchValue({
+        velocidad: res.velAplicacionExp
+      });
+  }
+
   onBlurFalla(){
     this.cargando = this.cargando + 1;
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -521,6 +576,7 @@ export class PruebaCilindroComponent implements OnInit{
     }else{
       this.oldmembers= res;
     }
+    console.log(this.oldmembers);
   }
 
 }

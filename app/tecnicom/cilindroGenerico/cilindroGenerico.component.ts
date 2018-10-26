@@ -51,6 +51,8 @@ export class CilindroGenericoComponent implements OnInit{
         cargaKg:         '',
         area:            '',
         resCompresion:   '',
+        velocidad:       '',
+        tiempo:          '',
         falla:           ''
       }
 
@@ -70,12 +72,12 @@ export class CilindroGenericoComponent implements OnInit{
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
     
-    url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
+    url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getRegistrosByID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
-    search.set('id_ensayoViga', this.id_Registro);
+    search.set('id_ensayoCilindro', this.id_Registro);
     this.http.get(url, {search}).subscribe(res => { 
                                                     this.llenado(res.json());
                                                   });
@@ -93,7 +95,9 @@ export class CilindroGenericoComponent implements OnInit{
       'altura2':        new FormControl( {value: this.FormatoCCH.altura2,       disabled: true}),
       'cargaKg':        new FormControl( {value: this.FormatoCCH.cargaKg,       disabled: true}),
       'area':           new FormControl( {value: this.FormatoCCH.area,          disabled: true}),
-      'resCompresion':  new FormControl( {value: this.FormatoCCH.resCompresion, disabled: true}),       
+      'resCompresion':  new FormControl( {value: this.FormatoCCH.resCompresion, disabled: true}),
+      'velocidad':      new FormControl( {value: this.FormatoCCH.velocidad,     disabled: true}),
+      'tiempo':         new FormControl( {value: this.FormatoCCH.tiempo,        disabled: true}),       
       'falla':          new FormControl( {value: this.FormatoCCH.falla,         disabled: true})});
   }
   
@@ -109,6 +113,8 @@ export class CilindroGenericoComponent implements OnInit{
    get cargaKg()         { return this.formatoCCHForm.get('cargaKg'); }
    get area()            { return this.formatoCCHForm.get('area'); } 
    get resCompresion()   { return this.formatoCCHForm.get('resCompresion'); }
+   get velocidad()       { return this.formatoCCHForm.get('velocidad'); }        
+   get tiempo()          { return this.formatoCCHForm.get('tiempo'); }     
    get falla()           { return this.formatoCCHForm.get('falla'); }                              
    
   submitted = false;
@@ -130,7 +136,9 @@ export class CilindroGenericoComponent implements OnInit{
         altura2:         respuesta.h2,
         cargaKg:         respuesta.carga,
         area:            respuesta.area,
-        resCompresion:   respuesta.resCompresion,
+        resCompresion:   respuesta.resistencia,
+        velocidad:       respuesta.velAplicacionExp,
+        tiempo:          respuesta.tiempoDeCarga, 
         falla:           respuesta.falla
       });
   }
