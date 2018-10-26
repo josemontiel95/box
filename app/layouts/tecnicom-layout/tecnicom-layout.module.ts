@@ -22,6 +22,7 @@ import { dashboardVigaComponent } from '../../tecnicom/dashboardViga/dashboardVi
 import { PruebaCilindroComponent } from '../../tecnicom/pruebaCilindro/pruebaCilindro.component';
 import { PruebaVigaComponent } from '../../tecnicom/pruebaViga/pruebaViga.component';
 import { VigaGenericoComponent } from '../../tecnicom/vigaGenerico/vigaGenerico.component';
+import { CilindroGenericoComponent } from '../../tecnicom/cilindroGenerico/cilindroGenerico.component';
 import { PruebaCuboComponent } from '../../tecnicom/pruebaCubo/pruebaCubo.component';
 
 
@@ -60,8 +61,8 @@ import { ToastrModule } from 'ngx-toastr';
   GridCuboComponent,
   GridVigaComponent,
   PruebaCuboComponent,
-  VigaGenericoComponent
- 
+  VigaGenericoComponent,
+  CilindroGenericoComponent
   ]
 })
 

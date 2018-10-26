@@ -35,12 +35,13 @@ export class PruebaCilindroComponent implements OnInit{
   private gridColumnApi;
   rowSelection;
   columnDefs;
-  cargando;
+  cargando= 2;
   hiddenA = false;
   hiddenB = false;
   hiddenC = false;
   hidden = false;
   locked =false;
+  oldmembers;
   mis_fallas: Array<any>;
  
   
@@ -72,7 +73,7 @@ export class PruebaCilindroComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_Footer=params.id; this.id_Registro=params.id2}); //Recibe dos parametros
     //El primer parametro es para recibir el numero de registro y el segundo el numero de formato.
-    this.cargando=1;
+    this.cargando = this.cargando + 1;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -86,7 +87,8 @@ export class PruebaCilindroComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res =>{
       this.llenaRapido(res.json());
       this.llenado(res.json());
-      //this.desactivaCampos(res.json()); 
+      this.llenadoValidator(res.json());
+      //this.respuestaSwitch(res.json());
     });
 
     url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
@@ -94,8 +96,20 @@ export class PruebaCilindroComponent implements OnInit{
     search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaFallas(res.json()) );
+    this.http.get(url, {search}).subscribe(res => {
+      this.llenaFallas(res.json());
+      //this.respuestaSwitch(res.json());
+    });
 
+    url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getOldMembers');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('id_ensayoCilindro', this.id_Registro);
+    this.http.get(url, {search}).subscribe(res => { 
+      this.llamaOldMembers(res.json());
+    });
     this.formatoCCHForm = new FormGroup({
       'fechaColado': new FormControl( {value: this.FormatoCCH.fechaColado, disabled: true}),
       'infoNo': new FormControl( {value: this.FormatoCCH.infoNo, disabled: true}),
@@ -142,7 +156,16 @@ export class PruebaCilindroComponent implements OnInit{
 
   onSubmit() { this.submitted = true; }
 
+  llenadoValidator(respuesta: any){
+    this.cargando = this.cargando -1;
+    if(respuesta.error>0){
+      window.alert(respuesta.estatus);
+    }else{ 
+    } //EXITO.
+  }
+
   llenaFallas(resp: any){
+    this.cargando = this.cargando -1;
     console.log(resp);
     this.mis_fallas= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ ){
@@ -154,8 +177,6 @@ export class PruebaCilindroComponent implements OnInit{
 
   llenado(respuesta: any){
     console.log(respuesta);
-    this.cargando = this.cargando-1;
-
     this.formatoCCHForm.patchValue({
       fechaColado:  respuesta.fechaColado,
       infoNo: respuesta.informeNo,
@@ -197,6 +218,10 @@ export class PruebaCilindroComponent implements OnInit{
   llenarDespues(){
     this.cargando = this.cargando +1;
     this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+this.id_Footer]);
+  }
+
+  cambiarCargando(num){
+    this.cargando=this.cargando + num;
   }
 
   registroCompletado(){
@@ -246,7 +271,7 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.onBlurAreaResis();
-                                              //this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());                 
                                             } );
   }
 
@@ -264,7 +289,7 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.onBlurAreaResis();
-                                              //this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());                 
                                             } );
   }
 
@@ -317,7 +342,7 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.onBlurAreaResis();
-                                              //this.respuestaSwitch(res.json());                 
+                                              this.respuestaSwitch(res.json());                 
                                             } );
   }
   
@@ -380,7 +405,6 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.falla);
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-
                                               this.respuestaSwitch(res.json());                 
                                             } );
   }
@@ -392,7 +416,7 @@ export class PruebaCilindroComponent implements OnInit{
        location.reload();
      }
      else{
-          console.log(this.id_registro);
+         
           this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);        
      }
    }
@@ -401,8 +425,9 @@ export class PruebaCilindroComponent implements OnInit{
     this.cargando = this.cargando -1; 
     console.log(res);
     if(res.error!= 0){
+      window.alert("Hola");
       window.alert(res.estatus);
-      location.reload();
+      //location.reload();
     }
     else{    
         //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
@@ -478,6 +503,23 @@ export class PruebaCilindroComponent implements OnInit{
       this.hiddenC = true;
       this.hidden = false;
 
+    }
+  }
+
+  /*
+    Manejo de los Old Members
+  */
+
+  llamaOldMembers(res){
+    this.cargando=this.cargando-1;
+    console.log("llamaOldMembers :: res:");
+    console.log(res);
+    if(res.error == 12){
+      this.oldmembers=[]; //Se asigna oldMembers a un arreglo vacio.
+    }else if(res.error > 0){
+      window.alert(res.estatus);
+    }else{
+      this.oldmembers= res;
     }
   }
 

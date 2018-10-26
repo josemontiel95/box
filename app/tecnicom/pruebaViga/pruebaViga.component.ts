@@ -212,6 +212,7 @@ export class PruebaVigaComponent implements OnInit{
   cambiarCargando(num){
     this.cargando=this.cargando + num;
   }
+
   registroCompletado(){
     this.cargando = this. cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -705,7 +706,7 @@ export class PruebaVigaComponent implements OnInit{
     console.log("llemaOldMembers :: res:");
     console.log(res);
     if(res.error == 12){
-      this.oldmembers=[];
+      this.oldmembers=[]; //Se asigna oldMembers a un arreglo vacio.
     }else if(res.error > 0){
       window.alert(res.estatus);
     }else{
