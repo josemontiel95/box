@@ -241,11 +241,11 @@ export class ClienteDetailComponent implements OnInit {
     search.set('rol_usuario_id', this.global.rol);
     search.set('cliente_id', this.id);
     this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
-                                            this.rowData= res.json();
-                                            this.gridApi.sizeColumnsToFit();
-                                            this.cargando=this.cargando-1;
-                                          });
+          console.log(res.json());
+          this.rowData= res.json();
+          this.gridApi.sizeColumnsToFit();
+          this.cargando=this.cargando-1;
+        });
   }
 
 
