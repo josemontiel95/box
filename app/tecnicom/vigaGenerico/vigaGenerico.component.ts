@@ -176,11 +176,11 @@ export class VigaGenericoComponent implements OnInit{
      disApoyos:       respuesta.disApoyo,
      disCarga:        respuesta.disCarga,
      cargaAplicada:   respuesta.carga,
-     moduloRuptura:   respuesta.moduloRuptura,
      defectos:        respuesta.defectos,
      velocidad:       respuesta.velAplicacionExp,
      tiempo:          respuesta.tiempoDeCarga, 
-     realizo:         respuesta.nombre 
+     realizo:         respuesta.nombre,
+     moduloRuptura:   respuesta.mr
    });
   }
   
