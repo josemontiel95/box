@@ -32,6 +32,10 @@ export class dashboardCuboComponent implements OnInit{
   global: Global;
   private gridApi;
   private gridColumnApi;
+  link = "";
+  linkFormatoCampo = "";
+  preliminar = false;
+  preliminarGabs= false;
   rowSelection;
   columnDefs;
   cargando= 4;
@@ -81,7 +85,7 @@ export class dashboardCuboComponent implements OnInit{
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id_footer=params.id); 
-    this.cargando=0;
+    this.cargando=1;
 
     let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -89,11 +93,14 @@ export class dashboardCuboComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_footerEnsayo', this.id_footer);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
+    this.http.get(url, {search}).subscribe(res =>{ 
+      this.llenado(res.json());
+      this.llenadoValidator(res.json(), "getFooterByID");
+      this.sinNombre(res.json());
+    });
 
     url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     search = new URLSearchParams();
-
     search.set('function', 'getForDroptdownBasculas');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
@@ -120,73 +127,12 @@ export class dashboardCuboComponent implements OnInit{
                                                     this.llenaPrensas(res.json()); 
                                                     });
 
-    /*
-
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-    let search = new URLSearchParams();
-    
-   
-    search.set('function', 'getForDroptdownJefeBrigadaCono');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_ordenDeTrabajo', this.id_orden);
-    this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
-
-    search = new URLSearchParams();
-    search.set('function', 'getForDroptdownJefeBrigadaVarilla');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_ordenDeTrabajo', this.id_orden);
-    this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
-
-    search = new URLSearchParams();
-    search.set('function', 'getForDroptdownJefeBrigadaFlexometro');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_ordenDeTrabajo', this.id_orden);
-    this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
-
-    url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
-    search = new URLSearchParams();
-    search.set('function', 'getformatoDefoults');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => {  
-      this.maxNoOfRegistrosRev = res.json().maxNoOfRegistrosRev;
-      this.cargando=this.cargando-1;
-      console.log("getformatoDefoults :: this.maxNoOfRegistrosRev: "+this.maxNoOfRegistrosRev);
-    });
-
-    url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
-    search = new URLSearchParams();
-    search.set('function', 'getNumberOfRegistrosByID');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id',  this.global.rol);
-    search.set('formatoRegistroRev_id', this.id_formato);
-    this.http.get(url, {search}).subscribe(res => {
-      this.numberOfRegistros =res.json().numberOfRegistrosByID;
-      this.cargando          =this.cargando-1;
-      console.log("getNumberOfRegistrosByID :: this.numberOfRegistros: "+this.numberOfRegistros);
-    }); 
-
-
-    url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
-    search = new URLSearchParams();
-    search.set('function', 'getInfoByID');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id',  this.global.rol);
-    search.set('id_formatoRegistroRev', this.id_formato);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) ); 
-
-    */
-
-
     this.formatoCCHForm = new FormGroup({
       'fechaEnsayo':         new FormControl( {value: this.FormatoCCH.fechaEnsayo, disabled: true }),
-      'observaciones':   new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden }),       
-      'bascula':            new FormControl( {value: this.FormatoCCH.bascula, disabled: this.hidden },  [Validators.required]),
-      'regla':         new FormControl( {value: this.FormatoCCH.regla, disabled: this.hidden },  [Validators.required]),
-      'prensa':      new FormControl( {value: this.FormatoCCH.prensa, disabled: this.hidden },  [Validators.required]),
+      'observaciones':       new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden }),       
+      'bascula':             new FormControl( {value: this.FormatoCCH.bascula, disabled: this.hidden },  [Validators.required]),
+      'regla':               new FormControl( {value: this.FormatoCCH.regla, disabled: this.hidden },  [Validators.required]),
+      'prensa':              new FormControl( {value: this.FormatoCCH.prensa, disabled: this.hidden },  [Validators.required]),
     });
   }
 
@@ -251,30 +197,160 @@ export class dashboardCuboComponent implements OnInit{
      regla:            respuesta.regVerFle_id,
      prensa:           respuesta.prensa_id
     });
-     this.formatoStatus=(respuesta.status == 0 ? true : false);
-     console.log(this.formatoStatus);
-     //this.cargando=this.cargando-1;
-  }
 
- 
-  /*
-  llenado(respuesta: any){
-    console.log(respuesta);
-
-    this.formatoCCHForm.patchValue({
-      fechaEnsayo:     respuesta.fechaEnsayo, //Falta ver el nombre real de la respuesta
-      observaciones:   respuesta.observaciones,
-      cono:            respuesta.cono_id,
-      varilla:         respuesta.varilla_id,
-      flexometro:      respuesta.flexometro_id,
-      termometro:      respuesta.termometro_id
-    });
+    this.link = respuesta.preliminarGabs;
+    this.linkFormatoCampo = respuesta.preliminar;
 
     this.formatoStatus=(respuesta.status == 0 ? true : false);
+    console.log(this.formatoStatus);
+  }
 
+  sinNombre(respuesta: any){
+    //Esta if verifica si ya fue generado un PDF mediante respuesta.preliminar, si fue generado activa Visuarlizar PDF.
+    if(respuesta.preliminar == null){
+      this.preliminar = false;
+    }else{
+      this.preliminar = true;
+    }
+
+    if(respuesta.preliminarGabs == null){
+      this.preliminarGabs = false;
+    }else{
+      this.preliminarGabs = true;
+    }
+  }
+
+  cambiarCargando(num){
+    this.cargando=this.cargando + num;
+  }
+
+  /*********************************************/
+  /*CODIGO PARA VISUALIZAR EL FORMATO DE CAMPO */ 
+  visualizarFormatoDeCampoPDF(){
+    if(!this.preliminar){
+      window.alert("No se puede acceder al PDF solicitado.");
+    }else if(this.preliminar){
+      if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
+        let link = this.linkFormatoCampo;
+        window.open(link, "_blank");
+      } 
+    }                                  
+  }
+
+  /* FIN DEL BLOQUE DE VISUALIZAR EL FORMATO DE CAMPO*/
+  /***************************************************/
+
+  /***********************************************/
+  /*CODIGO PARA GENERAR PDF DE ENSAYO DE GABINO */   
+  generaPDFEnsayo(){
+    this.cargando=this.cargando+1;
+    let url = `${this.global.apiRoot}/ensayoCubo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getAllRegistrosFromFooterByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('footerEnsayo_id', this.id_footer);
+    this.http.get(url, {search}).subscribe(res => {
+      console.log(res.json());
+      this.validaRegistrosVaciosGEN(res.json());
+    });                                         
+  }
+
+  validaRegistrosVaciosGEN(res: any){
     this.cargando=this.cargando-1;
-     
-  } */
+    let isValid = true;
+    res.forEach(function (value) {
+      if(value.status == "0"){
+         isValid = false;
+      } 
+    });
+
+    if(!isValid){
+      window.alert("Tienes al menos un ensayo sin completar, todos los ensayos deben estar en ESTATUS:1 para poder Generar un PDF.");     
+    }else if(window.confirm("¿Estas seguro de Generar el PDF de Ensayo?")){
+      this.generatePDF();
+    } 
+  } //FIN ValidaCamposVacios
+
+  generatePDF(){
+    this.cargando= this.cargando + 1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'generatePDFEnsayo');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('id_footerEnsayo', this.id_footer);  
+    this.http.post(url, formData).subscribe(res => {
+      this.respuestaGeneratePDF(res.json());
+    });
+    
+  } 
+
+  respuestaGeneratePDF(res: any){
+    if(res.error==0){
+      this.cargando=this.cargando-1;
+      window.alert("Exito al crear el PDF de Ensayo.");
+      //this.reloadData();
+    }else{
+      window.alert(res.estatus);
+      //location.reload();
+    } 
+  }
+
+  /* FIN DEL BLOQUE DE GENERACION PDF DE ENSAYO*/
+  /*********************************************/
+
+  /*************************************************/
+/*CODIGO PARA VISUALIZAR PDF DE ENSAYO DE GABINO */  
+
+  visualizarFormatoCampo(){
+    if(!this.preliminarGabs){
+        window.alert("Para Visualizar PDF: Primero debes Generar el PDF dando click al botón Generar PDF.");
+      }else if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
+        let link = this.link;
+        window.open(link, "_blank");
+      } 
+  }
+
+  obtenStatusVisualizarPDF(){
+      this.cargando=this.cargando+1;
+      let url = `${this.global.apiRoot}/ensayoCubo/get/endpoint.php`;
+      let search = new URLSearchParams();
+      search.set('function', 'getAllRegistrosFromFooterByID');
+      search.set('token', this.global.token);
+      search.set('rol_usuario_id', this.global.rol);
+      search.set('footerEnsayo_id', this.id_footer);
+      this.http.get(url, {search}).subscribe(res => {
+        this.validaRegistrosVaciosVisualizar(res.json());
+    });
+  }
+
+  validaRegistrosVaciosVisualizar(res: any){
+    this.cargando=this.cargando-1;
+    let isValid = true;
+    res.forEach(function (value) {
+      if(value.status == "0"){
+         isValid = false;
+      }
+    });
+
+    if(!isValid){
+      window.alert("No hay vigas ensayadas, para poder Visualizar un PDF tiene que haber al menos una ensayada..");     
+    }else{
+      if(!this.preliminarGabs){
+        window.alert("Para Visualizar PDF: Primero debes Generar el PDF dando click al botón Generar PDF.");
+      }else if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
+        let link = this.link;
+        window.open(link, "_blank");
+      } 
+    } 
+  } 
+
+ /* FIN DEL BLOQUE DE GENERACION PDF DE ENSAYO*/
+ /*********************************************/
+
+
 
   obtenStatusReg(){
     let url = `${this.global.apiRoot}/ensayoCubo/get/endpoint.php`;
@@ -472,6 +548,15 @@ export class dashboardCuboComponent implements OnInit{
 
   regresaPendientes(){
     this.router.navigate(['tecnico/pendientes/']);
+  }
+
+  llenadoValidator(respuesta: any, caller){
+    this.cargando = this.cargando -1;
+    if(respuesta.error>0){
+      window.alert(caller + " :: " +respuesta.estatus);
+    }else{
+      //EXITO. 
+    } 
   }
 
 }

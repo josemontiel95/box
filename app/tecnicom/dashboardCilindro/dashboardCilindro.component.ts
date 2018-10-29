@@ -30,13 +30,18 @@ export class dashboardCilindroComponent implements OnInit{
   id_registro: string;
   title = 'app';
   global: Global;
+  link = "";
+  linkFormatoCampo = "";
   private gridApi;
   private gridColumnApi;
+  preliminar = false;
+  preliminarGabs= false;
   rowSelection;
   columnDefs;
   cargando= 0;
   hidden = true;
   hiddenf= true;
+  isValid=false;
   mis_tipos: Array<any>;
   mis_lab: Array<any>;
   mis_cli: Array<any>;
@@ -92,6 +97,7 @@ export class dashboardCilindroComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res =>{ 
       this.llenado(res.json());
       this.llenadoValidator(res.json(), "getFooterByID");
+      this.sinNombre(res.json());
     });
 
     url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
@@ -193,14 +199,164 @@ export class dashboardCilindroComponent implements OnInit{
      regla:            respuesta.regVerFle_id,
      prensa:           respuesta.prensa_id
     });
+
+    this.link = respuesta.preliminarGabs;
+    this.linkFormatoCampo = respuesta.preliminar;
+
      this.formatoStatus=(respuesta.status == 0 ? true : false);
      console.log(this.formatoStatus);
      //this.cargando=this.cargando-1;
   }
 
+  sinNombre(respuesta: any){
+    //Esta if verifica si ya fue generado un PDF mediante respuesta.preliminar, si fue generado activa Visuarlizar PDF.
+    if(respuesta.preliminar == null){
+      this.preliminar = false;
+    }else{
+      this.preliminar = true;
+    }
+
+    if(respuesta.preliminarGabs == null){
+      this.preliminarGabs = false;
+      this.isValid = false;
+    }else{
+      this.preliminarGabs = true;
+      this.isValid = true;
+    }
+  }
+
   cambiarCargando(num){
     this.cargando=this.cargando + num;
   }
+
+
+/*********************************************/
+  /*CODIGO PARA VISUALIZAR EL FORMATO DE CAMPO */ 
+  visualizarFormatoDeCampoPDF(){
+    if(!this.preliminar){
+      window.alert("No se puede acceder al PDF solicitado.");
+    }else if(this.preliminar){
+      if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
+        let link = this.linkFormatoCampo;
+        window.open(link, "_blank");
+      } 
+    }                                  
+  }
+
+  /* FIN DEL BLOQUE DE VISUALIZAR EL FORMATO DE CAMPO*/
+  /***************************************************/
+
+
+  
+  /***********************************************/
+  /*CODIGO PARA GENERAR PDF DE ENSAYO DE GABINO */   
+  generaPDFEnsayo(){
+    this.cargando=this.cargando+1;
+    let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getAllRegistrosFromFooterByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('footerEnsayo_id', this.id_footer);
+    this.http.get(url, {search}).subscribe(res => {
+      console.log(res.json());
+      this.validaRegistrosVaciosGEN(res.json());
+    });                                         
+  }
+
+  validaRegistrosVaciosGEN(res: any){
+    this.cargando=this.cargando-1;
+    let isValid = true;
+    res.forEach(function (value) {
+      if(value.status == "0"){
+         isValid = false;
+      } 
+    });
+
+    if(!isValid){
+      window.alert("Tienes al menos un ensayo sin completar, todos los ensayos deben estar en ESTATUS:1 para poder Generar un PDF.");     
+    }else if(window.confirm("¿Estas seguro de Generar el PDF de Ensayo?")){
+      this.generatePDF();
+    } 
+  } //FIN ValidaCamposVacios
+
+  generatePDF(){
+    this.cargando= this.cargando + 1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'generatePDFEnsayo');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('id_footerEnsayo', this.id_footer);  
+    this.http.post(url, formData).subscribe(res => {
+      this.respuestaGeneratePDF(res.json());
+    });
+    
+  } 
+
+  respuestaGeneratePDF(res: any){
+    if(res.error==0){
+      this.cargando=this.cargando-1;
+      window.alert("Exito al crear el PDF de Ensayo.");
+      //this.reloadData();
+    }else{
+      window.alert(res.estatus);
+      //location.reload();
+    } 
+  }
+
+  /* FIN DEL BLOQUE DE GENERACION PDF DE ENSAYO*/
+  /*********************************************/
+
+ /*************************************************/
+/*CODIGO PARA VISUALIZAR PDF DE ENSAYO DE GABINO */  
+
+  visualizarFormatoCampo(){
+    if(!this.preliminarGabs){
+        window.alert("Para Visualizar PDF: Primero debes Generar el PDF dando click al botón Generar PDF.");
+      }else if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
+        let link = this.link;
+        window.open(link, "_blank");
+      } 
+  }
+
+  obtenStatusVisualizarPDF(){
+      this.cargando=this.cargando+1;
+      let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
+      let search = new URLSearchParams();
+      search.set('function', 'getAllRegistrosFromFooterByID');
+      search.set('token', this.global.token);
+      search.set('rol_usuario_id', this.global.rol);
+      search.set('footerEnsayo_id', this.id_footer);
+      this.http.get(url, {search}).subscribe(res => {
+        this.validaRegistrosVaciosVisualizar(res.json());
+    });
+  }
+
+  validaRegistrosVaciosVisualizar(res: any){
+    this.cargando=this.cargando-1;
+    let isValid = true;
+    res.forEach(function (value) {
+      if(value.status == "0"){
+         isValid = false;
+      }
+    });
+
+    if(!isValid){
+      window.alert("No hay vigas ensayadas, para poder Visualizar un PDF tiene que haber al menos una ensayada..");     
+    }else{
+      if(!this.preliminarGabs){
+        window.alert("Para Visualizar PDF: Primero debes Generar el PDF dando click al botón Generar PDF.");
+      }else if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
+        let link = this.link;
+        window.open(link, "_blank");
+      } 
+    } 
+  } 
+
+ /* FIN DEL BLOQUE DE GENERACION PDF DE ENSAYO*/
+ /*********************************************/
 
   obtenStatusReg(){
     let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
