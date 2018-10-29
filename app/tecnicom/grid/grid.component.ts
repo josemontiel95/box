@@ -1,5 +1,5 @@
-import { Component, OnInit} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,12 +13,12 @@ export class GridComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   id_orden: string;
   rowClassRules;
 
+  @Output() cambiarCargando = new EventEmitter<any>();
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -66,7 +66,6 @@ export class GridComponent implements OnInit  {
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
 
     let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -74,11 +73,10 @@ export class GridComponent implements OnInit  {
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
-                                            this.rowData= res.json();
-                                            this.gridApi.sizeColumnsToFit();
-                                            //this.cargando=this.cargando-1;
-                                          });
+      console.log(res.json());
+      this.rowData= res.json();
+      this.gridApi.sizeColumnsToFit();
+    });
   }
 
   llenaTabla(repuesta: any){
