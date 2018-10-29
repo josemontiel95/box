@@ -1,17 +1,12 @@
-import { GridComponent } from '../grid/grid.component';
 import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 //FIN DE LOS IMPORTS
@@ -29,8 +24,6 @@ export class llenaFormatoCCHComponent implements OnInit{
   id_registro: string;
   title = 'app';
   global: Global;
-  private gridApi;
-  private gridColumnApi;
   link = "";
   rowSelection;
   columnDefs;
@@ -450,8 +443,6 @@ export class llenaFormatoCCHComponent implements OnInit{
     }else{
       this.preliminar = true;
     }
-
-
   }
 
   onChangeTipoEspecimen(){
