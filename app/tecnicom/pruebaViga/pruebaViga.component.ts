@@ -261,9 +261,9 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.apoyo);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());                 
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.updateFechaEnsaye(res.json());                 
+      this.respuestaSwitch(res.json());                 
+    } );
   }
 
   onBlurFractura(){
@@ -279,10 +279,10 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.fractura);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());
-                                              this.onBlurModuloRuptura();                 
-                                              this.respuestaSwitch(res.json());                 
-                                            });
+      this.updateFechaEnsaye(res.json());
+      this.onBlurModuloRuptura();                 
+      this.respuestaSwitch(res.json());                 
+    });
   } 
 
   onBlurAncho1(){
@@ -531,11 +531,13 @@ export class PruebaVigaComponent implements OnInit{
                                             } );
   }
 
-  respuestaSwitch(res: any){
+  respuestaSwitch(res: any, caller = "N.A."){
     this.cargando = this.cargando -1; 
+    console.log("respuestaSwitch :: res:");
     console.log(res);
     if(res.error!= 0){
-      window.alert(res.estatus);
+      window.alert("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
+      console.log("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
     }
     else{    
      }
@@ -600,7 +602,7 @@ export class PruebaVigaComponent implements OnInit{
       console.log("onBlurModuloRuptura :: ");
       console.log(res.json()); 
       this.onChangeModuloRup(res.json());
-      this.respuestaSwitch(res.json());
+      this.respuestaSwitch(res.json(), "onBlurModuloRuptura");
     });
   }
 
@@ -624,7 +626,7 @@ export class PruebaVigaComponent implements OnInit{
       console.log("onBlurCalcularVelocidad :: ");
       console.log(res.json()); 
       this.respuestaCalcularVelocidad(res.json());
-      this.respuestaSwitch(res.json());
+      this.respuestaSwitch(res.json(), "onBlurCalcularVelocidad");
     });
   }
 
