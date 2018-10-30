@@ -93,6 +93,16 @@ export class PruebaCuboComponent implements OnInit{
     search.set('rol_usuario_id',  this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaFallas(res.json()) );
 
+    url = `${this.global.apiRoot}/ensayoCubo/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'getOldMembers');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('id_ensayoCubo', this.id_Registro);
+    this.http.get(url, {search}).subscribe(res => { 
+      this.llamaOldMembers(res.json());
+    });
+
     this.formatoCCHForm = new FormGroup({
       'fechaColado':      new FormControl( {value: this.FormatoCCH.fechaColado,    disabled: true}),
       'infoNo':           new FormControl( {value: this.FormatoCCH.infoNo,         disabled: true}),
