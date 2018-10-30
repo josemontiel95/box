@@ -23,6 +23,7 @@ import { PruebaCilindroComponent } from '../../tecnicom/pruebaCilindro/pruebaCil
 import { PruebaVigaComponent } from '../../tecnicom/pruebaViga/pruebaViga.component';
 import { VigaGenericoComponent } from '../../tecnicom/vigaGenerico/vigaGenerico.component';
 import { CilindroGenericoComponent } from '../../tecnicom/cilindroGenerico/cilindroGenerico.component';
+import { CuboGenericoComponent } from '../../tecnicom/cuboGenerico/cuboGenerico.component';
 import { PruebaCuboComponent } from '../../tecnicom/pruebaCubo/pruebaCubo.component';
 
 
@@ -62,7 +63,8 @@ import { ToastrModule } from 'ngx-toastr';
   GridVigaComponent,
   PruebaCuboComponent,
   VigaGenericoComponent,
-  CilindroGenericoComponent
+  CilindroGenericoComponent,
+  CuboGenericoComponent
   ]
 })
 

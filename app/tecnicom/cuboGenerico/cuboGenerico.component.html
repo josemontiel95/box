@@ -1,10 +1,5 @@
-
-<div class="panel-header panel-header-sm">
-</div>
-<div class="main-content">
-<div class="row">
-    <div class="col-lg-12 col-12 col-md-12">
-      <div class="card card-chart">
+    <!--<div class="col-lg-12 col-12 col-md-12">   tag del padre-->
+        <div class="card card-chart">
         
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
@@ -50,7 +45,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="l1">L1</label> <!--disable-->
-                    <input type="text" id="l1" class="form-control" placeholder="" formControlName="l1" required (change)="onBlurL1()">
+                    <input type="text" id="l1" class="form-control" placeholder="" formControlName="L1" required (change)="onBlurL1()">
                     <div *ngIf="l1.errors && (l1.dirty || l1.touched)" class="alert alert-danger">
                         <div *ngIf="l1.errors.required">L1 REQUERIDA.</div>
                         <div *ngIf="l1.errors.pattern">LA L1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -153,41 +148,6 @@
               </div> <!--FIN PRIMERA GRID -->
 
             </div>
-
-
-            <div class="row">
-              <div class="col-md-2 col-12">                
-
-                  <button class="btn btn-default" *ngIf="hiddenA || hiddenB" [disabled]="formatoCCHForm.invalid" (click)="llenarDespues();">
-                    <span><b> Regresar. </b></span>
-                  </button>
-              </div>
-              <div class="col-md-6 col-md-offset-6 col-12">
-
-              </div>
-              <div class="col-md-2 col-12">
-
-               <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
-                    <span><b> Cambiar Datos. </b></span>
-                  </button>
-                <button class="btn btn-default" *ngIf="hiddenC" (click)="llenarDespues()">
-                      <span><b> Llenar mas tarde. </b></span>
-                </button>
-              </div>
-              <div class="col-md-2 col-12">
-                <button class="btn btn-success" *ngIf="hiddenC" (click)="validaCamposVacios()">
-                      <span><b> Registro Completo. </b></span>
-                </button>
-              </div>
-            </div>
           </form>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12 col-12 col-md-12">
-      <app-cuboGenerico *ngFor="let member of oldmembers" [id_Registro]="member.id_ensayoCubo" (cambiarCargando)="cambiarCargando($event)"></app-cuboGenerico>
-    </div>
-  </div>
-</div>

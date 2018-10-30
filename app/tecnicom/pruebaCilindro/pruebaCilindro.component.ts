@@ -66,7 +66,7 @@ export class PruebaCilindroComponent implements OnInit{
       }
 
 
-        fallas= [{"falla":1, "id": 1},{"falla":2, "id": 2},{"falla":3, "id": 3},{"falla":4, "id": 4},{"falla":5, "id": 5},{"falla":6, "id": 6}];
+  fallas= [{"falla":"Ninguna Falla", "id": 0},{"falla":1, "id": 1},{"falla":2, "id": 2},{"falla":3, "id": 3},{"falla":4, "id": 4},{"falla":5, "id": 5},{"falla":6, "id": 6}];
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     
