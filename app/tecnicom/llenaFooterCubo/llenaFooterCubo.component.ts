@@ -112,7 +112,7 @@ export class LlenaFooterCuboComponent implements OnInit {
     this.http.get(url, {search}).subscribe(res => this.llenaBascula(res.json()) );
 
     search = new URLSearchParams();
-    search.set('function', 'getForDroptdownReglas');
+    search.set('function', 'getForDroptdownReglasVerFlex');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => this.llenaReglas(res.json()) );
@@ -197,7 +197,7 @@ export class LlenaFooterCuboComponent implements OnInit {
       this.mis_reglas[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
-    console.log("llenaVarillas this.cargando: "+this.cargando);
+    console.log("llenaReglas this.cargando: "+this.cargando);
   }
 
   onChangeObservaciones(){
