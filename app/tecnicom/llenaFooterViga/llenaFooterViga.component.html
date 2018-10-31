@@ -17,16 +17,23 @@
         </div>
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=creaCCHForm #formDir="ngForm">
-            
+            <div class="row">
+
+              <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="vAplicacion">LA VELOCIDAD DE APLICACI&Oacute;N DE CARGA ES DE: </label>
+                  <input type="text" id="vAplicacion" required class="form-control" placeholder="VELOCIDAD DE APLICACION DE CARGA" formControlName="vAplicacion" (change)="onChangeVelocidadDeAplicacion()">
+                </div>
+              </div>
+                          
+            </div> <!--FIN ROW-->
             <h6>INVENTARIO DE INSTRUMENTO</h6>
             <div class="row">
               
               <div class="col-md-6 col-12">
                  <div class="form-group">
                   <label for="prensas">PRENSA</label>
-                  <select  class="form-control" id="prensas" 
-                    required name="prensas"
-                    placeholder="Tipos"  formControlName="prensas" (change)="onChangePrensa()">
+                  <select  class="form-control" id="prensas" required placeholder="Tipos"  formControlName="prensas" (change)="onChangePrensa()">
                     <option value="" [disabled]="true">Selecciona una Prensa...</option>
                     <option *ngFor="let prensas of mis_prensas" [value]="prensas.id_herramienta">
                       {{prensas.placas}}

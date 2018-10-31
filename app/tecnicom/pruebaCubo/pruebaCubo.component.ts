@@ -31,7 +31,7 @@ export class PruebaCuboComponent implements OnInit{
   private gridColumnApi;
   rowSelection;
   columnDefs;
-  cargando;
+  cargando= 0;
   hiddenA = false;
   hiddenB = false;
   hiddenC = false;
@@ -69,7 +69,7 @@ export class PruebaCuboComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_Footer=params.id; this.id_Registro=params.id2}); //Recibe tre parametros
     //El primer parametro es para recibir el numero de registro y el segundo el numero de formato.
-    this.cargando=1;
+    this.cargando = this.cargando + 3;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -83,7 +83,7 @@ export class PruebaCuboComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => {
       this.llenaRapido(res.json());
       this.llenado(res.json());
-      //this.desactivaCampos(res.json());
+      this.llenadoValidator(res.json());   
     });
 
     url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
@@ -91,7 +91,9 @@ export class PruebaCuboComponent implements OnInit{
     search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaFallas(res.json()) );
+    this.http.get(url, {search}).subscribe(res =>{
+      this.llenaFallas(res.json());
+    });
 
     url = `${this.global.apiRoot}/ensayoCubo/get/endpoint.php`;
     search = new URLSearchParams();
@@ -138,16 +140,16 @@ export class PruebaCuboComponent implements OnInit{
 
   onSubmit() { this.submitted = true; }
 
-    llenaFallas(resp: any){
-      console.log(resp);
-      this.mis_fallas= new Array(resp.length);
-      for (var _i = 0; _i < resp.length; _i++ ){
-        this.mis_fallas[_i]=resp[_i];
-      }
-      console.log("llenaFallas this.cargando: "+this.cargando);
-    } 
-    
-
+  llenaFallas(resp: any){
+    this.cargando = this.cargando -1;
+    console.log(resp);
+    this.mis_fallas= new Array(resp.length);
+    for (var _i = 0; _i < resp.length; _i++ ){
+      this.mis_fallas[_i]=resp[_i];
+    }
+    console.log("llenaFallas this.cargando: "+this.cargando);
+  } 
+   
   llenado(respuesta: any){
     console.log(respuesta);
     this.formatoCCHForm.patchValue({
@@ -173,11 +175,20 @@ export class PruebaCuboComponent implements OnInit{
      
   }
 
+  llenadoValidator(respuesta: any){
+    this.cargando = this.cargando -1;
+    if(respuesta.error>0){
+      window.alert(respuesta.estatus);
+    }else{ 
+    } //EXITO.
+  }
+
   llenarDespues(){
     this.router.navigate(['tecnico/pendientes/dashboardCubo/'+this.id_Footer]);
   }
 
   registroCompletado(){
+    this.cargando = this.cargando + 1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCubo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -186,12 +197,22 @@ export class PruebaCuboComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('id_ensayoCubo', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-      this.respuestaSwitch(res.json());                 
+      this.respuestaSwitchRegComplete(res.json());                 
     });
-    this.router.navigate(['tecnico/pendientes/dashboardCubo/'+this.id_Footer]);
+  }
+
+  respuestaSwitchRegComplete(res){
+    if(res.error!= 0){
+      window.alert(res.estatus);
+      console.log(res.estatus);
+    }
+    else{
+      this.router.navigate(['tecnico/pendientes/dashboardCubo/'+this.id_Footer]);    
+     }
   }
   
   onBlurL1(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCubo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -208,6 +229,7 @@ export class PruebaCuboComponent implements OnInit{
   }
 
   onBlurL2(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCubo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -219,11 +241,12 @@ export class PruebaCuboComponent implements OnInit{
     formData.append('id_ensayoCubo', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
       this.onBlurAreaResis();
-      //this.respuestaSwitch(res.json());                 
+      this.respuestaSwitch(res.json());                   
     });
   }
 
   onBlurCargaKg(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCubo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -235,7 +258,7 @@ export class PruebaCuboComponent implements OnInit{
     formData.append('id_ensayoCubo', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
       this.onBlurAreaResis();
-      //this.respuestaSwitch(res.json());                 
+      this.respuestaSwitch(res.json());                   
     });
   }
 
@@ -271,14 +294,9 @@ export class PruebaCuboComponent implements OnInit{
       this.onBlurAreaResis();          
     });
   }
-
-  respuestaCalcularVelocidad(res: any){
-    this.formatoCCHForm.patchValue({
-      velocidad: res.velAplicacionExp
-    });
-  }
  
   onBlurAreaResis(){
+    this.cargando = this.cargando +1;
     let url = `${this.global.apiRoot}/ensayoCubo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'calcularAreaResis');
@@ -288,9 +306,21 @@ export class PruebaCuboComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => { 
       console.log(res); 
       this.onChangeArea(res.json());
-      //this.respuestaSwitch(res.json());
+      this.onChangeAreaValidator(res.json());
     });
   }
+
+  onChangeAreaValidator(res: any, caller = "N.A."){
+    this.cargando = this.cargando -1;
+    console.log(res.area + res.resistencia);
+    if(res.error == 5){
+      //NOTHING
+    }else if(res.error != 0){
+      window.alert("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
+      console.log("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
+    }
+  }
+
 
   onChangeArea(res: any){
     if(res.area == 0 || res.resistencia == 0 || res.velAplicacionExp == 0){
@@ -321,16 +351,17 @@ export class PruebaCuboComponent implements OnInit{
                                             } );
   }
 
-  respuestaSwitch(res: any){ 
+  respuestaSwitch(res: any, caller = "N.A."){
+    this.cargando = this.cargando -1; 
+    console.log("respuestaSwitch :: res:");
     console.log(res);
     if(res.error!= 0){
-      window.alert(res.estatus);
-      location.reload();
+      window.alert("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
+      console.log("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
     }
-    else{
-                 
-    }
-  }
+    else{    
+     }
+   }
 
   ocultar(){
     this.hidden = !this.hidden;
@@ -396,6 +427,10 @@ export class PruebaCuboComponent implements OnInit{
       this.hiddenC = true;
       this.hidden = false;
     }
+  }
+
+  cambiarCargando(num){
+    this.cargando=this.cargando + num;
   }
 
   /*

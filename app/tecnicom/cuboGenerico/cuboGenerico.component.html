@@ -4,6 +4,8 @@
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
             <h5>ENSAYO A COMPRESI&Oacute;N DE CUBOS DE CONCRETO HIDR&Aacute;ULICO </h5>
+            <hr>
+            <h6>INFORMACI&Oacute;N GENERAL DEL ENSAYO</h6>
             <div class="row"> <!--PRIMER ROW -->
               
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
@@ -39,13 +41,14 @@
                         
             </div> <!--FIN PRIMER ROW -->
 
+            <hr>
             <h6>LADO (cm)</h6>
 
             <div class="row">
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="l1">L1</label> <!--disable-->
-                    <input type="text" id="l1" class="form-control" placeholder="" formControlName="L1" required (change)="onBlurL1()">
+                    <input type="text" id="l1" class="form-control" placeholder="" formControlName="l1" required>
                     <div *ngIf="l1.errors && (l1.dirty || l1.touched)" class="alert alert-danger">
                         <div *ngIf="l1.errors.required">L1 REQUERIDA.</div>
                         <div *ngIf="l1.errors.pattern">LA L1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -58,7 +61,7 @@
                     <label for="l2">L2</label> <!--disable-->
                     <input type="text" id="l2"   
                     class="form-control" 
-                    name="l2" placeholder="L2" formControlName="l2" required (change)="onBlurL2()">
+                    name="l2" placeholder="L2" formControlName="l2" required>
                     <div *ngIf="l2.errors && (l2.dirty || l2.touched)" class="alert alert-danger">
                         <div *ngIf="l2.errors.required">L2 REQUERIDA.</div>
                         <div *ngIf="l2.errors.pattern">LA L2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -67,6 +70,7 @@
               </div> <!--FIN PRIMERA GRID -->
             </div>
 
+            <hr>
             <h6>ALTURAS (cm)</h6>
 
                       
@@ -76,7 +80,7 @@
                     <label for="cargaKg">RESISTENCIA A COMPRESI&Oacute;N Kg</label>
                     <input type="text" id="cargaKg"  
                     class="form-control" 
-                    name="cargaKg" placeholder="RESISTENCIA A COMPRESI&Oacute;N Kg" formControlName="cargaKg" required (change)="onBlurCargaKg()">
+                    name="cargaKg" placeholder="RESISTENCIA A COMPRESI&Oacute;N Kg" formControlName="cargaKg" required>
                     <div *ngIf="cargaKg.errors && (cargaKg.dirty || cargaKg.touched)" class="alert alert-danger">
                         <div *ngIf="cargaKg.errors.required">RESISTENCIA A COMPRESI&Oacute;N K REQUERIDA.</div>
                         <div *ngIf="cargaKg.errors.pattern">LA RESISTENCIA A COMPRESI&Oacute;N K DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -107,7 +111,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                 <div class="form-group"><!--PRIMER CAMPO -->
                   <label for="tiempo">TIEMPO</label> <!--disable-->
-                  <input type="text" id="tiempo"  class="form-control" name="tiempo" placeholder="TIEMPO" formControlName="tiempo" required (change)="onBlurTiempo()">
+                  <input type="text" id="tiempo"  class="form-control" name="tiempo" placeholder="TIEMPO" formControlName="tiempo" required>
                   <div *ngIf="tiempo.errors && (tiempo.dirty || tiempo.touched)" class="alert alert-danger">
                     <div *ngIf="tiempo.errors.required">TIEMPO REQUERIDO.</div>
                     <div *ngIf="tiempo.errors.pattern">EL TIEMPO DEBE CONTENER SOLO NUMEROS.</div>
@@ -136,7 +140,7 @@
                     
                    <select  class="form-control" id="falla" 
                     name="falla"
-                    placeholder="falla No"  formControlName="falla" (change)="onBlurFalla()">
+                    placeholder="falla No"  formControlName="falla">
                     <option value="0" [disabled]="true">Selecciona una falla...</option>
                     
                     <option *ngFor="let falla of fallas" [value]="falla.id">

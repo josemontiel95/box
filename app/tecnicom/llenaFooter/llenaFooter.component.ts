@@ -188,7 +188,7 @@ export class LlenaFooterComponent implements OnInit {
     console.log("llenaPrensas this.cargando: "+this.cargando);
   }
 
-  onChangeObservaciones(){
+  onChangeVelocidadDeAplicacion(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
     let formData:FormData = new FormData();

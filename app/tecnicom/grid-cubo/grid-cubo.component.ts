@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./grid-cubo.component.css']
 })
 export class GridCuboComponent implements OnInit  {
+  @Output() cambiarCargando = new EventEmitter<any>();
 	title = 'app';
   global: Global;
   private gridApi;
@@ -18,7 +19,7 @@ export class GridCuboComponent implements OnInit  {
   columnDefs;
   id_orden: string;
   id_footer: string;
-   rowClassRules;
+  rowClassRules;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -44,7 +45,8 @@ export class GridCuboComponent implements OnInit  {
 
   ngOnInit() {
      this.data.currentGlobal.subscribe(global => this.global = global);
-     this.route.params.subscribe( params => this.id_footer=params.id); 
+     this.route.params.subscribe( params => this.id_footer=params.id);
+     this.cambiarCargando.emit(+1); 
   }
 
 
@@ -65,8 +67,17 @@ export class GridCuboComponent implements OnInit  {
                                             console.log(res.json());
                                             this.rowData= res.json();
                                             this.gridApi.sizeColumnsToFit();
-                                            //this.cargando=this.cargando-1;
+                                            this.llenadoValidator(res.json(), "getAllRegistrosFromFooterByID");
                                           });
+  }
+
+  llenadoValidator(respuesta: any, caller){
+    this.cambiarCargando.emit(-1);
+    if(respuesta.error>0){
+      window.alert(caller + " :: GridCubo :: " +respuesta.estatus);
+    }else{
+      //EXITO. 
+    } 
   }
 
   llenaTabla(repuesta: any){

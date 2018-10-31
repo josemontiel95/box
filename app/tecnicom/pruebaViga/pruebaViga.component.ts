@@ -223,10 +223,18 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());
-                                              this.updateFechaEnsaye(res.json());                 
-                                            } );
-    this.router.navigate(['tecnico/pendientes/dashboardViga/'+this.id_Footer]);
+      this.respuestaSwitchRegComplete(res.json());
+    });
+  }
+
+  respuestaSwitchRegComplete(res){
+    if(res.error!= 0){
+      window.alert(res.estatus);
+      console.log(res.estatus);
+    }
+    else{
+      this.router.navigate(['tecnico/pendientes/dashboardViga/'+this.id_Footer]);    
+     }
   }
 
   onBlurCurado(){
@@ -241,8 +249,7 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('campo', '1');
     formData.append('valor', this.formatoCCHForm.value.condiCurado);
     formData.append('id_ensayoViga', this.id_Registro);
-    this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());                 
+    this.http.post(url, formData).subscribe(res => {                 
                                               this.respuestaSwitch(res.json());                 
                                             } );
   }
@@ -260,8 +267,7 @@ export class PruebaVigaComponent implements OnInit{
 
     formData.append('valor', this.formatoCCHForm.value.apoyo);
     formData.append('id_ensayoViga', this.id_Registro);
-    this.http.post(url, formData).subscribe(res => {
-      this.updateFechaEnsaye(res.json());                 
+    this.http.post(url, formData).subscribe(res => {                
       this.respuestaSwitch(res.json());                 
     } );
   }
@@ -279,7 +285,6 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.fractura);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-      this.updateFechaEnsaye(res.json());
       this.onBlurModuloRuptura();                 
       this.respuestaSwitch(res.json());                 
     });
@@ -298,7 +303,6 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.ancho1);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -317,7 +321,6 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.ancho2);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -336,7 +339,6 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.per1);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -355,7 +357,6 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.per2);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -374,7 +375,6 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.l1);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
                                               this.onBlurPromedio();
                                               this.respuestaSwitch(res.json());                 
@@ -394,7 +394,6 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.l2);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
                                               this.onBlurPromedio();
                                               this.respuestaSwitch(res.json());                 
@@ -414,7 +413,6 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.l3);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
                                               this.onBlurPromedio();
                                               this.respuestaSwitch(res.json());                
@@ -434,7 +432,6 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.disApoyos);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -454,9 +451,8 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.disCarga);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+                                              this.respuestaSwitch(res.json());                
+                                            });
   }
  
   onBlurCargaAplicada(){
@@ -472,7 +468,6 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.cargaAplicada);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());
                                               this.onBlurModuloRuptura();
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -491,9 +486,8 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.defectos);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.updateFechaEnsaye(res.json());
                                               this.respuestaSwitch(res.json());                 
-                                            } );
+                                            });
   }
 
   onBlurVelocidad(){
@@ -526,8 +520,8 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('valor', this.formatoCCHForm.value.tiempo);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());   
-                                              this.onBlurCalcularVelocidad();          
+                                              this.respuestaSwitch(res.json(),"onBlurTiempo");   
+                                              this.onBlurModuloRuptura();          
                                             } );
   }
 
@@ -535,12 +529,12 @@ export class PruebaVigaComponent implements OnInit{
     this.cargando = this.cargando -1; 
     console.log("respuestaSwitch :: res:");
     console.log(res);
-    if(res.error!= 0){
+    if(res.error != 0){
       window.alert("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
       console.log("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
+    }else{
+      //Exito
     }
-    else{    
-     }
    }
  
   mostrar(){
@@ -575,12 +569,7 @@ export class PruebaVigaComponent implements OnInit{
                                                     });
   }
 
-  updateFechaEnsaye(res: any){
-        console.log(res.fechaEnsayo);
-        this.formatoCCHForm.patchValue({
-        fechaEnsayo: res.fechaEnsayo
-      });
-  }
+  
 
 
   onChangeProm(res: any){
@@ -602,48 +591,28 @@ export class PruebaVigaComponent implements OnInit{
       console.log("onBlurModuloRuptura :: ");
       console.log(res.json()); 
       this.onChangeModuloRup(res.json());
-      this.respuestaSwitch(res.json(), "onBlurModuloRuptura");
+      this.onChangeModuloRupValidator(res.json(), "onBlurModuloRuptura");
     });
   }
 
-   onChangeModuloRup(res: any){
-        this.formatoCCHForm.patchValue({
-        moduloRuptura: res.modulo
-      });
-      this.onBlurCalcularVelocidad();
+  onChangeModuloRupValidator(res: any, caller = "N.A."){
+    this.cargando = this.cargando -1;
+    console.log(res.modulo + res.velAplicacionExp);
+    if(res.error == 5){
+      //NOTHING
+    }else if(res.error != 0){
+      window.alert("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
+      console.log("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
+    }
   }
 
-  onBlurCalcularVelocidad(){
-    this.cargando = this. cargando +1;
-    let url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
-    let search = new URLSearchParams();
-    
-    search.set('function', 'calcularVelocidad');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_ensayoViga', this.id_Registro);
-    this.http.get(url, {search}).subscribe(res => { 
-      console.log("onBlurCalcularVelocidad :: ");
-      console.log(res.json()); 
-      this.respuestaCalcularVelocidad(res.json());
-      this.respuestaSwitch(res.json(), "onBlurCalcularVelocidad");
-    });
+  onChangeModuloRup(res: any){
+    this.formatoCCHForm.patchValue({
+      moduloRuptura: res.modulo,
+      velocidad: res.velAplicacionExp
+    }); 
   }
 
-  respuestaCalcularVelocidad(res: any){
-        this.formatoCCHForm.patchValue({
-        velocidad: res.velAplicacionExp
-      });
-  }
-
- 
-/*
-  desactivaCampos(res:any){
-    if(res.completado == "SI"){
-      this.ocultar();
-    } 
-   }
-*/
   ocultar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable'; 

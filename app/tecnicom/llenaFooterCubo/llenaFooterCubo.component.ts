@@ -53,7 +53,7 @@ export class LlenaFooterCuboComponent implements OnInit {
     if(warning){
       window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
     }else{
-          if(window.confirm("¿Estas seguro dar como completado el Footer de Cilindros del día?.")){
+          if(window.confirm("¿Estas seguro dar como completado el Footer de Cubos del día?.")){
             //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
             this.router.navigate(['tecnico/pendientes/dashboardCubo/'+this.id_Footer]);
           }
@@ -61,8 +61,7 @@ export class LlenaFooterCuboComponent implements OnInit {
 
   }
   
-  recibeFormatoID(res: any)
-  {
+  recibeFormatoID(res: any){
     this.id_formato= res.id_formatoRegistroRev;
     console.log(this.id_formato); 
   }
@@ -200,21 +199,20 @@ export class LlenaFooterCuboComponent implements OnInit {
     console.log("llenaReglas this.cargando: "+this.cargando);
   }
 
-  onChangeObservaciones(){
+  onChangeVelocidadDeAplicacion(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '4');
     formData.append('valor', this.creaCCHForm.value.vAplicacion);
     formData.append('id_footerEnsayo', this.id_Footer);
     this.http.post(url, formData).subscribe(res => {
-                                              console.log(this.id_Footer);
-                                              this.validaRespuesta(res.json());                 
-                                            } );
+      console.log(this.id_Footer);
+      this.validaRespuesta(res.json());                 
+    });
   }
   
   onChangeBascula(){
@@ -224,14 +222,13 @@ export class LlenaFooterCuboComponent implements OnInit {
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '1');
     formData.append('valor', this.creaCCHForm.value.bascula);
     formData.append('id_footerEnsayo', this.id_Footer);
     this.http.post(url, formData).subscribe(res => {
-                                              console.log(this.id_Footer);
-                                              this.validaRespuesta(res.json());                 
-                                            } );
+      console.log(this.id_Footer);
+      this.validaRespuesta(res.json());                 
+    });
   }
 
   onChangeRegla(){
@@ -241,14 +238,13 @@ export class LlenaFooterCuboComponent implements OnInit {
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '2');
     formData.append('valor', this.creaCCHForm.value.regla);
     formData.append('id_footerEnsayo', this.id_Footer);
     this.http.post(url, formData).subscribe(res => {
-                                              console.log(this.id_Footer);
-                                              this.validaRespuesta(res.json());                 
-                                            } );
+      console.log(this.id_Footer);
+      this.validaRespuesta(res.json());                 
+    });
   }
 
   onChangePrensa(){
@@ -258,14 +254,13 @@ export class LlenaFooterCuboComponent implements OnInit {
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '3');
     formData.append('valor', this.creaCCHForm.value.prensa);
     formData.append('id_footerEnsayo', this.id_Footer);
     this.http.post(url, formData).subscribe(res => {
-                                              console.log(this.id_Footer);
-                                              this.validaRespuesta(res.json());                 
-                                            } );
+      console.log(this.id_Footer);
+      this.validaRespuesta(res.json());                 
+    });
   }  
    
   

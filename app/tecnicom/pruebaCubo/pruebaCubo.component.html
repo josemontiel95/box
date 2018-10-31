@@ -1,3 +1,8 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
 
 <div class="panel-header panel-header-sm">
 </div>
@@ -8,7 +13,10 @@
         
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="llenarDespues();"></i>
             <h5>ENSAYO A COMPRESI&Oacute;N DE CUBOS DE CONCRETO HIDR&Aacute;ULICO </h5>
+            <hr>
+            <h6>INFORMACI&Oacute;N GENERAL DEL ENSAYO</h6>
             <div class="row"> <!--PRIMER ROW -->
               
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
@@ -44,6 +52,7 @@
                         
             </div> <!--FIN PRIMER ROW -->
 
+            <hr>
             <h6>LADO (cm)</h6>
 
             <div class="row">
@@ -72,6 +81,7 @@
               </div> <!--FIN PRIMERA GRID -->
             </div>
 
+            <hr>
             <h6>ALTURAS (cm)</h6>
 
                       
@@ -99,9 +109,7 @@
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="resCompresion">RESISTENCIA A COMPRESI&Oacute;N Kg/cm<sup>2</sup></label>
-                    <input type="text" id="resCompresion"  
-                    class="form-control" 
-                    name="resCompresion" placeholder="RESISTENCIA A COMPRESION Kg/cm" formControlName="resCompresion">
+                    <input type="text" id="resCompresion" class="form-control" placeholder="RESISTENCIA A COMPRESION Kg/cm" formControlName="resCompresion">
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->    
             </div>
@@ -175,7 +183,7 @@
                 </button>
               </div>
               <div class="col-md-2 col-12">
-                <button class="btn btn-success" *ngIf="hiddenC" (click)="validaCamposVacios()">
+                <button class="btn btn-success" *ngIf="hiddenC" [disabled]="formatoCCHForm.invalid" (click)="validaCamposVacios()">
                       <span><b> Registro Completo. </b></span>
                 </button>
               </div>

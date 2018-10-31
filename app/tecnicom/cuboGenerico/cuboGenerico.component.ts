@@ -114,6 +114,7 @@ export class CuboGenericoComponent implements OnInit{
   onSubmit() { this.submitted = true; } 
 
     llenado(respuesta: any){
+    console.log(respuesta);
     this.cambiarCargando.emit(-1);
     this.formatoCCHForm.patchValue({
       fechaColado:      respuesta.fechaColado,
@@ -125,7 +126,7 @@ export class CuboGenericoComponent implements OnInit{
       l2:               respuesta.l2,
       cargaKg:          respuesta.carga,
       area:             respuesta.area,
-      resCompresion:    respuesta.resCompresion,
+      resCompresion:    respuesta.resistencia,
       velocidad:        respuesta.velAplicacionExp,
       tiempo:           respuesta.tiempoDeCarga, 
       falla:            respuesta.falla,

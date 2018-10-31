@@ -57,7 +57,7 @@ export class GridComponent implements OnInit  {
 
   ngOnInit() {
      this.data.currentGlobal.subscribe(global => this.global = global);
- 
+     this.cambiarCargando.emit(+1);
   }
 
 
@@ -76,8 +76,19 @@ export class GridComponent implements OnInit  {
       console.log(res.json());
       this.rowData= res.json();
       this.gridApi.sizeColumnsToFit();
+      this.llenadoValidator(res.json(), "getAllRegistrosFromFooterByID");
     });
   }
+
+  llenadoValidator(respuesta: any, caller){
+    this.cambiarCargando.emit(-1);
+    if(respuesta.error>0){
+      window.alert(caller + " :: GridFormatosPendientes :: " +respuesta.estatus);
+    }else{
+      //EXITO. 
+    } 
+  }
+
 
   llenaTabla(repuesta: any){
     console.log(repuesta)
