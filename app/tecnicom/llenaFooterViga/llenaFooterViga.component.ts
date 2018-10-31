@@ -36,7 +36,9 @@ export class LlenaFooterVigaComponent implements OnInit {
     creaCCHForm: FormGroup;
       cch = {
       prensas:'',
-      flexo:''}
+      flexo:'',
+      vAplicacion: '',
+      }
   
   ValidaSiguiente(){
 
@@ -111,6 +113,7 @@ export class LlenaFooterVigaComponent implements OnInit {
     this.http.get(url, {search}).subscribe(res => {console.log(res);this.llenado(res.json());} );
 
     this.creaCCHForm = new FormGroup({
+      'vAplicacion': new FormControl( this.cch.vAplicacion, Validators.required),
       'prensas': new FormControl( this.cch.prensas),
       'flexo': new FormControl( this.cch.flexo )
        });
@@ -133,7 +136,8 @@ export class LlenaFooterVigaComponent implements OnInit {
 
     this.creaCCHForm.patchValue({
      flexo: respuesta.regVerFle_id,
-     prensas: respuesta.prensa_id
+     prensas: respuesta.prensa_id,
+     vAplicacion: respuesta.observaciones,
     });
   }
 
@@ -194,6 +198,22 @@ export class LlenaFooterVigaComponent implements OnInit {
                                               console.log(this.id_Footer);
                                               this.validaRespuesta(res.json());                 
                                             } );
+  }
+
+  onChangeVelocidadDeAplicacion(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('campo', '4');
+    formData.append('valor', this.creaCCHForm.value.vAplicacion);
+    formData.append('id_footerEnsayo', this.id_Footer);
+    this.http.post(url, formData).subscribe(res => {
+      console.log(this.id_Footer);
+      this.validaRespuesta(res.json());                 
+    });
   }
 
   validaRespuesta(res:any){

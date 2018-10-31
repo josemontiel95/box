@@ -146,7 +146,7 @@ export class dashboardVigaComponent implements OnInit{
 
     this.formatoCCHForm = new FormGroup({
       'fechaEnsayo':      new FormControl( {value: this.FormatoCCH.fechaEnsayo, disabled: true }),
-      'observaciones':    new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden }),       
+      'observaciones':    new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden }, [Validators.required]),       
       'bascula':          new FormControl( {value: this.FormatoCCH.bascula, disabled: this.hidden },  [Validators.required]),
       'regla':            new FormControl( {value: this.FormatoCCH.regla, disabled: this.hidden },  [Validators.required]),
       'prensa':           new FormControl( {value: this.FormatoCCH.prensa, disabled: this.hidden },  [Validators.required]),
@@ -242,6 +242,10 @@ export class dashboardVigaComponent implements OnInit{
 
   }
 
+  cambiarCargando(num){
+    this.cargando=this.cargando + num;
+  }
+
   reloadData(){
     this.cargando = this.cargando +1;
     let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
@@ -320,8 +324,8 @@ export class dashboardVigaComponent implements OnInit{
   } 
 
   respuestaGeneratePDF(res: any){
+    this.cargando=this.cargando-1;
     if(res.error==0){
-      this.cargando=this.cargando-1;
       window.alert("Exito al crear el PDF de Ensayo.");
       this.reloadData();
     }else{
@@ -553,6 +557,7 @@ export class dashboardVigaComponent implements OnInit{
   }
 
   onChangeObservaciones(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -567,7 +572,7 @@ export class dashboardVigaComponent implements OnInit{
                                               console.log(this.id_footer);
                                               this.validaRespuesta(res.json());                 
                                             } );
-  }  
+  }    
 
 
   validaRespuesta(res:any){

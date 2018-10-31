@@ -24,7 +24,7 @@ export class PendientesComponent implements OnInit{
   private gridApi;
   rowSelection;
   columnDefs;
-  cargando= 1;
+  cargando= 0;
   id_registrosCampo: string;
   id = "";
   tipo = "";
@@ -59,12 +59,13 @@ export class PendientesComponent implements OnInit{
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id_registrosCampo=params.id);
-    this.cargando=1;
+    this.cargando=0;
   }
 
   rowData: any;
 
   onGridReady(params) {
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
 
@@ -77,8 +78,21 @@ export class PendientesComponent implements OnInit{
                                             console.log(res.json());
                                             this.rowData= res.json();
                                             this.gridApi.sizeColumnsToFit();
-                                            this.cargando=this.cargando-1;
+                                            this.llenadoValidator(res.json(), "getAllRegistrosFromFooterByID");
                                           });
+  }
+
+  llenadoValidator(respuesta: any, caller){
+    this.cargando = this.cargando -1;
+    if(respuesta.error>0){
+      window.alert(caller + " :: GridFormatosPendientes :: " +respuesta.estatus);
+    }else{
+      //EXITO. 
+    } 
+  }
+
+  cambiarCargando(num){
+    this.cargando=this.cargando + num;
   }
 
  onSelectionChanged(event: EventListenerObject) {

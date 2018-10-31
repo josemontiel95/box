@@ -22,8 +22,7 @@
               <div class="col-md-12 col-12">
                 <div class="form-group">
                   <label for="vAplicacion">LA VELOCIDAD DE APLICACI&Oacute;N DE CARGA ES DE: </label>
-                  <input type="text" id="vAplicacion" class="form-control" required 
-                  name="vAplicacion" placeholder="" formControlName="vAplicacion" (change)="onChangeObservaciones()">
+                  <input type="text" id="vAplicacion" class="form-control" required placeholder="VELOCIDAD DE APLICACION DE CARGA" formControlName="vAplicacion" (change)="onChangeVelocidadDeAplicacion()">
                 </div>
               </div>
                           
@@ -33,11 +32,8 @@
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="bascula">BASCULA</label>
-                  <select  class="form-control" id="bascula" 
-                    required name="bascula"
-                    placeholder="Tipos"  formControlName="bascula" (change)="onChangeBascula()">
+                  <select  class="form-control" id="bascula" required placeholder="BASCULA"  formControlName="bascula" (change)="onChangeBascula()">
                     <option value="" [disabled]="true">Selecciona una bascula...</option>
-                    
                     <option *ngFor="let bascula of mis_basculas" [value]="bascula.id_herramienta">
                       {{bascula.placas}}
                     </option>
@@ -55,11 +51,8 @@
               <div class="col-md-4 col-12">
                  <div class="form-group">
                   <label for="prensa">PRENSA</label>
-                  <select  class="form-control" id="prensa" 
-                    required name="prensa"
-                    placeholder="Tipos"  formControlName="prensa" (change)="onChangePrensa()">
+                  <select  class="form-control" id="prensa" required placeholder="PRENSA"  formControlName="prensa" (change)="onChangePrensa()">
                     <option value="" [disabled]="true">Selecciona una prensa...</option>
-                    
                     <option *ngFor="let prensa of mis_prensas" [value]="prensa.id_herramienta">
                       {{prensa.placas}}
                     </option>
@@ -75,11 +68,8 @@
               <div class="col-md-4 col-12">
                  <div class="form-group">
                   <label for="regla">REGLA</label>
-                  <select  class="form-control" id="regla" 
-                    required name="regla"
-                    placeholder="Tipos"  formControlName="regla" (change)="onChangeRegla()">
+                  <select  class="form-control" id="regla" required placeholder="REGLA"  formControlName="regla" (change)="onChangeRegla()">
                     <option value="" [disabled]="true">Selecciona un cono...</option>
-                    
                     <option *ngFor="let regla of mis_reglas" [value]="regla.id_herramienta">
                       {{regla.placas}}
                     </option>
@@ -91,7 +81,6 @@
                   </div>
                 </div>
               </div>
-              
             </div>
 
             <div class="btn-group" style="float: right; padding-right: 10%;">

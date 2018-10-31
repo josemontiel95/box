@@ -91,7 +91,6 @@ export class PruebaCilindroComponent implements OnInit{
       this.llenaRapido(res.json());
       this.llenado(res.json());
       this.llenadoValidator(res.json());
-      //this.respuestaSwitch(res.json());
     });
 
     url = `${this.global.apiRoot}/concretera/get/endpoint.php`;
@@ -231,12 +230,20 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-    this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+this.id_Footer]);
+      this.respuestaSwitchRegComplete(res.json());                 
+    });
   }
 
-  
+  respuestaSwitchRegComplete(res){
+    if(res.error!= 0){
+      window.alert(res.estatus);
+      console.log(res.estatus);
+    }
+    else{
+      this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+this.id_Footer]);    
+     }
+  }
+
   onBlurPesoKg(){
     this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -356,15 +363,18 @@ export class PruebaCilindroComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => { 
                                                     console.log(res); 
                                                     this.onChangeArea(res.json());
-                                                    this.onChangeAreaValidator(res.json());
+                                                    this.onChangeAreaValidator(res.json(),"onBlurAreaResis");
                                                     });
   }
 
-  onChangeAreaValidator(res: any){
+  onChangeAreaValidator(res: any, caller = "N.A."){
     this.cargando = this.cargando -1;
     console.log(res.area + res.resistencia);
-    if(res.error != 0){
-      window.alert(res.estatus);
+    if(res.error == 5){
+      //NOTHING
+    }else if(res.error != 0){
+      window.alert("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
+      console.log("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
     }
   }
 
@@ -374,7 +384,8 @@ export class PruebaCilindroComponent implements OnInit{
     }else{
         this.formatoCCHForm.patchValue({
         area: res.area,
-        resCompresion: res.resistencia
+        resCompresion: res.resistencia,
+        velocidad: res.velAplicacionExp
       });
     }
     
@@ -428,31 +439,8 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());   
-                                              this.onBlurCalcularVelocidad();          
+                                              this.onBlurAreaResis();          
                                             } );
-  }
-
-  onBlurCalcularVelocidad(){
-    this.cargando = this. cargando +1;
-    let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
-    let search = new URLSearchParams();
-    
-    search.set('function', 'calcularVelocidad');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_ensayoCilindro', this.id_Registro);
-    this.http.get(url, {search}).subscribe(res => { 
-      console.log("onBlurCalcularVelocidad :: ");
-      console.log(res.json()); 
-      this.respuestaCalcularVelocidad(res.json());
-      this.respuestaSwitch(res.json());
-    });
-  }
-
-  respuestaCalcularVelocidad(res: any){
-        this.formatoCCHForm.patchValue({
-        velocidad: res.velAplicacionExp
-      });
   }
 
   onBlurFalla(){
@@ -484,25 +472,18 @@ export class PruebaCilindroComponent implements OnInit{
      }
    }
 
-  respuestaSwitch(res: any){
+  respuestaSwitch(res: any, caller = "N.A."){
     this.cargando = this.cargando -1; 
+    console.log("respuestaSwitch :: res:");
+    console.log(res);
     if(res.error!= 0){
-      window.alert(res.estatus);
-      //location.reload();
+      window.alert("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
+      console.log("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
     }
     else{    
-        //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
-    }
-    console.log(res); 
-  }
-
-/*
-  desactivaCampos(res:any){
-    if(res.completado == "SI"){
-      this.ocultar();
-    } 
+     }
    }
-*/
+
   ocultar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable'; 

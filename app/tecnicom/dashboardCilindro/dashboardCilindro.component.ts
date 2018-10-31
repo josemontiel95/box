@@ -296,8 +296,8 @@ export class dashboardCilindroComponent implements OnInit{
   } 
 
   respuestaGeneratePDF(res: any){
+    this.cargando=this.cargando-1;
     if(res.error==0){
-      this.cargando=this.cargando-1;
       window.alert("Exito al crear el PDF de Ensayo.");
       //this.reloadData();
     }else{

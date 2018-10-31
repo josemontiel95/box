@@ -76,7 +76,7 @@
             
           </form>
           <div>
-           <app-grid-cubo></app-grid-cubo>
+           <app-grid-cubo (cambiarCargando)="cambiarCargando($event)"></app-grid-cubo>
           </div>
         </div>
       </div>
@@ -90,14 +90,12 @@
          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
             <div class="row">
 
-              <div class="col-md-12 col-12">
-                <div class="form-group">
-                  <label for="observaciones">OBSERVACIONES</label>
-                  <input type="text" id="observaciones" class="form-control" 
-                  name="observaciones" placeholder="" (change)="onChangeObservaciones()" formControlName="observaciones">
-
-                </div>
+            <div class="col-md-12 col-12">
+              <div class="form-group">
+                <label for="observaciones">VELOCIDAD DE APLICACI&Oacute;N DE CARGA</label>
+                <input type="text" id="observaciones" class="form-control" required placeholder="" (change)="onChangeObservaciones()" formControlName="observaciones">
               </div>
+            </div>
 
               
               

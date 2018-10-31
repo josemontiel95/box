@@ -78,7 +78,7 @@
             
           </form>
           <div>
-           <app-grid-viga></app-grid-viga>
+           <app-grid-viga (cambiarCargando)="cambiarCargando($event)"></app-grid-viga>
           </div>
         </div>
       </div>
@@ -90,7 +90,16 @@
       <div class="card">
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
-            
+            <div class="row">
+
+              <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="observaciones">VELOCIDAD DE APLICACI&Oacute;N DE CARGA</label>
+                  <input type="text" id="observaciones" class="form-control" required placeholder="" (change)="onChangeObservaciones()" formControlName="observaciones">
+                </div>
+              </div>
+            </div> <!--FIN ROW-->
+
             <h6>Inventario de Intrumento</h6>
             <div class="row">
               <div class="col-md-6 col-12">
