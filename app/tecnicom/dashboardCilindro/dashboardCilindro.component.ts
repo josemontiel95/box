@@ -208,6 +208,22 @@ export class dashboardCilindroComponent implements OnInit{
      //this.cargando=this.cargando-1;
   }
 
+  reloadData(){
+    this.cargando = this.cargando +1;
+    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getFooterByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_footerEnsayo', this.id_footer);
+    this.http.get(url, {search}).subscribe(res =>{ 
+      this.llenado(res.json());
+      this.llenadoValidator(res.json(), "getFooterByID");
+      this.sinNombre(res.json());
+    });
+  }
+
+
   sinNombre(respuesta: any){
     //Esta if verifica si ya fue generado un PDF mediante respuesta.preliminar, si fue generado activa Visuarlizar PDF.
     if(respuesta.preliminar == null){
@@ -299,7 +315,7 @@ export class dashboardCilindroComponent implements OnInit{
     this.cargando=this.cargando-1;
     if(res.error==0){
       window.alert("Exito al crear el PDF de Ensayo.");
-      //this.reloadData();
+      this.reloadData();
     }else{
       window.alert(res.estatus);
       //location.reload();

@@ -6,12 +6,12 @@ import { Global } from "../../interfaces/int.Global";
 import { CrearResp } from "../../interfaces/int.CrearResp";
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
-    FormGroup,
-    FormControl,
-    Validators,
-    FormBuilder
+  ReactiveFormsModule,
+  FormsModule,
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder
 } from '@angular/forms';
 
 //FIN DE LOS IMPORTS
@@ -46,25 +46,23 @@ export class PruebaCilindroComponent implements OnInit{
  
   
   formatoCCHForm: FormGroup;
-
-        FormatoCCH = {
-        fechaColado:     '',
-        infoNo:          '',
-        pesoKg:          '',
-        clave:           '',
-        edadEnsaye:      '',
-        diametro1:       '',
-        diametro2:       '',
-        altura1:         '',
-        altura2:         '',
-        cargaKg:         '',
-        area:            '',
-        resCompresion:   '',
-        velocidad:       '',
-        tiempo:          '',
-        falla:           ''
-      }
-
+    FormatoCCH = {
+    fechaColado:     '',
+    infoNo:          '',
+    pesoKg:          '',
+    clave:           '',
+    edadEnsaye:      '',
+    diametro1:       '',
+    diametro2:       '',
+    altura1:         '',
+    altura2:         '',
+    cargaKg:         '',
+    area:            '',
+    resCompresion:   '',
+    velocidad:       '',
+    tiempo:          '',
+    falla:           ''
+  }
 
   fallas= [{"falla":"Ninguna Falla", "id": 0},{"falla":1, "id": 1},{"falla":2, "id": 2},{"falla":3, "id": 3},{"falla":4, "id": 4},{"falla":5, "id": 5},{"falla":6, "id": 6}];
 
@@ -100,7 +98,6 @@ export class PruebaCilindroComponent implements OnInit{
     search.set('rol_usuario_id',  this.global.rol);
     this.http.get(url, {search}).subscribe(res => {
       this.llenaFallas(res.json());
-      //this.respuestaSwitch(res.json());
     });
 
     url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
@@ -120,7 +117,7 @@ export class PruebaCilindroComponent implements OnInit{
       'edadEnsaye':       new FormControl( {value: this.FormatoCCH.edadEnsaye, disabled: true}),
       'diametro1':        new FormControl( {value: this.FormatoCCH.diametro1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
       'diametro2':        new FormControl( {value: this.FormatoCCH.diametro2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
-      'altura1':          new FormControl( {value:   this.FormatoCCH.altura1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
+      'altura1':          new FormControl( {value: this.FormatoCCH.altura1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
       'altura2':          new FormControl( {value: this.FormatoCCH.altura2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
       'cargaKg':          new FormControl( {value: this.FormatoCCH.cargaKg, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
       'area':             new FormControl( {value: this.FormatoCCH.area, disabled: true}),
@@ -130,21 +127,21 @@ export class PruebaCilindroComponent implements OnInit{
       'falla':            new FormControl( {value: this.FormatoCCH.falla, disabled: this.hidden})});
   }
   
-   get fechaColado() { return this.formatoCCHForm.get('fechaColado'); }
-   get infoNo() { return this.formatoCCHForm.get('infoNo'); }
-   get clave() { return this.formatoCCHForm.get('clave'); }
-   get pesoKg() { return this.formatoCCHForm.get('pesoKg'); }
-   get edadEnsaye() { return this.formatoCCHForm.get('edadEnsaye'); }
-   get diametro1() { return this.formatoCCHForm.get('diametro1'); }
-   get diametro2() { return this.formatoCCHForm.get('diametro2'); } 
-   get altura1() { return this.formatoCCHForm.get('altura1'); }
-   get altura2() { return this.formatoCCHForm.get('altura2'); }
-   get cargaKg() { return this.formatoCCHForm.get('cargaKg'); }  
-   get area() { return this.formatoCCHForm.get('area'); }   
-   get resCompresion() { return this.formatoCCHForm.get('resCompresion'); }
-   get velocidad()       { return this.formatoCCHForm.get('velocidad'); }        
-   get tiempo()          { return this.formatoCCHForm.get('tiempo'); }               
-   get falla() { return this.formatoCCHForm.get('falla'); }                          
+  get fechaColado()   { return this.formatoCCHForm.get('fechaColado'); }
+  get infoNo()        { return this.formatoCCHForm.get('infoNo'); }
+  get clave()         { return this.formatoCCHForm.get('clave'); }
+  get pesoKg()        { return this.formatoCCHForm.get('pesoKg'); }
+  get edadEnsaye()    { return this.formatoCCHForm.get('edadEnsaye'); }
+  get diametro1()     { return this.formatoCCHForm.get('diametro1'); }
+  get diametro2()     { return this.formatoCCHForm.get('diametro2'); } 
+  get altura1()       { return this.formatoCCHForm.get('altura1'); }
+  get altura2()       { return this.formatoCCHForm.get('altura2'); }
+  get cargaKg()       { return this.formatoCCHForm.get('cargaKg'); }  
+  get area()          { return this.formatoCCHForm.get('area'); }   
+  get resCompresion() { return this.formatoCCHForm.get('resCompresion'); }
+  get velocidad()     { return this.formatoCCHForm.get('velocidad'); }        
+  get tiempo()        { return this.formatoCCHForm.get('tiempo'); }               
+  get falla()         { return this.formatoCCHForm.get('falla'); }                          
    
   submitted = false;
 
@@ -165,28 +162,28 @@ export class PruebaCilindroComponent implements OnInit{
     for (var _i = 0; _i < resp.length; _i++ ){
       this.mis_fallas[_i]=resp[_i];
     }
-    console.log("llenaFallas this.cargando: "+this.cargando);
+    //console.log("llenaFallas this.cargando: "+this.cargando);
   } 
     
 
   llenado(respuesta: any){
-    console.log(respuesta);
+    //console.log(respuesta);
     this.formatoCCHForm.patchValue({
-      fechaColado:      respuesta.fechaColado,
-      infoNo:           respuesta.informeNo,
-      clave:            respuesta.claveEspecimen,
-      pesoKg:           respuesta.peso,
-      edadEnsaye:       respuesta.diasEnsayeFinal,
-      diametro1:        respuesta.d1,
-      diametro2:        respuesta.d2,
-      altura1:          respuesta.h1,
-      altura2:          respuesta.h2,
-      cargaKg:          respuesta.carga,
-      area:             respuesta.area,
-      resCompresion:    respuesta.resCompresion,
-      velocidad:        respuesta.velAplicacionExp,
-      tiempo:           respuesta.tiempoDeCarga, 
-      falla:            respuesta.falla});
+    fechaColado:      respuesta.fechaColado,
+    infoNo:           respuesta.informeNo,
+    clave:            respuesta.claveEspecimen,
+    pesoKg:           respuesta.peso,
+    edadEnsaye:       respuesta.diasEnsayeFinal,
+    diametro1:        respuesta.d1,
+    diametro2:        respuesta.d2,
+    altura1:          respuesta.h1,
+    altura2:          respuesta.h2,
+    cargaKg:          respuesta.carga,
+    area:             respuesta.area,
+    resCompresion:    respuesta.resCompresion,
+    velocidad:        respuesta.velAplicacionExp,
+    tiempo:           respuesta.tiempoDeCarga, 
+    falla:            respuesta.falla});
 
     this.onBlurAreaResis();
 
@@ -204,11 +201,10 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('function', 'deactivate');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('id_registrosCampo', this.id_registro);  
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaDescartaCambios(res.json());                 
-                                            });
+      this.respuestaDescartaCambios(res.json());                 
+    });
   }
 
   llenarDespues(){
@@ -237,11 +233,11 @@ export class PruebaCilindroComponent implements OnInit{
   respuestaSwitchRegComplete(res){
     if(res.error!= 0){
       window.alert(res.estatus);
-      console.log(res.estatus);
+      //console.log(res.estatus);
     }
     else{
       this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+this.id_Footer]);    
-     }
+    }
   }
 
   onBlurPesoKg(){
@@ -252,13 +248,12 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '1');
     formData.append('valor', this.formatoCCHForm.value.pesoKg);
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.respuestaSwitch(res.json());                 
+    });
   }
   
   onBlurDiametro1(){
@@ -269,14 +264,13 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '2');
     formData.append('valor', this.formatoCCHForm.value.diametro1);
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.onBlurAreaResis();
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.onBlurAreaResis();
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onBlurDiametro2(){
@@ -287,14 +281,13 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '3');
     formData.append('valor', this.formatoCCHForm.value.diametro2);
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.onBlurAreaResis();
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.onBlurAreaResis();
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onBlurAltura1(){
@@ -305,13 +298,12 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '4');
     formData.append('valor', this.formatoCCHForm.value.altura1);
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onBlurAltura2(){
@@ -322,13 +314,12 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '5');
     formData.append('valor', this.formatoCCHForm.value.altura2);
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
 
@@ -340,14 +331,13 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '6');
     formData.append('valor', this.formatoCCHForm.value.cargaKg);
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.onBlurAreaResis();
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.onBlurAreaResis();
+      this.respuestaSwitch(res.json());                 
+    });
   }
   
 
@@ -355,21 +345,20 @@ export class PruebaCilindroComponent implements OnInit{
     this.cargando = this.cargando +1;
     let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
     let search = new URLSearchParams();
-    
     search.set('function', 'calcularAreaResis');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ensayoCilindro', this.id_Registro);
     this.http.get(url, {search}).subscribe(res => { 
-                                                    console.log(res); 
-                                                    this.onChangeArea(res.json());
-                                                    this.onChangeAreaValidator(res.json(),"onBlurAreaResis");
-                                                    });
+      //console.log(res); 
+      this.onChangeArea(res.json());
+      this.onChangeAreaValidator(res.json(),"onBlurAreaResis");
+    });
   }
 
   onChangeAreaValidator(res: any, caller = "N.A."){
     this.cargando = this.cargando -1;
-    console.log(res.area + res.resistencia);
+    //console.log(res.area + res.resistencia);
     if(res.error == 5){
       //NOTHING
     }else if(res.error != 0){
@@ -382,10 +371,10 @@ export class PruebaCilindroComponent implements OnInit{
     if(res.area == 0 || res.resistencia == 0){
 
     }else{
-        this.formatoCCHForm.patchValue({
-        area: res.area,
-        resCompresion: res.resistencia,
-        velocidad: res.velAplicacionExp
+      this.formatoCCHForm.patchValue({
+      area: res.area,
+      resCompresion: res.resistencia,
+      velocidad: res.velAplicacionExp
       });
     }
     
@@ -399,13 +388,12 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('function', 'insertRegistroJefeBrigada');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '8');
     formData.append('valor', this.formatoCCHForm.value.resCompresion);
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onBlurVelocidad(){
@@ -416,13 +404,12 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '9'); //Falta cambiar el numero de campo
     formData.append('valor', this.formatoCCHForm.value.velocidad);
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
       this.respuestaSwitch(res.json());                 
-    } );
+    });
   }
 
   onBlurTiempo(){
@@ -433,14 +420,13 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '10'); //Falta cambiar el numero de campo
     formData.append('valor', this.formatoCCHForm.value.tiempo);
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());   
-                                              this.onBlurAreaResis();          
-                                            } );
+      this.respuestaSwitch(res.json());   
+      this.onBlurAreaResis();          
+    });
   }
 
   onBlurFalla(){
@@ -451,26 +437,24 @@ export class PruebaCilindroComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '7');
     formData.append('valor', this.formatoCCHForm.value.falla);
     formData.append('id_ensayoCilindro', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   respuestaDescartaCambios(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       location.reload();
-     }
-     else{
-         
-          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);        
-     }
-   }
+    console.log(res);
+    if(res.error!= 0){
+      window.alert(res.estatus);
+      location.reload();
+    }
+    else{
+      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);        
+    }
+  }
 
   respuestaSwitch(res: any, caller = "N.A."){
     this.cargando = this.cargando -1; 
@@ -481,7 +465,7 @@ export class PruebaCilindroComponent implements OnInit{
       console.log("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
     }
     else{    
-     }
+    }
    }
 
   ocultar(){
@@ -519,18 +503,18 @@ export class PruebaCilindroComponent implements OnInit{
   validaCamposVacios(){
     let warning = false;
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
-        if(this.formatoCCHForm.controls[controlName].value == "" || this.formatoCCHForm.controls[controlName].value == null || this.formatoCCHForm.controls[controlName].value == "null"){
-          warning = true;
-        }// disables/enables each form control based on 'this.formDisabled'
+      if(this.formatoCCHForm.controls[controlName].value == "" || this.formatoCCHForm.controls[controlName].value == null || this.formatoCCHForm.controls[controlName].value == "null"){
+        warning = true;
+      }// disables/enables each form control based on 'this.formDisabled'
     });
 
     if(warning){
       window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
     }else{
-          if(window.confirm("¿Estas seguro de marcar como completado el registro? ya no podras editarlo.")){
-            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
-            this.registroCompletado();
-          }
+      if(window.confirm("¿Estas seguro de marcar como completado el registro? ya no podras editarlo.")){
+        //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+        this.registroCompletado();
+      }
     }
   } //FIN ValidaCamposVacios
 
@@ -545,7 +529,6 @@ export class PruebaCilindroComponent implements OnInit{
     }else if(respuesta.status == 0){
       this.hiddenC = true;
       this.hidden = false;
-
     }
   }
 

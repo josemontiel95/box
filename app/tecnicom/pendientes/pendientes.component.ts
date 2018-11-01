@@ -30,6 +30,7 @@ export class PendientesComponent implements OnInit{
   tipo = "";
   ruta = 0;
   rowClassRules;
+  noRowDataError;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -75,20 +76,25 @@ export class PendientesComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
-                                            this.rowData= res.json();
-                                            this.gridApi.sizeColumnsToFit();
-                                            this.llenadoValidator(res.json(), "getAllRegistrosFromFooterByID");
-                                          });
+      console.log(res.json());
+      this.rowData= res.json();
+      this.gridApi.sizeColumnsToFit();
+      this.llenaTabla(res.json(), "getAllRegistrosFromFooterByID");
+    });
   }
 
-  llenadoValidator(respuesta: any, caller){
+  llenaTabla(repuesta: any, caller){
+    console.log(repuesta)
     this.cargando = this.cargando -1;
-    if(respuesta.error>0){
-      window.alert(caller + " :: GridFormatosPendientes :: " +respuesta.estatus);
+    if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
+      window.alert(repuesta.estatus);
+      this.router.navigate(['login']);
+    }else if(repuesta.error==5){
+      this.rowData =[];
+      this.noRowDataError="No existen Especimenes pendientes para hoy.";   
     }else{
-      //EXITO. 
-    } 
+      this.rowData =repuesta;
+    }
   }
 
   cambiarCargando(num){

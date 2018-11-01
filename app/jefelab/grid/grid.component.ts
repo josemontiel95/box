@@ -30,8 +30,8 @@ export class GridComponent implements OnInit  {
   @Output() cambiarCargando = new EventEmitter<any>();
 
   ngOnInit() {
-     this.data.currentGlobal.subscribe(global => this.global = global);
-      this.route.params.subscribe( params => this.id_orden=params.id);
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    this.route.params.subscribe( params => this.id_orden=params.id);
   }
 
   cargando(num){

@@ -34,38 +34,35 @@ export class PruebaVigaComponent implements OnInit{
   locked =false;   
   oldmembers;
   formatoCCHForm: FormGroup;
+    FormatoCCH = {
+    idMuestra: '',
+    fechaColado: '',
+    fechaEnsayo: '',
+    edadEnsaye: '',
+    condiCurado: '',
+    apoyo: '',
+    fractura: '',
+    ancho1: '',
+    ancho2: '',
+    per1:'',
+    per2:'',
+    l1:'',
+    l2:'',
+    l3:'',
+    prom:'',
+    disApoyos: '',
+    disCarga: '',
+    cargaAplicada: '',
+    moduloRuptura:'',
+    defectos: '',
+    velocidad: '',
+    tiempo: '',
+    realizo:''
+    }
 
-        FormatoCCH = {
-        idMuestra: '',
-        fechaColado: '',
-        fechaEnsayo: '',
-        edadEnsaye: '',
-        condiCurado: '',
-        apoyo: '',
-        fractura: '',
-        lijado: '',
-        cuero: '',
-        ancho1: '',
-        ancho2: '',
-        per1:'',
-        per2:'',
-        l1:'',
-        l2:'',
-        l3:'',
-        prom:'',
-        disApoyos: '',
-        disCarga: '',
-        cargaAplicada: '',
-        moduloRuptura:'',
-        defectos: '',
-        velocidad: '',
-        tiempo: '',
-        realizo:''
-      }
-
- curado= [{"condicion":"Humedo", "id":"Humedo"},{"condicion":"Seco", "id":"Seco"},{"condicion":"Intemperie", "id":"Intemperie"}];
- apoyos= [{"tapoyo":"Lijado", "id":"1"},{"tapoyo":"Cuero", "id":"2"}];
- fracture= [{"frac":"Dentro del Claro", "id":"1"},{"frac":"Fuera del Claro", "id":"2"}];
+  curado= [{"condicion":"Humedo", "id":"Humedo"},{"condicion":"Seco", "id":"Seco"},{"condicion":"Intemperie", "id":"Intemperie"}];
+  apoyos= [{"tapoyo":"Lijado", "id":"1"},{"tapoyo":"Cuero", "id":"2"}];
+  fracture= [{"frac":"Dentro del Claro", "id":"1"},{"frac":"Fuera del Claro", "id":"2"}];
 
 
 
@@ -79,8 +76,6 @@ export class PruebaVigaComponent implements OnInit{
     //El primer parametro es para recibir el numero de registro y el segundo el numero de formato.
     this.cargando= this.cargando+1;
 
-
-    
     let url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getRegistrosByID');
@@ -90,7 +85,6 @@ export class PruebaVigaComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => { 
       this.llenaRapido(res.json());
       this.llenado(res.json());
-      //this.desactivaCampos(res.json());
     });
 
     url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
@@ -103,9 +97,6 @@ export class PruebaVigaComponent implements OnInit{
       this.llemaOldMembers(res.json());
     });
 
-                                              
-
-
     this.formatoCCHForm = new FormGroup({
       'idMuestra':        new FormControl( {value: this.FormatoCCH.idMuestra, disabled: true}),
       'fechaColado':      new FormControl( {value: this.FormatoCCH.fechaColado, disabled: true}),
@@ -114,8 +105,6 @@ export class PruebaVigaComponent implements OnInit{
       'condiCurado':      new FormControl( {value: this.FormatoCCH.condiCurado, disabled: this.hidden}),
       'apoyo':            new FormControl( {value: this.FormatoCCH.apoyo, disabled: this.hidden}),
       'fractura':         new FormControl( {value: this.FormatoCCH.fractura, disabled: this.hidden}),
-      'lijado':           new FormControl( {value: this.FormatoCCH.lijado, disabled: this.hidden}),
-      'cuero':            new FormControl( {value: this.FormatoCCH.cuero, disabled: this.hidden}),
       'ancho1':           new FormControl( {value: this.FormatoCCH.ancho1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
       'ancho2':           new FormControl( {value: this.FormatoCCH.ancho2, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),
       'per1':             new FormControl( {value: this.FormatoCCH.per1, disabled: this.hidden},[Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),      
@@ -134,37 +123,35 @@ export class PruebaVigaComponent implements OnInit{
       'realizo':          new FormControl( {value: this.FormatoCCH.realizo, disabled: true})  });
   }
   
-   get idMuestra()       { return this.formatoCCHForm.get('idMuestra'); }
-   get fechaColado()     { return this.formatoCCHForm.get('fechaColado'); }
-   get fechaEnsayo()     { return this.formatoCCHForm.get('fechaEnsayo'); }
-   get edadEnsaye()      { return this.formatoCCHForm.get('edadEnsaye'); }
-   get condiCurado()     { return this.formatoCCHForm.get('condiCurado'); }
-   get apoyo()           { return this.formatoCCHForm.get('apoyo'); }
-   get fractura()        { return this.formatoCCHForm.get('fractura'); }
-   get lijado()          { return this.formatoCCHForm.get('lijado'); }
-   get cuero()           { return this.formatoCCHForm.get('cuero'); }
-   get ancho1()          { return this.formatoCCHForm.get('ancho1'); }
-   get ancho2()          { return this.formatoCCHForm.get('ancho2'); }
-   get per1()            { return this.formatoCCHForm.get('per1'); }
-   get per2()            { return this.formatoCCHForm.get('per2'); }
-   get l1()              { return this.formatoCCHForm.get('l1'); }
-   get l2()              { return this.formatoCCHForm.get('l2'); }
-   get l3()              { return this.formatoCCHForm.get('l3'); }
-   get prom()            { return this.formatoCCHForm.get('prom'); }
-   get disApoyos()       { return this.formatoCCHForm.get('disApoyos'); }
-   get disCarga()        { return this.formatoCCHForm.get('disCarga'); }
-   get cargaAplicada()   { return this.formatoCCHForm.get('cargaAplicada'); }              
-   get moduloRuptura()   { return this.formatoCCHForm.get('moduloRuptura'); }              
-   get defectos()        { return this.formatoCCHForm.get('defectos'); }   
-   get velocidad()       { return this.formatoCCHForm.get('velocidad'); }        
-   get tiempo()          { return this.formatoCCHForm.get('tiempo'); }                               
-   get realizo()         { return this.formatoCCHForm.get('realizo'); }                          
+  get idMuestra()       { return this.formatoCCHForm.get('idMuestra'); }
+  get fechaColado()     { return this.formatoCCHForm.get('fechaColado'); }
+  get fechaEnsayo()     { return this.formatoCCHForm.get('fechaEnsayo'); }
+  get edadEnsaye()      { return this.formatoCCHForm.get('edadEnsaye'); }
+  get condiCurado()     { return this.formatoCCHForm.get('condiCurado'); }
+  get apoyo()           { return this.formatoCCHForm.get('apoyo'); }
+  get fractura()        { return this.formatoCCHForm.get('fractura'); }
+  get ancho1()          { return this.formatoCCHForm.get('ancho1'); }
+  get ancho2()          { return this.formatoCCHForm.get('ancho2'); }
+  get per1()            { return this.formatoCCHForm.get('per1'); }
+  get per2()            { return this.formatoCCHForm.get('per2'); }
+  get l1()              { return this.formatoCCHForm.get('l1'); }
+  get l2()              { return this.formatoCCHForm.get('l2'); }
+  get l3()              { return this.formatoCCHForm.get('l3'); }
+  get prom()            { return this.formatoCCHForm.get('prom'); }
+  get disApoyos()       { return this.formatoCCHForm.get('disApoyos'); }
+  get disCarga()        { return this.formatoCCHForm.get('disCarga'); }
+  get cargaAplicada()   { return this.formatoCCHForm.get('cargaAplicada'); }              
+  get moduloRuptura()   { return this.formatoCCHForm.get('moduloRuptura'); }              
+  get defectos()        { return this.formatoCCHForm.get('defectos'); }   
+  get velocidad()       { return this.formatoCCHForm.get('velocidad'); }        
+  get tiempo()          { return this.formatoCCHForm.get('tiempo'); }                               
+  get realizo()         { return this.formatoCCHForm.get('realizo'); }                          
    
   submitted = false;
 
   onSubmit() { this.submitted = true; } 
 
-    llenado(respuesta: any){
+  llenado(respuesta: any){
     this.cargando = this.cargando -1;
     console.log(respuesta);
 
@@ -176,8 +163,6 @@ export class PruebaVigaComponent implements OnInit{
      condiCurado:     respuesta.condiciones,
      apoyo:           respuesta.apoyo,
      fractura:        respuesta.posFractura,
-     lijado:          respuesta.lijado,
-     cuero:           respuesta.cuero,
      ancho1:          respuesta.ancho1,
      ancho2:          respuesta.ancho2,
      per1:            respuesta.per1,
@@ -194,13 +179,13 @@ export class PruebaVigaComponent implements OnInit{
      velocidad:       respuesta.velAplicacionExp,
      tiempo:          respuesta.tiempoDeCarga, 
      realizo:         respuesta.nombre 
-   });
+    });
 
     if(respuesta.status == 1){
       this.mostrar();
     }
-     this.onBlurPromedio();
-     this.onBlurModuloRuptura();
+    this.onBlurPromedio();
+    this.onBlurModuloRuptura();
   }
   //DON'T TOUCH THIS!
 
@@ -245,16 +230,13 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '1');
     formData.append('valor', this.formatoCCHForm.value.condiCurado);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {                 
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+       this.respuestaSwitch(res.json());                 
+    });
   }
-
-
 
   onBlurApoyo(){
     this.cargando = this. cargando +1;
@@ -264,12 +246,11 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'onChangePuntosDeApoyo');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('valor', this.formatoCCHForm.value.apoyo);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {                
       this.respuestaSwitch(res.json());                 
-    } );
+    });
   }
 
   onBlurFractura(){
@@ -280,7 +261,6 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '3');
     formData.append('valor', this.formatoCCHForm.value.fractura);
     formData.append('id_ensayoViga', this.id_Registro);
@@ -298,14 +278,13 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '4');
     formData.append('valor', this.formatoCCHForm.value.ancho1);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.onBlurModuloRuptura();
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.onBlurModuloRuptura();
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onBlurAncho2(){
@@ -316,7 +295,6 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '5');
     formData.append('valor', this.formatoCCHForm.value.ancho2);
     formData.append('id_ensayoViga', this.id_Registro);
@@ -334,14 +312,13 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '6');
     formData.append('valor', this.formatoCCHForm.value.per1);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.onBlurModuloRuptura();
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.onBlurModuloRuptura();
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onBlurPer2(){
@@ -352,14 +329,13 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '7');
     formData.append('valor', this.formatoCCHForm.value.per2);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.onBlurModuloRuptura();
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.onBlurModuloRuptura();
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onBlurL1(){
@@ -370,15 +346,14 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '8');
     formData.append('valor', this.formatoCCHForm.value.l1);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.onBlurModuloRuptura();
-                                              this.onBlurPromedio();
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.onBlurModuloRuptura();
+      this.onBlurPromedio();
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onBlurL2(){
@@ -389,15 +364,14 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '9');
     formData.append('valor', this.formatoCCHForm.value.l2);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.onBlurModuloRuptura();
-                                              this.onBlurPromedio();
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.onBlurModuloRuptura();
+      this.onBlurPromedio();
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onBlurL3(){
@@ -408,15 +382,14 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '10');
     formData.append('valor', this.formatoCCHForm.value.l3);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.onBlurModuloRuptura();
-                                              this.onBlurPromedio();
-                                              this.respuestaSwitch(res.json());                
-                                            } );
+      this.onBlurModuloRuptura();
+      this.onBlurPromedio();
+      this.respuestaSwitch(res.json());                
+    });
   }
 
   onBlurDisApoyos(){
@@ -427,14 +400,13 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '11');
     formData.append('valor', this.formatoCCHForm.value.disApoyos);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.onBlurModuloRuptura();
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.onBlurModuloRuptura();
+      this.respuestaSwitch(res.json());                 
+    });
   }
   
 
@@ -446,13 +418,12 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '12');
     formData.append('valor', this.formatoCCHForm.value.disCarga);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                
-                                            });
+      this.respuestaSwitch(res.json());                
+    });
   }
  
   onBlurCargaAplicada(){
@@ -463,14 +434,13 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '13');
     formData.append('valor', this.formatoCCHForm.value.cargaAplicada);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.onBlurModuloRuptura();
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.onBlurModuloRuptura();
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onBlurDefectos(){
@@ -481,13 +451,12 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '14');
     formData.append('valor', this.formatoCCHForm.value.defectos);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            });
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   onBlurVelocidad(){
@@ -498,13 +467,12 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '15');
     formData.append('valor', this.formatoCCHForm.value.defectos);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
       this.respuestaSwitch(res.json());                 
-    } );
+    });
   }
 
   onBlurTiempo(){
@@ -515,14 +483,13 @@ export class PruebaVigaComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '16');
     formData.append('valor', this.formatoCCHForm.value.tiempo);
     formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json(),"onBlurTiempo");   
-                                              this.onBlurModuloRuptura();          
-                                            } );
+      this.respuestaSwitch(res.json(),"onBlurTiempo");   
+      this.onBlurModuloRuptura();          
+    });
   }
 
   respuestaSwitch(res: any, caller = "N.A."){
@@ -557,25 +524,21 @@ export class PruebaVigaComponent implements OnInit{
     this.cargando = this. cargando +1;
     let url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
     let search = new URLSearchParams();
-    
     search.set('function', 'calcularPromedio');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ensayoViga', this.id_Registro);
     this.http.get(url, {search}).subscribe(res => { 
-                                                    console.log(res); 
-                                                    this.onChangeProm(res.json());
-                                                    this.respuestaSwitch(res.json());
-                                                    });
+      //console.log(res); 
+      this.onChangeProm(res.json());
+      this.respuestaSwitch(res.json());
+    });
   }
 
-  
-
-
   onChangeProm(res: any){
-        this.formatoCCHForm.patchValue({
-        prom: res.promedio
-      });
+    this.formatoCCHForm.patchValue({
+    prom: res.promedio
+    });
   }
 
   onBlurModuloRuptura(){
@@ -623,22 +586,23 @@ export class PruebaVigaComponent implements OnInit{
   
   cambiarDatos(){
     if(window.confirm("¿Estas seguro de cambiar los datos de este registro?.")){
-            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
-            if(window.confirm("ESTA ACCIÓN PROVOCARÁ QUE SE ENVIE UN NUEVO CORREO NOTIFICANDO AL CLIENTE DEL CAMBIO. EL ADMINISTRADOR SERA NOTIFICADO DE ESTE CAMBIO. ¿Esta seguro de continuar?")){
-            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
-            this.mostrar();
-            }
+      //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+      if(window.confirm("ESTA ACCIÓN PROVOCARÁ QUE SE ENVIE UN NUEVO CORREO NOTIFICANDO AL CLIENTE DEL CAMBIO. EL ADMINISTRADOR SERA NOTIFICADO DE ESTE CAMBIO. ¿Esta seguro de continuar?")){
+      //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+      this.mostrar();
+      }
     }
   }
 
   validaCamposVacios(){
     let warning = false;
     Object.keys(this.formatoCCHForm.controls).forEach((controlName) => {
-      if(controlName == "l1" || controlName == "l2" || controlName == "l3" || controlName == "prom" || controlName == "defectos"){ 
+      if(controlName == "defectos"){ 
         //DO NOTHING
       }else{
         if(this.formatoCCHForm.controls[controlName].value == "" || this.formatoCCHForm.controls[controlName].value == null || this.formatoCCHForm.controls[controlName].value == "null"){
-          warning = true;
+         console.log("ControlName : "+ controlName + " controlNameValue : "+this.formatoCCHForm.controls[controlName].value);
+         warning = true;
         }// disables/enables each form control based on 'this.formDisabled'
       }
     });
@@ -646,10 +610,10 @@ export class PruebaVigaComponent implements OnInit{
     if(warning){
       window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
     }else{
-          if(window.confirm("¿Estas seguro de marcar como completado el registro? ya no podras editarlo.")){
-            //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
-            this.registroCompletado();
-          }
+      if(window.confirm("¿Estas seguro de marcar como completado el registro? ya no podras editarlo.")){
+        //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
+        this.registroCompletado();
+      }
     }
   } //FIN ValidaCamposVacios
 
@@ -664,7 +628,6 @@ export class PruebaVigaComponent implements OnInit{
     }else if(respuesta.status == 0){
       this.hiddenC = true;
       this.hidden = false;
-
     }
   }
 
@@ -685,5 +648,3 @@ export class PruebaVigaComponent implements OnInit{
     }
   }
 }
-
-

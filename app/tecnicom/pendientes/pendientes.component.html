@@ -18,7 +18,8 @@
           <h4 class="card-title">Especimenes pendientes para hoy:</h4>
         </div>
         <div class="card-body">
-         <ag-grid-angular 
+        <p style="color: red;"><b>{{noRowDataError}}</b></p>
+          <ag-grid-angular 
             #agGrid
             id="myGrid"
             style="width: 100%; height: 450px;" 

@@ -17,6 +17,7 @@ export class GridComponent implements OnInit  {
   columnDefs;
   id_orden: string;
   rowClassRules;
+  noRowDataError;
 
   @Output() cambiarCargando = new EventEmitter<any>();
 
@@ -76,25 +77,19 @@ export class GridComponent implements OnInit  {
       console.log(res.json());
       this.rowData= res.json();
       this.gridApi.sizeColumnsToFit();
-      this.llenadoValidator(res.json(), "getAllRegistrosFromFooterByID");
+      this.llenaTabla(res.json(), "getAllRegistrosFromFooterByID");
     });
   }
 
-  llenadoValidator(respuesta: any, caller){
-    this.cambiarCargando.emit(-1);
-    if(respuesta.error>0){
-      window.alert(caller + " :: GridFormatosPendientes :: " +respuesta.estatus);
-    }else{
-      //EXITO. 
-    } 
-  }
-
-
-  llenaTabla(repuesta: any){
+  llenaTabla(repuesta: any, caller){
     console.log(repuesta)
+    this.cambiarCargando.emit(-1);
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.error==5){
+      this.rowData =[];
+      this.noRowDataError="No existen Formatos Pendientes.";   
     }else{
       this.rowData =repuesta;
     }

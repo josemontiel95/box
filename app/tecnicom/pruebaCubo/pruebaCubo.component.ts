@@ -122,19 +122,19 @@ export class PruebaCuboComponent implements OnInit{
     });
   }
   
-   get fechaColado()     { return this.formatoCCHForm.get('fechaColado'); }
-   get infoNo()          { return this.formatoCCHForm.get('infoNo'); }
-   get clave()           { return this.formatoCCHForm.get('clave'); }
-   get pesoKg()          { return this.formatoCCHForm.get('pesoKg'); }
-   get edadEnsaye()      { return this.formatoCCHForm.get('edadEnsaye'); }
-   get l1()              { return this.formatoCCHForm.get('l1'); }
-   get l2()              { return this.formatoCCHForm.get('l2'); }
-   get cargaKg()         { return this.formatoCCHForm.get('cargaKg'); }
-   get area()            { return this.formatoCCHForm.get('area'); }
-   get resCompresion()   { return this.formatoCCHForm.get('resCompresion'); }
-   get velocidad()       { return this.formatoCCHForm.get('velocidad'); }        
-   get tiempo()          { return this.formatoCCHForm.get('tiempo'); }               
-   get falla()           { return this.formatoCCHForm.get('falla'); }                          
+  get fechaColado()     { return this.formatoCCHForm.get('fechaColado'); }
+  get infoNo()          { return this.formatoCCHForm.get('infoNo'); }
+  get clave()           { return this.formatoCCHForm.get('clave'); }
+  get pesoKg()          { return this.formatoCCHForm.get('pesoKg'); }
+  get edadEnsaye()      { return this.formatoCCHForm.get('edadEnsaye'); }
+  get l1()              { return this.formatoCCHForm.get('l1'); }
+  get l2()              { return this.formatoCCHForm.get('l2'); }
+  get cargaKg()         { return this.formatoCCHForm.get('cargaKg'); }
+  get area()            { return this.formatoCCHForm.get('area'); }
+  get resCompresion()   { return this.formatoCCHForm.get('resCompresion'); }
+  get velocidad()       { return this.formatoCCHForm.get('velocidad'); }        
+  get tiempo()          { return this.formatoCCHForm.get('tiempo'); }               
+  get falla()           { return this.formatoCCHForm.get('falla'); }                          
   
   submitted = false;
 
@@ -171,8 +171,7 @@ export class PruebaCuboComponent implements OnInit{
     if(respuesta.status == 1){
       this.mostrar();
     }
-    this.onBlurAreaResis();
-     
+    this.onBlurAreaResis();   
   }
 
   llenadoValidator(respuesta: any){
@@ -342,13 +341,12 @@ export class PruebaCuboComponent implements OnInit{
     formData.append('function', 'insertRegistroTecMuestra');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
     formData.append('campo', '4');
     formData.append('valor', this.formatoCCHForm.value.falla);
     formData.append('id_ensayoCubo', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
+      this.respuestaSwitch(res.json());                 
+    });
   }
 
   respuestaSwitch(res: any, caller = "N.A."){
@@ -360,7 +358,7 @@ export class PruebaCuboComponent implements OnInit{
       console.log("ERROR. \nCaller: "+ caller + ". Descripcion: " +res.estatus);
     }
     else{    
-     }
+    }
    }
 
   ocultar(){

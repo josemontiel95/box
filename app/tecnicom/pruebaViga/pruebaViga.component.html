@@ -261,7 +261,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="velocidad">VELOCIDAD DE APLICACI&Oacute;N DE CARGA EXPERIMENTAL</label> <!--disable-->
-                    <input type="text" id="velocidad"   class="form-control" name="velocidad" placeholder="VELOCIDAD DE APLICACI&Oacute;N DE CARGA EXPERIMENTAL" formControlName="velocidad" required (change)="onBlurVelocidad()">
+                    <input type="text" id="velocidad"   class="form-control" name="velocidad" placeholder="VELOCIDAD DE APLICACI&Oacute;N DE CARGA EXPERIMENTAL" formControlName="velocidad" (change)="onBlurVelocidad()">
                     <div *ngIf="velocidad.errors && (velocidad.dirty || velocidad.touched)" class="alert alert-danger">
                         <div *ngIf="velocidad.errors.required">VELOCIDAD REQUERIDA.</div>
                         <div *ngIf="velocidad.errors.pattern">LA VELOCIDAD DEBE CONTENER SOLO NUMEROS.</div>
