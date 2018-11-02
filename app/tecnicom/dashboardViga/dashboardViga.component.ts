@@ -58,18 +58,17 @@ export class dashboardVigaComponent implements OnInit{
   numberOfRegistros;
   
   formatoCCHForm: FormGroup;
-
-        FormatoCCH = {
-        fechaEnsayo: '',
-        observaciones:'',
-        bascula:'',
-        regla:'',
-        prensa:''
+    FormatoCCH = {
+    fechaEnsayo: '',
+    observaciones:'',
+    bascula:'',
+    regla:'',
+    prensa:''
     }
 
-   mis_conos: Array<any>;
-   mis_varillas: Array<any>;
-   mis_flexometro: Array<any>;
+  mis_conos: Array<any>;
+  mis_varillas: Array<any>;
+  mis_flexometro: Array<any>;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -153,11 +152,11 @@ export class dashboardVigaComponent implements OnInit{
     });
   }
 
-   get fechaEnsayo()        { return this.formatoCCHForm.get('fechaEnsayo'); }
-   get observaciones()  { return this.formatoCCHForm.get('observaciones'); }
-   get bascula()           { return this.formatoCCHForm.get('bascula'); }
-   get regla()        { return this.formatoCCHForm.get('regla'); }
-   get prensa()     { return this.formatoCCHForm.get('prensa'); }  
+  get fechaEnsayo()       { return this.formatoCCHForm.get('fechaEnsayo'); }
+  get observaciones()     { return this.formatoCCHForm.get('observaciones'); }
+  get bascula()           { return this.formatoCCHForm.get('bascula'); }
+  get regla()             { return this.formatoCCHForm.get('regla'); }
+  get prensa()            { return this.formatoCCHForm.get('prensa'); }  
   
   mostrar(){
     this.hidden = !this.hidden;
@@ -192,8 +191,6 @@ export class dashboardVigaComponent implements OnInit{
 
   onSubmit() { this.submitted = true; }
 
-
-  
   labValidator(repuesta: any){
     console.log(repuesta)
     if(repuesta.error==5 || repuesta.error==6){
@@ -389,6 +386,7 @@ export class dashboardVigaComponent implements OnInit{
  /*****************************************************/
  /*CODIGO PARA COMPLETAR FORMATO DE ENSAYO DE MUESTRA */  
   obtenStatusReg(){
+    this.cargando = this.cargando +1;
     let url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllRegistrosFromFooterByID');
@@ -403,15 +401,15 @@ export class dashboardVigaComponent implements OnInit{
 
   validaRegistrosVacios(res: any){
     this.cargando=this.cargando-1;
-    this.isValid = true;
+    let isValid = true;
     res.forEach(function (value) {
       if(value.status == "0"){
-         this.isValid = false;
+        isValid = false;
         //window.alert("Existe al menos un registro que no ha sido completado, verifica que todos los registros esten completados.");
       }
     });
 
-    if(!this.isValid){
+    if(!isValid){
       window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para completar el formato.");     
     }else{
           if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
@@ -448,17 +446,6 @@ export class dashboardVigaComponent implements OnInit{
 
   /* FIN DEL BLOQUE COMPLETAR FORMATO DE ENSAYO DE MUESTRA*/
  /*********************************************************/
-    
-  respuestaSwitch(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       location.reload();
-     }
-     else{
-          this.mostrar();         
-     }
-   }
 
   respuestaRegistro(res: any){ 
      console.log(res);
@@ -504,6 +491,7 @@ export class dashboardVigaComponent implements OnInit{
   }
 
    onChangeBascula(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
     let formData:FormData = new FormData();

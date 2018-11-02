@@ -375,6 +375,7 @@ export class dashboardCilindroComponent implements OnInit{
  /*********************************************/
 
   obtenStatusReg(){
+    this.cargando = this.cargando +1;
     let url = `${this.global.apiRoot}/ensayoCilindro/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllRegistrosFromFooterByID');
@@ -388,7 +389,7 @@ export class dashboardCilindroComponent implements OnInit{
   }
 
   validaRegistrosVacios(res: any){
-
+    this.cargando = this.cargando -1;
     let isValid = true;
     res.forEach(function (value) {
       if(value.status == "0"){
@@ -407,6 +408,7 @@ export class dashboardCilindroComponent implements OnInit{
   } 
 
   formatoCompletado(){
+    this.cargando = this.cargando +1;
     console.log("formatoCompletado :: Sigo vivo");
     this.cargando=1;
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -431,17 +433,6 @@ export class dashboardCilindroComponent implements OnInit{
       window.alert(res.estatus);
     }
   }
-    
-  respuestaSwitch(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       location.reload();
-     }
-     else{
-          this.mostrar();         
-     }
-   }
 
   respuestaRegistro(res: any){ 
      console.log(res);
@@ -487,6 +478,7 @@ export class dashboardCilindroComponent implements OnInit{
   }
 
    onChangeBascula(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -504,6 +496,7 @@ export class dashboardCilindroComponent implements OnInit{
   }
 
   onChangeRegla(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -521,6 +514,7 @@ export class dashboardCilindroComponent implements OnInit{
   }
 
   onChangePrensa(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -538,6 +532,7 @@ export class dashboardCilindroComponent implements OnInit{
   }
 
   onChangeObservaciones(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -556,14 +551,15 @@ export class dashboardCilindroComponent implements OnInit{
 
 
   validaRespuesta(res:any){
-     console.log(res);
-     if(res.error!= 0){
-       window.alert("Intentalo otra vez");
-     }
-     else{
-               
-     }
-   }
+    this.cargando = this.cargando -1;
+    console.log(res);
+    if(res.error!= 0){
+      window.alert("Intentalo otra vez");
+    }
+    else{
+              
+    }
+  }
 
   regresaPendientes(){
     this.router.navigate(['tecnico/pendientes/']);
