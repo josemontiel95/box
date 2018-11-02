@@ -37,7 +37,7 @@
               </button>
             </div>
             <div style="display: inline-block;">
-              <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminar }" *ngIf="formatoStatus" (click)="obtenStatusReg();"> 
+              <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminar && isComplete }" *ngIf="formatoStatus" (click)="obtenStatusReg();"> 
                 <span><b>FORMATO COMPLETADO</b></span>
               </button>
             </div>
