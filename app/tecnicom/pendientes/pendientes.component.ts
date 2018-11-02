@@ -31,6 +31,7 @@ export class PendientesComponent implements OnInit{
   ruta = 0;
   rowClassRules;
   noRowDataError;
+  selected = false;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -131,11 +132,12 @@ export class PendientesComponent implements OnInit{
     this.tipo =tipoo;
     this.ruta =rutaa;
     console.log("Que paso: "+this.id);
-    this.validaFooter();
+    this.selected= true;
+    //this.validaFooter();
    }
 
    validaFooter(){
-
+    this.cambiarCargando(+1);
     let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'initInsert');
@@ -145,11 +147,13 @@ export class PendientesComponent implements OnInit{
     formData.append('id_RegistroCCH', this.id);
     this.http.post(url, formData).subscribe(res => {
       console.log(res);
-                                              this.respuestaSwitch(res.json());                 
+      this.respuestaSwitch(res.json());                 
     });
    }
 
    respuestaSwitch(res: any){
+      this.cambiarCargando(-1);
+
      console.log(res);
      if(res.error!= 0){
        window.alert(res.estatus);

@@ -16,7 +16,13 @@
         
         <div class="card-header">
           <h4 class="card-title">Especimenes pendientes para hoy:</h4>
+          <div class="btn-group" style="float: right; padding-right: 5%;">
+            <button class="btn btn-success"  *ngIf="selected"  (click)="validaFooter();">
+              <span><b>Ensayar</b></span>
+            </button>
+          </div>
         </div>
+        <br><br>
         <div class="card-body">
         <p style="color: red;"><b>{{noRowDataError}}</b></p>
           <ag-grid-angular 
