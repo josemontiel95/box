@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
     <div class="loader-container">
         <i class="now-ui-icons loader_refresh spin"></i> 
@@ -11,8 +12,10 @@
 <div class="row">
     <div class="col-md-12 ml-auto mr-auto">
       <div class="card">
-        <div class="card-header " >
-          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaPendientes();"></i>
+        <div class="card-header ">
+          <h4 style="float: left;">
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaPendientes();"></i>
+          </h4>
           <h4 style="text-align: center;" *ngIf="formatoStatus"class="card-title">En Ensaye por el Tecnico de Muestras</h4>
           <h4 style="text-align: center;" *ngIf="!formatoStatus"class="card-title">Esta formato esta completado y la edicion ya no esta permitida</h4>
         </div>
@@ -38,7 +41,8 @@
             </div>
             <div style="display: inline-block;">
               <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminar && isComplete }" *ngIf="formatoStatus" (click)="obtenStatusReg();"> 
-                <span><b>FORMATO COMPLETADO</b></span>
+                <span><b>FORMATO COMPLETADO &nbsp;&nbsp;</b></span>
+                <i class="fa fa-check-square-o" style="font-size:18px; display: inline-block; "></i>
               </button>
             </div>
           </div>
@@ -92,7 +96,11 @@
               <div class="col-md-12 col-12">
                 <div class="form-group">
                   <label for="observaciones">VELOCIDAD DE APLICACI&Oacute;N DE CARGA</label>
-                  <input type="text" id="observaciones" class="form-control" required placeholder="" (change)="onChangeObservaciones()" formControlName="observaciones">
+                  <input type="number" id="observaciones" class="form-control" required placeholder="" (change)="onChangeObservaciones()" formControlName="observaciones">
+                  <div *ngIf="observaciones.errors && (observaciones.dirty || observaciones.touched)" class="alert alert-danger">
+                        <div *ngIf="observaciones.errors.required">VELOCIDAD DE APLICACI&Oacute;N DE CARGA REQUERIDA.</div>
+                        <div *ngIf="observaciones.errors.pattern">LA VELOCIDAD DE APLICACI&Oacute;N DE CARGA DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                  </div>
                 </div>
               </div>
 
