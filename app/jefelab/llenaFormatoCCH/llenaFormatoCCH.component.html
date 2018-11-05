@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
     <div class="loader-container">
         <i class="now-ui-icons loader_refresh spin"></i> 
@@ -12,16 +14,31 @@
     <div class="col-md-12 ml-auto mr-auto">
       <div class="card">
         <div class="card-header " *ngIf="!formatoStatus">
-          <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i>
-          <h4 style="text-align: center;" *ngIf="!formatoStatus" class="card-title">Esta formato esta completado y la edicion ya no esta permitida</h4>
+          <h4 style="text-align: center;" *ngIf="!formatoStatus" class="card-title">Esta formato esta completado y la edici&oacute;n ya no esta permitida</h4>
         </div>
         <div class="card-body">
-          <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
-                  <button class="btn btn-default"  *ngIf="hiddenf == true && formatoStatus" (click)="obtenStatusReg();">
-                    <span><b>FORMATO COMPLETADO</b></span>
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i>
+            <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
+                <div style="display: inline-block; margin-right: 15px;"> 
+                  <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid }" *ngIf="hiddenf == true && formatoStatus" (click)="obtenStatusGenPDF();">
+                    <span><b>GENERAR PDF &nbsp;&nbsp;</b></span>
+                    <i class="fa fa-cogs" style="font-size:18px;"></i>
                   </button>
+                </div>
+                <div style="display: inline-block; margin-right: 15px;"> 
+                  <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminar }" *ngIf="hiddenf == true" (click)="obtenStatusVisualizarPDF();">
+                    <span><b>VISUALIZAR PDF &nbsp;&nbsp;</b></span>
+                    <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block; "></i>
+                  </button>
+                </div>
+                <div style="display: inline-block;"> 
+                  <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminar }" *ngIf="hiddenf == true && formatoStatus" (click)="obtenStatusReg();">
+                    <span><b>FORMATO COMPLETADO &nbsp;&nbsp;</b></span>
+                    <i class="fa fa-check-square-o" style="font-size:18px; display: inline-block; "></i>
+                  </button>
+                </div>
           </div>
-
+          
         </div>
       </div>
     </div>
@@ -135,7 +152,7 @@
         </div>
         <br> <br> <br>
         <div class="card-body ">
-          <app-formato-cch-grid></app-formato-cch-grid>
+          <app-formato-cch-grid (statusForm)="statusFormReciver($event)"></app-formato-cch-grid>
         </div> 
       </div>
     </div>
@@ -159,7 +176,7 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label>Tipos de Especimen</label>
-                  <select type="text" id="especimen" required name="especimen" class="form-control" placeholder="Especimen" formControlName="tipo_especimen">
+                  <select type="text" id="especimen" required name="especimen" class="form-control" placeholder="Especimen" formControlName="tipo_especimen" (change)=onChangeTipoEspecimen();>
                     <option value="" [disabled]="true">Selecciona el tipo de especimen...</option>
                     <option *ngFor="let especimen of espec" [value]="especimen.id">
                       {{especimen.especimen}}
@@ -185,23 +202,23 @@
               </div> <!--FIN PRIMERA GRID -->
             </div> <!--FIN ROW-->
             <div class="row">
-              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen1">Especimen 1</label> <!--disable-->
                     <input type="text" id="especimen1" class="form-control" required name="especimen1" placeholder="" formControlName="especimen1">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
-              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen2">Especimen 2</label> <!--disable-->
                     <input type="text" id="especimen2"   
                     class="form-control" 
-                    name="especimen2" placeholder="" formControlName="especimen2" required>
+                    name="especimen2" placeholder="" formControlName="especimen2" required required (change)="onBlurEspecimen2()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
 
-              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen3">Especimen 3</label> <!--disable-->
                     <input type="text" id="especimen3"   
@@ -209,7 +226,7 @@
                     name="especimen3" placeholder="" formControlName="especimen3" required (change)="onBlurEspecimen3()">
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
-              <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="tipoMuestra"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="especimen4">Especimen 4</label> <!--disable-->
                     <input type="text" id="especimen4"  class="form-control" 
@@ -312,9 +329,4 @@
       </div>
     </div> 
   </div>
-
-  
-
-
-
 </div>

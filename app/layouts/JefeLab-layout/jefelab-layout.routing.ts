@@ -27,6 +27,8 @@ import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid
 import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
 import { TecnicosGridAgregaComponent } from '../../jefelab/tecnicos-grida/tecnicos-grida.component';
 
+import { JLabPendientesComponent } from '../../jefelab/pendientes/pendientes.component';
+
 import { llenaFormatoCCHComponent } from '../../jefelab/llenaFormatoCCH/llenaFormatoCCH.component';
 import { llenaRevenimientoComponent } from '../../jefelab/llenaRevenimiento/llenaRevenimiento.component';
 import { agregaRegistroCCHComponent } from '../../jefelab/agregaRegistroCCH/agregaRegistroCCH.component';
@@ -50,7 +52,7 @@ export const JefeLabLayoutRoutes: Routes = [
     { path: 'orden-trabajo/dashboard/agregaRegistroCCH/:id/:id2/:id3',      component: agregaRegistroCCHComponent },
     { path: 'orden-trabajo/dashboard/agregaRegistroRevenimiento/:id/:id2/:id3',      component: agregaRegistroRevenimientoComponent },   
 
-
+    { path: 'pendientes',  component: JLabPendientesComponent },
 
     { path: 'herramientas',  component: HerramientasComponent },
     { path: 'herramientas/herramienta-detail/:id',   component: HerramientaDetailComponent },

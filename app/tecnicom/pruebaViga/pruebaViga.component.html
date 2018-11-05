@@ -98,7 +98,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="ancho1">LEC 1</label> <!--disable-->
-                    <input type="text" id="ancho1"   class="form-control"  placeholder="LEC 1" formControlName="ancho1" required (change)="onBlurAncho1()">
+                    <input type="number" id="ancho1"   class="form-control"  placeholder="LEC 1" formControlName="ancho1" required (change)="onBlurAncho1()">
                     <div *ngIf="ancho1.errors && (ancho1.dirty || ancho1.touched)" class="alert alert-danger">
                       <div *ngIf="ancho1.errors.required">LECTURA DE ANCHO 1 REQUERIDO.</div>
                       <div *ngIf="ancho1.errors.pattern">LA LECTURA DEL ANCHO 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -109,7 +109,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="ancho2">LEC 2</label> <!--disable-->
-                    <input type="text" id="ancho2"  class="form-control"  placeholder="LEC 2" formControlName="ancho2" required (change)="onBlurAncho2()">
+                    <input type="number" id="ancho2"  class="form-control"  placeholder="LEC 2" formControlName="ancho2" required (change)="onBlurAncho2()">
                     <div *ngIf="ancho2.errors && (ancho2.dirty || ancho2.touched)" class="alert alert-danger">
                       <div *ngIf="ancho2.errors.required">LECTURA DE ANCHO 2 REQUERIDO.</div>
                       <div *ngIf="ancho2.errors.pattern">LA LECTURA DEL ANCHO 2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -123,7 +123,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                 <div class="form-group"><!--PRIMER CAMPO -->
                   <label for="per1">LEC 1</label> <!--disable-->
-                  <input type="text" id="per1"   class="form-control"  placeholder="LEC 1" formControlName="per1" required (change)="onBlurPer1()">
+                  <input type="number" id="per1"   class="form-control"  placeholder="LEC 1" formControlName="per1" required (change)="onBlurPer1()">
                   <div *ngIf="per1.errors && (per1.dirty || per1.touched)" class="alert alert-danger">
                     <div *ngIf="per1.errors.required">LECTURA DE PERALTE 1 REQUERIDO.</div>
                     <div *ngIf="per1.errors.pattern">LA LECTURA DEL PERALTE 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -134,7 +134,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="per2">LEC 2</label> <!--disable-->
-                    <input type="text" id="per2"  class="form-control"  placeholder="LEC 2" formControlName="per2" required (change)="onBlurPer2()">
+                    <input type="number" id="per2"  class="form-control"  placeholder="LEC 2" formControlName="per2" required (change)="onBlurPer2()">
                     <div *ngIf="per2.errors && (per2.dirty || per2.touched)" class="alert alert-danger">
                       <div *ngIf="per2.errors.required">LECTURA DE PERALTE 2 REQUERIDO.</div>
                       <div *ngIf="per2.errors.pattern">LA LECTURA DEL PERALTE 2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -148,7 +148,7 @@
               <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="l1">L1</label> <!--disable-->
-                    <input type="text" id="l1"   class="form-control" required placeholder="L1" formControlName="l1" (change)="onBlurL1()">
+                    <input type="number" id="l1"   class="form-control" required placeholder="L1" formControlName="l1" (change)="onBlurL1()">
                     <div *ngIf="l1.errors && (l1.dirty || l1.touched)" class="alert alert-danger">
                       <div *ngIf="l1.errors.required">LECTURA DE LOCALIZACI&Oacute;N EN LA FALLA 1 REQUERIDO.</div>
                       <div *ngIf="l1.errors.pattern">LA LECTURA DE LOCALIZACI&Oacute;N EN LA FALLA 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -159,7 +159,7 @@
               <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="l2">L2</label> <!--disable-->
-                    <input type="text" id="l2"  class="form-control" required placeholder="L2" formControlName="l2" (change)="onBlurL2()">
+                    <input type="number" id="l2"  class="form-control" required placeholder="L2" formControlName="l2" (change)="onBlurL2()">
                     <div *ngIf="l2.errors && (l2.dirty || l2.touched)" class="alert alert-danger">
                       <div *ngIf="l2.errors.required">LECTURA DE LOCALIZACI&Oacute;N EN LA FALLA 2 REQUERIDO.</div>
                       <div *ngIf="l2.errors.pattern">LA LECTURA DE LOCALIZACI&Oacute;N EN LA FALLA 2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -170,7 +170,7 @@
               <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="l3">L3</label> <!--disable-->
-                    <input type="text" id="l3"   class="form-control" required  placeholder="L3" formControlName="l3" (change)="onBlurL3()">
+                    <input type="number" id="l3"   class="form-control" required  placeholder="L3" formControlName="l3" (change)="onBlurL3()">
                     <div *ngIf="l3.errors && (l3.dirty || l3.touched)" class="alert alert-danger">
                       <div *ngIf="l3.errors.required">LECTURA DE LOCALIZACI&Oacute;N EN LA FALLA 3 REQUERIDO.</div>
                       <div *ngIf="l3.errors.pattern">LA LECTURA DE LOCALIZACI&Oacute;N EN LA FALLA 3 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -191,7 +191,7 @@
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="disApoyos">DISTANCIA ENTRE APOYOS(cm)</label>
-                    <input type="text" id="disApoyos"  class="form-control"  placeholder="DISTANCIA ENTRE APOYOS(cm)" formControlName="disApoyos" required (change)="onBlurDisApoyos()">
+                    <input type="number" id="disApoyos"  class="form-control"  placeholder="DISTANCIA ENTRE APOYOS(cm)" formControlName="disApoyos" required (change)="onBlurDisApoyos()">
                       <div *ngIf="disApoyos.errors && (disApoyos.dirty || disApoyos.touched)" class="alert alert-danger">
                         <div *ngIf="disApoyos.errors.required">DISTANCIA ENTRE APOYOS REQUERIDA.</div>
                         <div *ngIf="disApoyos.errors.pattern">LA DISTANCIA ENTRE APOYOS DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -202,7 +202,7 @@
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="disCarga">DISTANCIA ENTRE PUNTOS DE CARGA (cm)</label> <!--disable-->
-                    <input type="text" id="disCarga" class="form-control" placeholder="DISTANCIA ENTRE PUNTOS DE CARGA (cm)" formControlName="disCarga" required (change)="onBlurDisCarga()">
+                    <input type="number" id="disCarga" class="form-control" placeholder="DISTANCIA ENTRE PUNTOS DE CARGA (cm)" formControlName="disCarga" required (change)="onBlurDisCarga()">
                     <div *ngIf="disCarga.errors && (disCarga.dirty || disCarga.touched)"class="alert alert-danger">
                         <div *ngIf="disCarga.errors.required">DISTANCIA ENTRE PUNTOS DE CARGA REQUERIDA.</div>
                         <div *ngIf="disCarga.errors.pattern">LA DISTANCIA ENTRE PUNTOS DE CARGA DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -213,7 +213,7 @@
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="cargaAplicada">CARGA APLICADA(kgf/cm<sup>2</sup>)</label>
-                    <input type="text" id="cargaAplicada"  class="form-control" placeholder="CARGA APLICADA" formControlName="cargaAplicada" required (change)="onBlurCargaAplicada()">
+                    <input type="number" id="cargaAplicada"  class="form-control" placeholder="CARGA APLICADA" formControlName="cargaAplicada" required (change)="onBlurCargaAplicada()">
                     <div *ngIf="cargaAplicada.errors && (cargaAplicada.dirty || cargaAplicada.touched)"class="alert alert-danger">
                         <div *ngIf="cargaAplicada.errors.required">CARGA APLICADA REQUERIDA.</div>
                         <div *ngIf="cargaAplicada.errors.pattern">LA CARGA APLICADA DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -251,7 +251,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                 <div class="form-group"><!--PRIMER CAMPO -->
                   <label for="tiempo">TIEMPO</label> <!--disable-->
-                  <input type="text" id="tiempo"  class="form-control" name="tiempo" placeholder="TIEMPO" formControlName="tiempo" required (change)="onBlurTiempo()">
+                  <input type="number" id="tiempo"  class="form-control" name="tiempo" placeholder="TIEMPO" formControlName="tiempo" required (change)="onBlurTiempo()">
                   <div *ngIf="tiempo.errors && (tiempo.dirty || tiempo.touched)" class="alert alert-danger">
                     <div *ngIf="tiempo.errors.required">TIEMPO REQUERIDO.</div>
                     <div *ngIf="tiempo.errors.pattern">EL TIEMPO DEBE CONTENER SOLO NUMEROS.</div>

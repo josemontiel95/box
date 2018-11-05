@@ -52,9 +52,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="pesoKg">PESO EN Kg</label> <!--disable-->
-                    <input type="text" id="pesoKg"   
-                    class="form-control" 
-                    name="pesoKg" placeholder="" formControlName="pesoKg" required (blur)="onBlurPesoKg()">
+                    <input type="number" id="pesoKg" class="form-control" placeholder="" formControlName="pesoKg" required (blur)="onBlurPesoKg()">
                     <div *ngIf="pesoKg.errors && (pesoKg.dirty || pesoKg.touched)" class="alert alert-danger">
                         <div *ngIf="pesoKg.errors.required">PESO EN KG REQUERIDO.</div>
                         <div *ngIf="pesoKg.errors.pattern">EL PESO EN KG DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -76,7 +74,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="diametro1">D1</label> <!--disable-->
-                    <input type="text" id="diametro1" class="form-control" required placeholder="" formControlName="diametro1" (blur)="onBlurDiametro1()">
+                    <input type="number" id="diametro1" class="form-control" required placeholder="" formControlName="diametro1" (blur)="onBlurDiametro1()">
                     <div *ngIf="diametro1.errors && (diametro1.dirty || diametro1.touched)" class="alert alert-danger">
                         <div *ngIf="diametro1.errors.required">DIAMETRO 1 REQUERIDO.</div>
                         <div *ngIf="diametro1.errors.pattern">EL DIAMETRO 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -87,7 +85,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="diametro2">D2</label> <!--disable-->
-                    <input type="text" id="diametro2" class="form-control" required placeholder="" formControlName="diametro2" (blur)="onBlurDiametro2()">
+                    <input type="number" id="diametro2" class="form-control" required placeholder="" formControlName="diametro2" (blur)="onBlurDiametro2()">
                     <div *ngIf="diametro2.errors && (diametro2.dirty || diametro2.touched)" class="alert alert-danger">
                         <div *ngIf="diametro2.errors.required">DIAMETRO 2 REQUERIDO.</div>
                         <div *ngIf="diametro2.errors.pattern">EL DIAMETRO 2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -102,7 +100,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="altura1">H1</label> <!--disable-->
-                    <input type="text" id="altura1" class="form-control" required placeholder="" formControlName="altura1" (blur)="onBlurAltura1()">
+                    <input type="number" id="altura1" class="form-control" required placeholder="" formControlName="altura1" (blur)="onBlurAltura1()">
                     <div *ngIf="altura1.errors && (altura1.dirty || altura1.touched)" class="alert alert-danger">
                         <div *ngIf="altura1.errors.required">ALTURA 1 REQUERIDA.</div>
                         <div *ngIf="altura1.errors.pattern">LA ALTURA 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -113,7 +111,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="altura2">H2</label> <!--disable-->
-                    <input type="text" id="altura2" class="form-control" required placeholder="" formControlName="altura2" (blur)="onBlurAltura2()">
+                    <input type="number" id="altura2" class="form-control" required placeholder="" formControlName="altura2" (blur)="onBlurAltura2()">
                     <div *ngIf="altura2.errors && (altura2.dirty || altura2.touched)"
                               class="alert alert-danger">
                         <div *ngIf="altura2.errors.required">ALTURA 2 REQUERIDA.</div>
@@ -128,7 +126,7 @@
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="  ">CARGA kg</label>
-                    <input type="text" id="cargaKg" class="form-control" required placeholder="" formControlName="cargaKg" (blur)="onBlurCargaKg()">
+                    <input type="number" id="cargaKg" class="form-control" required placeholder="" formControlName="cargaKg" (blur)="onBlurCargaKg()">
                      <div *ngIf="cargaKg.errors && (cargaKg.dirty || cargaKg.touched)"
                               class="alert alert-danger">
                         <div *ngIf="cargaKg.errors.required">CARGA KG REQUERIDA.</div>
@@ -158,7 +156,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                 <div class="form-group"><!--PRIMER CAMPO -->
                   <label for="tiempo">TIEMPO</label> <!--disable-->
-                  <input type="text" id="tiempo"  class="form-control" required placeholder="TIEMPO" formControlName="tiempo" required (change)="onBlurTiempo()">
+                  <input type="number" id="tiempo"  class="form-control" required placeholder="TIEMPO" formControlName="tiempo" required (change)="onBlurTiempo()">
                   <div *ngIf="tiempo.errors && (tiempo.dirty || tiempo.touched)" class="alert alert-danger">
                     <div *ngIf="tiempo.errors.required">TIEMPO REQUERIDO.</div>
                     <div *ngIf="tiempo.errors.pattern">EL TIEMPO DEBE CONTENER SOLO NUMEROS.</div>

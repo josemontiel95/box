@@ -142,11 +142,11 @@ export class dashboardCilindroComponent implements OnInit{
     });
 
     this.formatoCCHForm = new FormGroup({
-      'fechaEnsayo':         new FormControl( {value: this.FormatoCCH.fechaEnsayo, disabled: true }),
-      'observaciones':   new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden }),       
-      'bascula':            new FormControl( {value: this.FormatoCCH.bascula, disabled: this.hidden },  [Validators.required]),
-      'regla':         new FormControl( {value: this.FormatoCCH.regla, disabled: this.hidden },  [Validators.required]),
-      'prensa':      new FormControl( {value: this.FormatoCCH.prensa, disabled: this.hidden },  [Validators.required]),
+      'fechaEnsayo':      new FormControl( {value: this.FormatoCCH.fechaEnsayo,   disabled: true }),
+      'observaciones':    new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden },  [Validators.required,Validators.pattern("^[0-9]+([.][0-9]+)?$")]),       
+      'bascula':          new FormControl( {value: this.FormatoCCH.bascula,       disabled: this.hidden },  [Validators.required]),
+      'regla':            new FormControl( {value: this.FormatoCCH.regla,         disabled: this.hidden },  [Validators.required]),
+      'prensa':           new FormControl( {value: this.FormatoCCH.prensa,        disabled: this.hidden },  [Validators.required]),
     });
   }
 

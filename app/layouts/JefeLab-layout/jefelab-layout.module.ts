@@ -34,6 +34,9 @@ import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid
 import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
 import { TecnicosGridAgregaComponent } from '../../jefelab/tecnicos-grida/tecnicos-grida.component';
 
+import { JLabPendientesComponent } from '../../jefelab/pendientes/pendientes.component';
+
+
 import { llenaFormatoCCHComponent } from '../../jefelab/llenaFormatoCCH/llenaFormatoCCH.component';
 import { llenaRevenimientoComponent } from '../../jefelab/llenaRevenimiento/llenaRevenimiento.component';
 import { agregaRegistroCCHComponent } from '../../jefelab/agregaRegistroCCH/agregaRegistroCCH.component';
@@ -92,7 +95,8 @@ import { FechasGridComponent } from '../../jefelab/fechasgrid/fechasgrid.compone
     FormatosGridComponent,
     RegistrosRevGridComponent,
     TecGridComponent,
-    FechasGridComponent
+    FechasGridComponent,
+    JLabPendientesComponent
 
   ]
 })
