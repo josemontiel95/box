@@ -32,12 +32,13 @@ export class JLabPendientesComponent implements OnInit{
   rowClassRules;
   noRowDataError;
   selected = false;
+  tipoNo;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'FECHA DE COLADO', field: 'fecha'},
+    {headerName: 'CTRL FORMATO', field: 'id' },    
     {headerName: 'INFORME N&Uacute;MERO', field: 'informeNo' },    
-    {headerName: 'CLAVE', field: 'claveEspecimen' },    
+    
     {headerName: 'EDAD DE ENSAYE EN D&Iacute;AS', field: 'diasEnsaye' },
     {headerName: 'Fecha de ensayo', field: 'fechaEnsayeAsignado' },
     {headerName: 'TIPO', field: 'tipo' },
@@ -71,9 +72,9 @@ export class JLabPendientesComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
 
-    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getRegistrosForToday');
+    search.set('function', 'getAwaitingApproval');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => {
@@ -104,30 +105,44 @@ export class JLabPendientesComponent implements OnInit{
 
  onSelectionChanged(event: EventListenerObject) {
     var selectedRows = this.gridApi.getSelectedRows();
-    var idd
-    var tipoo
-    var rutaa
+    var idd;
+    var tipoo;
+    var rutaa;
+    var tipoNo;
+    var id;
+    var ordenDeTrabajo_id;
+
     selectedRows.forEach(function(selectedRow, index) {
-      console.log("Que paso: "+selectedRow.id_registrosCampo);
+      tipoNo = selectedRow.tipoNo;
+      id = selectedRow.id;
+      ordenDeTrabajo_id = selectedRow.ordenDeTrabajo_id;
+    });
+
+    if(tipoNo == 0){
+      window.alert("ERROR: CONTACTA A SOPORTE");
+    }else if(tipoNo == 1){
+      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaRevenimiento/'+ordenDeTrabajo_id + "/" + id]);
+    }else if(tipoNo >1){
+      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+ordenDeTrabajo_id + "/" + id]);
+    }
+
+/*
+    console.log("Que paso: "+selectedRow.id_registrosCampo);
       console.log("El tipo es:"+selectedRow.tipo);
-      if(selectedRow.tipo == "CILINDRO"){
-         idd= selectedRow.id_registrosCampo;
-         tipoo = selectedRow.tipo;
+      if(selectedRow.tipoNo == 0){
+         window.alert("ERROR: CONTACTA A SOPORTE");
+      }else if(selectedRow.tipoNo == 1){
+         idd= selectedRow.id;
+         tipoo = selectedRow.tipoNo;
          //window.alert(selectedRow.id_formato);
          rutaa = 1;
-      }else if(selectedRow.tipo == "CUBO"){
-         idd= selectedRow.id_registrosCampo;
-         tipoo = selectedRow.tipo;
+      }else if(selectedRow.tipo >1){
+        idd= selectedRow.id;
+         tipoo = selectedRow.tipoNo;
          //window.alert(selectedRow.id_formato);
          rutaa = 2;
-      }else if(selectedRow.tipo == "VIGAS"){
-        idd= selectedRow.id_registrosCampo;
-         tipoo = selectedRow.tipo;
-         //window.alert(selectedRow.id_formato);
-         rutaa = 3;
       }
-            
-    });
+*/
     this.id =idd;
     this.tipo =tipoo;
     this.ruta =rutaa;
