@@ -46,6 +46,7 @@ import { FormatosGridComponent } from '../../jefelab/formatos-grid/formatos-grid
 import { RegistrosRevGridComponent } from '../../jefelab/registrosrev-grid/registrosrev-grid.component';
 import { TecGridComponent } from '../../jefelab/tecgrid/tecgrid.component';
 import { FechasGridComponent } from '../../jefelab/fechasgrid/fechasgrid.component';
+import { OdtEdicionGridComponent } from '../../jefelab/ordenesDeTrabajo-grids/odt-edicion-grid/odt-edicion-grid.component';
 
 @NgModule({
   imports: [
@@ -96,8 +97,8 @@ import { FechasGridComponent } from '../../jefelab/fechasgrid/fechasgrid.compone
     RegistrosRevGridComponent,
     TecGridComponent,
     FechasGridComponent,
+    OdtEdicionGridComponent,
     JLabPendientesComponent
-
   ]
 })
 

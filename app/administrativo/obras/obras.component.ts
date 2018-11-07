@@ -1,15 +1,11 @@
 import { Component, OnInit} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
-    FormControl,
-    Validators,
-    FormBuilder
+    FormControl
 } from '@angular/forms';
 
 @Component({
@@ -21,7 +17,6 @@ export class ObrasComponent implements OnInit{
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   id= "";
@@ -52,8 +47,7 @@ export class ObrasComponent implements OnInit{
       {headerName: 'Tipo', field: 'tipo' },
       {headerName: 'No. Cotizaci&oacute;n', field: 'cotizacion' },
       {headerName: 'Cliente', field: 'razonSocial' },
-      {headerName: 'Obra', field: 'obra' },
-
+      {headerName: 'Obra', field: 'obra' }
     ];
     this.rowSelection = "multiple";
   }
@@ -132,7 +126,6 @@ export class ObrasComponent implements OnInit{
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
 
     let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
