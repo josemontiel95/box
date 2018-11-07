@@ -77,13 +77,13 @@
             <div class="row">
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="cargaKg">RESISTENCIA A COMPRESI&Oacute;N Kg</label>
+                    <label for="cargaKg">CARGA A COMPRESI&Oacute;N Kg</label>
                     <input type="text" id="cargaKg"  
                     class="form-control" 
                     name="cargaKg" placeholder="RESISTENCIA A COMPRESI&Oacute;N Kg" formControlName="cargaKg" required>
                     <div *ngIf="cargaKg.errors && (cargaKg.dirty || cargaKg.touched)" class="alert alert-danger">
-                        <div *ngIf="cargaKg.errors.required">RESISTENCIA A COMPRESI&Oacute;N K REQUERIDA.</div>
-                        <div *ngIf="cargaKg.errors.pattern">LA RESISTENCIA A COMPRESI&Oacute;N K DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                        <div *ngIf="cargaKg.errors.required">CARGA A COMPRESI&Oacute;N K REQUERIDA.</div>
+                        <div *ngIf="cargaKg.errors.pattern">LA CARGA A COMPRESI&Oacute;N K DEBE CONTENER SOLO N&Uacute;MEROS.</div>
                     </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->              

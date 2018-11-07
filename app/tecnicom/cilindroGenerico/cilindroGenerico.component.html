@@ -118,14 +118,14 @@
             <div class="row">
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="  ">CARGA kg</label>
+                    <label for="  ">CARGA A COMPRESIÓN kg</label>
                     <input type="text" id="cargaKg"  
                     class="form-control" 
                     name="cargaKg" placeholder="" formControlName="cargaKg">
                      <div *ngIf="cargaKg.errors && (cargaKg.dirty || cargaKg.touched)"
                               class="alert alert-danger">
-                        <div *ngIf="cargaKg.errors.required">CARGA KG REQUERIDA.</div>
-                        <div *ngIf="cargaKg.errors.pattern">LA CARGA KG DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                        <div *ngIf="cargaKg.errors.required">CARGA A COMPRESIÓN KG REQUERIDA.</div>
+                        <div *ngIf="cargaKg.errors.pattern">LA CARGA A COMPRESIÓN KG DEBE CONTENER SOLO N&Uacute;MEROS.</div>
                     </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->

@@ -197,9 +197,6 @@
               <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-              <button class="btn btn-success" *ngIf="!hidden"  (click)="cambiarLabo();">
-                <span><b> Cambiar Labo </b></span>
-              </button>
               <button class="btn btn-success" *ngIf="!hidden" [disabled]="clienteForm.invalid"  (click)="actualizarCliente();">
                 <span><b> Guardar Cambios. </b></span>
               </button>

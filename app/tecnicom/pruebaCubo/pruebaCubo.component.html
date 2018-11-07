@@ -13,8 +13,8 @@
         
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
-            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="llenarDespues();"></i>
-            <h5>ENSAYO A COMPRESI&Oacute;N DE CUBOS DE CONCRETO HIDR&Aacute;ULICO </h5>
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" style="float: left; padding-top: 8px;" (click)="llenarDespues();"></i>
+            <h5 style="text-align: center;">ENSAYO A COMPRESI&Oacute;N DE CUBOS DE CONCRETO HIDR&Aacute;ULICO </h5>
             <hr>
             <h6>INFORMACI&Oacute;N GENERAL DEL ENSAYO</h6>
             <div class="row"> <!--PRIMER ROW -->
@@ -88,13 +88,13 @@
             <div class="row">
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="cargaKg">RESISTENCIA A COMPRESI&Oacute;N Kg</label>
+                    <label for="cargaKg">CARGA A COMPRESI&Oacute;N Kg</label>
                     <input type="number" id="cargaKg"  
                     class="form-control" 
                     name="cargaKg" placeholder="RESISTENCIA A COMPRESI&Oacute;N Kg" formControlName="cargaKg" required (change)="onBlurCargaKg()">
                     <div *ngIf="cargaKg.errors && (cargaKg.dirty || cargaKg.touched)" class="alert alert-danger">
-                        <div *ngIf="cargaKg.errors.required">RESISTENCIA A COMPRESI&Oacute;N K REQUERIDA.</div>
-                        <div *ngIf="cargaKg.errors.pattern">LA RESISTENCIA A COMPRESI&Oacute;N K DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                        <div *ngIf="cargaKg.errors.required">CARGA A COMPRESI&Oacute;N K REQUERIDA.</div>
+                        <div *ngIf="cargaKg.errors.pattern">LA CARGA A COMPRESI&Oacute;N K DEBE CONTENER SOLO N&Uacute;MEROS.</div>
                     </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->              
