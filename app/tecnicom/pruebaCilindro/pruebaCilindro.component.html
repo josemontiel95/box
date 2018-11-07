@@ -13,8 +13,8 @@
         
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
-            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="llenarDespues();"></i>
-            <h5>ENSAYO A COMPRESI&Oacute;N DE CILINDROS DE CONCRETO HIDR&Aacute;ULICO </h5>
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="llenarDespues();" style="float: left; padding-top: 8px;"></i>
+            <h5 style="text-align: center;">ENSAYO A COMPRESI&Oacute;N DE CILINDROS DE CONCRETO HIDR&Aacute;ULICO </h5>
             <hr>
             <h6>INFORMACI&Oacute;N GENERAL DEL ENSAYO</h6>
             <div class="row"> <!--PRIMER ROW -->
@@ -125,12 +125,12 @@
             <div class="row">
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="  ">CARGA kg</label>
+                    <label for="  ">CARGA A COMPRESIÓN kg</label>
                     <input type="number" id="cargaKg" class="form-control" required placeholder="" formControlName="cargaKg" (blur)="onBlurCargaKg()">
                      <div *ngIf="cargaKg.errors && (cargaKg.dirty || cargaKg.touched)"
                               class="alert alert-danger">
-                        <div *ngIf="cargaKg.errors.required">CARGA KG REQUERIDA.</div>
-                        <div *ngIf="cargaKg.errors.pattern">LA CARGA KG DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                        <div *ngIf="cargaKg.errors.required">CARGA A COMPRESIÓN REQUERIDA.</div>
+                        <div *ngIf="cargaKg.errors.pattern">LA CARGA A COMPRESIÓN KG DEBE CONTENER SOLO N&Uacute;MEROS.</div>
                     </div>
                   </div> <!--FIN SEGUNDO CAMPO -->
                 </div> <!--FIN SEGUNDO GRID -->

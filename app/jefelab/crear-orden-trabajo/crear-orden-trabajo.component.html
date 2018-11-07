@@ -101,7 +101,7 @@
                   <label for="fechaInicio">Fecha de Inicio</label>
                   <input type="date" id="fechaInicio" class="form-control" name="fechaInicio" placeholder="" required  formControlName="fechaInicio">
                   <div *ngIf="fechaInicio.invalid && (fechaInicio.dirty || fechaInicio.touched)" class="alert alert-danger">
-                    <div *ngIf="fechaInicio.errors.required"> Fecha de Inicio requerida.</div>
+                    <div *ngIf="fechaInicio.errors.required"> Fecha de inicio requerida.</div>
                     <div *ngIf="fechaInicio.errors.pattern">Formato debe ser AAAA-MM-DD</div>
                   </div>
                 </div>
@@ -111,7 +111,7 @@
                   <label for="fechaFin">Fecha de Termino</label>
                   <input type="date" id="fechaFin" class="form-control" name="fechaFin" placeholder="" required  formControlName="fechaFin">
                   <div *ngIf="fechaFin.invalid && (fechaFin.dirty || fechaFin.touched)" class="alert alert-danger">
-                    <div *ngIf="fechaFin.errors.required">Fecha de Termino requerida.</div>
+                    <div *ngIf="fechaFin.errors.required">Fecha de termino requerida.</div>
                     <div *ngIf="fechaFin.errors.pattern">Formato debe ser AAAA-MM-DD</div>
                   </div>
                 </div>
@@ -123,7 +123,7 @@
                   <label for="horaInicio">Hora de Inicio</label>
                   <input type="time" id="horaInicio"  class="form-control" name="horaInicio" placeholder="" required  formControlName="horaInicio">
                   <div *ngIf="horaInicio.invalid && (horaInicio.dirty || horaInicio.touched)"class="alert alert-danger">
-                    <div *ngIf="horaInicio.errors.required">Hora de Inicio requerida.</div>
+                    <div *ngIf="horaInicio.errors.required">Hora de inicio requerida.</div>
                   </div>
                 </div>
               </div> <!--FIN  CAMPO -->
@@ -132,7 +132,7 @@
                   <label for="horaFin">Hora de Termino</label>
                   <input type="time" id="horaFin"  class="form-control" name="horaFin" placeholder="" required  formControlName="horaFin">
                   <div *ngIf="horaFin.invalid && (horaFin.dirty || horaFin.touched)" class="alert alert-danger">
-                    <div *ngIf="horaFin.errors.required">Nombre de contacto requerido.</div>
+                    <div *ngIf="horaFin.errors.required">Hora de fin requerida.</div>
                   </div>
                 </div>
               </div> <!--FIN  CAMPO -->
