@@ -40,6 +40,7 @@ export class dashboardVigaComponent implements OnInit{
   hidden = true;
   hiddenf= true;
   isValid=false;
+  isComplete=false;
   tipoModificable;
   preliminar = false;
   preliminarGabs= false;
@@ -58,18 +59,17 @@ export class dashboardVigaComponent implements OnInit{
   numberOfRegistros;
   
   formatoCCHForm: FormGroup;
-
-        FormatoCCH = {
-        fechaEnsayo: '',
-        observaciones:'',
-        bascula:'',
-        regla:'',
-        prensa:''
+    FormatoCCH = {
+    fechaEnsayo: '',
+    observaciones:'',
+    bascula:'',
+    regla:'',
+    prensa:''
     }
 
-   mis_conos: Array<any>;
-   mis_varillas: Array<any>;
-   mis_flexometro: Array<any>;
+  mis_conos: Array<any>;
+  mis_varillas: Array<any>;
+  mis_flexometro: Array<any>;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -88,7 +88,7 @@ export class dashboardVigaComponent implements OnInit{
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id_footer=params.id); 
-    this.cargando=4;
+    this.cargando=5;
 
     let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -127,6 +127,17 @@ export class dashboardVigaComponent implements OnInit{
       this.llenaPrensas(res.json()); 
     });
 
+    url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'isTheWholeFamilyHereAndComplete');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_footerEnsayo', this.id_footer);
+    this.http.get(url, {search}).subscribe(res => {
+      console.log(res.json());
+      this.validaComplete(res.json());
+    });
+
     
     //Esta Función no existe en el back pero supondria darme el estado para poder generar el PDF 0 No listo | 1 Listo.
 
@@ -153,11 +164,11 @@ export class dashboardVigaComponent implements OnInit{
     });
   }
 
-   get fechaEnsayo()        { return this.formatoCCHForm.get('fechaEnsayo'); }
-   get observaciones()  { return this.formatoCCHForm.get('observaciones'); }
-   get bascula()           { return this.formatoCCHForm.get('bascula'); }
-   get regla()        { return this.formatoCCHForm.get('regla'); }
-   get prensa()     { return this.formatoCCHForm.get('prensa'); }  
+  get fechaEnsayo()       { return this.formatoCCHForm.get('fechaEnsayo'); }
+  get observaciones()     { return this.formatoCCHForm.get('observaciones'); }
+  get bascula()           { return this.formatoCCHForm.get('bascula'); }
+  get regla()             { return this.formatoCCHForm.get('regla'); }
+  get prensa()            { return this.formatoCCHForm.get('prensa'); }  
   
   mostrar(){
     this.hidden = !this.hidden;
@@ -192,8 +203,6 @@ export class dashboardVigaComponent implements OnInit{
 
   onSubmit() { this.submitted = true; }
 
-
-  
   labValidator(repuesta: any){
     console.log(repuesta)
     if(repuesta.error==5 || repuesta.error==6){
@@ -338,7 +347,9 @@ export class dashboardVigaComponent implements OnInit{
   /*********************************************/
 
  /*************************************************/
-/*CODIGO PARA VISUALIZAR PDF DE ENSAYO DE GABINO */  
+/*CODIGO PARA VISUALIZAR PDF DE ENSAYO DE GABINO */
+
+
 
   visualizarFormatoCampo(){
     if(!this.preliminarGabs){
@@ -388,36 +399,55 @@ export class dashboardVigaComponent implements OnInit{
 
  /*****************************************************/
  /*CODIGO PARA COMPLETAR FORMATO DE ENSAYO DE MUESTRA */  
+
+  validaComplete(res: any){
+    this.cargando = this.cargando -1;
+    if(res.error == 0){
+      this.isComplete = true;
+    }else if(res.error >0 && res.error <4 ){
+      window.alert(res.estatus);
+      this.router.navigate(['login']);
+    }else if(res.error == 20){ //NO HAN LLEGADO TODO LOS HIJOS
+      this.isComplete = false;
+    }else if(res.error == 30){ //NO ESTAN COMPLETADOS TODO LOS HIJOS
+      this.isComplete = false;
+      this.isValid= false;
+    }else if(res.error != 0){ //NO ESTAN COMPLETADOS TODO LOS HIJOS
+      this.isComplete = false;
+      window.alert(res.estatus);
+    }
+  }
+
   obtenStatusReg(){
-    let url = `${this.global.apiRoot}/ensayoViga/get/endpoint.php`;
+    this.cargando = this.cargando +1;
+    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllRegistrosFromFooterByID');
+    search.set('function', 'isTheWholeFamilyHereAndComplete');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('footerEnsayo_id', this.id_footer);
+    search.set('id_footerEnsayo', this.id_footer);
     this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
-                                            this.validaRegistrosVacios(res.json());
-                                          });
+      console.log(res.json());
+      this.validaRegistrosVacios(res.json());
+    });
   }
 
   validaRegistrosVacios(res: any){
-    this.cargando=this.cargando-1;
-    this.isValid = true;
-    res.forEach(function (value) {
-      if(value.status == "0"){
-         this.isValid = false;
-        //window.alert("Existe al menos un registro que no ha sido completado, verifica que todos los registros esten completados.");
+    this.cargando = this.cargando -1;
+    if(res.error == 0){
+      if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
+        this.formatoCompletado();
       }
-    });
-
-    if(!this.isValid){
-      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para completar el formato.");     
-    }else{
-          if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
-            this.formatoCompletado();
-          }
-    } 
+    }else if(res.error >0 && res.error <4 ){
+      window.alert(res.estatus);
+      this.router.navigate(['login']);
+    }else if(res.error == 20){ //NO HAN LLEGADO TODO LOS HIJOS
+      window.alert(res.estatus);
+    }else if(res.error == 30){ //NO ESTAN COMPLETADOS TODO LOS HIJOS
+      window.alert(res.estatus);
+    }else if(res.error != 0){ //NO ESTAN COMPLETADOS TODO LOS HIJOS
+      window.alert(res.estatus);
+    }
   } 
 
   formatoCompletado(){
@@ -448,17 +478,6 @@ export class dashboardVigaComponent implements OnInit{
 
   /* FIN DEL BLOQUE COMPLETAR FORMATO DE ENSAYO DE MUESTRA*/
  /*********************************************************/
-    
-  respuestaSwitch(res: any){ 
-     console.log(res);
-     if(res.error!= 0){
-       window.alert(res.estatus);
-       location.reload();
-     }
-     else{
-          this.mostrar();         
-     }
-   }
 
   respuestaRegistro(res: any){ 
      console.log(res);
@@ -504,6 +523,7 @@ export class dashboardVigaComponent implements OnInit{
   }
 
    onChangeBascula(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
     let formData:FormData = new FormData();

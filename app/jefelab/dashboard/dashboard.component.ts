@@ -483,7 +483,7 @@ export class DashboardComponent implements OnInit {
    submitted = false;
 
   regresaOrdenTrabajo(){
-    this.router.navigate(['jefeBrigada/orden-trabajo']);
+    this.router.navigate(['jefeLaboratorio/orden-trabajo']);
   }
 
   onSubmit() { this.submitted = true; }

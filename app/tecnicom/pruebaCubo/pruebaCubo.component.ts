@@ -392,7 +392,8 @@ export class PruebaCuboComponent implements OnInit{
     this.formatoCCHForm.controls['clave']['disable']();
     this.formatoCCHForm.controls['edadEnsaye']['disable']();
     this.formatoCCHForm.controls['area']['disable']();
-    this.formatoCCHForm.controls['resCompresion']['disable']();    
+    this.formatoCCHForm.controls['resCompresion']['disable']();
+    this.formatoCCHForm.controls['velocidad']['disable']();    
   }
 
   validaCamposVacios(){

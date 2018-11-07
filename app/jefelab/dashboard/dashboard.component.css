@@ -1,0 +1,10 @@
+.clearfix:after{
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.other-post{
+	width: 25%;
+	float: left;
+}

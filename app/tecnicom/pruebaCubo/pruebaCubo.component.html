@@ -59,7 +59,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="l1">L1</label> <!--disable-->
-                    <input type="text" id="l1" class="form-control" placeholder="" formControlName="l1" required (change)="onBlurL1()">
+                    <input type="number" id="l1" class="form-control" placeholder="" formControlName="l1" required (change)="onBlurL1()">
                     <div *ngIf="l1.errors && (l1.dirty || l1.touched)" class="alert alert-danger">
                         <div *ngIf="l1.errors.required">L1 REQUERIDA.</div>
                         <div *ngIf="l1.errors.pattern">LA L1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
@@ -70,7 +70,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
                     <label for="l2">L2</label> <!--disable-->
-                    <input type="text" id="l2"   
+                    <input type="number" id="l2"   
                     class="form-control" 
                     name="l2" placeholder="L2" formControlName="l2" required (change)="onBlurL2()">
                     <div *ngIf="l2.errors && (l2.dirty || l2.touched)" class="alert alert-danger">
@@ -89,7 +89,7 @@
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="cargaKg">RESISTENCIA A COMPRESI&Oacute;N Kg</label>
-                    <input type="text" id="cargaKg"  
+                    <input type="number" id="cargaKg"  
                     class="form-control" 
                     name="cargaKg" placeholder="RESISTENCIA A COMPRESI&Oacute;N Kg" formControlName="cargaKg" required (change)="onBlurCargaKg()">
                     <div *ngIf="cargaKg.errors && (cargaKg.dirty || cargaKg.touched)" class="alert alert-danger">
@@ -120,7 +120,7 @@
               <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
                 <div class="form-group"><!--PRIMER CAMPO -->
                   <label for="tiempo">TIEMPO</label> <!--disable-->
-                  <input type="text" id="tiempo"  class="form-control" name="tiempo" placeholder="TIEMPO" formControlName="tiempo" required (change)="onBlurTiempo()">
+                  <input type="number" id="tiempo"  class="form-control" name="tiempo" placeholder="TIEMPO" formControlName="tiempo" required (change)="onBlurTiempo()">
                   <div *ngIf="tiempo.errors && (tiempo.dirty || tiempo.touched)" class="alert alert-danger">
                     <div *ngIf="tiempo.errors.required">TIEMPO REQUERIDO.</div>
                     <div *ngIf="tiempo.errors.pattern">EL TIEMPO DEBE CONTENER SOLO NUMEROS.</div>
