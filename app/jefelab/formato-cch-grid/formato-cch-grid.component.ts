@@ -66,7 +66,14 @@ export class FormatoCCHGridComponent implements OnInit  {
       this.data.currentGlobal.subscribe(global => this.global = global);
       this.route.params.subscribe( params => {this.id_orden = params.id2; this.id_formato=params.id});
   }
+  /*Este metodo es llamado por el boton REGISTRO DE CAMPO y llevara al usuario a AgregaRegistroCCH*/
+  onLoadCCH(){
+    this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_orden + '/' +this.id_formato]);
+  }
 
+  onLoadEnsayo(){
+
+  }
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
