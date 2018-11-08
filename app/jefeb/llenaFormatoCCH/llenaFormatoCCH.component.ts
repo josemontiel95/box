@@ -341,6 +341,11 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.formatoCCHForm.controls['informe']['disable']();
     this.formatoCCHForm.controls['especimen4']['disable']();
 
+    if(!this.tipoMuestra){
+      this.formatoCCHForm.controls['especimen3']['disable']();
+    }else{
+      this.formatoCCHForm.controls['especimen4']['disable']();
+    }
     /*Se realiza una validación mediante numberOfRegistros
       Para saber si existen registros, en caso positivo
       Se bloquea el campo tipo de especimen. */
@@ -348,7 +353,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     if(this.numberOfRegistros != 0){
       this.formatoCCHForm.controls['tipo_especimen']['disable']();
     }
-    this.onBlurTipoConcreto(); //¿Vale la pena la llamada?
+    //this.onBlurTipoConcreto(); //¿Vale la pena la llamada? ...NO!
   }
 
   submitted = false;
@@ -434,7 +439,9 @@ export class llenaFormatoCCHComponent implements OnInit{
     console.log(respuesta.tipo_especimen);
     if(respuesta.tipo_especimen == "VIGAS"){
       this.tipoMuestra = false;
+      this.formatoCCHForm.controls['especimen3']['disable']();
     }else{
+      this.formatoCCHForm.controls['especimen4']['disable']();
       this.tipoMuestra = true;
     }
     //Esta if verifica si ya fue generado un PDF mediante respuesta.preliminar, si fue generado activa Visuarlizar PDF.
@@ -457,10 +464,9 @@ export class llenaFormatoCCHComponent implements OnInit{
       especimen3:          this.vespecimen3,
       
     });
-      this.formatoCCHForm.controls["especimen1"]['disable'](); 
-      this.formatoCCHForm.controls["especimen2"]['disable']();
+      //this.formatoCCHForm.controls["especimen1"]['disable'](); 
+      //this.formatoCCHForm.controls["especimen2"]['disable']();
       this.formatoCCHForm.controls["especimen3"]['disable']();
-      this.formatoCCHForm.controls["especimen4"]['disable']();
     }else if(!this.tipoMuestra){
       
       this.tipoMuestra = true;
@@ -472,21 +478,17 @@ export class llenaFormatoCCHComponent implements OnInit{
       especimen3:          this.aespecimen3,
       especimen4:          this.aespecimen4,
     });
-      this.formatoCCHForm.controls["especimen1"]['disable'](); 
-      this.formatoCCHForm.controls["especimen2"]['disable']();
-      this.formatoCCHForm.controls["especimen3"]['disable']();
-      this.formatoCCHForm.controls["especimen4"]['disable']();
+      //this.formatoCCHForm.controls["especimen1"]['disable'](); 
+      //this.formatoCCHForm.controls["especimen2"]['disable']();
+      //this.formatoCCHForm.controls["especimen3"]['disable']();
+      this.formatoCCHForm.controls["especimen3"]['enable']();
     }
   }
 
   onBlurTipoConcreto(){
 
-
     //ESTO ES PARA QUE CUANDO CARGUE BLOQUEE LOS CAMPOS 3 o 4 DIAS ENSAYE.
-    if(!this.tipoMuestra ){ //SI ES VIGA
-      console.log("mostrarFooter :: if:");
-      console.log(this.tipoMuestra);
-      
+    if(!this.tipoMuestra ){ //SI ES VIGA      
       if(this.formatoCCHForm.value.tconcreto == "N"){//SI ES NORMAL
         
         this.notRR = false;
@@ -494,14 +496,12 @@ export class llenaFormatoCCHComponent implements OnInit{
            tconcreto:  this.atconcreto,
            especimen1: this.vespecimen1,
            especimen2: this.vespecimen2,
-           especimen3: this.vespecimen3,
-           
+           especimen3: this.vespecimen3
         });
 
-        this.formatoCCHForm.controls["especimen1"]['disable'](); 
-        this.formatoCCHForm.controls["especimen2"]['disable']();
-        this.formatoCCHForm.controls["especimen3"]['disable']();
-        this.formatoCCHForm.controls["especimen4"]['disable']();
+        this.formatoCCHForm.controls["especimen1"]['enable'](); 
+        this.formatoCCHForm.controls["especimen2"]['enable']();
+        this.formatoCCHForm.controls['especimen3']['disable'](); // disables/enables each form control based on 'this.formDisabled'
       }else{//SI NO ES NORMAL
         this.notRR = true;
         this.formatoCCHForm.controls["especimen1"]['enable'](); 
@@ -509,14 +509,6 @@ export class llenaFormatoCCHComponent implements OnInit{
         this.formatoCCHForm.controls['especimen3']['disable'](); // disables/enables each form control based on 'this.formDisabled'
         //this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
       }
-
-
-      this.notRR = !this.notRR;
-      const state = this.hiddenf || this.notRR ? 'disable' : 'enable'; 
-      this.formatoCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
-      this.formatoCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
-      //this.formatoCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
-      //this.formatoCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
 
     }else{ //SI CILINDRO O CUBO
       if(this.formatoCCHForm.value.tconcreto == "N"){
@@ -531,53 +523,18 @@ export class llenaFormatoCCHComponent implements OnInit{
            especimen4: this.aespecimen4
         });
 
-        this.formatoCCHForm.controls["especimen1"]['disable'](); 
-        this.formatoCCHForm.controls["especimen2"]['disable']();
-        this.formatoCCHForm.controls["especimen3"]['disable']();
-        this.formatoCCHForm.controls["especimen4"]['disable']();
-        }else{ //SI ES RR O CA.
-          this.notRR = true;
-          this.formatoCCHForm.controls["especimen1"]['enable'](); 
-          this.formatoCCHForm.controls["especimen2"]['enable']();
-          this.formatoCCHForm.controls["especimen3"]['enable']();
-          this.formatoCCHForm.controls["especimen4"]['disable'](); // disables/enables each form control based on 'this.formDisabled'
-        }
-
-        this.notRR = !this.notRR;
-        const state = this.hiddenf || this.notRR ? 'disable' : 'enable'; 
-        this.formatoCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
-        this.formatoCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
-        this.formatoCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
-        //this.formatoCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
+        this.formatoCCHForm.controls["especimen1"]['enable'](); 
+        this.formatoCCHForm.controls["especimen2"]['enable']();
+        this.formatoCCHForm.controls["especimen3"]['enable']();
+        this.formatoCCHForm.controls["especimen4"]['disable'](); // disables/enables each form control based on 'this.formDisabled'
+      }else{ //SI ES RR O CA.
+        this.notRR = true;
+        this.formatoCCHForm.controls["especimen1"]['enable'](); 
+        this.formatoCCHForm.controls["especimen2"]['enable']();
+        this.formatoCCHForm.controls["especimen3"]['enable']();
+        this.formatoCCHForm.controls["especimen4"]['disable'](); // disables/enables each form control based on 'this.formDisabled'
+      }
     }
-
-    /*
-
-    if(this.formatoCCHForm.getRawValue().tconcreto == "RR" || this.formatoCCHForm.getRawValue().tconcreto == "CA" ){
-      this.notRR = false;
-      this.formatoCCHForm.controls["especimen3"]['disable']();
-      this.formatoCCHForm.controls["especimen4"]['disable']();
-      //window.alert("notRR es false, this.formatoCCHForm.value.tconcreto: "+this.formatoCCHForm.value.tconcreto);
-    }else{
-      //window.alert("notRR es true, this.formatoCCHForm.value.tconcreto: "+this.formatoCCHForm.value.tconcreto);
-      this.notRR = true;
-      this.formatoCCHForm.patchValue({
-         tconcreto: this.atconcreto,
-         especimen1: this.aespecimen1,
-         especimen2: this.aespecimen2,
-         especimen3: this.aespecimen3,
-         especimen4: this.aespecimen4
-      });
-    }
-    
-     
-    this.notRR = !this.notRR;
-    const state = this.hiddenf || this.notRR ? 'disable' : 'enable'; 
-    this.formatoCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
-    this.formatoCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
-    this.formatoCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
-    this.formatoCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
-   */
   }
 
   onBlurEspecimen2(){

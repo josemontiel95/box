@@ -37,13 +37,9 @@ export class JLabPendientesComponent implements OnInit{
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
     {headerName: 'CTRL FORMATO', field: 'id' },    
-    {headerName: 'INFORME N&Uacute;MERO', field: 'informeNo' },    
-    
-    {headerName: 'EDAD DE ENSAYE EN D&Iacute;AS', field: 'diasEnsaye' },
-    {headerName: 'Fecha de ensayo', field: 'fechaEnsayeAsignado' },
+    {headerName: 'INFORME N&Uacute;MERO', field: 'informeNo' },
     {headerName: 'TIPO', field: 'tipo' },
-    {headerName: 'ESTADO', field: 'estado' },
-    {headerName: 'COMPLETADO', field: 'completado' },
+    {headerName: 'ACCION REQUERIDA', field: 'accReq' }
   ];
     this.rowSelection = "single";
     this.rowClassRules = {

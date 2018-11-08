@@ -22,7 +22,7 @@ import {
 export class CrearLlenaFormatoCCHComponent implements OnInit {
 
   global: Global;
-  cargando= 4;
+  cargando= 0;
   mis_conos: Array<any>;
   mis_varillas: Array<any>;
   mis_flexometro: Array<any>;
@@ -88,7 +88,6 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   onBlurTipoConcreto(){
     if(this.creaCCHForm.value.tconcreto == "RR" || this.creaCCHForm.value.tconcreto == "CA" ){
       this.notRR = false;
-     // window.alert("notRR es false, this.creaCCHForm.value.tconcreto: "+this.creaCCHForm.value.tconcreto);
     }else{
       //window.alert("notRR es true, this.creaCCHForm.value.tconcreto: "+this.creaCCHForm.value.tconcreto);
       this.notRR = true;
@@ -101,16 +100,18 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
       });
     }
     //this.notRR = !this.notRR;
-    if(this.tipoMuestra == false){
+    /*
+    if(this.tipoMuestra == false){ // Es viga
       const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
       this.creaCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
       this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
-    }else{
+    }else{ // No es viga
       const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
       this.creaCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
       this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
       this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
     }
+    */
     this.onChangeTipoConcreto();
   }
 
@@ -140,7 +141,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_orden=params.id; this.id_formato=params.id2});
-    this.cargando=4;
+    this.cargando=this.cargando+5;
 
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
@@ -238,9 +239,9 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
     console.log(respuesta);
     this.tipoGlobal = respuesta.tipo_especimen;
     //this.cargando = 1;
-    if(respuesta.tipo_especimen == "VIGAS"){
+    if(respuesta.tipo_especimen == "VIGAS"){  // Es vigas
       this.tipoMuestra = false;
-    }else{
+    }else{ // No es vigas
       this.tipoMuestra = true;
     }
     this.updateDays();
@@ -258,10 +259,10 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
       flexometro:     respuesta.flexometro_id,
       termometro:     respuesta.termometro_id
     });
-    //this.cargando = 0;   
   }
 
   llenadoDefault(respuesta: any){
+    this.cargando=this.cargando-1;
     console.log(respuesta);
     this.tipoGlobal = respuesta.tipo_especimen;
     if(respuesta.tipo_especimen == "VIGAS"){
@@ -310,7 +311,6 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
      flexometro:     respuesta.flexometro_id,
      termometro:     respuesta.termometro_id
     });
-    //this.cargando = 0; 
   }
 
   updateDays(){
@@ -340,8 +340,9 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
         especimen2: this.aespecimen2,
         especimen3: this.aespecimen3            
       });
-      // llamar al server.., para tconcreto
-    }else{
+      const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
+      this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
+    }else{ // no es vigas
       this.notRR=true;
       this.atconcreto= "N";
       this.aespecimen1= resp.cch_def_prueba1;
@@ -356,13 +357,17 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
         especimen3: this.aespecimen3,
         especimen4: this.aespecimen4
       });
+      const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
+      this.creaCCHForm.controls["especimen3"]['enable']();
+      this.creaCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
     }
-
+    /*
     const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
     this.creaCCHForm.controls["especimen1"][state](); // disables/enables each form control based on 'this.formDisabled'
     this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
     this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
     this.creaCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
+    */
     this.onChangeTipoConcreto();
   }  
 

@@ -1,5 +1,5 @@
-import { Component, ViewChild ,OnInit, Output, EventEmitter} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Component ,OnInit, Output, EventEmitter} from '@angular/core';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,12 +13,13 @@ export class FormatoCCHGridComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   id_orden: string;
   id_formato: string;
   rowSelection;
   columnDefs;
   rowClassRules;
+  noRowDataError;
+
 
   @Output() statusForm = new EventEmitter<any>();
 
@@ -75,7 +76,6 @@ export class FormatoCCHGridComponent implements OnInit  {
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllRegistrosByID');
@@ -92,18 +92,23 @@ export class FormatoCCHGridComponent implements OnInit  {
 
   llenaTabla(repuesta: any){
     console.log(repuesta)
+    let isValid=true;
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.error==5){
+      this.rowData =[];
+      this.noRowDataError="No has agregado registros a este formato";
+      isValid=false;
     }else{
       this.rowData =repuesta;
+      isValid=true;
+      repuesta.forEach(function (value) {
+        if(value.status == "0"){
+           isValid = false;
+        }
+      });
     }
-    let isValid=true;
-    repuesta.forEach(function (value) {
-      if(value.status == "0"){
-         isValid = false;
-      }
-    });
     this.statusForm.emit(isValid);
   }
 
