@@ -29,24 +29,9 @@ export class FormatoCCHGridComponent implements OnInit  {
     {headerName: 'FECHA', field: 'fecha' },
     {headerName: 'LOCALIZACI&Oacute;N', field: 'localizacion' },
     {headerName: 'Dias ensaye', field: 'diasEnsaye' },
-    /*
-    {headerName: 'F&rsquo;C', field: 'fprima'},
-
-    {headerName: 'TAMA&Ntilde;O NOMINAL DEL AGREGADO (mm)', field: 'tamagregado' },
-    {headerName: 'VOLUMEN (m<sup>2</sup>)', field: 'volumen' },
-    {headerName: 'TIPO DE CONCRETO', field: 'tipoConcreto' },
-    {headerName: 'UNIDAD', field: 'herramienta_id' },
-    {headerName: 'HORA DE MUESTREO EN OBRA', field: 'horaMuestreo' },
-    {headerName: 'TEMP AMBIENTE DE MUESTREO (&#176;C)', field: 'tempMuestreo' },
-    {headerName: 'TEMP AMBIENTE DE RECOLECCI&Oacute;N (&#176;C)', field: 'tempRecoleccion' },
-    {headerName: 'LOCALIZACI&Oacute;N', field: 'localizacion' },
-    */
     {headerName: 'ESTATUS', field: 'status' }
-
-      
     ];
     this.rowSelection = "single";
-
     this.rowClassRules = {
       "row-blue-warning": function(params) {
         var status = params.data.status;

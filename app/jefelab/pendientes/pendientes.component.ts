@@ -31,6 +31,7 @@ export class JLabPendientesComponent implements OnInit{
   ruta = 0;
   rowClassRules;
   noRowDataError;
+  noRowData=false;
   selected = false;
   tipoNo;
   ordenTrabajo;
@@ -91,7 +92,9 @@ export class JLabPendientesComponent implements OnInit{
     }else if(repuesta.error==5){
       this.rowData =[];
       this.noRowDataError="No existen Especimenes pendientes para hoy.";   
+      this.noRowData=true;
     }else{
+      this.noRowData=false;
       this.rowData =repuesta;
     }
   }
@@ -130,16 +133,13 @@ export class JLabPendientesComponent implements OnInit{
 
   selectOption(){
     this.cambiarCargando(+1);
-    this.respuestaSwitch(this.tipoNo);
-  }
-
-  respuestaSwitch(res: any){  
-    this.cambiarCargando(-1);
-    if(res == 1){
+    if(this.tipoNo == 1){
       this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaRevenimiento/'+ this.ordenTrabajo + "/" + this.id]);
-    }else if(res == 2){
+    }else if(this.tipoNo > 1){
       this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.ordenTrabajo + "/" + this.id]);
-    }   
+    }else{
+      window.alert("Error. Algo salió mal. Contacta a soporte.");
+    }
   }
 }
 
