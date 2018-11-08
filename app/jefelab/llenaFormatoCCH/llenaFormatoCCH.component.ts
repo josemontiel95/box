@@ -956,7 +956,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   }
 
   regresaOrdenTrabajo(){
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+ this.id_orden]);
+    this.router.navigate(['jefeLaboratorio/orden-trabajo/']);
   }
 
 

@@ -1,0 +1,99 @@
+
+<div class="card">
+  <div class="card-body">
+   <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="form-group">
+            <h4 style="text-align: center;" class="card-title">DETALLES DEL FORMATO DE ENSAYO.</h4>
+            <label for="observaciones">VELOCIDAD DE APLICACI&Oacute;N DE CARGA</label>
+            <input type="number" id="observaciones" class="form-control" required placeholder="" (change)="onChangeObservaciones()" formControlName="observaciones">
+            <div *ngIf="observaciones.errors && (observaciones.dirty || observaciones.touched)" class="alert alert-danger">
+              <div *ngIf="observaciones.errors.required">VELOCIDAD DE APLICACI&Oacute;N DE CARGA REQUERIDA.</div>
+              <div *ngIf="observaciones.errors.pattern">LA VELOCIDAD DE APLICACI&Oacute;N DE CARGA DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+            </div>
+          </div>
+        </div>
+
+        
+        
+      </div> <!--FIN ROW-->
+      <h6>Inventario de Intrumento</h6>
+      <div class="row">
+        <div *ngIf=!Viga class="col-md-6 col-12">
+           <div class="form-group">
+            <label for="bascula">BASCULA</label>
+            <select  class="form-control" id="bascula" 
+              required name="bascula"
+              placeholder="Tipos"  formControlName="bascula" (change)="onChangeBascula()">
+              <option value="" [disabled]="true">Selecciona una bascula...</option>
+              
+              <option *ngFor="let bascula of mis_basculas" [value]="bascula.id_herramienta">
+                {{bascula.placas}}
+              </option>
+            </select>
+            <div *ngIf="bascula.invalid && (bascula.dirty || bascula.touched)"
+              class="alert alert-danger">
+              <div *ngIf="bascula.errors.required">
+                 Bascula requerida.
+              </div>
+              <div *ngIf="bascula.errors.pattern">La Localizacion solo debe contener numeros</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-12">
+           <div class="form-group">
+            <label for="regla">REGLA,VERNIER O FLEXO</label>
+            <select  class="form-control" id="regla" 
+              required name="regla"
+              placeholder="Tipos"  formControlName="regla" (change)="onChangeRegla()">
+              <option value="" [disabled]="true">Selecciona una regla,vernier o flex...</option>
+              
+              <option *ngFor="let regla of mis_reglas" [value]="regla.id_herramienta">
+                {{regla.placas}}
+              </option>
+            </select>
+            <div *ngIf="regla.invalid && (regla.dirty || regla.touched)" class="alert alert-danger">
+             <div *ngIf="regla.errors.required">
+             Regla, Vernier o Flexo Requerido.
+             </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-12">
+           <div class="form-group">
+            <label for="prensa">PRENSA</label>
+            <select  class="form-control" id="prensa" 
+              required name="prensa"
+              placeholder="Tipos"  formControlName="prensa" (change)="onChangePrensa()">
+              <option value="" [disabled]="true">Selecciona una prensa...</option>
+              
+              <option *ngFor="let prensa of mis_prensas" [value]="prensa.id_herramienta">
+                {{prensa.placas}}
+              </option>
+            </select>
+            <div *ngIf="prensa.invalid && (prensa.dirty || prensa.touched)" class="alert alert-danger">
+             <div *ngIf="prensa.errors.required">
+             Prensa Requerida.
+             </div>
+            </div>
+          </div>
+        </div>
+       
+        
+      </div>
+    </form>
+    <div class="btn-group"  style="float: right; padding-right: 10%;">
+        <button class="btn btn-info" *ngIf="hiddenf && !formatoStatus"  (click)="mostrarFooter()">
+          <span><b> Cambiar Datos. </b></span>
+        </button>
+      <button class="btn btn-success" *ngIf="!hiddenf && !formatoStatus" [disabled]="formatoCCHForm.invalid" (click)="mostrarFooter();">
+        <span><b> Guardar Cambios. </b></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
