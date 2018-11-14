@@ -23,6 +23,10 @@ import { HerramientaGridComponent } from '../../jefelab/herramienta-grid/herrami
 import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component';
 import { EvaluaHerraComponent } from '../../jefelab/evaluaherra/evaluaherra.component';
 
+import { PruebaCilindroComponent } from '../../jefelab/pruebaCilindro/pruebaCilindro.component';
+import { PruebaCuboComponent } from '../../jefelab/pruebaCubo/pruebaCubo.component';
+import { PruebaVigaComponent } from '../../jefelab/pruebaViga/pruebaViga.component';
+
 import { ConstruccionComponent } from '../../jefelab/construccion/construccion.component';
 
 import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid.component';
@@ -53,6 +57,10 @@ export const JefeLabLayoutRoutes: Routes = [
     { path: 'orden-trabajo/dashboard/llenaRevenimiento/:id2/:id',      component: ConstruccionComponent },
     { path: 'orden-trabajo/dashboard/agregaRegistroCCH/:id/:id2/:id3/:id4',      component: agregaRegistroCCHComponent },
     { path: 'orden-trabajo/dashboard/agregaRegistroRevenimiento/:id/:id2/:id3',      component: agregaRegistroRevenimientoComponent },   
+    { path: 'orden-trabajo/dashboard/pruebaCilindro/:id/:id2/:id3/:id4',      component: PruebaCilindroComponent },
+    { path: 'orden-trabajo/dashboard/pruebaCubo/:id/:id2/:id3/:id4',      component: PruebaCuboComponent },
+    { path: 'orden-trabajo/dashboard/pruebaViga/:id/:id2/:id3/:id4',      component: PruebaCuboComponent },
+
 
     { path: 'pendientes',  component: JLabPendientesComponent },
 

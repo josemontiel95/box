@@ -1,0 +1,251 @@
+    <!--<div class="col-lg-12 col-12 col-md-12">   tag del padre-->
+        <div class="card card-chart">
+        
+            <div class="card-body">
+             <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+                <h5>REGISTRO DEL ENSAYO A FLEXI&Oacute;N DE VIGAS DE CONCRETO CON CARGA A LOS TERCIOS DEL CLARO</h5>
+                <hr>
+                <h6>INFORMACI&Oacute;N GENERAL DEL ENSAYO</h6>
+                <div class="row"> <!--PRIMER ROW -->
+                  
+                  <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="idMuestra">IDENTIFICACI&Oacute;N DE LA MUESTRA</label> <!--disable-->
+                        <input type="text" id="idMuestra"   class="form-control"  placeholder="IDENTIFICACI&Oacute;N DE LA MUESTRA" formControlName="idMuestra">
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+    
+                  <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="fechaColado">FECHA DE COLADO</label> <!--disable-->
+                        <input type="date" id="fechaColado"   class="form-control" name="fechaColado" placeholder="" formControlName="fechaColado">
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+    
+                  <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="fechaEnsayo">FECHA DE ENSAYO</label> <!--disable-->
+                        <input type="date" id="fechaEnsayo"   class="form-control" name="fechaEnsayo" placeholder="" formControlName="fechaEnsayo">
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+    
+                </div> <!--FIN PRIMER ROW -->
+    
+                <div class="row"> <!--PRIMER ROW -->
+                  <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="edadEnsaye">EDAD DIAS</label> <!--disable-->
+                        <input type="text" id="edadEnsaye"   class="form-control" name="edadEnsaye" placeholder="" formControlName="edadEnsaye">
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                </div> <!--FIN PRIMER ROW -->
+                <hr>
+                <h6>DATOS GENERALES DEL ENSAYO</h6>
+                <div class="row">
+                  <div class="col-md-12 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="condiCurado">CONDICIONES DE CURADO Y HUMEDAD</label>
+                        <select  class="form-control" id="condiCurado" name="condiCurado" formControlName="condiCurado" required >
+                          <option value="null" [disabled]="true">Selecciona la condicion de curado y humedad...</option>
+                          <option *ngFor="let condicion of curado" [value]="condicion.id">
+                                {{condicion.condicion}}
+                          </option>
+                        </select>
+    
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                      <label for="apoyo">PUNTOS DE APOYO</label>                    
+                        <select  class="form-control" id="apoyo" name="apoyo" formControlName="apoyo" required >
+                          <option value="null" [disabled]="true">Selecciona el apoyo a utilizar...</option>
+                          <option *ngFor="let tapoyo of apoyos" [value]="tapoyo.id">
+                                {{tapoyo.tapoyo}}
+                          </option>
+                        </select>
+    
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+    
+                  <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                      <label for="fractura">TIPO DE FRACTURA EN LA VIGA</label>                      
+                        <select  class="form-control" id="fractura" name="fractura" formControlName="fractura" required >
+                          <option value="null" [disabled]="true">Selecciona el tipo de Fractura de la Viga...</option>
+                          <option *ngFor="let frac of fracture" [value]="frac.id">
+                                {{frac.frac}}
+                          </option>
+                        </select>
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                </div>
+                <hr>
+                <h6>ANCHO(cm)</h6>
+                <div class="row">
+                  <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="ancho1">LEC 1</label> <!--disable-->
+                        <input type="text" id="ancho1"   class="form-control"  placeholder="LEC 1" formControlName="ancho1" required >
+                        <div *ngIf="ancho1.errors && (ancho1.dirty || ancho1.touched)" class="alert alert-danger">
+                          <div *ngIf="ancho1.errors.required">LECTURA DE ANCHO 1 REQUERIDO.</div>
+                          <div *ngIf="ancho1.errors.pattern">LA LECTURA DEL ANCHO 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                        </div>
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+    
+                  <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="ancho2">LEC 2</label> <!--disable-->
+                        <input type="text" id="ancho2"  class="form-control"  placeholder="LEC 2" formControlName="ancho2" required >
+                        <div *ngIf="ancho2.errors && (ancho2.dirty || ancho2.touched)" class="alert alert-danger">
+                          <div *ngIf="ancho2.errors.required">LECTURA DE ANCHO 2 REQUERIDO.</div>
+                          <div *ngIf="ancho2.errors.pattern">LA LECTURA DEL ANCHO 2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                        </div>
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                </div>
+                <hr>
+                <h6>PERALTE(cm)</h6>
+                <div class="row">
+                  <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                    <div class="form-group"><!--PRIMER CAMPO -->
+                      <label for="per1">LEC 1</label> <!--disable-->
+                      <input type="text" id="per1"   class="form-control"  placeholder="LEC 1" formControlName="per1" required>
+                      <div *ngIf="per1.errors && (per1.dirty || per1.touched)" class="alert alert-danger">
+                        <div *ngIf="per1.errors.required">LECTURA DE PERALTE 1 REQUERIDO.</div>
+                        <div *ngIf="per1.errors.pattern">LA LECTURA DEL PERALTE 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                      </div>
+                    </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+    
+                  <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="per2">LEC 2</label> <!--disable-->
+                        <input type="text" id="per2"  class="form-control"  placeholder="LEC 2" formControlName="per2" required >
+                        <div *ngIf="per2.errors && (per2.dirty || per2.touched)" class="alert alert-danger">
+                          <div *ngIf="per2.errors.required">LECTURA DE PERALTE 2 REQUERIDO.</div>
+                          <div *ngIf="per2.errors.pattern">LA LECTURA DEL PERALTE 2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                        </div>
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                </div>
+                <hr>
+                <h6>LOCALIZACI&Oacute;N DE LA FALLA EN mm</h6>
+                <div class="row">
+                  <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="l1">L1</label> <!--disable-->
+                        <input type="text" id="l1"   class="form-control"  placeholder="L1" formControlName="l1" >
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+    
+                  <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="l2">L2</label> <!--disable-->
+                        <input type="text" id="l2"  class="form-control"  placeholder="L2" formControlName="l2" >
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+    
+                  <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="l3">L3</label> <!--disable-->
+                        <input type="text" id="l3"   class="form-control"  placeholder="L3" formControlName="l3" >
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+    
+                  <div class="col-md-3 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="prom">PROM</label> <!--disable-->
+                        <input type="text" id="prom"    class="form-control"  placeholder="PROM" formControlName="prom">
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                </div>
+                <hr>
+                <h6>C&Aacute;LCULOS</h6>
+                <div class="row">
+                  <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                      <div class="form-group"><!--SEGUNDO CAMPO -->
+                        <label for="disApoyos">DISTANCIA ENTRE APOYOS(cm)</label>
+                        <input type="text" id="disApoyos"  class="form-control"  placeholder="DISTANCIA ENTRE APOYOS(cm)" formControlName="disApoyos" required >
+                          <div *ngIf="disApoyos.errors && (disApoyos.dirty || disApoyos.touched)" class="alert alert-danger">
+                            <div *ngIf="disApoyos.errors.required">DISTANCIA ENTRE APOYOS REQUERIDA.</div>
+                            <div *ngIf="disApoyos.errors.pattern">LA DISTANCIA ENTRE APOYOS DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                        </div>
+                      </div> <!--FIN SEGUNDO CAMPO -->
+                    </div> <!--FIN SEGUNDO GRID -->
+    
+                  <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="disCarga">DISTANCIA ENTRE PUNTOS DE CARGA (cm)</label> <!--disable-->
+                        <input type="text" id="disCarga"   class="form-control"placeholder="DISTANCIA ENTRE PUNTOS DE CARGA (cm)" formControlName="disCarga" required >
+                        <div *ngIf="disCarga.errors && (disCarga.dirty || disCarga.touched)"class="alert alert-danger">
+                            <div *ngIf="disCarga.errors.required">DISTANCIA ENTRE PUNTOS DE CARGA REQUERIDA.</div>
+                            <div *ngIf="disCarga.errors.pattern">LA DISTANCIA ENTRE PUNTOS DE CARGA DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                        </div>
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+    
+                  <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                      <div class="form-group"><!--SEGUNDO CAMPO -->
+                        <label for="cargaAplicada">CARGA APLICADA(kgf/cm<sup>2</sup>)</label>
+                        <input type="text" id="cargaAplicada"  class="form-control" placeholder="CARGA APLICADA(kgf/cm<sup>2</sup>)" formControlName="cargaAplicada" required >
+                        <div *ngIf="cargaAplicada.errors && (cargaAplicada.dirty || cargaAplicada.touched)"class="alert alert-danger">
+                            <div *ngIf="cargaAplicada.errors.required">CARGA APLICADA REQUERIDA.</div>
+                            <div *ngIf="cargaAplicada.errors.pattern">LA CARGA APLICADA DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                        </div>
+                      </div> <!--FIN SEGUNDO CAMPO -->
+                    </div> <!--FIN SEGUNDO GRID -->
+                </div>
+    
+                <div class="row">
+                  <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="moduloRuptura">M&Oacute;DULO DE RUPTURA(kgf/cm<sup>2</sup>)</label> <!--disable-->
+                        <input type="text" id="moduloRuptura"   class="form-control"  placeholder="M&Oacute;DULO DE RUPTURA" formControlName="moduloRuptura">                
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                  <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="defectos">DEFECTOS ESPECIMEN</label> <!--disable-->
+                        <input type="text" id="defectos"  class="form-control"  placeholder="DEFECTOS ESPECIMEN" formControlName="defectos" >                
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                  <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="realizo">REALIZ&Oacute;</label> <!--disable-->
+                        <input type="text" id="realizo"  class="form-control"  placeholder="REALIZ&Oacute;" formControlName="realizo">                
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                </div>
+                <hr>
+                <h6>VELOCIDAD Y TIEMPO</h6>
+                <div class="row">
+                  <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                    <div class="form-group"><!--PRIMER CAMPO -->
+                      <label for="tiempo">TIEMPO</label> <!--disable-->
+                      <input type="text" id="tiempo"  class="form-control" name="tiempo" placeholder="" formControlName="tiempo" required >
+                      <div *ngIf="tiempo.errors && (tiempo.dirty || tiempo.touched)" class="alert alert-danger">
+                        <div *ngIf="tiempo.errors.required">TIEMPO REQUERIDO.</div>
+                        <div *ngIf="tiempo.errors.pattern">EL TIEMPO DEBE CONTENER SOLO NUMEROS.</div>
+                      </div>
+                    </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                  <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                      <div class="form-group"><!--PRIMER CAMPO -->
+                        <label for="velocidad">VELOCIDAD DE APLICACI&Oacute;N DE CARGA EXPERIMENTAL</label> <!--disable-->
+                        <input type="text" id="velocidad"   class="form-control" name="velocidad" placeholder="" formControlName="velocidad" required >
+                        <div *ngIf="velocidad.errors && (velocidad.dirty || velocidad.touched)" class="alert alert-danger">
+                            <div *ngIf="velocidad.errors.required">VELOCIDAD REQUERIDA.</div>
+                            <div *ngIf="velocidad.errors.pattern">LA VELOCIDAD DEBE CONTENER SOLO NUMEROS.</div>
+                        </div>
+                      </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                </div>
+              </form>
+            </div>
+          </div>
+    
+    
