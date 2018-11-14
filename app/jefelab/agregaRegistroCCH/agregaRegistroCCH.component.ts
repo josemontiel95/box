@@ -1,17 +1,12 @@
-import { GridComponent } from '../grid/grid.component';
 import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 //FIN DE LOS IMPORTS
@@ -29,8 +24,6 @@ export class agregaRegistroCCHComponent implements OnInit{
   campo: "1"; //Esta variable es para seleccionar el campo que se insertara cuando pierda el foco.
   title = 'app';
   global: Global;
-  private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   cargando= 0;
@@ -211,15 +204,17 @@ export class agregaRegistroCCHComponent implements OnInit{
     // Se Copio groupsMember para poderlo manipular.
     this.groupMembers=respuesta.groupMembers;
     //Aqui se asignan las banderas del status en el que se encuentre la muestra.
-    if(respuesta.status == 1){
+    if(respuesta.status == 2){ // era el estado 1 
       this.hiddenB = true;
       this.mostrar();
-    }else if(respuesta.status >= 2){
+      this.reloadHerra();
+    }else if(respuesta.status <= 1){ // era el estado mayor que 1 
       this.hiddenA = true;
       this.locked=true;
       this.mostrar();
       this.reloadHerra();
-    }else if(respuesta.status == 0){
+    }else if(respuesta.status == 3){ // era el estado 0
+      this.reloadHerra();
       this.hiddenC = true;
 
     }
@@ -449,53 +444,36 @@ export class agregaRegistroCCHComponent implements OnInit{
     }
   }
 
-  
-
-
-  //Esta funcion ya no se usara, desactivaba un registro CCH
-  /*descartaCambios(){
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'deactivate');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('id_registrosCampo', this.id_registro);  
-    this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaDescartaCambios(res.json());                 
-                                            } );
-  }*/
 
   llenarDespues(){
     this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '12');
-    formData.append('valor', '0');
+    formData.append('valor', '3');
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());                 
-                                            } );
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' + this.id_formato]);
-  }
+        this.respuestaSwitch(res.json());                 
+      } );
+      this.regresar();
+    }
 
   registroCompletado(){
     this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '12');
-    formData.append('valor', '1');
+    formData.append('valor', '2');
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {                                             
                                               this.respuestaSwitchRegistroCompletado(res.json());                 
@@ -507,7 +485,7 @@ export class agregaRegistroCCHComponent implements OnInit{
       window.alert(res.estatus);
     }
     else{
-      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
+      this.regresar();
     }
   }
 
@@ -520,12 +498,12 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '12');
-    formData.append('valor', '0');
+    formData.append('valor', '3');
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {                                             
                                               this.respuestaSwitchCambioRegistro(res.json());                 
@@ -533,7 +511,7 @@ export class agregaRegistroCCHComponent implements OnInit{
 
     
     //window.alert("Si procedes ")
-    //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
+    //this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato]);
   }
 
   limpiaHerramientas(){
@@ -553,7 +531,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -579,7 +557,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -604,7 +582,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -630,7 +608,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -652,7 +630,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -669,7 +647,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -686,7 +664,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -703,7 +681,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -720,7 +698,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -737,7 +715,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -754,7 +732,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -771,7 +749,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -788,7 +766,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -805,7 +783,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -822,7 +800,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -839,7 +817,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('function', 'insertRegistroJefaLaboratorio');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -869,7 +847,7 @@ export class agregaRegistroCCHComponent implements OnInit{
      }
      else{
           
-          //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
+          //this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_formato]);
        
      }
    }
