@@ -57,6 +57,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   tipoMuestra = true;
   maxNoOfRegistrosCCH ="";
   multiplosNoOfRegistrosCCH ="";
+  footerExist=false;
   
   formatoCCHForm: FormGroup;
 
@@ -88,24 +89,20 @@ export class llenaFormatoCCHComponent implements OnInit{
    mis_termometro: Array<any>;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
-    this.columnDefs = [
-    {headerName: '# Orden', field: 'id_herramienta' },
-    {headerName: '# Cotización', field: 'id_herramienta' },
-    {headerName: 'Tipo', field: 'tipo' },
-    {headerName: 'Placas', field: 'placas' },
-    {headerName: 'Condicion', field: 'condicion'},
-    {headerName: 'Fecha de compra', field: 'fechaDeCompra' },
-    {headerName: 'Editado en', field: 'lastEditedON'},
 
-  ];
-    this.rowSelection = "single";
   }
     
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id; this.id_footer=params.id3;}); 
-    this.cargando=6;
 
+    if(this.id_footer == "null"){
+      this.footerExist=false;
+    }else{
+      this.footerExist=true;
+    }
+
+    this.cargando=6;
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
     
