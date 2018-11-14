@@ -23,6 +23,8 @@ import { HerramientaGridComponent } from '../../jefelab/herramienta-grid/herrami
 import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component';
 import { EvaluaHerraComponent } from '../../jefelab/evaluaherra/evaluaherra.component';
 
+import { ConstruccionComponent } from '../../jefelab/construccion/construccion.component';
+
 import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid.component';
 import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
 import { TecnicosGridAgregaComponent } from '../../jefelab/tecnicos-grida/tecnicos-grida.component';
@@ -47,9 +49,9 @@ export const JefeLabLayoutRoutes: Routes = [
     { path: 'orden-trabajo',      component: OrdenTrabajoComponent },
     { path: 'orden-trabajo/crear-orden-trabajo',   component: CrearOrdenTrabajoComponent }, 
     { path: 'orden-trabajo/dashboard/evaluaherra/:id',      component: EvaluaHerraComponent },
-    { path: 'orden-trabajo/dashboard/llenaFormatoCCH/:id2/:id',      component: llenaFormatoCCHComponent },
-    { path: 'orden-trabajo/dashboard/llenaRevenimiento/:id2/:id',      component: llenaRevenimientoComponent },
-    { path: 'orden-trabajo/dashboard/agregaRegistroCCH/:id/:id2/:id3',      component: agregaRegistroCCHComponent },
+    { path: 'orden-trabajo/dashboard/llenaFormatoCCH/:id2/:id/:id3',      component: ConstruccionComponent },
+    { path: 'orden-trabajo/dashboard/llenaRevenimiento/:id2/:id',      component: ConstruccionComponent },
+    { path: 'orden-trabajo/dashboard/agregaRegistroCCH/:id/:id2/:id3/:id4',      component: agregaRegistroCCHComponent },
     { path: 'orden-trabajo/dashboard/agregaRegistroRevenimiento/:id/:id2/:id3',      component: agregaRegistroRevenimientoComponent },   
 
     { path: 'pendientes',  component: JLabPendientesComponent },

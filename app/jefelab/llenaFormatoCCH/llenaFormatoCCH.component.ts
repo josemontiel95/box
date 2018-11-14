@@ -22,6 +22,9 @@ export class llenaFormatoCCHComponent implements OnInit{
   id_orden: string;
   id_formato: string;
   id_registro: string;
+  id_footer: string;
+  opciones=false;
+  opcionesMessage="Mostrar opciones";
   title = 'app';
   global: Global;
   link = "";
@@ -100,7 +103,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id}); 
+    this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id; this.id_footer=params.id3;}); 
     this.cargando=6;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
@@ -262,6 +265,15 @@ export class llenaFormatoCCHComponent implements OnInit{
     search.set('status', '-1');
     this.http.get(url, {search}).subscribe(res => this.llenaTermometro(res.json()) );
   }
+
+  masOpciones(){
+     this.opciones=!this.opciones;
+     if(this.opciones){
+       this.opcionesMessage= "Ocultar opciones"
+     }else{
+       this.opcionesMessage= "Mostrar opciones"
+     }
+   }
 
   loadDefaultsVigas(){
     //this.cargando=this.cargando+1;
@@ -913,6 +925,14 @@ export class llenaFormatoCCHComponent implements OnInit{
   }
 
   regresaOrdenTrabajo(){
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+ this.id_orden]);
+    this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/'+ this.id_orden]);
+  }
+
+  onLoadCCH(){
+    
+  }
+
+  onLoadEnsayo(){
+    
   }
 }

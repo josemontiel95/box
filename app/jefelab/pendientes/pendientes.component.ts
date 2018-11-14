@@ -111,10 +111,12 @@ export class JLabPendientesComponent implements OnInit{
     var tipoNo;
     var id;
     var ordenDeTrabajo_id;
+    var id_footerEnsayo;
 
     selectedRows.forEach(function(selectedRow, index) {
       tipoNo = selectedRow.tipoNo;
       id     = selectedRow.id;
+      id_footerEnsayo = selectedRow.id_footerEnsayo
       ordenDeTrabajo_id = selectedRow.ordenDeTrabajo_id;
     });
 
@@ -122,8 +124,9 @@ export class JLabPendientesComponent implements OnInit{
       window.alert("ERROR: CONTACTA A SOPORTE");
     }
 
-    this.ordenTrabajo = ordenDeTrabajo_id
-    this.id =id;
+    this.ordenTrabajo = ordenDeTrabajo_id; //ID Orden Trabajo
+    this.id =id;                           //ID Formato
+    this.id_Footer = id_footerEnsayo;      //ID Footer 
     this.tipo =tipoo;
     this.ruta =rutaa;
     console.log("Que paso: "+this.id);
@@ -136,7 +139,7 @@ export class JLabPendientesComponent implements OnInit{
     if(this.tipoNo == 1){
       this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaRevenimiento/'+ this.ordenTrabajo + "/" + this.id]);
     }else if(this.tipoNo > 1){
-      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.ordenTrabajo + "/" + this.id]);
+      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.ordenTrabajo + "/" + this.id + "/" + this.id_Footer]);
     }else{
       window.alert("Error. Algo salió mal. Contacta a soporte.");
     }

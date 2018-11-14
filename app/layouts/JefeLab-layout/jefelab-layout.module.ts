@@ -30,6 +30,8 @@ import { HerramientaGridComponent } from '../../jefelab/herramienta-grid/herrami
 import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component';
 import { EvaluaHerraComponent } from '../../jefelab/evaluaherra/evaluaherra.component';
 
+import { ConstruccionComponent } from '../../jefelab/construccion/construccion.component';
+
 import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid.component';
 import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
 import { TecnicosGridAgregaComponent } from '../../jefelab/tecnicos-grida/tecnicos-grida.component';
@@ -42,6 +44,7 @@ import { llenaRevenimientoComponent } from '../../jefelab/llenaRevenimiento/llen
 import { agregaRegistroCCHComponent } from '../../jefelab/agregaRegistroCCH/agregaRegistroCCH.component';
 import { agregaRegistroRevenimientoComponent } from '../../jefelab/agregaRegistroRevenimiento/agregaRegistroRevenimiento.component';
 import { FormatoCCHGridComponent } from '../../jefelab/formato-cch-grid/formato-cch-grid.component';
+import { PendientesPDFGridComponent } from '../../jefelab/pendientes-pdf-grid/pendientes-pdf-grid.component';
 import { FormatosGridComponent } from '../../jefelab/formatos-grid/formatos-grid.component';
 import { RegistrosRevGridComponent } from '../../jefelab/registrosrev-grid/registrosrev-grid.component';
 import { TecGridComponent } from '../../jefelab/tecgrid/tecgrid.component';
@@ -73,6 +76,7 @@ import { OdtEdicionGridComponent } from '../../jefelab/ordenesDeTrabajo-grids/od
     ClientesComponent,
     CrearClienteComponent,
     ClienteDetailComponent,
+    ConstruccionComponent,
     ConcreteraComponent,
     CrearConcreteraComponent,
     ConcreteraDetailComponent,
@@ -95,6 +99,7 @@ import { OdtEdicionGridComponent } from '../../jefelab/ordenesDeTrabajo-grids/od
     agregaRegistroRevenimientoComponent,
     FormatoCCHGridComponent,
     FormatosGridComponent,
+    PendientesPDFGridComponent,
     RegistrosRevGridComponent,
     TecGridComponent,
     FechasGridComponent,

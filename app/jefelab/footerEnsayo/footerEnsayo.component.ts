@@ -24,10 +24,8 @@ import {
 export class footerEnsayoComponent implements OnInit{
 
   id: string = "1001";
-  id_footer: string;
-  id_orden: string;
   id_formato: string;
-  id_registro: string;
+  id_footer: string;
   title = 'app';
   global: Global;
   link = "";
@@ -87,25 +85,23 @@ export class footerEnsayoComponent implements OnInit{
 	  
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id_footer=params.id); 
+    this.route.params.subscribe( params => this.id_formato=params.id); 
     
-    //this.cargando=5;
-    /*El Chema me va a ayudar despues
+    this.cargando = 4;
+  
     let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getFooterByID');
+    search.set('function', 'getFooterByFormatoCampoID');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('id_footerEnsayo', this.id_footer);
+    search.set('id_formatoCampo', this.id_formato);
     this.http.get(url, {search}).subscribe(res =>{ 
       this.llenado(res.json());
       this.llenadoValidator(res.json(), "getFooterByID");
     });
 
-    */
-
-    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
-    let search = new URLSearchParams();
+    url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    search = new URLSearchParams();
 
     search.set('function', 'getForDroptdownBasculas');
     search.set('token', this.global.token);
