@@ -1,0 +1,236 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+<div class="row">
+    <div class="col-lg-12 col-12 col-md-12">
+      <div class="card card-chart">
+        
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="llenarDespues();" style="float: left; padding-top: 8px;"></i>
+            <h5 style="text-align: center;">ENSAYO A COMPRESI&Oacute;N DE CILINDROS DE CONCRETO HIDR&Aacute;ULICO </h5>
+            <hr>
+            <h6>INFORMACI&Oacute;N GENERAL DEL ENSAYO</h6>
+            <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="fecha">FECHA DE COLADO</label> <!--disable-->
+                    <input type="date" id="fecha"   
+                    class="form-control" 
+                    name="fecha" placeholder="" formControlName="fechaColado">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="infoNo">INFORME NO.</label> <!--disable-->
+                    <input type="text" id="infoNo"   
+                    class="form-control" 
+                    name="infoNo" placeholder="" formControlName="infoNo">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="clave">CLAVE</label> <!--disable-->
+                    <input type="text" id="clave"   
+                    class="form-control" 
+                    name="clave" placeholder="" formControlName="clave">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+            </div> <!--FIN PRIMER ROW -->
+
+            <div class="row"> <!--PRIMER ROW -->
+              
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="pesoKg">PESO EN Kg</label> <!--disable-->
+                    <input type="number" id="pesoKg" class="form-control" placeholder="" formControlName="pesoKg" required (blur)="onBlurPesoKg()">
+                    <div *ngIf="pesoKg.errors && (pesoKg.dirty || pesoKg.touched)" class="alert alert-danger">
+                        <div *ngIf="pesoKg.errors.required">PESO EN KG REQUERIDO.</div>
+                        <div *ngIf="pesoKg.errors.pattern">EL PESO EN KG DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="edadEnsaye">EDAD DE ENSAYE EN DIAS</label> <!--disable-->
+                    <input type="text" id="edadEnsaye" class="form-control" name="edadEnsaye" placeholder="" formControlName="edadEnsaye">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div> <!--FIN PRIMER ROW -->
+
+            <hr>
+            <h6>DIAMETROS (cm)</h6>
+            <div class="row">
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="diametro1">D1</label> <!--disable-->
+                    <input type="number" id="diametro1" class="form-control" required placeholder="" formControlName="diametro1" (blur)="onBlurDiametro1()">
+                    <div *ngIf="diametro1.errors && (diametro1.dirty || diametro1.touched)" class="alert alert-danger">
+                        <div *ngIf="diametro1.errors.required">DIAMETRO 1 REQUERIDO.</div>
+                        <div *ngIf="diametro1.errors.pattern">EL DIAMETRO 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="diametro2">D2</label> <!--disable-->
+                    <input type="number" id="diametro2" class="form-control" required placeholder="" formControlName="diametro2" (blur)="onBlurDiametro2()">
+                    <div *ngIf="diametro2.errors && (diametro2.dirty || diametro2.touched)" class="alert alert-danger">
+                        <div *ngIf="diametro2.errors.required">DIAMETRO 2 REQUERIDO.</div>
+                        <div *ngIf="diametro2.errors.pattern">EL DIAMETRO 2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+
+            <hr>
+            <h6>ALTURAS (cm)</h6>
+            <div class="row">
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="altura1">H1</label> <!--disable-->
+                    <input type="number" id="altura1" class="form-control" required placeholder="" formControlName="altura1" (blur)="onBlurAltura1()">
+                    <div *ngIf="altura1.errors && (altura1.dirty || altura1.touched)" class="alert alert-danger">
+                        <div *ngIf="altura1.errors.required">ALTURA 1 REQUERIDA.</div>
+                        <div *ngIf="altura1.errors.pattern">LA ALTURA 1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="altura2">H2</label> <!--disable-->
+                    <input type="number" id="altura2" class="form-control" required placeholder="" formControlName="altura2" (blur)="onBlurAltura2()">
+                    <div *ngIf="altura2.errors && (altura2.dirty || altura2.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="altura2.errors.required">ALTURA 2 REQUERIDA.</div>
+                        <div *ngIf="altura2.errors.pattern">LA ALTURA 2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+            <hr>
+            <h6>C&Aacute;LCULOS</h6>
+            <div class="row">
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="  ">CARGA A COMPRESIÓN kg</label>
+                    <input type="number" id="cargaKg" class="form-control" required placeholder="" formControlName="cargaKg" (blur)="onBlurCargaKg()">
+                     <div *ngIf="cargaKg.errors && (cargaKg.dirty || cargaKg.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="cargaKg.errors.required">CARGA A COMPRESIÓN REQUERIDA.</div>
+                        <div *ngIf="cargaKg.errors.pattern">LA CARGA A COMPRESIÓN KG DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="area">&Aacute;REA cm<sup>2</sup></label> <!--disable-->
+                    <input type="text" id="area" class="form-control" placeholder="" formControlName="area">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="resCompresion">RESISTENCIA A COMPRESI&Oacute;N Kg/cm<sup>2</sup></label>
+                    <input type="text" id="resCompresion" class="form-control" placeholder="" formControlName="resCompresion" (blur)="onBlurResCompresion()">
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->
+            </div>
+
+            <hr>
+            <h6>VELOCIDAD Y TIEMPO</h6>
+            <div class="row">
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="tiempo">TIEMPO</label> <!--disable-->
+                  <input type="number" id="tiempo"  class="form-control" required placeholder="TIEMPO" formControlName="tiempo" required (change)="onBlurTiempo()">
+                  <div *ngIf="tiempo.errors && (tiempo.dirty || tiempo.touched)" class="alert alert-danger">
+                    <div *ngIf="tiempo.errors.required">TIEMPO REQUERIDO.</div>
+                    <div *ngIf="tiempo.errors.pattern">EL TIEMPO DEBE CONTENER SOLO NUMEROS.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="velocidad">VELOCIDAD DE APLICACI&Oacute;N DE CARGA EXPERIMENTAL</label> <!--disable-->
+                    <input type="text" id="velocidad"   class="form-control" placeholder="VELOCIDAD DE APLICACI&Oacute;N DE CARGA EXPERIMENTAL" formControlName="velocidad" required>
+                    <div *ngIf="velocidad.errors && (velocidad.dirty || velocidad.touched)" class="alert alert-danger">
+                        <div *ngIf="velocidad.errors.required">VELOCIDAD REQUERIDA.</div>
+                        <div *ngIf="velocidad.errors.pattern">LA VELOCIDAD DEBE CONTENER SOLO NUMEROS.</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+
+            <hr>
+            <h6>REPORTAR FALLA (OPCIONAL)</h6>
+            <div class="row">
+              
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="falla">FALLA N°</label> <!--disable-->
+                    
+                   <select  class="form-control" id="falla" 
+                    name="falla"
+                    placeholder="falla No"  formControlName="falla" (change)="onBlurFalla()">
+                    <option value="0" [disabled]="true">Selecciona una falla...</option>
+                    
+                    <option *ngFor="let falla of fallas" [value]="falla.id">
+                      {{falla.falla}}
+                    </option>
+                  </select>
+                    
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+            </div>
+
+            <div class="row">
+              <div class="col-md-2 col-12">                
+
+                  <button class="btn btn-default" *ngIf="hiddenA || hiddenB" [disabled]="formatoCCHForm.invalid" (click)="llenarDespues();">
+                    <span><b> Regresar. </b></span>
+                  </button>
+              </div>
+              <div class="col-md-6 col-12">
+
+              </div>
+              <div class="col-md-2 col-12">
+
+               <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
+                    <span><b> Cambiar Datos. </b></span>
+                  </button>
+                <button class="btn btn-default" *ngIf="hiddenC" (click)="llenarDespues()">
+                      <span><b> Llenar mas tarde. </b></span>
+                </button>
+              </div>
+              <div class="col-md-2 col-12">
+                <button class="btn btn-success" *ngIf="hiddenC" [disabled]="formatoCCHForm.invalid" (click)="validaCamposVacios()">
+                      <span><b> Registro Completo. </b></span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-12 col-md-12">
+      <app-cilindroGenerico *ngFor="let member of oldmembers" [id_Registro]="member.id_ensayoCilindro" (cambiarCargando)="cambiarCargando($event)"></app-cilindroGenerico>
+    </div>
+  </div>
+</div>

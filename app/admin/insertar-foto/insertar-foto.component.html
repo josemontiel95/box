@@ -12,16 +12,22 @@
               <img class="avatar border-gray" src="../assets/img/gabino.jpg" alt="...">
               
             </a>
-            
-            
           </div>
 
           <div class="col-md-3 ml-auto mr-auto">
+            <p style="color: red">{{crearMessage}}<p>
+            <p style="color: green">{{crearMessageCargando}}<p>
+              <mat-progress-bar  [value]="value" ></mat-progress-bar>
             <div class="form-group">
-                <button class="btn btn-info" for="file">Elige un Archivo</button>
+                <button class="btn btn-info" for="file">Elige una foto</button>
+
                 <input type="file"
                        id="file"
                        (change)="handleFileInput($event.target.files)">
+
+            </div>
+            <div class="form-group">
+               <button type="button" class="btn btn-alert"  (click)="cancelar()">Omitir Foto</button>
             </div>
           </div>
           <!--<div id="si" class="col-md-2 ml-auto mr-auto ">

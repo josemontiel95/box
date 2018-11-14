@@ -1,0 +1,287 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaCliente();"></i>
+            Perfil de {{this.clienteForm.value.razonSocial}}
+          </h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]=clienteForm #formDir="ngForm" >
+
+            <div class="row"> <!--Inicia Row1-->
+              <div class="col-md-12 col-12 ">
+                <div class="form-group">
+                  <label for="razonSocial">Raz&oacute;n social.</label> 
+                  <input type="text"  id= "razonSocial"   required class="form-control" name="razonSocial" placeholder="Tu Empresa S.A. de C.V."  formControlName="razonSocial" (change)="onChangeRazonSocial()">
+                  <div *ngIf="razonSocial.invalid && (razonSocial.dirty || razonSocial.touched)" class="alert alert-danger">
+                    <div *ngIf="razonSocial.errors.required">
+                      Raz&oacute;n social. requerida.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> <!--Termina Row1-->
+            <div class="row"> <!--Inicia Row2-->
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="nombre">Nombre de la empresa.</label> 
+                  <input type="text"  id= "nombre" required  class="form-control" placeholder="Tu Empresa S.A. de C.V."  formControlName="nombre">
+                  <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="alert alert-danger">            
+                    <div *ngIf="nombre.errors.required">
+                      Nombre de la empresa requerido.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="rfc">R.F.C.</label>
+                  <input id= "rfc"  required  class="form-control" placeholder="RFC"  formControlName="rfc">
+                  <div *ngIf="rfc.invalid && (rfc.dirty || rfc.touched)" class="alert alert-danger">
+                    <div *ngIf="rfc.errors.required">
+                      RFC requerido.
+                    </div>
+                    <div *ngIf="rfc.errors.pattern">
+                      Verifica tu R.F.C , recuerda que el R.F.C de personas físicas esta compuesto de 4 caracteres alfanuméricos, mas 6 numeros  y 3 carateres nuevamente alfanuméicos
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!--Termina Row2-->
+            <div class="row"><!--Inicia Row3-->
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="calle">Calle</label>
+                  <input type="text" id= "calle" required class="form-control" placeholder="calle" formControlName="calle" >
+                  <div *ngIf="calle.invalid && (calle.dirty || calle.touched)"class="alert alert-danger">
+                    <div *ngIf="calle.errors.required">
+                      Calle de la empresa requerido.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12 ">
+                <div class="form-group">
+                  <label for="noExt">N&uacute;mero exterior</label>
+                  <input type="text"  id= "noExt"   required   class="form-control" formControlName="noExt" placeholder="N&uacute;mero exterior" >
+                  <div *ngIf="noExt.errors && (noExt.dirty || noExt.touched)" class="alert alert-danger">
+                    <div *ngIf="noExt.errors.required">N&uacute;mero exterior requerido.</div>
+                  </div>
+                </div>
+              </div>
+            </div><!--Termina Row3-->
+
+            <div class="row"><!--Inicia Row4-->
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="noInt">N&uacute;mero interior</label>
+                  <input type="text"   id= "noInt" class="form-control" placeholder="N&uacute;mero interior" formControlName="noInt" >
+                  <div *ngIf="noInt.invalid && (noInt.dirty || noInt.touched)"class="alert alert-danger">
+                    <div *ngIf="noInt.errors.required">
+                      N&uacute;mero interior de la empresa requerido.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12 ">
+                <div class="form-group">
+                  <label for="col">Colonia</label>
+                  <input type="text"  id= "col"   required   class="form-control" formControlName="col" placeholder="colonia" >
+                  <div *ngIf="col.errors && (col.dirty || col.touched)" class="alert alert-danger">
+                    <div *ngIf="col.errors.required">Correo requerido.</div>
+                    <div *ngIf="col.errors.pattern">El correo debe contener @</div>
+                  </div>
+                </div>
+              </div>
+            </div><!--Termina Row4-->
+
+            <div class="row"><!--Inicia Row5-->
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="municipio">Municipio/Delegaci&oacute;n</label>
+                  <input type="text"   id= "municipio" required class="form-control" placeholder="municipio" formControlName="municipio" >
+                  <div *ngIf="municipio.invalid && (municipio.dirty || municipio.touched)"class="alert alert-danger">
+                    <div *ngIf="municipio.errors.required">
+                      Municipio/Delegaci&oacute;n de la empresa requerido.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12 ">
+                <div class="form-group">
+                  <label for="estado">Estado</label>
+                  <select  id="estado" required class="form-control" formControlName="estado">
+                    <option value="" [disabled]="true">Selecciona el Estado...</option>
+                    <option *ngFor="let estado of estadoss" [value]="estado.id">
+                      {{estado.estado}}
+                    </option>
+                  </select>                  
+                  <div *ngIf="estado.errors && (estado.dirty || estado.touched)" class="alert alestadoert-danger">
+                    <div *ngIf="estado.errors.required">Correo requerido.</div>
+                  </div>
+                </div>
+              </div>
+            </div><!--Termina Row5-->
+
+            <div class="row"><!--Inicia Row6-->
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="telefono">Tel&eacute;fono de la Empresa.</label>
+                  <input type="text"   id= "telefono" required  name="telefono"  class="form-control" placeholder="555501234" formControlName="telefono" >
+                  <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)"class="alert alert-danger">
+                    <div *ngIf="telefono.errors.required">
+                      Tel&eacute;fono de la Empresa requerido.
+                    </div>
+                    <div *ngIf="telefono.errors.pattern">Tel&eacute;fono solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12 ">
+                <div class="form-group">
+                  <label for="email">Correo Electronico.</label>
+                  <input type="text"  id= "email"   required   class="form-control" name="email"  formControlName="email" placeholder="mail@lacocs.com" >
+                  <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                    <div *ngIf="email.errors.required">Correo requerido.</div>
+                    <div *ngIf="email.errors.pattern">El correo debe contener @</div>
+                  </div>
+                </div>
+              </div>
+            </div><!--Termina Row6-->
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="nombreContacto">Nombre de contacto.</label>
+                  <input type="text"  id= "nombreContacto"  required   name="nombreContacto" class="form-control" placeholder="Nombre Contacto" formControlName="nombreContacto">
+                  <div *ngIf="nombreContacto.invalid && (nombreContacto.dirty || nombreContacto.touched)" class="alert alert-danger">
+                    <div *ngIf="nombreContacto.errors.required">
+                      Nombre de contacto requerido.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="telefonoDeContacto"> Tel&eacute;fono de Contacto.</label>
+                  <input type="text"  id= "telefonoDeContacto" required  class="form-control" name="telefonoDeContacto" placeholder="555501234" formControlName="telefonoDeContacto">
+                  <div *ngIf="telefonoDeContacto.invalid && (telefonoDeContacto.dirty || telefonoDeContacto.touched)" class="alert alert-danger">
+                    <div *ngIf="telefonoDeContacto.errors.required">
+                      Tel&eacute;fono de contacto requerido.
+                    </div>
+                    <div *ngIf="telefonoDeContacto.errors.pattern">
+                      Tel&eacute;fono solo debe contener numeros
+                    </div>              
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row"> 
+              <div class="col-md-12 col-12">
+                  <p style="color: orange">{{cargandoMessage}}<p>
+                  <p style="color: green">{{actualizarMessageCargando}}<p>
+              </div>
+            </div>
+           
+            <div class="btn-group"  style="float: right; padding-right: 10%;">
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
+                <span><b> Cambiar Datos. </b></span>
+              </button>
+              <button class="btn btn-success" *ngIf="!hidden"  (click)="cambiarLabo();">
+                <span><b> Cambiar Labo </b></span>
+              </button>
+              <button class="btn btn-success" *ngIf="!hidden" [disabled]="clienteForm.invalid"  (click)="actualizarCliente();">
+                <span><b> Guardar Cambios. </b></span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-user">
+        <div class="image">
+          <img src="../assets/img/Labo.jpg" alt="...">
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmit()" #passwordForm="ngForm">
+            <div class="author">
+              <img class="avatar border-gray" src="{{this.imgUrl}}" (click)="subirFoto()" alt="...">
+              <h5 class="title">{{this.clienteForm.value.razonSocial}}</h5>
+              <div class="form-group" [hidden]="desBut">
+                <label>Contrase&ntilde;a</label>
+                <input class="form-control"  required [(ngModel)]="model2.password1" placeholder="Contrase&ntilde;a" name="password1" type="password" #password1>
+              </div>
+              <div class="form-group" [hidden]="desBut">
+                <label>Contrase&ntilde;a</label>
+                <input class="form-control" required [(ngModel)]="model2.npassword" placeholder="Repite Contrase&ntilde;a" name="npassword" type="password" #npassword>
+              </div>
+              <div [hidden]= "!resppass" class="alert alert-danger">
+                Las Contrase&ntilde;as no coinciden.
+              </div>
+              <div [hidden]= "!exitoCon" class="alert alert-success">
+                Nueva contrase&ntilde;a actualizada
+              </div>
+            </div>
+            <div class="button-container">
+              <button type="button" class="btn btn-danger btn-round " (click)="cambiarContrasena()" *ngIf="desBut">Cambiar Contrase&ntilde;a</button>
+              <button type="button" class="btn btn-success btn-round " [disabled]="passwordForm.invalid" (click)="guardarContrasena(password1.value, npassword.value);" *ngIf="actBut">Guardar Contrase&ntilde;a</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            Laboratorios en los que esta disponible
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row"> <!--Inicia Row1-->
+            <div class="col-md-12">
+              <p>Los laboratorios de color verde es en los cuales esta disponible este cliente.</p>
+              <p>Da click en sobre alguno de ellos para agregar o eliminar.</p>
+              <div class="row"> 
+                <div class="col-md-12 col-12">
+                    <p style="color: orange">{{cargandoMessageLabo}}<p>
+                    <p style="color: green">{{actualizarMessageCargandoLabo}}<p>
+                </div>
+              </div>
+              <ag-grid-angular 
+              #agGrid
+              id="myGrid"
+              style="width: 100%; height: 600px;" 
+              class="ag-theme-balham"
+              [enableSorting]="true"
+              [rowData]="rowData" 
+              [columnDefs]="columnDefs"
+              [enableFilter]="true"
+              [enableColResize]="true"
+              [colResizeDefault]="false"
+              [suppressAutoSize]="true"
+              [rowSelection]="rowSelection"
+              [rowClassRules]="rowClassRules"
+              (selectionChanged)="onSelectionChanged($event)"
+              (gridReady)="onGridReady($event)"
+              ></ag-grid-angular>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

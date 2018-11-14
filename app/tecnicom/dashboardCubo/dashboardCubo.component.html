@@ -1,0 +1,196 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+
+<div class="row">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header ">
+          <h4 style="float: left; padding-top: 8px;">
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaPendientes();"></i>
+          </h4>
+          <h4 style="text-align: center;" *ngIf="formatoStatus"class="card-title">En Ensaye por el Tecnico de Muestras</h4>
+          <h4 style="text-align: center;" *ngIf="!formatoStatus"class="card-title">Esta formato esta completado y la edicion ya no esta permitida</h4>
+        </div>
+        <div class="card-body">
+          <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
+            <div style="display: inline-block; margin-right: 15px;"> 
+              <button  [ngClass]="{'btn': true, 'btn-default': !preliminar, 'btn-success': preliminar}"  *ngIf="hiddenf == true" (click)="visualizarFormatoDeCampoPDF();">
+                <span><b>VER FORMATO DE CAMPO &nbsp;&nbsp;</b></span>
+                <i class="fa fa-file-pdf-o" style="font-size:18px;"></i> 
+              </button>
+            </div>
+            <div style="display: inline-block; margin-right: 15px;"> 
+              <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid }" *ngIf="hiddenf == true && formatoStatus" (click)="generaPDFEnsayo();">
+                <span><b>GENERAR PDF &nbsp;&nbsp;</b></span>
+                <i class="fa fa-cogs" style="font-size:18px;"></i>
+              </button>
+            </div>
+            <div style="display: inline-block; margin-right: 15px;"> 
+              <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminarGabs }" *ngIf="hiddenf == true" (click)="obtenStatusVisualizarPDF();">
+                <span><b>VISUALIZAR PDF &nbsp;&nbsp;</b></span>
+                <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block; "></i>
+              </button>
+            </div>
+            <div style="display: inline-block;">
+              <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminar && isComplete }" *ngIf="formatoStatus" (click)="obtenStatusReg();"> 
+                <span><b>FORMATO COMPLETADO &nbsp;&nbsp;</b></span>
+                <i class="fa fa-check-square-o" style="font-size:18px; display: inline-block; "></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+</div>
+
+  <div class="row">
+    <div class="col-md-12 col-12">
+      <div class="card  card-tasks">
+        <div class="card-header" >
+            <div class="card-header " >
+                  <h4 style="text-align: center;" class="card-title">ENSAYO A COMPRESI&Oacute;N DE CUBOS DE CONCRETO HIDR&Aacute;ULICO</h4>
+            </div>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            
+            <div class="row">
+              <div class="col-md-8 col-12">
+                <!-- ESTO ES PARA POSICIONAR LA FECHA -->
+              </div>
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                <div class="form-group"><!--SEGUNDO CAMPO -->
+                  <label for="fechaEnsayo">FECHA DE ENSAYE</label>
+                  <input type="text" id="fechaEnsayo"  
+                  class="form-control" 
+                  name="fechaEnsayo" placeholder="" formControlName="fechaEnsayo">
+                   
+                </div> <!--FIN SEGUNDO CAMPO -->                
+              </div> <!--FIN SEGUNDO GRID -->
+            </div>
+            
+          </form>
+          <div>
+           <app-grid-cubo (cambiarCargando)="cambiarCargando($event)"></app-grid-cubo>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            <div class="row">
+
+            <div class="col-md-12 col-12">
+              <div class="form-group">
+                <label for="observaciones">VELOCIDAD DE APLICACI&Oacute;N DE CARGA</label>
+                <input type="number" id="observaciones" class="form-control" required placeholder="" (change)="onChangeObservaciones()" formControlName="observaciones">
+                <div *ngIf="observaciones.errors && (observaciones.dirty || observaciones.touched)" class="alert alert-danger">
+                        <div *ngIf="observaciones.errors.required">VELOCIDAD DE APLICACI&Oacute;N DE CARGA REQUERIDA.</div>
+                        <div *ngIf="observaciones.errors.pattern">LA VELOCIDAD DE APLICACI&Oacute;N DE CARGA DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                </div>
+              </div>
+            </div>
+
+              
+              
+            </div> <!--FIN ROW-->
+            <h6>Inventario de Intrumento</h6>
+            <div class="row">
+              <div class="col-md-6 col-12">
+                 <div class="form-group">
+                  <label for="bascula">BASCULA</label>
+                  <select  class="form-control" id="bascula" 
+                    required name="bascula"
+                    placeholder="Tipos"  formControlName="bascula" (change)="onChangeBascula()">
+                    <option value="" [disabled]="true">Selecciona una bascula...</option>
+                    
+                    <option *ngFor="let bascula of mis_basculas" [value]="bascula.id_herramienta">
+                      {{bascula.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="bascula.invalid && (bascula.dirty || bascula.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="bascula.errors.required">
+                       Bascula requerida.
+                    </div>
+                    <div *ngIf="bascula.errors.pattern">La Localizacion solo debe contener numeros</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                 <div class="form-group">
+                  <label for="regla">REGLA,VERNIER O FLEXO</label>
+                  <select  class="form-control" id="regla" 
+                    required name="regla"
+                    placeholder="Tipos"  formControlName="regla" (change)="onChangeRegla()">
+                    <option value="" [disabled]="true">Selecciona una regla,vernier o flex...</option>
+                    
+                    <option *ngFor="let regla of mis_reglas" [value]="regla.id_herramienta">
+                      {{regla.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="regla.invalid && (regla.dirty || regla.touched)" class="alert alert-danger">
+                   <div *ngIf="regla.errors.required">
+                   Regla, Vernier o Flexo Requerido.
+                   </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-12">
+                 <div class="form-group">
+                  <label for="prensa">PRENSA</label>
+                  <select  class="form-control" id="prensa" 
+                    required name="prensa"
+                    placeholder="Tipos"  formControlName="prensa" (change)="onChangePrensa()">
+                    <option value="" [disabled]="true">Selecciona una prensa...</option>
+                    
+                    <option *ngFor="let prensa of mis_prensas" [value]="prensa.id_herramienta">
+                      {{prensa.placas}}
+                    </option>
+                  </select>
+                  <div *ngIf="prensa.invalid && (prensa.dirty || prensa.touched)" class="alert alert-danger">
+                   <div *ngIf="prensa.errors.required">
+                   Prensa Requerida.
+                   </div>
+                  </div>
+                </div>
+              </div>
+             
+              
+            </div>
+          </form>
+          <div class="btn-group"  style="float: right; padding-right: 10%;">
+              <button class="btn btn-info" *ngIf="hiddenf && formatoStatus"  (click)="mostrarFooter()">
+                <span><b> Cambiar Datos. </b></span>
+              </button>
+            <button class="btn btn-success" *ngIf="!hiddenf && formatoStatus" [disabled]="formatoCCHForm.invalid" (click)="mostrarFooter();">
+              <span><b> Guardar Cambios. </b></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+  
+  
+
+
+
+</div>

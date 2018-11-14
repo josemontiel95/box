@@ -7,51 +7,70 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-herramientas',
   templateUrl: './herramientas.component.html',
-  styleUrls: ['./herramientas.component.scss']
+  styleUrls: ['./herramientas.component.scss','../../loadingArrows.css']
 })
-export class HerramientasComponent {
-
+export class HerramientasComponent implements OnInit{
   title = 'app';
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   global: Global;
   private gridApi;
   private gridColumnApi;
-  constructor( private http: Http, private router: Router, private data: DataService){}
-	  /*columnDefs = [
-      {headerName: 'id_usuario', field: 'id_usuario' },
-      {headerName: 'nombre', field: 'nombre' },
-      {headerName: 'apellido', field: 'apellido'},
-      {headerName: 'email', field: 'email' },
-      {headerName: 'fechaDeNac', field: 'fechaDeNac' },
-      {headerName: 'foto', field: 'foto'},
-      {headerName: 'rol_usuario_id', field: 'rol_usuario_id' },
-      {headerName: 'active', field: 'active' },
+  rowSelection;
+  columnDefs;
+  cargando= 1;
 
+  constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
+    this.columnDefs = [
+    {headerName: 'Ctrl', field: 'id_herramienta' },
+    {headerName: 'Tipo', field: 'tipo' },
+    {headerName: 'Placas', field: 'placas' },
+    {headerName: 'Condicion', field: 'condicion'},
+    {headerName: 'Fecha de compra', field: 'fechaDeCompra' },
+    //{headerName: 'Fecha de creaci&oacute;n', field: 'createdON'},
+    {headerName: 'Laboratorio', field: 'laboratorio'},
+    {headerName: 'Asignacion', field: 'asignacion'},
+    {headerName: 'active', field: 'active' },
   ];
-  */
+    this.rowSelection = "single";
+  }
+	  
+  ngOnInit() {
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    this.cargando=1;
+  }
 
   rowData: any;
 
-
-  crearUsuario(){
-    this.router.navigate(['administrador/crear-herramientas']);
+  crearHerramienta(){
+    this.router.navigate(['administrador/herramientas/crear-herramientas']);
   }
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
-
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    let url = `${this.apiRoot}/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllUsuarios');
+    search.set('function', 'getAllAdmin');
     search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.rowData= res.json();
                                             this.gridApi.sizeColumnsToFit();
+                                            this.cargando=this.cargando-1;
                                           });
+  }
+
+  onSelectionChanged(event: EventListenerObject){
+    var selectedRows = this.gridApi.getSelectedRows();
+    var id = "";
+
+    selectedRows.forEach(function(selectedRow, index) {
+      id += selectedRow.id_herramienta;
+      
+    });
+      this.router.navigate(['administrador/herramientas/herramienta-detail/'+id]);
   }
 
 }

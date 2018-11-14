@@ -12,13 +12,14 @@ import 'rxjs/Rx';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss','../loadingArrows.css']
 })
 export class LoginComponent implements OnInit {
-  apiRoot: string = "http://lacocs.montielpalacios.com/usuario";
   loginMessage: string= "";
   loginresp: LoginResp;
   global: Global;
+  cargando= 0;
+
   constructor(private router: Router, private http: Http, private data: DataService) { }
 
   ngOnInit() {
@@ -26,7 +27,9 @@ export class LoginComponent implements OnInit {
   }
 
   login(user: string, password: string){
-      let url = `${this.apiRoot}/get/endpoint.php`;
+      this.cargando= 1;
+      let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
+      console.log(url);
       let search = new URLSearchParams();
       search.set('function', 'login');
       search.set('email', user);
@@ -39,9 +42,11 @@ export class LoginComponent implements OnInit {
   
   diplay(loginresp: LoginResp){
     if(loginresp.error==0){
-      this.data.changeGlobal(new Global(loginresp.id_usuario,loginresp.token,""));
-      this.router.navigate(['administrador/']);
+      console.log(loginresp);
+      this.data.changeGlobal(new Global(loginresp.id_usuario,loginresp.token,"http://lacocsmex.com.mx/laboratorio/API", "http://lacocsmex.com.mx/laboratorio/", loginresp.rol));
+      this.router.navigate([loginresp.root+"/"]);
     }else{
+      this.cargando= 0;
       this.loginMessage=loginresp.estatus;
     }
   }

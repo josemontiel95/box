@@ -1,0 +1,66 @@
+<!-- Este bloque es para hacer la animación de Loading con flechas-->
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div> <!-- Fin bloque de animación loading-->
+
+<!-- Este primer div contiene el panel header-->
+<div class="panel-header panel-header-sm">
+</div> 
+<!--Fin panel header-->
+<div class="main-content"> <!--INICIO MAIN-CONTENT-->
+  <div class="row"> <!--INICIO ROW PRINCIPAL-->
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="btn-group" style="float: right; padding-right: 5%;">
+            <button class="btn btn-success" (click)="crearOrdenTrabajo();">
+              <span><b>+ Orden de Trabajo</b></span>
+            </button>
+          </div>
+          <h4 class="card-title"><b>Paso 1: </b>Ordenes de Trabajo en <b>edici&oacute;n</b></h4>
+        </div>
+        <div class="card-body">
+          <odt-edicion-grid
+          (cambiarCargando)= "cambiarCargando($event)"
+          [status]="statusPaso1"
+          >
+          </odt-edicion-grid>
+        </div>
+      </div>
+    </div>
+  </div> <!--FIN ROW PRINCIPAL-->
+  <div class="row"> <!--INICIO ROW PRINCIPAL-->
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title"><b>Paso 2: </b>Ordenes de Trabajo en <b>ejecuci&oacute;n</b></h4>
+        </div>
+        <div class="card-body">
+          <odt-edicion-grid
+          (cambiarCargando)= "cambiarCargando($event)"
+          [status]="statusPaso2"
+          >
+          </odt-edicion-grid>
+        </div>
+      </div>
+    </div>
+  </div> <!--FIN ROW PRINCIPAL-->
+  <div class="row"> <!--INICIO ROW PRINCIPAL-->
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title"><b>Paso 3: </b>Ordenes de Trabajo en <b>revisi&oacute;n</b></h4>
+        </div>
+        <div class="card-body">
+          <odt-edicion-grid
+          (cambiarCargando)= "cambiarCargando($event)"
+          [status]="statusPaso3"
+          >
+          </odt-edicion-grid>
+        </div>
+      </div>
+    </div>
+  </div> <!--FIN ROW PRINCIPAL-->
+</div>

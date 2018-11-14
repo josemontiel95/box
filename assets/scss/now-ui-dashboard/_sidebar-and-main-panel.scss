@@ -19,10 +19,38 @@
         height: auto;
     }
 }
+.barra{
+
+
+        &:after{
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            right: 15px;
+            height: 1px;
+            width: calc(100% - 30px);
+            background-color: $opacity-5;
+
+        }
 
 
 
+.simple-text-title{
+            text-transform: uppercase;
+            padding: $padding-base-vertical 0;
+            display: block;
+            white-space: nowrap;
+            font-size: $font-size-large;
+            color: $white-color;
+            text-decoration: none;
+            font-weight: $font-weight-normal;
+            line-height: 30px;
+            overflow: hidden;
+        text-align: center;
+         }
+}
 
+  
 .sidebar,
 .off-canvas-sidebar{
     position: fixed;
@@ -205,6 +233,7 @@
             @include transform-translate-x(0px);
         }
 
+        /* esta es la barrita blanca de separacion*/
         &:after{
             content: '';
             position: absolute;
@@ -222,6 +251,7 @@
             margin: 10px 10px;
             color: $white-color;
             line-height: 20px;
+
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
@@ -236,7 +266,22 @@
             font-weight: $font-weight-normal;
             line-height: 30px;
             overflow: hidden;
+
         }
+
+        .simple-text-title{
+            text-transform: uppercase;
+            padding: $padding-base-vertical 0;
+            display: block;
+            white-space: nowrap;
+            font-size: $font-size-large;
+            color: $white-color;
+            text-decoration: none;
+            font-weight: $font-weight-normal;
+            line-height: 30px;
+            overflow: hidden;
+        text-align: center;
+         }
     }
 
     .logo-tim{

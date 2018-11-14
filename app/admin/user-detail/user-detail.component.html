@@ -1,0 +1,168 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaUsuario();"></i>
+            Perfil de {{this.userForm.value.nombre + ' '+ this.userForm.value.apellido}}
+          </h5>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmit()" [formGroup]=userForm #formDir="ngForm">
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="id_usuario">ID Usuario</label> 
+                  <input type="text" class="form-control" required id="id_usuario" placeholder="Puesto" formControlName="id_usuario" >
+                  <div *ngIf="id_usuario.invalid && (id_usuario.dirty || id_usuario.touched)" class="alert alert-danger">
+                    <div *ngIf="id_usuario.errors.required"> Puesto requerido.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="rol_usuario_id">Rol</label> <!--tipo de credencial referido a puestos tales como jefe de laboratorio-->
+                  <select  class="form-control"  id="rol_usuario_id " required  name="rol_usuario_id" placeholder="Puesto" formControlName="rol_usuario_id">
+                    <option value=""  selected>Selecciona un rol...</option>
+                    <option *ngFor="let puesto of mis_rolesActivos" [value]="puesto.id_rol_usuario">
+                      {{puesto.rol}}
+                    </option>
+                  </select>
+                  <div *ngIf="rol_usuario_id.invalid && (rol_usuario_id.dirty || rol_usuario_id.touched)" class="alert alert-danger">
+                    <div *ngIf="rol_usuario_id.errors.required"> Puesto requerido.</div>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- FIN ROW-->
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="email">Correo Electronico</label>
+                  <input type="email" id="email"   required   class="form-control" placeholder="mail@lacocs.com" formControlName="email" >
+                  <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                    <div *ngIf="email.errors.required">Correo requerido.</div>
+                    <div *ngIf="email.errors.pattern">El correo debe contener @</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">                
+                <div class="form-group">
+                  <label for="nss"> N&uacute;mero de Seguridad Social</label>
+                  <input type="nss" id="nss"  class="form-control" name="nss" placeholder="555501234" formControlName="nss">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="nombre">Nombre</label>
+                  <input type="text" id="nombre"  required  class="form-control" placeholder="Nombre" formControlName="nombre" >
+                  <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="alert alert-danger">            
+                    <div *ngIf="nombre.errors.required"> Nombre requerido. </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="apellido">Apellidos</label>
+                  <input type="text" id="apellido"  required class="form-control" placeholder="Apellidos" formControlName="apellido" >
+                  <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)"class="alert alert-danger">            
+                    <div *ngIf="apellido.errors.required"> Apellido requerido. </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="laboratorio_id">Laboratorio</label> 
+                  <select   class="form-control"  id="laboratorio_id" required placeholder="Laboratorio" formControlName="laboratorio_id">
+                    <option value="Selecciona un Laboratorio..." selected>Selecciona un Laboratorio...</option>
+                    <option *ngFor="let lab of mis_lab" [value]="lab.id_laboratorio">
+                      {{lab.laboratorio}}
+                    </option>
+                  </select>
+                  <div *ngIf="laboratorio_id.invalid && (laboratorio_id.dirty || laboratorio_id.touched)" class="alert alert-danger">
+                    <div *ngIf="laboratorio_id.errors.required">Laboratorio requerido. </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label for="fechaDeNac">Fecha de Nacimiento.</label>
+                  <input type="date"  id="fechaDeNac" required class="form-control" formControlName="fechaDeNac">
+                  <div *ngIf="fechaDeNac.invalid && (fechaDeNac.dirty || fechaDeNac.touched)" class="alert alert-danger">            
+                    <div *ngIf="fechaDeNac.errors.required"> Fecha de nacimiento requerida.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="btn-group"  style="float: right; padding-right: 10%;">
+              <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
+                <span><b> Cambiar Datos. </b></span>
+              </button>
+              <button class="btn btn-success" *ngIf="!hidden" [disabled]="userForm.invalid" (click)="actualizarUsuario(); ">
+                <span><b> Guardar Cambios. </b></span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="card card-user">
+        <div class="image">
+          <img src="../assets/img/Labo.jpg" alt="...">
+        </div>
+        <div class="card-body">
+          <div class="author">
+            <img class="avatar border-gray" src="{{this.imgUrl}}" (click)="subirFoto()" alt="...">
+            <h5 class="title">{{ this.userForm.value.nombre + ' '+ this.userForm.value.apellido}}</h5>
+            <p class="description">
+              {{this.userForm.value.rol}}
+            </p>
+            <form (ngSubmit)="onSubmit()" [formGroup]=passwordForm #formDir="ngForm">
+              <div class="form-group" [hidden]="desBut">
+                <label for="password1">Contrase&ntilde;a</label>
+                <input class="form-control"  required id="password1" formControlName="password1" placeholder="Contrase&ntilde;a" type="password" >
+                <div *ngIf="password1.invalid && (password1.dirty || password1.touched)" class="alert alert-danger">            
+                  <div *ngIf="password1.errors.required"> Contrase&ntilde;a requerida.</div>
+                </div>
+              </div>
+              <div class="form-group" [hidden]="desBut">
+                <label for="npassword">Contrase&ntilde;a</label>
+                <input class="form-control" required id="npassword" formControlName="npassword" placeholder="Repite Contrase&ntilde;a"type="password" >
+                <div *ngIf="npassword.invalid && (npassword.dirty || npassword.touched)" class="alert alert-danger">            
+                  <div *ngIf="npassword.errors.required"> Contrase&ntilde;a requerida.</div>
+                </div>
+              </div>
+              <div [hidden]= "!resppass" class="alert alert-danger">
+                Las Contrase&ntilde;as no coinciden.
+              </div>
+              <div [hidden]= "!exitoCon" class="alert alert-success">
+                Nueva contrase&ntilde;a actualizada
+              </div>
+              <div class="button-container">
+                <button type="button" class="btn btn-danger btn-round " (click)="cambiarContrasena()" *ngIf="desBut">Cambiar Contrase&ntilde;a</button>
+                <button type="button" class="btn btn-success btn-round " [disabled]="passwordForm.invalid" (click)="guardarContrasena();" *ngIf="actBut">Guardar Contrase&ntilde;a</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

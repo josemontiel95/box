@@ -8,8 +8,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebars/sidebar/sidebar.component';
 import { SidebarAdministrativoComponent } from './sidebars/sidebarAdministrativo/sidebarAdministrativo.component';
 import { SidebarJefebComponent } from './sidebars/sidebarJefeB/sidebarjefeb.component';
-
-
+import { SidebarJefeLab } from './sidebars/sidebarJefeLab/sidebarjefelab.component';
+import { SidebarSoporteComponent } from './sidebars/sidebarSoporte/sidebarSoporte.component';
+import { SidebarTecnicoMComponent } from './sidebars/sidebarTecnicoM/sidebartecnicom.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -22,7 +23,9 @@ import { SidebarJefebComponent } from './sidebars/sidebarJefeB/sidebarjefeb.comp
     SidebarJefebComponent,
     SidebarComponent,
     SidebarAdministrativoComponent,
-    SidebarJefebComponent,
+    SidebarJefeLab,
+     SidebarTecnicoMComponent,
+     SidebarSoporteComponent
   ],
   exports: [
     FooterComponent,
@@ -30,7 +33,9 @@ import { SidebarJefebComponent } from './sidebars/sidebarJefeB/sidebarjefeb.comp
     SidebarJefebComponent,
     SidebarComponent,
     SidebarAdministrativoComponent,
-    SidebarJefebComponent,
+    SidebarJefeLab,
+     SidebarTecnicoMComponent,
+     SidebarSoporteComponent
   ]
 })
 export class ComponentsModule { }

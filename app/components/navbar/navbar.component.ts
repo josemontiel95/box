@@ -4,6 +4,8 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 import { Router } from '@angular/router';
 import Chart from 'chart.js';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { DataService } from "../../data.service";
+import { Global } from "../../interfaces/int.Global";
 
 @Component({
   selector: 'app-navbar',
@@ -19,8 +21,9 @@ export class NavbarComponent implements OnInit {
     private sidebarVisible: boolean;
 
     public isCollapsed = true;
+    global: Global;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router,private http: Http) {
+    constructor(location: Location,  private element: ElementRef, private router: Router,private http: Http,private data: DataService) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -157,7 +160,8 @@ export class NavbarComponent implements OnInit {
     cerrarSesion(){
       let token: string;
       token= localStorage.getItem("token");
-      let url = `${this.apiRoot}/get/endpoint.php`;
+      this.data.currentGlobal.subscribe(global => this.global = global);
+      let url = `${this.global.apiRoot}/usuario/get/endpoint.php`;
       let search = new URLSearchParams();
       search.set('function', 'cerrarSesion');
       search.set('token', token);

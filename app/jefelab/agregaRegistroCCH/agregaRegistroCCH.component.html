@@ -1,0 +1,353 @@
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }"> 
+<!--<div [ngClass]="{'loading':true ,'loading-visible': false }"> -->
+
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
+
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+<div class="row">
+    <div class="col-lg-12 col-12 col-md-12">
+      <div class="card card-chart">
+        
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            <h5>AGREGA REGISTRO</h5>
+            <br><hr>
+              <h5 style="display: flex;align-items: center; justify-content: center;">DATOS DE LOS ESPECIMENES</h5>
+            <hr><br>
+            <div class="row">
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="cesp1">CLAVE DEL ESPECIMEN 1</label> <!--disable-->
+                    <input type="text" id="cesp1"   
+                    class="form-control" 
+                    name="cesp1" placeholder="" formControlName="cesp1">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="cesp2">CLAVE DEL ESPECIMEN 2</label> <!--disable-->
+                    <input type="text" id="cesp2"   
+                    class="form-control" 
+                    name="cesp2" placeholder="" formControlName="cesp2">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="cesp3">CLAVE DEL ESPECIMEN 3</label> <!--disable-->
+                    <input type="text" id="cesp3"   
+                    class="form-control" 
+                    name="cesp3" placeholder="" formControlName="cesp3">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="tipoMuestra"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="cesp4">CLAVE DEL ESPECIMEN 4</label> <!--disable-->
+                    <input type="text" id="cesp4"   class="form-control" name="cesp4" placeholder="" formControlName="cesp4">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div> <!-- FIN ROW DE ESPECIMENES-->
+
+            <div class="row">
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="diasEnsaye1">D&Iacute;AS ANTES DE ENSAYAR I</label> <!--disable-->
+                    <select class="form-control" id="diasEnsaye1" name="diasEnsaye1" formControlName="diasEnsaye1"  (change)="onBlurdiasEnsaye()">
+                          <option value="0" [disabled]="true">Selecciona los dias</option>
+                          <option *ngFor="let day of days1" [value]="day.id">
+                                {{day.value}}
+                          </option>
+                    </select>
+                    
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="diasEnsaye2">D&Iacute;AS ANTES DE ENSAYAR II</label> <!--disable-->
+                    <select class="form-control" id="diasEnsaye2" name="diasEnsaye2" formControlName="diasEnsaye2"  (change)="onBlurdiasEnsaye()">
+                          <option value="0" [disabled]="true">Selecciona los dias</option>
+                          <option *ngFor="let day of days2" [value]="day.id">
+                                {{day.value}}
+                          </option>
+                    </select>
+                    
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="diasEnsaye3">D&Iacute;AS ANTES DE ENSAYAR III</label> <!--disable-->
+                    <select class="form-control" id="diasEnsaye3" name="diasEnsaye3" formControlName="diasEnsaye3"  (change)="onBlurdiasEnsaye()">
+                          <option value="0" [disabled]="true">Selecciona los dias</option>
+                          <option *ngFor="let day of days3" [value]="day.id">
+                                {{day.value}}
+                          </option>
+                    </select>
+                    
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="tipoMuestra"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label  for="diasEnsaye4">D&Iacute;AS ANTES DE ENSAYAR IV</label> <!--disable-->
+                    <select class="form-control" id="diasEnsaye4" name="diasEnsaye4" formControlName="diasEnsaye4"  (change)="onBlurdiasEnsaye()">
+                          <option value="0" [disabled]="true">Selecciona los dias</option>
+                          <option *ngFor="let day of days4" [value]="day.id">
+                                {{day.value}}
+                          </option>
+                    </select>
+                    
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+
+            <div class="row">
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="herramienta">MOLDE 1</label> <!--disable-->
+                    <select  class="form-control" id="herramienta" name="herramienta" formControlName="herramienta" (change)="onBlurHerramienta()">
+                          <option value="0" [disabled]="true">Selecciona la herramienta</option>
+                          <option *ngFor="let herr of herramientas" [value]="herr.id_herramienta">
+                                {{herr.placas}}
+                          </option>
+                    </select>
+                    <div *ngIf="herramienta.invalid && (herramienta.dirty || herramienta.touched)"
+                    class="alert alert-danger">            
+                      <div *ngIf="herramienta.errors.required">
+                          MOLDE 1 requerido.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="herramienta1">MOLDE 2</label> <!--disable-->
+                    <select  class="form-control" id="herramienta1" name="herramienta1" formControlName="herramienta1" (change)="onBlurHerramienta1()">
+                          <option value="0" [disabled]="true">Selecciona la herramienta</option>
+                          <option *ngFor="let herr of herramientas1" [value]="herr.id_herramienta">
+                              {{herr.placas}}
+                            </option>
+                    </select>
+                    <div *ngIf="herramienta1.invalid && (herramienta1.dirty || herramienta1.touched)"
+                    class="alert alert-danger">            
+                      <div *ngIf="herramienta1.errors.required">
+                          MOLDE 2 requerido.
+                        </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="herramienta2">MOLDE 3</label> <!--disable-->
+                    <select  class="form-control" id="herramienta2" name="herramienta2" formControlName="herramienta2" (change)="onBlurHerramienta2()">
+                          <option value="0" [disabled]="true">Selecciona la herramienta</option>
+                          <option *ngFor="let herr of herramientas2" [value]="herr.id_herramienta">
+                                {{herr.placas}}
+                          </option>
+                    </select>
+                    <div *ngIf="herramienta2.invalid && (herramienta2.dirty || herramienta2.touched)"
+                    class="alert alert-danger">            
+                      <div *ngIf="herramienta2.errors.required">
+                          MOLDE 3 requerido.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div [ngClass]="{'col-md-3':tipoMuestra,'col-md-4':!tipoMuestra,'col-12':true}" *ngIf="tipoMuestra"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="herramienta3">MOLDE 4</label> <!--disable-->
+                    <select  class="form-control" id="herramienta3" name="herramienta3" formControlName="herramienta3" (change)="onBlurHerramienta3()">
+                          <option value="0" [disabled]="true">Selecciona la herramienta</option>
+                          <option *ngFor="let herr of herramientas3" [value]="herr.id_herramienta">
+                                {{herr.placas}}
+                          </option>
+                    </select>
+                    <div *ngIf="herramienta3.invalid && (herramienta3.dirty || herramienta3.touched)"
+                    class="alert alert-danger">            
+                      <div *ngIf="herramienta3.errors.required">
+                          MOLDE 4 requerido.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+            
+            <br><hr>
+              <h5 style="display: flex;align-items: center; justify-content: center;">DATOS DE LA MUESTRA</h5>
+            <hr><br>
+
+
+            <div class="row">
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="fc">F'C (kg/cm<sup>2</sup>)/<b>MR</b></label> <!--disable-->
+                    <input type="number" id="fc" required   class="form-control"  name="fc" placeholder="" formControlName="fc" (change)="onBlurFC()">
+                    <div *ngIf="fc.errors && (fc.dirty || fc.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="fc.errors.required">F'C requerido.</div>
+                        <div *ngIf="fc.errors.pattern">F'C debe contener solo numeros,recuerda que si es viga MR, solo escribe el numero del MR.</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="revp">REVENIMIENTO(cm): PROYECTO</label>
+                    <input type="number" id="revp"  required class="form-control"  placeholder="" formControlName="revp" (change)="onBlurRevProy()">
+                    <div *ngIf="revp.errors && (revp.dirty || revp.touched)" class="alert alert-danger">
+                        <div *ngIf="revp.errors.required">REVENIMIENTO(cm): PROYECTO requerido.</div>
+                        <div *ngIf="revp.errors.pattern">REVENIMIENTO(cm): PROYECTO debe contener solo numeros</div>
+                    </div>
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="revo">REVENIMIENTO(cm): OBRA</label> <!--disable-->
+                    <input type="number" id="revo"  required  class="form-control"  name="revo" placeholder="" formControlName="revo" (change)="onBlurRevObra()">
+                    <div *ngIf="revo.errors && (revo.dirty || revo.touched)" class="alert alert-danger">
+                        <div *ngIf="revo.errors.required">REVENIMIENTO(cm): OBRA requerido.</div>
+                        <div *ngIf="revo.errors.pattern">EL REVENIMIENTO(cm): OBRA debe contener solo numeros</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+
+            <div class="row">
+
+               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="tamano">TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm)</label> <!--disable-->
+                    <input type="number" id="tamano"  required class="form-control" name="tamano" placeholder="" formControlName="tamano" (change)="onBlurTamNomAg()">
+                    <div *ngIf="tamano.errors && (tamano.dirty || tamano.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="tamano.errors.required">TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm) requerido.</div>
+                        <div *ngIf="tamano.errors.pattern">EL TAMA&Ntilde;O NOMINAL DEL AGREGADO(mm) debe contener solo numeros</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="volumen">VOLUMEN(m<sup>3</sup>)</label>
+                    <input type="number" id="volumen"  required class="form-control"  name="volumen" placeholder="" formControlName="volumen" (change)="onBlurVolumen()">
+                    <div *ngIf="volumen.errors && (volumen.dirty || volumen.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="volumen.errors.required">VOLUMEN(m<sup>3</sup>) requerido.</div>
+                        <div *ngIf="volumen.errors.pattern">VOLUMEN(m<sup>3</sup>) debe contener solo numeros enteros o decimales con precisi&oacute;n a centecimas</div>
+                    </div>
+                  </div> <!--FIN SEGUNDO CAMPO -->
+              </div> <!--FIN SEGUNDO GRID -->
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="fecha">FECHA</label> <!--disable-->
+                    <input type="date" id="fecha"  required class="form-control" name="fecha" placeholder="" formControlName="fecha">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              
+                
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="unidad">UNIDAD</label> <!--disable-->
+                    <input type="text" id="unidad"   class="form-control"  required placeholder="" formControlName="unidad" (change)="onBlurUnidad()">
+                    <div *ngIf="unidad.invalid && (unidad.dirty || unidad.touched)"
+                    class="alert alert-danger">            
+                      <div *ngIf="unidad.errors.required">
+                       UNIDAD requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="hmobra">HORA DE MUESTREO EN OBRA</label>
+                    <input type="time" id="hmobra"  class="form-control" required placeholder="" formControlName="hmobra" (change)="onBlurHoraMuestreo()">
+                     <div *ngIf="hmobra.invalid && (hmobra.dirty || hmobra.touched)"
+                    class="alert alert-danger">            
+                      <div *ngIf="hmobra.errors.required">
+                       HORA DE MUESTREO requerida.
+                      </div>
+                    </div>
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="tempamb">TEMPERATURA AMBIENTE DE MUESTREO (&#176;C)</label> <!--disable-->
+                    <input type="number" id="tempamb"   class="form-control" required placeholder="" formControlName="tempamb" (change)="onBlurTemperaturaMuestreo()">
+                    <div *ngIf="tempamb.errors && (tempamb.dirty || tempamb.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="tempamb.errors.required">TEMPERATURA AMBIENTE DE MUESTREO (&#176;C) requerido.</div>
+                        <div *ngIf="tempamb.errors.pattern">TEMPERATURA AMBIENTE DE MUESTREO (&#176;C) debe contener solo numeros</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="tempambrec">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C)</label> <!--disable-->
+                    <input type="number" id="tempambrec"   class="form-control" required  placeholder="" formControlName="tempambrec" (change)="onBlurTemperaturaRecoleccion()">
+                    <div *ngIf="tempambrec.errors && (tempambrec.dirty || tempambrec.touched)"
+                              class="alert alert-danger">
+                        <div *ngIf="tempambrec.errors.required">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C) requerido.</div>
+                        <div *ngIf="tempambrec.errors.pattern">TEMPERATURA AMBIENTE DE RECOLECCI&Oacute;N (&#176;C) debe contener solo numeros</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="localizacion">LOCALIZACI&Oacute;N</label> <!--disable-->
+                    <input type="textarea" id="localizacion"  class="form-control"  required placeholder="" formControlName="localizacion" (change)="onBlurLocalizacion()">
+                    <div *ngIf="localizacion.invalid && (localizacion.dirty || localizacion.touched)"
+                    class="alert alert-danger">            
+                      <div *ngIf="localizacion.errors.required">
+                       LOCALIZACI&Oacute;N requerida.
+                      </div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+            <div class="row">
+              <div class="col-md-2 col-12">                
+
+                  <button class="btn btn-default" *ngIf="hiddenA || hiddenB"  (click)="regresar();">
+                    <span><b> Regresar </b></span>
+                  </button>
+
+              </div>
+              <div class="col-md-6 col-md-offset-6 col-12">
+
+              </div>
+              <div class="col-md-2 col-12">
+
+               <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="cambioRegistroIncompleto();">
+                    <span><b> Cambiar Datos. </b></span>
+                  </button>
+                <button class="btn btn-default" *ngIf="hiddenC" (click)="llenarDespues()">
+                      <span><b> Llenar mas tarde. </b></span>
+                </button>
+              </div>
+              <div class="col-md-2 col-12">
+                <button class="btn btn-success" *ngIf="hiddenC" [disabled]="formatoCCHForm.invalid"  (click)="validaCamposVacios()">
+                      <span><b> Registro Completo. </b></span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
