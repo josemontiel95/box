@@ -1,0 +1,157 @@
+    <!--<div class="col-lg-12 col-12 col-md-12">   tag del padre-->
+        <div class="card card-chart">
+        
+        <div class="card-body">
+         <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+            <h5>ENSAYO A COMPRESI&Oacute;N DE CUBOS DE CONCRETO HIDR&Aacute;ULICO </h5>
+            <hr>
+            <h6>INFORMACI&Oacute;N GENERAL DEL ENSAYO</h6>
+            <div class="row"> <!--PRIMER ROW -->
+              
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="fecha">FECHA DE COLADO</label> <!--disable-->
+                    <input type="date" id="fecha" class="form-control" placeholder="FECHA DE COLADO" formControlName="fechaColado">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="infoNo">INFORME NO.</label> <!--disable-->
+                    <input type="text" id="infoNo" class="form-control" placeholder="INFORME NO." formControlName="infoNo">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+            </div> <!--FIN PRIMER ROW -->
+            
+
+            <div class="row"> <!--PRIMER ROW -->
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="clave">CLAVE</label> <!--disable-->
+                    <input type="text" id="clave" class="form-control" placeholder="CLAVE" formControlName="clave">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="edadEnsaye">EDAD DE ENSAYE EN DIAS</label> <!--disable-->
+                    <input type="text" id="edadEnsaye" class="form-control" placeholder="EDAD DE ENSAYE EN DIAS" formControlName="edadEnsaye">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->                  
+                        
+            </div> <!--FIN PRIMER ROW -->
+
+            <hr>
+            <h6>LADO (cm)</h6>
+
+            <div class="row">
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="l1">L1</label> <!--disable-->
+                    <input type="text" id="l1" class="form-control" placeholder="" formControlName="l1" required>
+                    <div *ngIf="l1.errors && (l1.dirty || l1.touched)" class="alert alert-danger">
+                        <div *ngIf="l1.errors.required">L1 REQUERIDA.</div>
+                        <div *ngIf="l1.errors.pattern">LA L1 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="l2">L2</label> <!--disable-->
+                    <input type="text" id="l2"   
+                    class="form-control" 
+                    name="l2" placeholder="L2" formControlName="l2" required>
+                    <div *ngIf="l2.errors && (l2.dirty || l2.touched)" class="alert alert-danger">
+                        <div *ngIf="l2.errors.required">L2 REQUERIDA.</div>
+                        <div *ngIf="l2.errors.pattern">LA L2 DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+
+            <hr>
+            <h6>ALTURAS (cm)</h6>
+
+                      
+            <div class="row">
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="cargaKg">CARGA A COMPRESI&Oacute;N Kg</label>
+                    <input type="text" id="cargaKg"  
+                    class="form-control" 
+                    name="cargaKg" placeholder="RESISTENCIA A COMPRESI&Oacute;N Kg" formControlName="cargaKg" required>
+                    <div *ngIf="cargaKg.errors && (cargaKg.dirty || cargaKg.touched)" class="alert alert-danger">
+                        <div *ngIf="cargaKg.errors.required">CARGA A COMPRESI&Oacute;N K REQUERIDA.</div>
+                        <div *ngIf="cargaKg.errors.pattern">LA CARGA A COMPRESI&Oacute;N K DEBE CONTENER SOLO N&Uacute;MEROS.</div>
+                    </div>
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->              
+
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="area">&Aacute;REA cm<sup>2</sup></label> <!--disable-->
+                    <input type="text" id="area" class="form-control" placeholder="Area" formControlName="area">
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                  <div class="form-group"><!--SEGUNDO CAMPO -->
+                    <label for="resCompresion">RESISTENCIA A COMPRESI&Oacute;N Kg/cm<sup>2</sup></label>
+                    <input type="text" id="resCompresion"  
+                    class="form-control" 
+                    name="resCompresion" placeholder="RESISTENCIA A COMPRESION Kg/cm" formControlName="resCompresion">
+                  </div> <!--FIN SEGUNDO CAMPO -->
+                </div> <!--FIN SEGUNDO GRID -->    
+            </div>
+
+            <hr>
+            <h6>VELOCIDAD Y TIEMPO</h6>
+            <div class="row">
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="tiempo">TIEMPO</label> <!--disable-->
+                  <input type="text" id="tiempo"  class="form-control" name="tiempo" placeholder="TIEMPO" formControlName="tiempo" required>
+                  <div *ngIf="tiempo.errors && (tiempo.dirty || tiempo.touched)" class="alert alert-danger">
+                    <div *ngIf="tiempo.errors.required">TIEMPO REQUERIDO.</div>
+                    <div *ngIf="tiempo.errors.pattern">EL TIEMPO DEBE CONTENER SOLO NUMEROS.</div>
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div class="col-md-6 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="velocidad">VELOCIDAD DE APLICACI&Oacute;N DE CARGA EXPERIMENTAL</label> <!--disable-->
+                    <input type="text" id="velocidad"   class="form-control" name="velocidad" placeholder="VELOCIDAD DE APLICACI&Oacute;N DE CARGA EXPERIMENTAL" formControlName="velocidad" required>
+                    <div *ngIf="velocidad.errors && (velocidad.dirty || velocidad.touched)" class="alert alert-danger">
+                        <div *ngIf="velocidad.errors.required">VELOCIDAD REQUERIDA.</div>
+                        <div *ngIf="velocidad.errors.pattern">LA VELOCIDAD DEBE CONTENER SOLO NUMEROS.</div>
+                    </div>
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+            </div>
+
+            <hr>
+            <h6>REPORTAR FALLA (OPCIONAL)</h6>
+            <div class="row">
+              
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                  <div class="form-group"><!--PRIMER CAMPO -->
+                    <label for="falla">FALLA N°</label> <!--disable-->
+                    
+                   <select  class="form-control" id="falla" 
+                    name="falla"
+                    placeholder="falla No"  formControlName="falla">
+                    <option value="0" [disabled]="true">Selecciona una falla...</option>
+                    
+                    <option *ngFor="let falla of fallas" [value]="falla.id">
+                      {{falla.falla}}
+                    </option>
+                  </select>
+                    
+                  </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+
+            </div>
+          </form>
+        </div>
+      </div>

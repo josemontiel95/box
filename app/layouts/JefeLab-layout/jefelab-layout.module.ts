@@ -30,6 +30,14 @@ import { HerramientaGridComponent } from '../../jefelab/herramienta-grid/herrami
 import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component';
 import { EvaluaHerraComponent } from '../../jefelab/evaluaherra/evaluaherra.component';
 
+import { CilindroGenericoComponent } from '../../jefelab/cilindroGenerico/cilindroGenerico.component';
+import { CuboGenericoComponent } from '../../jefelab/cuboGenerico/cuboGenerico.component';
+import { VigaGenericoComponent } from '../../jefelab/vigaGenerico/vigaGenerico.component';
+
+import { PruebaCilindroComponent } from '../../jefelab/pruebaCilindro/pruebaCilindro.component';
+import { PruebaCuboComponent } from '../../jefelab/pruebaCubo/pruebaCubo.component';
+import { PruebaVigaComponent } from '../../jefelab/pruebaViga/pruebaViga.component';
+
 import { ConstruccionComponent } from '../../jefelab/construccion/construccion.component';
 
 import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid.component';
@@ -92,6 +100,12 @@ import { OdtEdicionGridComponent } from '../../jefelab/ordenesDeTrabajo-grids/od
     TecnicosGridAgregaComponent,
     EvaluaHerraComponent,
     footerEnsayoComponent,
+    PruebaCilindroComponent,
+    CilindroGenericoComponent,
+    PruebaCuboComponent,
+    CuboGenericoComponent,
+    PruebaVigaComponent,
+    VigaGenericoComponent,
 
     llenaFormatoCCHComponent,
     llenaRevenimientoComponent,
