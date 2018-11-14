@@ -52,11 +52,11 @@ export class FormatoCCHGridComponent implements OnInit  {
     this.rowClassRules = {
       "row-blue-warning": function(params) {
         var status = params.data.status;
-        return status == 1;
+        return status == 3;
       },
       "row-green-warning": function(params) {
         var status = params.data.status;
-        return status > 1;
+        return status ==2; 
       },
       "row-red-warning": function(params) {
         var herramienta_id = params.data.herramienta_id;
