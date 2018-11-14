@@ -16,6 +16,8 @@ export class FormatoCCHGridComponent implements OnInit  {
   private gridColumnApi;
   id_orden: string;
   id_formato: string;
+  id_registro: string;
+  id_footer: string;
   rowSelection;
   columnDefs;
   rowClassRules;
@@ -64,11 +66,11 @@ export class FormatoCCHGridComponent implements OnInit  {
 
   ngOnInit() {
       this.data.currentGlobal.subscribe(global => this.global = global);
-      this.route.params.subscribe( params => {this.id_orden = params.id2; this.id_formato=params.id});
+      this.route.params.subscribe( params => {this.id_orden = params.id2; this.id_formato=params.id; this.id_footer=params.id3;});
   }
   /*Este metodo es llamado por el boton REGISTRO DE CAMPO y llevara al usuario a AgregaRegistroCCH*/
   onLoadCCH(){
-    this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_orden + '/' +this.id_formato]);
+    this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_orden + '/' +this.id_formato +'/' +this.id_registro + '/' + this.id_footer]);
   }
 
   onLoadEnsayo(){
@@ -114,8 +116,6 @@ export class FormatoCCHGridComponent implements OnInit  {
       id += selectedRow.id_registrosCampo;
       
     });
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_orden + '/' +this.id_formato +'/' +id]);
+    this.id_registro = id;
   }
-
-
 }

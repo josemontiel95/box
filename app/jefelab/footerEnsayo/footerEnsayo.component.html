@@ -1,4 +1,8 @@
-
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div>
 <div class="card">
   <div class="card-body">
    <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
@@ -86,10 +90,10 @@
       </div>
     </form>
     <div class="btn-group"  style="float: right; padding-right: 10%;">
-        <button class="btn btn-info" *ngIf="hiddenf && !formatoStatus"  (click)="mostrarFooter()">
+        <button class="btn btn-info" *ngIf="hiddenf && formatoStatus"  (click)="mostrarFooter()">
           <span><b> Cambiar Datos. </b></span>
         </button>
-      <button class="btn btn-success" *ngIf="!hiddenf && !formatoStatus" [disabled]="formatoCCHForm.invalid" (click)="mostrarFooter();">
+      <button class="btn btn-success" *ngIf="!hiddenf && formatoStatus" [disabled]="formatoCCHForm.invalid" (click)="mostrarFooter();">
         <span><b> Guardar Cambios. </b></span>
       </button>
     </div>

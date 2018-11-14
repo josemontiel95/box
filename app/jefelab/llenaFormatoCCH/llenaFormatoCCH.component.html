@@ -13,32 +13,35 @@
 <div class="row">
     <div class="col-md-12 ml-auto mr-auto">
       <div class="card">
-        <div class="card-header " *ngIf="!formatoStatus">
-          <h4 style="text-align: center;" *ngIf="!formatoStatus" class="card-title">Esta formato esta completado y la edici&oacute;n ya no esta permitida</h4>
+        <div class="card-header">
+          <h4 style="text-align: center;" class="card-title">GENERACI&Oacute;N DE PDF</h4>
+        </div>
+        <div class= "row" style="display: flex; align-items: center; justify-content: center;">
+          <div class="btn-group" style="padding-right: 5%;">
+              <button class="btn btn-success" (click)="onLoadCCH();">
+                <span><b>REPORTE DE CAMPO</b></span>
+              </button>
+          </div>
+          <div class="btn-group">
+              <button class="btn btn-success" (click)="onLoadEnsayo();">
+                <span><b>REPORTE DE ENSAYO</b></span>
+              </button>
+          </div>
         </div>
         <div class="card-body">
-            <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i>
-            <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
-                <div style="display: inline-block; margin-right: 15px;"> 
-                  <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid }" *ngIf="hiddenf == true && formatoStatus" (click)="obtenStatusGenPDF();">
-                    <span><b>GENERAR PDF &nbsp;&nbsp;</b></span>
-                    <i class="fa fa-cogs" style="font-size:18px;"></i>
-                  </button>
-                </div>
-                <div style="display: inline-block; margin-right: 15px;"> 
-                  <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminar }" *ngIf="hiddenf == true" (click)="obtenStatusVisualizarPDF();">
-                    <span><b>VISUALIZAR PDF &nbsp;&nbsp;</b></span>
-                    <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block; "></i>
-                  </button>
-                </div>
-                <div style="display: inline-block;"> 
-                  <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminar }" *ngIf="hiddenf == true && formatoStatus" (click)="obtenStatusReg();">
-                    <span><b>FORMATO COMPLETADO &nbsp;&nbsp;</b></span>
-                    <i class="fa fa-check-square-o" style="font-size:18px; display: inline-block; "></i>
-                  </button>
-                </div>
-          </div>
-          
+            <h4><i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i></h4>
+            <div *ngIf="opciones">
+              <app-pendientes-pdf-grid (cargando)="cambiaCargando($event)" (reloadMainGrid)="reloadMainGrid()"></app-pendientes-pdf-grid>
+            </div>
+            <div class="" (click)="masOpciones();">
+              <hr *ngIf="opciones">
+              <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
+                <p>{{opcionesMessage}}</p>
+              </div>
+              <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
+                  <i _ngcontent-c25="" [ngClass]="{'now-ui-icons':true,'arrows-1_minimal-down':!this.opciones ,'arrows-1_minimal-up': this.opciones,'pr-3':true}" ></i>
+              </div>
+            </div>
         </div>
       </div>
     </div>

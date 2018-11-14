@@ -1,17 +1,12 @@
-import { GridComponent } from '../grid/grid.component';
 import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import {  Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 //FIN DE LOS IMPORTS
@@ -29,8 +24,7 @@ export class llenaRevenimientoComponent implements OnInit{
   id_registro: string;
   title = 'app';
   global: Global;
-  private gridApi;
-  private gridColumnApi;
+  link = "";
   rowSelection;
   columnDefs;
   cargando= 4;
@@ -42,8 +36,10 @@ export class llenaRevenimientoComponent implements OnInit{
   mis_obras: Array<any>;
   mis_jefes: Array<any>;
   formatoStatus;
+  preliminar = false;
   maxNoOfRegistrosRev;
   numberOfRegistros;
+  isValid=false;
   
   formatoCCHForm: FormGroup;
 
@@ -79,7 +75,7 @@ export class llenaRevenimientoComponent implements OnInit{
   ];
     this.rowSelection = "single";
   }
-	  
+    
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id}); 
@@ -93,6 +89,7 @@ export class llenaRevenimientoComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
 
     search = new URLSearchParams();
@@ -100,6 +97,7 @@ export class llenaRevenimientoComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
 
     search = new URLSearchParams();
@@ -107,6 +105,7 @@ export class llenaRevenimientoComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
 
     url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
@@ -139,7 +138,10 @@ export class llenaRevenimientoComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('id_formatoRegistroRev', this.id_formato);
-    this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) ); 
+    this.http.get(url, {search}).subscribe(res => {
+      this.llenado(res.json());
+      this.sinNombre(res.json());
+    } ); 
 
 
     this.formatoCCHForm = new FormGroup({
@@ -221,7 +223,9 @@ export class llenaRevenimientoComponent implements OnInit{
     }
   }
 
-
+  statusFormReciver(isValid){
+    this.isValid=isValid;
+  }
     
   llenaObra(resp: any){
     this.mis_obras= new Array(resp.length);
@@ -252,10 +256,54 @@ export class llenaRevenimientoComponent implements OnInit{
       termometro:      respuesta.termometro_id
     });
 
-    this.formatoStatus=(respuesta.status == 0 ? true : false);
+    this.link = respuesta.preliminar;
 
+    this.formatoStatus=(respuesta.status == 0 ? true : false);
+    if(!this.formatoStatus){
+      this.recargaHerramientas();
+    }
     this.cargando=this.cargando-1;
      
+  }
+
+  sinNombre(respuesta: any){    
+    //Esta if verifica si ya fue generado un PDF mediante respuesta.preliminar, si fue generado activa Visuarlizar PDF.
+    if(respuesta.preliminar == null){
+      this.preliminar = false;
+    }else{
+      this.preliminar = true;
+    }
+  }
+
+  recargaHerramientas(){
+    this.cargando = this.cargando +3;
+
+    let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
+    let search = new URLSearchParams();
+   
+    search.set('function', 'getForDroptdownJefeBrigadaCono');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '-1');
+    this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
+
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownJefeBrigadaVarilla');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '-1');
+    this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
+
+    search = new URLSearchParams();
+    search.set('function', 'getForDroptdownJefeBrigadaFlexometro');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_ordenDeTrabajo', this.id_orden);
+    search.set('status', '-1');
+    this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
+
   }
 
   obtenStatusReg(){
@@ -280,6 +328,124 @@ export class llenaRevenimientoComponent implements OnInit{
                                             console.log(res.json());
                                             this.validaRegistrosVacios(res.json());
                                           });
+  }
+
+  obtenStatusVisualizarPDF(){
+      if(0 == this.numberOfRegistros){
+        window.alert("Para Visualizar PDF: Primero debes Agregar una Muestra y Completarla.");
+        return;
+      }     
+
+      let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
+      let search = new URLSearchParams();
+      this.cargando=this.cargando+1;
+      search.set('function', 'getAllRegistrosByID');
+      search.set('token', this.global.token);
+      search.set('rol_usuario_id', this.global.rol);
+      search.set('id_formatoRegistroRev', this.id_formato);
+      console.log(search);
+      this.http.get(url, {search}).subscribe(res => {
+                                              console.log(res.json());
+                                              this.validaRegistrosVaciosVisualizar(res.json());
+                                            });
+  }
+
+  validaRegistrosVaciosVisualizar(res: any){
+    this.cargando=this.cargando-1;
+    let isValid = true;
+    res.forEach(function (value) {
+      if(value.status == "0"){
+         isValid = false;
+      }
+    });
+    if(!isValid){
+      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para Visualizar un PDF.");     
+    }else{
+      if(!this.preliminar){
+        window.alert("Para Visualizar PDF: Primero debes Generar el PDF dando click al botón Generar PDF.");
+      }else if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
+        let link = this.link;
+        window.open(link, "_blank");
+      } 
+    } 
+  } //FIN  
+
+  obtenStatusGenPDF(){
+    if(0 == this.numberOfRegistros){
+        window.alert("Para Generar el PDF: Primero debes Agregar una Muestra y Completarla.");
+        return;
+    }
+    this.cargando=this.cargando+1;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getAllRegistrosByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_formatoRegistroRev', this.id_formato);
+    console.log(search);
+    this.http.get(url, {search}).subscribe(res => {
+                                            console.log(res.json());
+                                            this.validaRegistrosVaciosGEN(res.json());
+                                          });
+    
+  }
+
+  validaRegistrosVaciosGEN(res: any){
+    this.cargando=this.cargando-1;
+    let isValid = true;
+    res.forEach(function (value) {
+      if(value.status == "0"){
+         isValid = false;
+      } 
+    });
+
+    if(!isValid){
+      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para poder Generar un PDF.");     
+    }else if(window.confirm("¿Estas seguro de Generar el PDF?")){
+      this.generatePDF();
+    } 
+  } //FIN ValidaCamposVacios
+
+  generatePDF(){
+    this.cargando= this.cargando + 1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'generatePDF');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('id_formatoRegistroRev', this.id_formato);  
+    this.http.post(url, formData).subscribe(res => {
+      this.respuestaGeneratePDF(res.json());
+    });
+    
+  }
+
+  respuestaGeneratePDF(res: any){
+    if(res.error==0){
+      console.log(res);
+      this.cargando=this.cargando-1;
+      this.reloadData();
+      console.log(res);
+    }else{
+      window.alert(res.estatus);
+      location.reload();
+    } 
+  } 
+
+  reloadData(){
+    this.cargando = this.cargando +1;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getInfoByID');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('id_formatoRegistroRev', this.id_formato);
+    this.http.get(url, {search}).subscribe(res => {
+      this.llenado(res.json());
+      this.sinNombre(res.json());
+    } ); 
   }
 
   validaRegistrosVacios(res: any){
@@ -318,9 +484,15 @@ export class llenaRevenimientoComponent implements OnInit{
   } 
   
   respuestaFormatoCompletado(res: any){
-    this.cargando=this.cargando-1;
-    this.formatoStatus=false;
-    console.log(res);
+    if(res.error==0){
+      this.cargando=this.cargando-1;
+      this.formatoStatus=false;
+      console.log(res);
+    }else{
+      this.cargando=this.cargando-1;
+      window.alert(res.estatus);
+    }
+    
   }
   
   agregaRegistro(){
@@ -340,7 +512,6 @@ export class llenaRevenimientoComponent implements OnInit{
                                               console.log(res);
                                               this.respuestaRegistro(res.json());                 
                                             } );
-    
   }
 
   actualizarInformeNo(){
@@ -357,8 +528,6 @@ export class llenaRevenimientoComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
-
-
   }
 
   actualizarFooter(){
@@ -377,8 +546,6 @@ export class llenaRevenimientoComponent implements OnInit{
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitchFooter(res.json());                 
                                             } );
-
-
   }
 
   respuestaSwitch(res: any){ 
@@ -412,7 +579,7 @@ export class llenaRevenimientoComponent implements OnInit{
      else{
           this.id_registro= res.id_registrosRev;
           console.log(this.id_registro);
-          this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/agregaRegistroRevenimiento/'+this.id_orden + '/' + this.id_formato + '/' +this.id_registro]);        
+          this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroRevenimiento/'+this.id_orden + '/' + this.id_formato + '/' +this.id_registro]);        
      }
    }
 
@@ -453,10 +620,6 @@ export class llenaRevenimientoComponent implements OnInit{
   }
 
   regresaDashboard(){
-    this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/'+ this.id_orden]);
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+ this.id_orden]);
   }
-
-
-
-
 }
