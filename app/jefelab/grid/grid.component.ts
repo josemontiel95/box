@@ -20,8 +20,9 @@ export class GridComponent implements OnInit  {
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-      {headerName: 'InformeNo.', field: 'formatoNo' },
-      {headerName: 'Tipo', field: 'tipo' }
+      {headerName: 'InformeNo.', field: 'informeNo' },
+      {headerName: 'Tipo', field: 'tipo' },
+      {headerName: 'Accion requerida', field: 'accReq' }
     ];
     this.rowSelection = "single";
   }

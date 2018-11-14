@@ -1,5 +1,5 @@
-import { Component, ViewChild ,OnInit} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Component ,OnInit} from '@angular/core';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +13,6 @@ export class FormatosGridComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   id_orden: string;
   rowSelection;
   columnDefs;
@@ -21,9 +20,9 @@ export class FormatosGridComponent implements OnInit  {
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-    {headerName: 'InformeNo.', field: 'formatoNo' },
-    {headerName: 'Tipo', field: 'tipo2' },
-    {headerName: 'Formato', field: 'tipo' }
+    {headerName: 'InformeNo.', field: 'informeNo' },
+    {headerName: 'Tipo', field: 'tipo' },
+    {headerName: 'Accion Requerida', field: 'accReq' }
       
     ];
     this.rowSelection = "single";
@@ -53,7 +52,6 @@ export class FormatosGridComponent implements OnInit  {
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllFormatos');
@@ -84,16 +82,15 @@ export class FormatosGridComponent implements OnInit  {
     var id = "";
     var ruta = false;
     selectedRows.forEach(function(selectedRow, index) {
-      if(selectedRow.tipo == "REVENIMIENTO"){
-         id += selectedRow.id_formato;
+      if(selectedRow.tipoNo == 1){
+         id += selectedRow.id;
          //window.alert(selectedRow.id_formato);
          ruta = true;
-      }else if(selectedRow.tipo == "CONTROL DE CONCRETO HIDRAULICO"){
-        id += selectedRow.id_formato;
+      }else if(selectedRow.tipoNo > 1){
+        id += selectedRow.id;
         //window.alert(selectedRow.id_formato);
         ruta = false;
       }
-            
     });
     if(ruta == false){
       this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden +'/'+id]);
