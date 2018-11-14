@@ -331,7 +331,14 @@
 
   <div class="row">
     <div class="col-md-12 col-12">
-      <app-footerEnsayo></app-footerEnsayo>
+      <app-footerEnsayo *ngIf="footerExist"></app-footerEnsayo>
+      <div *ngIf="!footerExist">
+        <div class="card">
+          <div class="card-body">
+            <h4>No se ha ensayado</h4>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
