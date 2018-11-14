@@ -620,6 +620,6 @@ export class llenaRevenimientoComponent implements OnInit{
   }
 
   regresaDashboard(){
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+ this.id_orden]);
+    this.router.navigate(['/jefeLaboratorio/orden-trabajo/dashboard/'+ this.id_orden]);
   }
 }

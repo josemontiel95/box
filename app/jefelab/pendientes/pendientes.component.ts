@@ -120,10 +120,6 @@ export class JLabPendientesComponent implements OnInit{
       ordenDeTrabajo_id = selectedRow.ordenDeTrabajo_id;
     });
 
-    if(tipoNo == 0){
-      window.alert("ERROR: CONTACTA A SOPORTE");
-    }
-
     this.ordenTrabajo = ordenDeTrabajo_id; //ID Orden Trabajo
     this.id =id;                           //ID Formato
     this.id_Footer = id_footerEnsayo;      //ID Footer 
@@ -140,7 +136,7 @@ export class JLabPendientesComponent implements OnInit{
       this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaRevenimiento/'+ this.ordenTrabajo + "/" + this.id]);
     }else if(this.tipoNo > 1){
       this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.ordenTrabajo + "/" + this.id + "/" + this.id_Footer]);
-    }else{
+    }else if(this.tipoNo == 0){
       window.alert("Error. Algo salió mal. Contacta a soporte.");
     }
   }

@@ -17,6 +17,14 @@ export class GridComponent implements OnInit  {
   columnDefs;
   id_orden: string;
   noRowDataError;
+  id_Footer: string;
+  tipoNo;
+  ordenTrabajo;
+  id = "";
+  tipo = "";
+  ruta = 0;
+  selected = false;
+
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -36,7 +44,7 @@ export class GridComponent implements OnInit  {
   }
 
   cargando(num){
-    this.cambiarCargando.emit(num)
+    this.cambiarCargando=this.cargando + num;
   }
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -75,14 +83,42 @@ export class GridComponent implements OnInit  {
    
  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
-    var id = "";
+    var idd;
+    var tipoo;
+    var rutaa;
+    var tipoNo;
+    var id;
+    var ordenDeTrabajo_id;
+    var id_footerEnsayo;
 
     selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_herramienta;
-      
+      tipoNo = selectedRow.tipoNo;
+      id     = selectedRow.id;
+      id_footerEnsayo = selectedRow.id_footerEnsayo
+      ordenDeTrabajo_id = selectedRow.ordenDeTrabajo_id;
     });
-    //this.router.navigate(['jefeb/herramientas/herramienta-detail/'+id]);
+
+    this.ordenTrabajo = ordenDeTrabajo_id; //ID Orden Trabajo
+    this.id =id;                           //ID Formato
+    this.id_Footer = id_footerEnsayo;      //ID Footer 
+    this.tipo =tipoo;
+    this.ruta =rutaa;
+    console.log("Que paso: "+this.id);
+    this.selected= true;
+    this.tipoNo = tipoNo;
+
+    this.selectOption();
   }
 
+  selectOption(){
+    this.cargando(+1);
+    if(this.tipoNo == 1){
+      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaRevenimiento/'+ this.ordenTrabajo + "/" + this.id]);
+    }else if(this.tipoNo > 1){
+      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.ordenTrabajo + "/" + this.id + "/" + this.id_Footer]);
+    }else if(this.tipoNo == 0){
+      window.alert("Error. Algo salió mal. Contacta a soporte.");
+    }
+  }
 
 }
