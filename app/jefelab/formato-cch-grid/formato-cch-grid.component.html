@@ -1,35 +1,34 @@
 <hr>
-	<h4 style="text-align: center;" class="card-title">GENERACI&Oacute;N DE FORMATOS FINALES.</h4>
+	<h5 style="text-align: center;" class="card-title">GENERACI&Oacute;N DE FORMATOS FINALES.</h5>
     <div class="row" style="display: flex; align-items: center; justify-content: center;">
       <div class="btn-group" style="padding-right: 5%;">  
-        <button class="btn btn-success" [ngClass]="{'btn':true ,'btn-default': !statusEnsayo, 'btn-success':statusEnsayo}" (click)="generarPDFFinal();">
+        <button [ngClass]="{'btn':true ,'btn-default': !isSelected && isGenerarPDFValid, 'btn-success':isSelected && isGenerarPDFValid}" (click)="onClickGenerarPDF();">
           <span><b> GENERAR PDF FINAL </b></span>
         </button>
       </div>
       <div class="btn-group" style="padding-right: 5%;">
-        <button class="btn btn-success" (click)="recalcularEstados();">
+        <button [ngClass]="{'btn':true ,'btn-default': !isSelected && isVerPDFValid, 'btn-success':isSelected && isVerPDFValid}" (click)="onClickVizualizarPDF();">
           <span><b> VISUALIZAR PDF </b></span>
         </button>
       </div>
       <div class="btn-group" style="padding-right: 5%;">
-        <button class="btn btn-success" (click)="recalcularEstados();">
+        <button [ngClass]="{'btn':true ,'btn-default': !isSelected && isAutoValid, 'btn-success':isSelected && isAutoValid}" (click)="onClickAutorizar();">
           <span><b> AUTORIZAR & ENVIAR </b></span>
         </button>
       </div>  
     </div>
 
     <hr>
-    <h4 style="text-align: center;" class="card-title">EDICI&Oacute;N DE REGISTROS.</h4>
+    <h5 style="text-align: center;" class="card-title">EDICI&Oacute;N DE REGISTROS.</h5>
 	<div class="row" style="display: flex; float: right; padding-right: 5%;">
-		<div class="btn-group" style="padding-right: 5%;">
-		    <button class="btn btn-success" [ngClass]="{'btn':true ,'btn-default': !isSelected, 'btn-success':isSelected}" (click)="onLoadEnsayo();">
-		      <span><b>REGISTRO DE ENSAYO</b></span>
-		    </button>
-		</div>
-
 		<div class="btn-group">
-		    <button class="btn btn-success" [ngClass]="{'btn':true ,'btn-default': !isSelected, 'btn-success':isSelected}"  (click)="onLoadCCH();">
-		      <span><b>REGISTRO DE CAMPO</b></span>
+		    <button  [ngClass]="{'btn':true ,'btn-default': !isSelected && isVerCampoValid, 'btn-success':isSelected && isVerCampoValid}"  (click)="onLoadCCH();">
+		      <span><b>VIZUALIZAR DE CAMPO</b></span>
+		    </button>
+    </div>
+    <div class="btn-group" style="padding-right: 5%;">
+		    <button [ngClass]="{'btn':true ,'btn-default': !isSelected && isVerEnsayoValid, 'btn-success':isSelected && isVerEnsayoValid}" (click)="onLoadEnsayo();">
+		      <span><b>VIZUALIZAR ENSAYO</b></span>
 		    </button>
 		</div>
 	</div>

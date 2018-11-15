@@ -58,6 +58,8 @@ export class llenaFormatoCCHComponent implements OnInit{
   maxNoOfRegistrosCCH ="";
   multiplosNoOfRegistrosCCH ="";
   footerExist=false;
+
+  isMainGridVisible=true;
   
   formatoCCHForm: FormGroup;
 
@@ -202,7 +204,7 @@ export class llenaFormatoCCHComponent implements OnInit{
    get flexometro()      { return this.formatoCCHForm.get('flexometro'); }
    get termometro()      { return this.formatoCCHForm.get('termometro'); } 
 
-    mostrar(){
+  mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
 
@@ -221,6 +223,17 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.formatoCCHForm.controls['flexometro']['disable']();
     this.formatoCCHForm.controls['termometro']['disable']();
 
+  }
+
+  cambiarCargando(num){
+    this.cargando=this.cargando + num;
+  }
+  reloadComponent(event: any){
+    this.isMainGridVisible= false;
+    setTimeout(() =>{
+      this.isMainGridVisible = true;
+      this.cargando = this.cargando -1;
+    },700);
   }
 
 
