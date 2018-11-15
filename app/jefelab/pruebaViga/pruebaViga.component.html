@@ -279,16 +279,16 @@
               <div class="col-md-6 col-md-offset-6 col-12">
               </div>
               <div class="col-md-2 col-12">
-               <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
-                    <span><b> Cambiar Datos. </b></span>
-                  </button>
+                <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="cambioRegistroIncompleto();">
+                  <span><b>Cambiar Datos</b></span>
+                </button>
                 <button class="btn btn-default" *ngIf="hiddenC" (click)="llenarDespues()">
-                      <span><b> Llenar mas tarde. </b></span>
+                  <span><b>Llenar mas tarde</b></span>
                 </button>
               </div>
               <div class="col-md-2 col-12">
                 <button class="btn btn-success" *ngIf="hiddenC" [disabled]="formatoCCHForm.invalid" (click)="validaCamposVacios()">
-                      <span><b> Registro Completo. </b></span>
+                  <span><b>Registro Completo</b></span>
                 </button>
               </div>
             </div>
