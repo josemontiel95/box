@@ -1,17 +1,12 @@
-import { GridComponent } from '../grid/grid.component';
 import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 //FIN DE LOS IMPORTS
@@ -30,8 +25,6 @@ export class footerEnsayoComponent implements OnInit{
   global: Global;
   link = "";
   linkFormatoCampo = "";
-  private gridApi;
-  private gridColumnApi;
   preliminar = false;
   preliminarGabs= false;
   rowSelection;
@@ -70,17 +63,7 @@ export class footerEnsayoComponent implements OnInit{
   mis_flexometro: Array<any>;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
-    this.columnDefs = [
-    {headerName: '# Orden', field: 'id_herramienta' },
-    {headerName: '# Cotización', field: 'id_herramienta' },
-    {headerName: 'Tipo', field: 'tipo' },
-    {headerName: 'Placas', field: 'placas' },
-    {headerName: 'Condicion', field: 'condicion'},
-    {headerName: 'Fecha de compra', field: 'fechaDeCompra' },
-    {headerName: 'Editado en', field: 'lastEditedON'},
 
-  ];
-    this.rowSelection = "single";
   }
 	  
   ngOnInit() {
