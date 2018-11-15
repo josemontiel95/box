@@ -57,8 +57,8 @@ export class GridComponent implements OnInit  {
  
 
   ngOnInit() {
-     this.data.currentGlobal.subscribe(global => this.global = global);
-     this.cambiarCargando.emit(+1);
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    this.cambiarCargando.emit(+1);
   }
 
 
@@ -107,12 +107,15 @@ export class GridComponent implements OnInit  {
     });
     switch(tipo){
       case 'CILINDRO':
+        this.cambiarCargando.emit(+1);
         this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+id]);
       break;
       case 'CUBO':
+        this.cambiarCargando.emit(+1);
         this.router.navigate(['tecnico/pendientes/dashboardCubo/'+id]);
       break;
       case 'VIGAS':
+        this.cambiarCargando.emit(+1);
         this.router.navigate(['tecnico/pendientes/dashboardViga/'+id]);
       break;
     }

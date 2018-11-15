@@ -18,7 +18,7 @@ export class GridCilindrosComponent implements OnInit  {
   columnDefs;
   id_orden: string;
   id_footer: string;
-   rowClassRules;
+  rowClassRules;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -97,8 +97,7 @@ export class GridCilindrosComponent implements OnInit  {
       id += selectedRow.id_ensayoCilindro;
       
     });
+    this.cambiarCargando.emit(+1); 
     this.router.navigate(['tecnico/pendientes/dashboardCilindro/pruebaCilindro/'+this.id_footer +'/' +id]);
   }
-
-
 }
