@@ -170,34 +170,40 @@ export class PendientesComponent implements OnInit{
        if(this.ruta == 1){
           id_footer = res.id_footerEnsayo;
           id_RegistroCCH = res.id_RegistroGabs;
-          window.alert("CILINDRO");
+          //window.alert("CILINDRO");
+          this.cambiarCargando(+1);
           this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+id_footer]);
        }else if(this.ruta == 2) {
           id_footer = res.id_footerEnsayo;
-          window.alert("CUBO");
+          //window.alert("CUBO");
           id_RegistroCCH = res.id_RegistroGabs;
-          this.router.navigate(['tecnico/pendientes/dashboardCubo'+id_footer]);
+          this.cambiarCargando(+1);
+          this.router.navigate(['tecnico/pendientes/dashboardCubo/'+id_footer]);
        }else if(this.ruta == 3) {
           id_footer = res.id_footerEnsayo;
-          window.alert("VIGA");
-          id_RegistroCCH = res.id_RegistroGabs;          
+          //window.alert("VIGA");
+          id_RegistroCCH = res.id_RegistroGabs;
+          this.cambiarCargando(+1);          
           this.router.navigate(['tecnico/pendientes/dashboardViga/'+id_footer]);
        }
      }else{
        if(this.ruta == 1){
           id_footer = res.id_footerEnsayo;
-          window.alert("CILINDRO");
+          //window.alert("CILINDRO");
           id_RegistroCCH = res.id_RegistroGabs;
+          this.cambiarCargando(+1);
           this.router.navigate(['tecnico/llenaFooter/'+id_footer + '/'+id_RegistroCCH]);
        }else if(this.ruta == 2) {
           id_footer = res.id_footerEnsayo;
-          window.alert("CUBO");
+          //window.alert("CUBO");
           id_RegistroCCH = res.id_RegistroGabs;
+          this.cambiarCargando(+1);
           this.router.navigate(['tecnico/llenaFooterCubo/'+id_footer + '/'+id_RegistroCCH]);
        }else if(this.ruta == 3) {
           id_footer = res.id_footerEnsayo;
-          window.alert("VIGA");
-          id_RegistroCCH = res.id_RegistroGabs;  
+          //window.alert("VIGA");
+          id_RegistroCCH = res.id_RegistroGabs;
+          this.cambiarCargando(+1);  
           this.router.navigate(['tecnico/llenaFooterViga/'+id_footer + '/'+id_RegistroCCH]);
        }
     }

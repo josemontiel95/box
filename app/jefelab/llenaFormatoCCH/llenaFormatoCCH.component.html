@@ -14,7 +14,7 @@
     <div class="col-md-12 ml-auto mr-auto">
       <div class="card">
         <div class="card-header">
-          <h4 style="text-align: center;" class="card-title">GENERACI&Oacute;N DE PDF</h4>
+          <h4 style="text-align: center; font-size:30px;" class="card-title">GENERACI&Oacute;N DE PDF</h4>
 
         </div>
         <h4><i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i></h4>
@@ -22,12 +22,14 @@
 
           <div class="btn-group" style="padding-right: 5%;">
               <button class="btn btn-success" (click)="onLoadCCH();">
-                <span><b>REPORTE DE CAMPO</b></span>
+                <span><b>REPORTE DE CAMPO &nbsp;&nbsp;</b></span>
+                <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block;"></i>
               </button>
           </div>
           <div class="btn-group">
               <button class="btn btn-success" (click)="onLoadEnsayo();">
-                <span><b>REPORTE DE ENSAYO</b></span>
+                <span><b>REPORTE DE ENSAYO &nbsp;&nbsp;</b></span>
+                <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block;"></i>
               </button>
           </div>
         </div>
@@ -147,7 +149,7 @@
     <div class="col-md-12 col-12">
       <div class="card  card-tasks">
         <div class="card-header ">
-          <h3 style="text-align: center;" class="card-title">CONTROL DE CONCRETO HIDRAULICO.</h3>
+          <h3 style="text-align: center; font-size:35px;" class="card-title">CONTROL DE CONCRETO HIDRAULICO.</h3>
         </div>
         <div class="card-body">
           <app-formato-cch-grid *ngIf="isMainGridVisible" (cambiarCargando)="cambiarCargando($event)" (reloadComponent)="reloadComponent($event)"></app-formato-cch-grid>

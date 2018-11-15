@@ -3,17 +3,20 @@
     <div class="row" style="display: flex; align-items: center; justify-content: center;">
       <div class="btn-group" style="padding-right: 5%;">  
         <button [ngClass]="{'btn':true ,'btn-default': !isSelected && isGenerarPDFValid, 'btn-success':isSelected && isGenerarPDFValid}" (click)="onClickGenerarPDF();">
-          <span><b> GENERAR PDF FINAL </b></span>
+          <span><b> GENERAR PDF FINAL &nbsp;&nbsp; </b></span>
+          <i class="fa fa-cogs" style="font-size:18px; display: inline-block;"></i> 
         </button>
       </div>
       <div class="btn-group" style="padding-right: 5%;">
         <button [ngClass]="{'btn':true ,'btn-default': !isSelected && isVerPDFValid, 'btn-success':isSelected && isVerPDFValid}" (click)="onClickVizualizarPDF();">
-          <span><b> VISUALIZAR PDF </b></span>
+          <span><b> VISUALIZAR PDF &nbsp;&nbsp;</b></span>
+          <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block;"></i>
         </button>
       </div>
       <div class="btn-group" style="padding-right: 5%;">
         <button [ngClass]="{'btn':true ,'btn-default': !isSelected && isAutoValid, 'btn-success':isSelected && isAutoValid}" (click)="onClickAutorizar();">
-          <span><b> AUTORIZAR & ENVIAR </b></span>
+          <span><b> AUTORIZAR & ENVIAR &nbsp;&nbsp;</b></span>
+          <i class="fa fa-check-square-o" style="font-size:18px; display: inline-block;"></i>
         </button>
       </div>  
     </div>
@@ -23,12 +26,14 @@
 	<div class="row" style="display: flex; float: right; padding-right: 5%;">
 		<div class="btn-group">
 		    <button  [ngClass]="{'btn':true ,'btn-default': !isSelected && isVerCampoValid, 'btn-success':isSelected && isVerCampoValid}"  (click)="onLoadCCH();">
-		      <span><b>VIZUALIZAR DE CAMPO</b></span>
+		      <span><b>VIZUALIZAR DE CAMPO &nbsp;&nbsp;</b></span>
+          <i class="fas fa-external-link-alt" style="font-size:18px; display: inline-block;"></i>
 		    </button>
     </div>
     <div class="btn-group" style="padding-right: 5%;">
 		    <button [ngClass]="{'btn':true ,'btn-default': !isSelected && isVerEnsayoValid, 'btn-success':isSelected && isVerEnsayoValid}" (click)="onLoadEnsayo();">
-		      <span><b>VIZUALIZAR ENSAYO</b></span>
+		      <span><b>VIZUALIZAR ENSAYO &nbsp;&nbsp;</b></span>
+          <i class="fas fa-external-link-alt" style="font-size:18px; display: inline-block;"></i>
 		    </button>
 		</div>
 	</div>

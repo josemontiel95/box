@@ -432,6 +432,35 @@ export class PruebaCuboComponent implements OnInit{
     this.cargando=this.cargando + num;
   }
 
+  cambioRegistroIncompleto(){
+    this.cargando = this. cargando +1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/ensayoCubo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'editEnsayo');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('id_ensayoCubo', this.id_Registro);
+    this.http.post(url, formData).subscribe(res => {                                             
+      this.respuestaSwitchCambioRegistro(res.json());                 
+    });
+  }
+
+  respuestaSwitchCambioRegistro(res: any){
+    console.log(res);
+    this.cargando = this.cargando -1; 
+    if(res.error!= 0){
+      window.alert(res.estatus);
+    }
+    else{
+      //this.cargaDatos();
+      this.hiddenB = false;
+      this.hiddenA = false;
+      this.hiddenC = true;
+      this.mostrar();       
+    }
+  }
+
   /*
     Manejo de los Old Members
   */

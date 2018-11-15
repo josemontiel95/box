@@ -99,6 +99,7 @@ export class GridCuboComponent implements OnInit  {
       id += selectedRow.id_ensayoCubo;
       
     });
+    this.cambiarCargando.emit(+1); 
     this.router.navigate(['tecnico/pendientes/dashboardCubo/pruebaCubo/'+this.id_footer +'/' +id]);
   }
 
