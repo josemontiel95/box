@@ -142,19 +142,15 @@
       </div>
     </div>
   </div>
-
-
+  
   <div class="row">
     <div class="col-md-12 col-12">
       <div class="card  card-tasks">
         <div class="card-header ">
           <h3 style="text-align: center;" class="card-title">CONTROL DE CONCRETO HIDRAULICO.</h3>
         </div>
-        
-
-
         <div class="card-body">
-          <app-formato-cch-grid (statusForm)="statusFormReciver($event)"></app-formato-cch-grid>
+          <app-formato-cch-grid *ngIf="isMainGridVisible" (cambiarCargando)="cambiarCargando($event)" (reloadComponent)="reloadComponent($event)"></app-formato-cch-grid>
         </div> 
       </div>
     </div>

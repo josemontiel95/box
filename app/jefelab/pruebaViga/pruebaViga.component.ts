@@ -225,6 +225,34 @@ export class PruebaVigaComponent implements OnInit{
       this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato + '/' + this.id_Footer]);    
      }
   }
+  cambioRegistroIncompleto(){
+    this.cargando = this.cargando +1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '12');
+    formData.append('valor', '3');
+    formData.append('id_registrosCampo', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {                                             
+      this.respuestaSwitchCambioRegistro(res.json());                 
+    } );
+  }
+
+  respuestaSwitchCambioRegistro(res: any){
+    this.cargando = this.cargando -1; 
+    if(res.error!= 0){
+      window.alert(res.estatus);
+    }
+    else{
+      this.hiddenB = false;
+      this.hiddenA = false;
+      this.mostrar();       
+    }
+  }
 
   onBlurCurado(){
     this.cargando = this. cargando +1;
@@ -622,14 +650,14 @@ export class PruebaVigaComponent implements OnInit{
   } //FIN ValidaCamposVacios
 
   llenaRapido(respuesta: any){
-    if(respuesta.status == 1){
+    if(respuesta.status == 1){ // verificado
       this.hiddenB = true;
       //this.mostrar();
-    }else if(respuesta.status >= 2){
+    }else if(respuesta.status == 0 || respuesta.status > 1){ // bloqueado
       this.hiddenA = true;
       this.locked=true;
       this.mostrar();
-    }else if(respuesta.status == 0){
+    }else if(respuesta.status == -1){ // edicion
       this.hiddenC = true;
       this.hidden = false;
     }

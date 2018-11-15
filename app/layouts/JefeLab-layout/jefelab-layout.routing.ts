@@ -6,7 +6,6 @@ import { CrearObraComponent } from '../../jefelab/crear-obra/crear-obra.componen
 import { InsertarFotoComponent } from '../../jefelab/insertar-foto/insertar-foto.component';
 import { InsertarFotoClienteComponent } from '../../jefelab/insertar-fotocliente/insertar-fotocliente.component';
 import { ObrasComponent } from '../../jefelab/obras/obras.component';
-import { PruebaComponent } from '../../prueba/prueba.component';
 import { HerramientasComponent } from '../../jefelab/herramientas/herramientas.component';
 import { CrearHerramientasComponent } from '../../jefelab/crear-herramientas/crear-herramientas.component';
 import { HerramientaDetailComponent } from '../../jefelab/herramienta-detail/herramienta-detail.component';
@@ -18,8 +17,6 @@ import { CrearConcreteraComponent } from '../../jefelab/crear-concretera/crear-c
 import { ConcreteraDetailComponent } from '../../jefelab/concretera-detail/concretera-detail.component';
 import { OrdenTrabajoComponent } from '../../jefelab/orden-trabajo/orden-trabajo.component';
 import { CrearOrdenTrabajoComponent } from '../../jefelab/crear-orden-trabajo/crear-orden-trabajo.component';
-import { GridComponent } from '../../jefelab/grid/grid.component';
-import { HerramientaGridComponent } from '../../jefelab/herramienta-grid/herramienta-grid.component';
 import { DashboardComponent } from '../../jefelab/dashboard/dashboard.component';
 import { EvaluaHerraComponent } from '../../jefelab/evaluaherra/evaluaherra.component';
 
@@ -27,11 +24,7 @@ import { PruebaCilindroComponent } from '../../jefelab/pruebaCilindro/pruebaCili
 import { PruebaCuboComponent } from '../../jefelab/pruebaCubo/pruebaCubo.component';
 import { PruebaVigaComponent } from '../../jefelab/pruebaViga/pruebaViga.component';
 
-import { ConstruccionComponent } from '../../jefelab/construccion/construccion.component';
 
-import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid.component';
-import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
-import { TecnicosGridAgregaComponent } from '../../jefelab/tecnicos-grida/tecnicos-grida.component';
 
 import { JLabPendientesComponent } from '../../jefelab/pendientes/pendientes.component';
 
@@ -59,7 +52,7 @@ export const JefeLabLayoutRoutes: Routes = [
     { path: 'orden-trabajo/dashboard/agregaRegistroRevenimiento/:id/:id2/:id3',      component: agregaRegistroRevenimientoComponent },   
     { path: 'orden-trabajo/dashboard/pruebaCilindro/:id/:id2/:id3/:id4',      component: PruebaCilindroComponent },
     { path: 'orden-trabajo/dashboard/pruebaCubo/:id/:id2/:id3/:id4',      component: PruebaCuboComponent },
-    { path: 'orden-trabajo/dashboard/pruebaViga/:id/:id2/:id3/:id4',      component: PruebaCuboComponent },
+    { path: 'orden-trabajo/dashboard/pruebaViga/:id/:id2/:id3/:id4',      component: PruebaVigaComponent },
 
 
     { path: 'pendientes',  component: JLabPendientesComponent },
