@@ -207,7 +207,7 @@ export class PruebaVigaComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'completeEnsayo');
+    formData.append('function', 'completeEnsayoJL');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('id_ensayoViga', this.id_Registro);
@@ -225,21 +225,19 @@ export class PruebaVigaComponent implements OnInit{
       this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato + '/' + this.id_Footer]);    
      }
   }
+  
   cambioRegistroIncompleto(){
     this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoViga/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'insertRegistroTecMuestra');
+    formData.append('function', 'editEnsayoJL');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('campo', '12');
-    formData.append('valor', '3');
-    formData.append('id_registrosCampo', this.id_registro);
+    formData.append('id_ensayoViga', this.id_Registro);
     this.http.post(url, formData).subscribe(res => {                                             
       this.respuestaSwitchCambioRegistro(res.json());                 
-    } );
+    });
   }
 
   respuestaSwitchCambioRegistro(res: any){
@@ -653,11 +651,11 @@ export class PruebaVigaComponent implements OnInit{
     if(respuesta.status == 1){ // verificado
       this.hiddenB = true;
       //this.mostrar();
-    }else if(respuesta.status == 0 || respuesta.status > 1){ // bloqueado
+    }else if(respuesta.status == 0 || respuesta.status > 2){ // bloqueado
       this.hiddenA = true;
       this.locked=true;
       this.mostrar();
-    }else if(respuesta.status == -1){ // edicion
+    }else if(respuesta.status == 2){ // edicion
       this.hiddenC = true;
       this.hidden = false;
     }
