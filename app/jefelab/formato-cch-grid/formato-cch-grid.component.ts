@@ -24,6 +24,8 @@ export class FormatoCCHGridComponent implements OnInit  {
   columnDefs;
   rowClassRules;
   footerEnsayo_id: string;
+  statusEnsayo = false;
+  isSelected = false;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -73,22 +75,30 @@ export class FormatoCCHGridComponent implements OnInit  {
   }
   /*Este metodo es llamado por el boton REGISTRO DE CAMPO y llevara al usuario a AgregaRegistroCCH*/
   onLoadCCH(){
-    this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_orden + '/' +this.id_formato +'/' +this.id_footer + '/' + this.id_registro]);
+    if(this.isSelected){
+    this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/agregaRegistroCCH/'+this.id_orden + '/' +this.id_formato +'/' +this.id_footer + '/' + this.id_registro]);      
+    }else{
+      window.alert("No hay un especimen seleccionado, intentalo de nuevo.");
+    }
   }
 
   onLoadEnsayo(){
-
-    if(this.footerEnsayo_id == "null"){
-      window.alert("ESTE ESPECIMEN AUN NO HA SIDO ENSAYADO POR EL TECNICO DE MUESTRAS");
-    }else if(this.tipoEnsayo == "VIGAS"){
-      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/pruebaViga/'+this.id_orden + '/' +this.id_formato +'/' +this.id_footer + '/' + this.id_registroEnsayo]);
-    }else if(this.tipoEnsayo == "CUBO"){
-      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/pruebaCubo/'+this.id_orden + '/' +this.id_formato +'/' +this.id_footer + '/' + this.id_registroEnsayo]);
-    }else if(this.tipoEnsayo == "CILINDRO"){
-      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/pruebaCilindro/'+this.id_orden + '/' +this.id_formato +'/' +this.id_footer + '/' + this.id_registroEnsayo]);
+    if(this.isSelected){
+      if(this.footerEnsayo_id == "null"){
+        window.alert("ESTE ESPECIMEN AUN NO HA SIDO ENSAYADO POR EL TECNICO DE MUESTRAS");
+      }else if(this.tipoEnsayo == "VIGAS"){
+        this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/pruebaViga/'+this.id_orden + '/' +this.id_formato +'/' +this.id_footer + '/' + this.id_registroEnsayo]);
+      }else if(this.tipoEnsayo == "CUBO"){
+        this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/pruebaCubo/'+this.id_orden + '/' +this.id_formato +'/' +this.id_footer + '/' + this.id_registroEnsayo]);
+      }else if(this.tipoEnsayo == "CILINDRO"){
+        this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/pruebaCilindro/'+this.id_orden + '/' +this.id_formato +'/' +this.id_footer + '/' + this.id_registroEnsayo]);
+      }else{
+        window.alert("ERROR, CONTANTE A SOPORTE");
+      }
     }else{
-      window.alert("ERROR, CONTANTE A SOPORTE");
+      window.alert("No hay un especimen seleccionado, intentalo de nuevo.");
     }
+    
 
   }
 
@@ -129,17 +139,25 @@ export class FormatoCCHGridComponent implements OnInit  {
     var tipoEnsayo = "";
     var id_registroEnsayo = "";
     var footerEnsayo_id = "";
+    var statusEnsayo;
+    this.isSelected = true;
 
     selectedRows.forEach(function(selectedRow, index) {
       id += selectedRow.id_registrosCampo;
       tipoEnsayo += selectedRow.tipo;
       id_registroEnsayo += selectedRow.id_ensayo;
       footerEnsayo_id +=selectedRow.footerEnsayo_id;
+      statusEnsayo += selectedRow.statusEnsayo;
       
     });
     this.id_registro = id;
     this.tipoEnsayo = tipoEnsayo;
     this.id_registroEnsayo = id_registroEnsayo;
     this.footerEnsayo_id = footerEnsayo_id;
+    if(statusEnsayo == 1){
+      this.statusEnsayo = true;
+    }else{
+      this.statusEnsayo = false;
+    }
   }
 }
