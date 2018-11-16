@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Output,EventEmitter} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -23,7 +23,7 @@ export class footerEnsayoComponent implements OnInit{
   id_footer: string;
   title = 'app';
   global: Global;
-  link = "";
+  link; //Este va a ser emitido a llenaFormatoCCH.
   linkFormatoCampo = "";
   preliminar = false;
   preliminarGabs= false;
@@ -61,6 +61,8 @@ export class footerEnsayoComponent implements OnInit{
   mis_conos:      Array<any>;
   mis_varillas:   Array<any>;
   mis_flexometro: Array<any>;
+
+  @Output() linkPreliminarGabs = new EventEmitter<any>();
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 
@@ -174,7 +176,7 @@ export class footerEnsayoComponent implements OnInit{
 
   llenado(respuesta:any){
     console.log(respuesta);
-
+    var linkGabs;
     this.formatoCCHForm.patchValue({
      fechaEnsayo:      respuesta.fecha,
      observaciones:    respuesta.observaciones,
@@ -184,11 +186,15 @@ export class footerEnsayoComponent implements OnInit{
     });
 
     this.link = respuesta.preliminarGabs;
+    linkGabs = this.link;
     this.linkFormatoCampo = respuesta.preliminar;
 
-     this.formatoStatus=(respuesta.status == 0 ? true : false);
-     console.log(this.formatoStatus);
-     //this.cargando=this.cargando-1;
+    this.linkPreliminarGabs.emit(linkGabs);
+    console.log(respuesta.preliminarGabs); 
+
+    this.formatoStatus=(respuesta.status == 0 ? true : false);
+    console.log(this.formatoStatus);
+    //this.cargando=this.cargando-1;
   }
 
  /*************************************************/

@@ -28,9 +28,10 @@ export class GridComponent implements OnInit  {
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-      {headerName: 'InformeNo.', field: 'informeNo' },
-      {headerName: 'Tipo', field: 'tipo' },
-      {headerName: 'Accion requerida', field: 'accReq' }
+      {headerName: 'CTRL FORMATO', field: 'id' },    
+      {headerName: 'INFORME N&Uacute;MERO', field: 'informeNo' },
+      {headerName: 'TIPO', field: 'tipo' },
+      {headerName: 'ACCION REQUERIDA', field: 'accReq' }
     ];
     this.rowSelection = "single";
   }
@@ -52,12 +53,11 @@ export class GridComponent implements OnInit  {
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.cargando(+1);
-    let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllFormatos');
+    search.set('function', 'getAwaitingApprovalSeen');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('id_ordenDeTrabajo', this.id_orden);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
