@@ -1,4 +1,4 @@
-import { Component, ViewChild ,OnInit} from '@angular/core';
+import { Component, ViewChild ,OnInit, Output, EventEmitter} from '@angular/core';
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -19,6 +19,7 @@ export class RegistrosRevGridComponent implements OnInit  {
   rowSelection;
   columnDefs;
   rowClassRules;
+  @Output() cambiarCargando = new EventEmitter<any>();
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -62,8 +63,12 @@ export class RegistrosRevGridComponent implements OnInit  {
       this.route.params.subscribe( params => {this.id_orden = params.id2; this.id_formato=params.id});
   }
 
+  cargando(num){
+    this.cambiarCargando=this.cargando + num;
+  }
 
   onGridReady(params) {
+    this.cargando(+1);
     this.data.currentGlobal.subscribe(global => this.global = global);
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
@@ -84,6 +89,7 @@ export class RegistrosRevGridComponent implements OnInit  {
   }
 
   llenaTabla(repuesta: any){
+    this.cargando(-1);
     console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
@@ -102,7 +108,8 @@ export class RegistrosRevGridComponent implements OnInit  {
       id += selectedRow.id_registrosRev;
       
     });
-    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/agregaRegistroRevenimiento/'+this.id_orden + '/' +this.id_formato +'/' +id]);
+    this.cargando(+1);
+    this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/agregaRegistroRevenimiento/'+this.id_orden + '/' +this.id_formato +'/' +id]);
   }
 
 

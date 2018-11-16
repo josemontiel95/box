@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import {  Http, URLSearchParams} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import {
     FormGroup,
     FormControl,
@@ -27,7 +27,7 @@ export class llenaRevenimientoComponent implements OnInit{
   link = "";
   rowSelection;
   columnDefs;
-  cargando= 4;
+  cargando;
   hidden = true;
   hiddenf= true;
   mis_tipos: Array<any>;
@@ -212,6 +212,9 @@ export class llenaRevenimientoComponent implements OnInit{
   onSubmit() { this.submitted = true; }
 
 
+  cambiarCargando(num){
+    this.cargando=this.cargando + num;
+  }
   
   labValidator(repuesta: any){
     console.log(repuesta)
