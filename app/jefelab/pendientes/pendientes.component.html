@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
 <!-- Este bloque es para hacer la animación de Loading con flechas-->
 <div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
     <div class="loader-container">
@@ -24,7 +27,8 @@
               </div>
               <div class="col-md-7">
                 <button class="btn btn-success" (click)="selectOption();">
-                  <span><b>Visualizar Formato</b></span>
+                  <span><b>Visualizar Formato &nbsp;&nbsp;</b></span>
+                  <i class="fas fa-external-link-alt" style="font-size:18px; display: inline-block; "></i>
                 </button>
               </div>
             </div>
