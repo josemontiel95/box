@@ -248,6 +248,7 @@ export class PruebaVigaComponent implements OnInit{
     else{
       this.hiddenB = false;
       this.hiddenA = false;
+      this.hiddenC = true;
       this.mostrar();       
     }
   }
@@ -650,7 +651,6 @@ export class PruebaVigaComponent implements OnInit{
   llenaRapido(respuesta: any){
     if(respuesta.status == 1){ // verificado
       this.hiddenB = true;
-      //this.mostrar();
     }else if(respuesta.status == 0 || respuesta.status > 2){ // bloqueado
       this.hiddenA = true;
       this.locked=true;
