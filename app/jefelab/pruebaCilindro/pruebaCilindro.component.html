@@ -199,22 +199,23 @@
             </div>
 
             <div class="row">
-              <div class="btn-group" style="float: left; padding-left: 5%;">                
+              <div  class="col-md-2 col-12">                
                 <button class="btn btn-default" *ngIf="hiddenA || hiddenB" [disabled]="formatoCCHForm.invalid" (click)="llenarDespues();">
                   <span><b> Regresar. </b></span>
                 </button>
               </div>
-              <div class="btn-group" style="float: right; padding-right: 5%;">
-                <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="mostrar();">
+              <div class="col-md-6 col-12">
+
+              </div>
+              <div class="col-md-2 col-12">
+                <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="cambioRegistroIncompleto();">
                     <span><b> Cambiar Datos. </b></span>
                 </button>
-              </div>
-              <div class="btn-group" style="float: right; padding-right: 5%;">
                 <button class="btn btn-default" *ngIf="hiddenC" (click)="llenarDespues()">
                       <span><b> Llenar mas tarde. </b></span>
                 </button>
               </div>
-              <div class="btn-group" style="float: right; padding-right: 5%;">
+              <div class="col-md-2 col-12">
                 <button class="btn btn-success" *ngIf="hiddenC" [disabled]="formatoCCHForm.invalid" (click)="validaCamposVacios()">
                       <span><b> Registro Completo. </b></span>
                 </button>

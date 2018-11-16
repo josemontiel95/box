@@ -221,7 +221,7 @@ export class PruebaCilindroComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'completeEnsayo');
+    formData.append('function', 'completeEnsayoJL');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('id_ensayoCilindro', this.id_Registro);
@@ -236,7 +236,7 @@ export class PruebaCilindroComponent implements OnInit{
       //console.log(res.estatus);
     }
     else{
-      this.router.navigate(['tecnico/pendientes/dashboardCilindro/'+this.id_Footer]);    
+      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato + '/' + this.id_Footer]);    
     }
   }
 
@@ -486,6 +486,35 @@ export class PruebaCilindroComponent implements OnInit{
     }
   }
 
+  cambioRegistroIncompleto(){
+    this.cargando = this. cargando +1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'editEnsayoJL');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('id_ensayoCilindro', this.id_Registro);
+    this.http.post(url, formData).subscribe(res => {                                             
+      this.respuestaSwitchCambioRegistro(res.json());                 
+    });
+  }
+
+  respuestaSwitchCambioRegistro(res: any){
+    console.log(res);
+    this.cargando = this.cargando -1; 
+    if(res.error!= 0){
+      window.alert(res.estatus);
+    }
+    else{
+      //this.cargaDatos();
+      this.hiddenB = false;
+      this.hiddenA = false;
+      this.hiddenC = true;
+      this.mostrar();       
+    }
+  }
+  
   mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable'; 
@@ -520,14 +549,14 @@ export class PruebaCilindroComponent implements OnInit{
   } //FIN ValidaCamposVacios
 
   llenaRapido(respuesta: any){
-    if(respuesta.status == 1){
+    if(respuesta.status == 1){ // verificado
       this.hiddenB = true;
       //this.mostrar();
-    }else if(respuesta.status >= 2){
+    }else if(respuesta.status == 0 || respuesta.status > 2){ // bloqueado
       this.hiddenA = true;
       this.locked=true;
       this.mostrar();
-    }else if(respuesta.status == 0){
+    }else if(respuesta.status == 2){ // edicion
       this.hiddenC = true;
       this.hidden = false;
     }

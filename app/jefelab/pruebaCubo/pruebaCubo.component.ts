@@ -383,6 +383,35 @@ export class PruebaCuboComponent implements OnInit{
     }
   }
 
+  cambioRegistroIncompleto(){
+    this.cargando = this. cargando +1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/ensayoCubo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'editEnsayoJL');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('id_ensayoCubo', this.id_Registro);
+    this.http.post(url, formData).subscribe(res => {                                             
+      this.respuestaSwitchCambioRegistro(res.json());                 
+    });
+  }
+
+  respuestaSwitchCambioRegistro(res: any){
+    console.log(res);
+    this.cargando = this.cargando -1; 
+    if(res.error!= 0){
+      window.alert(res.estatus);
+    }
+    else{
+      //this.cargaDatos();
+      this.hiddenB = false;
+      this.hiddenA = false;
+      this.hiddenC = true;
+      this.mostrar();       
+    }
+  }
+
   
   mostrar(){
     this.hidden = !this.hidden;
@@ -419,14 +448,14 @@ export class PruebaCuboComponent implements OnInit{
   } //FIN ValidaCamposVacios
 
   llenaRapido(respuesta: any){
-    if(respuesta.status == 1){
+    if(respuesta.status == 1){ // verificado
       this.hiddenB = true;
       //this.mostrar();
-    }else if(respuesta.status >= 2){
+    }else if(respuesta.status == 0 || respuesta.status > 2){ // bloqueado
       this.hiddenA = true;
       this.locked=true;
       this.mostrar();
-    }else if(respuesta.status == 0){
+    }else if(respuesta.status == 2){ // edicion
       this.hiddenC = true;
       this.hidden = false;
     }
