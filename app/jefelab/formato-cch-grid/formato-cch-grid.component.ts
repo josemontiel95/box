@@ -161,7 +161,18 @@ export class FormatoCCHGridComponent implements OnInit  {
     if(this.statusEnsayo){
       if(this.isAutoValid){
         if(window.confirm("¿Esta usted seguro de autorizar el PDF generado y enviarlo al personal administrativo para ser enviado y cobrado al cliente?. Esta acción NO se puede revertir")){
-          // Autorizar
+          this.cambiarCargando.emit(+1);
+          let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+          let formData:FormData = new FormData();
+          formData.append('function', 'autEnsayoForAdmin');
+          formData.append('token', this.global.token);
+          formData.append('rol_usuario_id', this.global.rol);
+
+          formData.append('id_formatoCampo', this.id_formato);  
+          formData.append('id_ensayo', this.id_registroEnsayo);  
+          this.http.post(url, formData).subscribe(res => {
+            this.respuestaGeneratePDF(res.json());
+          });
         }else{
           // Autorizacion cancelada.
         }
@@ -241,7 +252,7 @@ export class FormatoCCHGridComponent implements OnInit  {
     this.tipoEnsayo = tipoEnsayo;
     this.id_registroEnsayo = id_registroEnsayo;
     this.footerEnsayo_id = footerEnsayo_id;
-    if(statusEnsayo == 1){
+    if(statusEnsayo > 0){
       this.statusEnsayo = true;
     }else{
       this.statusEnsayo = false;

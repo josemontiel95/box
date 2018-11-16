@@ -28,6 +28,8 @@ export class llenaFormatoCCHComponent implements OnInit{
   title = 'app';
   global: Global;
   link = "";
+  linkCampo = "";
+  linkEnsayo = "";
   rowSelection;
   columnDefs;
   cargando= 5;
@@ -46,6 +48,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   notRR=true;
   formatoStatus;
   preliminar = false;
+  preliminarGabs = false;
   atconcreto  ="";
   vespecimen1
   vespecimen2
@@ -104,7 +107,7 @@ export class llenaFormatoCCHComponent implements OnInit{
       this.footerExist=true;
     }
 
-    this.cargando=6;
+    this.cargando=7;
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
     
@@ -140,7 +143,22 @@ export class llenaFormatoCCHComponent implements OnInit{
     search.set('status', '0');
     this.http.get(url, {search}).subscribe(res => this.llenaTermometro(res.json()) );
 
-
+    url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`; 
+    let formData:FormData = new FormData();
+    formData.append('function', 'formatoSeen');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('id_formatoCampo', this.id_formato);
+    formData.append('id_footerEnsayo', this.id_footer);  
+    this.http.post(url, formData).subscribe(res => {
+      if(res.json().error==0){
+        console.log(res);
+        this.cargando=this.cargando-1;
+        console.log(res);
+      }else{
+        window.alert(res.json().estatus);
+      } 
+    }); 
 
     url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
     search = new URLSearchParams();
@@ -445,7 +463,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     });
 
     this.link = respuesta.preliminar;
-
+    this.linkCampo = respuesta.preliminar;
 
     this.tipo_especimeng=respuesta.tipo_especimen;
     this.cargaDefaults(this.tipo_especimeng);
@@ -471,6 +489,12 @@ export class llenaFormatoCCHComponent implements OnInit{
       this.preliminar = false;
     }else{
       this.preliminar = true;
+    }
+
+    if(respuesta.preliminarGabs == null){
+      this.preliminarGabs = false;
+    }else{
+      this.preliminarGabs = true;
     }
   }
 
@@ -939,10 +963,26 @@ export class llenaFormatoCCHComponent implements OnInit{
   }
 
   onLoadCCH(){
-    
+    if(!this.preliminar){
+        window.alert("ERROR: Reporte de Campo no se pudo encontrar, contactar a soporte.");
+      }else if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
+        let link = this.linkCampo;
+        window.open(link, "_blank");
+      } 
   }
 
   onLoadEnsayo(){
-    
+    if(this.linkEnsayo == null){
+        window.alert("FORMATO DE ENSAYO NO DISPONIBLE.");
+      }else if(window.confirm("¿Estas seguro de visualizar el formato de ensayo?")){
+        console.log(this.linkEnsayo);
+        window.open(this.linkEnsayo, "_blank");
+      } 
   }
+
+  linkPreliminarGabs(link :any){
+    console.log(link);
+    this.linkEnsayo = link;
+  }
+
 }

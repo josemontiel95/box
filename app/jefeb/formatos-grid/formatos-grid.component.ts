@@ -21,6 +21,7 @@ export class FormatosGridComponent implements OnInit  {
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
     {headerName: 'InformeNo.', field: 'informeNo' },
+    {headerName: 'Fecha.', field: 'fecha' },
     {headerName: 'Tipo', field: 'tipo' },
     {headerName: 'Accion Requerida', field: 'accReq' }
       

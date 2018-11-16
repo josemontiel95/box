@@ -487,17 +487,19 @@ export class PruebaCilindroComponent implements OnInit{
   }
 
   cambioRegistroIncompleto(){
-    this.cargando = this. cargando +1;
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'editEnsayoJL');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-    formData.append('id_ensayoCilindro', this.id_Registro);
-    this.http.post(url, formData).subscribe(res => {                                             
-      this.respuestaSwitchCambioRegistro(res.json());                 
-    });
+    if(window.confirm("SOLO TIENES UN PERMISO PARA CAMBIAR LOS DATOS DE ENSAYO, ¿ESTAS SEGURO DE USARLO?")){
+      this.cargando = this. cargando +1;
+      this.data.currentGlobal.subscribe(global => this.global = global);
+      let url = `${this.global.apiRoot}/ensayoCilindro/post/endpoint.php`;
+      let formData:FormData = new FormData();
+      formData.append('function', 'editEnsayoJL');
+      formData.append('token', this.global.token);
+      formData.append('rol_usuario_id', this.global.rol);
+      formData.append('id_ensayoCilindro', this.id_Registro);
+      this.http.post(url, formData).subscribe(res => {                                             
+        this.respuestaSwitchCambioRegistro(res.json());                 
+      });
+    }
   }
 
   respuestaSwitchCambioRegistro(res: any){
@@ -541,7 +543,7 @@ export class PruebaCilindroComponent implements OnInit{
     if(warning){
       window.alert("Tienes al menos un campo vacio, verifica tus datos.");     
     }else{
-      if(window.confirm("¿Estas seguro de marcar como completado el registro? ya no podras editarlo.")){
+      if(window.confirm("¿Estas seguro de marcar como completado el registro? ACEPTANDO, YA NO PODRAS REALIZAR MAS CAMBIOS.")){
         //window.alert("Aqui voy a llamar a la conexion la funcion de la BD");
         this.registroCompletado();
       }
@@ -549,6 +551,7 @@ export class PruebaCilindroComponent implements OnInit{
   } //FIN ValidaCamposVacios
 
   llenaRapido(respuesta: any){
+    console.log(respuesta);
     if(respuesta.status == 1){ // verificado
       this.hiddenB = true;
       //this.mostrar();
