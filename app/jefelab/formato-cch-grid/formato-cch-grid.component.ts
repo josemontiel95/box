@@ -247,14 +247,14 @@ export class FormatoCCHGridComponent implements OnInit  {
       this.statusEnsayo = false;
     }
 
-    if(Number(statusEnsayo) != 1){ // registro Sin ensayar.
+    if(Number(statusEnsayo) == 0 || statusEnsayo == null){ // registro Sin ensayar.
       window.alert("onSelectionChanged :: IF : 1 :: statusEnsayo : "+statusEnsayo);
       this.isVerCampoValid   = true;
       this.isVerEnsayoValid  = false;
       this.isGenerarPDFValid = false;
       this.isVerPDFValid     = false;
       this.isAutoValid       = false;
-    }else if(Number(statusEnsayo) == 1 && pdfFinal == null){ // Registro ensayado pero sin PDF
+    }else if(Number(statusEnsayo) > 0 && pdfFinal == null){ // Registro ensayado pero sin PDF
       window.alert("onSelectionChanged :: IF : 2");
 
       this.isVerCampoValid   = true;
@@ -262,14 +262,14 @@ export class FormatoCCHGridComponent implements OnInit  {
       this.isGenerarPDFValid = true;
       this.isVerPDFValid     = false;
       this.isAutoValid       = false;
-    }else if(statusEnsayo == 1 && pdfFinal != null && jefaLabApproval_id == null){ // Registro ensayado, con PDF pero no Autorizado
+    }else if(statusEnsayo  > 0 && pdfFinal != null && jefaLabApproval_id == null){ // Registro ensayado, con PDF pero no Autorizado
       window.alert("onSelectionChanged :: IF : 3");
       this.isVerCampoValid   = true;
       this.isVerEnsayoValid  = true;
       this.isGenerarPDFValid = true;
       this.isVerPDFValid     = true;
       this.isAutoValid       = true;
-    }else if(statusEnsayo == 1 && pdfFinal != null && jefaLabApproval_id != null){ // Registro ensayado, con PDF y autorizado
+    }else if(statusEnsayo  > 0 && pdfFinal != null && jefaLabApproval_id != null){ // Registro ensayado, con PDF y autorizado
       window.alert("onSelectionChanged :: IF : 4");
 
       this.isVerCampoValid   = true;
