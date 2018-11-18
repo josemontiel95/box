@@ -70,7 +70,7 @@ export class footerEnsayoComponent implements OnInit{
 	  
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id_formato=params.id); 
+    this.route.params.subscribe( params => {this.id_formato=params.id; this.id_footer=params.id3;}); 
     
     this.cargando = 4;
   

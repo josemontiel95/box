@@ -26,12 +26,19 @@
                 <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block;"></i>
               </button>
           </div>
-          <div class="btn-group">
+          <div class="btn-group" style="padding-right: 5%;">
               <button class="btn btn-success" (click)="onLoadEnsayo();">
                 <span><b>VER FORMATO DE ENSAYO &nbsp;&nbsp;</b></span>
                 <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block;"></i>
               </button>
           </div>
+          <!-- Este boton completara el formato y subira a todos los hijos -->
+          <div style="display: inline-block;">
+            <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminar }"  (click)="obtenStatusReg();"> 
+              <span><b>FORMATO COMPLETADO &nbsp;&nbsp;</b></span>
+              <i class="fa fa-check-square-o" style="font-size:18px; display: inline-block; "></i>
+            </button>
+          </div>  
         </div>
         <div class="card-body">
           <!--  <div *ngIf="opciones">

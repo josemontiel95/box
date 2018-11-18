@@ -418,64 +418,6 @@ export class dashboardVigaComponent implements OnInit{
     }
   }
 
-  obtenStatusReg(){
-    this.cargando = this.cargando +1;
-    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'isTheWholeFamilyHereAndComplete');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_footerEnsayo', this.id_footer);
-    this.http.get(url, {search}).subscribe(res => {
-      console.log(res.json());
-      this.validaRegistrosVacios(res.json());
-    });
-  }
-
-  validaRegistrosVacios(res: any){
-    this.cargando = this.cargando -1;
-    if(res.error == 0){
-      if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
-        this.formatoCompletado();
-      }
-    }else if(res.error >0 && res.error <4 ){
-      window.alert(res.estatus);
-      this.router.navigate(['login']);
-    }else if(res.error == 20){ //NO HAN LLEGADO TODO LOS HIJOS
-      window.alert(res.estatus);
-    }else if(res.error == 30){ //NO ESTAN COMPLETADOS TODO LOS HIJOS
-      window.alert(res.estatus);
-    }else if(res.error != 0){ //NO ESTAN COMPLETADOS TODO LOS HIJOS
-      window.alert(res.estatus);
-    }
-  } 
-
-  formatoCompletado(){
-    console.log("formatoCompletado :: Sigo vivo");
-    this.cargando = this.cargando +1;
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'completeFormato');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-    formData.append('id_footerEnsayo', this.id_footer);  
-    this.http.post(url, formData).subscribe(res => {
-      this.respuestaFormatoCompletado(res.json());
-    });
-  } 
-  
-  respuestaFormatoCompletado(res: any){
-    this.cargando=this.cargando-1;
-    this.formatoStatus=false;
-    console.log(res.status);
-    if(res.error==0){
-      window.alert("¡Exito! El Formato Se ha Completado");
-    }else{
-      window.alert(res.estatus);
-    }
-  }
-
   /* FIN DEL BLOQUE COMPLETAR FORMATO DE ENSAYO DE MUESTRA*/
  /*********************************************************/
 

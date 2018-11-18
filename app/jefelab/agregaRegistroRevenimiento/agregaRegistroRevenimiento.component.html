@@ -13,7 +13,7 @@
         
         <div class="card-body">
          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
-            <h5>AGREGA REGISTRO REVENIMIENTO</h5>
+            <h5><i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresar();"></i>&nbsp;&nbsp;AGREGA REGISTRO REVENIMIENTO</h5>
             <div class="row"> <!--PRIMER ROW -->
               
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
@@ -165,7 +165,7 @@
             <div class="row">
               <div class="col-md-2 col-12">                
 
-                  <button class="btn btn-default" *ngIf="hiddenA || hiddenB" [disabled]="formatoCCHForm.invalid" (click)="registroCompletado();">
+                  <button class="btn btn-default" *ngIf="hiddenA || hiddenB" [disabled]="formatoCCHForm.invalid" (click)="regresar();">
                     <span><b> Regresar. </b></span>
                   </button>
               </div>
@@ -177,7 +177,7 @@
                <button class="btn btn-success" *ngIf="hiddenB && !locked" [disabled]="formatoCCHForm.invalid" (click)="cambioRegistroIncompleto();">
                     <span><b> Cambiar Datos. </b></span>
                   </button>
-                <button class="btn btn-default" *ngIf="hiddenC" (click)="llenarDespues()">
+                <button class="btn btn-default" *ngIf="hiddenC" (click)="regresar()">
                       <span><b> Llenar mas tarde. </b></span>
                 </button>
               </div>

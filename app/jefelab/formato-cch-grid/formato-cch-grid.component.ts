@@ -26,6 +26,7 @@ export class FormatoCCHGridComponent implements OnInit  {
   statusEnsayo = false;
   isSelected = false;
   pdfFinal;
+  formatoStatus
 
   /* Variables de estado de los botones */ 
   isVerCampoValid = false;
@@ -113,6 +114,8 @@ export class FormatoCCHGridComponent implements OnInit  {
     }else{
       this.rowData =repuesta;
     }
+
+
   }
   /*Este metodo es llamado por el boton REGISTRO DE CAMPO y llevara al usuario a AgregaRegistroCCH*/
   onLoadCCH(){

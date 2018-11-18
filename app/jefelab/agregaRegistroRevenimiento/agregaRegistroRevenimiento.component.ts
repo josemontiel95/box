@@ -230,7 +230,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
       window.alert(res.estatus);
     }
     else{
-      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);
+      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaRevenimiento/'+ this.id_orden + '/' + this.id_formato]);
     }
   }
 
@@ -495,4 +495,8 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
       }
     }
   } //FIN ValidaCamposVacios
+
+  regresar(){
+    this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaRevenimiento/'+this.id_orden + '/' +this.id_formato]);
+  }
 }

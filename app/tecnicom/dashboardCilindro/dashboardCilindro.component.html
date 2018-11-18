@@ -39,12 +39,6 @@
                 <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block; "></i>
               </button>
             </div>
-            <div style="display: inline-block;">
-              <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminar && isComplete }" *ngIf="formatoStatus" (click)="obtenStatusReg();"> 
-                <span><b>FORMATO COMPLETADO &nbsp;&nbsp;</b></span>
-                <i class="fa fa-check-square-o" style="font-size:18px; display: inline-block; "></i>
-              </button>
-            </div>
           </div>
         </div>
       </div>
