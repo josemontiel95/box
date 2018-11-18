@@ -195,7 +195,7 @@ export class PruebaCuboComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ensayoCubo/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'completeEnsayo');
+    formData.append('function', 'completeEnsayoJL');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('id_ensayoCubo', this.id_Registro);
@@ -210,7 +210,7 @@ export class PruebaCuboComponent implements OnInit{
       console.log(res.estatus);
     }
     else{
-      this.router.navigate(['tecnico/pendientes/dashboardCubo/'+this.id_Footer]);    
+      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden + '/' +this.id_formato + '/' + this.id_Footer]);    
      }
   }
   

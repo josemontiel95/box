@@ -37,30 +37,43 @@ export class llenaRevenimientoComponent implements OnInit{
   mis_jefes: Array<any>;
   formatoStatus;
   preliminar = false;
+  pdfFinal;
+  edicionJB = false;
+  edicionJL = false;
+  completeRev = false;
   maxNoOfRegistrosRev;
   numberOfRegistros;
   isValid=false;
+  statusRevenimiento = false;
+
+
+
+  /* Variables de estado de los botones */ 
+  isVerCampoValid = false;
+  isVerEnsayoValid = false;
+  isGenerarPDFValid = false;
+  isVerPDFValid = false;
+  isAutoValid = false;
   
   formatoCCHForm: FormGroup;
+    FormatoCCH = {
+    obra:'',
+    localizacion: '',
+    informe: '',
+    empresa:'',
+    direccion: '',
+    observaciones:'',
+    tipo_especimen:'',
+    cono:'',
+    varilla:'',
+    flexometro:'',
+    termometro:''
+  }
 
-        FormatoCCH = {
-        obra:'',
-        localizacion: '',
-        informe: '',
-        empresa:'',
-        direccion: '',
-        observaciones:'',
-        tipo_especimen:'',
-        cono:'',
-        varilla:'',
-        flexometro:'',
-        termometro:''
-    }
-
-   mis_conos: Array<any>;
-   mis_varillas: Array<any>;
-   mis_flexometro: Array<any>;
-   mis_termometro: Array<any>;
+  mis_conos: Array<any>;
+  mis_varillas: Array<any>;
+  mis_flexometro: Array<any>;
+  mis_termometro: Array<any>;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -71,43 +84,47 @@ export class llenaRevenimientoComponent implements OnInit{
     {headerName: 'Condicion', field: 'condicion'},
     {headerName: 'Fecha de compra', field: 'fechaDeCompra' },
     {headerName: 'Editado en', field: 'lastEditedON'},
-
   ];
     this.rowSelection = "single";
   }
     
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id}); 
+    /************************PARAMETRIZACION DE ID_ORDEN Y ID_FORMATO**************************/
+    this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id});
+    //INICIALIZACIÓN DE LA VARIABLE GLOBAL CARGANDO EN EL NUMERO DE LLAMADAS AL BACK 6 
     this.cargando=6;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
     
-   
+    /****LLAMADA AL BACK PARA LLENAR EL DROPDOWN DE CONOS****/
     search.set('function', 'getForDroptdownJefeBrigadaCono');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
     search.set('status', '0');
-    this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()));
 
+    /****LLAMADA AL BACK PARA LLENAR EL DROPDOWN DE VARILLAS****/
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownJefeBrigadaVarilla');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
     search.set('status', '0');
-    this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()));
 
+    /****LLAMADA AL BACK PARA LLENAR EL DROPDOWN DE FLEXOMETROS****/
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownJefeBrigadaFlexometro');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
     search.set('status', '0');
-    this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()));
 
+    /****LLAMADA AL BACK PARA ALMACENAR EL NUMERO MAXIMO DE REGISTROS****/
     url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getformatoDefoults');
@@ -119,6 +136,7 @@ export class llenaRevenimientoComponent implements OnInit{
       console.log("getformatoDefoults :: this.maxNoOfRegistrosRev: "+this.maxNoOfRegistrosRev);
     });
 
+    /****LLAMADA AL BACK PARA OBTENER EL NUMERO DE REGISTROS POR ID****/
     url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getNumberOfRegistrosByID');
@@ -131,7 +149,7 @@ export class llenaRevenimientoComponent implements OnInit{
       console.log("getNumberOfRegistrosByID :: this.numberOfRegistros: "+this.numberOfRegistros);
     }); 
 
-
+    /****LLAMADA AL BACK PARA LLENAR TODOS LOS CAMPOS, OBTENER STATUS.****/
     url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
     search = new URLSearchParams();
     search.set('function', 'getInfoByID');
@@ -141,8 +159,8 @@ export class llenaRevenimientoComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => {
       this.llenado(res.json());
       this.sinNombre(res.json());
-    } ); 
-
+      this.estados(res.json());
+    }); 
 
     this.formatoCCHForm = new FormGroup({
       'obra':            new FormControl( {value: this.FormatoCCH.obra, disabled: this.hidden },  [Validators.required]),
@@ -158,17 +176,17 @@ export class llenaRevenimientoComponent implements OnInit{
     });
   }
 
-   get obra()           { return this.formatoCCHForm.get('obra'); }
-   get localizacion()   { return this.formatoCCHForm.get('localizacion'); }
-   get informe()        { return this.formatoCCHForm.get('informe'); }
-   get empresa()        { return this.formatoCCHForm.get('empresa'); }
-   get direccion()      { return this.formatoCCHForm.get('direccion'); }
-   get observaciones()  { return this.formatoCCHForm.get('observaciones'); }
-   get tipo_especimen() { return this.formatoCCHForm.get('tipo_especimen'); }
-   get cono()           { return this.formatoCCHForm.get('cono'); }
-   get varilla()        { return this.formatoCCHForm.get('varilla'); }
-   get flexometro()     { return this.formatoCCHForm.get('flexometro'); }
-   get termometro()     { return this.formatoCCHForm.get('termometro'); } 
+  get obra()           { return this.formatoCCHForm.get('obra'); }
+  get localizacion()   { return this.formatoCCHForm.get('localizacion'); }
+  get informe()        { return this.formatoCCHForm.get('informe'); }
+  get empresa()        { return this.formatoCCHForm.get('empresa'); }
+  get direccion()      { return this.formatoCCHForm.get('direccion'); }
+  get observaciones()  { return this.formatoCCHForm.get('observaciones'); }
+  get tipo_especimen() { return this.formatoCCHForm.get('tipo_especimen'); }
+  get cono()           { return this.formatoCCHForm.get('cono'); }
+  get varilla()        { return this.formatoCCHForm.get('varilla'); }
+  get flexometro()     { return this.formatoCCHForm.get('flexometro'); }
+  get termometro()     { return this.formatoCCHForm.get('termometro'); } 
   
   mostrar(){
     this.hidden = !this.hidden;
@@ -182,9 +200,7 @@ export class llenaRevenimientoComponent implements OnInit{
     this.formatoCCHForm.controls['localizacion']['disable']();
     this.formatoCCHForm.controls['empresa']['disable']();
     this.formatoCCHForm.controls['direccion']['disable']();
-
-    this.formatoCCHForm.controls['observaciones']['disable']();
-    
+    this.formatoCCHForm.controls['observaciones']['disable']();  
     this.formatoCCHForm.controls['cono']['disable']();
     this.formatoCCHForm.controls['varilla']['disable']();
     this.formatoCCHForm.controls['flexometro']['disable']();
@@ -204,13 +220,11 @@ export class llenaRevenimientoComponent implements OnInit{
     this.formatoCCHForm.controls['empresa']['disable']();
     this.formatoCCHForm.controls['direccion']['disable']();
     this.formatoCCHForm.controls['tipo_especimen']['disable']();
-
   }
 
   submitted = false;
 
   onSubmit() { this.submitted = true; }
-
 
   cambiarCargando(num){
     this.cargando=this.cargando + num;
@@ -232,10 +246,8 @@ export class llenaRevenimientoComponent implements OnInit{
     
   llenaObra(resp: any){
     this.mis_obras= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
+    for (var _i = 0; _i < resp.length; _i++ ){
       this.mis_obras[_i]=resp[_i];
-
     }
     console.log(this.mis_obras);
     //this.cargando=this.cargando-1;
@@ -260,7 +272,7 @@ export class llenaRevenimientoComponent implements OnInit{
     });
 
     this.link = respuesta.preliminar;
-
+    this.statusRevenimiento = respuesta.status;
     this.formatoStatus=(respuesta.status == 0 ? true : false);
     if(!this.formatoStatus){
       this.recargaHerramientas();
@@ -268,13 +280,39 @@ export class llenaRevenimientoComponent implements OnInit{
     this.cargando=this.cargando-1;
      
   }
+  //Aun falta definir los estados en los botones en el hmtl INCOMPLETO
+  estados(respuesta: any){
+    if(respuesta.status == 0){ //Sigue en Edicion Por el Jefe de Brigada
+      this.edicionJB = true;
+      this.edicionJL = false;
+      this.completeRev = false;
+    }else if(respuesta.status == 1){
+      this.edicionJB = false;
+      this.edicionJL = true;
+      this.completeRev = false;
+    }else if(respuesta.status > 1){
+      this.edicionJB = false;
+      this.edicionJL = false;
+      this.completeRev = true;
+    }  
+  }
 
-  sinNombre(respuesta: any){    
+  sinNombre(respuesta: any){
+
+      
     //Esta if verifica si ya fue generado un PDF mediante respuesta.preliminar, si fue generado activa Visuarlizar PDF.
     if(respuesta.preliminar == null){
       this.preliminar = false;
     }else{
       this.preliminar = true;
+    }
+
+    if(respuesta.pdfFinal == null){ //Aqui se cambia la bandera si se genero un PDF Final de Revenimiento.
+      this.pdfFinal = false;
+      this.isVerPDFValid = false;
+    }else{
+      this.pdfFinal = respuesta.pdfFinal;
+      this.isVerPDFValid = true;
     }
   }
 
@@ -289,7 +327,7 @@ export class llenaRevenimientoComponent implements OnInit{
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
     search.set('status', '-1');
-    this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenaConos(res.json()));
 
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownJefeBrigadaVarilla');
@@ -297,7 +335,7 @@ export class llenaRevenimientoComponent implements OnInit{
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
     search.set('status', '-1');
-    this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()) );
+    this.http.get(url, {search}).subscribe(res => this.llenaVarillas(res.json()));
 
     search = new URLSearchParams();
     search.set('function', 'getForDroptdownJefeBrigadaFlexometro');
@@ -305,8 +343,7 @@ export class llenaRevenimientoComponent implements OnInit{
     search.set('rol_usuario_id', this.global.rol);
     search.set('id_ordenDeTrabajo', this.id_orden);
     search.set('status', '-1');
-    this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()) );
-
+    this.http.get(url, {search}).subscribe(res => this.llenaFlexometro(res.json()));
   }
 
   obtenStatusReg(){
@@ -328,114 +365,10 @@ export class llenaRevenimientoComponent implements OnInit{
     search.set('id_formatoRegistroRev', this.id_formato);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
-                                            this.validaRegistrosVacios(res.json());
-                                          });
-  }
-
-  obtenStatusVisualizarPDF(){
-      if(0 == this.numberOfRegistros){
-        window.alert("Para Visualizar PDF: Primero debes Agregar una Muestra y Completarla.");
-        return;
-      }     
-
-      let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
-      let search = new URLSearchParams();
-      this.cargando=this.cargando+1;
-      search.set('function', 'getAllRegistrosByID');
-      search.set('token', this.global.token);
-      search.set('rol_usuario_id', this.global.rol);
-      search.set('id_formatoRegistroRev', this.id_formato);
-      console.log(search);
-      this.http.get(url, {search}).subscribe(res => {
-                                              console.log(res.json());
-                                              this.validaRegistrosVaciosVisualizar(res.json());
-                                            });
-  }
-
-  validaRegistrosVaciosVisualizar(res: any){
-    this.cargando=this.cargando-1;
-    let isValid = true;
-    res.forEach(function (value) {
-      if(value.status == "0"){
-         isValid = false;
-      }
+      console.log(res.json());
+      this.validaRegistrosVacios(res.json());
     });
-    if(!isValid){
-      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para Visualizar un PDF.");     
-    }else{
-      if(!this.preliminar){
-        window.alert("Para Visualizar PDF: Primero debes Generar el PDF dando click al botón Generar PDF.");
-      }else if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
-        let link = this.link;
-        window.open(link, "_blank");
-      } 
-    } 
-  } //FIN  
-
-  obtenStatusGenPDF(){
-    if(0 == this.numberOfRegistros){
-        window.alert("Para Generar el PDF: Primero debes Agregar una Muestra y Completarla.");
-        return;
-    }
-    this.cargando=this.cargando+1;
-    let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'getAllRegistrosByID');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_formatoRegistroRev', this.id_formato);
-    console.log(search);
-    this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
-                                            this.validaRegistrosVaciosGEN(res.json());
-                                          });
-    
   }
-
-  validaRegistrosVaciosGEN(res: any){
-    this.cargando=this.cargando-1;
-    let isValid = true;
-    res.forEach(function (value) {
-      if(value.status == "0"){
-         isValid = false;
-      } 
-    });
-
-    if(!isValid){
-      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para poder Generar un PDF.");     
-    }else if(window.confirm("¿Estas seguro de Generar el PDF?")){
-      this.generatePDF();
-    } 
-  } //FIN ValidaCamposVacios
-
-  generatePDF(){
-    this.cargando= this.cargando + 1;
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'generatePDF');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('id_formatoRegistroRev', this.id_formato);  
-    this.http.post(url, formData).subscribe(res => {
-      this.respuestaGeneratePDF(res.json());
-    });
-    
-  }
-
-  respuestaGeneratePDF(res: any){
-    if(res.error==0){
-      console.log(res);
-      this.cargando=this.cargando-1;
-      this.reloadData();
-      console.log(res);
-    }else{
-      window.alert(res.estatus);
-      location.reload();
-    } 
-  } 
 
   reloadData(){
     this.cargando = this.cargando +1;
@@ -448,7 +381,7 @@ export class llenaRevenimientoComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => {
       this.llenado(res.json());
       this.sinNombre(res.json());
-    } ); 
+    }); 
   }
 
   validaRegistrosVacios(res: any){
@@ -625,4 +558,92 @@ export class llenaRevenimientoComponent implements OnInit{
   regresaDashboard(){
     this.router.navigate(['/jefeLaboratorio/orden-trabajo/dashboard/'+ this.id_orden]);
   }
+
+  /*********************************************/
+  /*CODIGO PARA VISUALIZAR EL FORMATO DE CAMPO */ 
+  visualizarFormatoDeCampoPDF(){
+    if(!this.preliminar){
+      window.alert("No se puede acceder al PDF solicitado.");
+    }else if(this.preliminar){
+      if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
+        window.open(this.link, "_blank");
+      } 
+    }                                  
+  }
+
+  /* FIN DEL BLOQUE DE VISUALIZAR EL FORMATO DE CAMPO*/
+  /***************************************************/
+
+  onClickVizualizarPDF(){
+    if(this.isVerPDFValid){
+      window.open(this.pdfFinal, "_blank");
+    }else{
+      window.alert("No se ha generado un PDF para este ensayo");
+    }
+  }
+  onClickAutorizar(){
+    if(this.formatoStatus){
+      if(this.isAutoValid){
+        if(window.confirm("¿Esta usted seguro de autorizar el PDF generado y enviarlo al personal administrativo para ser enviado y cobrado al cliente?. Esta acción NO se puede revertir")){
+          this.cargando(+1);
+          let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+          let formData:FormData = new FormData();
+          formData.append('function', 'autEnsayoForAdmin');
+          formData.append('token', this.global.token);
+          formData.append('rol_usuario_id', this.global.rol);
+          formData.append('id_formatoRegistroRev', this.id_formato);  
+          //formData.append('id_ensayo', this.id_registroEnsayo);  PREGUNTALE A CHEMA SI LA FUNCION VA A LLAMAR A ALGO PARECIDO PARA REV.
+          this.http.post(url, formData).subscribe(res => {
+            this.respuestaGeneratePDF(res.json());
+          });
+        }else{
+          // Autorizacion cancelada.
+        }
+      }else{
+        window.alert("No es posible autorizar todavia este ensayo.");
+      }
+    }else{
+      window.alert("Selecciona un ensayo primero");
+    }
+  }
+  onClickGenerarPDF(){
+    if(this.formatoStatus){ //Esta variable almacena el status de el formato de revenimiento.
+      if(this.isValid){
+        if(window.confirm("¿Esta usted seguro de generar el PDF?")){
+          this.generatePDF();
+        }else{
+          // Autorizacion cancelada.
+        }
+      }else{
+        window.alert("No es posible generar un PDF para este ensayo todavia.");
+      }
+    }else{
+      window.alert("Selecciona un ensayo primero");
+    }
+  }
+
+  generatePDF(){
+    this.cargando = this.cargando +1;
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'generatePDFFinal');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('id_formatoRegistroRev', this.id_formato);    
+    this.http.post(url, formData).subscribe(res => {
+      this.respuestaGeneratePDF(res.json());
+    });
+  }
+  respuestaGeneratePDF(res: any){
+    if(res.error==0){
+      console.log(res);
+      this.cargando=this.cargando-1;
+      this.reloadData();
+      console.log(res);
+    }else{
+      window.alert(res.estatus);
+      location.reload();
+    } 
+  } 
 }

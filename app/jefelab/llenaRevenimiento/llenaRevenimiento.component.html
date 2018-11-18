@@ -12,6 +12,45 @@
 <div class="row">
     <div class="col-md-12 ml-auto mr-auto">
       <div class="card">
+        <div class="card-header">
+          <h4 style="text-align: center; font-size:30px;" class="card-title">GENERACI&Oacute;N DE PDF</h4>
+        </div>
+        <h4><i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaDashboard();"></i></h4>
+        <div class="card-body">
+          <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
+            <div style="display: inline-block; margin-right: 15px;"> 
+              <button  [ngClass]="{'btn': true, 'btn-default': !preliminar, 'btn-success': preliminar}"  *ngIf="hiddenf == true" (click)="visualizarFormatoDeCampoPDF();">
+                <span><b>VER FORMATO DE CAMPO &nbsp;&nbsp;</b></span>
+                <i class="fa fa-file-pdf-o" style="font-size:18px;"></i> 
+              </button>
+            </div>
+            <div style="display: inline-block; margin-right: 15px;"> 
+              <button [ngClass]="{'btn':true ,'btn-default': !isValid || edicionJB,'btn-success': isValid}" *ngIf="!completeRev ||  edicionJB " (click)="onClickGenerarPDF();">
+                <span><b>GENERAR PDF FINAL &nbsp;&nbsp;</b></span>
+                <i class="fa fa-cogs" style="font-size:18px;"></i>
+              </button>
+            </div>
+            <div style="display: inline-block; margin-right: 15px;"> 
+              <button [ngClass]="{'btn':true ,'btn-default': !isValid || edicionJB,'btn-success': isValid && isVerPDFValid }" *ngIf="hiddenf == true" (click)="onClickVizualizarPDF();">
+                <span><b>VISUALIZAR PDF &nbsp;&nbsp;</b></span>
+                <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block; "></i>
+              </button>
+            </div>
+            <div style="display: inline-block;">
+              <button [ngClass]="{'btn':true ,'btn-default': !isValid || edicionJB,'btn-success': isValid && preliminar && isComplete }" *ngIf="formatoStatus || !completeRev" (click)="obtenStatusReg();"> 
+                <span><b>AUTORIZAR & ENVIAR &nbsp;&nbsp;</b></span>
+                <i class="fa fa-check-square-o" style="font-size:18px; display: inline-block; "></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!--<div class="row">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
         <div class="card-header ">
           <h4 style="text-align: center;" *ngIf="!formatoStatus" class="card-title">Esta formato esta completado y la edici&oacute;n ya no esta permitida</h4>
         </div>
@@ -41,7 +80,7 @@
         </div>
       </div>
     </div>
-</div>
+</div> -->
 
 <div class="row">
     <div class="col-lg-12 col-12 col-md-12">
@@ -162,19 +201,10 @@
   <div class="row">
     <div class="col-md-12 col-12">
       <div class="card  card-tasks">
-        <div class="card-header" >
-          
-            <h4 style="text-align: center;" class="card-title">REGISTRO EN LA DETERMINACION DEL REVENIMIENTO EN EL CONCRETO FRESCO.</h4>
-      
-          <div class="row" style="float: right; padding-right: 5%;">
-            <div class="btn-group">
-                <button class="btn btn-success" *ngIf="hiddenf && formatoStatus" (click)="agregaRegistro();">
-                  <span><b>AGREGAR REGISTRO</b></span>
-                </button>
-            </div>
-          </div>
+        <div class="card-header" > 
+          <h4 style="text-align: center;" class="card-title">REGISTRO EN LA DETERMINACION DEL REVENIMIENTO EN EL CONCRETO FRESCO.</h4>
         </div>
-        <br> <br> <br>
+
         <div class="card-body">
           <div>
            <app-registrosrev-grid (statusForm)="statusFormReciver($event)" (cambiarCargando)="cambiarCargando($event)"></app-registrosrev-grid>

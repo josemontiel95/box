@@ -653,54 +653,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     
   }
 
-  obtenStatusReg(){
-    if(0 == this.numberOfRegistros){
-       if(window.confirm("¿Estas seguro de que quieres marcar como completado sin agregar un solo registro?")){
-         this.formatoCompletado();
-         return;
-       }else{
-         return;
-       }
-    }else if(Number(this.numberOfRegistros)<Number(this.multiplosNoOfRegistrosCCH)){
-       if(window.confirm("Estas a punto mandar un formato con solo "+(Number(this.numberOfRegistros))+" registro. Recuerda que debes insertar de "+this.multiplosNoOfRegistrosCCH+" en "+this.multiplosNoOfRegistrosCCH+"\n ¿Deseas continuar?")){
-
-       }else{
-         return;
-       }
-    }
-    let url = `${this.global.apiRoot}/formatoCampo/get/endpoint.php`;
-    let search = new URLSearchParams();
-    this.cargando=this.cargando+1;
-    search.set('function', 'getAllRegistrosByID');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_formatoCampo', this.id_formato);
-    console.log(search);
-    this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
-                                            this.validaRegistrosVacios(res.json());
-                                          });
-  }
-
-  validaRegistrosVacios(res: any){
-    this.cargando=this.cargando-1;
-    let isValid = true;
-    res.forEach(function (value) {
-      if(value.status == "0"){
-         isValid = false;
-      }
-    });
-
-    if(!isValid){
-      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para Completar el Formato.");     
-    }else if(!this.preliminar){
-            window.alert("Para Completar el formato: Primero debes Generar el PDF.");
-    } else{
-        if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
-              this.formatoCompletado();
-        }
-    }
-  } //FIN ValidaCamposVacios
+  
 
   validaRegistrosVaciosGEN(res: any){
     this.cargando=this.cargando-1;
@@ -739,22 +692,6 @@ export class llenaFormatoCCHComponent implements OnInit{
     } 
   } //FIN  
 
-  formatoCompletado(){
-    this.cargando=1;
-    this.data.currentGlobal.subscribe(global => this.global = global);
-    let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'completeFormato');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-
-    formData.append('id_formatoCampo', this.id_formato);  
-    this.http.post(url, formData).subscribe(res => {
-      this.respuestaFormatoCompletado(res.json());
-    });
-    
-  } 
-
   generatePDF(){
     this.cargando= this.cargando + 1;
     this.data.currentGlobal.subscribe(global => this.global = global);
@@ -777,20 +714,6 @@ export class llenaFormatoCCHComponent implements OnInit{
       this.cargando=this.cargando-1;
       this.reloadData();
       console.log(res);
-    }else{
-      window.alert(res.estatus);
-      location.reload();
-    } 
-  }
-
-
-  respuestaFormatoCompletado(res: any){
-    console.log(res);
-    if(res.error==0){
-      
-      this.cargando=this.cargando-1;
-      this.formatoStatus=false;
-      
     }else{
       window.alert(res.estatus);
       location.reload();
@@ -983,6 +906,66 @@ export class llenaFormatoCCHComponent implements OnInit{
   linkPreliminarGabs(link :any){
     console.log(link);
     this.linkEnsayo = link;
+  }
+
+  /******AQUI SE COMPLETA EL ENSAYO Y SE SUBEN A TODOS SUS HIJOS******/
+   obtenStatusReg(){
+    this.cargando = this.cargando +1;
+    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'isTheWholeFamilyHereAndComplete');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('id_footerEnsayo', this.id_footer);
+    this.http.get(url, {search}).subscribe(res => {
+      console.log(res.json());
+      this.validaRegistrosVacios(res.json());
+    });
+  }
+
+  validaRegistrosVacios(res: any){
+    this.cargando = this.cargando -1;
+    if(res.error == 0){
+      if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
+        this.formatoCompletado();
+      }
+    }else if(res.error >0 && res.error <4 ){
+      window.alert(res.estatus);
+      this.router.navigate(['login']);
+    }else if(res.error == 20){ //NO HAN LLEGADO TODO LOS HIJOS
+      window.alert(res.estatus);
+    }else if(res.error == 30){ //NO ESTAN COMPLETADOS TODO LOS HIJOS
+      window.alert(res.estatus);
+    }else if(res.error != 0){ //NO ESTAN COMPLETADOS TODO LOS HIJOS
+      window.alert(res.estatus);
+    }
+  } 
+
+  formatoCompletado(){
+    this.cargando = this.cargando +1;
+    console.log("formatoCompletado :: Sigo vivo");
+    //this.cargando=1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'completeFormato');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('id_footerEnsayo', this.id_footer);  
+    this.http.post(url, formData).subscribe(res => {
+      this.respuestaFormatoCompletado(res.json());
+    });
+  } 
+  
+  respuestaFormatoCompletado(res: any){
+    this.cargando = this.cargando -1;
+    this.formatoStatus=false;
+    console.log(res.status);
+    if(res.error==0){
+      window.alert("¡Exito! El Formato Se ha Completado");
+    }else{
+      window.alert(res.estatus);
+    }
   }
 
 }

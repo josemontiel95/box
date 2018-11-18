@@ -1,3 +1,14 @@
+<hr>
+<h5 style="text-align: center;" class="card-title">EDICI&Oacute;N DE REGISTROS.</h5>
+    <div class="row" style="display: flex; float: right; padding-right: 5%;">
+        <div class="btn-group">
+            <button  [ngClass]="{'btn':true ,'btn-default': !isSelected && isVerCampoValid, 'btn-success':isSelected && isVerCampoValid}"  (click)="onLoadRev();">
+              <span><b>VIZUALIZAR REVENIMIENTO &nbsp;&nbsp;</b></span>
+          <i class="fas fa-external-link-alt" style="font-size:18px; display: inline-block;"></i>
+            </button>
+        </div>
+    </div>
+<br><br><br>
           <ag-grid-angular 
             #agGrid
             id="myGrid"
