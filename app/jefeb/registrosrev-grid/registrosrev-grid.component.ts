@@ -24,7 +24,7 @@ export class RegistrosRevGridComponent implements OnInit  {
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-    {headerName: 'FECHA REG', field: 'fecha' },
+    {headerName: 'FECHA DE COLADO', field: 'fecha' },
     {headerName: 'REVENIMIENTO OBTENIDO', field: 'revObtenido' },
     {headerName: 'REVENIMIENTO PROYECTO', field: 'revProyecto' },
     {headerName: 'NUMERO DE REMISI&Oacute;N', field: 'remisionNo' },

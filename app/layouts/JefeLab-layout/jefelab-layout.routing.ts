@@ -56,7 +56,7 @@ export const JefeLabLayoutRoutes: Routes = [
     { path: 'orden-trabajo/dashboard/pruebaViga/:id/:id2/:id3/:id4',      component: PruebaVigaComponent },
 
 
-    { path: 'historico',  component: ConstruccionComponent },
+    { path: 'historico',  component: JLabHistoricoComponent },
 
     { path: 'pendientes',  component: JLabPendientesComponent },
 
