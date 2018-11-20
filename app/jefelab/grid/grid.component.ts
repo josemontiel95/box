@@ -44,15 +44,12 @@ export class GridComponent implements OnInit  {
     this.route.params.subscribe( params => this.id_orden=params.id);
   }
 
-  cargando(num){
-    this.cambiarCargando=this.cargando + num;
-  }
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
-    this.cargando(+1);
+    this.cambiarCargando.emit(+1);
     let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAwaitingApprovalSeen');
@@ -67,7 +64,7 @@ export class GridComponent implements OnInit  {
   }
 
   llenaTabla(repuesta: any){
-    this.cargando(-1);
+    this.cambiarCargando.emit(-1);
     console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
@@ -111,7 +108,7 @@ export class GridComponent implements OnInit  {
   }
 
   selectOption(){
-    this.cargando(+1);
+    this.cambiarCargando.emit(+1);
     if(this.tipoNo == 1){
       this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaRevenimiento/'+ this.ordenTrabajo + "/" + this.id]);
     }else if(this.tipoNo > 1){

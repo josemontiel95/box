@@ -38,22 +38,19 @@ export class llenaRevenimientoComponent implements OnInit{
   formatoStatus;
   preliminar = false;
   pdfFinal;
-  edicionJB = false;
-  edicionJL = false;
-  completeRev = false;
+ 
   maxNoOfRegistrosRev;
   numberOfRegistros;
   isValid=false;
   statusRevenimiento = false;
 
-
+  estadoTitle="";
 
   /* Variables de estado de los botones */ 
-  isVerCampoValid = false;
-  isVerEnsayoValid = false;
-  isGenerarPDFValid = false;
-  isVerPDFValid = false;
-  isAutoValid = false;
+  verformatoCampo=false;
+  generarFormatoFinal=false;
+  verFormatoFinal=false;
+  autYEnviar=false;
   
   formatoCCHForm: FormGroup;
     FormatoCCH = {
@@ -282,18 +279,37 @@ export class llenaRevenimientoComponent implements OnInit{
   }
   //Aun falta definir los estados en los botones en el hmtl INCOMPLETO
   estados(respuesta: any){
-    if(respuesta.status == 0){ //Sigue en Edicion Por el Jefe de Brigada
-      this.edicionJB = true;
-      this.edicionJL = false;
-      this.completeRev = false;
-    }else if(respuesta.status == 1){
-      this.edicionJB = false;
-      this.edicionJL = true;
-      this.completeRev = false;
-    }else if(respuesta.status > 1){
-      this.edicionJB = false;
-      this.edicionJL = false;
-      this.completeRev = true;
+    
+    if(respuesta.preliminar == null && respuesta.pdfFinal == null && respuesta.status == 0){
+      this.verformatoCampo = false;
+      this.generarFormatoFinal = false;
+      this.verFormatoFinal = false;
+      this.autYEnviar = false;
+      this.estadoTitle="En edici\u00f3n por el Jefe de Brigada";
+    }else if(respuesta.preliminar != null && respuesta.pdfFinal == null && respuesta.status == 0){
+      this.verformatoCampo = true;
+      this.generarFormatoFinal = false;
+      this.verFormatoFinal = false;
+      this.autYEnviar = false;
+      this.estadoTitle="En edici\u00f3n por el Jefe de Brigada";
+    }else if(respuesta.preliminar != null && respuesta.pdfFinal == null && respuesta.status == 1){
+      this.verformatoCampo = true;
+      this.generarFormatoFinal = true;
+      this.verFormatoFinal = false;
+      this.autYEnviar = false;
+      this.estadoTitle="En revisi\u00f3n y espera de autorizaci\u00f3n del jefe de laboratorio.";
+    }else if(respuesta.preliminar != null && respuesta.pdfFinal != null && respuesta.status == 1){
+      this.verformatoCampo = true;
+      this.generarFormatoFinal = true;
+      this.verFormatoFinal = true;
+      this.autYEnviar = true;
+      this.estadoTitle="En revisi\u00f3n y espera de autorizaci\u00f3n del jefe de laboratorio.";
+    }else if(respuesta.preliminar != null && respuesta.pdfFinal != null && respuesta.status == 2){
+      this.verformatoCampo = true;
+      this.generarFormatoFinal = false;
+      this.verFormatoFinal = true;
+      this.autYEnviar = false;
+      this.estadoTitle="Se ha autorizado y completado este Reporte.";
     }  
   }
 
@@ -347,7 +363,10 @@ export class llenaRevenimientoComponent implements OnInit{
   }
 
   obtenStatusReg(){
-    window.alert("obtenStatusReg :: this.id_formato: "+this.id_formato);
+    if(!this.autYEnviar){
+      window.alert("Todavia no puedes autorizar este reporte. Verifica el estado actual e intentalo otra vez.");
+      return;
+    }
     if(0 == this.numberOfRegistros){
       if(window.confirm("¿Estas seguro de que quieres marcar como completado sin agregar un solo registro?")){
         this.formatoCompletado();
@@ -388,14 +407,14 @@ export class llenaRevenimientoComponent implements OnInit{
 
     let isValid = true;
     res.forEach(function (value) {
-      if(value.status == "0"){
+      if(value.status == "0" || value.status == "3"){
          isValid = false;
         //window.alert("Existe al menos un registro que no ha sido completado, verifica que todos los registros esten completados.");
       }
     });
 
     if(!isValid){
-      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para completar el formato.");     
+      window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:2 o 4 para completar el formato.");     
     }else{
           if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
             this.formatoCompletado();
@@ -409,7 +428,7 @@ export class llenaRevenimientoComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
-    formData.append('function', 'completeFormato');
+    formData.append('function', 'autRevenimientoForAdmin');
     formData.append('token', this.global.token);
     formData.append('rol_usuario_id', this.global.rol);
 
@@ -607,7 +626,7 @@ export class llenaRevenimientoComponent implements OnInit{
     }
   }
   onClickGenerarPDF(){
-    if(this.formatoStatus){ //Esta variable almacena el status de el formato de revenimiento.
+    if(this.generarFormatoFinal){ //Esta variable almacena el status de el formato de revenimiento.
       if(this.isValid){
         if(window.confirm("¿Esta usted seguro de generar el PDF?")){
           this.generatePDF();
