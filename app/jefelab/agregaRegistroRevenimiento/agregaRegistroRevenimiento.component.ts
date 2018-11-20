@@ -1,17 +1,12 @@
-import { GridComponent } from '../grid/grid.component';
 import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 //FIN DE LOS IMPORTS
@@ -29,8 +24,6 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
   campo: "1"; //Esta variable es para seleccionar el campo que se insertara cuando pierda el foco.
   title = 'app';
   global: Global;
-  private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   cargando= 1;
@@ -126,14 +119,14 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
   } 
     
   llenaRapido(respuesta: any){
-    if(respuesta.status == 1){
+    if(respuesta.status == 2){ // verificado
       this.hiddenB = true;
-      //this.mostrar();
-    }else if(respuesta.status >= 2){
+      this.mostrar();
+    }else if(respuesta.status < 2  || respuesta.status >3){ // bloqueado
       this.hiddenA = true;
       this.locked=true;
       this.mostrar();
-    }else if(respuesta.status == 0){
+    }else if(respuesta.status == 3){ // edicion
       this.hiddenC = true;
     }
   }
@@ -217,7 +210,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '13');
-    formData.append('valor', '1');
+    formData.append('valor', '4');
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitchRegistroCompletado(res.json());                 
@@ -244,7 +237,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '13');
-    formData.append('valor', '0');
+    formData.append('valor', '3');
     formData.append('id_registrosRev', this.id_registro);
     this.http.post(url, formData).subscribe(res => {                                             
                                               this.respuestaSwitchCambioRegistro(res.json());                 

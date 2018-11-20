@@ -90,7 +90,7 @@ export class llenaRevenimientoComponent implements OnInit{
     /************************PARAMETRIZACION DE ID_ORDEN Y ID_FORMATO**************************/
     this.route.params.subscribe( params => {this.id_orden=params.id2; this.id_formato=params.id});
     //INICIALIZACIÓN DE LA VARIABLE GLOBAL CARGANDO EN EL NUMERO DE LLAMADAS AL BACK 6 
-    this.cargando=6;
+    this.cargando=7;
 
     let url = `${this.global.apiRoot}/herramienta/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -144,6 +144,21 @@ export class llenaRevenimientoComponent implements OnInit{
       this.numberOfRegistros =res.json().numberOfRegistrosByID;
       this.cargando          =this.cargando-1;
       console.log("getNumberOfRegistrosByID :: this.numberOfRegistros: "+this.numberOfRegistros);
+    }); 
+
+    url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'formatoSeen');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('id_formatoRegistroRev', this.id_formato);
+    this.http.post(url, formData).subscribe(res => {
+      if(res.json().error==0){
+        console.log(res.json());
+        this.cargando=this.cargando-1;
+      }else{
+        window.alert(res.json().estatus);
+      } 
     }); 
 
     /****LLAMADA AL BACK PARA LLENAR TODOS LOS CAMPOS, OBTENER STATUS.****/
@@ -249,6 +264,7 @@ export class llenaRevenimientoComponent implements OnInit{
     console.log(this.mis_obras);
     //this.cargando=this.cargando-1;
   }
+  
 
   
   llenado(respuesta: any){
@@ -269,8 +285,9 @@ export class llenaRevenimientoComponent implements OnInit{
     });
 
     this.link = respuesta.preliminar;
+    this.pdfFinal = respuesta.pdfFinal;
     this.statusRevenimiento = respuesta.status;
-    this.formatoStatus=(respuesta.status == 0 ? true : false);
+    this.formatoStatus=(respuesta.status < 2 ? true : false);
     if(!this.formatoStatus){
       this.recargaHerramientas();
     }
@@ -317,19 +334,7 @@ export class llenaRevenimientoComponent implements OnInit{
 
       
     //Esta if verifica si ya fue generado un PDF mediante respuesta.preliminar, si fue generado activa Visuarlizar PDF.
-    if(respuesta.preliminar == null){
-      this.preliminar = false;
-    }else{
-      this.preliminar = true;
-    }
-
-    if(respuesta.pdfFinal == null){ //Aqui se cambia la bandera si se genero un PDF Final de Revenimiento.
-      this.pdfFinal = false;
-      this.isVerPDFValid = false;
-    }else{
-      this.pdfFinal = respuesta.pdfFinal;
-      this.isVerPDFValid = true;
-    }
+   
   }
 
   recargaHerramientas(){
@@ -400,6 +405,7 @@ export class llenaRevenimientoComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => {
       this.llenado(res.json());
       this.sinNombre(res.json());
+      this.estados(res.json());
     }); 
   }
 
@@ -442,6 +448,7 @@ export class llenaRevenimientoComponent implements OnInit{
     if(res.error==0){
       this.cargando=this.cargando-1;
       this.formatoStatus=false;
+      this.reloadData();
       console.log(res);
     }else{
       this.cargando=this.cargando-1;
@@ -581,9 +588,9 @@ export class llenaRevenimientoComponent implements OnInit{
   /*********************************************/
   /*CODIGO PARA VISUALIZAR EL FORMATO DE CAMPO */ 
   visualizarFormatoDeCampoPDF(){
-    if(!this.preliminar){
+    if(!this.verformatoCampo){
       window.alert("No se puede acceder al PDF solicitado.");
-    }else if(this.preliminar){
+    }else if(this.verformatoCampo){
       if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
         window.open(this.link, "_blank");
       } 
@@ -594,35 +601,10 @@ export class llenaRevenimientoComponent implements OnInit{
   /***************************************************/
 
   onClickVizualizarPDF(){
-    if(this.isVerPDFValid){
+    if(this.verFormatoFinal){
       window.open(this.pdfFinal, "_blank");
     }else{
       window.alert("No se ha generado un PDF para este ensayo");
-    }
-  }
-  onClickAutorizar(){
-    if(this.formatoStatus){
-      if(this.isAutoValid){
-        if(window.confirm("¿Esta usted seguro de autorizar el PDF generado y enviarlo al personal administrativo para ser enviado y cobrado al cliente?. Esta acción NO se puede revertir")){
-          this.cargando(+1);
-          let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
-          let formData:FormData = new FormData();
-          formData.append('function', 'autEnsayoForAdmin');
-          formData.append('token', this.global.token);
-          formData.append('rol_usuario_id', this.global.rol);
-          formData.append('id_formatoRegistroRev', this.id_formato);  
-          //formData.append('id_ensayo', this.id_registroEnsayo);  PREGUNTALE A CHEMA SI LA FUNCION VA A LLAMAR A ALGO PARECIDO PARA REV.
-          this.http.post(url, formData).subscribe(res => {
-            this.respuestaGeneratePDF(res.json());
-          });
-        }else{
-          // Autorizacion cancelada.
-        }
-      }else{
-        window.alert("No es posible autorizar todavia este ensayo.");
-      }
-    }else{
-      window.alert("Selecciona un ensayo primero");
     }
   }
   onClickGenerarPDF(){
@@ -662,7 +644,8 @@ export class llenaRevenimientoComponent implements OnInit{
       console.log(res);
     }else{
       window.alert(res.estatus);
-      location.reload();
+      console.log(res);
+      this.cargando=this.cargando-1;
     } 
   } 
 }

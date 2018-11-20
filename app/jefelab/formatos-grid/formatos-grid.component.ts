@@ -1,5 +1,5 @@
-import { Component, ViewChild ,OnInit} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Component,OnInit,  Output, EventEmitter} from '@angular/core';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,16 +13,25 @@ export class FormatosGridComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   id_orden: string;
   rowSelection;
   columnDefs;
   rowClassRules;
+  noRowDataError="";
+  ordenTrabajo;
+  id;
+  id_Footer;
+  selected;
+  tipoNo;
+  @Output() cambiarCargando = new EventEmitter<any>();
+
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-    {headerName: 'InformeNo.', field: 'formatoNo' },
-    {headerName: 'Tipo', field: 'tipo' }
+      {headerName: 'InformeNo.', field: 'informeNo' },
+      {headerName: 'Fecha.', field: 'fecha' },
+      {headerName: 'Tipo', field: 'tipo' },
+      {headerName: 'Accion Requerida', field: 'accReq' }
       
     ];
     this.rowSelection = "single";
@@ -45,11 +54,12 @@ export class FormatosGridComponent implements OnInit  {
 
 
   onGridReady(params) {
+    this.cambiarCargando.emit(+1);
+
     this.data.currentGlobal.subscribe(global => this.global = global);
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllFormatos');
@@ -65,10 +75,15 @@ export class FormatosGridComponent implements OnInit  {
   }
 
   llenaTabla(repuesta: any){
+    this.cambiarCargando.emit(-1);
+
     console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.error==5){
+      this.rowData =[];
+      this.noRowDataError="No existen formatos para esta orden.";   
     }else{
       this.rowData =repuesta;
     }
@@ -76,27 +91,35 @@ export class FormatosGridComponent implements OnInit  {
 
    
  onSelectionChanged(event: EventListenerObject){
-    var selectedRows = this.gridApi.getSelectedRows();
-    var id = "";
-    var ruta = false;
-    selectedRows.forEach(function(selectedRow, index) {
-      if(selectedRow.tipo == "REVENIMIENTO"){
-         id += selectedRow.id_formato;
-         //window.alert(selectedRow.id_formato);
-         ruta = true;
-      }else if(selectedRow.tipo == "CONTROL DE CONCRETO HIDRAULICO"){
-        id += selectedRow.id_formato;
-        //window.alert(selectedRow.id_formato);
-        ruta = false;
-      }
-            
-    });
-    if(ruta == false){
-      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden +'/'+id]);
-    }else if(ruta == true) {
-      this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+this.id_orden +'/'+id]);
+  var selectedRows = this.gridApi.getSelectedRows();
+  var tipoNo;
+  var id;
+  var ordenDeTrabajo_id;
+  var id_footerEnsayo;
+
+  selectedRows.forEach(function(selectedRow, index) {
+    tipoNo = selectedRow.tipoNo;
+    id     = selectedRow.id;
+    id_footerEnsayo = selectedRow.id_footerEnsayo
+    ordenDeTrabajo_id = selectedRow.ordenDeTrabajo_id;
+  });
+
+  this.ordenTrabajo = ordenDeTrabajo_id; //ID Orden Trabajo
+  this.id =id;                           //ID Formato
+  this.id_Footer = id_footerEnsayo;      //ID Footer 
+  this.selected= true;
+  this.tipoNo = tipoNo;
+   
+  }
+  selectOption(){
+    this.cambiarCargando.emit(+1);
+    if(this.tipoNo == 1){
+      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaRevenimiento/'+ this.ordenTrabajo + "/" + this.id]);
+    }else if(this.tipoNo > 1){
+      this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/llenaFormatoCCH/'+this.ordenTrabajo + "/" + this.id + "/" + this.id_Footer]);
+    }else if(this.tipoNo == 0){
+      window.alert("Error. Algo salió mal. Contacta a soporte.");
     }
-    //this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden +'/'+id]);
   }
 
 
