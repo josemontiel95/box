@@ -105,7 +105,6 @@ export class JLabPendientesComponent implements OnInit{
 
  onSelectionChanged(event: EventListenerObject) {
     var selectedRows = this.gridApi.getSelectedRows();
-    var idd;
     var tipoo;
     var rutaa;
     var tipoNo;
@@ -143,19 +142,4 @@ export class JLabPendientesComponent implements OnInit{
 }
 
 
-/*
-validaFooter(){
-    this.cambiarCargando(+1);
-    let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'initInsert');
-    formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', this.global.rol);
-    formData.append('tipo', this.tipo);
-    formData.append('id_RegistroCCH', this.id);
-    this.http.post(url, formData).subscribe(res => {
-      console.log(res);
-      this.respuestaSwitch(res.json());                 
-    });
-   }
-*/
+
