@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AgGridModule } from 'ag-grid-angular';
 import { MatProgressBarModule } from '@angular/material';
+import { ConstruccionComponent } from '../../tecnicom/construccion/construccion.component';
 
 import { UserProfileComponent } from '../../tecnicom/user-profile/user-profile.component';
 import { PendientesComponent } from '../../tecnicom/pendientes/pendientes.component';
@@ -28,6 +29,6 @@ export const TecnicoMLayoutRoutes: Routes = [
     { path: 'pendientes/dashboardCilindro/pruebaCilindro/:id/:id2',   component: PruebaCilindroComponent },
     { path: 'pendientes/dashboardViga/pruebaViga/:id/:id2',   component: PruebaVigaComponent },
     { path: 'pendientes/dashboardCubo/pruebaCubo/:id/:id2',   component: PruebaCuboComponent },
-
+    { path: 'historico',  component: ConstruccionComponent },
 
 ];

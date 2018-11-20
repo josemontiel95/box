@@ -6,7 +6,7 @@ import { TecnicoMLayoutRoutes } from './tecnicom-layout.routing';
 import { AgGridModule } from 'ag-grid-angular';
 
 import { MatProgressBarModule } from '@angular/material';
-
+import { ConstruccionComponent } from '../../tecnicom/construccion/construccion.component';
 import { GridComponent } from '../../tecnicom/grid/grid.component';
 import { GridCilindrosComponent } from '../../tecnicom/grid-cilindros/grid-cilindros.component';
 import { GridCuboComponent } from '../../tecnicom/grid-cubo/grid-cubo.component';
@@ -64,7 +64,8 @@ import { ToastrModule } from 'ngx-toastr';
   PruebaCuboComponent,
   VigaGenericoComponent,
   CilindroGenericoComponent,
-  CuboGenericoComponent
+  CuboGenericoComponent,
+  ConstruccionComponent,
   ]
 })
 

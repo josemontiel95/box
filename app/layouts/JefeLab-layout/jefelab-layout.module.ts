@@ -44,6 +44,8 @@ import { TecnicosGridComponent } from '../../jefelab/tecnicos-grid/tecnicos-grid
 import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/herramienta-grida.component';
 import { TecnicosGridAgregaComponent } from '../../jefelab/tecnicos-grida/tecnicos-grida.component';
 
+import { JLabHistoricoComponent } from '../../jefelab/historico/historico.component';
+
 import { JLabPendientesComponent } from '../../jefelab/pendientes/pendientes.component';
 import { footerEnsayoComponent } from '../../jefelab/footerEnsayo/footerEnsayo.component';
 
@@ -106,6 +108,7 @@ import { OdtEdicionGridComponent } from '../../jefelab/ordenesDeTrabajo-grids/od
     CuboGenericoComponent,
     PruebaVigaComponent,
     VigaGenericoComponent,
+    JLabHistoricoComponent,
 
     llenaFormatoCCHComponent,
     llenaRevenimientoComponent,

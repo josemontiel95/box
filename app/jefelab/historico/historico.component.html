@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+<!-- Este bloque es para hacer la animación de Loading con flechas-->
+<div [ngClass]="{'loading':true ,'loading-visible': cargando != 0 }">
+    <div class="loader-container">
+        <i class="now-ui-icons loader_refresh spin"></i> 
+    </div>
+</div> <!-- Fin bloque de animación loading-->
+
+<!-- Este primer div contiene el panel header-->
+<div class="panel-header panel-header-sm">
+</div> 
+<!--Fin panel header-->
+<div class="main-content"> <!--INICIO MAIN-CONTENT-->
+  <div class="row"> <!--INICIO ROW PRINCIPAL-->
+   <div class="col-md-12">
+      <div class="card">
+        
+        <div class="card-header">
+          <h4 class="card-title">FORMATOS PENDIENTES:</h4>
+          <div class="btn-group" *ngIf="selected"  style="float: right; padding-right: 5%;">
+            <div class="row">
+              <div class="col-md-5">
+                <p><b>PASO 2</b></p>
+                <p style="color: green;"><b>Click -></b></p>
+              </div>
+              <div class="col-md-7">
+                <button class="btn btn-success" (click)="selectOption();">
+                  <span><b>Visualizar Formato &nbsp;&nbsp;</b></span>
+                  <i class="fas fa-external-link-alt" style="font-size:18px; display: inline-block; "></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="selected">
+          <br><br><br>
+        </div>
+        
+        <div class="card-body">
+          <p style="color: red;"><b>{{noRowDataError}}</b></p>
+          <div *ngIf="!selected && !noRowData">
+            <p><b>PASO 1</b></p>
+            <p style="color: green;"><b>Selecciona un formato de la siguiente tabla.</b></p>
+          </div>
+          
+          <ag-grid-angular 
+            #agGrid
+            id="myGrid"
+            style="width: 100%; height: 450px;" 
+            class="ag-theme-balham"
+            [enableSorting]="true"
+            [rowData]="rowData" 
+            [columnDefs]="columnDefs"
+            [enableFilter]="true"
+            [enableColResize]="true"
+            [colResizeDefault]="false"
+            [suppressAutoSize]="true"
+            [rowSelection]="rowSelection"
+            [rowClassRules]="rowClassRules"
+            (selectionChanged)="onSelectionChanged($event)"
+            (gridReady)="onGridReady($event)"
+            >
+          </ag-grid-angular>
+          </div>
+        </div>
+      </div>
+    </div> <!--FIN ROW PRINCIPAL-->
+      <div class="row"> <!--INICIO ROW PRINCIPAL-->
+   <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">FORMATOS PENDIENTES DE ENVIAR A ADMINISTRATIVO:</h4>
+        </div>
+        <div class="card-body">
+         <app-grid (cambiarCargando)="cambiarCargando($event)"></app-grid>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>

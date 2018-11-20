@@ -25,7 +25,7 @@ import { PruebaCuboComponent } from '../../jefelab/pruebaCubo/pruebaCubo.compone
 import { PruebaVigaComponent } from '../../jefelab/pruebaViga/pruebaViga.component';
 import { ConstruccionComponent } from '../../jefelab/construccion/construccion.component';
 
-
+import { JLabHistoricoComponent } from '../../jefelab/historico/historico.component';
 
 import { JLabPendientesComponent } from '../../jefelab/pendientes/pendientes.component';
 
@@ -55,6 +55,8 @@ export const JefeLabLayoutRoutes: Routes = [
     { path: 'orden-trabajo/dashboard/pruebaCubo/:id/:id2/:id3/:id4',      component: PruebaCuboComponent },
     { path: 'orden-trabajo/dashboard/pruebaViga/:id/:id2/:id3/:id4',      component: PruebaVigaComponent },
 
+
+    { path: 'historico',  component: ConstruccionComponent },
 
     { path: 'pendientes',  component: JLabPendientesComponent },
 

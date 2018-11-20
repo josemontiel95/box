@@ -19,6 +19,7 @@ export const ROUTES: RouteInfo[] = [
     { path: 'obras', title: 'Obras',  icon:'now-ui-icons travel_istanbul', class: '' },
     { path: 'orden-trabajo', title: 'Orden de Trabajo',  icon:'now-ui-icons files_paper', class: '' },
     { path: 'pendientes', title: 'Pendientes',  icon:'design_bullet-list-67 ', class: '' },
+    { path: 'historico', title: 'Historico',  icon:'now-ui-icons files_box ', class: '' },
  ];
 
 export const ROUTES2: RouteInfo2[] = [
