@@ -1,17 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { LoginResp } from "../../interfaces/int.LoginResp";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
-import { Obra }    from './Obra';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 export class Password

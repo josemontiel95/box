@@ -23,6 +23,7 @@ import { EvaluaHerraComponent } from '../../jefelab/evaluaherra/evaluaherra.comp
 import { PruebaCilindroComponent } from '../../jefelab/pruebaCilindro/pruebaCilindro.component';
 import { PruebaCuboComponent } from '../../jefelab/pruebaCubo/pruebaCubo.component';
 import { PruebaVigaComponent } from '../../jefelab/pruebaViga/pruebaViga.component';
+import { ConstruccionComponent } from '../../jefelab/construccion/construccion.component';
 
 
 

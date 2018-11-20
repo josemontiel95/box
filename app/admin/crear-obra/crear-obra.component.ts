@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
   //Esto es un dummy, borralo despues.
@@ -184,7 +181,34 @@ export class CrearObraComponent implements OnInit
 
   onSubmit() { this.submitted = true; }
 
+  onBlurObra(){
+    this.cargando=this.cargando+1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/validatorTextPDF/post/endpoint.php`;
+    let formData:FormData = new FormData();
 
+    formData.append('function',             'validatedInfo');
+    formData.append('token',                this.global.token);
+    formData.append('rol_usuario_id',       this.global.rol);
+    
+    formData.append('campo',                'obra');
+    formData.append('string',               this.obraForm.value.obra);
+
+    this.http.post(url, formData).subscribe(res => {
+      this.respOnBlurObra(res.json());
+    });
+  }
+  respOnBlurObra(respuesta){
+    if(respuesta.error == 100){
+      window.alert("Haz excedido el tama\u00f1o que se puede imprimir en el PDF. Intentaste poner un texto de "+respuesta.tam_string+" pixeles en un campo de "+respuesta.tam_campo+" pixeles. Hemos truncado tu texto");
+      this.obraForm.patchValue({
+        obra:  respuesta.obra
+      });
+    }else{
+      // pendiente poner tamaño de letra 
+    }
+    
+  }
   crearObra(){
     this.cargando=1;
     this.cargandoMessage="Guardando...";
@@ -218,7 +242,6 @@ export class CrearObraComponent implements OnInit
     formData.append('correo_alterno',       this.obraForm.value.correo_alterno );
     this.cargandoMessage="Cargando...";
     this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );
-    
 
   }
 
