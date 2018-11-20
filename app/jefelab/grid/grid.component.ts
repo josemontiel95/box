@@ -24,6 +24,7 @@ export class GridComponent implements OnInit  {
   tipo = "";
   ruta = 0;
   selected = false;
+  noRowData = false;
 
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
@@ -72,15 +73,18 @@ export class GridComponent implements OnInit  {
     }else if(repuesta.error==5){
       this.rowData =[];
       this.noRowDataError="No existen formatos para esta orden.";   
+      this.noRowData=true;
+
     }else{
       this.rowData =repuesta;
+      this.noRowData=false;
+
     }
   }
 
    
  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
-    var idd;
     var tipoo;
     var rutaa;
     var tipoNo;
@@ -104,7 +108,6 @@ export class GridComponent implements OnInit  {
     this.selected= true;
     this.tipoNo = tipoNo;
 
-    this.selectOption();
   }
 
   selectOption(){

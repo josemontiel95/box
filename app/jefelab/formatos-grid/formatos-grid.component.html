@@ -1,3 +1,25 @@
+<div class="btn-group" *ngIf="selected"  style="float: right; padding-right: 5%;">
+    <div class="row">
+      <div class="col-md-5">
+        <p><b>PASO 2</b></p>
+        <p style="color: green;"><b>Click -></b></p>
+      </div>
+      <div class="col-md-7">
+        <button class="btn btn-success" (click)="selectOption();">
+          <span><b>Visualizar Formato &nbsp;&nbsp;</b></span>
+          <i class="fas fa-external-link-alt" style="font-size:18px; display: inline-block; "></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="selected">
+      <br><br><br>
+    </div>
+          <p style="color: red;"><b>{{noRowDataError}}</b></p>
+          <div *ngIf="!selected && !noRowData">
+              <p><b>PASO 1</b></p>
+              <p style="color: green;"><b>Selecciona un formato de la siguiente tabla.</b></p>
+            </div>
           <ag-grid-angular 
             #agGrid
             id="myGrid"

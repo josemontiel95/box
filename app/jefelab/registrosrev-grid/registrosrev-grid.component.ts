@@ -1,5 +1,5 @@
-import { Component, ViewChild ,OnInit, Output, EventEmitter} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Component ,OnInit, Output, EventEmitter} from '@angular/core';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +13,6 @@ export class RegistrosRevGridComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   id_orden: string;
   id_formato: string;
   id_registro: string;
@@ -27,11 +26,7 @@ export class RegistrosRevGridComponent implements OnInit  {
 
 
   /* Variables de estado de los botones */ 
-  isVerCampoValid = false;
-  isVerEnsayoValid = false;
-  isGenerarPDFValid = false;
-  isVerPDFValid = false;
-  isAutoValid = false;
+
 
   @Output() cambiarCargando = new EventEmitter<any>();
   @Output() statusForm = new EventEmitter<any>();
@@ -62,11 +57,11 @@ export class RegistrosRevGridComponent implements OnInit  {
     this.rowClassRules = {
       "row-blue-warning": function(params) {
         var status = params.data.status;
-        return status == 1;
+        return status == 2 || status == 4;
       },
       "row-green-warning": function(params) {
         var status = params.data.status;
-        return status > 1;
+        return status == 5;
       }
     };
   }
@@ -88,7 +83,6 @@ export class RegistrosRevGridComponent implements OnInit  {
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
     let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllRegistrosByID');
@@ -131,87 +125,22 @@ export class RegistrosRevGridComponent implements OnInit  {
    
  onSelectionChanged(event: EventListenerObject){
     var selectedRows = this.gridApi.getSelectedRows();
-   /* var id = "";
-    this.isSelected = true;
-
-    selectedRows.forEach(function(selectedRow, index) {
-      id += selectedRow.id_registrosRev;
-      
-    });
-    this.id_registro = id;
-    //this.cargando(+1);
-    //this.router.navigate(['jefeLaboratorio/orden-trabajo/dashboard/agregaRegistroRevenimiento/'+this.id_orden + '/' +this.id_formato +'/' +id]); */
-
     var id = "";
-    var tipoEnsayo = "";
-    var id_registroEnsayo = "";
-    var footerEnsayo_id = "";
-    var statusEnsayo;
-    var pdfFinal;
-    var jefaLabApproval_id;
+    var status;
     this.isSelected = true;
 
-
     selectedRows.forEach(function(selectedRow, index) {
-      id = selectedRow.id_registrosRev; //Listo
-      tipoEnsayo = selectedRow.tipo;
-      id_registroEnsayo = selectedRow.id_ensayo;
-      footerEnsayo_id =selectedRow.footerEnsayo_id;
-      statusEnsayo = selectedRow.status;
-      pdfFinal = selectedRow.pdfFinal;
-      jefaLabApproval_id = selectedRow.jefaLabApproval_id;
+      id = selectedRow.id_registrosRev;
+      status = selectedRow.status;
     });
-
-    this.pdfFinal=pdfFinal;
     this.id_registro = id;
-    //this.tipoEnsayo = tipoEnsayo;
-    //this.id_registroEnsayo = id_registroEnsayo;
-    //this.footerEnsayo_id = footerEnsayo_id;
-    if(statusEnsayo > 0){
+
+    if(status > 0){
       this.statusEnsayo = true;
     }else{
       this.statusEnsayo = false;
     }
 
-    if(Number(statusEnsayo) == 0 || statusEnsayo == null){ // registro Sin ensayar.
-      window.alert("onSelectionChanged :: IF : 1 :: statusEnsayo : "+statusEnsayo);
-      this.isVerCampoValid   = true;
-      this.isVerEnsayoValid  = false;
-      this.isGenerarPDFValid = false;
-      this.isVerPDFValid     = false;
-      this.isAutoValid       = false;
-    }else if(Number(statusEnsayo) > 0 && pdfFinal == null){ // Registro ensayado pero sin PDF
-      window.alert("onSelectionChanged :: IF : 2");
-
-      this.isVerCampoValid   = true;
-      this.isVerEnsayoValid  = true;
-      this.isGenerarPDFValid = true;
-      this.isVerPDFValid     = false;
-      this.isAutoValid       = false;
-    }else if(statusEnsayo  > 0 && pdfFinal != null && jefaLabApproval_id == null){ // Registro ensayado, con PDF pero no Autorizado
-      window.alert("onSelectionChanged :: IF : 3");
-      this.isVerCampoValid   = true;
-      this.isVerEnsayoValid  = true;
-      this.isGenerarPDFValid = true;
-      this.isVerPDFValid     = true;
-      this.isAutoValid       = true;
-    }else if(statusEnsayo  > 0 && pdfFinal != null && jefaLabApproval_id != null){ // Registro ensayado, con PDF y autorizado
-      window.alert("onSelectionChanged :: IF : 4");
-
-      this.isVerCampoValid   = true;
-      this.isVerEnsayoValid  = true;
-      this.isGenerarPDFValid = false;
-      this.isVerPDFValid     = true;
-      this.isAutoValid       = true;
-    }else{ // Error
-      window.alert("onSelectionChanged :: IF : 5");
-
-      this.isVerCampoValid   = false;
-      this.isVerEnsayoValid  = false;
-      this.isGenerarPDFValid = false;
-      this.isVerPDFValid     = false;
-      this.isAutoValid       = false;
-    }
   }
 
   onLoadRev(){
