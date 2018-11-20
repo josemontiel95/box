@@ -52,15 +52,17 @@ export class FormatoCCHGridComponent implements OnInit  {
     this.rowClassRules = {
       "row-blue-warning": function(params) {
         var status = params.data.status;
-        return status == 3;
+        var statusEnsayo = params.data.statusEnsayo;
+        return (status == 2  || status == 4) && statusEnsayo == 4;
       },
       "row-green-warning": function(params) {
         var status = params.data.status;
-        return status ==2; 
+        return status == 5; 
       },
-      "row-red-warning": function(params) {
-        var herramienta_id = params.data.herramienta_id;
-        return herramienta_id == null;
+      "row-orange-warning": function(params) {
+        var status = params.data.status;
+        var statusEnsayo = params.data.statusEnsayo;
+        return  status == 3  || statusEnsayo == 2;
       }
     };
   }
@@ -163,20 +165,32 @@ export class FormatoCCHGridComponent implements OnInit  {
   onClickAutorizar(){
     if(this.statusEnsayo){
       if(this.isAutoValid){
-        if(window.confirm("¿Esta usted seguro de autorizar el PDF generado y enviarlo al personal administrativo para ser enviado y cobrado al cliente?. Esta acción NO se puede revertir")){
-          this.cambiarCargando.emit(+1);
-          let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
-          let formData:FormData = new FormData();
-          formData.append('function', 'autEnsayoForAdmin');
-          formData.append('token', this.global.token);
-          formData.append('rol_usuario_id', this.global.rol);
+        if(window.confirm("\u00BFEst\u00E1 usted seguro de autorizar el PDF generado y enviarlo al personal administrativo para ser enviado y cobrado al cliente?. Esta acci\u00f3n NO se puede revertir.")){
+          if(window.confirm("Al autorizar el PDF generado y enviarlo al personal administrativo perder\u00E1 privilegios de edici\u00f3n sobre todos los especimenes de la muestra. Esta acci\u00f3n NO se puede revertir. \u00BFEst\u00E1 usted seguro de continuar?")){
+            var confirmation = prompt("Por favor esriba SI para continuar. Escriba cualquier otra palabra para abortar. Recuerde que esta acci\u00f3n no se puede revertir, verifique sus datos antes de continuar", "NO");
+            if(confirmation == "SI"){
+              this.cambiarCargando.emit(+1);
+              let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;
+              let formData:FormData = new FormData();
+              formData.append('function', 'autEnsayoForAdmin');
+              formData.append('token', this.global.token);
+              formData.append('rol_usuario_id', this.global.rol);
 
-          formData.append('id_formatoCampo', this.id_formato);  
-          formData.append('id_ensayo', this.id_registroEnsayo);  
-          this.http.post(url, formData).subscribe(res => {
-            this.respuestaGeneratePDF(res.json());
-          });
+              formData.append('id_formatoCampo', this.id_formato);  
+              formData.append('id_ensayo', this.id_registroEnsayo);  
+              this.http.post(url, formData).subscribe(res => {
+                this.respuestaGeneratePDF(res.json());
+              });
+            }else{
+              window.alert("La operaci\u00f3n ha sido abortada.");
+              // Autorizacion cancelada.
+            }
+          }else{
+            window.alert("La operaci\u00f3n ha sido abortada.");
+            // Autorizacion cancelada.
+          }
         }else{
+          window.alert("La operaci\u00f3n ha sido abortada.");
           // Autorizacion cancelada.
         }
       }else{
@@ -238,6 +252,7 @@ export class FormatoCCHGridComponent implements OnInit  {
     var pdfFinal;
     var jefaLabApproval_id;
     this.isSelected = true;
+    var status;
 
 
     selectedRows.forEach(function(selectedRow, index) {
@@ -248,6 +263,7 @@ export class FormatoCCHGridComponent implements OnInit  {
       statusEnsayo = selectedRow.statusEnsayo;
       pdfFinal = selectedRow.pdfFinal;
       jefaLabApproval_id = selectedRow.jefaLabApproval_id;
+      status =  selectedRow.status;
     });
 
     this.pdfFinal=pdfFinal;
@@ -261,15 +277,29 @@ export class FormatoCCHGridComponent implements OnInit  {
       this.statusEnsayo = false;
     }
 
-    if(Number(statusEnsayo) == 0 || statusEnsayo == null){ // registro Sin ensayar.
-      window.alert("onSelectionChanged :: IF : 1 :: statusEnsayo : "+statusEnsayo);
+    if(Number(status) == 3 && Number(statusEnsayo) > 0){
+      console.log("onSelectionChanged :: IF : -1 :: statusEnsayo : "+statusEnsayo);
+      this.isVerCampoValid   = true;
+      this.isVerEnsayoValid  = true;
+      this.isGenerarPDFValid = false;
+      this.isVerPDFValid     = false;
+      this.isAutoValid       = false;
+    }else if(Number(status) == 0){
+      console.log("onSelectionChanged :: IF : 0 :: statusEnsayo : "+statusEnsayo);
+      this.isVerCampoValid   = false;
+      this.isVerEnsayoValid  = false;
+      this.isGenerarPDFValid = false;
+      this.isVerPDFValid     = false;
+      this.isAutoValid       = false;
+    }else if(Number(statusEnsayo) == 0 || statusEnsayo == null){ // registro Sin ensayar.
+      console.log("onSelectionChanged :: IF : 1 :: statusEnsayo : "+statusEnsayo);
       this.isVerCampoValid   = true;
       this.isVerEnsayoValid  = false;
       this.isGenerarPDFValid = false;
       this.isVerPDFValid     = false;
       this.isAutoValid       = false;
     }else if(Number(statusEnsayo) > 0 && pdfFinal == null){ // Registro ensayado pero sin PDF
-      window.alert("onSelectionChanged :: IF : 2");
+      console.log("onSelectionChanged :: IF : 2");
 
       this.isVerCampoValid   = true;
       this.isVerEnsayoValid  = true;
@@ -277,22 +307,22 @@ export class FormatoCCHGridComponent implements OnInit  {
       this.isVerPDFValid     = false;
       this.isAutoValid       = false;
     }else if(statusEnsayo  > 0 && pdfFinal != null && jefaLabApproval_id == null){ // Registro ensayado, con PDF pero no Autorizado
-      window.alert("onSelectionChanged :: IF : 3");
+      console.log("onSelectionChanged :: IF : 3");
       this.isVerCampoValid   = true;
       this.isVerEnsayoValid  = true;
       this.isGenerarPDFValid = true;
       this.isVerPDFValid     = true;
       this.isAutoValid       = true;
     }else if(statusEnsayo  > 0 && pdfFinal != null && jefaLabApproval_id != null){ // Registro ensayado, con PDF y autorizado
-      window.alert("onSelectionChanged :: IF : 4");
+      console.log("onSelectionChanged :: IF : 4");
 
       this.isVerCampoValid   = true;
       this.isVerEnsayoValid  = true;
       this.isGenerarPDFValid = false;
       this.isVerPDFValid     = true;
-      this.isAutoValid       = true;
+      this.isAutoValid       = false;
     }else{ // Error
-      window.alert("onSelectionChanged :: IF : 5");
+      console.log("onSelectionChanged :: IF : 5");
 
       this.isVerCampoValid   = false;
       this.isVerEnsayoValid  = false;

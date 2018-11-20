@@ -182,6 +182,7 @@ export class CrearObraComponent implements OnInit
   onSubmit() { this.submitted = true; }
 
   onBlurObra(){
+    /*
     this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/validatorTextPDF/post/endpoint.php`;
@@ -193,10 +194,11 @@ export class CrearObraComponent implements OnInit
     
     formData.append('campo',                'obra');
     formData.append('string',               this.obraForm.value.obra);
-
+    
     this.http.post(url, formData).subscribe(res => {
       this.respOnBlurObra(res.json());
     });
+    */
   }
   respOnBlurObra(respuesta){
     if(respuesta.error == 100){
@@ -205,7 +207,7 @@ export class CrearObraComponent implements OnInit
         obra:  respuesta.obra
       });
     }else{
-      // pendiente poner tamaño de letra 
+      // pendiente poner tamaño de letra  
     }
     
   }
