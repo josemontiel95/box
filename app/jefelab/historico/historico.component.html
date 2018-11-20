@@ -18,7 +18,7 @@
       <div class="card">
         
         <div class="card-header">
-          <h4 class="card-title">FORMATOS PENDIENTES:</h4>
+          <h4 class="card-title">HISTORICO ORDENES DE TRABAJO</h4>
           <div class="btn-group" *ngIf="selected"  style="float: right; padding-right: 5%;">
             <div class="row">
               <div class="col-md-5">
@@ -74,7 +74,7 @@
           <h4 class="card-title">FORMATOS PENDIENTES DE ENVIAR A ADMINISTRATIVO:</h4>
         </div>
         <div class="card-body">
-         <app-grid (cambiarCargando)="cambiarCargando($event)"></app-grid>
+         <app-historico-grid (cambiarCargando)="cambiarCargando($event)"></app-historico-grid>
         </div>
       </div>
     </div>

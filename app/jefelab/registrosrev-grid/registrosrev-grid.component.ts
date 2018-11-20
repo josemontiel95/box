@@ -33,21 +33,8 @@ export class RegistrosRevGridComponent implements OnInit  {
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-    {headerName: 'FECHA REG', field: 'fecha' },
-    /*
-    {headerName: 'FECHA', field: 'fecha' },
-    {headerName: 'F&rsquo;C', field: 'fprima'},
-    {headerName: 'REVENIMIENTO: PROYECTO', field: 'revProyecto'},
-    {headerName: 'REVENIMIENTO: OBRA', field: 'revObra'},
-    {headerName: 'TAMA&Ntilde;O NOMINAL DEL AGREGADO (mm)', field: 'tamagregado' },
-    {headerName: 'VOLUMEN (m<sup>2</sup>)', field: 'volumen' },
-    {headerName: 'TIPO DE CONCRETO', field: 'tipoConcreto' },
-    {headerName: 'UNIDAD', field: 'herramienta_id' },
-    {headerName: 'HORA DE MUESTREO EN OBRA', field: 'horaMuestreo' },
-    {headerName: 'TEMP AMBIENTE DE MUESTREO (&#176;C)', field: 'tempMuestreo' },
-    {headerName: 'TEMP AMBIENTE DE RECOLECCI&Oacute;N (&#176;C)', field: 'tempRecoleccion' },
-    {headerName: 'LOCALIZACI&Oacute;N', field: 'localizacion' },
-    */
+    {headerName: 'FECHA DE COLADO', field: 'fecha' },
+    
     {headerName: 'ESTATUS', field: 'status' }
 
       
