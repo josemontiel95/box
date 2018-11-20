@@ -60,10 +60,17 @@ export class llenaFormatoCCHComponent implements OnInit{
   tipoMuestra = true;
   maxNoOfRegistrosCCH ="";
   multiplosNoOfRegistrosCCH ="";
+
+  verFomatoCampo= false;
   footerExist=false;
+  verPreliminarGabs = false;
+  completarFormato = false;
 
   isMainGridVisible=true;
   
+  estadoTitle="";
+
+
   formatoCCHForm: FormGroup;
 
         FormatoCCH = {
@@ -409,7 +416,8 @@ export class llenaFormatoCCHComponent implements OnInit{
     search.set('rol_usuario_id', this.global.rol);
     search.set('tipo', tipo);
     this.http.get(url, {search}).subscribe(res => {
-      this.llenatipo(res.json(),tipo); });
+      this.llenatipo(res.json(),tipo); 
+    });
     this.loadDefaultsVigas();
     this.loadDefaultsCILCUB();
   }
@@ -485,6 +493,58 @@ export class llenaFormatoCCHComponent implements OnInit{
       this.tipoMuestra = true;
     }
     //Esta if verifica si ya fue generado un PDF mediante respuesta.preliminar, si fue generado activa Visuarlizar PDF.
+    /*Verificacion de estados de los botones. */
+
+    if(Number(respuesta.status)==0 && respuesta.preliminar == null  && Number(respuesta.footerExist) == 0 && Number(respuesta.ensayadoFin) > 0){
+      this.verFomatoCampo= false;
+      this.footerExist= false;
+      this.verPreliminarGabs = false;
+      this.completarFormato= false;
+      this.estadoTitle="En edici\u00f3n por el Jefe de Brigada. No ha generado preliminar."
+    }else if(Number(respuesta.status)==0 && respuesta.preliminar != null  && Number(respuesta.footerExist) == 0 && Number(respuesta.ensayadoFin) > 0){
+      this.verFomatoCampo= true;
+      this.footerExist= false;
+      this.verPreliminarGabs = false;
+      this.completarFormato= false;
+      this.estadoTitle="En edici\u00f3n por el Jefe de Brigada. Ya gener\u00f3 preliminar."
+    }else if(Number(respuesta.status)==1 && respuesta.preliminar != null  && Number(respuesta.footerExist) == 0 && Number(respuesta.ensayadoFin) > 0){
+      this.verFomatoCampo= true;
+      this.footerExist= false;
+      this.verPreliminarGabs = false;
+      this.completarFormato= false;
+      this.estadoTitle="Completado por el Jefe de Brigada. El t\u00E9cnico de muestras NO ha comenzado a ensayar."
+    }else if(Number(respuesta.status)==1 && respuesta.preliminar != null && respuesta.preliminarGabs == null && Number(respuesta.footerExist) == 1 && Number(respuesta.ensayadoFin) > 0){
+      this.verFomatoCampo= true;
+      this.footerExist= true;
+      this.verPreliminarGabs = false;
+      this.completarFormato= false;
+      this.estadoTitle="Completado por el Jefe de Brigada. El t\u00E9cnico de muestras ya ha comenzado a ensayar."
+    }else if(Number(respuesta.status)==1 && respuesta.preliminar != null && respuesta.preliminarGabs != null && Number(respuesta.footerExist) == 1 && Number(respuesta.ensayadoFin) > 0){
+      this.verFomatoCampo= true;
+      this.footerExist= true;
+      this.verPreliminarGabs = true;
+      this.completarFormato= false;
+      this.estadoTitle="Completado por el Jefe de Brigada. El t\u00E9cnico de muestras ya ha comenzado a ensayar. Ya existe un preliminar interno de ensaye. Se recomienda revisar si no hay un formato final pendiente por generar y autorizar."
+    }else if(Number(respuesta.status)==1 && respuesta.preliminar != null && respuesta.preliminarGabs != null && Number(respuesta.footerExist) == 1 && Number(respuesta.ensayadoFin) == 0){
+      this.verFomatoCampo= true;
+      this.footerExist= true;
+      this.verPreliminarGabs = true;
+      this.completarFormato= true;
+      this.estadoTitle="Completado por el Jefe de Brigada. El t\u00E9cnico de muestras ya ha terminado de ensayar todas las muestras. Se recomienda verificar si no hay un formato final pendiente por generar y autorizar antes de completar el formato."
+    }else if(Number(respuesta.status)==2 && respuesta.preliminar != null && respuesta.preliminarGabs != null && Number(respuesta.footerExist) == 1 && Number(respuesta.ensayadoFin) == 0){
+      this.verFomatoCampo= true;
+      this.footerExist= true;
+      this.verPreliminarGabs = true;
+      this.completarFormato= false;
+      this.estadoTitle="Se ha autorizado y completado este reporte.";
+    }else{
+      this.verFomatoCampo= false;
+      this.footerExist= false;
+      this.verPreliminarGabs = false;
+      this.completarFormato= false;
+      this.estadoTitle="Error inesperado. Contacte a soporte."
+    }
+
     if(respuesta.preliminar == null){
       this.preliminar = false;
     }else{
@@ -886,7 +946,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   }
 
   onLoadCCH(){
-    if(!this.preliminar){
+    if(!this.verFomatoCampo){
         window.alert("ERROR: Reporte de Campo no se pudo encontrar, contactar a soporte.");
       }else if(window.confirm("¿Estas seguro de Visualizar el PDF?")){
         let link = this.linkCampo;
@@ -895,7 +955,7 @@ export class llenaFormatoCCHComponent implements OnInit{
   }
 
   onLoadEnsayo(){
-    if(this.linkEnsayo == null){
+    if(!this.verPreliminarGabs){
         window.alert("FORMATO DE ENSAYO NO DISPONIBLE.");
       }else if(window.confirm("¿Estas seguro de visualizar el formato de ensayo?")){
         console.log(this.linkEnsayo);
@@ -910,6 +970,10 @@ export class llenaFormatoCCHComponent implements OnInit{
 
   /******AQUI SE COMPLETA EL ENSAYO Y SE SUBEN A TODOS SUS HIJOS******/
    obtenStatusReg(){
+    if(!this.completarFormato){
+      window.alert("Todavia no es posible que completes el formato. Verifica los datos actuales y vuele a intentarlo");
+      return;
+    }
     this.cargando = this.cargando +1;
     let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -943,7 +1007,6 @@ export class llenaFormatoCCHComponent implements OnInit{
 
   formatoCompletado(){
     this.cargando = this.cargando +1;
-    console.log("formatoCompletado :: Sigo vivo");
     //this.cargando=1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/footerEnsayo/post/endpoint.php`;

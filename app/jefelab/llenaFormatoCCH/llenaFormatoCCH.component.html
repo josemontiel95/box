@@ -14,45 +14,34 @@
     <div class="col-md-12 ml-auto mr-auto">
       <div class="card">
         <div class="card-header">
-          <h4 style="text-align: center; font-size:30px;" class="card-title">GENERACI&Oacute;N DE PDF</h4>
+          <h4 style="text-align: center; font-size:30px;" class="card-title">{{estadoTitle}}</h4>
 
         </div>
         <h4><i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i></h4>
         <div class= "row" style="display: flex; align-items: center; justify-content: center;">
 
           <div class="btn-group" style="padding-right: 5%;">
-              <button class="btn btn-success" (click)="onLoadCCH();">
+              <button [ngClass]="{'btn':true ,'btn-default': !verFomatoCampo,'btn-success': verFomatoCampo }"  (click)="onLoadCCH();">
                 <span><b>VER FORMATO DE CAMPO &nbsp;&nbsp;</b></span>
                 <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block;"></i>
               </button>
           </div>
           <div class="btn-group" style="padding-right: 5%;">
-              <button class="btn btn-success" (click)="onLoadEnsayo();">
+              <button [ngClass]="{'btn':true ,'btn-default': !verPreliminarGabs,'btn-success': verPreliminarGabs }"  (click)="onLoadEnsayo();">
                 <span><b>VER FORMATO DE ENSAYO &nbsp;&nbsp;</b></span>
                 <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block;"></i>
               </button>
           </div>
           <!-- Este boton completara el formato y subira a todos los hijos -->
           <div style="display: inline-block;">
-            <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminar }"  (click)="obtenStatusReg();"> 
+            <button [ngClass]="{'btn':true ,'btn-default': !completarFormato,'btn-success': completarFormato }"  (click)="obtenStatusReg();"> 
               <span><b>FORMATO COMPLETADO &nbsp;&nbsp;</b></span>
               <i class="fa fa-check-square-o" style="font-size:18px; display: inline-block; "></i>
             </button>
           </div>  
         </div>
         <div class="card-body">
-          <!--  <div *ngIf="opciones">
-              <app-pendientes-pdf-grid (cargando)="cambiaCargando($event)" (reloadMainGrid)="reloadMainGrid()"></app-pendientes-pdf-grid>
-            </div> 
-            <div class="" (click)="masOpciones();">
-              <hr *ngIf="opciones">
-              <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
-                <p>{{opcionesMessage}}</p>
-              </div>
-              <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
-                  <i _ngcontent-c25="" [ngClass]="{'now-ui-icons':true,'arrows-1_minimal-down':!this.opciones ,'arrows-1_minimal-up': this.opciones,'pr-3':true}" ></i>
-              </div>
-            </div>-->
+         
         </div>
       </div>
     </div>

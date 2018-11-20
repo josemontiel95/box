@@ -326,7 +326,7 @@ export class llenaRevenimientoComponent implements OnInit{
       this.generarFormatoFinal = false;
       this.verFormatoFinal = true;
       this.autYEnviar = false;
-      this.estadoTitle="Se ha autorizado y completado este Reporte.";
+      this.estadoTitle="Se ha autorizado y completado este reporte.";
     }  
   }
 
