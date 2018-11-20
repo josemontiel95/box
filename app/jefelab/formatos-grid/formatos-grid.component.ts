@@ -22,6 +22,7 @@ export class FormatosGridComponent implements OnInit  {
   id;
   id_Footer;
   selected;
+  noRowData;
   tipoNo;
   @Output() cambiarCargando = new EventEmitter<any>();
 
@@ -84,8 +85,10 @@ export class FormatosGridComponent implements OnInit  {
     }else if(repuesta.error==5){
       this.rowData =[];
       this.noRowDataError="No existen formatos para esta orden.";   
+      this.noRowData = true;
     }else{
       this.rowData =repuesta;
+      this.noRowData = false;
     }
   }
 

@@ -204,16 +204,16 @@ export class agregaRegistroCCHComponent implements OnInit{
     // Se Copio groupsMember para poderlo manipular.
     this.groupMembers=respuesta.groupMembers;
     //Aqui se asignan las banderas del status en el que se encuentre la muestra.
-    if(respuesta.status == 2){ // era el estado 1 
+    if(respuesta.status == 2){ //varificado
       this.hiddenB = true;
       this.mostrar();
       this.reloadHerra();
-    }else if(respuesta.status <= 1){ // era el estado mayor que 1 
+    }else if(respuesta.status <= 1 || respuesta.status >3){ // bloqueado
       this.hiddenA = true;
       this.locked=true;
       this.mostrar();
       this.reloadHerra();
-    }else if(respuesta.status == 3){ // era el estado 0
+    }else if(respuesta.status == 3){ // edicion
       this.reloadHerra();
       this.hiddenC = true;
 
@@ -473,7 +473,7 @@ export class agregaRegistroCCHComponent implements OnInit{
     formData.append('rol_usuario_id', this.global.rol);
 
     formData.append('campo', '12');
-    formData.append('valor', '2');
+    formData.append('valor', '4');
     formData.append('id_registrosCampo', this.id_registro);
     this.http.post(url, formData).subscribe(res => {                                             
                                               this.respuestaSwitchRegistroCompletado(res.json());                 

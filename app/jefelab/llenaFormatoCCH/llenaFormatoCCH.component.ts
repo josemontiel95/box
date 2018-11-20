@@ -1025,6 +1025,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.formatoStatus=false;
     console.log(res.status);
     if(res.error==0){
+      this.reloadData();
       window.alert("¡Exito! El Formato Se ha Completado");
     }else{
       window.alert(res.estatus);
