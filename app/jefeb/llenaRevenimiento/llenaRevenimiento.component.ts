@@ -307,27 +307,27 @@ export class llenaRevenimientoComponent implements OnInit{
   }
 
   obtenStatusReg(){
-    window.alert("obtenStatusReg :: this.id_formato: "+this.id_formato);
+    //window.alert("obtenStatusReg :: this.id_formato: "+this.id_formato);
     if(0 == this.numberOfRegistros){
       if(window.confirm("¿Estas seguro de que quieres marcar como completado sin agregar un solo registro?")){
         this.formatoCompletado();
         return;
-      }else{
-        return;
       }
-    }
+    } else if(this.numberOfRegistros > 0){
+        let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
+        let search = new URLSearchParams();
+        search.set('function', 'getAllRegistrosByID');
+        search.set('token', this.global.token);
+        search.set('rol_usuario_id', this.global.rol);
+        search.set('id_formatoRegistroRev', this.id_formato);
+        console.log(search);
+        this.http.get(url, {search}).subscribe(res => {
+                                                console.log(res.json());
+                                                this.validaRegistrosVacios(res.json());
+                                              });
+      }
 
-    let url = `${this.global.apiRoot}/formatoRegistroRev/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'getAllRegistrosByID');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    search.set('id_formatoRegistroRev', this.id_formato);
-    console.log(search);
-    this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
-                                            this.validaRegistrosVacios(res.json());
-                                          });
+    
   }
 
   obtenStatusVisualizarPDF(){
@@ -449,22 +449,22 @@ export class llenaRevenimientoComponent implements OnInit{
   }
 
   validaRegistrosVacios(res: any){
-
     let isValid = true;
     res.forEach(function (value) {
       if(value.status == "0"){
          isValid = false;
-        //window.alert("Existe al menos un registro que no ha sido completado, verifica que todos los registros esten completados.");
       }
     });
 
     if(!isValid){
       window.alert("Tienes al menos un registro sin completar, todos los registros deben estar en ESTATUS:1 para completar el formato.");     
+    } else if(this.preliminar){
+        if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
+          this.formatoCompletado();
+        }
     }else{
-          if(window.confirm("¿Estas seguro de marcar como completado el formato? ya no podrá ser editado.")){
-            this.formatoCompletado();
-          }
-    } 
+      window.confirm("No has generado el PDF del formato, debes generarlo antes de poder completar el formato.");
+    }      
   } 
 
   formatoCompletado(){
