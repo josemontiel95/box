@@ -14,7 +14,7 @@ import { dashboardVigaComponent } from '../../tecnicom/dashboardViga/dashboardVi
 import { PruebaCilindroComponent } from '../../tecnicom/pruebaCilindro/pruebaCilindro.component';
 import { PruebaVigaComponent } from '../../tecnicom/pruebaViga/pruebaViga.component';
 import { PruebaCuboComponent } from '../../tecnicom/pruebaCubo/pruebaCubo.component';
-
+import { JLabHistoricoComponent } from '../../tecnicom/historico/historico.component';
 
 export const TecnicoMLayoutRoutes: Routes = [
     { path: '',      		  redirectTo: 'user-profile', pathMatch: 'full' },
@@ -29,6 +29,6 @@ export const TecnicoMLayoutRoutes: Routes = [
     { path: 'pendientes/dashboardCilindro/pruebaCilindro/:id/:id2',   component: PruebaCilindroComponent },
     { path: 'pendientes/dashboardViga/pruebaViga/:id/:id2',   component: PruebaVigaComponent },
     { path: 'pendientes/dashboardCubo/pruebaCubo/:id/:id2',   component: PruebaCuboComponent },
-    { path: 'historico',  component: ConstruccionComponent },
+    { path: 'historico',  component: JLabHistoricoComponent },
 
 ];
