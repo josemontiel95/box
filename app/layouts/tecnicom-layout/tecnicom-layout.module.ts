@@ -25,8 +25,7 @@ import { VigaGenericoComponent } from '../../tecnicom/vigaGenerico/vigaGenerico.
 import { CilindroGenericoComponent } from '../../tecnicom/cilindroGenerico/cilindroGenerico.component';
 import { CuboGenericoComponent } from '../../tecnicom/cuboGenerico/cuboGenerico.component';
 import { PruebaCuboComponent } from '../../tecnicom/pruebaCubo/pruebaCubo.component';
-
-
+import { JLabHistoricoComponent } from '../../tecnicom/historico/historico.component';
 
 
 import { ChartsModule } from 'ng2-charts';
@@ -66,6 +65,7 @@ import { ToastrModule } from 'ngx-toastr';
   CilindroGenericoComponent,
   CuboGenericoComponent,
   ConstruccionComponent,
+  JLabHistoricoComponent
   ]
 })
 
