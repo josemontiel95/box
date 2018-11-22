@@ -56,7 +56,6 @@ export class FormatosGridComponent implements OnInit  {
 
   onGridReady(params) {
     this.cambiarCargando.emit(+1);
-
     this.data.currentGlobal.subscribe(global => this.global = global);
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
@@ -69,10 +68,10 @@ export class FormatosGridComponent implements OnInit  {
     search.set('id_ordenDeTrabajo', this.id_orden);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
-                                            this.llenaTabla(res.json());
-                                            this.gridApi.sizeColumnsToFit();
-                                          });
+      console.log(res.json());
+      this.llenaTabla(res.json());
+      this.gridApi.sizeColumnsToFit();
+    });
   }
 
   llenaTabla(repuesta: any){
@@ -83,8 +82,8 @@ export class FormatosGridComponent implements OnInit  {
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
     }else if(repuesta.error==5){
-      this.rowData =[];
-      this.noRowDataError="No existen formatos para esta orden.";   
+      this.rowData = [];
+      this.noRowDataError = "No existen formatos para esta orden.";
       this.noRowData = true;
     }else{
       this.rowData =repuesta;
