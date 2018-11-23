@@ -32,22 +32,26 @@ export class ObrasComponent implements OnInit{
   cargando= 1;
   tipoForm: FormGroup;
   mis_tipos: Array<any>;
-  formatosSeleccionados: Array<any>;
+  formatosSeleccionadosCCH: Array<any>;
+formatosSeleccionadosRev: Array<any>;
   status="1";
 
   forma={
-    formato_tipo_id:'0'
+    formato_tipo_id:''
   };
 
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-      {headerName: 'Ctrl', field: 'id_formatoCampo' },
-      {headerName: 'No. Informe', field: 'informeNo' },
-      {headerName: 'Tipo', field: 'tipo' },
-      {headerName: 'No. Cotizaci&oacute;n', field: 'cotizacion' },
       {headerName: 'Cliente', field: 'razonSocial' },
-      {headerName: 'Obra', field: 'obra' }
+      {headerName: '# Cot.', field: 'cotizacion' },
+      {headerName: 'Obra', field: 'obra' },
+      {headerName: '# Informe', field: 'informeNo' },
+      {headerName: 'Tipo', field: 'tipo' },
+      {headerName: 'F. Colado', field: 'fechaColado' },
+      {headerName: 'F. Ensayo', field: 'fechaEnsayado' },
+      {headerName: '# envios', field: 'sentToClientFinal' },
+
     ];
     this.rowSelection = "multiple";
   }
@@ -75,14 +79,20 @@ export class ObrasComponent implements OnInit{
    get lotes() { return this.tipoForm.get('lotes'); } 
 
   llenaLotes(resp: any){
-    console.log(resp);
-    this.mis_tipos= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
-      this.mis_tipos[_i]=resp[_i];
+    if(resp.error==5){
+      this.mis_tipos=[];
+    }else{
+      console.log(resp);
+      this.mis_tipos= new Array(resp.length);
+      for (var _i = 0; _i < resp.length; _i++ )
+      {
+        this.mis_tipos[_i]=resp[_i];
+      }
+      console.log("llenaTipos this.cargando: "+this.cargando);
     }
     this.cargando=this.cargando-1;
-    console.log("llenaTipos this.cargando: "+this.cargando);
+
+   
   }
 
 
@@ -108,14 +118,14 @@ export class ObrasComponent implements OnInit{
   }
 
   agregaFormatos(){
-    window.alert("POR EL MOMENTO EL FORMATO DE VIGAS NO DISPONIBLE. IGNORANDO ESTOS FORMATOS");
     let url = `${this.global.apiRoot}/loteCorreos/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'agregaFormatos');
     formData.append('rol_usuario_id', this.global.rol);
     formData.append('token', this.global.token);
     formData.append('lote', this.tipoForm.value.lotes);
-    formData.append('formatosSeleccionados', JSON.stringify(this.formatosSeleccionados));
+    formData.append('formatosSeleccionadosCCH', JSON.stringify(this.formatosSeleccionadosCCH));
+    formData.append('formatosSeleccionadosRev', JSON.stringify(this.formatosSeleccionadosRev));
     this.http.post(url, formData).subscribe(res => {
                                                     this.respuestaSwitch(res.json());
     });
@@ -160,40 +170,8 @@ export class ObrasComponent implements OnInit{
      
     }
   }
-
-
    menosDetalles(){
      this.hidden=false;
-   }
-
-   desactivarUsuario(){
-     this.actBut= true;
-     this.desBut= false;
-     this.switchActive(0);
-  }
-
-   activarUsuario(){
-     this.actBut = false;
-     this.desBut = true;
-     this.switchActive(1);
-   }
-
-   switchActive(active: number){
-     let url = `${this.global.apiRoot}/obra/post/endpoint.php`;
-     let formData:FormData = new FormData();
-      
-      if(active == 0){
-        formData.append('function', 'deactivate');
-      }
-      else{
-        formData.append('function', 'activate');
-      }
-        formData.append('id_obra', this.id);
-        formData.append('rol_usuario_id', this.global.rol);
-        formData.append('token', this.global.token);
-        this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());
-                                            });
    }
 
    respuestaSwitch(res: any){
@@ -209,24 +187,27 @@ export class ObrasComponent implements OnInit{
 
    agregaLote(){
     this.selectLote=!this.selectLote;
-
   }
 
    onSelectionChanged(event: EventListenerObject) {
     var selectedRows = this.gridApi.getSelectedRows();
-    var id = []; //array
+    var id_rev = []; //array
+    var id_cch = []; //array
     selectedRows.forEach(function(selectedRow, index) {
-      if(selectedRow.tipo == "VIGAS"){
-
-      }else{
-            id.push(selectedRow.id_formatoCampo);
+      if(selectedRow.tipoNo == 1){
+          id_rev.push(selectedRow.id_formato);
+      }else if(selectedRow.tipoNo > 1 && selectedRow.tipoNo < 5){
+          id_cch.push(selectedRow.id_registrosCampo);
       }
       //this.formatosSeleccionados.push(selectedRow.id_formatoCampo);
     });
-    this.formatosSeleccionados = [];
-    this.formatosSeleccionados = id;
+    this.formatosSeleccionadosCCH = [];
+    this.formatosSeleccionadosRev = [];
+    this.formatosSeleccionadosCCH = id_cch;
+    this.formatosSeleccionadosRev = id_rev;
 
-    console.log(this.formatosSeleccionados);
+    console.log(this.formatosSeleccionadosCCH);
+    console.log(this.formatosSeleccionadosRev);
   }
 
 }
