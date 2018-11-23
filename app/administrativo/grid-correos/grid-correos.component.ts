@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +13,6 @@ export class GridCorreosComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   id_orden: string;
@@ -23,26 +22,26 @@ export class GridCorreosComponent implements OnInit  {
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'INFORME NUMERO', field: 'informeNo'},
-    {headerName: 'COTIZACI&Oacute;N', field: 'cotizacion'},
-    {headerName: 'OBRA', field: 'obra'},
-    {headerName: 'Email Cliente', field: 'emailCliente' },
-    {headerName: 'Email Residente de obra', field: 'emailResidente' },
-    {headerName: 'RAZ&Oacute;N SOCIAL', field: 'razonSocial' },
-
-    {headerName: 'PDF', field: 'PDF' }
+      {headerName: 'Cliente', field: 'razonSocial' },
+      {headerName: '# Cot.', field: 'cotizacion' },
+      {headerName: 'Obra', field: 'obra' },
+      {headerName: '# Informe', field: 'informeNo' },
+      {headerName: 'Tipo', field: 'tipo' },
+      {headerName: 'F. Colado', field: 'fechaColado' },
+      {headerName: '# envios', field: 'sentToClientFinal' }
   ];
 
     this.rowSelection = "single";
 
     this.rowClassRules = {
       "row-blue-warning": function(params) {
-        var status = params.data.status;
-        return status == 1;
+        var corrLoteStatus = params.data.corrLoteStatus;
+        var sentToClientFinal = params.data.sentToClientFinal;
+        return corrLoteStatus == 0 && sentToClientFinal > 0;
       },
       "row-green-warning": function(params) {
-        var status = params.data.status;
-        return status > 1;
+        var corrLoteStatus = params.data.corrLoteStatus;
+        return corrLoteStatus == 1;
       }
     };
   }
@@ -58,7 +57,6 @@ export class GridCorreosComponent implements OnInit  {
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
 
     let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();

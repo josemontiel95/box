@@ -2,15 +2,11 @@ import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import {
-         ReactiveFormsModule,
-         FormsModule,
-         FormGroup,
-         FormControl,
-         Validators,
-         FormBuilder
+  Validators,
+  FormGroup,
+  FormControl
 } from '@angular/forms';
 
 //FIN DE LOS IMPORTS
@@ -30,8 +26,7 @@ export class dashboardLoteComponent implements OnInit{
   loteCorreos: string;
   title = 'app';
   global: Global;
-  private gridApi;
-  private gridColumnApi;
+
   rowSelection;
   columnDefs;
   cargando= 4;
@@ -44,17 +39,20 @@ export class dashboardLoteComponent implements OnInit{
 
   mensajeEstado="";
   
-  fechaForm: FormGroup;
+  loteDetailsForm: FormGroup;
 
-  fecha  = {
-    fechaEnsayo: ''
+  loteDetails  = {
+    factua: '',
+    observaciones: ''
   }
   footerForm: FormGroup;
 
   footer  = {
     noCorreos:'',
     encargado:'',
-    ctrl:''
+    ctrl:'',
+    fechaEnsayo: ''
+
   }
 
    mis_conos: Array<any>;
@@ -88,24 +86,31 @@ export class dashboardLoteComponent implements OnInit{
     this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
 
    
-    this.fechaForm = new FormGroup({
-      'fechaEnsayo':      new FormControl( {value: this.fecha.fechaEnsayo, disabled: true })
+    this.loteDetailsForm = new FormGroup({
+      'factua':             new FormControl( {value: this.loteDetails.factua,        disabled: true },  [Validators.required]),
+      'observaciones':      new FormControl( {value: this.loteDetails.observaciones, disabled: true })
     });
     this.footerForm = new FormGroup({
       'noCorreos':        new FormControl( {value: this.footer.noCorreos,   disabled: true }),
       'encargado':        new FormControl( {value: this.footer.encargado,   disabled: true }),
       'ctrl':             new FormControl( {value: this.footer.ctrl,        disabled: true }),
+      'fechaEnsayo':      new FormControl( {value: this.footer.fechaEnsayo, disabled: true })
     });
   }
 
-   get fechaEnsayo()    { return this.fechaForm.get('fechaEnsayo'); }
-   get noCorreos()      { return this.footerForm.get('noCorreos'); }
-   get encargado()      { return this.footerForm.get('encargado'); }
-   get ctrl()           { return this.footerForm.get('ctrl'); }  
+  get factua()         { return this.loteDetailsForm.get('factua'); }
+  get observaciones()  { return this.loteDetailsForm.get('observaciones'); }
+
+  get noCorreos()      { return this.footerForm.get('noCorreos'); }
+  get encargado()      { return this.footerForm.get('encargado'); }
+  get ctrl()           { return this.footerForm.get('ctrl'); }  
   
   mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
+    Object.keys(this.loteDetailsForm.controls).forEach((controlName) => {
+      this.loteDetailsForm.controls[controlName][state](); // disables/enables each form control based on 'this.formDisabled'
+  });
   }
 
 
@@ -133,11 +138,14 @@ export class dashboardLoteComponent implements OnInit{
     this.footerForm.patchValue({
      noCorreos:     respuesta.correosNo,
      encargado:     respuesta.encargado,
-     ctrl:          respuesta.id_loteCorreos
-    });
-    this.fechaForm.patchValue({
+     ctrl:          respuesta.id_loteCorreos,
      fechaEnsayo:   respuesta.fecha
     });
+    this.loteDetailsForm.patchValue({
+      factua:        respuesta.factua,
+      observaciones:  respuesta.observaciones
+    });
+
     this.formatoStatus=respuesta.status;
 
     switch(Number(respuesta.status)){
@@ -170,6 +178,31 @@ export class dashboardLoteComponent implements OnInit{
                                             console.log(res.json());
                                             this.validaRespuesta(res.json());
                                           });
+  }
+  actualizarLoteDetails(){
+    this.cargando=this.cargando+1;
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/loteCorreos/post/endpoint.php`;
+    let formData:FormData = new FormData();
+
+    formData.append('function',           'upDateLoteDetails');
+    formData.append('token',              this.global.token);
+    formData.append('rol_usuario_id',     this.global.rol);
+    
+    formData.append('id_loteCorreos',     this.loteCorreos);
+    formData.append('factua',             this.loteDetailsForm.value.factua);
+    formData.append('observaciones',      this.loteDetailsForm.value.observaciones );
+
+    this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
+  }
+  respuestaError(res){
+    if(res.error != 0){
+      window.alert(res.estatus);
+      location.reload();
+    }else{
+      this.mostrar();
+      this.cargando=this.cargando-1;
+    }
   }
   validaRespuesta(res: any){
     this.cargando=this.cargando-1;

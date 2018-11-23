@@ -3,6 +3,11 @@ import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
+import {
+  FormGroup,
+  FormControl,
+  Validators
+} from '@angular/forms';
 
 @Component({
   selector: 'app-jlabhistorico',
@@ -35,6 +40,18 @@ export class JLabHistoricoComponent implements OnInit{
   selected = false;
   tipoNo;
   ordenTrabajo;
+  mis_obras: Array<any>;
+
+  noObrasMessage="";
+
+  obras= false;
+
+  isdataReadyForGrid=false;
+  ordenForm: FormGroup; //se crea un formulario de tipo form group
+  obra_idTmp;
+  Orden = {
+    obra_id: ''
+  };
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
   /* this.columnDefs = [    
@@ -68,8 +85,48 @@ export class JLabHistoricoComponent implements OnInit{
 	  
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.route.params.subscribe( params => this.id_registrosCampo=params.id);
-    this.cargando=0;
+    this.cargando = this.cargando +1;
+    let url = `${this.global.apiRoot}/obra/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getForDroptdownAdmin');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {
+      this.llenaObra(res.json());
+    });
+    this.ordenForm = new FormGroup({
+      'obra_id':             new FormControl(this.Orden.obra_id,  [ Validators.required])
+    });
+  }
+  get obra_id() { return this.ordenForm.get('obra_id'); }
+
+  onObraBlur(){
+    this.obra_idTmp=this.ordenForm.value.obra_id;
+    console.log("onObraBlur :: "+this.obra_idTmp);
+    this.isdataReadyForGrid=true;
+    this.ordenForm.patchValue({
+      obra_id: ''
+    });
+  }
+  llenaObra(repuesta: any){
+    this.cargando=this.cargando-1;
+    if(repuesta.error==5){
+      this.mis_obras= [];
+      this.obras=false;
+      this.noObrasMessage="No hay obras en el sistema."
+    }
+    else if(repuesta.error>0){
+      this.obras=false;
+      this.mis_obras= [];
+      window.alert(repuesta.estatus);
+    }else{
+      this.obras=true;
+      this.mis_obras= new Array(repuesta.length);
+      for (var _i = 0; _i < repuesta.length; _i++){
+        this.mis_obras[_i]=repuesta[_i];
+      }
+      console.log(this.mis_obras);
+    }
   }
 
   rowData: any;
@@ -90,21 +147,26 @@ export class JLabHistoricoComponent implements OnInit{
       this.gridApi.sizeColumnsToFit();
       this.llenaTabla(res.json(), "getAllRegistrosFromFooterByID");
     });*/
-    
+    console.log("onGridReady :: "+this.obra_idTmp);
+
     let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getHistoricEnsayos');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('obra_id', this.obra_idTmp);
+
     this.http.get(url, {search}).subscribe(res => {
       console.log(res.json());
-      this.rowData= res.json();
       this.gridApi.sizeColumnsToFit();
       this.llenaTabla(res.json(), "getAllRegistrosFromFooterByID");
     }); 
   }
 
+
   llenaTabla(repuesta: any, caller){
+    console.log("llenaTabla :: "+this.obra_idTmp);
+
     console.log(repuesta)
     this.cargando = this.cargando -1;
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
@@ -112,10 +174,11 @@ export class JLabHistoricoComponent implements OnInit{
       this.router.navigate(['login']);
     }else if(repuesta.error==5){
       this.rowData =[];
-      this.noRowDataError="No existen Especimenes pendientes para hoy.";   
+      this.noRowDataError="No hay ensayos de la obra seleccionada";   
       this.noRowData=true;
     }else{
       this.noRowData=false;
+      this.noRowDataError="";   
       this.rowData =repuesta;
     }
   }
