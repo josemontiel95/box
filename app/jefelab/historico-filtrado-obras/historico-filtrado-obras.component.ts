@@ -32,6 +32,7 @@ export class HistoricoFiltradoObrasComponent implements OnInit{
   columnDefs;
   id: any;
   historial=false;
+  id_obra;
   rowClassRules;
 
   @Output() cargando = new EventEmitter<any>();
@@ -39,7 +40,7 @@ export class HistoricoFiltradoObrasComponent implements OnInit{
   cambiaCargando(cantidad: any) {
     this.cargando.emit(cantidad);
   }
-  
+
   @Output() reloadMainGrid = new EventEmitter<any>();
 
   reloadMainGridFunc() {
@@ -85,6 +86,7 @@ export class HistoricoFiltradoObrasComponent implements OnInit{
  
 
   onGridReady(params) {
+   this.cambiaCargando(+1);
    this.data.currentGlobal.subscribe(global => this.global = global);
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
@@ -126,21 +128,9 @@ export class HistoricoFiltradoObrasComponent implements OnInit{
     }
   }
   recalcularEstados(){
-    if(window.confirm("¿Estas seguro que quieres recalcular estados? Esto puede tomar varios minutos. Recuerda que cada que inicias sesión por primera vez en el día, se recalculan los estados. ")){
-      this.recalculaEstados();
-    }else{
-
-    }
+    this.emitIdObra(this.id_obra);
   }
-  recalculaEstados(){
-    this.cambiaCargando(1);
-    let url = `${this.global.apiRoot}/certificaciones/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function',           'recalculaEstados');
-    formData.append('token',              this.global.token);
-    formData.append('rol_usuario_id',     '1004');
-    this.http.post(url, formData).subscribe(res => this.respuestaRecalculaEdos(res.json()) );
-  }
+  
   respuestaRecalculaEdos(resp: any){
     this.cambiaCargando(-1);
     if(resp.error!=0){
@@ -156,65 +146,13 @@ export class HistoricoFiltradoObrasComponent implements OnInit{
    
   onSelectionChanged(event: EventListenerObject) {
     var selectedRows = this.gridApi.getSelectedRows();
-    var id_certificaciones = "";
-    var id_usuario_certificaciones =  "";
-    var certificacion = "";
-    var estadoNo = "";
+    var id_obra = "";
 
     selectedRows.forEach(function(selectedRow, index) {
-      id_certificaciones         = selectedRow.id_certificaciones;
-      id_usuario_certificaciones = selectedRow.id_usuario_certificaciones;
-      certificacion              = selectedRow.certificacion;
-      estadoNo                   = selectedRow.estadoNo;
+      id_obra         = selectedRow.id_obra;
     });
-    if(estadoNo=='1'){
-      if(window.confirm("¿Estas seguro que quieres que el sistema ignore esta certificación?")){
-        this.changeCertificacionAdmin(id_certificaciones,estadoNo);
-      }else{
-
-      }
+    this.id_obra = id_obra;
       
-    }else{
-      if(window.confirm("¿Estas seguro que quieres que el sistema tome en cuenta esta certificación?")){
-        this.changeCertificacionAdmin(id_certificaciones,estadoNo);
-      }else{
-
-      }    
-    }
-   
-    //this.displayShortDescription(id_ordenDeTrabajo, obra, nombre_jefe_brigada_id, actividades, condicionesTrabajo, fechaInicio, fechaFin, active,activeColor);
+      console.log(id_obra);
   }
-  changeCertificacionAdmin(id_certificaciones,estadoNo){
-    this.cambiaCargando(1);
-    let url = `${this.global.apiRoot}/certificaciones/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function',           'addCertificacionPerfil');
-    formData.append('token',              this.global.token);
-    formData.append('rol_usuario_id',     '1004');
-
-    formData.append('id_certificaciones', id_certificaciones);
-    formData.append('estadoNo',           estadoNo);
-    this.http.post(url, formData).subscribe(res => this.respuestaToggle(res.json()) );
-  }
-  respuestaToggle(resp: any){
-    if(resp.error!=0){
-      this.cambiaCargando(-1);
-      window.alert(resp.estatus);
-      location.reload();
-    }else{
-      let url = `${this.global.apiRoot}/certificaciones/get/endpoint.php`;
-      let search = new URLSearchParams();
-      search.set('function', 'getAllusuario_certificacionesAdmin');
-      search.set('token', this.global.token);
-      search.set('rol_usuario_id', "1004");
-      this.http.get(url, {search}).subscribe(res => {
-                                                console.log(res.json());
-                                                this.llenaTabla(res.json());
-                                                this.gridApi.sizeColumnsToFit();
-                                              });
-     
-    }
-  }
-
-
 }

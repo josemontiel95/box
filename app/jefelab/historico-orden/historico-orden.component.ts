@@ -13,6 +13,7 @@ export class HistoricoOrdenTrabajoComponent implements OnInit{
   title = 'app';
   id_Footer: string;
   obra: string;
+  id_obra: string; //Esta es el id de la obra que va a filtrarse.
   nombre_jefe_brigada_id: string;
   actividades: string;
   condicionesTrabajo: string;
@@ -35,15 +36,17 @@ export class HistoricoOrdenTrabajoComponent implements OnInit{
   selected = false;
   tipoNo;
   ordenTrabajo;
-  opciones = false;
-  opcionesMessage="Mostrar opciones";
+  opciones = true;
+  opcionesMessage = "Mostrar Obras";
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'CTRL FORMATO', field: 'id' },    
-    {headerName: 'INFORME N&Uacute;MERO', field: 'informeNo' },
-    {headerName: 'TIPO', field: 'tipo' },
-    {headerName: 'ACCION REQUERIDA', field: 'accReq' }
+    {headerName: 'CTRL', field: 'obra_id' },
+    {headerName: 'OBRA', field: 'obra' },    
+    {headerName: 'ACTIVIDADES', field: 'actividades' },
+    {headerName: 'LUGAR', field: 'lugar' },
+    {headerName: 'OBSERVACIONES', field: 'observaciones' },
+    {headerName: 'ESTADO', field: 'estado' }
   ];
     this.rowSelection = "single";
     this.rowClassRules = {
@@ -56,7 +59,6 @@ export class HistoricoOrdenTrabajoComponent implements OnInit{
         return color == 2;
       }
     };
-
   }
 	  
   ngOnInit() {
@@ -72,17 +74,28 @@ export class HistoricoOrdenTrabajoComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
 
-    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAwaitingApproval');
+    search.set('function', 'getByObraJefaLab');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_obra', this.id_obra); //Confirma que "Jose Maria" lo haya puesto asi ja
     this.http.get(url, {search}).subscribe(res => {
       console.log(res.json());
       this.rowData= res.json();
       this.gridApi.sizeColumnsToFit();
       this.llenaTabla(res.json(), "getAllRegistrosFromFooterByID");
     });
+  }
+  
+  cambiaCargando(aux3: any){
+    this.cargando=this.cargando+aux3;
+  }
+
+  emitIdObra(idObra: any){
+    this.id_obra = idObra;
+    console.log(this.id_obra);
+    this.opciones = false;
   }
 
   llenaTabla(repuesta: any, caller){
@@ -93,7 +106,7 @@ export class HistoricoOrdenTrabajoComponent implements OnInit{
       this.router.navigate(['login']);
     }else if(repuesta.error==5){
       this.rowData =[];
-      this.noRowDataError="No existen Especimenes pendientes para hoy.";   
+      this.noRowDataError="No existen Ordenes relacionada a la Obra.";   
       this.noRowData=true;
     }else{
       this.noRowData=false;
@@ -132,12 +145,12 @@ export class HistoricoOrdenTrabajoComponent implements OnInit{
    }
 
   masOpciones(){
-     this.opciones=!this.opciones;
-     if(this.opciones){
-       this.opcionesMessage= "Ocultar opciones"
-     }else{
-       this.opcionesMessage= "Mostrar opciones"
-     }
+    this.opciones=!this.opciones;
+    if(this.opciones){
+      this.opcionesMessage= "Mostrar Obras"
+    }else{
+      this.opcionesMessage= ""
+    }
    }
 
   selectOption(){

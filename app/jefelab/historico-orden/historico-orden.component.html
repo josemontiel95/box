@@ -23,14 +23,14 @@
         </div>
         <div class="card-body">
           <div *ngIf="opciones">
-            <historico-filtrado-obras (cargando)="cambiaCargando($event)" (reloadMainGrid)="reloadMainGrid()"></historico-filtrado-obras>
+            <historico-filtrado-obras (cargando)="cambiaCargando($event)" (reloadMainGrid)="reloadMainGrid()" (idObra)="emitIdObra($event)"></historico-filtrado-obras>
           </div>
           <div class="" (click)="masOpciones();">
-            <hr *ngIf="opciones">
-            <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
+            <hr *ngIf="!opciones">
+            <div class="btn-group" *ngIf="!opciones" style="display: flex;align-items: center; justify-content: center;">
               <p>{{opcionesMessage}}</p>
             </div>
-            <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
+            <div class="btn-group" *ngIf="!opciones" style="display: flex;align-items: center; justify-content: center;">
                 <i _ngcontent-c25="" [ngClass]="{'now-ui-icons':true,'arrows-1_minimal-down':!this.opciones ,'arrows-1_minimal-up': this.opciones,'pr-3':true}" ></i>
             </div>
           </div>
@@ -42,7 +42,7 @@
 
   <!-- GRID SECTION -->
 
-  <div class="row"> <!--INICIO ROW PRINCIPAL-->
+  <div class="row" *ngIf="!opciones"> <!--INICIO ROW PRINCIPAL-->
    <div class="col-md-12">
       <div class="card">
         <div class="card-header">
@@ -96,13 +96,4 @@
         </div>
       </div>
     </div> <!--FIN ROW PRINCIPAL-->
-      <div class="row"> <!--INICIO ROW PRINCIPAL-->
-   <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title">FORMATOS PENDIENTES DE ENVIAR A ADMINISTRATIVO:</h4>
-        </div>
-      </div>
-    </div>
-  </div> 
 </div>
