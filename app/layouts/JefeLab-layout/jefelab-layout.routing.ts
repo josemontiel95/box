@@ -26,6 +26,10 @@ import { PruebaVigaComponent } from '../../jefelab/pruebaViga/pruebaViga.compone
 import { ConstruccionComponent } from '../../jefelab/construccion/construccion.component';
 
 import { JLabHistoricoComponent } from '../../jefelab/historico/historico.component';
+import { HistoricoOrdenTrabajoComponent } from '../../jefelab/historico-orden/historico-orden.component';
+import { HistoricoFormatoComponent } from '../../jefelab/historico-formato/historico-formato.component';
+import { HistoricoEspecimenComponent } from '../../jefelab/historico-especimen/historico-especimen.component';
+
 
 import { JLabPendientesComponent } from '../../jefelab/pendientes/pendientes.component';
 
@@ -55,8 +59,11 @@ export const JefeLabLayoutRoutes: Routes = [
     { path: 'orden-trabajo/dashboard/pruebaCubo/:id/:id2/:id3/:id4',      component: PruebaCuboComponent },
     { path: 'orden-trabajo/dashboard/pruebaViga/:id/:id2/:id3/:id4',      component: PruebaVigaComponent },
 
+    //{ path: 'historico',  component: JLabHistoricoComponent },
+    { path: 'historico-orden',  component: HistoricoOrdenTrabajoComponent },
+    { path: 'historico-formato',  component: HistoricoFormatoComponent },
+    { path: 'historico-especimen',  component: HistoricoEspecimenComponent },
 
-    { path: 'historico',  component: JLabHistoricoComponent },
 
     { path: 'pendientes',  component: JLabPendientesComponent },
 

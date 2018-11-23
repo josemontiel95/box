@@ -35,9 +35,9 @@ export const ROUTES2: RouteInfo2[] = [
 ];
 
 export const ROUTES3: RouteInfo3[] = [
-   { path: 'concretera', title: 'Concretera',  icon:'shopping_tag-content', class: '' },
-   { path: 'herramientas', title: 'Herramienta',  icon:'now-ui-icons ui-2_settings-90', class: '' },
-   { path: 'clientes', title: 'Clientes',  icon:'shopping_shop', class: '' },
+   { path: 'historico-orden', title: 'Orden',  icon:'now-ui-icons files_box', class: '' },
+   { path: 'historico-formato', title: 'Formatos',  icon:'now-ui-icons files_paper', class: '' },
+   { path: 'historico-especimen', title: 'Especimenes',  icon:'now-ui-icons files_single-copy-04', class: '' },
 ];
 
 
