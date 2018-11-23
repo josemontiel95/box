@@ -45,6 +45,11 @@ import { HerramientaGridAgregaComponent } from '../../jefelab/herramienta-grida/
 import { TecnicosGridAgregaComponent } from '../../jefelab/tecnicos-grida/tecnicos-grida.component';
 
 import { JLabHistoricoComponent } from '../../jefelab/historico/historico.component';
+import { HistoricoOrdenTrabajoComponent } from '../../jefelab/historico-orden/historico-orden.component';
+import { HistoricoFormatoComponent } from '../../jefelab/historico-formato/historico-formato.component';
+import { HistoricoEspecimenComponent } from '../../jefelab/historico-especimen/historico-especimen.component';
+import { HistoricoFiltradoObrasComponent } from '../../jefelab/historico-filtrado-obras/historico-filtrado-obras.component';
+
 import { HistoricoGridComponent } from '../../jefelab/historico-grid/historico-grid.component';
 
 
@@ -112,6 +117,8 @@ import { OdtEdicionGridComponent } from '../../jefelab/ordenesDeTrabajo-grids/od
     VigaGenericoComponent,
     JLabHistoricoComponent,
     HistoricoGridComponent,
+    HistoricoOrdenTrabajoComponent,
+    HistoricoFiltradoObrasComponent,
 
     llenaFormatoCCHComponent,
     llenaRevenimientoComponent,
@@ -124,7 +131,9 @@ import { OdtEdicionGridComponent } from '../../jefelab/ordenesDeTrabajo-grids/od
     TecGridComponent,
     FechasGridComponent,
     OdtEdicionGridComponent,
-    JLabPendientesComponent
+    JLabPendientesComponent,
+    HistoricoFormatoComponent,
+    HistoricoEspecimenComponent
   ]
 })
 
