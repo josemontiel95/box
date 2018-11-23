@@ -1,18 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
-import { OrdenTrabajo }    from './OrdenTrabajo';
-import * as moment from 'moment';
+import { Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 @Component({
@@ -204,10 +198,8 @@ export class CrearOrdenTrabajoComponent implements OnInit {
 
   llenaObra(resp: any){
     this.mis_obras= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
+    for (var _i = 0; _i < resp.length; _i++){
       this.mis_obras[_i]=resp[_i];
-
     }
     console.log(this.mis_obras);
     this.cargando=this.cargando-1;
