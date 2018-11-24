@@ -11,6 +11,9 @@ import { ObrasComponent } from '../../administrativo/obras/obras.component';
 import { TerminadosComponent } from '../../administrativo/terminados/terminados.component';
 import { GridLotesComponent } from '../../administrativo/grid-lotes/grid-lotes.component';
 import { GridCorreosComponent } from '../../administrativo/grid-correos/grid-correos.component';
+import { InsertarDocumentoComponent } from '../../administrativo/insertar-documento/insertar-documento.component';
+import { MatProgressBarModule } from '@angular/material';
+
 
 /*
 import { DashboardComponent } from '../../dashboard/dashboard.component';
@@ -34,7 +37,8 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
-     AgGridModule.withComponents([]),
+    MatProgressBarModule,
+    AgGridModule.withComponents([]),
     NgbModule,
     ToastrModule.forRoot()
   ],
@@ -46,9 +50,9 @@ import { ToastrModule } from 'ngx-toastr';
       TerminadosComponent,
       dashboardLoteComponent,
       GridLotesComponent,
-      GridCorreosComponent
-   /* DashboardComponent,
-
+      GridCorreosComponent,
+      InsertarDocumentoComponent
+/* 
     TableListComponent,
     TypographyComponent,
     IconsComponent,

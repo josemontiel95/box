@@ -38,13 +38,22 @@ export class dashboardLoteComponent implements OnInit{
   hiddenFormato=true;
 
   mensajeEstado="";
+
+  customMailFlag=false;
+  adjuntoFlag=false;
   
   loteDetailsForm: FormGroup;
 
   loteDetails  = {
     factua: '',
-    observaciones: ''
+    observaciones: '',
+    customMail: '',
+    adjunto: '',
+    adjuntoPath: '',
+    customMailStatus: '',
+    customText: ''
   }
+
   footerForm: FormGroup;
 
   footer  = {
@@ -52,12 +61,16 @@ export class dashboardLoteComponent implements OnInit{
     encargado:'',
     ctrl:'',
     fechaEnsayo: ''
-
   }
 
-   mis_conos: Array<any>;
-   mis_varillas: Array<any>;
-   mis_flexometro: Array<any>;
+  
+
+/* Variables para documentos */
+  pdf;
+  xml;
+/* Variables para iconos de documentos */
+  pdfIcon;
+  xmlIcon;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -88,7 +101,10 @@ export class dashboardLoteComponent implements OnInit{
    
     this.loteDetailsForm = new FormGroup({
       'factua':             new FormControl( {value: this.loteDetails.factua,        disabled: true },  [Validators.required]),
-      'observaciones':      new FormControl( {value: this.loteDetails.observaciones, disabled: true })
+      'observaciones':      new FormControl( {value: this.loteDetails.observaciones, disabled: true }),
+      'customMail':         new FormControl( {value: this.loteDetails.customMail,    disabled: true }),
+      'customText':         new FormControl( {value: this.loteDetails.customText,    disabled: true }),
+      'adjunto':            new FormControl( {value: this.loteDetails.adjunto,       disabled: true })
     });
     this.footerForm = new FormGroup({
       'noCorreos':        new FormControl( {value: this.footer.noCorreos,   disabled: true }),
@@ -100,6 +116,9 @@ export class dashboardLoteComponent implements OnInit{
 
   get factua()         { return this.loteDetailsForm.get('factua'); }
   get observaciones()  { return this.loteDetailsForm.get('observaciones'); }
+  get customMail()     { return this.loteDetailsForm.get('customMail'); }
+  get customText()     { return this.loteDetailsForm.get('customText'); }
+  get adjunto()        { return this.loteDetailsForm.get('adjunto'); }
 
   get noCorreos()      { return this.footerForm.get('noCorreos'); }
   get encargado()      { return this.footerForm.get('encargado'); }
@@ -130,9 +149,6 @@ export class dashboardLoteComponent implements OnInit{
 
   llenado(respuesta:any){
     console.log(respuesta);
-    console.log("llenado :: respuesta.correosNo: "+respuesta.correosNo);
-    console.log("llenado :: respuesta.id_loteCorreos: "+respuesta.id_loteCorreos);
-    console.log("llenado :: respuesta.encargado: "+respuesta.encargado);
 
 
     this.footerForm.patchValue({
@@ -143,11 +159,26 @@ export class dashboardLoteComponent implements OnInit{
     });
     this.loteDetailsForm.patchValue({
       factua:        respuesta.factua,
-      observaciones:  respuesta.observaciones
+      observaciones: respuesta.observaciones,
+      customMail:    respuesta.customMail,
+      customText:    respuesta.customText,
+      adjunto:       respuesta.adjunto
+
     });
+    if(this.loteDetailsForm.getRawValue().customMail==1){
+      this.customMailFlag=true;
+    }else if(this.loteDetailsForm.getRawValue().customMail==0){
+      this.customMailFlag=false;
+    }
+    if(this.loteDetailsForm.getRawValue().adjunto==1){
+      this.adjuntoFlag=true;
+    }else if(this.loteDetailsForm.getRawValue().adjunto==0){
+      this.adjuntoFlag=false;
+    }
 
     this.formatoStatus=respuesta.status;
-
+    this.pdf =  respuesta.pdfPath;
+    this.xml =  respuesta.xmlPath;
     switch(Number(respuesta.status)){
       case 0:
         this.mensajeEstado = "Listo para generar PDFs";
@@ -159,10 +190,34 @@ export class dashboardLoteComponent implements OnInit{
         this.mensajeEstado = "Correos enviados";
       break;
     }
+    if(this.pdf==null){
+      this.pdfIcon = "assets/img/missing.png";
+    }else{
+      this.pdfIcon = "assets/img/doc.png";
+    }
+
+    if(this.xml==null){
+      this.xmlIcon = "assets/img/missing.png";
+    }else{
+      this.xmlIcon = "assets/img/doc.png";
+    }
     console.log(this.formatoStatus);
     this.cargando=this.cargando-1;
   }
-
+  onBlurCustomMail(){
+    if(Number(this.loteDetailsForm.value.customMail)==1){
+      this.customMailFlag=true;
+    }else if(Number(this.loteDetailsForm.value.customMail)==0){
+      this.customMailFlag=false;
+    }
+  }
+  onBlurAdjunto(){
+    if(this.loteDetailsForm.value.adjunto==1){
+      this.adjuntoFlag=true;
+    }else if(this.loteDetailsForm.value.adjunto==0){
+      this.adjuntoFlag=false;
+    }
+  }
   generarPDF(){
     this.cargando=1;
     this.hiddenFormato=false;
@@ -192,6 +247,9 @@ export class dashboardLoteComponent implements OnInit{
     formData.append('id_loteCorreos',     this.loteCorreos);
     formData.append('factua',             this.loteDetailsForm.value.factua);
     formData.append('observaciones',      this.loteDetailsForm.value.observaciones );
+    formData.append('customMail',         this.loteDetailsForm.value.customMail );
+    formData.append('customText',         this.loteDetailsForm.value.customText );
+    formData.append('adjunto',            this.loteDetailsForm.value.adjunto );
 
     this.http.post(url, formData).subscribe(res => this.respuestaError(res.json()) );
   }
@@ -203,6 +261,28 @@ export class dashboardLoteComponent implements OnInit{
       this.mostrar();
       this.cargando=this.cargando-1;
     }
+    if(this.loteDetailsForm.value.adjunto==1){
+      this.adjuntoFlag=true;
+    }else if(this.loteDetailsForm.value.adjunto==0){
+      this.adjuntoFlag=false;
+    }
+  }
+  abrirPDF(){
+    if(this.pdf==null){
+      window.alert("No existe archivo para este lote");
+    }else{
+      window.open(this.global.assetsRoot+this.pdf, "_blank");
+    }
+  }
+  abrirXML(){
+    if(this.xml==null){
+      window.alert("No existe archivo para este lote");
+    }else{
+      window.open(this.global.assetsRoot+this.xml, "_blank");
+    }
+  }
+  subirDoc(docNo: any ){
+    this.router.navigate(['administrativo/insertar-documento/'+this.loteCorreos+'/'+docNo]);
   }
   validaRespuesta(res: any){
     this.cargando=this.cargando-1;
