@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -19,6 +19,14 @@ export class GridCorreosComponent implements OnInit  {
   id_footer: string;
   lote: string;
   rowClassRules;
+  selected=false;
+  pdfLink;
+  tipoNo;
+  id_formato;
+  id_registrosCampo;
+
+  @Output() cambiarCargando = new EventEmitter<any>();
+  @Output() reloadComponent = new EventEmitter<any>();
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -87,20 +95,44 @@ export class GridCorreosComponent implements OnInit  {
     var selectedRows = this.gridApi.getSelectedRows();
     var pdf = "";
     var link = "";
+    var tipoNo = "";
+    var id_formato = "";
+    var id_registrosCampo = "";
+    this.selected=true;
 
     selectedRows.forEach(function(selectedRow, index) {
       pdf = selectedRow.PDF;
-      link = selectedRow.link;
+      link = selectedRow.pdfFinal;
+      tipoNo = selectedRow.tipoNo;
+      id_formato = selectedRow.id_formato;
+      id_registrosCampo = selectedRow.id_registrosCampo;
     });
-    if(pdf == "No"){
-      window.alert("No hay PDF generado");
-    }else{
-      //window.alert("Redireccionando");
-      //this.router.navigate(selectedRows.link);
-      window.open(link, "_blank");
-    }
-    //this.router.navigate(['tecnico/pendientes/dashboardCilindro/pruebaCilindro/'+this.id_footer +'/' +id]);
+    this.tipoNo = tipoNo;
+    this.id_formato = id_formato;
+    this.id_registrosCampo = id_registrosCampo;
+    this.pdfLink=link;
   }
 
+  openPDF(){
+    window.open(this.pdfLink, "_blank");
+  }
+  mandarCorreoFinalAClientes(){
+    this.cambiarCargando.emit(+1); 
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/loteCorreos/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'sentFinalMailAdministrativo');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
 
+    formData.append('tipoNo', this.tipoNo);  
+    formData.append('id_formato', this.id_formato);  
+    formData.append('id_registrosCampo', this.id_registrosCampo);  
+    this.http.post(url, formData).subscribe(res => {
+      this.respuestaMandarCorreoFinalAClientes(res.json());
+    });
+  }
+  respuestaMandarCorreoFinalAClientes(res){
+    this.reloadComponent.emit(+1);
+  }
 }

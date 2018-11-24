@@ -5,6 +5,8 @@ import { dashboardLoteComponent } from '../../administrativo/dashboardLote/dashb
 import { ObraDetailComponent } from '../../administrativo/obra-detail/obra-detail.component';
 import { ObrasComponent } from '../../administrativo/obras/obras.component';
 import { TerminadosComponent } from '../../administrativo/terminados/terminados.component';
+import { InsertarDocumentoComponent } from '../../administrativo/insertar-documento/insertar-documento.component';
+
 /*
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { TableListComponent } from '../../table-list/table-list.component';
@@ -23,6 +25,7 @@ export const SubAdminLayoutRoutes: Routes = [
     { path: 'obras/obra-detail/:id',   component: ObraDetailComponent },
     { path: 'ordenes',   component: OrdenesComponent },
     { path: 'obras/dashboardLote/:id',   component: dashboardLoteComponent },
+    { path: 'insertar-documento/:id/:id2',   component: InsertarDocumentoComponent },
 
     /*
     { path: 'dashboard',      component: DashboardComponent },

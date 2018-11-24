@@ -30,9 +30,7 @@
     <div class="col-md-12 col-12">
       <div class="card  card-tasks">
         <div class="card-header" >
-            <div class="card-header " >
-                  <h4 style="text-align: center;" class="card-title">LOTE DE CORREOS</h4>
-            </div>
+          <h4 style="text-align: center;" class="card-title">LOTE DE CORREOS</h4>
         </div>
         <div class="card-body">
           
@@ -47,9 +45,11 @@
   <div class="row">
     <div class="col-md-12 ml-auto mr-auto">
       <div class="card">
+        <div class="card-header" >
+          <h4 style="text-align: center;" class="card-title">Factura y observaciones</h4>
+        </div>
         <div class="card-body">
           <form (ngSubmit)="onSubmit()" [formGroup]=loteDetailsForm #formDir="ngForm">
-            <h6>Factura y observaciones</h6>
             <div class="row">
               <div class="col-md-12 col-12">
                   <div class="form-group">
@@ -62,11 +62,42 @@
             <div class="row">
               <div class="col-md-12 col-12">
                   <div class="form-group">
-                  <label for="observaciones">Observaciones</label>
+                  <label for="observaciones">Observaciones Internas</label>
                   <textarea class="form-control" id="observaciones" formControlName="observaciones"></textarea>
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="customMail">Adjuntar texto peronalizado</label>
+                  <select class="form-control" id="customMail" formControlName="customMail" (change)="onBlurCustomMail()">
+                    <option value="0">NO</option>  
+                    <option value="1">SI</option>  
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="customMailFlag">
+              <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="customText">Texto personalizado</label>
+                  <textarea class="form-control" id="customText" formControlName="customText"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="adjunto">Adjuntar Factura</label>
+                  <select class="form-control" id="adjunto" formControlName="adjunto" >
+                    <option value="0">NO</option>  
+                    <option value="1">SI</option>  
+                  </select>
+                </div>
+              </div>
+            </div>
+            
             <div class="btn-group"  style="float: right; padding-right: 10%;">
                 <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                   <span><b> Cambiar Datos. </b></span>
@@ -79,6 +110,35 @@
         </div>
       </div>
     </div> 
+  </div>
+  <div class="row" *ngIf="adjuntoFlag">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header" >
+          <h4 style="text-align: center;" class="card-title">Adjuntar PDF y XML</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 col-12 ">
+              <p style="text-align: center;"><b>PDF</b></p>
+              <img class="imageDoc" [src]="this.pdfIcon" (click)="abrirPDF()" alt="...">
+              <br>
+              <button class="btn btn-info buttonDoc" (click)="subirDoc(1)">
+                <span><b> Cambiar PDF</b></span>
+              </button>
+            </div>
+            <div class="col-md-6 col-12 ">
+              <p style="text-align: center;"><b>XML</b></p>
+              <img class="imageDoc" [src]="this.xmlIcon" (click)="abrirXML()" alt="...">
+              <br>
+              <button class="btn btn-info buttonDoc" (click)="subirDoc(2)">
+                <span><b> Cambiar XML</b></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="row">
@@ -104,7 +164,7 @@
             <div class="row">
               <div class="col-md-6 col-12">
                  <div class="form-group">
-                  <label for="noCorreos">N&uacute;mero de Correos</label>
+                  <label for="noCorreos">N&uacute;mero de Reportes</label>
                   <input type="text" class="form-control" id="noCorreos" name="noCorreos" formControlName="noCorreos">
                 </div>
               </div>
