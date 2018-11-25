@@ -1,15 +1,11 @@
 import { Component, OnInit} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
-    FormControl,
-    Validators,
-    FormBuilder
+    FormControl
 } from '@angular/forms';
 
 @Component({
@@ -21,7 +17,6 @@ export class TerminadosComponent implements OnInit{
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   id= "";
@@ -35,26 +30,20 @@ export class TerminadosComponent implements OnInit{
   actBut=false;
   imgUrl="";
   cargando= 1;
-  tipoForm: FormGroup;
   mis_tipos: Array<any>;
   formatosSeleccionados: Array<any>;
   status="1";
 
-  forma={
-    formato_tipo_id:'0'
-  };
 
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
-      {headerName: 'INFORME N&Uacute;MERO', field: 'informeNo' },
-      {headerName: 'COTIZACI&Oacute;N', field: 'cotizacion' },
-      {headerName: 'OBRA', field: 'obra' },
-      {headerName: 'EMAIL CLIENTE', field: 'emailCliente' },
-      {headerName: 'EMAIL RESIDENTE DE OBRA', field: 'emailResidente' },
       {headerName: 'RAZ&Oacute;N SOCIAL', field: 'razonSocial' },
-      {headerName: 'PDF', field: 'PDF' },
-      {headerName: 'LOTE', field: 'id_loteCorreos' },
+      {headerName: 'COTIZACI&Oacute;N', field: 'cotizacion' },
+      {headerName: 'Identificador', field: 'informeNo' },
+      {headerName: 'Factura', field: 'factua' },
+      {headerName: 'TIPO', field: 'tipoObra' },
+      {headerName: 'F. Colado', field: 'fechaColado' },
 
     ];
     this.rowSelection = "multiple";
@@ -65,33 +54,10 @@ export class TerminadosComponent implements OnInit{
   ngOnInit() {
     this.route.params.subscribe( params => this.id=params.id );
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.cargando=2;
-
-    let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
-    let search = new URLSearchParams();
-    search.set('function', 'getAllFormatos');
-    search.set('token', this.global.token);
-    search.set('rol_usuario_id', this.global.rol);
-    this.http.get(url, {search}).subscribe(res => this.llenaLotes(res.json()) );
-
-    this.tipoForm = new FormGroup({
-      'lotes': new FormControl(  this.forma.formato_tipo_id)
-    });
+    this.cargando=1;
   }
 
-   get lotes() { return this.tipoForm.get('lotes'); } 
 
-  llenaLotes(resp: any){
-    console.log("Hola!!!");
-    console.log(resp);
-    this.mis_tipos= new Array(resp.length);
-    for (var _i = 0; _i < resp.length; _i++ )
-    {
-      this.mis_tipos[_i]=resp[_i];
-    }
-    this.cargando=this.cargando-1;
-    console.log("llenaTipos this.cargando: "+this.cargando);
-  }
 
 
   crearObra(){
@@ -101,46 +67,20 @@ export class TerminadosComponent implements OnInit{
   detalleObra(){ //Cambialo a detalleObra
     this.router.navigate(['administrador/obras/obra-detail/'+this.id]);
   }
-  seleccionaLote(){
-    if(this.tipoForm.value.lotes == -1){
-      //window.alert("seleccionaLote :: IF : -1");
-        if(window.confirm("¿Estas seguro de crear un nuevo lote de correos? Ya NO podrás eliminarlo despues.")){
-          this.agregaFormatos();
-        }else{
-          return;
-        }
-    }else{
-      this.agregaFormatos();
-      //window.alert("seleccionaLote :: ELSE: "+this.tipoForm.value.lotes);
-    }
-  }
-
-  agregaFormatos(){
-    window.alert("POR EL MOMENTO EL FORMATO DE VIGAS NO DISPONIBLE. IGNORANDO ESTOS FORMATOS");
-    let url = `${this.global.apiRoot}/loteCorreos/post/endpoint.php`;
-    let formData:FormData = new FormData();
-    formData.append('function', 'agregaFormatos');
-    formData.append('rol_usuario_id', this.global.rol);
-    formData.append('token', this.global.token);
-    formData.append('lote', this.tipoForm.value.lotes);
-    formData.append('formatosSeleccionados', JSON.stringify(this.formatosSeleccionados));
-    this.http.post(url, formData).subscribe(res => {
-                                                    this.respuestaSwitch(res.json());
-    });
-  }
+  
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
 
     let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAllFormatos');
+    search.set('function', 'getAllAdministrativoFULL');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.llenaTabla(res.json());
@@ -228,7 +168,7 @@ export class TerminadosComponent implements OnInit{
 
     selectedRows.forEach(function(selectedRow, index) {
       pdf = selectedRow.PDF;
-      link = selectedRow.link;
+      link = selectedRow.pdfFinal;
     });
     if(pdf == "No"){
       window.alert("No hay PDF generado");

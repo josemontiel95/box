@@ -33,6 +33,7 @@
           </div>  
         </form>
         <div class="card-body" *ngIf="!selectLote">
+          <p style="color: red;"><b>{{noRowDataError}}</b></p>
           <ag-grid-angular 
             #agGrid
             id="myGrid"
@@ -61,7 +62,7 @@
           <h4 class="card-title">Lotes pendientes</h4>
         </div>
         <div class="card-body">
-          <app-grid-lotes></app-grid-lotes>
+          <app-grid-lotes (cambiarCargando)="cambiarCargando($event)"></app-grid-lotes>
         </div>
       </div>
     </div>

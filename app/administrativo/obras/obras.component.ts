@@ -29,12 +29,14 @@ export class ObrasComponent implements OnInit{
   desBut=true;
   actBut=false;
   imgUrl="";
-  cargando= 1;
+  cargando= 0;
   tipoForm: FormGroup;
   mis_tipos: Array<any>;
   formatosSeleccionadosCCH: Array<any>;
-formatosSeleccionadosRev: Array<any>;
+  formatosSeleccionadosRev: Array<any>;
   status="1";
+
+  noRowDataError;
 
   forma={
     formato_tipo_id:''
@@ -61,7 +63,7 @@ formatosSeleccionadosRev: Array<any>;
   ngOnInit() {
     this.route.params.subscribe( params => this.id=params.id );
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.cargando=2;
+    this.cargando=this.cargando+1;
 
     let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -84,17 +86,17 @@ formatosSeleccionadosRev: Array<any>;
     }else{
       console.log(resp);
       this.mis_tipos= new Array(resp.length);
-      for (var _i = 0; _i < resp.length; _i++ )
-      {
+      for (var _i = 0; _i < resp.length; _i++ ){
         this.mis_tipos[_i]=resp[_i];
       }
       console.log("llenaTipos this.cargando: "+this.cargando);
     }
     this.cargando=this.cargando-1;
-
-   
   }
 
+  cambiarCargando(num){
+    this.cargando=this.cargando+num;
+  }
 
   crearObra(){
     this.router.navigate(['administrador/obras/crear-obra']);
@@ -133,10 +135,8 @@ formatosSeleccionadosRev: Array<any>;
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    console.log("this.global.apiRoot"+this.global.apiRoot);
-    console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
-
+    this.cargando=this.cargando+1;
     let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllAdministrativo');
@@ -145,7 +145,6 @@ formatosSeleccionadosRev: Array<any>;
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.llenaTabla(res.json());
-                                            this.llenadoValidator(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
   }
@@ -155,21 +154,17 @@ formatosSeleccionadosRev: Array<any>;
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.error==5){
+      this.rowData =[];
+      this.noRowDataError="No tienes lotes pendientes.";
     }else{
       this.rowData =repuesta;
+      this.noRowDataError="";
+
     }
     this.cargando=this.cargando-1;
   }
   
-  llenadoValidator(respuesta: any){
-    console.log(respuesta)
-    if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
-      window.alert(respuesta.estatus);
-    }
-    else{
-     
-    }
-  }
    menosDetalles(){
      this.hidden=false;
    }
