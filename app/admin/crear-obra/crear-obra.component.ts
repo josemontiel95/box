@@ -17,8 +17,7 @@ import {
   templateUrl: './crear-obra.component.html',
   styleUrls: ['./crear-obra.component.scss','../../loadingArrows.css']
 })
-export class CrearObraComponent implements OnInit
-  {
+export class CrearObraComponent implements OnInit{
   global: Global;
   constructor(private router: Router, 
               private data: DataService, 

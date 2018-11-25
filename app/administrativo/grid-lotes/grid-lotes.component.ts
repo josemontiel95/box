@@ -1,5 +1,5 @@
-import { Component, OnInit} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,13 +13,16 @@ export class GridLotesComponent implements OnInit  {
 	title = 'app';
   global: Global;
   private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   id_orden: string;
   id_footer: string;
   rowClassRules;
   status="2";
+  noRowDataError;
+  isValid;
+  @Output() cambiarCargando = new EventEmitter<any>();
+
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -53,7 +56,7 @@ export class GridLotesComponent implements OnInit  {
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
+    this.cambiarCargando.emit(+1); 
 
     let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -63,19 +66,26 @@ export class GridLotesComponent implements OnInit  {
     search.set('status', this.status);
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
-                                            this.rowData= res.json();
+                                            this.llenaTabla(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                             //this.cargando=this.cargando-1;
                                           });
   }
 
   llenaTabla(repuesta: any){
+    this.cambiarCargando.emit(-1); 
+
     console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.error==5){
+      this.rowData =[];
+      this.noRowDataError="No tienes lotes pendientes.";
     }else{
       this.rowData =repuesta;
+      this.noRowDataError="";
+
     }
   }
 
@@ -88,6 +98,7 @@ export class GridLotesComponent implements OnInit  {
       id += selectedRow.id_loteCorreos;
       
     });
+    this.cambiarCargando.emit(+1); 
        this.router.navigate(['administrativo/obras/dashboardLote/'+id]);
   }
 
