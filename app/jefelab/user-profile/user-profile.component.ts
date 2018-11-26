@@ -174,6 +174,7 @@ export class UserProfileComponent implements OnInit {
 
 
   actualizarUsuario(){
+    this.cargando = this.cargando +1;
     let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function',           'upDateAdmin');
@@ -195,6 +196,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   respuestaError(resp: any){
+    this.cargando = this.cargando -1;
     if(resp.error!=0){
       window.alert(resp.estatus);
       location.reload();
