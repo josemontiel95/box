@@ -41,7 +41,7 @@ export class HistoricoOrdenTrabajoComponent implements OnInit{
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'CTRL', field: 'obra_id' },
+    {headerName: 'CTRL', field: 'id_ordenDeTrabajo' },
     {headerName: 'OBRA', field: 'obra' },    
     {headerName: 'ACTIVIDADES', field: 'actividades' },
     {headerName: 'LUGAR', field: 'lugar' },
@@ -84,7 +84,7 @@ export class HistoricoOrdenTrabajoComponent implements OnInit{
       console.log(res.json());
       this.rowData= res.json();
       this.gridApi.sizeColumnsToFit();
-      this.llenaTabla(res.json(), "getAllRegistrosFromFooterByID");
+      this.llenaTabla(res.json(), "getByObraJefaLab");
     });
   }
   

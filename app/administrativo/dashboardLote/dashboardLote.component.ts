@@ -41,6 +41,7 @@ export class dashboardLoteComponent implements OnInit{
 
   customMailFlag=false;
   adjuntoFlag=false;
+  mainGridVisible=true;
   
   loteCompletado=false;
   loteDetailsForm: FormGroup;
@@ -343,6 +344,7 @@ export class dashboardLoteComponent implements OnInit{
       return;
     }
     this.cargando=this.cargando+1;
+    this.mainGridVisible=false;
     this.hiddenFormato=false;
     let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -353,6 +355,7 @@ export class dashboardLoteComponent implements OnInit{
     search.set('all',             '0');
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
+                                            this.mainGridVisible=true;
                                             this.validaRespuesta(res.json());
                                           });
   } 
@@ -362,6 +365,7 @@ export class dashboardLoteComponent implements OnInit{
       return;
     }
     this.cargando=this.cargando+1;
+    this.mainGridVisible=false;
     this.hiddenFormato=false;
     let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -372,6 +376,7 @@ export class dashboardLoteComponent implements OnInit{
     search.set('all',             '1');
     this.http.get(url, {search}).subscribe(res => {
       console.log(res.json());
+      this.mainGridVisible=true;
       this.validaRespuesta(res.json());
     });
   } 
@@ -381,6 +386,7 @@ export class dashboardLoteComponent implements OnInit{
       return;
     }
     this.cargando=this.cargando+1;
+    this.mainGridVisible=false;
     this.hiddenFormato=false;
     let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -390,6 +396,7 @@ export class dashboardLoteComponent implements OnInit{
     search.set('lote',            this.loteCorreos);
     this.http.get(url, {search}).subscribe(res => {
       console.log(res.json());
+      this.mainGridVisible=true;
       this.validaRespuesta(res.json());
     });
   } 
@@ -400,6 +407,7 @@ export class dashboardLoteComponent implements OnInit{
       return;
     }
     this.cargando=this.cargando+1;
+    this.mainGridVisible=false;
     let url = `${this.global.apiRoot}/loteCorreos/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'completarLote');
@@ -409,9 +417,13 @@ export class dashboardLoteComponent implements OnInit{
 
     this.http.post(url, formData).subscribe(res => {
       this.validaRespuesta(res.json());
+      this.mainGridVisible=true;
     });
   }
-  
+
+  cambiarCargando(num){
+    this.cargando=this.cargando+num;
+  }
     
   respuestaSwitch(res: any){ 
     this.cargando=this.cargando-1;

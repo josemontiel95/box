@@ -61,8 +61,8 @@ export const JefeLabLayoutRoutes: Routes = [
 
     //{ path: 'historico',  component: JLabHistoricoComponent },
     { path: 'historico-orden',  component: HistoricoOrdenTrabajoComponent },
-    { path: 'historico-formato',  component: HistoricoFormatoComponent },
-    { path: 'historico-especimen',  component: HistoricoEspecimenComponent },
+    { path: 'historico-formato',  component: ConstruccionComponent },
+    { path: 'historico-especimen',  component: ConstruccionComponent },
 
 
     { path: 'pendientes',  component: JLabPendientesComponent },

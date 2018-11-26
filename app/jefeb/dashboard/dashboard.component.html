@@ -336,7 +336,7 @@
         <div class="card-body">
             
             <div class="btn-group" style="display: flex;align-items: center; justify-content: center;">
-                  <button class="btn btn-default" [ngClass]="{'btn':true ,'btn-success': formatoStatus == 1, 'btn-default': formatoStatus > 1 }" style="" [disabled]="!edicionJLab" (click)="obtenStatusFormatos();">
+                  <button class="btn btn-default" [ngClass]="{'btn':true ,'btn-success': formatoStatus == 1, 'btn-default': formatoStatus > 1 }"  [disabled]="!edicionJLab" (click)="obtenStatusFormatos();">
                     <span><b>COMPLETAR ORDEN DE TRABAJO &nbsp;&nbsp;</b></span>
                     <i class="fa fa-check-square-o" style="font-size:18px; display: inline-block; "></i>
                   </button>

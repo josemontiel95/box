@@ -55,8 +55,8 @@
         </div>
         <div class="card-body">
           
-          <div>
-           <app-grid-correos></app-grid-correos>
+          <div *ngIf="mainGridVisible">
+           <app-grid-correos (cambiarCargando)="cambiarCargando($event)"></app-grid-correos>
           </div>
         </div>
       </div>

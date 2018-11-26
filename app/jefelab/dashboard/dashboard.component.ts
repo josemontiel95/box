@@ -627,13 +627,13 @@ export class DashboardComponent implements OnInit {
 
     let isValid = true;
     res.forEach(function (value) {
-      if(value.status == "0"){
+      if(value.status == "2"){
          isValid = false;
       }
     });
 
     if(!isValid){
-      window.alert("Tienes al menos un formato incompleto, todos los formatos deben estar en ESTATUS:1 para completar esta orden de trabajo.");     
+      window.alert("Tienes al menos un formato incompleto, todos los formatos deben estar ensayados,autorizados y completados para completar esta orden de trabajo.");     
     }else{
           if(window.confirm("¿Estas seguro de marcar como completado la orden de trabajo? ya no podra ser editarlo y seras redireccionado a evaluar la herramienta.")){
             this.evaluaHerra();
