@@ -13,6 +13,7 @@ export class HistoricoFormatoComponent implements OnInit{
   title = 'app';
   id_Footer: string;
   obra: string;
+  id_obra: string; //Esta es el id de la obra que va a filtrarse.
   nombre_jefe_brigada_id: string;
   actividades: string;
   condicionesTrabajo: string;
@@ -35,13 +36,17 @@ export class HistoricoFormatoComponent implements OnInit{
   selected = false;
   tipoNo;
   ordenTrabajo;
+  opciones = true;
+  opcionesMessage = "Mostrar Obras";
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
-    {headerName: 'CTRL FORMATO', field: 'id' },    
-    {headerName: 'INFORME N&Uacute;MERO', field: 'informeNo' },
-    {headerName: 'TIPO', field: 'tipo' },
-    {headerName: 'ACCION REQUERIDA', field: 'accReq' }
+    {headerName: 'CTRL', field: 'obra_id' },
+    {headerName: 'OBRA', field: 'obra' },    
+    {headerName: 'ACTIVIDADES', field: 'actividades' },
+    {headerName: 'LUGAR', field: 'lugar' },
+    {headerName: 'OBSERVACIONES', field: 'observaciones' },
+    {headerName: 'ESTADO', field: 'estado' }
   ];
     this.rowSelection = "single";
     this.rowClassRules = {
@@ -70,11 +75,12 @@ export class HistoricoFormatoComponent implements OnInit{
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
 
-    let url = `${this.global.apiRoot}/footerEnsayo/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
-    search.set('function', 'getAwaitingApproval');
+    search.set('function', 'getByObraJefaLab');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('id_obra', this.id_obra); //Confirma que "Jose Maria" lo haya puesto asi ja
     this.http.get(url, {search}).subscribe(res => {
       console.log(res.json());
       this.rowData= res.json();
@@ -102,6 +108,25 @@ export class HistoricoFormatoComponent implements OnInit{
   cambiarCargando(num){
     this.cargando=this.cargando + num;
   }
+
+  emitIdObra(idObra: any){
+    this.id_obra = idObra;
+    console.log(this.id_obra);
+    this.opciones = false;
+  }
+
+  cambiaCargando(aux3: any){
+    this.cargando=this.cargando+aux3;
+  }
+
+  masOpciones(){
+    this.opciones=!this.opciones;
+    if(this.opciones){
+      this.opcionesMessage= "Mostrar Obras"
+    }else{
+      this.opcionesMessage= ""
+    }
+   }
 
  onSelectionChanged(event: EventListenerObject) {
     var selectedRows = this.gridApi.getSelectedRows();
