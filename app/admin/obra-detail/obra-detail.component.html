@@ -83,31 +83,122 @@
                 </div>
               </div><!-- FIN NOVENO CAMPO -->  
             </div><!-- FIN SEGUNDO ROW -->
+            <hr>
+            <br><h6>Consecutivos de documentos</h6><br>
             <div class="row"> <!-- INICIO SEXTO ROW -->
-             <div class="col-md-6 col-12"> <!-- INICIO SEGUNDO CAMPO -->
+              <div class="col-md-12 col-12"> <!-- INICIO SEGUNDO CAMPO -->
                 <div class="form-group">
-                  <label>Consecutivo de documentos</label>
-                  <input type="text" id="consecutivoDocumentos"  required  class="form-control" placeholder="consecutivoDocumentos" formControlName="consecutivoDocumentos">
-                  <div *ngIf="consecutivoDocumentos.invalid && (consecutivoDocumentos.dirty || consecutivoDocumentos.touched)"
-                    class="alert alert-danger">    
-                    <div *ngIf="consecutivoDocumentos.errors.required">
-                      Consecutivo de documentos requerido.
-                    </div>
-                    <div *ngIf="consecutivoDocumentos.errors.pattern">Consecutivo de documentos solo debe contener numeros</div>              
+                  <label for="consecutivoDocumentosCCH_REV">Consecutivo de documentos de <b>Revenimientos</b></label>
+                  <input type="text" id="consecutivoDocumentosCCH_REV"  required name="consecutivoDocumentosCCH_REV" class="form-control" placeholder="consecutivoDocumentosCCH_REV" formControlName="consecutivoDocumentosCCH_REV">
+                  <div *ngIf="consecutivoDocumentosCCH_REV.invalid && (consecutivoDocumentosCCH_REV.dirty || consecutivoDocumentosCCH_REV.touched)"class="alert alert-danger">    
+                    <div *ngIf="consecutivoDocumentosCCH_REV.errors.required">Consecutivo de documentos requerido.</div>
+                    <div *ngIf="consecutivoDocumentosCCH_REV.errors.pattern">Consecutivo de documentos solo debe contener numeros</div>              
                   </div>
                 </div>
               </div> <!-- FIN SEGUNDO CAMPO -->  
-              <div class="col-md-6 col-12"> <!-- INICIO DECIMO CAMPO -->
+            </div><!-- FIN SEGUNDO ROW -->
+            <div class="row"> <!-- INICIO SEXTO ROW -->
+             <div class="col-md-4 col-12"> <!-- INICIO SEGUNDO CAMPO -->
                 <div class="form-group">
-                  <label>Consecutivo de Probeta</label>
-                  <input type="text" id="consecutivoProbeta" required  class="form-control" placeholder="Consecutivo" value="1" formControlName="consecutivoProbeta">
-                  <div *ngIf="consecutivoProbeta.invalid && (consecutivoProbeta.dirty || consecutivoProbeta.touched)" class="alert alert-danger">            
-                    <div *ngIf="consecutivoProbeta.errors.required">Consecutivo de Probeta requerido.</div>
-                    <div *ngIf="consecutivoProbeta.errors.pattern">Consecutivo de Probeta solo debe contener numeros</div>              
+                  <label for="consecutivoDocumentosCCH_VIGA">Consecutivo de documentos de <b>Vigas</b></label>
+                  <input type="text" id="consecutivoDocumentosCCH_VIGA"  required name="consecutivoDocumentosCCH_VIGA" class="form-control" placeholder="consecutivoDocumentosCCH_VIGA" formControlName="consecutivoDocumentosCCH_VIGA">
+                  <div *ngIf="consecutivoDocumentosCCH_VIGA.invalid && (consecutivoDocumentosCCH_VIGA.dirty || consecutivoDocumentosCCH_VIGA.touched)" class="alert alert-danger">    
+                    <div *ngIf="consecutivoDocumentosCCH_VIGA.errors.required">Consecutivo de documentos requerido.</div>
+                    <div *ngIf="consecutivoDocumentosCCH_VIGA.errors.pattern">Consecutivo de documentos solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div> <!-- FIN SEGUNDO CAMPO -->  
+              <div class="col-md-4 col-12"> <!-- INICIO SEGUNDO CAMPO -->
+                <div class="form-group">
+                  <label for="consecutivoDocumentosCCH_CILINDRO">Consecutivo de documentos de <b>Cilindros</b></label>
+                  <input type="text" id="consecutivoDocumentosCCH_CILINDRO"  required name="consecutivoDocumentosCCH_CILINDRO" class="form-control" placeholder="consecutivoDocumentosCCH_CILINDRO" formControlName="consecutivoDocumentosCCH_CILINDRO">
+                  <div *ngIf="consecutivoDocumentosCCH_CILINDRO.invalid && (consecutivoDocumentosCCH_CILINDRO.dirty || consecutivoDocumentosCCH_CILINDRO.touched)" class="alert alert-danger">    
+                    <div *ngIf="consecutivoDocumentosCCH_CILINDRO.errors.required">Consecutivo de documentos requerido.</div>
+                    <div *ngIf="consecutivoDocumentosCCH_CILINDRO.errors.pattern">Consecutivo de documentos solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div> <!-- FIN SEGUNDO CAMPO -->  
+              <div class="col-md-4 col-12"> <!-- INICIO SEGUNDO CAMPO -->
+                <div class="form-group">
+                  <label for="consecutivoDocumentosCCH_CUBO">Consecutivo de documentos de <b>Cubos</b></label>
+                  <input type="text" id="consecutivoDocumentosCCH_CUBO"  required name="consecutivoDocumentosCCH_CUBO" class="form-control" placeholder="consecutivoDocumentosCCH_CUBO" formControlName="consecutivoDocumentosCCH_CUBO">
+                  <div *ngIf="consecutivoDocumentosCCH_CUBO.invalid && (consecutivoDocumentosCCH_CUBO.dirty || consecutivoDocumentosCCH_CUBO.touched)" class="alert alert-danger">    
+                    <div *ngIf="consecutivoDocumentosCCH_CUBO.errors.required"> Consecutivo de documentos requerido.</div>
+                    <div *ngIf="consecutivoDocumentosCCH_CUBO.errors.pattern">Consecutivo de documentos solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div> <!-- FIN SEGUNDO CAMPO -->  
+            </div> <!-- FIN SEXTO ROW -->
+            <hr>
+            <br><h6>Consecutivos de probetas</h6><br>
+            <div class="row"> <!-- INICIO SEXTO ROW -->
+              <div class="col-md-4 col-12"> <!-- INICIO DECIMO CAMPO -->
+                <div class="form-group">
+                  <label for="consecutivoProbetaCCH_VIGA">Consecutivo de Probeta de <b>Viga</b></label>
+                  <input type="text" id="consecutivoProbetaCCH_VIGA" name="consecutivoProbetaCCH_VIGA" class="form-control" placeholder="Consecutivo" value="1" formControlName="consecutivoProbetaCCH_VIGA">
+                  <div *ngIf="consecutivoProbetaCCH_VIGA.invalid && (consecutivoProbetaCCH_VIGA.dirty || consecutivoProbetaCCH_VIGA.touched)" class="alert alert-danger">            
+                    <div *ngIf="consecutivoProbetaCCH_VIGA.errors.required">Consecutivo de Probeta requerido.</div>
+                    <div *ngIf="consecutivoProbetaCCH_VIGA.errors.pattern">Consecutivo de Probeta solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div><!-- FIN DECIMO CAMPO --> 
+              <div class="col-md-4 col-12"> <!-- INICIO DECIMO CAMPO -->
+                <div class="form-group">
+                  <label for="consecutivoProbetaCCH_CILINDRO">Consecutivo de Probeta de <b>Cilindro</b></label>
+                  <input type="text" id="consecutivoProbetaCCH_CILINDRO" name="consecutivoProbetaCCH_CILINDRO" class="form-control" placeholder="Consecutivo" value="1" formControlName="consecutivoProbetaCCH_CILINDRO">
+                  <div *ngIf="consecutivoProbetaCCH_CILINDRO.invalid && (consecutivoProbetaCCH_CILINDRO.dirty || consecutivoProbetaCCH_CILINDRO.touched)" class="alert alert-danger">            
+                    <div *ngIf="consecutivoProbetaCCH_CILINDRO.errors.required">Consecutivo de Probeta requerido.</div>
+                    <div *ngIf="consecutivoProbetaCCH_CILINDRO.errors.pattern">Consecutivo de Probeta solo debe contener numeros</div>              
+                  </div>
+                </div>
+              </div><!-- FIN DECIMO CAMPO --> 
+              <div class="col-md-4 col-12"> <!-- INICIO DECIMO CAMPO -->
+                <div class="form-group">
+                  <label for="">Consecutivo de Probeta de <b>Cubo</b></label>
+                  <input type="text" id="consecutivoProbetaCCH_CUBO" name="consecutivoProbetaCCH_CUBO" class="form-control" placeholder="Consecutivo" value="1" formControlName="consecutivoProbetaCCH_CUBO">
+                  <div *ngIf="consecutivoProbetaCCH_CUBO.invalid && (consecutivoProbetaCCH_CUBO.dirty || consecutivoProbetaCCH_CUBO.touched)" class="alert alert-danger">
+                    <div *ngIf="consecutivoProbetaCCH_CUBO.errors.required">Consecutivo de Probeta requerido.</div>
+                    <div *ngIf="consecutivoProbetaCCH_CUBO.errors.pattern">Consecutivo de Probeta solo debe contener numeros</div>              
                   </div>
                 </div>
               </div><!-- FIN DECIMO CAMPO --> 
             </div> <!-- FIN SEXTO ROW -->
+            <hr>
+            <br><h6>Incertidumbres</h6><br>
+            <div class="row"> <!-- INICIO TERCER ROW -->
+              <div class="col-md-4 col-12"> <!-- INICIO DECIMO CAMPO -->
+                <div class="form-group">
+                  <label for="incertidumbreVigas">Incertidumbre <b>Vigas</b></label>
+                  <input type="text" id="incertidumbreVigas" name="incertidumbreVigas" required class="form-control" placeholder="Incertidumbre Vigas" formControlName="incertidumbreVigas">
+                  <div *ngIf="incertidumbreVigas.invalid && (incertidumbreVigas.dirty || incertidumbreVigas.touched)" class="alert alert-danger">            
+                    <div *ngIf="incertidumbreVigas.errors.required">Incertidumbre requerido.</div>
+                    <div *ngIf="incertidumbreVigas.errors.pattern">Incertidumbre solo debe contener decimales (precisi&oacute;n a centecimas) o enteros</div>              
+                  </div>
+                </div>
+              </div><!-- FIN DECIMO CAMPO --> 
+              <div class="col-md-4 col-12"> <!-- INICIO DECIMO CAMPO -->
+                <div class="form-group">
+                  <label for="incertidumbreCilindro">Incertidumbre de <b>Cilindros</b></label>
+                  <input type="text" id="incertidumbreCilindro" name="incertidumbreCilindro" required class="form-control" placeholder="Incertidumbre Cilindros" formControlName="incertidumbreCilindro">
+                  <div *ngIf="incertidumbreCilindro.invalid && (incertidumbreCilindro.dirty || incertidumbreCilindro.touched)" class="alert alert-danger">            
+                    <div *ngIf="incertidumbreCilindro.errors.required">Incertidumbre requerido.</div>
+                    <div *ngIf="incertidumbreCilindro.errors.pattern">Incertidumbre solo debe contener decimales (precisi&oacute;n a centecimas) o enteros</div>              
+                  </div>
+                </div>
+              </div><!-- FIN DECIMO CAMPO --> 
+              <div class="col-md-4 col-12"> <!-- INICIO DECIMO CAMPO -->
+                <div class="form-group">
+                  <label for="incertidumbreCubo">Incertidumbre <b>Cubos</b></label>
+                  <input type="text" id="incertidumbreCubo" name="incertidumbreCubo" required class="form-control" placeholder="Incertidumbre Cubos" formControlName="incertidumbreCubo">
+                  <div *ngIf="incertidumbreCubo.invalid && (incertidumbreCubo.dirty || incertidumbreCubo.touched)" class="alert alert-danger">            
+                    <div *ngIf="incertidumbreCubo.errors.required">Incertidumbre requerido.</div>
+                    <div *ngIf="incertidumbreCubo.errors.pattern">Incertidumbre solo debe contener decimales (precisi&oacute;n a centecimas) o enteros</div>              
+                  </div>
+                </div>
+              </div><!-- FIN DECIMO CAMPO --> 
+            </div> <!-- FIN SEXTO ROW -->
+            <hr>
+            <br>
             <div class="row"> <!-- INICIO SEXTO ROW -->
               <div class="col-md-6 col-12"> <!-- INICIO NOVENO CAMPO -->
                 <div class="form-group">
@@ -126,38 +217,6 @@
                   <div *ngIf="incertidumbre.invalid && (incertidumbre.dirty || incertidumbre.touched)" class="alert alert-danger">            
                     <div *ngIf="incertidumbre.errors.required">Incertidumbre requerido.</div>
                     <div *ngIf="incertidumbre.errors.pattern">Incertidumbre solo debe contener decimales (precisi&oacute;n a centecimas) o enteros</div>              
-                  </div>
-                </div>
-              </div><!-- FIN DECIMO CAMPO --> 
-            </div> <!-- FIN SEXTO ROW -->
-            <div class="row"> <!-- INICIO TERCER ROW -->
-              <div class="col-md-4 col-12"> <!-- INICIO DECIMO CAMPO -->
-                <div class="form-group">
-                  <label for="incertidumbreCilindro">Incertidumbre de Cilindros</label>
-                  <input type="text" id="incertidumbreCilindro" name="incertidumbreCilindro" required class="form-control" placeholder="Incertidumbre Cilindros" formControlName="incertidumbreCilindro">
-                  <div *ngIf="incertidumbreCilindro.invalid && (incertidumbreCilindro.dirty || incertidumbreCilindro.touched)" class="alert alert-danger">            
-                    <div *ngIf="incertidumbreCilindro.errors.required">Incertidumbre requerido.</div>
-                    <div *ngIf="incertidumbreCilindro.errors.pattern">Incertidumbre solo debe contener decimales (precisi&oacute;n a centecimas) o enteros</div>              
-                  </div>
-                </div>
-              </div><!-- FIN DECIMO CAMPO --> 
-              <div class="col-md-4 col-12"> <!-- INICIO DECIMO CAMPO -->
-                <div class="form-group">
-                  <label for="incertidumbreCubo">Incertidumbre Cubos</label>
-                  <input type="text" id="incertidumbreCubo" name="incertidumbreCubo" required class="form-control" placeholder="Incertidumbre Cubos" formControlName="incertidumbreCubo">
-                  <div *ngIf="incertidumbreCubo.invalid && (incertidumbreCubo.dirty || incertidumbreCubo.touched)" class="alert alert-danger">            
-                    <div *ngIf="incertidumbreCubo.errors.required">Incertidumbre requerido.</div>
-                    <div *ngIf="incertidumbreCubo.errors.pattern">Incertidumbre solo debe contener decimales (precisi&oacute;n a centecimas) o enteros</div>              
-                  </div>
-                </div>
-              </div><!-- FIN DECIMO CAMPO --> 
-              <div class="col-md-4 col-12"> <!-- INICIO DECIMO CAMPO -->
-                <div class="form-group">
-                  <label for="incertidumbreVigas">Incertidumbre Vigas</label>
-                  <input type="text" id="incertidumbreVigas" name="incertidumbreVigas" required class="form-control" placeholder="Incertidumbre Vigas" formControlName="incertidumbreVigas">
-                  <div *ngIf="incertidumbreVigas.invalid && (incertidumbreVigas.dirty || incertidumbreVigas.touched)" class="alert alert-danger">            
-                    <div *ngIf="incertidumbreVigas.errors.required">Incertidumbre requerido.</div>
-                    <div *ngIf="incertidumbreVigas.errors.pattern">Incertidumbre solo debe contener decimales (precisi&oacute;n a centecimas) o enteros</div>              
                   </div>
                 </div>
               </div><!-- FIN DECIMO CAMPO --> 
