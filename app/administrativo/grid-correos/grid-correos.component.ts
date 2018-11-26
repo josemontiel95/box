@@ -79,7 +79,7 @@ export class GridCorreosComponent implements OnInit  {
     search.set('lote', this.lote);
     this.http.get(url, {search}).subscribe(res => {
       console.log(res.json());
-      this.rowData= res.json();
+      this.llenaTabla(res.json());
       this.gridApi.sizeColumnsToFit();
     });
   }
