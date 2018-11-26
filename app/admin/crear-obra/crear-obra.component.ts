@@ -51,8 +51,13 @@ export class CrearObraComponent implements OnInit{
      nombre_residente:    '',
      correo_residente:    '', 
      cotizacion :          '',
-     consecutivoProbeta :  '1',
-     consecutivoDocumentos:'1',
+     consecutivoProbetaCCH_VIGA :  '1',
+     consecutivoProbetaCCH_CILINDRO :  '1',
+     consecutivoProbetaCCH_CUBO :  '1',
+     consecutivoDocumentosCCH_VIGA :  '1',
+     consecutivoDocumentosCCH_CILINDRO :  '1',
+     consecutivoDocumentosCCH_CUBO :  '1',
+     consecutivoDocumentosCCH_REV:'1',
      correo_alterno: ''
    }
 
@@ -81,52 +86,62 @@ export class CrearObraComponent implements OnInit{
                                                    this.labValidator(res.json());
                                                  });
     this.obraForm = new FormGroup({
-      'id_obra':              new FormControl({ value:this.Obra.id_obra,           disabled: true }),         
-      'obra':                 new FormControl({ value:this.Obra.obra,              disabled: this.hidden },  [Validators.required]), 
-      'revenimiento':         new FormControl({ value:this.Obra.revenimiento,      disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'incertidumbre':        new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
-      'incertidumbreCilindro':new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
-      'incertidumbreCubo':    new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
-      'incertidumbreVigas':   new FormControl({ value:this.Obra.incertidumbre,     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
-      'prefijo':              new FormControl({ value:this.Obra.prefijo,           disabled: this.hidden },  [Validators.required]), 
-      'id_cliente':           new FormControl({ value:this.Obra.id_cliente,        disabled: this.hidden },  [Validators.required]), 
-      'id_concretera':        new FormControl({ value:this.Obra.id_concretera,     disabled: this.hidden },  [Validators.required]), 
-      'tipo':                 new FormControl({ value:this.Obra.tipo,              disabled: this.hidden },  [Validators.required]), 
-      'localizacion':         new FormControl({ value:this.Obra.localizacion,      disabled: this.hidden },  [Validators.required]), 
-      'descripcion':          new FormControl({ value:this.Obra.descripcion,       disabled: this.hidden },  [Validators.required]), 
-      'fechaDeCre':           new FormControl({ value:this.Obra.fechaDeCre,        disabled: this.hidden },  [Validators.required]), 
-      'telefono_residente':   new FormControl({ value:this.Obra.telefono_residente,disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'nombre_residente':     new FormControl({ value:this.Obra.nombre_residente,  disabled: this.hidden },  [Validators.required]), 
-      'cotizacion':           new FormControl({ value:this.Obra.cotizacion,        disabled: this.hidden },  [Validators.required]), 
-      'consecutivoProbeta':   new FormControl({ value:this.Obra.consecutivoProbeta,disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'consecutivoDocumentos':new FormControl({ value:this.Obra.consecutivoDocumentos,disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
-      'correo_residente':     new FormControl({ value:this.Obra.correo_residente,  disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*")]),
-      'correo_alterno':       new FormControl({ value:this.Obra.correo_alterno,  disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*")])   
+      'id_obra':                             new FormControl({ value:this.Obra.id_obra,                           disabled: true }),         
+      'obra':                                new FormControl({ value:this.Obra.obra,                              disabled: this.hidden },  [Validators.required]), 
+      'revenimiento':                        new FormControl({ value:this.Obra.revenimiento,                      disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'incertidumbre':                       new FormControl({ value:this.Obra.incertidumbre,                     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
+      'incertidumbreCilindro':               new FormControl({ value:this.Obra.incertidumbre,                     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
+      'incertidumbreCubo':                   new FormControl({ value:this.Obra.incertidumbre,                     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
+      'incertidumbreVigas':                  new FormControl({ value:this.Obra.incertidumbre,                     disabled: this.hidden },  [Validators.required, Validators.pattern("[0-9]+(\.[0-9][0-9]?)?")]), 
+      'prefijo':                             new FormControl({ value:this.Obra.prefijo,                           disabled: this.hidden },  [Validators.required]), 
+      'id_cliente':                          new FormControl({ value:this.Obra.id_cliente,                        disabled: this.hidden },  [Validators.required]), 
+      'id_concretera':                       new FormControl({ value:this.Obra.id_concretera,                     disabled: this.hidden },  [Validators.required]), 
+      'tipo':                                new FormControl({ value:this.Obra.tipo,                              disabled: this.hidden },  [Validators.required]), 
+      'localizacion':                        new FormControl({ value:this.Obra.localizacion,                      disabled: this.hidden },  [Validators.required]), 
+      'descripcion':                         new FormControl({ value:this.Obra.descripcion,                       disabled: this.hidden },  [Validators.required]), 
+      'fechaDeCre':                          new FormControl({ value:this.Obra.fechaDeCre,                        disabled: this.hidden },  [Validators.required]), 
+      'telefono_residente':                  new FormControl({ value:this.Obra.telefono_residente,                disabled: this.hidden },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'nombre_residente':                    new FormControl({ value:this.Obra.nombre_residente,                  disabled: this.hidden },  [Validators.required]), 
+      'cotizacion':                          new FormControl({ value:this.Obra.cotizacion,                        disabled: this.hidden },  [Validators.required]), 
+      'consecutivoProbetaCCH_VIGA':          new FormControl({ value:this.Obra.consecutivoProbetaCCH_VIGA,        disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'consecutivoProbetaCCH_CILINDRO':      new FormControl({ value:this.Obra.consecutivoProbetaCCH_CILINDRO,    disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'consecutivoProbetaCCH_CUBO':          new FormControl({ value:this.Obra.consecutivoProbetaCCH_CUBO,        disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'consecutivoDocumentosCCH_VIGA':       new FormControl({ value:this.Obra.consecutivoDocumentosCCH_VIGA,     disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'consecutivoDocumentosCCH_CILINDRO':   new FormControl({ value:this.Obra.consecutivoDocumentosCCH_CILINDRO, disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'consecutivoDocumentosCCH_CUBO':       new FormControl({ value:this.Obra.consecutivoDocumentosCCH_CUBO,     disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'consecutivoDocumentosCCH_REV':        new FormControl({ value:this.Obra.consecutivoDocumentosCCH_REV,      disabled: true        },  [Validators.required, Validators.pattern("^([0-9])*")]), 
+      'correo_residente':                    new FormControl({ value:this.Obra.correo_residente,                  disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*")]),
+      'correo_alterno':                      new FormControl({ value:this.Obra.correo_alterno,                    disabled: this.hidden },  [Validators.required, Validators.pattern("[^ @]*@[^ @]*")])   
       
     });
   }
 
-  get id_obra()               { return this.obraForm.get('id_obra'); }
-  get obra()                  { return this.obraForm.get('obra'); }
-  get revenimiento()          { return this.obraForm.get('revenimiento'); }
-  get incertidumbre()         { return this.obraForm.get('incertidumbre'); }
-  get incertidumbreCilindro() { return this.obraForm.get('incertidumbreCilindro'); }
-  get incertidumbreCubo()     { return this.obraForm.get('incertidumbreCubo'); }
-  get incertidumbreVigas()    { return this.obraForm.get('incertidumbreVigas'); }
-  get prefijo()               { return this.obraForm.get('prefijo'); }
-  get id_cliente()            { return this.obraForm.get('id_cliente'); }
-  get id_concretera()         { return this.obraForm.get('id_concretera'); }
-  get tipo()                  { return this.obraForm.get('tipo'); }
-  get descripcion()           { return this.obraForm.get('descripcion'); }
-  get localizacion()          { return this.obraForm.get('localizacion'); }
-  get fechaDeCre()            { return this.obraForm.get('fechaDeCre'); }
-  get telefono_residente()    { return this.obraForm.get('telefono_residente'); }
-  get cotizacion()            { return this.obraForm.get('cotizacion'); }
-  get consecutivoProbeta()    { return this.obraForm.get('consecutivoProbeta'); }
-  get consecutivoDocumentos() { return this.obraForm.get('consecutivoDocumentos'); }
-  get nombre_residente()      { return this.obraForm.get('nombre_residente'); }
-  get correo_residente()      { return this.obraForm.get('correo_residente'); }
-  get correo_alterno()        { return this.obraForm.get('correo_alterno'); }
+  get id_obra()                             { return this.obraForm.get('id_obra'); }
+  get obra()                                { return this.obraForm.get('obra'); }
+  get revenimiento()                        { return this.obraForm.get('revenimiento'); }
+  get incertidumbre()                       { return this.obraForm.get('incertidumbre'); }
+  get incertidumbreCilindro()               { return this.obraForm.get('incertidumbreCilindro'); }
+  get incertidumbreCubo()                   { return this.obraForm.get('incertidumbreCubo'); }
+  get incertidumbreVigas()                  { return this.obraForm.get('incertidumbreVigas'); }
+  get prefijo()                             { return this.obraForm.get('prefijo'); }
+  get id_cliente()                          { return this.obraForm.get('id_cliente'); }
+  get id_concretera()                       { return this.obraForm.get('id_concretera'); }
+  get tipo()                                { return this.obraForm.get('tipo'); }
+  get descripcion()                         { return this.obraForm.get('descripcion'); }
+  get localizacion()                        { return this.obraForm.get('localizacion'); }
+  get fechaDeCre()                          { return this.obraForm.get('fechaDeCre'); }
+  get telefono_residente()                  { return this.obraForm.get('telefono_residente'); }
+  get cotizacion()                          { return this.obraForm.get('cotizacion'); }
+  get consecutivoProbetaCCH_VIGA()          { return this.obraForm.get('consecutivoProbetaCCH_VIGA'); }
+  get consecutivoProbetaCCH_CILINDRO()      { return this.obraForm.get('consecutivoProbetaCCH_CILINDRO'); }
+  get consecutivoProbetaCCH_CUBO()          { return this.obraForm.get('consecutivoProbetaCCH_CUBO'); }
+  get consecutivoDocumentosCCH_VIGA()       { return this.obraForm.get('consecutivoDocumentosCCH_VIGA'); }
+  get consecutivoDocumentosCCH_CILINDRO()   { return this.obraForm.get('consecutivoDocumentosCCH_CILINDRO'); }
+  get consecutivoDocumentosCCH_CUBO()       { return this.obraForm.get('consecutivoDocumentosCCH_CUBO'); }
+  get consecutivoDocumentosCCH_REV()        { return this.obraForm.get('consecutivoDocumentosCCH_REV'); }
+  get nombre_residente()                    { return this.obraForm.get('nombre_residente'); }
+  get correo_residente()                    { return this.obraForm.get('correo_residente'); }
+  get correo_alterno()                      { return this.obraForm.get('correo_alterno'); }
   
   rolValidator(repuesta: any){
     console.log(repuesta)
@@ -221,26 +236,31 @@ export class CrearObraComponent implements OnInit{
     formData.append('token',                this.global.token);
     formData.append('rol_usuario_id',       this.global.rol);
     
-    formData.append('obra',                 this.obraForm.value.obra);
-    formData.append('prefijo',              this.obraForm.value.prefijo );
-    formData.append('fechaDeCreacion',      this.obraForm.value.fechaDeCre);
-    formData.append('descripcion',          this.obraForm.value.descripcion);
-    formData.append('localizacion',         this.obraForm.value.localizacion);
-    formData.append('cliente_id',           this.obraForm.value.id_cliente);
-    formData.append('concretera',           this.obraForm.value.id_concretera);
-    formData.append('tipo',                 this.obraForm.value.tipo);
-    formData.append('revenimiento',         this.obraForm.value.revenimiento  );
-    formData.append('incertidumbre',        this.obraForm.value.incertidumbre );
-    formData.append('incertidumbreCilindro',this.obraForm.value.incertidumbreCilindro );
-    formData.append('incertidumbreCubo',    this.obraForm.value.incertidumbreCubo );
-    formData.append('incertidumbreVigas',   this.obraForm.value.incertidumbreVigas );
-    formData.append('telefono_residente',   this.obraForm.value.telefono_residente );
-    formData.append('cotizacion',           this.obraForm.value.cotizacion );
-    formData.append('consecutivoDocumentos',this.obraForm.getRawValue().consecutivoDocumentos );
-    formData.append('consecutivoProbeta',   this.obraForm.getRawValue().consecutivoProbeta );
-    formData.append('nombre_residente',     this.obraForm.value.nombre_residente );
-    formData.append('correo_residente',     this.obraForm.value.correo_residente );
-    formData.append('correo_alterno',       this.obraForm.value.correo_alterno );
+    formData.append('obra',                             this.obraForm.value.obra);
+    formData.append('prefijo',                          this.obraForm.value.prefijo );
+    formData.append('fechaDeCreacion',                  this.obraForm.value.fechaDeCre);
+    formData.append('descripcion',                      this.obraForm.value.descripcion);
+    formData.append('localizacion',                     this.obraForm.value.localizacion);
+    formData.append('cliente_id',                       this.obraForm.value.id_cliente);
+    formData.append('concretera',                       this.obraForm.value.id_concretera);
+    formData.append('tipo',                             this.obraForm.value.tipo);
+    formData.append('revenimiento',                     this.obraForm.value.revenimiento  );
+    formData.append('incertidumbre',                    this.obraForm.value.incertidumbre );
+    formData.append('incertidumbreCilindro',            this.obraForm.value.incertidumbreCilindro );
+    formData.append('incertidumbreCubo',                this.obraForm.value.incertidumbreCubo );
+    formData.append('incertidumbreVigas',               this.obraForm.value.incertidumbreVigas );
+    formData.append('telefono_residente',               this.obraForm.value.telefono_residente );
+    formData.append('cotizacion',                       this.obraForm.value.cotizacion );
+    formData.append('consecutivoProbetaCCH_VIGA',       this.obraForm.getRawValue().consecutivoProbetaCCH_VIGA );
+    formData.append('consecutivoProbetaCCH_CILINDRO',   this.obraForm.getRawValue().consecutivoProbetaCCH_CILINDRO );
+    formData.append('consecutivoProbetaCCH_CUBO',       this.obraForm.getRawValue().consecutivoProbetaCCH_CUBO );
+    formData.append('consecutivoDocumentosCCH_VIGA',    this.obraForm.getRawValue().consecutivoDocumentosCCH_VIGA );
+    formData.append('consecutivoDocumentosCCH_CILINDRO',this.obraForm.getRawValue().consecutivoDocumentosCCH_CILINDRO );
+    formData.append('consecutivoDocumentosCCH_CUBO',    this.obraForm.getRawValue().consecutivoDocumentosCCH_CUBO );
+    formData.append('consecutivoDocumentosCCH_REV',     this.obraForm.getRawValue().consecutivoDocumentosCCH_REV );
+    formData.append('nombre_residente',                 this.obraForm.value.nombre_residente );
+    formData.append('correo_residente',                 this.obraForm.value.correo_residente );
+    formData.append('correo_alterno',                   this.obraForm.value.correo_alterno );
     this.cargandoMessage="Cargando...";
     this.http.post(url, formData).subscribe(res => this.diplay(res.json()) );
 
