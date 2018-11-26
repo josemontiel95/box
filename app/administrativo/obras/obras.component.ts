@@ -28,6 +28,7 @@ export class ObrasComponent implements OnInit{
   hidden=false;
   desBut=true;
   actBut=false;
+  viewPDF=false;
   imgUrl="";
   cargando= 0;
   tipoForm: FormGroup;
@@ -37,6 +38,8 @@ export class ObrasComponent implements OnInit{
   status="1";
 
   noRowDataError;
+  pdfFinal;
+  selected;
 
   forma={
     formato_tipo_id:''
@@ -49,6 +52,7 @@ export class ObrasComponent implements OnInit{
       {headerName: '# Cot.', field: 'cotizacion' },
       {headerName: 'Obra', field: 'obra' },
       {headerName: '# Informe', field: 'informeNo' },
+      {headerName: 'Clave especimen', field: 'claveEspecimen' },
       {headerName: 'Tipo', field: 'tipo' },
       {headerName: 'F. Colado', field: 'fechaColado' },
       {headerName: 'F. Ensayo', field: 'fechaEnsayado' },
@@ -120,6 +124,7 @@ export class ObrasComponent implements OnInit{
   }
 
   agregaFormatos(){
+    this.cargando=this.cargando+1;
     let url = `${this.global.apiRoot}/loteCorreos/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'agregaFormatos');
@@ -188,7 +193,11 @@ export class ObrasComponent implements OnInit{
     var selectedRows = this.gridApi.getSelectedRows();
     var id_rev = []; //array
     var id_cch = []; //array
+    var pdfFinal;
+    this.selected=true;
+
     selectedRows.forEach(function(selectedRow, index) {
+      pdfFinal = selectedRow.pdfFinal;
       if(selectedRow.tipoNo == 1){
           id_rev.push(selectedRow.id_formato);
       }else if(selectedRow.tipoNo > 1 && selectedRow.tipoNo < 5){
@@ -196,6 +205,7 @@ export class ObrasComponent implements OnInit{
       }
       //this.formatosSeleccionados.push(selectedRow.id_formatoCampo);
     });
+    this.pdfFinal=pdfFinal;
     this.formatosSeleccionadosCCH = [];
     this.formatosSeleccionadosRev = [];
     this.formatosSeleccionadosCCH = id_cch;
@@ -203,6 +213,23 @@ export class ObrasComponent implements OnInit{
 
     console.log(this.formatosSeleccionadosCCH);
     console.log(this.formatosSeleccionadosRev);
+
+    console.log("onSelectionChage Size CCH: "+this.formatosSeleccionadosCCH.length);
+    console.log("onSelectionChage Size Rev: "+this.formatosSeleccionadosRev.length);
+    if(this.formatosSeleccionadosCCH.length == 1 && this.formatosSeleccionadosRev.length == 0){
+      this.viewPDF=true;
+    }else if(this.formatosSeleccionadosCCH.length == 0 && this.formatosSeleccionadosRev.length == 1){
+      this.viewPDF=true;
+    }else{
+      this.viewPDF=false;
+    }
+  }
+  verPDF(){
+    if(this.viewPDF){
+      window.open(this.pdfFinal, "_blank");
+    }else{
+      window.alert("Debes seleccionar exactamente s\u00F3lo un reporte para ver su PDF")
+    }
   }
 
 }

@@ -14,8 +14,13 @@
           <h4 class="card-title">Formatos completados pendientes:</h4>
         </div>
         <div class="btn-group" style="float: right; padding-right: 5%;">
-          <button class="btn btn-success"   (click)="agregaLote();">
+          <button [ngClass]="{'btn':true,'btn-default': !selected ,'btn-success': selected }"   (click)="agregaLote();">
             <span><b>Agregar a un lote</b></span>
+          </button>
+        </div>
+        <div class="btn-group" style="float: right; padding-right: 5%;">
+          <button [ngClass]="{'btn':true,'btn-default': !viewPDF ,'btn-success': viewPDF }"  (click)="verPDF();">
+            <span><b>Ver PDF</b></span>
           </button>
         </div>
         <br><br><br>

@@ -42,6 +42,7 @@ export class dashboardLoteComponent implements OnInit{
   customMailFlag=false;
   adjuntoFlag=false;
   
+  loteCompletado=false;
   loteDetailsForm: FormGroup;
 
   loteDetails  = {
@@ -62,7 +63,8 @@ export class dashboardLoteComponent implements OnInit{
     ctrl:'',
     fechaEnsayo: ''
   }
-
+  groupMail;
+  GroupMailValidStatus;
   
 
 /* Variables para documentos */
@@ -98,6 +100,25 @@ export class dashboardLoteComponent implements OnInit{
     search.set('lote', this.loteCorreos);
     this.http.get(url, {search}).subscribe(res => this.llenado(res.json()) );
 
+    url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
+    search = new URLSearchParams();
+    search.set('function', 'checkViabilityOfGroupMail');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    search.set('lote', this.loteCorreos);
+    this.http.get(url, {search}).subscribe(res => {
+      console.log(res.json());
+      if(res.json().error!=0){
+        window.alert(res.json().estatus);
+      }else if(res.json().GroupMailValid==0){
+        this.groupMail=false;
+        this.GroupMailValidStatus=res.json().GroupMailValidStatus;
+      }else if(res.json().GroupMailValid==1){
+        this.groupMail=true;
+        this.GroupMailValidStatus=res.json().GroupMailValidStatus;
+      }
+    });
+    
    
     this.loteDetailsForm = new FormGroup({
       'factua':             new FormControl( {value: this.loteDetails.factua,        disabled: true },  [Validators.required]),
@@ -123,7 +144,25 @@ export class dashboardLoteComponent implements OnInit{
   get noCorreos()      { return this.footerForm.get('noCorreos'); }
   get encargado()      { return this.footerForm.get('encargado'); }
   get ctrl()           { return this.footerForm.get('ctrl'); }  
-  
+
+  mandarCorreoenGrupo(){
+    if(this.loteCompletado){
+      window.alert("Ya completaste el lote. Ya no puedes enviar.");
+      return;
+    }
+    if(this.groupMail){
+      if(window.confirm("Se enviar\u00E1 un solo correo con todos los reportes del lote. Si adjunt\u00F3 factura, esta se incluir\u00E1 en el correo.\u00BFEst\u00E1 usted seguro de enviar el correo?")){
+        var confirmation = prompt('Por favor esriba "SI" para continuar. Escriba cualquier otra palabra para abortar. Recuerde que esta acci\u00f3n no se puede revertir, verifique sus datos antes de continuar', "NO");
+        if(confirmation == "SI"){
+          this.mandarCorreoEnGrupo();
+        }else{
+          window.alert("Operaci\u00F3n abortada");
+        }
+      }
+    }else{
+      window.alert(this.GroupMailValidStatus);
+    }
+  }
   mostrar(){
     this.hidden = !this.hidden;
     const state = this.hidden ? 'disable' : 'enable';
@@ -181,13 +220,16 @@ export class dashboardLoteComponent implements OnInit{
     this.xml =  respuesta.xmlPath;
     switch(Number(respuesta.status)){
       case 0:
-        this.mensajeEstado = "Listo para generar PDFs";
+        this.loteCompletado=false;
+        this.mensajeEstado = "Listo modificar datos de facturaci\u00F3n y enviar correos";
       break;
       case 1:
-        this.mensajeEstado = "Listo para mandar correos";
+      this.loteCompletado=false;
+      this.mensajeEstado = "Correos enviados. Listo para completar";
       break;
       case 2:
-        this.mensajeEstado = "Correos enviados";
+        this.loteCompletado=true;
+        this.mensajeEstado = "Completado";
       break;
     }
     if(this.pdf==null){
@@ -295,8 +337,12 @@ export class dashboardLoteComponent implements OnInit{
     }
   }
 
-  mandarCorreo(){
-    this.cargando=1;
+  mandarCorreoFaltantes(){
+    if(this.loteCompletado){
+      window.alert("Ya completaste el lote. Ya no puedes enviar.");
+      return;
+    }
+    this.cargando=this.cargando+1;
     this.hiddenFormato=false;
     let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -304,13 +350,67 @@ export class dashboardLoteComponent implements OnInit{
     search.set('token',           this.global.token);
     search.set('rol_usuario_id',  this.global.rol);
     search.set('lote',            this.loteCorreos);
+    search.set('all',             '0');
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.validaRespuesta(res.json());
                                           });
   } 
+  mandarCorreoTodos(){
+    if(this.loteCompletado){
+      window.alert("Ya completaste el lote. Ya no puedes enviar.");
+      return;
+    }
+    this.cargando=this.cargando+1;
+    this.hiddenFormato=false;
+    let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'sentAllEmailFormatosByLote');
+    search.set('token',           this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('lote',            this.loteCorreos);
+    search.set('all',             '1');
+    this.http.get(url, {search}).subscribe(res => {
+      console.log(res.json());
+      this.validaRespuesta(res.json());
+    });
+  } 
+  mandarCorreoEnGrupo(){
+    if(this.loteCompletado){
+      window.alert("Ya completaste el lote. Ya no puedes enviar.");
+      return;
+    }
+    this.cargando=this.cargando+1;
+    this.hiddenFormato=false;
+    let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'sentGroupMailFormatosByLote');
+    search.set('token',           this.global.token);
+    search.set('rol_usuario_id',  this.global.rol);
+    search.set('lote',            this.loteCorreos);
+    this.http.get(url, {search}).subscribe(res => {
+      console.log(res.json());
+      this.validaRespuesta(res.json());
+    });
+  } 
 
-  
+  completarLote(){
+    if(this.loteCompletado){
+      window.alert("Ya completaste el lote. Ya no puedes completar.");
+      return;
+    }
+    this.cargando=this.cargando+1;
+    let url = `${this.global.apiRoot}/loteCorreos/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'completarLote');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+    formData.append('lote',            this.loteCorreos);
+
+    this.http.post(url, formData).subscribe(res => {
+      this.validaRespuesta(res.json());
+    });
+  }
   
     
   respuestaSwitch(res: any){ 
@@ -326,9 +426,8 @@ export class dashboardLoteComponent implements OnInit{
      }
    }
 
-
-
   regresaPendientes(){
+    this.cargando=this.cargando+1;
     this.router.navigate(['administrativo/obras/']);
   }
 

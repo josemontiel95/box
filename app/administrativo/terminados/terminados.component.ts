@@ -4,8 +4,9 @@ import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
 import {
-    FormGroup,
-    FormControl
+  FormGroup,
+  FormControl,
+  Validators
 } from '@angular/forms';
 
 @Component({
@@ -29,21 +30,40 @@ export class TerminadosComponent implements OnInit{
   desBut=true;
   actBut=false;
   imgUrl="";
-  cargando= 1;
+  cargando= 0;
   mis_tipos: Array<any>;
   formatosSeleccionados: Array<any>;
   status="1";
 
+  link;
+  id_loteCorreos;
+  selected=false;
+  noRowDataError;
+  noRowData;
+  mis_obras: Array<any>;
 
+  noObrasMessage="";
+
+  obras= false;
+
+  isdataReadyForGrid=false;
+  ordenForm: FormGroup; //se crea un formulario de tipo form group
+  obra_idTmp;
+  Orden = {
+    obra_id: ''
+  };
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
+      {headerName: 'Lote No.', field: 'id_loteCorreos' },
       {headerName: 'RAZ&Oacute;N SOCIAL', field: 'razonSocial' },
       {headerName: 'COTIZACI&Oacute;N', field: 'cotizacion' },
       {headerName: 'Identificador', field: 'informeNo' },
+      {headerName: 'Clave de Especimen', field: 'claveEspecimen' },
       {headerName: 'Factura', field: 'factua' },
       {headerName: 'TIPO', field: 'tipoObra' },
       {headerName: 'F. Colado', field: 'fechaColado' },
+      {headerName: 'F. Lote', field: 'fechaLote' },
 
     ];
     this.rowSelection = "multiple";
@@ -54,37 +74,56 @@ export class TerminadosComponent implements OnInit{
   ngOnInit() {
     this.route.params.subscribe( params => this.id=params.id );
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.cargando=1;
+    this.cargando = this.cargando +1;
+    let url = `${this.global.apiRoot}/obra/get/endpoint.php`;
+    let search = new URLSearchParams();
+    search.set('function', 'getForDroptdownAdmin');
+    search.set('token', this.global.token);
+    search.set('rol_usuario_id', this.global.rol);
+    this.http.get(url, {search}).subscribe(res => {
+      this.llenaObra(res.json());
+    });
+    this.ordenForm = new FormGroup({
+      'obra_id':             new FormControl(this.Orden.obra_id,  [ Validators.required])
+    });
   }
+  get obra_id() { return this.ordenForm.get('obra_id'); }
 
-
-
-
-  crearObra(){
-    this.router.navigate(['administrador/obras/crear-obra']);
+  llenaObra(repuesta: any){
+    this.cargando=this.cargando-1;
+    if(repuesta.error==5){
+      this.mis_obras= [];
+      this.obras=false;
+      this.noObrasMessage="No hay obras en el sistema."
+    }
+    else if(repuesta.error>0){
+      this.obras=false;
+      this.mis_obras= [];
+      window.alert(repuesta.estatus);
+    }else{
+      this.obras=true;
+      this.mis_obras= new Array(repuesta.length);
+      for (var _i = 0; _i < repuesta.length; _i++){
+        this.mis_obras[_i]=repuesta[_i];
+      }
+      console.log(this.mis_obras);
+    }
   }
-
-  detalleObra(){ //Cambialo a detalleObra
-    this.router.navigate(['administrador/obras/obra-detail/'+this.id]);
-  }
-  
 
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    console.log("this.global.apiRoot"+this.global.apiRoot);
-    console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
-
+    this.cargando = this.cargando +1;
     let url = `${this.global.apiRoot}/loteCorreos/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllAdministrativoFULL');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
+    search.set('obra_id', this.obra_idTmp);
 
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
                                             this.llenaTabla(res.json());
-                                            this.llenadoValidator(res.json());
                                             this.gridApi.sizeColumnsToFit();
                                           });
   }
@@ -94,20 +133,16 @@ export class TerminadosComponent implements OnInit{
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.error==5){
+      this.rowData =[];
+      this.noRowDataError="No hay reportes de la obra seleccionada";   
+      this.noRowData=true;
     }else{
+      this.noRowData=false;
+      this.noRowDataError="";   
       this.rowData =repuesta;
     }
     this.cargando=this.cargando-1;
-  }
-  
-  llenadoValidator(respuesta: any){
-    console.log(respuesta)
-    if(respuesta.error==1 || respuesta.error==2 || respuesta.error==3){
-      window.alert(respuesta.estatus);
-    }
-    else{
-     
-    }
   }
 
 
@@ -115,35 +150,7 @@ export class TerminadosComponent implements OnInit{
      this.hidden=false;
    }
 
-   desactivarUsuario(){
-     this.actBut= true;
-     this.desBut= false;
-     this.switchActive(0);
-  }
 
-   activarUsuario(){
-     this.actBut = false;
-     this.desBut = true;
-     this.switchActive(1);
-   }
-
-   switchActive(active: number){
-     let url = `${this.global.apiRoot}/obra/post/endpoint.php`;
-     let formData:FormData = new FormData();
-      
-      if(active == 0){
-        formData.append('function', 'deactivate');
-      }
-      else{
-        formData.append('function', 'activate');
-      }
-        formData.append('id_obra', this.id);
-        formData.append('rol_usuario_id', this.global.rol);
-        formData.append('token', this.global.token);
-        this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());
-                                            });
-   }
 
    respuestaSwitch(res: any){
      console.log(res);
@@ -165,18 +172,32 @@ export class TerminadosComponent implements OnInit{
     var selectedRows = this.gridApi.getSelectedRows();
     var pdf = "";
     var link = "";
-
+    var id_loteCorreos;
+    this.selected=true;
     selectedRows.forEach(function(selectedRow, index) {
       pdf = selectedRow.PDF;
       link = selectedRow.pdfFinal;
+      id_loteCorreos = selectedRow.id_loteCorreos;
     });
-    if(pdf == "No"){
-      window.alert("No hay PDF generado");
-    }else{
-      //window.alert("Redireccionando");
-      //this.router.navigate(selectedRows.link);
-      window.open(link, "_blank");
-    }
+    this.link=link;
+    this.id_loteCorreos=id_loteCorreos;
+
+  }
+  openPDF(){
+    window.open(this.link, "_blank");
+  }
+  openLote(){
+    this.cargando = this.cargando +1;
+
+    this.router.navigate(['administrativo/obras/dashboardLote/'+this.id_loteCorreos]);
+  }
+  onObraBlur(){
+    this.obra_idTmp=this.ordenForm.value.obra_id;
+    console.log("onObraBlur :: "+this.obra_idTmp);
+    this.isdataReadyForGrid=true;
+    this.ordenForm.patchValue({
+      obra_id: ''
+    });
   }
 
 }
