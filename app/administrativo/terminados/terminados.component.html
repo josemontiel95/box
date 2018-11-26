@@ -11,31 +11,69 @@
    <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">LOTES</h4>
+          <h4 class="card-title">Reportes</h4>
         </div>
         <div class="btn-group" style="float: right; padding-right: 5%;">
         </div>
         <br><br><br>
 
         
-        <div class="card-body" *ngIf="!selectLote">
-          <ag-grid-angular 
-            #agGrid
-            id="myGrid"
-            style="width: 100%; height: 350px;" 
-            class="ag-theme-balham"
-            [enableSorting]="true"
-            [rowData]="rowData" 
-            [columnDefs]="columnDefs"
-            [enableFilter]="true"
-            [enableColResize]="true"
-            [colResizeDefault]="false"
-            [suppressAutoSize]="true"
-            [rowSelection]="rowSelection"
-            (selectionChanged)="onSelectionChanged($event)"
-            (gridReady)="onGridReady($event)"
-            >
-          </ag-grid-angular>
+        <div class="card-body">
+          <div *ngIf="!isdataReadyForGrid">
+            <form (ngSubmit)="onSubmit()" [formGroup]=ordenForm #formDir="ngForm">
+              <div class="row"> <!--PRIMER ROW -->
+                <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
+                  <div class="form-group">
+                    <label for="obra_id">Selecciona una obra </label>
+                    <select  class="form-control" id="obra_id" required name="obra_id" formControlName="obra_id" (change)="onObraBlur()">
+                      <option value="" [disabled]="true" selected>Selecciona el obra...</option>  
+                      <option *ngFor="let obra of mis_obras" [value]="obra.id_obra">
+                        {{obra.obra}}
+                      </option>   
+                    </select>
+                    <div *ngIf="obra_id.invalid && (obra_id.dirty || obra_id.touched)" class="alert alert-danger">
+                      <div *ngIf="obra_id.errors.required"> Obra requerida.</div>
+                    </div>
+                  </div>
+                </div> <!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMER ROW -->
+            </form>
+          </div>
+          <div *ngIf="isdataReadyForGrid">
+            <div class="btn-group" *ngIf="selected"  style="float: right; padding-right: 5%;">
+              <button class="btn btn-success"  (click)="openLote();">
+                <span><b>Ver lote &nbsp;&nbsp;</b></span>
+                <i class="fas fa-external-link-alt" style="font-size:18px; display: inline-block; "></i>
+              </button>
+            </div>
+            <div class="btn-group" *ngIf="selected"  style="float: right; padding-right: 5%;">
+              <button class="btn btn-success" (click)="openPDF();">
+                <span><b>Ver PDF &nbsp;&nbsp;</b></span>
+                <i class="fa fa-file-pdf-o" style="font-size:18px; display: inline-block; "></i>
+              </button>
+            </div>
+            <div *ngIf="selected">
+              <br><br><br>
+            </div>
+            <p style="color: red;"><b>{{noRowDataError}}</b></p>
+            <ag-grid-angular 
+              #agGrid
+              id="myGrid"
+              style="width: 100%; height: 350px;" 
+              class="ag-theme-balham"
+              [enableSorting]="true"
+              [rowData]="rowData" 
+              [columnDefs]="columnDefs"
+              [enableFilter]="true"
+              [enableColResize]="true"
+              [colResizeDefault]="false"
+              [suppressAutoSize]="true"
+              [rowSelection]="rowSelection"
+              (selectionChanged)="onSelectionChanged($event)"
+              (gridReady)="onGridReady($event)"
+              >
+            </ag-grid-angular>
+          </div>
         </div>
       </div>
     </div>

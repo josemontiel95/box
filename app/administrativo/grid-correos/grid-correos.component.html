@@ -1,7 +1,7 @@
           <div class="btn-group" *ngIf="selected"  style="float: right; padding-right: 5%;">
-            <button class="btn btn-success" (click)="selectOption();">
-              <span><b>Mandar correo &nbsp;&nbsp;</b></span>
-              <i class="fa fa-send-o" style="font-size:18px; display: inline-block; "></i>
+            <button [ngClass]="{'btn':true,'btn-default': !deleteAbility ,'btn-danger': deleteAbility }"  (click)="deleteRegistro();">
+              <span><b>Eliminar &nbsp;&nbsp;</b></span>
+              <i class="fa fa-times-circle-o" style="font-size:18px; display: inline-block; "></i>
             </button>
           </div>
           <div class="btn-group" *ngIf="selected"  style="float: right; padding-right: 5%;">
