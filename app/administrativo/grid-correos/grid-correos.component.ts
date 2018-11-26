@@ -26,7 +26,8 @@ export class GridCorreosComponent implements OnInit  {
   id_registrosCampo;
   deleteAbility=false;
   id_correoDeLote;
-
+  noRowDataError;
+  noRowData;
   @Output() cambiarCargando = new EventEmitter<any>();
   @Output() reloadComponent = new EventEmitter<any>();
 
@@ -90,7 +91,13 @@ export class GridCorreosComponent implements OnInit  {
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.error==5){
+      this.rowData =[];
+      this.noRowDataError="No hay ensayos de la obra seleccionada";   
+      this.noRowData=true;
     }else{
+      this.noRowData=false;
+      this.noRowDataError="";   
       this.rowData =repuesta;
     }
   }
