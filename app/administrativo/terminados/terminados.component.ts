@@ -46,6 +46,8 @@ export class TerminadosComponent implements OnInit{
 
   obras= false;
 
+  opcionesMessage = "Volver a Obras";
+
   isdataReadyForGrid=false;
   ordenForm: FormGroup; //se crea un formulario de tipo form group
   obra_idTmp;
@@ -198,6 +200,10 @@ export class TerminadosComponent implements OnInit{
     this.ordenForm.patchValue({
       obra_id: ''
     });
+  }
+
+  showDropDown(){
+    this.isdataReadyForGrid=false;
   }
 
 }

@@ -259,6 +259,7 @@ export class UserDetailComponent implements OnInit {
 
 
   actualizarUsuario(){
+    this.cargando = this.cargando +1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/usuario/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -283,14 +284,14 @@ export class UserDetailComponent implements OnInit {
 
 
   respuestaError(resp: any){
+    this.cargando = this.cargando -1;
     if(resp.error!=0)
     {
       window.alert(resp.estatus);
       location.reload();
     }
-    else
-    {
-      location.reload();
+    else{
+      this.mostrar();
     }
   }
 

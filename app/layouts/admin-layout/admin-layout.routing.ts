@@ -36,7 +36,7 @@ import { ConstruccionComponent } from '../../admin/construccion/construccion.com
 
 
 export const AdminLayoutRoutes: Routes = [
-    { path: '',      		  redirectTo: 'dashboard', pathMatch: 'full' },
+    { path: '',      		  redirectTo: 'user-profile', pathMatch: 'full' },
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'construccion',   component: ConstruccionComponent },

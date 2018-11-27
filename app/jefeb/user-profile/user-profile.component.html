@@ -127,7 +127,7 @@
               <button class="btn btn-info" *ngIf="hidden == true"  (click)="mostrar()">
                 <span><b> Cambiar Datos. </b></span>
               </button>
-            <button class="btn btn-success" *ngIf="!hidden" [disabled]="userForm.invalid" (click)="actualizarUsuario(  ); ">
+            <button class="btn btn-success" *ngIf="!hidden" [disabled]="userForm.invalid" (click)="actualizarUsuario(); ">
               <span><b> Guardar Cambios. </b></span>
             </button>
           </div>
