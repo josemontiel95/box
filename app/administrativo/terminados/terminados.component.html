@@ -11,7 +11,16 @@
    <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Reportes</h4>
+          <div class="" (click)="showDropDown();">
+            <hr *ngIf="isdataReadyForGrid">
+            <div class="btn-group" *ngIf="isdataReadyForGrid" style="display: flex;align-items: center; justify-content: center;">
+              <p>{{opcionesMessage}}</p>
+            </div>
+            <div class="btn-group" *ngIf="isdataReadyForGrid" style="display: flex;align-items: center; justify-content: center;">
+                <i _ngcontent-c25="" [ngClass]="{'now-ui-icons':true,'arrows-1_minimal-down':!this.opciones ,'arrows-1_minimal-up': this.opciones,'pr-3':true}" ></i>
+            </div>
+          </div>
+          <h4 class="card-title">REPORTES</h4>
         </div>
         <div class="btn-group" style="float: right; padding-right: 5%;">
         </div>
@@ -39,6 +48,7 @@
               </div> <!--FIN PRIMER ROW -->
             </form>
           </div>
+          <hr *ngIf="!isdataReadyForGrid">
           <div *ngIf="isdataReadyForGrid">
             <div class="btn-group" *ngIf="selected"  style="float: right; padding-right: 5%;">
               <button class="btn btn-success"  (click)="openLote();">
