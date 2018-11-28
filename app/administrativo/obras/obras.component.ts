@@ -56,6 +56,8 @@ export class ObrasComponent implements OnInit{
       {headerName: 'Tipo', field: 'tipo' },
       {headerName: 'F. Colado', field: 'fechaColado' },
       {headerName: 'F. Ensayo', field: 'fechaEnsayado' },
+      {headerName: 'Dias de Ensaye', field: 'diasEnsaye' },
+      {headerName: 'Tipo Obra', field: 'tipoObra' },
       {headerName: '# envios', field: 'sentToClientFinal' },
 
     ];
