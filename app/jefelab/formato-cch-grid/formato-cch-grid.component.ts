@@ -42,9 +42,10 @@ export class FormatoCCHGridComponent implements OnInit  {
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
     {headerName: 'CLAVE DEL ESPECIMEN', field: 'claveEspecimen' },
-    {headerName: 'FECHA', field: 'fecha' },
+    {headerName: 'F.COLADO', field: 'fecha' },
+    {headerName: 'F.ENSAYE', field: 'fechaEnsayeAsignado' },
     {headerName: 'LOCALIZACI&Oacute;N', field: 'localizacion' },
-    {headerName: 'Dias ensaye', field: 'diasEnsaye' },
+    {headerName: 'DIAS ENSAYE', field: 'diasEnsaye' },
     {headerName: 'ESTATUS', field: 'statusGeneral' }
     ];
     this.rowSelection = "single";
