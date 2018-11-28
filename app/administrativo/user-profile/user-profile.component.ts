@@ -188,7 +188,7 @@ export class UserProfileComponent implements OnInit {
     let formData:FormData = new FormData();
     formData.append('function', 'upDateAdmin');
     formData.append('token', this.global.token);
-    formData.append('rol_usuario_id', '1001');
+    formData.append('rol_usuario_id', this.global.rol);
 
 
     formData.append('id_usuario', this.userForm.value.id_usuario);
