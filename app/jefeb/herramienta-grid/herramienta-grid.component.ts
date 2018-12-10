@@ -36,8 +36,9 @@ export class HerramientaGridComponent implements OnInit  {
             this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
   }
-
-    @Output() agregaHerra = new EventEmitter<any>();
+  
+  @Output() agregaHerra = new EventEmitter<any>();
+  @Output() cambiarCargando = new EventEmitter<any>();
 
   agregaHerr(ids: any) {
     this.agregaHerra.emit(ids);
@@ -53,6 +54,7 @@ export class HerramientaGridComponent implements OnInit  {
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    this.cambiarCargando.emit(+1);
     let url = `${this.global.apiRoot}/Herramienta_ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllHerraOrden');
@@ -69,6 +71,7 @@ export class HerramientaGridComponent implements OnInit  {
 
   llenaTabla(repuesta: any){
     console.log(repuesta)
+    this.cambiarCargando.emit(-1);
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);

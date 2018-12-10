@@ -37,6 +37,7 @@ export class TecnicosGridComponent implements OnInit  {
   }
 
   @Output() pasaLista = new EventEmitter<any>();
+  @Output() cambiarCargando = new EventEmitter<any>();
 
 
   paseL() {
@@ -47,6 +48,7 @@ export class TecnicosGridComponent implements OnInit  {
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
+    this.cambiarCargando.emit(+1);
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getTecAsistencia');
@@ -63,7 +65,7 @@ export class TecnicosGridComponent implements OnInit  {
 
   llenaTabla(repuesta: any){
     console.log(repuesta)
-
+    this.cambiarCargando.emit(-1);
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);

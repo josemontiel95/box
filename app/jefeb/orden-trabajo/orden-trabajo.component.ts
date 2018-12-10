@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -28,11 +28,11 @@ export class OrdenTrabajoComponent implements OnInit{
   imgUrl="";
   global: Global;
   private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
-  cargando= 1;
+  cargando= 0;
   rowClassRules;
+  noRowDataError;
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
     this.columnDefs = [
@@ -66,13 +66,14 @@ export class OrdenTrabajoComponent implements OnInit{
 	  
   ngOnInit() {
     this.data.currentGlobal.subscribe(global => this.global = global);
-    this.cargando=1;
+    this.cargando=this.cargando+1;
   }
 
   rowData: any;
 
 
-    detalleOrdenTrabajo(){
+  detalleOrdenTrabajo(){
+    this.cargando=this.cargando+1;
     this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/'+this.id_ordenDeTrabajo]);
   }
 
@@ -82,15 +83,15 @@ export class OrdenTrabajoComponent implements OnInit{
      this.switchActive(0);
   }
 
-   activarCliente(){
+  activarCliente(){
      this.actBut = false;
      this.desBut = true;
      this.switchActive(1);
-   }
+  }
 
-      switchActive(active: number){
-     let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
-     let formData:FormData = new FormData();
+  switchActive(active: number){
+    let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
+    let formData:FormData = new FormData();
       
       if(active == 0){
         formData.append('function', 'deactivate');
@@ -104,11 +105,10 @@ export class OrdenTrabajoComponent implements OnInit{
         this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());
                                             });
-       
 
       }
 
-               respuestaSwitch(res: any){
+  respuestaSwitch(res: any){
      console.log(res);
      if(res.error!= 0){
        window.alert("Intentalo otra vez");
@@ -121,9 +121,9 @@ export class OrdenTrabajoComponent implements OnInit{
 
 
 
-     menosDetalles(){
+  menosDetalles(){
      this.hidden=false;
-   }
+  }
 
   reloadHistorial(){
     this.cargando=this.cargando+1;
@@ -162,7 +162,6 @@ export class OrdenTrabajoComponent implements OnInit{
   onGridReady(params) {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
 
     let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
@@ -170,11 +169,22 @@ export class OrdenTrabajoComponent implements OnInit{
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
     this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
-                                            this.rowData= res.json();
-                                            this.gridApi.sizeColumnsToFit();
-                                            this.cargando=this.cargando-1;
-                                          });
+      this.llenaTabla(res.json());
+      this.gridApi.sizeColumnsToFit();
+    });
+  }
+  llenaTabla(repuesta: any){
+    console.log(repuesta)
+    this.cargando = this.cargando -1;
+    if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
+      window.alert(repuesta.estatus);
+      this.router.navigate(['login']);
+    }else if(repuesta.error==5){
+      this.rowData =[];
+      this.noRowDataError="No existen Especimenes pendientes para hoy.";   
+    }else{
+      this.rowData =repuesta;
+    }
   }
 
  onSelectionChanged(event: EventListenerObject) {

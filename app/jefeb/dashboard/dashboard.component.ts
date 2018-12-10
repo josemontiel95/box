@@ -420,6 +420,10 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  cambiarCargando(num){
+    this.cargando=this.cargando + num;
+  }
+
   addCliente(id_cliente: any,cliente: any){
     let aux= new Array(this.mis_cli.length+1);
     let index=0;
