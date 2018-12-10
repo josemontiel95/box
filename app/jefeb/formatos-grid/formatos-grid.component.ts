@@ -99,6 +99,10 @@ export class FormatosGridComponent implements OnInit  {
         id += selectedRow.id;
         //window.alert(selectedRow.id_formato);
         ruta = false;
+      }else if(selectedRow.tipoNo == 0){
+        id += selectedRow.id;
+        //window.alert(selectedRow.id_formato);
+        ruta = false;
       }
     });
     this.cambiarCargando.emit(+1);

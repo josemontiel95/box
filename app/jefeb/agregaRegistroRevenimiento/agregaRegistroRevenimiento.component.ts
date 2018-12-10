@@ -1,17 +1,12 @@
-import { GridComponent } from '../grid/grid.component';
 import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 //FIN DE LOS IMPORTS
@@ -29,8 +24,6 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
   campo: "1"; //Esta variable es para seleccionar el campo que se insertara cuando pierda el foco.
   title = 'app';
   global: Global;
-  private gridApi;
-  private gridColumnApi;
   rowSelection;
   columnDefs;
   cargando= 1;
@@ -53,7 +46,8 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     provCon: '',
     numRem: '',
     hsalida: '',
-    hllegada: ''         
+    hllegada: '',
+    volumen: ''
   }
 
   constructor(private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){}
@@ -96,7 +90,8 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
       'provCon':      new FormControl( {value: this.FormatoCCH.provCon, disabled: this.hidden},     [Validators.required]),
       'numRem':       new FormControl( {value: this.FormatoCCH.numRem, disabled: this.hidden},      [Validators.required]),
       'hsalida':      new FormControl( {value: this.FormatoCCH.hsalida, disabled: this.hidden},     [Validators.required]),
-      'hllegada':     new FormControl( {value: this.FormatoCCH.hllegada, disabled: this.hidden},    [Validators.required])          
+      'hllegada':     new FormControl( {value: this.FormatoCCH.hllegada, disabled: this.hidden},    [Validators.required]),
+      'volumen':      new FormControl( {value: this.FormatoCCH.volumen, disabled: this.hidden},     [Validators.required])
     });
   }
   
@@ -111,6 +106,7 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
   get numRem()       { return this.formatoCCHForm.get('numRem'); }              
   get hsalida()      { return this.formatoCCHForm.get('hsalida'); }              
   get hllegada()     { return this.formatoCCHForm.get('hllegada'); }              
+  get volumen()      { return this.formatoCCHForm.get('volumen'); }              
 
   submitted = false;
 
@@ -151,7 +147,8 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
     provCon:        respuesta.concretera_id,
     numRem:         respuesta.remisionNo,
     hsalida:        respuesta.horaSalida,
-    hllegada:       respuesta.horaLlegada
+    hllegada:       respuesta.horaLlegada,
+    volumen:        respuesta.volumen
     });
 
     if(respuesta.status == 1){
@@ -351,6 +348,22 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
                                               this.respuestaSwitch(res.json());                 
     });
   }
+  onBlurVolumen(){
+    this.data.currentGlobal.subscribe(global => this.global = global);
+    let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
+    let formData:FormData = new FormData();
+    formData.append('function', 'insertRegistroJefeBrigada');
+    formData.append('token', this.global.token);
+    formData.append('rol_usuario_id', this.global.rol);
+
+    formData.append('campo', '6');
+    formData.append('valor', this.formatoCCHForm.value.volumen);
+    formData.append('id_registrosRev', this.id_registro);
+    this.http.post(url, formData).subscribe(res => {
+                                              this.respuestaSwitch(res.json());                 
+    });
+  }
+
 
   onBlurHoraMuestreo(){
     this.data.currentGlobal.subscribe(global => this.global = global);
