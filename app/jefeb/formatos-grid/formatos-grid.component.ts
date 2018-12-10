@@ -1,4 +1,4 @@
-import { Component ,OnInit} from '@angular/core';
+import { Component ,OnInit, Output, EventEmitter} from '@angular/core';
 import { Http, URLSearchParams} from '@angular/http';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
@@ -17,6 +17,7 @@ export class FormatosGridComponent implements OnInit  {
   rowSelection;
   columnDefs;
   rowClassRules;
+  noRowDataError;
 
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
@@ -42,6 +43,8 @@ export class FormatosGridComponent implements OnInit  {
 
   rowData: any;
 
+  @Output() cambiarCargando = new EventEmitter<any>();
+
   ngOnInit() {
       this.data.currentGlobal.subscribe(global => this.global = global);
       this.route.params.subscribe( params => this.id_orden=params.id);
@@ -53,6 +56,8 @@ export class FormatosGridComponent implements OnInit  {
     console.log("this.global.apiRoot"+this.global.apiRoot);
     console.log("this.global.token"+this.global.token);
     this.gridApi = params.api;
+    this.cambiarCargando.emit(+1);
+
     let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllFormatos');
@@ -61,17 +66,20 @@ export class FormatosGridComponent implements OnInit  {
     search.set('id_ordenDeTrabajo', this.id_orden);
     console.log(search);
     this.http.get(url, {search}).subscribe(res => {
-                                            console.log(res.json());
-                                            this.llenaTabla(res.json());
-                                            this.gridApi.sizeColumnsToFit();
-                                          });
+      this.llenaTabla(res.json());
+      this.gridApi.sizeColumnsToFit();
+    });
   }
 
   llenaTabla(repuesta: any){
+    this.cambiarCargando.emit(-1);
     console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);
       this.router.navigate(['login']);
+    }else if(repuesta.error==5){
+      this.rowData =[];
+      this.noRowDataError="No existen Formatos asignados a esta orden.";   
     }else{
       this.rowData =repuesta;
     }
@@ -93,6 +101,7 @@ export class FormatosGridComponent implements OnInit  {
         ruta = false;
       }
     });
+    this.cambiarCargando.emit(+1);
     if(ruta == false){
       this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaFormatoCCH/'+this.id_orden +'/'+id]);
     }else if(ruta == true) {

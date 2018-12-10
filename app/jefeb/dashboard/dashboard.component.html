@@ -239,7 +239,7 @@
           <h4 class="card-title">Equipo Asignado para la Orden de Trabajo.</h4>
         </div>
         <div class="card-body ">
-          <app-herramienta-grid></app-herramienta-grid>
+          <app-herramienta-grid (cambiarCargando)="cambiarCargando($event)"></app-herramienta-grid>
 
         </div>
       </div>
@@ -255,7 +255,7 @@
         </div>
         <div class="card-body">
           <div *ngIf="this.hiddenTecnicos">
-          <app-tecnicos-grid (pasaLista)="pasaTec($event)"></app-tecnicos-grid>
+          <app-tecnicos-grid (cambiarCargando)="cambiarCargando($event)" (pasaLista)="pasaTec($event)"></app-tecnicos-grid>
         </div>
           <div *ngIf="!this.hiddenTecnicos">
            <form (ngSubmit)="onSubmit()" [formGroup]=paseForm #formDir="ngForm">
@@ -319,7 +319,7 @@
             
 
         <div class="card-body" *ngIf="hiddenFormato">
-          <app-formatos-grid></app-formatos-grid>
+          <app-formatos-grid (cambiarCargando)="cambiarCargando($event)"></app-formatos-grid>
         </div>
 
         <div class="card-footer">

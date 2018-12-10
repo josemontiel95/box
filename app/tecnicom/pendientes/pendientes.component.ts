@@ -92,7 +92,7 @@ export class PendientesComponent implements OnInit{
       this.router.navigate(['login']);
     }else if(repuesta.error==5){
       this.rowData =[];
-      this.noRowDataError="No existen Especimenes pendientes para hoy.";   
+      this.noRowDataError="No existen Ordenes Pendientes para hoy.";   
     }else{
       this.rowData =repuesta;
     }
