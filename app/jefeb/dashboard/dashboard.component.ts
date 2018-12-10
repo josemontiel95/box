@@ -231,6 +231,8 @@ export class DashboardComponent implements OnInit {
   }
 
   pasarlista(){
+    this.cargando=this.cargando+1;
+
     let url = `${this.global.apiRoot}/Tecnicos_ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'pasarLista');
@@ -248,6 +250,8 @@ export class DashboardComponent implements OnInit {
   }
 
    respuestaSwitch(res: any){
+    this.cargando=this.cargando-1;
+
      if(res.error!= 0){
        window.alert("Intentalo otra vez");
        location.reload();
@@ -381,7 +385,7 @@ export class DashboardComponent implements OnInit {
   } //FIN ValidaCamposVacios
 
   completarOrden(){
-    this.cargando=1;
+    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();
@@ -458,6 +462,8 @@ export class DashboardComponent implements OnInit {
   }
 
   creaIDFormatoCCH(){
+    this.cargando=this.cargando+1;
+
     let url = `${this.global.apiRoot}/formatoCampo/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'initInsertCCH');
@@ -471,6 +477,8 @@ export class DashboardComponent implements OnInit {
   }
   
   creaIDFormatoCCHRev(){
+    this.cargando=this.cargando+1;
+
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
     let formData:FormData = new FormData();
     formData.append('function', 'initInsertRev');

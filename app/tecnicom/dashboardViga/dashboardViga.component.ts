@@ -1,17 +1,12 @@
-import { GridComponent } from '../grid/grid.component';
 import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from "../../data.service";
 import { Global } from "../../interfaces/int.Global";
-import { CrearResp } from "../../interfaces/int.CrearResp";
-import { HttpModule, Http, URLSearchParams, Headers, RequestOptions} from '@angular/http';
+import { Http, URLSearchParams} from '@angular/http';
 import {
-    ReactiveFormsModule,
-    FormsModule,
     FormGroup,
     FormControl,
-    Validators,
-    FormBuilder
+    Validators
 } from '@angular/forms';
 
 //FIN DE LOS IMPORTS
@@ -30,8 +25,6 @@ export class dashboardVigaComponent implements OnInit{
   id_registro: string;
   title = 'app';
   global: Global;
-  private gridApi;
-  private gridColumnApi;
   link = "";
   linkFormatoCampo = "";
   rowSelection;
@@ -456,12 +449,12 @@ export class dashboardVigaComponent implements OnInit{
 
   llenaPrensas(resp: any){
     this.cargando=this.cargando-1;
+    console.log("llenaPrensas this.cargando: "+this.cargando);
     console.log(resp);
     this.mis_prensas= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ ){
       this.mis_prensas[_i]=resp[_i];
     }
-    console.log("llenaPrensas this.cargando: "+this.cargando);
   }
 
    onChangeBascula(){

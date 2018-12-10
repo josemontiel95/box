@@ -12,7 +12,7 @@
       <div class="card card-chart">
         
         <div class="card-body">
-         <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
+          <form (ngSubmit)="onSubmit()" [formGroup]=formatoCCHForm #formDir="ngForm">
             <h5>AGREGA REGISTRO REVENIMIENTO</h5>
             <div class="row"> <!--PRIMER ROW -->
               
@@ -82,21 +82,31 @@
                     </div>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
-
-              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
-                  <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="hDet">HORA DE LA DETERMINACI&Oacute;N</label>
-                    <input type="time" id="hDet"  required class="form-control"  name="hDet" placeholder="" formControlName="hDet" (blur)="onBlurHoraMuestreo()">
-                    <div *ngIf="hDet.invalid && (hDet.dirty || hDet.touched)" class="alert alert-danger">
-                      <div *ngIf="hDet.errors.required">
-                        HORA DE LA DETERMINACI&Oacute;N requerido.
-                      </div>
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="volumen">Volumen m<sup>2</sup></label> <!--disable-->
+                  <input type="text" id="volumen" required class="form-control"  name="volumen" placeholder="" formControlName="volumen" (blur)="onBlurVolumen()">
+                  <div *ngIf="volumen.invalid && (volumen.dirty || volumen.touched)" class="alert alert-danger">
+                    <div *ngIf="volumen.errors.required">
+                      VOLUMEN requerido.
                     </div>
-                  </div> <!--FIN SEGUNDO CAMPO -->
-                </div> <!--FIN SEGUNDO GRID -->
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
             </div>
 
             <div class="row">
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                <div class="form-group"><!--SEGUNDO CAMPO -->
+                  <label for="hDet">HORA DE LA DETERMINACI&Oacute;N</label>
+                  <input type="time" id="hDet"  required class="form-control"  name="hDet" placeholder="" formControlName="hDet" (blur)="onBlurHoraMuestreo()">
+                  <div *ngIf="hDet.invalid && (hDet.dirty || hDet.touched)" class="alert alert-danger">
+                    <div *ngIf="hDet.errors.required">
+                      HORA DE LA DETERMINACI&Oacute;N requerido.
+                    </div>
+                  </div>
+                </div> <!--FIN SEGUNDO CAMPO -->
+              </div> <!--FIN SEGUNDO GRID -->
               <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
                   <div class="form-group"><!--SEGUNDO CAMPO -->
                     <label for="unidad">UNIDAD</label>
@@ -120,45 +130,43 @@
                     </select>
                   </div><!--FIN PRIMER CAMPO -->
               </div> <!--FIN PRIMERA GRID -->
-
-              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
-                  <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="numRem">NUMERO DE REMISI&Oacute;N</label> <!--disable-->
-                    <input type="text" id="numRem" required   class="form-control"  name="numRem" placeholder="" formControlName="numRem" (blur)="onBlurNumeroRemision()">
-                    <div *ngIf="numRem.invalid && (numRem.dirty || numRem.touched)" class="alert alert-danger">
-                      <div *ngIf="numRem.errors.required">
-                        NUMERO DE REMISI&Oacute;N requerido.
-                      </div>
-                    </div>
-                  </div><!--FIN PRIMER CAMPO -->
-              </div> <!--FIN PRIMERA GRID -->
             </div>
 
             <div class="row">
-               
-             <div class="col-md-6 col-12"> <!--SEGUNDO GRID -->
-                  <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="hsalida">HORA DE SALIDA DE PLANTA</label>
-                    <input type="time" id=""  required class="form-control"  name="hsalida" placeholder="" formControlName="hsalida" (blur)="onBlurHoraSalida()">
-                    <div *ngIf="hsalida.invalid && (hsalida.dirty || hsalida.touched)" class="alert alert-danger">
-                      <div *ngIf="hsalida.errors.required">
-                        HORA DE SALIDA requerido.
-                      </div>
+              <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="numRem">NUMERO DE REMISI&Oacute;N</label> <!--disable-->
+                  <input type="text" id="numRem" required   class="form-control"  name="numRem" placeholder="" formControlName="numRem" (blur)="onBlurNumeroRemision()">
+                  <div *ngIf="numRem.invalid && (numRem.dirty || numRem.touched)" class="alert alert-danger">
+                    <div *ngIf="numRem.errors.required">
+                      NUMERO DE REMISI&Oacute;N requerido.
                     </div>
-                  </div> <!--FIN SEGUNDO CAMPO -->
-                </div> <!--FIN SEGUNDO GRID -->
+                  </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                <div class="form-group"><!--SEGUNDO CAMPO -->
+                  <label for="hsalida">HORA DE SALIDA DE PLANTA</label>
+                  <input type="time" id=""  required class="form-control"  name="hsalida" placeholder="" formControlName="hsalida" (blur)="onBlurHoraSalida()">
+                  <div *ngIf="hsalida.invalid && (hsalida.dirty || hsalida.touched)" class="alert alert-danger">
+                    <div *ngIf="hsalida.errors.required">
+                      HORA DE SALIDA requerido.
+                    </div>
+                  </div>
+                </div> <!--FIN SEGUNDO CAMPO -->
+              </div> <!--FIN SEGUNDO GRID -->
 
-                <div class="col-md-6 col-12"> <!--SEGUNDO GRID -->
-                  <div class="form-group"><!--SEGUNDO CAMPO -->
-                    <label for="hllegada">HORA DE LLEGADA A OBRA</label>
-                    <input type="time" id="hllegada" required  class="form-control"  name="hllegada" placeholder="" formControlName="hllegada" (blur)="onBlurHoraLlegada()">
-                    <div *ngIf="hllegada.invalid && (hllegada.dirty || hllegada.touched)" class="alert alert-danger">
-                      <div *ngIf="hllegada.errors.required">
-                        HORA DE LLEGADA requerido.
-                      </div>
+              <div class="col-md-4 col-12"> <!--SEGUNDO GRID -->
+                <div class="form-group"><!--SEGUNDO CAMPO -->
+                  <label for="hllegada">HORA DE LLEGADA A OBRA</label>
+                  <input type="time" id="hllegada" required  class="form-control"  name="hllegada" placeholder="" formControlName="hllegada" (blur)="onBlurHoraLlegada()">
+                  <div *ngIf="hllegada.invalid && (hllegada.dirty || hllegada.touched)" class="alert alert-danger">
+                    <div *ngIf="hllegada.errors.required">
+                      HORA DE LLEGADA requerido.
                     </div>
-                  </div> <!--FIN SEGUNDO CAMPO -->
-                </div> <!--FIN SEGUNDO GRID -->
+                  </div>
+                </div> <!--FIN SEGUNDO CAMPO -->
+              </div> <!--FIN SEGUNDO GRID -->
             </div> <!--FIN DEL ROW -->
 
 
