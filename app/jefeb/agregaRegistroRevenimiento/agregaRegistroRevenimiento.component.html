@@ -84,7 +84,7 @@
               </div> <!--FIN PRIMERA GRID -->
               <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
                 <div class="form-group"><!--PRIMER CAMPO -->
-                  <label for="volumen">Volumen m<sup>2</sup></label> <!--disable-->
+                  <label for="volumen">Volumen m<sup>3</sup></label> <!--disable-->
                   <input type="text" id="volumen" required class="form-control"  name="volumen" placeholder="" formControlName="volumen" (blur)="onBlurVolumen()">
                   <div *ngIf="volumen.invalid && (volumen.dirty || volumen.touched)" class="alert alert-danger">
                     <div *ngIf="volumen.errors.required">
