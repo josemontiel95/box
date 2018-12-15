@@ -267,6 +267,11 @@ export class agregaRegistroRevenimientoComponent implements OnInit{
      }
    }
 
+  regresar(){
+    //Esta Ruta regresa al usuario a la vista de llenaFormato
+    this.router.navigate(['jefeBrigada/orden-trabajo/dashboard/llenaRevenimiento/'+this.id_orden +'/'+this.id_formato]);
+  }
+
   onBlurFechaDet(){
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/formatoRegistroRev/post/endpoint.php`;
