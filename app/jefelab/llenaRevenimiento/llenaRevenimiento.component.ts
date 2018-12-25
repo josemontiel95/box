@@ -60,7 +60,6 @@ export class llenaRevenimientoComponent implements OnInit{
     empresa:'',
     direccion: '',
     observaciones:'',
-    tipo_especimen:'',
     cono:'',
     varilla:'',
     flexometro:'',
@@ -181,7 +180,6 @@ export class llenaRevenimientoComponent implements OnInit{
       'empresa':         new FormControl( {value: this.FormatoCCH.empresa, disabled: this.hidden },  [Validators.required]),
       'direccion':       new FormControl( {value: this.FormatoCCH.direccion, disabled: this.hidden },  [Validators.required]),
       'observaciones':   new FormControl( {value: this.FormatoCCH.observaciones, disabled: this.hidden }),       
-      'tipo_especimen':  new FormControl( {value: this.FormatoCCH.tipo_especimen, disabled: this.hidden },  [Validators.required]),
       'cono':            new FormControl( {value: this.FormatoCCH.cono, disabled: this.hidden },  [Validators.required]),
       'varilla':         new FormControl( {value: this.FormatoCCH.varilla, disabled: this.hidden },  [Validators.required]),
       'flexometro':      new FormControl( {value: this.FormatoCCH.flexometro, disabled: this.hidden },  [Validators.required]),
@@ -194,7 +192,6 @@ export class llenaRevenimientoComponent implements OnInit{
   get empresa()        { return this.formatoCCHForm.get('empresa'); }
   get direccion()      { return this.formatoCCHForm.get('direccion'); }
   get observaciones()  { return this.formatoCCHForm.get('observaciones'); }
-  get tipo_especimen() { return this.formatoCCHForm.get('tipo_especimen'); }
   get cono()           { return this.formatoCCHForm.get('cono'); }
   get varilla()        { return this.formatoCCHForm.get('varilla'); }
   get flexometro()     { return this.formatoCCHForm.get('flexometro'); }
@@ -227,11 +224,10 @@ export class llenaRevenimientoComponent implements OnInit{
     });
 
     this.formatoCCHForm.controls['obra']['disable']();
-    this.formatoCCHForm.controls['localizacion']['disable']();
+    //this.formatoCCHForm.controls['localizacion']['disable']();
     this.formatoCCHForm.controls['informe']['disable']();
     this.formatoCCHForm.controls['empresa']['disable']();
     this.formatoCCHForm.controls['direccion']['disable']();
-    this.formatoCCHForm.controls['tipo_especimen']['disable']();
   }
 
   submitted = false;
@@ -277,7 +273,6 @@ export class llenaRevenimientoComponent implements OnInit{
       empresa:         respuesta.razonSocial,
       direccion:       respuesta.direccion,
       observaciones:   respuesta.observaciones,
-      tipo_especimen:  respuesta.localizacion,
       cono:            respuesta.cono_id,
       varilla:         respuesta.varilla_id,
       flexometro:      respuesta.flexometro_id,
@@ -486,7 +481,6 @@ export class llenaRevenimientoComponent implements OnInit{
 
     formData.append('id_formatoRegistroRev', this.id_formato);  
     formData.append('regNo', this.formatoCCHForm.value.informe);
-    formData.append('localizacion', this.formatoCCHForm.value.tipo_especimen);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitch(res.json());                 
                                             } );
@@ -505,6 +499,7 @@ export class llenaRevenimientoComponent implements OnInit{
     formData.append('cono_id', this.formatoCCHForm.value.cono);
     formData.append('varilla_id', this.formatoCCHForm.value.varilla);
     formData.append('flexometro_id', this.formatoCCHForm.value.flexometro);
+    formData.append('localizacion', this.formatoCCHForm.value.localizacion);
     this.http.post(url, formData).subscribe(res => {
                                               this.respuestaSwitchFooter(res.json());                 
                                             } );

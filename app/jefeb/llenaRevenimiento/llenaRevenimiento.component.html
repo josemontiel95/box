@@ -70,13 +70,10 @@
             <div class="row">
               <div class="col-md-10 col-12"> <!--PRIMERA GRID -->
                   <div class="form-group"><!--PRIMER CAMPO -->
-                    <label for="localizacion">LOCALIZACION DE LA OBRA</label> <!--disable-->
-                    <input type="text" id="localizacion"   
-                    class="form-control" 
-                    name="localizacion" placeholder="" required   formControlName="localizacion">
-                     <div *ngIf="localizacion.invalid && (localizacion.dirty || localizacion.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="localizacion.errors.required">
+                    <label for="direccion">LOCALIZACION DE LA OBRA</label> <!--disable-->
+                    <input type="text" id="direccion" class="form-control" name="direccion" placeholder="" required   formControlName="direccion">
+                     <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)" class="alert alert-danger">
+                        <div *ngIf="direccion.errors.required">
                           Localizacion requerida.
                         </div>
                       </div>
@@ -137,19 +134,17 @@
             </div>
 
             <div class="row">
-              <div class="col-md-10 col-12">
-                <div class="form-group">
-                  <label>LOCALIZACION</label>
-                  <input type="text" id="especimen" required class="form-control" 
-                  name="observaciones" placeholder="" formControlName="tipo_especimen">
-
-                  <div *ngIf="tipo_especimen.invalid && (tipo_especimen.dirty || tipo_especimen.touched)" class="alert alert-danger">
-                   <div *ngIf="tipo_especimen.errors.required">
-                   Localizacion Requerida.
-                   </div>
-                  </div>
-                </div>
-              </div>
+              <div class="col-md-10 col-12"> <!--PRIMERA GRID -->
+                <div class="form-group"><!--PRIMER CAMPO -->
+                  <label for="localizacion">ELEMENTO COLADO</label> <!--disable-->
+                  <input type="text" id="localizacion" class="form-control" name="localizacion" placeholder="" required   formControlName="localizacion">
+                   <div *ngIf="localizacion.invalid && (localizacion.dirty || localizacion.touched)" class="alert alert-danger">
+                      <div *ngIf="localizacion.errors.required">
+                        Localizacion requerida.
+                      </div>
+                    </div>
+                </div><!--FIN PRIMER CAMPO -->
+              </div> <!--FIN PRIMERA GRID -->
             </div>
 
           </form>

@@ -64,7 +64,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
   onBlurEspecimen2(){
     if(this.tipoMuestra == false){
       this.creaCCHForm.patchValue({
-      especimen3: this.creaCCHForm.value.especimen2,
+        especimen3: this.creaCCHForm.value.especimen2,
       });
       this.onChangeEspecimen2();
       this.onChangeEspecimen3();
@@ -273,7 +273,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
       }else{//SI NO ES NORMAL
         this.notRR = true;
         const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
-        this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
+        this.creaCCHForm.controls["especimen3"]['enable'](); // disables/enables each form control based on 'this.formDisabled'
         //this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
       }
     }else{ //SI CILINDRO O CUBO
@@ -282,7 +282,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
         }else{ //SI ES RR O CA.
           this.notRR = true;
           const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
-          this.creaCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
+          this.creaCCHForm.controls["especimen4"]['enable'](); // disables/enables each form control based on 'this.formDisabled'
               
         }
     }
@@ -333,10 +333,10 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
         tconcreto: this.atconcreto,
         especimen1: this.aespecimen1,
         especimen2: this.aespecimen2,
-        especimen3: this.aespecimen3            
+        especimen3: this.aespecimen3
       });
       const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
-      this.creaCCHForm.controls["especimen3"][state](); // disables/enables each form control based on 'this.formDisabled'
+      this.creaCCHForm.controls["especimen3"]['enable'](); // disables/enables each form control based on 'this.formDisabled'
     }else{ // no es vigas
       this.notRR=true;
       this.atconcreto= "N";
@@ -354,7 +354,7 @@ export class CrearLlenaFormatoCCHComponent implements OnInit {
       });
       const state = this.hidden || this.notRR ? 'disable' : 'enable'; 
       this.creaCCHForm.controls["especimen3"]['enable']();
-      this.creaCCHForm.controls["especimen4"][state](); // disables/enables each form control based on 'this.formDisabled'
+      this.creaCCHForm.controls["especimen4"]['enable'](); // disables/enables each form control based on 'this.formDisabled'
     }
     /*
     const state = this.hidden || this.notRR ? 'disable' : 'enable'; 

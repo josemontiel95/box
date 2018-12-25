@@ -386,12 +386,12 @@ export class llenaFormatoCCHComponent implements OnInit{
     this.formatoCCHForm.controls['empresa']['disable']();
     this.formatoCCHForm.controls['direccion']['disable']();
     this.formatoCCHForm.controls['informe']['disable']();
-    this.formatoCCHForm.controls['especimen4']['disable']();
+    //Commented out 25 dic 2018 this.formatoCCHForm.controls['especimen4']['disable']();
 
     if(!this.tipoMuestra){
-      this.formatoCCHForm.controls['especimen3']['disable']();
+      //Commented out 25 dic 2018 this.formatoCCHForm.controls['especimen3']['disable']();
     }else{
-      this.formatoCCHForm.controls['especimen4']['disable']();
+      //Commented out 25 dic 2018 this.formatoCCHForm.controls['especimen4']['disable']();
     }
     /*Se realiza una validación mediante numberOfRegistros
       Para saber si existen registros, en caso positivo
@@ -487,9 +487,9 @@ export class llenaFormatoCCHComponent implements OnInit{
     console.log(respuesta.tipo_especimen);
     if(respuesta.tipo_especimen == "VIGAS"){
       this.tipoMuestra = false;
-      this.formatoCCHForm.controls['especimen3']['disable']();
+      //Commented out 25 dic 2018 this.formatoCCHForm.controls['especimen3']['disable']();
     }else{
-      this.formatoCCHForm.controls['especimen4']['disable']();
+      //Commented out 25 dic 2018 this.formatoCCHForm.controls['especimen4']['disable']();
       this.tipoMuestra = true;
     }
     //Esta if verifica si ya fue generado un PDF mediante respuesta.preliminar, si fue generado activa Visuarlizar PDF.
@@ -572,7 +572,7 @@ export class llenaFormatoCCHComponent implements OnInit{
     });
       //this.formatoCCHForm.controls["especimen1"]['disable'](); 
       //this.formatoCCHForm.controls["especimen2"]['disable']();
-      this.formatoCCHForm.controls["especimen3"]['disable']();
+      //Commented out 25 dic 2018  this.formatoCCHForm.controls["especimen3"]['disable']();
     }else if(!this.tipoMuestra){
       
       this.tipoMuestra = true;
@@ -607,12 +607,12 @@ export class llenaFormatoCCHComponent implements OnInit{
 
         this.formatoCCHForm.controls["especimen1"]['enable'](); 
         this.formatoCCHForm.controls["especimen2"]['enable']();
-        this.formatoCCHForm.controls['especimen3']['disable'](); // disables/enables each form control based on 'this.formDisabled'
+        //Commented out 25 dic 2018 this.formatoCCHForm.controls['especimen3']['disable'](); // disables/enables each form control based on 'this.formDisabled'
       }else{//SI NO ES NORMAL
         this.notRR = true;
         this.formatoCCHForm.controls["especimen1"]['enable'](); 
         this.formatoCCHForm.controls["especimen2"]['enable']();
-        this.formatoCCHForm.controls['especimen3']['disable'](); // disables/enables each form control based on 'this.formDisabled'
+        //Commented out 25 dic 2018 this.formatoCCHForm.controls['especimen3']['disable'](); // disables/enables each form control based on 'this.formDisabled'
         //this.creaCCHForm.controls["especimen2"][state](); // disables/enables each form control based on 'this.formDisabled'
       }
 
@@ -632,13 +632,13 @@ export class llenaFormatoCCHComponent implements OnInit{
         this.formatoCCHForm.controls["especimen1"]['enable'](); 
         this.formatoCCHForm.controls["especimen2"]['enable']();
         this.formatoCCHForm.controls["especimen3"]['enable']();
-        this.formatoCCHForm.controls["especimen4"]['disable'](); // disables/enables each form control based on 'this.formDisabled'
+        //Commented out 25 dic 2018 this.formatoCCHForm.controls["especimen4"]['disable'](); // disables/enables each form control based on 'this.formDisabled'
       }else{ //SI ES RR O CA.
         this.notRR = true;
         this.formatoCCHForm.controls["especimen1"]['enable'](); 
         this.formatoCCHForm.controls["especimen2"]['enable']();
         this.formatoCCHForm.controls["especimen3"]['enable']();
-        this.formatoCCHForm.controls["especimen4"]['disable'](); // disables/enables each form control based on 'this.formDisabled'
+        //Commented out 25 dic 2018 this.formatoCCHForm.controls["especimen4"]['disable'](); // disables/enables each form control based on 'this.formDisabled'
       }
     }
   }
