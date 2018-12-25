@@ -57,6 +57,7 @@ export class SidebarJefeLab implements OnInit {
     this.menuItems = ROUTES.filter(menuItem => menuItem);    
     this.menuItems2 = ROUTES2.filter(menuItem => menuItem);
     this.menuItems3 = ROUTES3.filter(menuItem => menuItem);
+    //this.menuItems[0].title="MiPrueba";
   }
   isMobileMenu() {
       if ( window.innerWidth > 991) {
