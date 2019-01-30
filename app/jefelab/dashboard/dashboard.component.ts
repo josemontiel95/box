@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
    
 
   hiddenf= true;
-  edicionJLab= false;
+  edicionJLab = true;
   ejecucionJBrigada = false;
   terminadoJBrigada = false;
   terminadoJLab = false;
@@ -88,6 +88,7 @@ export class DashboardComponent implements OnInit {
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
     this.cargando=this.cargando+4;
+    console.log("DashboardComponent :: ngOnInit :: this.cargando+4");
 
 
     let url = `${this.global.apiRoot}/herramienta_tipo/get/endpoint.php`;
@@ -205,7 +206,7 @@ export class DashboardComponent implements OnInit {
   }
 
   actualizarOrden(){
-    console.log("crearOrdenTrabajo :: "+this.ordenForm.value.obra_id);
+    //console.log("crearOrdenTrabajo :: "+this.ordenForm.value.obra_id);
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando=this.cargando+1;
     let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
@@ -232,6 +233,8 @@ export class DashboardComponent implements OnInit {
   }
 
   cambiarCargando(num){
+    console.log("#DashboardComponent :: cambiarCargando :: this.cargando + "+num);
+
     this.cargando=this.cargando + num;
   }
 
@@ -306,7 +309,7 @@ export class DashboardComponent implements OnInit {
   }
 
   respuestaSwitch(res: any){
-    console.log(res);
+    //console.log(res);
     if(res.error!= 0){
       window.alert("ERROR. Intentalo otra vez");
       location.reload();
@@ -490,17 +493,19 @@ export class DashboardComponent implements OnInit {
 
  
   llenaTipos(resp: any){
-    console.log(resp);
+    //console.log(resp);
     this.mis_tipos= new Array(resp.length);
     for (var _i = 0; _i < resp.length; _i++ )
     {
       this.mis_tipos[_i]=resp[_i];
     }
     this.cargando=this.cargando-1;
+    console.log("DashboardComponent :: llenaTipos :: this.cargando-1");
+
   }
 
   labValidator(repuesta: any){
-    console.log(repuesta)
+    //console.log(repuesta)
     if(repuesta.error==5 || repuesta.error==6){
       window.alert(repuesta.estatus);
     }
@@ -516,8 +521,10 @@ export class DashboardComponent implements OnInit {
       this.mis_cli[_i]=resp[_i];
 
     }
-    console.log(this.mis_cli);
+    //console.log(this.mis_cli);
     this.cargando=this.cargando-1;
+    console.log("DashboardComponent :: llenaClientes :: this.cargando-1");
+
   }
 
   llenaObra(resp: any){
@@ -527,8 +534,10 @@ export class DashboardComponent implements OnInit {
       this.mis_obras[_i]=resp[_i];
 
     }
-    console.log(this.mis_obras);
+    //console.log(this.mis_obras);
     this.cargando=this.cargando-1;
+    console.log("DashboardComponent :: llenaObra :: this.cargando-1");
+
   }
 
   llenaJefe(resp: any){
@@ -538,8 +547,10 @@ export class DashboardComponent implements OnInit {
       this.mis_jefes[_i]=resp[_i];
 
     }
-    console.log(this.mis_jefes);
+    //console.log(this.mis_jefes);
     this.cargando=this.cargando-1;
+    console.log("DashboardComponent :: llenaJefe :: this.cargando-1");
+
   }
 
   llenado(respuesta: any){
@@ -594,12 +605,14 @@ export class DashboardComponent implements OnInit {
 
       case 2:
         this.terminadoJBrigada = true;
+        this.edicionJLab = false;
         this.botonHerramientaDesElimini="Desasignar Herramienta/as";
         this.botonTecnicosDesElimini="Desasignar Tecnico/os";
         this.mensajeStatus = "ORDEN TERMINADA POR EL JEFE DE BRIGADA";
       break;
 
       case 3:
+      this.edicionJLab = false;
       this.terminadoJBrigada = false;
       this.terminadoJLab = true;
       this.botonHerramientaDesElimini="Desasignar Herramienta/as";
@@ -635,7 +648,7 @@ export class DashboardComponent implements OnInit {
     if(!isValid){
       window.alert("Tienes al menos un formato incompleto, todos los formatos deben estar ensayados,autorizados y completados para completar esta orden de trabajo.");     
     }else{
-          if(window.confirm("¿Estas seguro de marcar como completado la orden de trabajo? ya no podra ser editarlo y seras redireccionado a evaluar la herramienta.")){
+          if(window.confirm("¿Estas seguro de marcar como completado la orden de trabajo? ya no podra ser editado y seras redireccionado a evaluar la herramienta.")){
             this.evaluaHerra();
           }
     } 
