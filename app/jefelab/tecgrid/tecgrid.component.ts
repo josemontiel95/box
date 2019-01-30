@@ -42,6 +42,7 @@ export class TecGridComponent implements OnInit  {
 
   onGridReady(params) {
     this.cambiarCargando.emit(+1);
+    console.log("TecGridComponent :: onGridReady :: cambiarCargando(+1)");
 
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.gridApi = params.api;
@@ -55,12 +56,14 @@ export class TecGridComponent implements OnInit  {
     this.http.get(url, {search}).subscribe(res => {
       console.log(res.json());
       this.llenaTabla(res.json());
-      this.gridApi.sizeColumnsToFit();
+      //this.gridApi.sizeColumnsToFit();
     });
   }
 
   llenaTabla(repuesta: any){
     this.cambiarCargando.emit(-1);
+    console.log("TecGridComponent :: llenaTabla :: cambiarCargando(-1)");
+
     console.log(repuesta)
     if(repuesta.error==1 || repuesta.error==2 || repuesta.error==3){
       window.alert(repuesta.estatus);

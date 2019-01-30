@@ -35,7 +35,7 @@ export class HerramientaGridComponent implements OnInit  {
   rowData: any;
 
   ngOnInit() {
-        this.data.currentGlobal.subscribe(global => this.global = global);
+    this.data.currentGlobal.subscribe(global => this.global = global);
     this.route.params.subscribe( params => this.id=params.id);
   }
 
