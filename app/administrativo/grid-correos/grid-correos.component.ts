@@ -171,6 +171,7 @@ export class GridCorreosComponent implements OnInit  {
         formData.append('rol_usuario_id', this.global.rol);
 
         formData.append('id_correoDeLote', this.id_correoDeLote); 
+        formData.append('id_lote', this.lote); 
  
         this.http.post(url, formData).subscribe(res => {
           this.validaRespuesta(res.json());
@@ -185,8 +186,11 @@ export class GridCorreosComponent implements OnInit  {
 
     if(res.error==0){
       window.alert("server regreso con exito");
+      location.reload();
     }else{
       window.alert("server regreso con error, estatus: "+res.estatus+" error: "+res.error);
+      location.reload();
+
     }
   }
 }

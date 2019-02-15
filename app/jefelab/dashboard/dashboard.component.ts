@@ -640,7 +640,7 @@ export class DashboardComponent implements OnInit {
 
     let isValid = true;
     res.forEach(function (value) {
-      if(value.status == "2"){
+      if(value.status == "1" || value.status == "0" ){
          isValid = false;
       }
     });

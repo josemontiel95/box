@@ -34,6 +34,7 @@ export class FormatoCCHGridComponent implements OnInit  {
   isGenerarPDFValid = false;
   isVerPDFValid = false;
   isAutoValid = false;
+  isVerPDFValidBlue = false;
 
   /* FIN DE Variables de estado de los botones */ 
   @Output() cambiarCargando = new EventEmitter<any>();
@@ -284,6 +285,7 @@ export class FormatoCCHGridComponent implements OnInit  {
       this.isVerEnsayoValid  = true;
       this.isGenerarPDFValid = false;
       this.isVerPDFValid     = false;
+      this.isVerPDFValidBlue = false;
       this.isAutoValid       = false;
     }else if(Number(status) == 0){
       console.log("onSelectionChanged :: IF : 0 :: statusEnsayo : "+statusEnsayo);
@@ -291,6 +293,7 @@ export class FormatoCCHGridComponent implements OnInit  {
       this.isVerEnsayoValid  = false;
       this.isGenerarPDFValid = false;
       this.isVerPDFValid     = false;
+      this.isVerPDFValidBlue = false;
       this.isAutoValid       = false;
     }else if(Number(statusEnsayo) == 0 || statusEnsayo == null){ // registro Sin ensayar.
       console.log("onSelectionChanged :: IF : 1 :: statusEnsayo : "+statusEnsayo);
@@ -298,6 +301,7 @@ export class FormatoCCHGridComponent implements OnInit  {
       this.isVerEnsayoValid  = false;
       this.isGenerarPDFValid = false;
       this.isVerPDFValid     = false;
+      this.isVerPDFValidBlue = false;
       this.isAutoValid       = false;
     }else if(Number(statusEnsayo) > 0 && pdfFinal == null){ // Registro ensayado pero sin PDF
       console.log("onSelectionChanged :: IF : 2");
@@ -306,6 +310,7 @@ export class FormatoCCHGridComponent implements OnInit  {
       this.isVerEnsayoValid  = true;
       this.isGenerarPDFValid = true;
       this.isVerPDFValid     = false;
+      this.isVerPDFValidBlue = false;
       this.isAutoValid       = false;
     }else if(statusEnsayo  > 0 && pdfFinal != null && jefaLabApproval_id == null){ // Registro ensayado, con PDF pero no Autorizado
       console.log("onSelectionChanged :: IF : 3");
@@ -313,6 +318,7 @@ export class FormatoCCHGridComponent implements OnInit  {
       this.isVerEnsayoValid  = true;
       this.isGenerarPDFValid = true;
       this.isVerPDFValid     = true;
+      this.isVerPDFValidBlue = false;
       this.isAutoValid       = true;
     }else if(statusEnsayo  > 0 && pdfFinal != null && jefaLabApproval_id != null){ // Registro ensayado, con PDF y autorizado
       console.log("onSelectionChanged :: IF : 4");
@@ -321,6 +327,7 @@ export class FormatoCCHGridComponent implements OnInit  {
       this.isVerEnsayoValid  = true;
       this.isGenerarPDFValid = false;
       this.isVerPDFValid     = true;
+      this.isVerPDFValidBlue = true;
       this.isAutoValid       = false;
     }else{ // Error
       console.log("onSelectionChanged :: IF : 5");

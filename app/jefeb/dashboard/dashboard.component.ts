@@ -251,9 +251,9 @@ export class DashboardComponent implements OnInit {
 
    respuestaSwitch(res: any){
     this.cargando=this.cargando-1;
-
+    console.log(res);
      if(res.error!= 0){
-       window.alert("Intentalo otra vez");
+       window.alert("Algo salio mal... Contacta a soporte ("+res.estatus+")");
        location.reload();
      }
      else{
