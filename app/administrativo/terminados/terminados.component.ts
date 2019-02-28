@@ -50,7 +50,7 @@ export class TerminadosComponent implements OnInit{
 
   isdataReadyForGrid=false;
   ordenForm: FormGroup; //se crea un formulario de tipo form group
-  obra_idTmp;
+  id_cliente;
   Orden = {
     obra_id: ''
   };
@@ -58,7 +58,7 @@ export class TerminadosComponent implements OnInit{
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
       {headerName: 'Lote No.', field: 'id_loteCorreos' },
-      {headerName: 'RAZ&Oacute;N SOCIAL', field: 'razonSocial' },
+      {headerName: 'Obra', field: 'obra' },
       {headerName: 'COTIZACI&Oacute;N', field: 'cotizacion' },
       {headerName: 'Identificador', field: 'informeNo' },
       {headerName: 'Clave de Especimen', field: 'claveEspecimen' },
@@ -77,7 +77,7 @@ export class TerminadosComponent implements OnInit{
     this.route.params.subscribe( params => this.id=params.id );
     this.data.currentGlobal.subscribe(global => this.global = global);
     this.cargando = this.cargando +1;
-    let url = `${this.global.apiRoot}/obra/get/endpoint.php`;
+    let url = `${this.global.apiRoot}/cliente/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getForDroptdownAdmin');
     search.set('token', this.global.token);
@@ -121,7 +121,7 @@ export class TerminadosComponent implements OnInit{
     search.set('function', 'getAllAdministrativoFULL');
     search.set('token', this.global.token);
     search.set('rol_usuario_id', this.global.rol);
-    search.set('obra_id', this.obra_idTmp);
+    search.set('id_cliente', this.id_cliente);
 
     this.http.get(url, {search}).subscribe(res => {
                                             console.log(res.json());
@@ -194,8 +194,8 @@ export class TerminadosComponent implements OnInit{
     this.router.navigate(['administrativo/obras/dashboardLote/'+this.id_loteCorreos]);
   }
   onObraBlur(){
-    this.obra_idTmp=this.ordenForm.value.obra_id;
-    console.log("onObraBlur :: "+this.obra_idTmp);
+    this.id_cliente=this.ordenForm.value.obra_id;
+    console.log("onObraBlur :: "+this.id_cliente);
     this.isdataReadyForGrid=true;
     this.ordenForm.patchValue({
       obra_id: ''

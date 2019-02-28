@@ -33,11 +33,11 @@
               <div class="row"> <!--PRIMER ROW -->
                 <div class="col-md-12 col-12"> <!--PRIMER CAMPO -->
                   <div class="form-group">
-                    <label for="obra_id">Selecciona una obra </label>
+                    <label for="obra_id">Selecciona un cliente </label>
                     <select  class="form-control" id="obra_id" required name="obra_id" formControlName="obra_id" (change)="onObraBlur()">
-                      <option value="" [disabled]="true" selected>Selecciona el obra...</option>  
-                      <option *ngFor="let obra of mis_obras" [value]="obra.id_obra">
-                        {{obra.obra}}
+                      <option value="" [disabled]="true" selected>Selecciona un cliente...</option>  
+                      <option *ngFor="let obra of mis_obras" [value]="obra.id_cliente">
+                        {{obra.nombre}}
                       </option>   
                     </select>
                     <div *ngIf="obra_id.invalid && (obra_id.dirty || obra_id.touched)" class="alert alert-danger">
