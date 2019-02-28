@@ -14,7 +14,7 @@
     <div class="col-md-12 ml-auto mr-auto">
       <div class="card">
         <div class="card-header " *ngIf="!formatoStatus">
-          <h4 style="text-align: center;" *ngIf="!formatoStatus" class="card-title">Esta formato esta completado y la edici&oacute;n ya no esta permitida</h4>
+          <h4 style="text-align: center;" *ngIf="!formatoStatus" class="card-title">Este formato esta completado y la edici&oacute;n ya no esta permitida</h4>
         </div>
         <div class="card-body">
             <i _ngcontent-c25="" class="now-ui-icons arrows-1_minimal-left pr-3" (click)="regresaOrdenTrabajo();"></i>
@@ -33,7 +33,7 @@
                 </div>
                 <div style="display: inline-block;"> 
                   <button [ngClass]="{'btn':true ,'btn-default': !isValid,'btn-success': isValid && preliminar }" *ngIf="hiddenf == true && formatoStatus" (click)="obtenStatusReg();">
-                    <span><b>FORMATO COMPLETADO &nbsp;&nbsp;</b></span>
+                    <span><b>COMPLETAR FORMATO &nbsp;&nbsp;</b></span>
                     <i class="fa fa-check-square-o" style="font-size:18px; display: inline-block; "></i>
                   </button>
                 </div>
@@ -146,7 +146,7 @@
           <h4 style="text-align: center;" class="card-title">CONTROL DE CONCRETO HIDRAULICO.</h4>
           <div class="btn-group" style="float: right; padding-right: 5%;">
                 <button class="btn btn-success"  *ngIf="hiddenf && formatoStatus"  (click)="agregaRegistro();">
-                  <span><b>AGREGAR REGISTRO</b></span>
+                  <span><b>AGREGAR MUESTRA</b></span>
                 </button>
           </div>
         </div>

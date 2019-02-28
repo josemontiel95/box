@@ -242,18 +242,30 @@ export class DashboardComponent implements OnInit {
     formData.append('id_tecnicos_ordenDeTrabajo', this.ids);
     formData.append('email',                      this.paseForm.value.correo);
     formData.append('contrasena',                 this.paseForm.value.pass);  
-
     this.http.post(url, formData).subscribe(res => {
-                                              this.respuestaSwitch(res.json());
-                                            });
-    this.hiddenTecnicos = true;
+      this.respuestaSwitchPasaLista(res.json());
+    });
+    
   }
+  respuestaSwitchPasaLista(res: any){
+    this.hiddenTecnicos = true;
+    this.cargando=this.cargando-1;
+    console.log(res);
+     if(res.error!= 0){
+       window.alert("Algo salio mal... Contacta a soporte ("+res.estatus+")");
+       location.reload();
+     }
+     else{
+          this.cargando=0;
+       //window.alert("Insertado con exito.");
+     }
+   }
 
    respuestaSwitch(res: any){
     this.cargando=this.cargando-1;
-
+    console.log(res);
      if(res.error!= 0){
-       window.alert("Intentalo otra vez");
+       window.alert("Algo salio mal... Contacta a soporte ("+res.estatus+")");
        location.reload();
      }
      else{
@@ -354,6 +366,7 @@ export class DashboardComponent implements OnInit {
   }//Fin llenado
 
   obtenStatusFormatos(){
+    this.cargando=this.cargando+1;
     let url = `${this.global.apiRoot}/ordenDeTrabajo/get/endpoint.php`;
     let search = new URLSearchParams();
     search.set('function', 'getAllFormatos');
@@ -367,7 +380,6 @@ export class DashboardComponent implements OnInit {
   }
 
   validaFormatosVacios(res: any){
-
     let isValid = true;
     res.forEach(function (value) {
       if(value.status == "0"){
@@ -376,16 +388,18 @@ export class DashboardComponent implements OnInit {
     });
 
     if(!isValid){
+      this.cargando=this.cargando-1;
       window.alert("Tienes al menos un formato incompleto, todos los formatos deben estar en ESTATUS:1 para completar esta orden de trabajo.");     
     }else{
           if(window.confirm("¿Estas seguro de marcar como completado la orden de trabajo? ya no podra ser editado.")){
             this.completarOrden();
+          }else{
+            this.cargando=this.cargando-1;
           }
     } 
   } //FIN ValidaCamposVacios
 
   completarOrden(){
-    this.cargando=this.cargando+1;
     this.data.currentGlobal.subscribe(global => this.global = global);
     let url = `${this.global.apiRoot}/ordenDeTrabajo/post/endpoint.php`;
     let formData:FormData = new FormData();

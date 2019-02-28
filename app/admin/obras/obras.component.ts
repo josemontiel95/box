@@ -26,6 +26,8 @@ export class ObrasComponent implements OnInit{
   actBut=false;
   imgUrl="";
   cargando= 1;
+  rowClassRules;
+
   constructor( private http: Http, private router: Router, private data: DataService, private route: ActivatedRoute){
 	  this.columnDefs = [
       {headerName: 'Ctrl', field: 'id_obra' },
@@ -41,6 +43,13 @@ export class ObrasComponent implements OnInit{
 
     ];
     this.rowSelection = "single";
+
+    this.rowClassRules = {
+      "row-red-warning": function(params) {
+        var status = params.data.oActive;
+        return status  == 0;
+      }
+    };
   }
 
   rowData: any;

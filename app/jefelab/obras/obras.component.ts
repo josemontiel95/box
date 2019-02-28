@@ -108,6 +108,9 @@ export class ObrasComponent implements OnInit{
    }
 
    desactivarUsuario(){
+     if(!window.confirm("Esta usted a punto de desativar esta obra. Si esto es un error, deber\u00E1s solicitar a algun amdinistrador que te vuelva a activar esta obra. ¿Esta seguro de continuar?")){
+      return;
+     }
      this.actBut= true;
      this.desBut= false;
      this.switchActive(0);

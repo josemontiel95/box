@@ -524,13 +524,19 @@ export class llenaFormatoCCHComponent implements OnInit{
       this.footerExist= true;
       this.verPreliminarGabs = true;
       this.completarFormato= false;
-      this.estadoTitle="Completado por el Jefe de Brigada. El t\u00E9cnico de muestras ya ha comenzado a ensayar. Ya existe un preliminar interno de ensaye. Se recomienda revisar si no hay un formato final pendiente por generar y autorizar."
-    }else if(Number(respuesta.status)==1 && respuesta.preliminar != null && respuesta.preliminarGabs != null && Number(respuesta.footerExist) == 1 && Number(respuesta.ensayadoFin) == 0){
+      this.estadoTitle="Completado por el Jefe de Brigada. El t\u00E9cnico de muestras ya ha comenzado a ensayar. Ya existe un preliminar interno de ensaye. Se recomienda revisar si no hay un PDF de informe final pendiente por generar y autorizar."
+    }else if(Number(respuesta.status)==1 && respuesta.preliminar != null && respuesta.preliminarGabs != null && Number(respuesta.footerExist) == 1 && Number(respuesta.ensayadoFin) == 0 && Number(respuesta.ensayosAwaitingApproval) > 0){
+      this.verFomatoCampo= true;
+      this.footerExist= true;
+      this.verPreliminarGabs = true;
+      this.completarFormato= false;
+      this.estadoTitle="Completado por el Jefe de Brigada. El t\u00E9cnico de muestras ya ha terminado de ensayar todas las muestras. Se requiere terminar de generar PDF de informe final y autorizar todos los especimenes de todas las muestras antes de completar el informe."
+    }else if(Number(respuesta.status)==1 && respuesta.preliminar != null && respuesta.preliminarGabs != null && Number(respuesta.footerExist) == 1 && Number(respuesta.ensayadoFin) == 0 && Number(respuesta.ensayosAwaitingApproval) == 0){
       this.verFomatoCampo= true;
       this.footerExist= true;
       this.verPreliminarGabs = true;
       this.completarFormato= true;
-      this.estadoTitle="Completado por el Jefe de Brigada. El t\u00E9cnico de muestras ya ha terminado de ensayar todas las muestras. Se recomienda verificar si no hay un formato final pendiente por generar y autorizar antes de completar el formato."
+      this.estadoTitle="Completado por el Jefe de Brigada. El t\u00E9cnico de muestras ya ha terminado de ensayar todas las muestras. Se requiere completar el informe."
     }else if(Number(respuesta.status)==2 && respuesta.preliminar != null && respuesta.preliminarGabs != null && Number(respuesta.footerExist) == 1 && Number(respuesta.ensayadoFin) == 0){
       this.verFomatoCampo= true;
       this.footerExist= true;
