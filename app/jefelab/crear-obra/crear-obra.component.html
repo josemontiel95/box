@@ -228,7 +228,7 @@
                     <select   class="form-control"  id="id_cliente"required placeholder="Cliente" formControlName="id_cliente">
                       <option value="" selected>Selecciona un Cliente...</option>
                       <option *ngFor="let cli of mis_cli" [value]="cli.id_cliente">
-                        {{cli.nombre}}
+                        {{cli.nombre}} -- {{cli.id_cliente}}
                       </option>
                     </select>
                     <div *ngIf="id_cliente.invalid && (id_cliente.dirty || id_cliente.touched)" class="alert alert-danger">            

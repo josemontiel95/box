@@ -484,7 +484,6 @@ export class llenaFormatoCCHComponent implements OnInit{
 
 
   sinNombre(respuesta: any){
-    console.log(respuesta.tipo_especimen);
     if(respuesta.tipo_especimen == "VIGAS"){
       this.tipoMuestra = false;
       //Commented out 25 dic 2018 this.formatoCCHForm.controls['especimen3']['disable']();
@@ -494,6 +493,8 @@ export class llenaFormatoCCHComponent implements OnInit{
     }
     //Esta if verifica si ya fue generado un PDF mediante respuesta.preliminar, si fue generado activa Visuarlizar PDF.
     /*Verificacion de estados de los botones. */
+    console.log("Datos para verificar estado:");
+    console.log(respuesta);
 
     if(Number(respuesta.status)==0 && respuesta.preliminar == null  && Number(respuesta.footerExist) == 0 && Number(respuesta.ensayadoFin) > 0){
       this.verFomatoCampo= false;

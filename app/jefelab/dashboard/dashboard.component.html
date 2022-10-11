@@ -355,6 +355,23 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-md-12 col-12 col-lg-12">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Notificaciones</h5>
+          <h4 class="card-title">Notificaciones</h4>
+        </div>
+        <div class="card-body">
+          <app-notificaciones-grid [done]="terminadoJLab" (cambiarCargando)="cambiarCargando($event)"></app-notificaciones-grid>
+        </div>
+
+        <div class="card-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
   
   <div class="row" *ngIf="!edicionJLab">
     <div class="col-md-12 col-12 col-lg-12">

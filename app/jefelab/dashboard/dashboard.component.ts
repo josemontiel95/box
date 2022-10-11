@@ -574,8 +574,7 @@ export class DashboardComponent implements OnInit {
      observaciones:        respuesta.observaciones,
     });    
 
-    if(respuesta.isClienteActive==0)
-    {
+    if(respuesta.isClienteActive==0){
       this.addCliente(respuesta.id_cliente,respuesta.nombre);
     }
   }

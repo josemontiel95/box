@@ -63,6 +63,7 @@ import { agregaRegistroRevenimientoComponent } from '../../jefelab/agregaRegistr
 import { FormatoCCHGridComponent } from '../../jefelab/formato-cch-grid/formato-cch-grid.component';
 import { PendientesPDFGridComponent } from '../../jefelab/pendientes-pdf-grid/pendientes-pdf-grid.component';
 import { FormatosGridComponent } from '../../jefelab/formatos-grid/formatos-grid.component';
+import { NotificacionesGridComponent } from '../../jefelab/notificaciones-grid/notificaciones-grid.component';
 import { RegistrosRevGridComponent } from '../../jefelab/registrosrev-grid/registrosrev-grid.component';
 import { TecGridComponent } from '../../jefelab/tecgrid/tecgrid.component';
 import { FechasGridComponent } from '../../jefelab/fechasgrid/fechasgrid.component';
@@ -126,6 +127,7 @@ import { OdtEdicionGridComponent } from '../../jefelab/ordenesDeTrabajo-grids/od
     agregaRegistroRevenimientoComponent,
     FormatoCCHGridComponent,
     FormatosGridComponent,
+    NotificacionesGridComponent,
     PendientesPDFGridComponent,
     RegistrosRevGridComponent,
     TecGridComponent,
