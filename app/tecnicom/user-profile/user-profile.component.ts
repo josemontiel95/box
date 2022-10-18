@@ -212,7 +212,7 @@ export class UserProfileComponent implements OnInit {
 
 
   subirFoto(){
-    this.router.navigate(['administrador/insertar-foto/'+this.id]);
+    
   }
 
     llenado(respuesta: any)

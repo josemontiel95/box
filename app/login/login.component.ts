@@ -44,6 +44,8 @@ export class LoginComponent implements OnInit {
     if(loginresp.error==0){
       console.log(loginresp);
       this.data.changeGlobal(new Global(loginresp.id_usuario,loginresp.token,"http://lacocsmex.com.mx/laboratorio/API", "http://lacocsmex.com.mx/laboratorio/", loginresp.rol));
+      //this.data.changeGlobal(new Global(loginresp.id_usuario,loginresp.token,"https://tech4u.com.mx/qualitycontrol/API", "https://tech4u.com.mx/qualitycontrol/", loginresp.rol));
+
       this.router.navigate([loginresp.root+"/"]);
     }else{
       this.cargando= 0;

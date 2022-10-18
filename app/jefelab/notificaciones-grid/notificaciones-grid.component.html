@@ -1,0 +1,234 @@
+          <div class="btn-group" *ngIf="selected && !done && !formVisible"  style="float: right; padding-right: 5%;">
+            <button class="btn btn-info" (click)="selectOption();">
+              <span><b>Editar &nbsp;&nbsp;</b></span>
+              <i class="fas fa-pencil-square-o" style="font-size:18px; display: inline-block; "></i>
+            </button>
+          </div>
+          <div class="btn-group" *ngIf="selected && !done"  style="float: right; padding-right: 5%;">
+              <button class="btn btn-danger" (click)="cancelEdit();">
+                <span><b>Cancelar </b></span>
+              </button>
+            </div>
+          <div class="btn-group" *ngIf="!selected && !done"  style="float: right; padding-right: 5%;">
+            <button class="btn btn-success" (click)="createModeOn();">
+              <span><b>Agregar &nbsp;&nbsp;</b></span>
+              <i class="fas fa-plus" style="font-size:18px; display: inline-block; "></i>
+            </button>
+          </div>
+          <br><br><br>
+          <div *ngIf="!formVisible">
+            <p style="color: red;"><b>{{noRowDataError}}</b></p>
+            <div *ngIf="!selected && !noRowData">
+              <p><b>Tip:</b></p>
+              <p style="color: green;"><b>Selecciona un contacto de la siguiente tabla.</b></p>
+            </div>
+            <ag-grid-angular 
+              #agGrid
+              id="myGrid"
+              style="width: 100%; height: 300px;" 
+              class="ag-theme-balham"
+              [enableSorting]="true"
+              [rowData]="rowData" 
+              [columnDefs]="columnDefs"
+              [rowClassRules]="rowClassRules"
+              [enableFilter]="true"
+              [enableColResize]="true"
+              [colResizeDefault]="false"
+              [suppressAutoSize]="true"
+              [rowSelection]="rowSelection"
+              (selectionChanged)="onSelectionChanged($event)"
+              (gridReady)="onGridReady($event)"
+              >
+            </ag-grid-angular>
+          </div>
+          <div *ngIf="formVisible">
+            <form (ngSubmit)="onSubmit()" [formGroup]=contactoForm #formDir="ngForm">
+                <div class="row"> <!--PRIMER ROW -->
+                  <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                    <div class="form-group"><!--PRIMER CAMPO -->
+                      <label for="id_contacto_ordenDeTrabajo">Ctrl. Contacto</label>
+                      <input type="text" id="id_contacto_ordenDeTrabajo"  class="form-control" placeholder="###" formControlName="id_contacto_ordenDeTrabajo">
+                    </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                  <div class="col-md-4 col-12"> <!--PRIMERA GRID -->
+                    <div class="form-group"><!--PRIMER CAMPO -->
+                      <label for="ordenDeTrabajo_id">Ctrl. Orden de trabajo</label>
+                      <input type="text" id="ordenDeTrabajo_id"  class="form-control" placeholder="###" formControlName="ordenDeTrabajo_id">
+                      <div *ngIf="ordenDeTrabajo_id.invalid && (ordenDeTrabajo_id.dirty || ordenDeTrabajo_id.touched)" class="alert alert-danger">
+                        <div *ngIf="ordenDeTrabajo_id.errors.required">Valor requerido</div>
+                      </div>
+                    </div><!--FIN PRIMER CAMPO -->
+                  </div> <!--FIN PRIMERA GRID -->
+                  
+                  <div class="col-md-4 col-12"> <!-- CAMPO -->
+                    <div class="form-group">
+                      <label for="perzonalizedMail">Correo dirigido a nombre</label>
+                      <select type="text" id="perzonalizedMail" class="form-control" name="perzonalizedMail" placeholder="" required   formControlName="perzonalizedMail">
+                        <option value="" [disabled]="true">Selecciona... </option>                  
+                        <option value="1">Si</option> 
+                        <option value="0">No</option> 
+                      </select>
+                      <div *ngIf="perzonalizedMail.invalid && (perzonalizedMail.dirty || perzonalizedMail.touched)" class="alert alert-danger">
+                        <div *ngIf="perzonalizedMail.errors.required">Valor requerido.</div>
+                      </div>
+                    </div>
+                  </div> <!--FIN  CAMPO -->
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-12"> <!--PRIMER CAMPO -->
+                    <div class="form-group">
+                      <label for="nombre">Nombre</label>
+                      <input type="text" id="direccion" class="form-control" placeholder="Nombre" required   formControlName="nombre">
+                      <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"class="alert alert-danger">
+                        <div *ngIf="nombre.errors.required">Nombre requerido.</div>
+                      </div>
+                    </div>
+                  </div> <!--FIN PRIMER CAMPO -->
+                  <div class="col-md-6 col-12"> <!--PRIMER CAMPO -->
+                    <div class="form-group">
+                      <label for="correo">Correo</label>
+                      <input type="text" id="direccion" class="form-control" placeholder="correo" required   formControlName="correo">
+                      <div *ngIf="correo.invalid && (correo.dirty || correo.touched)"class="alert alert-danger">
+                        <div *ngIf="correo.errors.required">Direcci&oacute;n requerida.</div>
+                        <div *ngIf="correo.errors.pattern">El correo debe contener @</div>
+                      </div>
+                    </div>
+                  </div> <!--FIN PRIMER CAMPO -->
+                </div>
+                <div class="row">
+                  <div class="col-md-3 col-12"> <!--PRIMER CAMPO -->
+                    <div class="form-group">
+                      <label for="codigoPais">C&oacute;digo de pais.</label>
+                      <input type="text" id="direccion" class="form-control" placeholder="52" required   formControlName="codigoPais">
+                      <div *ngIf="codigoPais.invalid && (codigoPais.dirty || codigoPais.touched)"class="alert alert-danger">
+                        <div *ngIf="codigoPais.errors.required">C&oacute;digo de pais requerido.</div>
+                      </div>
+                    </div>
+                  </div> <!--FIN PRIMER CAMPO -->
+                  <div class="col-md-3 col-12"> <!--PRIMER CAMPO -->
+                    <div class="form-group">
+                      <label for="lada">Lada</label>
+                      <input type="text" id="direccion" class="form-control" placeholder="1222" required   formControlName="lada">
+                      <div *ngIf="lada.invalid && (lada.dirty || lada.touched)"class="alert alert-danger">
+                        <div *ngIf="lada.errors.required">Lada requerida.</div>
+                      </div>
+                    </div>
+                  </div> <!--FIN PRIMER CAMPO -->
+                  <div class="col-md-6 col-12"> <!--PRIMER CAMPO -->
+                    <div class="form-group">
+                      <label for="telefono">Celular</label>
+                      <input type="text" id="direccion" class="form-control" placeholder="#######" required   formControlName="telefono">
+                      <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)"class="alert alert-danger">
+                        <div *ngIf="telefono.errors.required">Telefono requerido.</div>
+                      </div>
+                    </div>
+                  </div> <!--FIN PRIMER CAMPO -->
+                </div>
+                <div class="row"> <!--SEGUNDO ROW -->
+                  <div class="col-md-3 col-12"> <!--UNICA GRID -->
+                    <div class="form-group"><!--CUARTO CAMPO -->
+                      <label for="SMTPnotifyPreliminarJB">Correo de JB</label>
+                      <select  class="form-control" id="SMTPnotifyPreliminarJB" required name="SMTPnotifyPreliminarJB" formControlName="SMTPnotifyPreliminarJB">
+                          <option value="" [disabled]="true">Selecciona... </option>                  
+                          <option value="1">Si</option> 
+                          <option value="0">No</option> 
+                      </select>
+                      <div *ngIf="SMTPnotifyPreliminarJB.invalid && (SMTPnotifyPreliminarJB.dirty || SMTPnotifyPreliminarJB.touched)" class="alert alert-danger">
+                        <div *ngIf="SMTPnotifyPreliminarJB.errors.required"> Valor requerido.</div>
+                      </div>
+                    </div><!--FIN CUARTO CAMPO -->
+                  </div> <!--FIN UNICA GRID -->
+                  <div class="col-md-3 col-12"> <!--UNICA GRID -->
+                    <div class="form-group"><!--CUARTO CAMPO -->
+                      <label for="SMTPnotifyFinalAdministrativo">Correo Final</label>
+                      <select  class="form-control" id="SMTPnotifyFinalAdministrativo" required formControlName="SMTPnotifyFinalAdministrativo">
+                          <option value="" [disabled]="true">Selecciona... </option>                  
+                          <option value="1">Si</option> 
+                          <option value="0">No</option> 
+                      </select>
+                      <div *ngIf="SMTPnotifyFinalAdministrativo.invalid && (SMTPnotifyFinalAdministrativo.dirty || SMTPnotifyFinalAdministrativo.touched)" class="alert alert-danger">
+                        <div *ngIf="SMTPnotifyFinalAdministrativo.errors.required"> Valor requerido.</div>
+                      </div>
+                    </div><!--FIN CUARTO CAMPO -->
+                  </div> <!--FIN UNICA GRID -->
+                  <div class="col-md-3 col-12"> <!--UNICA GRID -->
+                    <div class="form-group"><!--CUARTO CAMPO -->
+                      <label for="SMSnotifyPreliminarJB">SMS de JB</label>
+                      <select  class="form-control" id="SMSnotifyPreliminarJB" required formControlName="SMSnotifyPreliminarJB">
+                          <option value="" [disabled]="true">Selecciona... </option>                  
+                          <option value="1">Si</option> 
+                          <option value="0">No</option> 
+                      </select>
+                      <div *ngIf="SMSnotifyPreliminarJB.invalid && (SMSnotifyPreliminarJB.dirty || SMSnotifyPreliminarJB.touched)" class="alert alert-danger">
+                        <div *ngIf="SMSnotifyPreliminarJB.errors.required"> Valor requerido.</div>
+                      </div>
+                    </div><!--FIN CUARTO CAMPO -->
+                  </div> <!--FIN UNICA GRID -->
+                  <div class="col-md-3 col-12"> <!--UNICA GRID -->
+                    <div class="form-group"><!--CUARTO CAMPO -->
+                      <label for="SMSnnotifyFinalAdministrativo">SMS Final</label>
+                      <select  class="form-control" id="SMSnnotifyFinalAdministrativo" required name="SMSnnotifyFinalAdministrativo" formControlName="SMSnnotifyFinalAdministrativo">
+                          <option value="" [disabled]="true">Selecciona... </option>                  
+                          <option value="1">Si</option> 
+                          <option value="0">No</option> 
+                      </select>
+                      <div *ngIf="SMSnnotifyFinalAdministrativo.invalid && (SMSnnotifyFinalAdministrativo.dirty || SMSnnotifyFinalAdministrativo.touched)" class="alert alert-danger">
+                        <div *ngIf="SMSnnotifyFinalAdministrativo.errors.required"> Valor requerido.</div>
+                      </div>
+                    </div><!--FIN CUARTO CAMPO -->
+                  </div> <!--FIN UNICA GRID -->
+                </div> <!--FIN TERCER ROW -->
+
+                <div class="row"> <!--SEGUNDO ROW -->
+                  <div class="col-md-6 col-12"> <!--UNICA GRID -->
+                    <div class="form-group"><!--CUARTO CAMPO -->
+                      <label for="autoGen">Contacto por defecto</label>
+                      <select  class="form-control" id="autoGen" required formControlName="autoGen">
+                          <option value="" [disabled]="true">Selecciona... </option>                  
+                          <option value="1">Si</option> 
+                          <option value="0">No</option> 
+                      </select>
+                      <div *ngIf="autoGen.invalid && (autoGen.dirty || autoGen.touched)" class="alert alert-danger">
+                        <div *ngIf="autoGen.errors.required"> Valor requerido.</div>
+                      </div>
+                    </div><!--FIN CUARTO CAMPO -->
+                  </div> <!--FIN UNICA GRID -->
+                  <div class="col-md-6 col-12"> <!--UNICA GRID -->
+                    <div class="form-group"><!--CUARTO CAMPO -->
+                      <label for="active">Contacto activo</label>
+                      <select  class="form-control" id="active" required formControlName="active">
+                          <option value="" [disabled]="true">Selecciona... </option>                  
+                          <option value="1">Si</option> 
+                          <option value="0">No</option> 
+                      </select>
+                      <div *ngIf="active.invalid && (active.dirty || active.touched)" class="alert alert-danger">
+                        <div *ngIf="active.errors.required"> Valor requerido.</div>
+                      </div>
+                    </div><!--FIN CUARTO CAMPO -->
+                  </div> <!--FIN UNICA GRID -->
+                </div> <!--FIN TERCER ROW -->
+                              
+              <div class="btn-group"  >
+                <div class="btn-group" *ngIf="editMode && locked" style="float: right; padding-left: 10%;">
+                  <button class="btn btn-info"   (click)="mostrar();">
+                    <span><b> Cambiar Datos </b></span>
+                  </button>
+                </div>
+                <div class="btn-group"  *ngIf="!createMode && !locked" style=" padding-left: 15%;">
+                  <button class="btn btn-success"  [disabled]="contactoForm.invalid" (click)="mostrar(); upDateContacto();">
+                    <span><b> Guardar Cambios </b></span>
+                  </button>
+                </div>
+                <div class="btn-group"  *ngIf="createMode" style=" padding-left: 15%;">
+                  <button class="btn btn-success"  [disabled]="contactoForm.invalid" (click)="createContacto();">
+                    <span><b> Crear contacto </b></span>
+                  </button>
+                </div>
+                
+              </div>
+            </form>
+          </div>
+    
+    
+  
+
